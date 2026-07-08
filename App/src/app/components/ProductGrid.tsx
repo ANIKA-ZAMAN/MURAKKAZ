@@ -13,9 +13,9 @@ interface ProductGridProps {
 }
 
 export default function ProductGrid({
-  products,
-  currentPage,
-  totalPages,
+  products = [],
+  currentPage = 1,
+  totalPages = 1,
   onPageChange,
 }: ProductGridProps) {
   return (
