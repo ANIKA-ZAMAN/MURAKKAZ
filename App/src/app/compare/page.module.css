@@ -295,7 +295,6 @@
   width: 100%;
   max-width: 1249px;
   margin: 1.5rem auto 0;
-  border: 1px solid #767677;
   border-radius: 10px;
   overflow: hidden;
   background-color: #f5f1e8;
@@ -304,34 +303,104 @@
 .compareTable {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
-}
-
-.compareTable th {
-  background-color: #313134;
-  color: #ffffff;
-  padding: 1.25rem 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-bottom: 1px solid #5f5f61;
+  text-align: center; /* Center cell content inside columns */
+  border: 1px solid #767677;
 }
 
 .compareTable td {
   padding: 1.25rem 1.5rem;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--foreground);
-  border-bottom: 1px solid #dcdad5;
-}
-
-.compareTable tr:last-child td {
-  border-bottom: none;
+  border: 1px solid #767677;
+  vertical-align: middle;
 }
 
 .featureTitle {
-  font-weight: 600;
-  background-color: rgba(0, 0, 0, 0.02);
-  width: 15%;
-  min-width: 120px;
+  font-weight: 500;
+  color: #555558;
+  background-color: rgba(0, 0, 0, 0.01);
+  width: 20%;
+  min-width: 180px;
+  text-align: left; /* Left align row headers */
+}
+
+.productNameCell {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.ratingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+  color: #7a7a7d;
+}
+
+.starIcon {
+  color: #ffb800; /* Star icon yellow */
+  font-size: 1rem;
+}
+
+.accordsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.accordItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.accordName {
+  font-size: 0.72rem;
+  color: #555558;
+  width: 62px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.progressBarBg {
+  flex: 1;
+  height: 12px;
+  background-color: #edeae2;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: #313134;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 6px;
+}
+
+.progressValue {
+  font-size: 0.6rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.profileCell, .bestForCell {
+  line-height: 1.5;
+  font-size: 0.88rem;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.notesCell {
+  height: 120px; /* Empty tall cell for visual matches */
 }
 
 /* Responsive queries */

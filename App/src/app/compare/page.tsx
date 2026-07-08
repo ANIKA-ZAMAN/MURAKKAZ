@@ -7,32 +7,75 @@ import styles from "./page.module.css";
 interface CompareProduct {
   name: string;
   image: string;
+  brand: string;
+  inspiredBy: string;
+  price: string;
+  rating: string;
+  profile: string;
   longevity: string;
-  timing: string;
-  smells: string;
+  projection: string;
+  sweetness: string;
+  bestFor: string;
+  accords: { name: string; value: number }[];
 }
 
 const mockProducts: CompareProduct[] = [
   {
     name: "Jade Serenity",
     image: "/images/products/jade_serenity.png",
-    longevity: "8 - 10 Hours (Very Long Lasting)",
-    timing: "Day & Summer Wear",
-    smells: "Fresh Bergamot, Mandarin & Cedar Wood",
+    brand: "Own",
+    inspiredBy: "Dior Sauvage",
+    price: "1,720tk",
+    rating: "4.8 (250)",
+    profile: "Clean, crisp green tea twist layered over the classic fresh metallic base.",
+    longevity: "Beast Mode (8+ Hours)",
+    projection: "Heavy (Cuts through humid air beautifully)",
+    sweetness: "●●○○○ (Subtle Crispness)",
+    bestFor: "Office, hot summer afternoons, and high-end formal setups.",
+    accords: [
+      { name: "Woody", value: 80 },
+      { name: "Vanilla", value: 65 },
+      { name: "Balsamic", value: 55 },
+      { name: "Warm Spicy", value: 50 },
+    ],
   },
   {
-    name: "Coral Sea",
+    name: "Mageration",
     image: "/images/products/coral_sea.png",
-    longevity: "6 - 8 Hours (Moderate to Long)",
-    timing: "Spring & Casual Wear",
-    smells: "Pineapple, Birch, Patchouli & Amber",
+    brand: "After Rain",
+    inspiredBy: "Dior",
+    price: "1,210tk",
+    rating: "3.5 (50)",
+    profile: "Raw, sharp, high-concentration classic amber-spicy formulation.",
+    longevity: "Strong (6-7 Hours)",
+    projection: "Moderate (Creates a close personal aura)",
+    sweetness: "●○○○○ (Very Dry / Spicy)",
+    bestFor: "Casual hangouts, post-gym refreshes, and daily signatures.",
+    accords: [
+      { name: "Woody", value: 75 },
+      { name: "Vanilla", value: 60 },
+      { name: "Balsamic", value: 55 },
+      { name: "Warm Spicy", value: 70 },
+    ],
   },
   {
     name: "Magnetism",
     image: "/images/products/magnetism.png",
-    longevity: "7 - 9 Hours (Long Lasting)",
-    timing: "Evening & Night Wear",
-    smells: "Apple, Ginger, Sage & Woody Vetiver",
+    brand: "Own",
+    inspiredBy: "YSL Y EDP",
+    price: "1,220tk",
+    rating: "4.7 (120)",
+    profile: "Sweet, fresh, highly aromatic ginger-apple opening with a deep woody trails.",
+    longevity: "Long Lasting (7-8 Hours)",
+    projection: "Heavy (Fills the room initially)",
+    sweetness: "●●●○○ (Sweet & Fresh)",
+    bestFor: "Clubbing, date nights, and winter evening gatherings.",
+    accords: [
+      { name: "Woody", value: 70 },
+      { name: "Vanilla", value: 50 },
+      { name: "Balsamic", value: 45 },
+      { name: "Warm Spicy", value: 65 },
+    ],
   },
 ];
 
@@ -176,31 +219,115 @@ export default function ComparePage() {
         {showComparison && (
           <div className={styles.tableContainer}>
             <table className={styles.compareTable}>
-              <thead>
-                <tr>
-                  <th>Feature</th>
-                  {selectedSlots.map((slot, idx) => (
-                    <th key={idx}>{slot ? slot.name : "(Empty)"}</th>
-                  ))}
-                </tr>
-              </thead>
               <tbody>
+                {/* Row 1: Name */}
                 <tr>
-                  <td className={styles.featureTitle}>Longevity</td>
+                  <td className={styles.featureTitle}>Name</td>
                   {selectedSlots.map((slot, idx) => (
-                    <td key={idx}>{slot ? slot.longevity : "-"}</td>
+                    <td key={idx} className={styles.productNameCell}>{slot ? slot.name : ""}</td>
                   ))}
                 </tr>
+                {/* Row 2: Brand */}
                 <tr>
-                  <td className={styles.featureTitle}>Timing</td>
+                  <td className={styles.featureTitle}>Brand</td>
                   {selectedSlots.map((slot, idx) => (
-                    <td key={idx}>{slot ? slot.timing : "-"}</td>
+                    <td key={idx}>{slot ? slot.brand : ""}</td>
                   ))}
                 </tr>
+                {/* Row 3: Inspired By */}
                 <tr>
-                  <td className={styles.featureTitle}>Smells Like</td>
+                  <td className={styles.featureTitle}>Inspired By</td>
                   {selectedSlots.map((slot, idx) => (
-                    <td key={idx}>{slot ? slot.smells : "-"}</td>
+                    <td key={idx}>{slot ? slot.inspiredBy : ""}</td>
+                  ))}
+                </tr>
+                {/* Row 4: Price */}
+                <tr>
+                  <td className={styles.featureTitle}>Price</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx}>{slot ? slot.price : ""}</td>
+                  ))}
+                </tr>
+                {/* Row 5: Community Rating */}
+                <tr>
+                  <td className={styles.featureTitle}>Community Rating</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx}>
+                      {slot ? (
+                        <div className={styles.ratingWrapper}>
+                          <span className={styles.starIcon}>★</span> {slot.rating}
+                        </div>
+                      ) : ""}
+                    </td>
+                  ))}
+                </tr>
+                {/* Row 6: Scent Profile */}
+                <tr>
+                  <td className={styles.featureTitle}>Scent Profile</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx} className={styles.profileCell}>{slot ? slot.profile : ""}</td>
+                  ))}
+                </tr>
+                {/* Row 7: Longevity (Lasting Power) */}
+                <tr>
+                  <td className={styles.featureTitle}>Longevity<br />(Lasting Power)</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx}>{slot ? slot.longevity : ""}</td>
+                  ))}
+                </tr>
+                {/* Row 8: Projection (Scent Radius) */}
+                <tr>
+                  <td className={styles.featureTitle}>Projection<br />(Scent Radius)</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx}>{slot ? slot.projection : ""}</td>
+                  ))}
+                </tr>
+                {/* Row 9: Sweetness Level */}
+                <tr>
+                  <td className={styles.featureTitle}>Sweetness Level</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx}>{slot ? slot.sweetness : ""}</td>
+                  ))}
+                </tr>
+                {/* Row 10: Best For */}
+                <tr>
+                  <td className={styles.featureTitle}>Best For</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx} className={styles.bestForCell}>{slot ? slot.bestFor : ""}</td>
+                  ))}
+                </tr>
+                {/* Row 11: Accord */}
+                <tr>
+                  <td className={styles.featureTitle}>Accord</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx}>
+                      {slot ? (
+                        <div className={styles.accordsList}>
+                          {slot.accords.map((accord) => (
+                            <div key={accord.name} className={styles.accordItem}>
+                              <span className={styles.accordName}>{accord.name}</span>
+                              <div className={styles.progressBarBg}>
+                                <div 
+                                  className={styles.progressBarFill} 
+                                  style={{ width: `${accord.value}%` }}
+                                >
+                                  <span className={styles.progressValue}>{accord.value}%</span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : ""}
+                    </td>
+                  ))}
+                </tr>
+                {/* Row 12: Fragrance Notes */}
+                <tr>
+                  <td className={styles.featureTitle}>Fragrance Notes</td>
+                  {selectedSlots.map((slot, idx) => (
+                    <td key={idx} className={styles.notesCell}>
+                      {/* Left blank / empty matching the screenshot block */}
+                    </td>
                   ))}
                 </tr>
               </tbody>
