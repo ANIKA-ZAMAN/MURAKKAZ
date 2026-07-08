@@ -103,11 +103,9 @@ export default function RecommendationSlider() {
 
   const scroll = (direction: "left" | "right") => {
     if (sliderRef.current) {
-      const cardWidth = 280;
-      const gap = 24; // 1.5rem
-      const scrollAmount = cardWidth + gap;
+      const sectionWidth = sliderRef.current.clientWidth;
       sliderRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
+        left: direction === "left" ? -sectionWidth : sectionWidth,
         behavior: "smooth",
       });
     }
