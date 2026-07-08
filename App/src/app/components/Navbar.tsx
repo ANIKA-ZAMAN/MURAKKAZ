@@ -6,11 +6,13 @@ import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 
 const navLinks = [
-  { label: "Products", href: "/" },
-  { label: "Men", href: "/" },
-  { label: "Occasions", href: "/" },
-  { label: "Fragrance", href: "/" },
-  { label: "Events", href: "/events" },
+  { label: "Our Story", href: "/" },
+  { label: "Shop", href: "/" },
+  { label: "Event", href: "/events" },
+  { label: "Library", href: "/" },
+  { label: "Compare", href: "/compare" },
+  { label: "Finder", href: "/" },
+  { label: "Vlog", href: "/" },
 ];
 
 export default function Navbar() {

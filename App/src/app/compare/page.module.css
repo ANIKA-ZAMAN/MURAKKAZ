@@ -1,0 +1,374 @@
+.page {
+  --background: #f5f1e8;
+  --foreground: #313134;
+  --muted: #7a7a7d;
+  --border: #d8d5cd;
+  --dark-bg: #313134;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  font-family: var(--font-geist-sans), sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1300px;
+  padding: 3rem 1.5rem 5rem;
+  gap: 2.5rem;
+}
+
+.headerSection {
+  text-align: left;
+  width: 100%;
+  max-width: 1249px;
+  margin: 0 auto;
+}
+
+.title {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+/* Compare Outer Box Frame */
+.compareFrame {
+  width: 100%;
+  max-width: 1249px;
+  margin: 0 auto;
+  background-color: #f5f1e8;
+  border: 1px solid #767677;
+  border-radius: 10px;
+  padding: 2.5rem 3.5rem;
+}
+
+.slotsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 41px;
+}
+
+.slotColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+/* Empty Slot */
+.emptySlot {
+  width: 100%;
+  aspect-ratio: 349 / 249;
+  background-color: #f5f1e8;
+  border: 1.5px solid #5f5f61;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.emptySlot:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.plusIcon {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #5f5f61;
+}
+
+/* Filled Slot */
+.filledSlot {
+  width: 100%;
+  aspect-ratio: 349 / 249;
+  background-color: #fcfbfa;
+  border: 1.5px solid #313134;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 1.5rem;
+}
+
+.removeBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #a0302c;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.removeBtn:hover {
+  background-color: rgba(160, 48, 44, 0.1);
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.productImage {
+  object-fit: contain;
+  max-height: 140px;
+}
+
+.productLabel {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* Buttons */
+.addCompareBtn, .changeCompareBtn {
+  width: 100%;
+  height: 55px;
+  background-color: #f5f1e8;
+  border: 1px solid #313134;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--foreground);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.addCompareBtn:hover, .changeCompareBtn:hover {
+  background-color: rgba(49, 49, 52, 0.05);
+}
+
+/* Actions Row */
+.actionButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.compareBtn {
+  padding: 0.85rem 3.5rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #313134;
+  border: 1px solid #313134;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.compareBtn:hover {
+  opacity: 0.9;
+}
+
+.resetBtn {
+  padding: 0.85rem 3.5rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: #313134;
+  background-color: transparent;
+  border: 1px solid #8e8d89;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.resetBtn:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+/* Modal Selector */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #f5f1e8;
+  border: 1.5px solid #767677;
+  border-radius: 12px;
+  padding: 2.25rem;
+  width: 90%;
+  max-width: 440px;
+}
+
+.modalTitle {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+}
+
+.modalList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.modalItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #fcfbfa;
+  border: 1px solid #d8d5cd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalItem:hover {
+  border-color: #313134;
+  background-color: #ffffff;
+}
+
+.modalItemImage {
+  object-fit: contain;
+}
+
+.modalCloseBtn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #a0302c;
+  background-color: transparent;
+  border: 1px solid #a0302c;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+  background-color: rgba(160, 48, 44, 0.05);
+}
+
+/* Comparison Table */
+.tableContainer {
+  width: 100%;
+  max-width: 1249px;
+  margin: 1.5rem auto 0;
+  border: 1px solid #767677;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f5f1e8;
+}
+
+.compareTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.compareTable th {
+  background-color: #313134;
+  color: #ffffff;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-bottom: 1px solid #5f5f61;
+}
+
+.compareTable td {
+  padding: 1.25rem 1.5rem;
+  font-size: 0.88rem;
+  color: var(--foreground);
+  border-bottom: 1px solid #dcdad5;
+}
+
+.compareTable tr:last-child td {
+  border-bottom: none;
+}
+
+.featureTitle {
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.02);
+  width: 15%;
+  min-width: 120px;
+}
+
+/* Responsive queries */
+@media (max-width: 1024px) {
+  .compareFrame {
+    padding: 2rem 2.25rem;
+  }
+
+  .slotsContainer {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .compareFrame {
+    padding: 1.5rem;
+  }
+
+  .slotsContainer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .emptySlot, .filledSlot {
+    max-width: 100%;
+  }
+
+  .compareTable {
+    display: block;
+    overflow-x: auto;
+  }
+}
