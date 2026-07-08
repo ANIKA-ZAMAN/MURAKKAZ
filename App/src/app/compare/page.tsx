@@ -370,10 +370,9 @@ export default function ComparePage() {
                                 <div 
                                   className={styles.progressBarFill} 
                                   style={{ "--progress-width": `${accord.value}%` } as React.CSSProperties}
-                                >
-                                  <span className={styles.progressValue}>{accord.value}%</span>
-                                </div>
+                                />
                               </div>
+                              <span className={styles.progressValue}>{accord.value}%</span>
                             </div>
                           ))}
                         </div>
