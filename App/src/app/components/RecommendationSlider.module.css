@@ -1,0 +1,101 @@
+.section {
+  width: 100%;
+  max-width: 1348px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin: 6rem 0;
+  font-family: var(--font-geist-sans);
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: #313134;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.sliderContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.slider {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  padding: 10px 0;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.slide {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+.navBtn {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1px solid #767677;
+  color: #313134;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navBtn:hover {
+  background-color: #313134;
+  border-color: #313134;
+  color: #ffffff;
+}
+
+.leftBtn {
+  left: -22px;
+}
+
+.rightBtn {
+  right: -22px;
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 1400px) {
+  .leftBtn {
+    left: 10px;
+  }
+  .rightBtn {
+    right: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .section {
+    margin: 4rem 0;
+    gap: 1.5rem;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+}

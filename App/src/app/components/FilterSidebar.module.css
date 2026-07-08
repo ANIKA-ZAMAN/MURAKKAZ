@@ -1,0 +1,139 @@
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  font-family: var(--font-geist-sans);
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #313134;
+  margin: 0;
+  padding-bottom: 0.5rem;
+}
+
+.categoriesList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.categoryBlock {
+  border-bottom: 1px solid rgba(118, 118, 119, 0.15);
+}
+
+.headerBtn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #313134;
+  transition: color 0.2s ease;
+}
+
+.headerBtn:hover {
+  color: #671D24; /* Accent color */
+}
+
+.categoryName {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.arrowExpanded {
+  transform: rotate(-180deg);
+}
+
+.optionsContainer {
+  display: grid;
+  transition: grid-template-rows 0.3s ease-out;
+}
+
+.collapsed {
+  grid-template-rows: 0fr;
+}
+
+.expanded {
+  grid-template-rows: 1fr;
+}
+
+.optionsContent {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxInput {
+  appearance: none;
+  background-color: #ffffff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #767677;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.checkboxInput:checked {
+  background-color: #313134;
+  border-color: #313134;
+}
+
+.checkboxInput:checked::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background-color: #ffffff;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.checkboxInput:focus-visible {
+  outline: 2px solid #671D24;
+  outline-offset: 2px;
+}
+
+.optionText {
+  font-size: 0.875rem;
+  color: #555558;
+  transition: color 0.2s ease;
+}
+
+.optionLabel:hover .optionText {
+  color: #313134;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+  }
+}
