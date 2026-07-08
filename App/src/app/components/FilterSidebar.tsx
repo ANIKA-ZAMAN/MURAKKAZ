@@ -6,51 +6,57 @@ import styles from "./FilterSidebar.module.css";
 interface FilterCategory {
   id: string;
   name: string;
-  options: string[];
+  options?: string[];
+  type?: "checkbox" | "slider";
 }
 
 export default function FilterSidebar() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
     family: true,
     gender: false,
-    sensation: false,
-    notes: false,
+    occasion: false,
+    meter: false,
     price: false,
   });
 
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
     family: [],
     gender: [],
-    sensation: [],
-    notes: [],
-    price: [],
+    occasion: [],
+    meter: [],
   });
+
+  const [maxPrice, setMaxPrice] = useState<number>(2500);
 
   const categories: FilterCategory[] = [
     {
       id: "family",
       name: "Fragrance Family",
       options: ["Citrus", "Floral", "Woody", "Oriental", "Fresh"],
+      type: "checkbox",
     },
     {
       id: "gender",
       name: "Gender",
       options: ["Unisex", "Men", "Women"],
+      type: "checkbox",
     },
     {
-      id: "sensation",
-      name: "Sensation",
-      options: ["Fresh", "Warm", "Spicy", "Cozy", "Energetic"],
+      id: "occasion",
+      name: "Occasion",
+      options: ["Casual", "Formal", "Night Out", "Date Night", "Daily Wear"],
+      type: "checkbox",
     },
     {
-      id: "notes",
-      name: "Performance Notes",
-      options: ["Long Lasting", "Moderate", "Intense"],
+      id: "meter",
+      name: "Performance Meter",
+      options: ["Beast Mode", "Long Lasting", "Moderate", "Intimate"],
+      type: "checkbox",
     },
     {
       id: "price",
-      name: "Price Select",
-      options: ["Under ৳1,000", "৳1,000 - ৳2,000", "Over ৳2,000"],
+      name: "Price Slider",
+      type: "slider",
     },
   ];
 
@@ -96,7 +102,7 @@ export default function FilterSidebar() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
@@ -110,20 +116,39 @@ export default function FilterSidebar() {
                 }`}
               >
                 <div className={styles.optionsContent}>
-                  {category.options.map((option) => {
-                    const isChecked = selectedFilters[category.id]?.includes(option);
-                    return (
-                      <label key={option} className={styles.optionLabel}>
-                        <input
-                          type="checkbox"
-                          className={styles.checkboxInput}
-                          checked={isChecked}
-                          onChange={() => handleCheckboxChange(category.id, option)}
-                        />
-                        <span className={styles.optionText}>{option}</span>
-                      </label>
-                    );
-                  })}
+                  {category.type === "slider" ? (
+                    <div className={styles.sliderWrapper}>
+                      <input
+                        type="range"
+                        min="1000"
+                        max="3000"
+                        step="50"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(Number(e.target.value))}
+                        className={styles.rangeInput}
+                      />
+                      <div className={styles.sliderValues}>
+                        <span className={styles.priceMin}>1,000tk</span>
+                        <span className={styles.priceCurrent}>{maxPrice.toLocaleString()}tk</span>
+                        <span className={styles.priceMax}>3,000tk</span>
+                      </div>
+                    </div>
+                  ) : (
+                    category.options?.map((option) => {
+                      const isChecked = selectedFilters[category.id]?.includes(option);
+                      return (
+                        <label key={option} className={styles.optionLabel}>
+                          <input
+                            type="checkbox"
+                            className={styles.checkboxInput}
+                            checked={isChecked}
+                            onChange={() => handleCheckboxChange(category.id, option)}
+                          />
+                          <span className={styles.optionText}>{option}</span>
+                        </label>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>
