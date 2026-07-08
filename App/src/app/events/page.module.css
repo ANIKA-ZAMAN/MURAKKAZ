@@ -384,70 +384,148 @@
 
 .meetGreetFormContainer {
   background-color: var(--dark-bg);
-  border-radius: 8px;
-  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  padding: 3rem;
   color: #ffffff;
 }
 
 .meetGreetFormTitle {
   font-family: var(--font-playfair), var(--font-lora), serif;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
 }
 
-.meetGreetFields {
-  display: flex;
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+.meetGreetDesc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555558;
+  max-width: 800px;
+  margin-bottom: 2.5rem;
 }
 
-.fieldGroup {
-  flex: 1;
+.formLayout {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 1.25rem;
 }
 
-.fieldLabel {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #b0b0b3;
+.formRow1, .formRow2 {
+  display: flex;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.formRow1 .fieldInput {
+  flex: 1;
+}
+
+.formRow2 .selectWrapper, .formRow2 .fieldInput {
+  flex: 1;
 }
 
 .fieldInput {
-  padding: 0.65rem 0.85rem;
-  font-size: 0.85rem;
-  background-color: var(--dark-card);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.88rem;
+  background-color: transparent;
   border: 1px solid #555559;
-  border-radius: 4px;
+  border-radius: 50px; /* Capsule pill shape */
   color: #ffffff;
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .fieldInput::placeholder {
-  color: #77777a;
+  color: #b0b0b3;
 }
 
 .fieldInput:focus {
   border-color: #a0a0a4;
 }
 
-.submitBtn {
-  padding: 0.6rem 2rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--foreground);
-  background-color: #f5f1e8;
-  border: none;
-  border-radius: 4px;
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fieldSelect {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.88rem;
+  background-color: transparent;
+  border: 1px solid #555559;
+  border-radius: 50px;
+  color: #ffffff;
+  outline: none;
+  appearance: none; /* Hide native dropdown arrow */
   cursor: pointer;
-  transition: opacity 0.2s ease;
+}
+
+.fieldSelect option {
+  background-color: var(--dark-bg);
+  color: #ffffff;
+}
+
+.selectCaret {
+  position: absolute;
+  right: 1.5rem;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.formRow3 {
+  width: 100%;
+}
+
+.fieldTextarea {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.88rem;
+  background-color: transparent;
+  border: 1px solid #555559;
+  border-radius: 18px; /* Slightly rounded corners for text area */
+  color: #ffffff;
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s ease;
+}
+
+.fieldTextarea::placeholder {
+  color: #b0b0b3;
+}
+
+.fieldTextarea:focus {
+  border-color: #a0a0a4;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid #555559;
+  border-radius: 10px; /* Outlined button with rounded corners */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 .submitBtn:hover {
-  opacity: 0.85;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: #a0a0a4;
+}
+
+.btnArrow {
+  font-size: 0.95rem;
 }
 
 /* ==============================
