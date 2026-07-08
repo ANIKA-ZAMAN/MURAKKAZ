@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
@@ -27,7 +28,7 @@ export default function ProductCard({
 
   return (
     <div className={styles.card}>
-      <div className={styles.imageContainer}>
+      <Link href="/product/jade-serenity" className={styles.imageContainer} style={{ display: "block" }}>
         <Image
           src={image}
           alt={name}
@@ -35,11 +36,16 @@ export default function ProductCard({
           height={280}
           className={styles.image}
         />
-      </div>
+      </Link>
 
       <div className={styles.content}>
         <div className={styles.headerRow}>
-          <h3 className={styles.name}>{name}</h3>
+          <h3 className={styles.name}>
+            <Link href="/product/jade-serenity" style={{ textDecoration: "none", color: "inherit" }}>
+              {name}
+            </Link>
+          </h3>
+
           <button
             className={`${styles.wishlistBtn} ${
               isWishlisted ? styles.active : ""
