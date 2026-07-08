@@ -12,94 +12,6 @@
   width: 100%;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.prevBtn,
-.nextBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 38px;
-  padding: 0 1.25rem;
-  border-radius: 19px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.prevBtn {
-  background: #F5F1E8;
-  border: 1px solid #767677;
-  color: #313134;
-}
-
-.prevBtn:hover {
-  background-color: #eae5db;
-  border-color: #313134;
-}
-
-.nextBtn {
-  background: #313134;
-  border: 1px solid #313134;
-  color: #ffffff;
-}
-
-.nextBtn:hover {
-  background-color: #1e1e20;
-  border-color: #1e1e20;
-}
-
-.chevron {
-  width: 14px;
-  height: 14px;
-}
-
-.pageNumbers {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pageNum {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: none;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  color: #767677;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pageNum:hover {
-  color: #313134;
-  background-color: rgba(118, 118, 119, 0.1);
-}
-
-.activePage {
-  background-color: #313134 !important;
-  color: #ffffff !important;
-}
-
-.dots {
-  color: #767677;
-  padding: 0 4px;
-  font-size: 0.9375rem;
-}
-
 @media (max-width: 1200px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
@@ -116,9 +28,5 @@
   .grid {
     grid-template-columns: 1fr;
     justify-items: center;
-  }
-  .pagination {
-    gap: 1rem;
-    flex-wrap: wrap;
   }
 }

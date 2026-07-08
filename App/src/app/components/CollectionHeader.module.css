@@ -1,0 +1,30 @@
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 3.5rem;
+  margin-top: 1.5rem;
+  gap: 2rem;
+}
+
+.title {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 2.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .title {
+    font-size: 2.25rem;
+  }
+}
