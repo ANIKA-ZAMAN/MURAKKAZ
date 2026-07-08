@@ -26,9 +26,9 @@ export default function Navbar() {
           <Link href="/" className={styles.navOverlayLink} style={{ left: "62%", width: "4%" }} title="Vlog" />
 
           {/* Icon Overlays */}
-          <Link href="/wishlist" className={styles.navOverlayLink} style={{ left: "86.7%", width: "2.5%" }} title="Wishlist" />
-          <Link href="/" className={styles.navOverlayLink} style={{ left: "89.7%", width: "2.5%" }} title="Cart" />
-          <Link href="/" className={styles.navOverlayLink} style={{ left: "92.7%", width: "2.5%" }} title="Profile" />
+          <Link href="/wishlist" className={styles.navOverlayLink} style={{ left: "86.5%", width: "3.5%" }} title="Wishlist" />
+          <Link href="/" className={styles.navOverlayLink} style={{ left: "90.0%", width: "3.5%" }} title="Cart" />
+          <Link href="/" className={styles.navOverlayLink} style={{ left: "93.5%", width: "3.5%" }} title="Profile" />
         </div>
       </nav>
     </header>
