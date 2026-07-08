@@ -130,7 +130,7 @@ export default function RecommendationSlider() {
           >
             <path
               d="M19.5495 26.2999L13.2511 20L19.5511 13.7M26.7495 20H13.2495H26.7495Z"
-              stroke="#2F0909"
+              stroke="#820011"
               strokeWidth="1.025"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -139,7 +139,7 @@ export default function RecommendationSlider() {
               cx="20"
               cy="20"
               r="19.6583"
-              stroke="#2F0909"
+              stroke="#820011"
               strokeWidth="0.683333"
             />
           </svg>
@@ -177,7 +177,7 @@ export default function RecommendationSlider() {
           >
             <path
               d="M19.5495 26.2999L13.2511 20L19.5511 13.7M26.7495 20H13.2495H26.7495Z"
-              stroke="#2F0909"
+              stroke="#820011"
               strokeWidth="1.025"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -186,7 +186,7 @@ export default function RecommendationSlider() {
               cx="20"
               cy="20"
               r="19.6583"
-              stroke="#2F0909"
+              stroke="#820011"
               strokeWidth="0.683333"
             />
           </svg>
