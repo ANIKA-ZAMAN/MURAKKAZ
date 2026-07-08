@@ -299,7 +299,7 @@
   border: 1px solid #e5e2da;
   border-radius: 8px;
   overflow: visible; /* Allows sticky table headers to render correctly */
-  background-color: #faf9f6;
+  background-color: #f5f1e8; /* Same background color as the page */
 }
 
 .compareTable {
@@ -328,7 +328,7 @@
 }
 
 .compareTable tr:hover td {
-  background-color: rgba(245, 241, 232, 0.15); /* Soft premium hover glow */
+  background-color: rgba(245, 241, 232, 0.25); /* Soft premium hover glow */
 }
 
 /* Sticky Header Row */
@@ -336,9 +336,13 @@
   position: sticky;
   top: 80px; /* Sits cleanly below header */
   z-index: 40;
-  background-color: #fbfaf8 !important;
+  background-color: #f5f1e8 !important; /* Matches page background */
   border-bottom: 1.5px solid #d9c49e !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.stickyHeaderRow td.recommendedColumn {
+  background-color: #eae2d5 !important; /* Darker beige sticky header column */
 }
 
 .featureTitle {
@@ -346,7 +350,7 @@
   font-size: 1.02rem;
   font-weight: 400;
   color: #8c8a82;
-  background-color: #fdfcfb;
+  background-color: #f0ece0; /* Slightly darker warm beige for row headers */
   width: 22%;
   min-width: 190px;
   text-align: left;
@@ -354,7 +358,7 @@
 
 /* Recommended Perfume Highlight column */
 .recommendedColumn {
-  background-color: #faf7f0 !important; /* Soft warm ivory */
+  background-color: #eae2d5 !important; /* Slightly darker beige accent color */
   border-left: 1.2px solid #e1d3b7 !important;
   border-right: 1.2px solid #e1d3b7 !important;
 }
@@ -393,7 +397,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #a3906b;
-  background-color: #faf7f0;
+  background-color: #eae2d5;
   border: 1px solid #e1d3b7;
   padding: 3px 12px;
   border-radius: 100px;
@@ -401,7 +405,7 @@
 
 .recommendedCard {
   border: 1.2px solid #e1d3b7 !important;
-  background-color: #fdfcfb !important;
+  background-color: #eae2d5 !important;
   box-shadow: 0 8px 30px rgba(163, 144, 107, 0.04) !important;
 }
 
