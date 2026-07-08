@@ -12,7 +12,7 @@ interface FilterCategory {
 
 export default function FilterSidebar() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
-    family: true,
+    family: false,
     gender: false,
     occasion: false,
     meter: false,

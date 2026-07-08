@@ -64,6 +64,7 @@
 .optionsContainer {
   display: grid;
   transition: grid-template-rows 0.3s ease-out;
+  overflow: hidden;
 }
 
 .collapsed {
