@@ -35,22 +35,52 @@ export default function EventsPage() {
           <div className={styles.upcomingList}>
             {upcomingEvents.map((event, idx) => (
               <div key={idx} className={styles.upcomingRow}>
-                <div className={styles.upcomingLeft}>
-                  <div className={styles.dateBlock}>
-                    <span className={styles.dateDay}>{event.day}</span>
-                    <span className={styles.dateMonth}>{event.month}</span>
-                  </div>
-                  <div className={styles.upcomingInfo}>
-                    <h3 className={styles.upcomingTitle}>{event.title}</h3>
-                    <p className={styles.upcomingDesc}>{event.description}</p>
-                    <button className={styles.joinBtn}>Join</button>
-                  </div>
+                {/* Col 1: Date */}
+                <div className={styles.dateBlock}>
+                  <span className={styles.dateDay}>{event.day}</span>
+                  <span className={styles.dateMonth}>{event.month}</span>
                 </div>
-                <div className={styles.upcomingImageWrap}>
-                  <div className={styles.placeholderImage} aria-label={event.title} />
+
+                {/* Col 2: Title + Location + Days Left + Time + Button */}
+                <div className={styles.upcomingInfo}>
+                  <h3 className={styles.upcomingTitle}>{event.title}</h3>
+                  <p className={styles.upcomingLocation}>{event.location}</p>
+                  <p className={styles.upcomingDaysLeft}>{event.daysLeft}</p>
+                  <p className={styles.upcomingTime}>{event.time}</p>
+                  <button className={styles.setReminderBtn}>Set Reminder</button>
                 </div>
+
+                {/* Col 3 & 4: Image and Description — alternating */}
+                {idx % 2 === 0 ? (
+                  <>
+                    <div className={styles.upcomingImageWrap}>
+                      <div className={styles.placeholderImage} />
+                    </div>
+                    <div className={styles.upcomingDescWrap}>
+                      <p className={styles.upcomingDesc}>{event.description}</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className={styles.upcomingDescWrap}>
+                      <p className={styles.upcomingDesc}>{event.description}</p>
+                    </div>
+                    <div className={styles.upcomingImageWrap}>
+                      <div className={styles.placeholderImage} />
+                    </div>
+                  </>
+                )}
               </div>
             ))}
+          </div>
+
+          {/* Pagination */}
+          <div className={styles.pagination}>
+            <button className={styles.paginationArrow}>&lt;</button>
+            <button className={`${styles.paginationNum} ${styles.paginationActive}`}>1</button>
+            <button className={styles.paginationNum}>2</button>
+            <button className={styles.paginationNum}>3</button>
+            <button className={styles.paginationArrow}>&gt;</button>
           </div>
         </section>
 
