@@ -45,6 +45,7 @@
 
 .navBtn {
   position: absolute;
+  top: 120px; /* Vertically centered relative to the 280px tall product images */
   width: 40px;
   height: 40px;
   background: none;
