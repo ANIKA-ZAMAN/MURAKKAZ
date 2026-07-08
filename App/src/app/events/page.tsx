@@ -55,8 +55,8 @@ export default function EventsPage() {
                   <>
                     <div className={styles.upcomingImageWrap}>
                       <Image
-                        src="/images/events/box_for_event.svg"
-                        alt="Event Box"
+                        src={`/images/events/${event.image}`}
+                        alt="Event Image"
                         width={302}
                         height={212}
                         className={styles.boxSvgImage}
@@ -74,8 +74,8 @@ export default function EventsPage() {
                     </div>
                     <div className={styles.upcomingImageWrap}>
                       <Image
-                        src="/images/events/box_for_event.svg"
-                        alt="Event Box"
+                        src={`/images/events/${event.image}`}
+                        alt="Event Image"
                         width={302}
                         height={212}
                         className={styles.boxSvgImage}

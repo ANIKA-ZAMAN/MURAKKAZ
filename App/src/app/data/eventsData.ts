@@ -8,6 +8,7 @@ export interface UpcomingEvent {
   daysLeft: string;
   time: string;
   description: string;
+  image: string;
 }
 
 export interface PreviousEvent {
@@ -38,6 +39,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "From 8.00\nTo 17.00",
     description:
       "We are heading back to NSU! After last event\u2019s massive response, we are bringing an exclusive lineup of our best-sellers and new summer drops right to the campus gallery. Stop by to test our signature line, meet the team, and grab your bottle before stocks run out.",
+    image: "sadid.png"
   },
   {
     day: "11",
@@ -48,6 +50,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "From 8.00\nTo 17.00",
     description:
       "BRACU, we are coming for you next! We are setting up our interactive fragrance booth right outside the library zone. Come experience our long-lasting formulations in person and pick up your favorite 2ml/5ml sample vials to test our beast-mode sillage free.",
+    image: "sadid.png"
   },
   {
     day: "05",
@@ -58,6 +61,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "From 8.00\nTo 17.00",
     description:
       "Murakkaz is taking over ICCB! We are architecting a premium fragrance experience at Pavilion 3, Stall B4. Join us to explore our highest-performing evening scents and enjoy an exclusive meet-and-greet window with the Founder every single evening. Don\u2019t miss out!",
+    image: "sadid.png"
   },
 ];
 

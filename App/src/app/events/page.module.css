@@ -182,9 +182,16 @@
 
 .upcomingImageWrap {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 4px;
+  aspect-ratio: 302 / 212;
+  border-radius: 10px;
   overflow: hidden;
+  position: relative;
+}
+
+.boxSvgImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .upcomingDescWrap {
