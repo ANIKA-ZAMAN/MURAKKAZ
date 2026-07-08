@@ -73,8 +73,8 @@ export default function ProductCard({
         </div>
 
         <div className={styles.actions}>
-          <button className={styles.quickView}>quick view</button>
-          <button className={styles.bagNow}>bag now</button>
+          <button className={styles.quickView}>Add to Bag</button>
+          <button className={styles.bagNow}>Buy Now</button>
         </div>
       </div>
     </div>

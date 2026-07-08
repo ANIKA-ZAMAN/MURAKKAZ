@@ -1,6 +1,8 @@
 :root {
   --background: #FAF8F5;
   --foreground: #313134;
+  --font-serif-title: var(--font-playfair), Georgia, serif;
+  --font-serif-text: var(--font-lora), Georgia, serif;
 }
 
 html {
