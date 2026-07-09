@@ -1,0 +1,43 @@
+.page {
+  --background: #E5DCCB; /* Matches the warm soft beige tone in the screenshot background */
+  --foreground: #313134;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  font-family: var(--font-geist-sans);
+  background-color: transparent;
+  color: var(--foreground);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1348px;
+  padding: 2.5rem 1.5rem;
+}
+
+.contentLayout {
+  display: flex;
+  gap: 3rem;
+  width: 100%;
+  align-items: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .contentLayout {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentLayout {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+}
