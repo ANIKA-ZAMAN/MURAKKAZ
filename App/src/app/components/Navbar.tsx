@@ -1,9 +1,35 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
+  const [cartCount, setCartCount] = useState(0);
+
+  const updateCount = () => {
+    const saved = localStorage.getItem("cart-items");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const total = parsed.reduce((sum, item) => sum + item.quantity, 0);
+          setCartCount(total);
+          return;
+        }
+      } catch (e) {
+        console.error("Error reading cart count", e);
+      }
+    }
+    setCartCount(0);
+  };
+
+  useEffect(() => {
+    updateCount();
+    window.addEventListener("cart-updated", updateCount);
+    return () => window.removeEventListener("cart-updated", updateCount);
+  }, []);
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -29,6 +55,13 @@ export default function Navbar() {
           <Link href="/wishlist" className={styles.navOverlayLink} style={{ left: "86.5%", width: "3.5%" }} title="Wishlist" />
           <Link href="/cart" className={styles.navOverlayLink} style={{ left: "90.0%", width: "3.5%" }} title="Cart" />
           <Link href="/" className={styles.navOverlayLink} style={{ left: "93.5%", width: "3.5%" }} title="Profile" />
+
+          {/* Cart Quantity Badge overlaying the Bag icon */}
+          {cartCount > 0 && (
+            <span className={styles.cartBadge}>
+              {cartCount}
+            </span>
+          )}
         </div>
       </nav>
     </header>

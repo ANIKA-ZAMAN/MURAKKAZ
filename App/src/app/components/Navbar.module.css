@@ -49,3 +49,23 @@
   background-color: rgba(130, 0, 17, 0.1); /* Visible soft highlight to identify clickable regions */
 }
 
+.cartBadge {
+  position: absolute;
+  left: 91.8%; /* Align exactly near top-right of Bag icon (which is centered around 90%) */
+  top: 14px;
+  background-color: #820011; /* Luxurious deep red */
+  color: #ffffff;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Let clicks pass through to standard navigation link */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+

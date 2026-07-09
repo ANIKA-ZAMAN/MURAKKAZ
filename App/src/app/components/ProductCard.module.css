@@ -199,3 +199,78 @@
   background-color: #1e1e20;
   border-color: #1e1e20;
 }
+
+/* Premium Toast Notification */
+.toast {
+  position: fixed;
+  top: 100px;
+  right: 24px;
+  background-color: #E5DCCB;
+  background-image: url('/plaster-stone-texture.png');
+  background-repeat: repeat;
+  background-size: 400px;
+  border: 1px solid #767677;
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  z-index: 10000;
+  width: 320px;
+  animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toastText {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.95rem;
+  color: #313134;
+  line-height: 1.4;
+}
+
+.toastActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toastLink {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #820011;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.toastLink:hover {
+  opacity: 0.8;
+}
+
+.toastClose {
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  color: #767677;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  margin-left: auto;
+  transition: color 0.2s ease;
+}
+
+.toastClose:hover {
+  color: #313134;
+}
+

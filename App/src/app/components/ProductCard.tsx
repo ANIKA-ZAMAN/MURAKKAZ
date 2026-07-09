@@ -3,9 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
+  id: string;
   name: string;
   description: string;
   rating: number;
@@ -16,6 +18,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({
+  id,
   name,
   description,
   rating,
@@ -25,6 +28,71 @@ export default function ProductCard({
   image,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleAddToBag = () => {
+    // Extract price number from string (e.g. "1,735tk" -> 1735)
+    const priceVal = parseInt(price.replace(/[^0-9]/g, ""), 10) || 0;
+    
+    // Load current cart
+    const savedCart = localStorage.getItem("cart-items");
+    let cartItems = [];
+    if (savedCart) {
+      try {
+        cartItems = JSON.parse(savedCart);
+      } catch (e) {
+        console.error("Failed to parse cart items", e);
+      }
+    }
+    
+    if (!Array.isArray(cartItems)) {
+      cartItems = [];
+    }
+
+    // Check if item already exists by name
+    const existingIndex = cartItems.findIndex((item: any) => item.name === name);
+    if (existingIndex > -1) {
+      cartItems[existingIndex].quantity += 1;
+    } else {
+      const newItem = {
+        id: `cart-${id}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+        name: name,
+        image: image,
+        inspiredBy: description,
+        selectedSize: "5ml",
+        quantity: 1,
+        prices: {
+          "5ml": priceVal,
+          "10ml": Math.round(priceVal * 1.8),
+          "100ml": Math.round(priceVal * 9.0),
+        },
+        selected: true,
+      };
+      cartItems.push(newItem);
+    }
+
+    // Save cart
+    localStorage.setItem("cart-items", JSON.stringify(cartItems));
+    
+    // Dispatch event
+    window.dispatchEvent(new Event("cart-updated"));
+
+    // Trigger toast
+    setToastMessage(`"${name}" has been added to your bag.`);
+    
+    // Clear toast after 4s
+    const timer = setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
+    
+    return () => clearTimeout(timer);
+  };
+
+  const handleBuyNow = () => {
+    handleAddToBag();
+    router.push("/cart");
+  };
 
   return (
     <div className={styles.card}>
@@ -80,10 +148,25 @@ export default function ProductCard({
         </div>
 
         <div className={styles.actions}>
-          <button className={styles.quickView}>Add to Bag</button>
-          <button className={styles.bagNow}>Buy Now</button>
+          <button className={styles.quickView} onClick={handleAddToBag}>Add to Bag</button>
+          <button className={styles.bagNow} onClick={handleBuyNow}>Buy Now</button>
         </div>
       </div>
+
+      {/* Premium Toast Popup */}
+      {toastMessage && (
+        <div className={styles.toast}>
+          <div className={styles.toastText}>{toastMessage}</div>
+          <div className={styles.toastActions}>
+            <span className={styles.toastLink} onClick={() => router.push("/cart")}>
+              View Bag
+            </span>
+            <button className={styles.toastClose} onClick={() => setToastMessage(null)}>
+              Dismiss
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

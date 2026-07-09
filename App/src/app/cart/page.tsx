@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -62,6 +62,34 @@ const initialCartItems: CartItem[] = [
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    setIsMounted(true);
+    const savedCart = localStorage.getItem("cart-items");
+    if (savedCart) {
+      try {
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          setCartItems(parsed);
+          return;
+        }
+      } catch (e) {
+        console.error("Failed to parse cart items from storage", e);
+      }
+    }
+    // Fallback to initial items if localStorage is empty
+    localStorage.setItem("cart-items", JSON.stringify(initialCartItems));
+  }, []);
+
+  // Save to localStorage when state updates
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem("cart-items", JSON.stringify(cartItems));
+      window.dispatchEvent(new Event("cart-updated"));
+    }
+  }, [cartItems, isMounted]);
 
   // Toggle single item selection
   const toggleSelectItem = (id: string) => {
