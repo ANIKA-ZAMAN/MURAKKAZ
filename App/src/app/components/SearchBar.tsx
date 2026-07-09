@@ -9,7 +9,7 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({
-  placeholder = "Search",
+  placeholder = "Search your perfume",
   onSearch,
 }: SearchBarProps) {
   const [query, setQuery] = useState("");
@@ -22,6 +22,13 @@ export default function SearchBar({
 
   return (
     <div className={styles.searchContainer}>
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={query}
+        onChange={handleChange}
+        className={styles.searchInput}
+      />
       <svg
         className={styles.searchIcon}
         viewBox="0 0 24 24"
@@ -32,13 +39,6 @@ export default function SearchBar({
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-      <input
-        type="text"
-        placeholder={placeholder}
-        value={query}
-        onChange={handleChange}
-        className={styles.searchInput}
-      />
     </div>
   );
 }

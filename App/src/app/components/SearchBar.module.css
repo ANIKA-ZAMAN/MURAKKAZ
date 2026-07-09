@@ -3,12 +3,12 @@
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 320px;
+  max-width: 280px;
 }
 
 .searchIcon {
   position: absolute;
-  left: 16px;
+  right: 14px;
   width: 16px;
   height: 16px;
   color: #767677;
@@ -17,22 +17,26 @@
 
 .searchInput {
   width: 100%;
-  height: 42px;
-  padding: 0 16px 0 44px;
-  border-radius: 21px;
-  border: 1px solid #767677;
-  background-color: var(--background, #F7F3EB);
+  height: 40px;
+  padding: 0 40px 0 16px;
+  border-radius: 20px;
+  border: 1px solid #c8c4bc;
+  background-color: #ffffff;
   color: var(--foreground);
-  font-size: 0.9375rem;
-  font-family: var(--font-geist-sans);
+  font-size: 0.8125rem;
+  font-family: var(--font-serif-text), Georgia, serif;
   transition: all 0.2s ease;
+}
+
+.searchInput::placeholder {
+  color: #999;
+  font-size: 0.8125rem;
 }
 
 .searchInput:focus {
   outline: none;
   border-color: #313134;
-  background-color: #ffffff;
-  box-shadow: 0 0 0 1px #313134;
+  box-shadow: 0 0 0 1px rgba(49, 49, 52, 0.15);
 }
 
 @media (max-width: 768px) {

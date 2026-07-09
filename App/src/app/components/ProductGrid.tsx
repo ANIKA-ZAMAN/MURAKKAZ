@@ -31,6 +31,7 @@ export default function ProductGrid({
               key={`${product.id}-${index}`}
               id={product.id}
               name={product.name}
+              brand={product.brand}
               description={product.description}
               rating={product.rating}
               reviews={product.reviews}

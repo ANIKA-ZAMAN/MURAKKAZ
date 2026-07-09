@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 0.875rem 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,61 +11,157 @@
   background-image: url('/plaster-stone-texture.png');
   background-repeat: repeat;
   background-size: 800px;
+  border-bottom: 1px solid rgba(118, 118, 119, 0.1);
 }
 
 .nav {
   width: 100%;
-  max-width: 1348px;
+  max-width: 1300px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
-.navbarWrapper {
-  width: 100%;
-  max-width: 1348px;
-  margin: 0 auto;
+/* ── Logo ── */
+.logo {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.75;
+}
+
+/* ── Nav Links ── */
+.links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: #555558;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
   position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.2s ease;
 }
 
-.navbarSvg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.navOverlayLink {
+.link::after {
+  content: "";
   position: absolute;
-  top: 0;
-  height: 100%;
-  background-color: transparent;
-  cursor: pointer;
-  z-index: 999;
-  transition: background-color 0.2s ease;
-  border-radius: 4px;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--foreground);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.navOverlayLink:hover {
-  background-color: rgba(130, 0, 17, 0.1); /* Visible soft highlight to identify clickable regions */
+.link:hover {
+  color: var(--foreground);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.linkActive {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.linkActive::after {
+  width: 100%;
+  background: var(--foreground);
+}
+
+/* ── Right Icons ── */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.iconBtn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.iconBtn:hover {
+  background-color: rgba(49, 49, 52, 0.06);
 }
 
 .cartBadge {
   position: absolute;
-  left: 94.8%; /* Align exactly near top-right of Bag icon, away from Account */
-  top: 14px;
-  background-color: #820011; /* Luxurious deep red */
+  top: 2px;
+  right: 2px;
+  background-color: #820011;
   color: #ffffff;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none; /* Let clicks pass through to standard navigation link */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .links {
+    gap: 1.25rem;
+  }
+  .link {
+    font-size: 0.75rem;
+  }
+}
 
+@media (max-width: 768px) {
+  .header {
+    padding: 0.75rem 1.25rem;
+  }
+  .links {
+    display: none;
+  }
+  .nav {
+    gap: 1rem;
+  }
+}

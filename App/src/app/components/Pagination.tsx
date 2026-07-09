@@ -10,15 +10,20 @@ interface PaginationProps {
 
 export default function Pagination({
   currentPage = 1,
-  totalPages = 10,
+  totalPages = 3,
   onPageChange,
 }: PaginationProps) {
+  // Generate page numbers to display
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
     <div className={styles.pagination}>
+      {/* Previous Arrow */}
       <button
-        className={styles.prevBtn}
+        className={styles.arrowBtn}
         onClick={() => onPageChange?.(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
+        aria-label="Previous page"
       >
         <svg
           className={styles.chevron}
@@ -29,49 +34,26 @@ export default function Pagination({
         >
           <polyline points="15 18 9 12 15 6" />
         </svg>
-        Previous
       </button>
 
-      <div className={styles.pageNumbers}>
+      {/* Page Numbers */}
+      {pages.map((page) => (
         <button
-          className={`${styles.pageNum} ${currentPage === 1 ? styles.activePage : ""}`}
-          onClick={() => onPageChange?.(1)}
+          key={page}
+          className={`${styles.pageNum} ${currentPage === page ? styles.activePage : ""}`}
+          onClick={() => onPageChange?.(page)}
         >
-          1
+          {page}
         </button>
-        <button
-          className={`${styles.pageNum} ${currentPage === 2 ? styles.activePage : ""}`}
-          onClick={() => onPageChange?.(2)}
-        >
-          2
-        </button>
-        <span className={styles.dots}>...</span>
-        <button
-          className={`${styles.pageNum} ${currentPage === 8 ? styles.activePage : ""}`}
-          onClick={() => onPageChange?.(8)}
-        >
-          8
-        </button>
-        <button
-          className={`${styles.pageNum} ${currentPage === 9 ? styles.activePage : ""}`}
-          onClick={() => onPageChange?.(9)}
-        >
-          9
-        </button>
-        <button
-          className={`${styles.pageNum} ${currentPage === 10 ? styles.activePage : ""}`}
-          onClick={() => onPageChange?.(10)}
-        >
-          10
-        </button>
-      </div>
+      ))}
 
+      {/* Next Arrow */}
       <button
-        className={styles.nextBtn}
+        className={styles.arrowBtn}
         onClick={() => onPageChange?.(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
+        aria-label="Next page"
       >
-        Next
         <svg
           className={styles.chevron}
           viewBox="0 0 24 24"

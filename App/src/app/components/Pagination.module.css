@@ -2,63 +2,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 0.5rem;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 2rem;
+  padding-bottom: 1rem;
 }
 
-.prevBtn,
-.nextBtn {
+.arrowBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 8px;
-  height: 38px;
-  padding: 0 1.25rem;
-  border-radius: 19px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  justify-content: center;
+  border: 1px solid #c8c4bc;
+  background: transparent;
+  color: #767677;
   cursor: pointer;
   transition: all 0.2s ease;
-  font-family: var(--font-serif-text), Georgia, serif;
 }
 
-.prevBtn {
-  background: var(--background, #F7F3EB);
-  border: 1px solid #767677;
+.arrowBtn:hover:not(:disabled) {
+  border-color: #313134;
   color: #313134;
 }
 
-.prevBtn:hover:not(:disabled) {
-  background-color: #eae5db;
-  border-color: #313134;
-}
-
-.prevBtn:disabled,
-.nextBtn:disabled {
-  opacity: 0.5;
+.arrowBtn:disabled {
+  opacity: 0.35;
   cursor: not-allowed;
-}
-
-.nextBtn {
-  background: #313134;
-  border: 1px solid #313134;
-  color: #ffffff;
-}
-
-.nextBtn:hover:not(:disabled) {
-  background-color: #1e1e20;
-  border-color: #1e1e20;
 }
 
 .chevron {
   width: 14px;
   height: 14px;
-}
-
-.pageNumbers {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
 .pageNum {
@@ -70,7 +46,7 @@
   justify-content: center;
   border: none;
   background: none;
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: #767677;
   cursor: pointer;
@@ -88,15 +64,8 @@
   color: #ffffff !important;
 }
 
-.dots {
-  color: #767677;
-  padding: 0 4px;
-  font-size: 0.9375rem;
-}
-
 @media (max-width: 600px) {
   .pagination {
-    gap: 1rem;
-    flex-wrap: wrap;
+    gap: 0.35rem;
   }
 }

@@ -9,6 +9,7 @@ import styles from "./ProductCard.module.css";
 interface ProductCardProps {
   id: string;
   name: string;
+  brand: string;
   description: string;
   rating: number;
   reviews: number;
@@ -20,6 +21,7 @@ interface ProductCardProps {
 export default function ProductCard({
   id,
   name,
+  brand,
   description,
   rating,
   reviews,
@@ -32,10 +34,8 @@ export default function ProductCard({
   const router = useRouter();
 
   const handleAddToBag = () => {
-    // Extract price number from string (e.g. "1,735tk" -> 1735)
     const priceVal = parseInt(price.replace(/[^0-9]/g, ""), 10) || 0;
-    
-    // Load current cart
+
     const savedCart = localStorage.getItem("cart-items");
     let cartItems = [];
     if (savedCart) {
@@ -45,12 +45,11 @@ export default function ProductCard({
         console.error("Failed to parse cart items", e);
       }
     }
-    
+
     if (!Array.isArray(cartItems)) {
       cartItems = [];
     }
 
-    // Check if item already exists by name
     const existingIndex = cartItems.findIndex((item: any) => item.name === name);
     if (existingIndex > -1) {
       cartItems[existingIndex].quantity += 1;
@@ -72,52 +71,40 @@ export default function ProductCard({
       cartItems.push(newItem);
     }
 
-    // Save cart
     localStorage.setItem("cart-items", JSON.stringify(cartItems));
-    
-    // Dispatch event
     window.dispatchEvent(new Event("cart-updated"));
 
-    // Trigger toast
     setToastMessage(`"${name}" has been added to your bag.`);
-    
-    // Clear toast after 4s
     const timer = setTimeout(() => {
       setToastMessage(null);
     }, 4000);
-    
     return () => clearTimeout(timer);
-  };
-
-  const handleBuyNow = () => {
-    handleAddToBag();
-    router.push("/cart");
   };
 
   return (
     <div className={styles.card}>
-      <Link href="/product/jade-serenity" className={styles.imageContainer} style={{ display: "block" }}>
+      {/* Product Image */}
+      <Link href={`/product/${id}`} className={styles.imageContainer}>
         <Image
           src={image}
           alt={name}
-          width={280}
-          height={280}
+          width={240}
+          height={240}
           className={styles.image}
         />
       </Link>
 
+      {/* Card Content */}
       <div className={styles.content}>
-        <div className={styles.headerRow}>
+        {/* Name + Heart Row */}
+        <div className={styles.nameRow}>
           <h3 className={styles.name}>
-            <Link href="/product/jade-serenity" style={{ textDecoration: "none", color: "inherit" }}>
+            <Link href={`/product/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
               {name}
             </Link>
           </h3>
-
           <button
-            className={`${styles.wishlistBtn} ${
-              isWishlisted ? styles.active : ""
-            }`}
+            className={`${styles.wishlistBtn} ${isWishlisted ? styles.active : ""}`}
             onClick={() => setIsWishlisted(!isWishlisted)}
             aria-label="Add to wishlist"
           >
@@ -132,28 +119,26 @@ export default function ProductCard({
           </button>
         </div>
 
-        <div className={styles.descriptionRow}>
-          <p className={styles.description}>{description}</p>
-          <div className={styles.priceRow}>
-            <span className={styles.price}>{price}</span>
-            <span className={styles.volume}>{volume}</span>
+        {/* Brand + Rating Row */}
+        <div className={styles.metaRow}>
+          <span className={styles.brand}>Brand: {brand}</span>
+          <div className={styles.ratingGroup}>
+            <span className={styles.star}>★</span>
+            <span className={styles.ratingText}>{rating.toFixed(1)}/{reviews}</span>
           </div>
         </div>
 
-        <div className={styles.ratingRow}>
-          <span className={styles.star}>★</span>
-          <span className={styles.ratingText}>
-            {rating.toFixed(1)} <span className={styles.reviews}>({reviews})</span>
-          </span>
-        </div>
+        {/* Description */}
+        <p className={styles.description}>{description}</p>
 
+        {/* Action Buttons */}
         <div className={styles.actions}>
-          <button className={styles.quickView} onClick={handleAddToBag}>Add to Bag</button>
-          <button className={styles.bagNow} onClick={handleBuyNow}>Buy Now</button>
+          <button className={styles.compareBtn} onClick={handleAddToBag}>Compare</button>
+          <button className={styles.readMoreBtn} onClick={() => router.push(`/product/${id}`)}>Read more</button>
         </div>
       </div>
 
-      {/* Premium Toast Popup */}
+      {/* Toast Notification */}
       {toastMessage && (
         <div className={styles.toast}>
           <div className={styles.toastText}>{toastMessage}</div>

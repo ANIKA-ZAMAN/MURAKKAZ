@@ -1,20 +1,36 @@
 .headerRow {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
-  margin-bottom: 3.5rem;
-  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
   gap: 2rem;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .title {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 2.75rem;
+  font-size: 2.5rem;
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--foreground);
   margin: 0;
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #555558;
+  margin: 0;
+  line-height: 1.4;
 }
 
 @media (max-width: 768px) {
@@ -22,9 +38,9 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
   .title {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
 }

@@ -5,17 +5,22 @@ import styles from "./CollectionHeader.module.css";
 
 interface CollectionHeaderProps {
   title?: string;
+  subtitle?: string;
   onSearch?: (query: string) => void;
 }
 
 export default function CollectionHeader({
-  title = "The Curated Collection",
+  title = "Perfume Library",
+  subtitle = "Universe of perfume",
   onSearch,
 }: CollectionHeaderProps) {
   return (
     <div className={styles.headerRow}>
-      <h1 className={styles.title}>{title}</h1>
-      <SearchBar placeholder="Search" onSearch={onSearch} />
+      <div className={styles.titleGroup}>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.subtitle}>{subtitle}</p>
+      </div>
+      <SearchBar placeholder="Search your perfume" onSearch={onSearch} />
     </div>
   );
 }
