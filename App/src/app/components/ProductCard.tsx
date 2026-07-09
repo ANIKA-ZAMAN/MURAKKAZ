@@ -33,7 +33,7 @@ export default function ProductCard({
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleAddToBag = () => {
+  const handleBuyNow = () => {
     const priceVal = parseInt(price.replace(/[^0-9]/g, ""), 10) || 0;
 
     const savedCart = localStorage.getItem("cart-items");
@@ -80,12 +80,7 @@ export default function ProductCard({
 
     localStorage.setItem("cart-items", JSON.stringify(cartItems));
     window.dispatchEvent(new Event("cart-updated"));
-
-    setToastMessage(`"${name}" has been added to your bag.`);
-    const timer = setTimeout(() => {
-      setToastMessage(null);
-    }, 4000);
-    return () => clearTimeout(timer);
+    router.push("/cart");
   };
 
   return (
@@ -140,7 +135,7 @@ export default function ProductCard({
 
         {/* Action Buttons */}
         <div className={styles.actions}>
-          <button className={styles.compareBtn} onClick={handleAddToBag}>Compare</button>
+          <button className={styles.compareBtn} onClick={handleBuyNow}>Buy now</button>
           <button className={styles.readMoreBtn} onClick={() => router.push(`/product/${id}`)}>Read more</button>
         </div>
       </div>
