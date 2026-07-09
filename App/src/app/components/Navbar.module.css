@@ -51,7 +51,7 @@
 
 .cartBadge {
   position: absolute;
-  left: 91.8%; /* Align exactly near top-right of Bag icon (which is centered around 90%) */
+  left: 95.6%; /* Align exactly near top-right of Bag icon (which is centered around 94.7%) */
   top: 14px;
   background-color: #820011; /* Luxurious deep red */
   color: #ffffff;
