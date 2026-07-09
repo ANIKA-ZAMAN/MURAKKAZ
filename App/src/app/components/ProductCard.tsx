@@ -50,7 +50,7 @@ export default function ProductCard({
       cartItems = [];
     }
 
-    const existingIndex = cartItems.findIndex((item: any) => item.name === name);
+    const existingIndex = cartItems.findIndex((item: any) => item.name === name && item.selectedSize === "12ml");
     if (existingIndex > -1) {
       cartItems[existingIndex].quantity += 1;
     } else {

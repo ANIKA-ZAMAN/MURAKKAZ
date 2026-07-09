@@ -144,11 +144,29 @@ export default function CartPage() {
 
   // Change product size
   const changeSize = (id: string, size: "12ml" | "30ml" | "55ml" | "100ml") => {
-    setCartItems(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, selectedSize: size } : item
-      )
-    );
+    setCartItems(prev => {
+      const targetItem = prev.find(item => item.id === id);
+      if (!targetItem) return prev;
+
+      const duplicateItem = prev.find(
+        item => item.id !== id && item.name === targetItem.name && item.selectedSize === size
+      );
+
+      if (duplicateItem) {
+        return prev
+          .map(item => {
+            if (item.id === duplicateItem.id) {
+              return { ...item, quantity: item.quantity + targetItem.quantity };
+            }
+            return item;
+          })
+          .filter(item => item.id !== id);
+      } else {
+        return prev.map(item =>
+          item.id === id ? { ...item, selectedSize: size } : item
+        );
+      }
+    });
   };
 
   // Adjust quantity
