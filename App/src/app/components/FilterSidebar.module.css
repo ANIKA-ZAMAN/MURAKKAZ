@@ -150,7 +150,7 @@
   appearance: none;
   width: 100%;
   height: 4px;
-  background: #F5F1E8;
+  background: var(--background, #F7F3EB);
   border-radius: 2px;
   outline: none;
 }

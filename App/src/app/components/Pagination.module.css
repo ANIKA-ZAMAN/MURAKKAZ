@@ -23,7 +23,7 @@
 }
 
 .prevBtn {
-  background: #F5F1E8;
+  background: var(--background, #F7F3EB);
   border: 1px solid #767677;
   color: #313134;
 }

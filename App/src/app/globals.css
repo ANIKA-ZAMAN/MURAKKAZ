@@ -1,5 +1,5 @@
 :root {
-  --background: #F5F1E8;
+  --background: #F7F3EB;
   --foreground: #313134;
   --font-serif-title: var(--font-playfair), Georgia, serif;
   --font-serif-text: var(--font-lora), Georgia, serif;
@@ -25,6 +25,18 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='paper-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.35 0 0 0 0 0.30 0 0 0 0 0.20 0.03 0 0 0 0.01'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper-noise)'/%3E%3C/svg%3E");
+  z-index: 9999;
 }
 
 * {
