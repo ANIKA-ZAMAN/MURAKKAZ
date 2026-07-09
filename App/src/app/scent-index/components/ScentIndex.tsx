@@ -136,15 +136,15 @@ export default function ScentIndex() {
         <div className={styles.heroLine} />
         <h1 className={styles.heroTitle}>Scent Index</h1>
         <p className={styles.heroTagline}>
-          An intimate consultation to discover
+          A simple consultation to find
           <br />
-          your perfect Murakkaz fragrance
+          the perfect Murakkaz perfume for you
         </p>
         <p className={styles.heroDescription}>
-          Six questions. One signature scent. Your olfactory identity, decoded.
+          9 easy questions. One perfect scent. Let's find yours.
         </p>
         <button className={styles.heroCta} onClick={beginConsultation}>
-          Begin Your Journey
+          Let's Get Started
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.heroCtaArrow}>
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
@@ -208,7 +208,7 @@ export default function ScentIndex() {
         </div>
 
         {currentStep.multiSelect && (
-          <p className={styles.multiHint}>Select all that apply</p>
+          <p className={styles.multiHint}>You can pick more than one</p>
         )}
 
         {/* Navigation */}
@@ -224,7 +224,7 @@ export default function ScentIndex() {
             onClick={nextStep}
             disabled={!canProceed()}
           >
-            {step < totalSteps - 1 ? "Continue" : "Reveal My Scent"}
+            {step < totalSteps - 1 ? "Continue" : "Find My Perfume"}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.navIcon}>
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
@@ -248,7 +248,7 @@ export default function ScentIndex() {
         {/* Results Header */}
         <div className={styles.resultsHeader}>
           <div className={styles.resultsLine} />
-          <span className={styles.resultsEyebrow}>Your Signature Scent</span>
+          <span className={styles.resultsEyebrow}>Your Perfect Match</span>
           <h2 className={styles.resultsTitle}>{recommendation.name}</h2>
           <p className={styles.resultsCollection}>{recommendation.collection}</p>
           <p className={styles.resultsTagline}>&ldquo;{recommendation.tagline}&rdquo;</p>
@@ -292,7 +292,7 @@ export default function ScentIndex() {
         {/* Olfactory Profile */}
         <div className={`${styles.profileSection} ${resultsReady ? styles.animateIn : ""}`}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Olfactory Profile</h3>
+            <h3 className={styles.sectionTitle}>Scent Profile</h3>
             <div className={styles.sectionLine} />
           </div>
           <div className={styles.profileBars}>
@@ -319,7 +319,7 @@ export default function ScentIndex() {
         {/* Fragrance DNA */}
         <div className={`${styles.dnaSection} ${resultsReady ? styles.animateIn : ""}`}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Fragrance DNA</h3>
+            <h3 className={styles.sectionTitle}>Scent Breakdown</h3>
             <div className={styles.sectionLine} />
           </div>
           <div className={styles.dnaBars}>
@@ -345,7 +345,7 @@ export default function ScentIndex() {
         {/* Notes */}
         <div className={`${styles.notesSection} ${resultsReady ? styles.animateIn : ""}`}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Composition</h3>
+            <h3 className={styles.sectionTitle}>What's Inside</h3>
             <div className={styles.sectionLine} />
           </div>
           <div className={styles.notesGrid}>
@@ -356,10 +356,10 @@ export default function ScentIndex() {
                 style={{ animationDelay: `${0.7 + i * 0.15}s` }}
               >
                 <span className={styles.noteLabel}>
-                  {tier === "top" ? "Top Notes" : tier === "heart" ? "Heart Notes" : "Base Notes"}
+                  {tier === "top" ? "Opening Notes" : tier === "heart" ? "Middle Notes" : "Base Notes"}
                 </span>
                 <span className={styles.noteTier}>
-                  {tier === "top" ? "The Opening" : tier === "heart" ? "The Journey" : "The Signature"}
+                  {tier === "top" ? "What you smell first" : tier === "heart" ? "Develops after a few minutes" : "Stays the longest"}
                 </span>
                 <ul className={styles.noteList}>
                   {recommendation.notes[tier].map((note) => (
@@ -374,13 +374,13 @@ export default function ScentIndex() {
         {/* Performance */}
         <div className={`${styles.performanceSection} ${resultsReady ? styles.animateIn : ""}`}>
           <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Performance</h3>
+            <h3 className={styles.sectionTitle}>How It Performs</h3>
             <div className={styles.sectionLine} />
           </div>
           <div className={styles.perfGrid}>
             <div className={styles.perfItem}>
               <div className={styles.perfHeader}>
-                <span className={styles.perfLabel}>Longevity</span>
+                <span className={styles.perfLabel}>How Long It Lasts</span>
                 <span className={styles.perfValue}>{recommendation.longevity}%</span>
               </div>
               <div className={styles.perfTrack}>
@@ -395,7 +395,7 @@ export default function ScentIndex() {
             </div>
             <div className={styles.perfItem}>
               <div className={styles.perfHeader}>
-                <span className={styles.perfLabel}>Projection</span>
+                <span className={styles.perfLabel}>How Far It Spreads</span>
                 <span className={styles.perfValue}>{recommendation.projection}%</span>
               </div>
               <div className={styles.perfTrack}>
@@ -410,7 +410,7 @@ export default function ScentIndex() {
             </div>
             <div className={styles.perfMeta}>
               <div className={styles.perfMetaItem}>
-                <span className={styles.perfMetaLabel}>Sillage</span>
+                <span className={styles.perfMetaLabel}>Scent Trail</span>
                 <span className={styles.perfMetaValue}>{recommendation.sillage}</span>
               </div>
               <div className={styles.perfMetaItem}>
