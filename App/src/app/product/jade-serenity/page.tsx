@@ -3,10 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import styles from "./page.module.css";
 
 export default function JadeSerenityProductPage() {
+  const router = useRouter();
   const [countdown, setCountdown] = useState(9026); // 2 hours, 30 minutes, 26 seconds (02.30.26)
   const [isMounted, setIsMounted] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -93,6 +95,62 @@ export default function JadeSerenityProductPage() {
     } else {
       setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
     }
+  };
+
+  const handleAddToCart = () => {
+    const savedCart = localStorage.getItem("cart-items");
+    let cartItems = [];
+    if (savedCart) {
+      try {
+        cartItems = JSON.parse(savedCart);
+      } catch (e) {
+        console.error("Failed to parse cart items", e);
+      }
+    }
+
+    if (!Array.isArray(cartItems)) {
+      cartItems = [];
+    }
+
+    const existingIndex = cartItems.findIndex(
+      (item: any) => item.name === "Jade Serenity" && item.selectedSize === selectedSizeOpt.label
+    );
+
+    if (existingIndex > -1) {
+      cartItems[existingIndex].quantity += quantity;
+    } else {
+      const newItem = {
+        id: `cart-jade-serenity-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+        name: "Jade Serenity",
+        image: "/images/products/jade_serenity.png",
+        inspiredBy: "Inspired by Dio Savotage",
+        selectedSize: selectedSizeOpt.label,
+        quantity: quantity,
+        prices: {
+          "12ml": 500,
+          "30ml": 900,
+          "55ml": 1500,
+          "100ml": 2800,
+        },
+        originalPrices: {
+          "12ml": 720,
+          "30ml": 1200,
+          "55ml": 2000,
+          "100ml": 3500,
+        },
+        selected: true,
+      };
+      cartItems.push(newItem);
+    }
+
+    localStorage.setItem("cart-items", JSON.stringify(cartItems));
+    window.dispatchEvent(new Event("cart-updated"));
+    triggerToast(`Added ${quantity}x Jade Serenity (${selectedSizeOpt.label}) to your bag!`);
+  };
+
+  const handleTryNow = () => {
+    handleAddToCart();
+    router.push("/cart");
   };
 
   const triggerToast = (msg: string) => {
@@ -292,13 +350,13 @@ export default function JadeSerenityProductPage() {
             {/* Action Buttons */}
             <div className={styles.actionRow}>
               <button
-                onClick={() => triggerToast(`Proceeding to try ${quantity}x Jade Serenity (${selectedSizeOpt.label})`)}
+                onClick={handleTryNow}
                 className={styles.buyNowBtn}
               >
                 Try Now
               </button>
               <button
-                onClick={() => triggerToast(`Added ${quantity}x Jade Serenity (${selectedSizeOpt.label}) to your cart!`)}
+                onClick={handleAddToCart}
                 className={styles.addToCartBtn}
               >
                 Add To Cart

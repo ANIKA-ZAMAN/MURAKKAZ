@@ -11,16 +11,18 @@
   background-image: url('/plaster-stone-texture.png');
   background-repeat: repeat;
   background-size: 800px;
-  border-bottom: 1px solid rgba(118, 118, 119, 0.1);
 }
 
 .nav {
   width: 100%;
   max-width: 1300px;
+  height: 64px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  padding: 0 2rem;
+  border: 1px solid rgba(118, 118, 119, 0.3);
+  border-radius: 20px;
+  background-color: transparent;
 }
 
 /* ── Logo ── */
@@ -34,6 +36,7 @@
   white-space: nowrap;
   flex-shrink: 0;
   transition: opacity 0.2s ease;
+  margin-right: 5rem; /* Space between logo and first link */
 }
 
 .logo:hover {
@@ -44,10 +47,11 @@
 .links {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 2rem;
   list-style: none;
   margin: 0;
   padding: 0;
+  flex: 1; /* Grow to fill space and push right section */
 }
 
 .link {
@@ -58,28 +62,12 @@
   text-decoration: none;
   letter-spacing: 0.01em;
   white-space: nowrap;
-  position: relative;
   padding: 0.25rem 0;
   transition: color 0.2s ease;
 }
 
-.link::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--foreground);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 .link:hover {
   color: var(--foreground);
-}
-
-.link:hover::after {
-  width: 100%;
 }
 
 .linkActive {
@@ -87,17 +75,53 @@
   font-weight: 500;
 }
 
-.linkActive::after {
-  width: 100%;
-  background: var(--foreground);
+/* ── Right Section ── */
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
 }
 
-/* ── Right Icons ── */
+/* Pill Search Box */
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  height: 38px;
+  border-radius: 100px;
+  background-color: rgba(49, 49, 52, 0.05); /* Light grey pill background */
+  border: none;
+}
+
+.searchIcon {
+  width: 16px;
+  height: 16px;
+  color: #767677;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.8125rem;
+  color: var(--foreground);
+  width: 100px;
+  padding: 0;
+}
+
+.searchInput::placeholder {
+  color: #99999c;
+}
+
+/* Icons */
 .icons {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-shrink: 0;
 }
 
 .iconBtn {
@@ -145,12 +169,27 @@
 }
 
 /* ── Responsive ── */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+  .logo {
+    margin-right: 2rem;
+  }
   .links {
     gap: 1.25rem;
   }
+}
+
+@media (max-width: 1024px) {
   .link {
     font-size: 0.75rem;
+  }
+  .searchInput {
+    width: 70px;
+  }
+}
+
+@media (max-width: 850px) {
+  .links {
+    display: none;
   }
 }
 
@@ -158,10 +197,11 @@
   .header {
     padding: 0.75rem 1.25rem;
   }
-  .links {
-    display: none;
-  }
   .nav {
     gap: 1rem;
+    padding: 0 1rem;
+  }
+  .searchBox {
+    display: none;
   }
 }

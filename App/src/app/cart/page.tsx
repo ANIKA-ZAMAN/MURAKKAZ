@@ -9,16 +9,18 @@ interface CartItem {
   name: string;
   image: string;
   inspiredBy: string;
-  selectedSize: "5ml" | "10ml" | "100ml";
+  selectedSize: "12ml" | "30ml" | "55ml" | "100ml";
   quantity: number;
   prices: {
-    "5ml": number;
-    "10ml": number;
+    "12ml": number;
+    "30ml": number;
+    "55ml": number;
     "100ml": number;
   };
   originalPrices?: {
-    "5ml"?: number;
-    "10ml"?: number;
+    "12ml"?: number;
+    "30ml"?: number;
+    "55ml"?: number;
     "100ml"?: number;
   };
   selected: boolean;
@@ -30,12 +32,19 @@ const initialCartItems: CartItem[] = [
     name: "Jade Serenity",
     image: "/images/products/jade_serenity.png",
     inspiredBy: "Inspired by Dio Savotage",
-    selectedSize: "5ml",
-    quantity: 1,
+    selectedSize: "12ml",
+    quantity: 5,
     prices: {
-      "5ml": 1720,
-      "10ml": 3100,
-      "100ml": 15500,
+      "12ml": 500,
+      "30ml": 900,
+      "55ml": 1500,
+      "100ml": 2800,
+    },
+    originalPrices: {
+      "12ml": 720,
+      "30ml": 1200,
+      "55ml": 2000,
+      "100ml": 3500,
     },
     selected: true,
   },
@@ -44,17 +53,19 @@ const initialCartItems: CartItem[] = [
     name: "Hellenist",
     image: "/images/products/magnetism.png",
     inspiredBy: "Inspired by Dio Savotage",
-    selectedSize: "5ml",
+    selectedSize: "12ml",
     quantity: 1,
     prices: {
-      "5ml": 2200,
-      "10ml": 3900,
-      "100ml": 19800,
+      "12ml": 500,
+      "30ml": 900,
+      "55ml": 1500,
+      "100ml": 2800,
     },
     originalPrices: {
-      "5ml": 2920,
-      "10ml": 5100,
-      "100ml": 25500,
+      "12ml": 680,
+      "30ml": 1100,
+      "55ml": 1900,
+      "100ml": 3300,
     },
     selected: true,
   },
@@ -71,8 +82,31 @@ export default function CartPage() {
     if (savedCart) {
       try {
         const parsed = JSON.parse(savedCart);
-        if (Array.isArray(parsed)) {
-          setCartItems(parsed);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Normalize old cart item sizes/prices to avoid type issues
+          const normalized = parsed.map((item: any) => {
+            const hasNewSizes = item.prices && "12ml" in item.prices;
+            if (!hasNewSizes) {
+              return {
+                ...item,
+                selectedSize: "12ml",
+                prices: {
+                  "12ml": 500,
+                  "30ml": 900,
+                  "55ml": 1500,
+                  "100ml": 2800,
+                },
+                originalPrices: {
+                  "12ml": 720,
+                  "30ml": 1200,
+                  "55ml": 2000,
+                  "100ml": 3500,
+                }
+              };
+            }
+            return item;
+          });
+          setCartItems(normalized);
           return;
         }
       } catch (e) {
@@ -109,7 +143,7 @@ export default function CartPage() {
   };
 
   // Change product size
-  const changeSize = (id: string, size: "5ml" | "10ml" | "100ml") => {
+  const changeSize = (id: string, size: "12ml" | "30ml" | "55ml" | "100ml") => {
     setCartItems(prev =>
       prev.map(item =>
         item.id === id ? { ...item, selectedSize: size } : item
@@ -144,11 +178,11 @@ export default function CartPage() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h1 className={styles.title}>Your Chart</h1>
+        <h1 className={styles.title}>Your Bag</h1>
 
         {cartItems.length === 0 ? (
           <div className={styles.emptyState}>
-            <p>Your chart is empty.</p>
+            <p>Your bag is empty.</p>
             <Link href="/" className={styles.shopBtn}>Continue Shopping</Link>
           </div>
         ) : (
@@ -220,7 +254,7 @@ export default function CartPage() {
                         <div className={styles.sizeSelectionRow}>
                           <span className={styles.metaLabel}>Size:</span>
                           <div className={styles.sizeTags}>
-                            {(["5ml", "10ml", "100ml"] as const).map((size) => (
+                            {(["12ml", "30ml", "55ml", "100ml"] as const).map((size) => (
                               <button
                                 key={size}
                                 className={`${styles.sizeTag} ${item.selectedSize === size ? styles.activeSize : ""}`}

@@ -59,12 +59,19 @@ export default function ProductCard({
         name: name,
         image: image,
         inspiredBy: description,
-        selectedSize: "5ml",
+        selectedSize: "12ml",
         quantity: 1,
         prices: {
-          "5ml": priceVal,
-          "10ml": Math.round(priceVal * 1.8),
-          "100ml": Math.round(priceVal * 9.0),
+          "12ml": 500,
+          "30ml": 900,
+          "55ml": 1500,
+          "100ml": 2800,
+        },
+        originalPrices: {
+          "12ml": 720,
+          "30ml": 1200,
+          "55ml": 2000,
+          "100ml": 3500,
         },
         selected: true,
       };
