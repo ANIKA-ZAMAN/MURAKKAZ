@@ -103,10 +103,10 @@ export default function QuizCard({
         animating smoothly when cards slide up.
       */}
       <div 
-        className={styles.cardInnerContent}
+        className={`${styles.cardInnerContent} ${isTop && !isLeaving ? styles.cardContentEnter : ''}`}
         style={{
-          opacity: (isTop || isLeaving) ? 1 : 0,
-          transition: "opacity 0.4s ease",
+          opacity: (isTop || isLeaving || depth <= 1) ? 1 : 0,
+          transition: "opacity 0.3s ease",
           pointerEvents: isTop ? "auto" : "none"
         }}
       >

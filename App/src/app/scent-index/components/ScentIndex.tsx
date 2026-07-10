@@ -52,15 +52,20 @@ export default function ScentIndex() {
     const currentAns = answers[currentQ.id];
     if (!currentAns || (Array.isArray(currentAns) && currentAns.length === 0)) return;
 
-    // Trigger transition animation
-    setTransitioningStep(currentStep);
+    if (currentStep < quizQuestions.length - 1) {
+      // Trigger leave animation on current card and advance immediately
+      setTransitioningStep(currentStep);
+      setCurrentStep((prev) => prev + 1);
 
-    setTimeout(() => {
-      if (currentStep < quizQuestions.length - 1) {
-        setCurrentStep((prev) => prev + 1);
+      // Clear leaving state after animation completes
+      setTimeout(() => {
         setTransitioningStep(null);
-      } else {
-        // Final step - transition to loading
+      }, 600); // Match physicalRemove animation duration
+    } else {
+      // Final step - transition to loading
+      setTransitioningStep(currentStep);
+      
+      setTimeout(() => {
         setPhase("loading");
         setTransitioningStep(null);
 
@@ -71,8 +76,8 @@ export default function ScentIndex() {
         setTimeout(() => {
           setPhase("results");
         }, 2500); // Elegant loading delay
-      }
-    }, 750); // Match leaves stack animation duration
+      }, 500);
+    }
   };
 
   const handleBack = () => {
