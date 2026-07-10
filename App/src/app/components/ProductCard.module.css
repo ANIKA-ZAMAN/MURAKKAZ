@@ -257,3 +257,7 @@
 .toastClose:hover {
   color: #313134;
 }
+
+.toastWrapper {
+  display: contents;
+}

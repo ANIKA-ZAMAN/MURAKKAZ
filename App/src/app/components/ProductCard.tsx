@@ -140,20 +140,22 @@ export default function ProductCard({
         </div>
       </div>
 
-      {/* Toast Notification */}
-      {toastMessage && (
-        <div className={styles.toast}>
-          <div className={styles.toastText}>{toastMessage}</div>
-          <div className={styles.toastActions}>
-            <span className={styles.toastLink} onClick={() => router.push("/cart")}>
-              View Bag
-            </span>
-            <button className={styles.toastClose} onClick={() => setToastMessage(null)}>
-              Dismiss
-            </button>
+      {/* Toast Alert Box Wrapper (stable parent node prevents removeChild hydration/unmount crashes) */}
+      <div className={styles.toastWrapper}>
+        {toastMessage && (
+          <div className={styles.toast}>
+            <div className={styles.toastText}>{toastMessage}</div>
+            <div className={styles.toastActions}>
+              <span className={styles.toastLink} onClick={() => router.push("/cart")}>
+                View Bag
+              </span>
+              <button className={styles.toastClose} onClick={() => setToastMessage(null)}>
+                Dismiss
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

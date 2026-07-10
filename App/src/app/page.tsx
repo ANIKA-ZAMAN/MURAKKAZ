@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
@@ -168,7 +166,6 @@ export default function Home() {
 
           <div className={styles.galleryRightCol}>
             <div className={styles.galleryGrid}>
-              {/* Column 1 */}
               <div className={styles.galleryColumn}>
                 <div className={`${styles.galleryGridItem} ${styles.itemShort}`} aria-label="Event gallery photo 1">
                   <div className={styles.darkMockPhoto} />
@@ -177,7 +174,6 @@ export default function Home() {
                   <div className={styles.darkMockPhoto} />
                 </div>
               </div>
-              {/* Column 2 */}
               <div className={styles.galleryColumn}>
                 <div className={`${styles.galleryGridItem} ${styles.itemTall}`} aria-label="Event gallery photo 3">
                   <div className={styles.darkMockPhoto} />
