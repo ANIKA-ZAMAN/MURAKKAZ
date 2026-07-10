@@ -7,6 +7,7 @@ import styles from "./RecommendationSlider.module.css";
 interface Product {
   id: string;
   name: string;
+  brand: string;
   description: string;
   rating: number;
   reviews: number;
@@ -22,6 +23,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-1",
       name: "Coral Sea",
+      brand: "Murakkaz",
       description: "Inspired by Creed Aventus",
       rating: 4.9,
       reviews: 180,
@@ -32,6 +34,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-2",
       name: "Jade Serenity",
+      brand: "Murakkaz",
       description: "Inspired by Dio Savotage",
       rating: 4.8,
       reviews: 250,
@@ -42,6 +45,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-3",
       name: "Magnetism",
+      brand: "Murakkaz",
       description: "Inspired by YSL Y EDP",
       rating: 4.7,
       reviews: 120,
@@ -52,6 +56,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-4",
       name: "Hellenist",
+      brand: "Murakkaz",
       description: "Inspired by Bleu De Chanel",
       rating: 4.9,
       reviews: 310,
@@ -62,6 +67,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-5",
       name: "Amber Gold",
+      brand: "Murakkaz",
       description: "Inspired by Xerjoff Erba Pura",
       rating: 4.9,
       reviews: 195,
@@ -72,6 +78,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-6",
       name: "Velvet Oud",
+      brand: "Murakkaz",
       description: "Inspired by Tom Ford Oud Wood",
       rating: 4.8,
       reviews: 210,
@@ -82,6 +89,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-7",
       name: "Rouge 540",
+      brand: "Murakkaz",
       description: "Inspired by Baccarat Rouge 540",
       rating: 4.9,
       reviews: 420,
@@ -92,6 +100,7 @@ export default function RecommendationSlider() {
     {
       id: "rec-8",
       name: "Silver Mountain",
+      brand: "Murakkaz",
       description: "Inspired by Creed Silver Mountain",
       rating: 4.7,
       reviews: 135,
@@ -149,6 +158,8 @@ export default function RecommendationSlider() {
           {products.map((product) => (
             <div key={product.id} className={styles.slide}>
               <ProductCard
+                id={product.id}
+                brand={product.brand}
                 name={product.name}
                 description={product.description}
                 rating={product.rating}

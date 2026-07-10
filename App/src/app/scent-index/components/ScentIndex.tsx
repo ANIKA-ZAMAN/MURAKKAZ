@@ -1,450 +1,296 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import styles from "./ScentIndex.module.css";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import QuizCard from "./QuizCard";
 import {
-  consultationSteps,
-  getRecommendation,
-  type Recommendation,
+  quizQuestions,
+  getQuizRecommendation,
+  type QuizRecommendation,
 } from "../data/scentIndexData";
-
-type Phase = "hero" | "consultation" | "results";
+import styles from "./ScentIndex.module.css";
 
 export default function ScentIndex() {
-  /* ───── State ───── */
-  const [phase, setPhase] = useState<Phase>("hero");
-  const [step, setStep] = useState(0);
+  const [phase, setPhase] = useState<"consultation" | "loading" | "results">("consultation");
+  const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
-  const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
-  const [fade, setFade] = useState(true); // true = visible
-  const [displayScore, setDisplayScore] = useState(0);
-  const [resultsReady, setResultsReady] = useState(false);
+  const [transitioningStep, setTransitioningStep] = useState<number | null>(null);
+  const [recommendation, setRecommendation] = useState<QuizRecommendation | null>(null);
+  const [particles, setParticles] = useState<Array<{ id: number; left: string; top: string; delay: string; size: string }>>([]);
 
-  const totalSteps = consultationSteps.length;
-  const currentStep = consultationSteps[step];
+  // Generate random particles positions on mount
+  useEffect(() => {
+    const pts = Array.from({ length: 15 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      delay: `${Math.random() * 5}s`,
+      size: `${Math.random() * 4 + 2}px`,
+    }));
+    setParticles(pts);
+  }, []);
 
-  /* ───── Transition helper ───── */
-  const transition = useCallback(
-    (action: () => void) => {
-      setFade(false);
-      setTimeout(() => {
-        action();
-        setFade(true);
-      }, 350);
-    },
-    []
-  );
+  const handleSelect = (questionId: number, option: string) => {
+    const question = quizQuestions.find((q) => q.id === questionId);
+    if (!question) return;
 
-  /* ───── Handlers ───── */
-  const beginConsultation = () => {
-    transition(() => setPhase("consultation"));
-  };
-
-  const selectOption = (optionId: string) => {
-    if (currentStep.multiSelect) {
-      const prev = (answers[step] as string[]) || [];
-      const next = prev.includes(optionId)
-        ? prev.filter((id) => id !== optionId)
-        : [...prev, optionId];
-      setAnswers({ ...answers, [step]: next });
+    if (question.type === "multi") {
+      const current = (answers[questionId] as string[]) || [];
+      const updated = current.includes(option)
+        ? current.filter((opt) => opt !== option)
+        : [...current, option];
+      setAnswers((prev) => ({ ...prev, [questionId]: updated }));
     } else {
-      setAnswers({ ...answers, [step]: optionId });
+      setAnswers((prev) => ({ ...prev, [questionId]: option }));
     }
   };
 
-  const isSelected = (optionId: string): boolean => {
-    const answer = answers[step];
-    if (!answer) return false;
-    if (Array.isArray(answer)) return answer.includes(optionId);
-    return answer === optionId;
+  const handleNext = () => {
+    // Validate that current question has a selection
+    const currentQ = quizQuestions[currentStep];
+    const currentAns = answers[currentQ.id];
+    if (!currentAns || (Array.isArray(currentAns) && currentAns.length === 0)) return;
+
+    // Trigger transition animation
+    setTransitioningStep(currentStep);
+
+    setTimeout(() => {
+      if (currentStep < quizQuestions.length - 1) {
+        setCurrentStep((prev) => prev + 1);
+        setTransitioningStep(null);
+      } else {
+        // Final step - transition to loading
+        setPhase("loading");
+        setTransitioningStep(null);
+
+        // Calculate recommendation and transition to results
+        const rec = getQuizRecommendation(answers);
+        setRecommendation(rec);
+
+        setTimeout(() => {
+          setPhase("results");
+        }, 2500); // Elegant loading delay
+      }
+    }, 750); // Match leaves stack animation duration
   };
 
-  const canProceed = (): boolean => {
-    const answer = answers[step];
-    if (!answer) return false;
-    if (Array.isArray(answer)) return answer.length > 0;
-    return true;
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep((prev) => prev - 1);
+    }
   };
 
-  const nextStep = () => {
-    if (step < totalSteps - 1) {
-      transition(() => setStep(step + 1));
+  const handleReset = () => {
+    setAnswers({});
+    setCurrentStep(0);
+    setRecommendation(null);
+    setPhase("consultation");
+  };
+
+  const handleBuyNow = () => {
+    if (!recommendation) return;
+    const prod = recommendation.product;
+
+    const saved = localStorage.getItem("cart-items");
+    let cart = [];
+    if (saved) {
+      try {
+        cart = JSON.parse(saved);
+      } catch (e) {
+        cart = [];
+      }
+    }
+    const existing = cart.find((item: any) => item.id === prod.id);
+    if (existing) {
+      existing.quantity += 1;
     } else {
-      // Final step — calculate results
-      const result = getRecommendation(answers);
-      transition(() => {
-        setRecommendation(result);
-        setPhase("results");
+      cart.push({
+        id: prod.id,
+        name: prod.name,
+        price: prod.price,
+        priceVal: prod.priceVal,
+        image: prod.image,
+        quantity: 1,
       });
     }
+    localStorage.setItem("cart-items", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cart-updated"));
+    window.location.href = "/cart";
   };
 
-  const prevStep = () => {
-    if (step > 0) {
-      transition(() => setStep(step - 1));
-    } else {
-      transition(() => setPhase("hero"));
-    }
+  const isNextDisabled = () => {
+    const currentQ = quizQuestions[currentStep];
+    const currentAns = answers[currentQ.id];
+    return !currentAns || (Array.isArray(currentAns) && currentAns.length === 0);
   };
 
-  const startOver = () => {
-    transition(() => {
-      setAnswers({});
-      setStep(0);
-      setDisplayScore(0);
-      setResultsReady(false);
-      setRecommendation(null);
-      setPhase("hero");
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  /* ───── Match score counter animation ───── */
-  useEffect(() => {
-    if (phase !== "results" || !recommendation) return;
-    setDisplayScore(0);
-    setResultsReady(false);
-
-    const target = recommendation.matchScore;
-    let current = 0;
-    const interval = setInterval(() => {
-      current += 1;
-      setDisplayScore(current);
-      if (current >= target) clearInterval(interval);
-    }, 18);
-
-    const timer = setTimeout(() => setResultsReady(true), 400);
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(timer);
-    };
-  }, [phase, recommendation]);
-
-  /* ───── Scroll to top on phase change ───── */
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [phase]);
-
-  /* ═══════════════════════════════════════════════
-     RENDER: HERO
-     ═══════════════════════════════════════════════ */
-  const renderHero = () => (
-    <section className={`${styles.hero} ${fade ? styles.fadeIn : styles.fadeOut}`}>
-      <div className={styles.heroInner}>
-        <div className={styles.heroBrandMark}>M</div>
-        <div className={styles.heroLine} />
-        <h1 className={styles.heroTitle}>Scent Index</h1>
-        <p className={styles.heroTagline}>
-          A simple consultation to find
-          <br />
-          the perfect Murakkaz perfume for you
-        </p>
-        <p className={styles.heroDescription}>
-          9 easy questions. One perfect scent. Let's find yours.
-        </p>
-        <button className={styles.heroCta} onClick={beginConsultation}>
-          Let's Get Started
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.heroCtaArrow}>
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-      <div className={styles.heroScroll}>
-        <div className={styles.scrollLine} />
-      </div>
-    </section>
-  );
-
-  /* ═══════════════════════════════════════════════
-     RENDER: CONSULTATION
-     ═══════════════════════════════════════════════ */
-  const renderConsultation = () => (
-    <section className={styles.consultation}>
-      {/* Progress Bar */}
-      <div className={styles.progressContainer}>
-        <div className={styles.progressTrack}>
+  return (
+    <div className={styles.quizPage}>
+      {/* Background Ambient Particles & Vignette */}
+      <div className={styles.vignette} />
+      <div className={styles.particlesContainer}>
+        {particles.map((pt) => (
           <div
-            className={styles.progressFill}
-            style={{ width: `${((step + 1) / totalSteps) * 100}%` }}
+            key={pt.id}
+            className={styles.particle}
+            style={{
+              left: pt.left,
+              top: pt.top,
+              animationDelay: pt.delay,
+              width: pt.size,
+              height: pt.size,
+            }}
           />
-        </div>
-        <div className={styles.progressLabel}>
-          {String(step + 1).padStart(2, "0")} / {String(totalSteps).padStart(2, "0")}
-        </div>
+        ))}
       </div>
 
-      {/* Step Content */}
-      <div className={`${styles.stepContent} ${fade ? styles.fadeIn : styles.fadeOut}`}>
-        <div className={styles.stepHeader}>
-          <span className={styles.stepId}>{currentStep.id}</span>
-          <h2 className={styles.stepQuestion}>{currentStep.question}</h2>
-          <p className={styles.stepCaption}>{currentStep.caption}</p>
-        </div>
+      {/* Main Page Layout Wrapper */}
+      <main className={styles.mainContent}>
+        {phase === "consultation" && (
+          <div className={styles.quizContainer}>
+            {/* 1. Progress markers above the stack */}
+            <div className={styles.progressMarkers}>
+              {quizQuestions.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`${styles.marker} ${idx === currentStep ? styles.markerActive : ""} ${idx < currentStep ? styles.markerPassed : ""}`}
+                />
+              ))}
+            </div>
 
-        {/* Options Grid */}
-        <div
-          className={styles.optionsGrid}
-          data-columns={currentStep.columns}
-        >
-          {currentStep.options.map((option) => (
-            <button
-              key={option.id}
-              className={`${styles.optionCard} ${isSelected(option.id) ? styles.optionSelected : ""}`}
-              onClick={() => selectOption(option.id)}
-            >
-              <span className={styles.optionIcon}>{option.icon}</span>
-              <span className={styles.optionTitle}>{option.title}</span>
-              <span className={styles.optionSubtitle}>{option.subtitle}</span>
-              {isSelected(option.id) && (
-                <span className={styles.optionCheck}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
+            {/* 2. Interactive Stack of 7 Cards */}
+            <div className={styles.cardStack}>
+              {quizQuestions.map((q, idx) => {
+                const isLeaving = transitioningStep === idx;
+                const isTop = idx === currentStep;
+                const depth = idx - currentStep;
+
+                // Render cards that are either active, upcoming, or currently leaving
+                if (idx < currentStep && !isLeaving) return null;
+
+                return (
+                  <QuizCard
+                    key={q.id}
+                    question={q}
+                    selectedAnswers={answers[q.id] || (q.type === "multi" ? [] : "")}
+                    onSelect={(opt) => handleSelect(q.id, opt)}
+                    isTop={isTop}
+                    depth={depth}
+                    isLeaving={isLeaving}
+                  />
+                );
+              })}
+            </div>
+
+            {/* 3. Navigation Buttons */}
+            <div className={styles.actionsRow}>
+              {currentStep > 0 ? (
+                <button
+                  type="button"
+                  className={`${styles.btn} ${styles.btnBack}`}
+                  onClick={handleBack}
+                >
+                  Previous
+                </button>
+              ) : (
+                <div style={{ width: "80px" }} /> // Spacing placeholder
               )}
-            </button>
-          ))}
-        </div>
 
-        {currentStep.multiSelect && (
-          <p className={styles.multiHint}>You can pick more than one</p>
+              <button
+                type="button"
+                className={`${styles.btn} ${styles.btnNext}`}
+                onClick={handleNext}
+                disabled={isNextDisabled()}
+              >
+                Next
+              </button>
+            </div>
+          </div>
         )}
 
-        {/* Navigation */}
-        <div className={styles.stepNav}>
-          <button className={styles.navBack} onClick={prevStep}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.navIcon}>
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            Back
-          </button>
-          <button
-            className={`${styles.navNext} ${!canProceed() ? styles.navDisabled : ""}`}
-            onClick={nextStep}
-            disabled={!canProceed()}
-          >
-            {step < totalSteps - 1 ? "Continue" : "Find My Perfume"}
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.navIcon}>
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-
-  /* ═══════════════════════════════════════════════
-     RENDER: RESULTS
-     ═══════════════════════════════════════════════ */
-  const renderResults = () => {
-    if (!recommendation) return null;
-
-    const circumference = 2 * Math.PI * 54;
-    const offset = circumference * (1 - displayScore / 100);
-
-    return (
-      <section className={`${styles.results} ${fade ? styles.fadeIn : styles.fadeOut}`}>
-        {/* Results Header */}
-        <div className={styles.resultsHeader}>
-          <div className={styles.resultsLine} />
-          <span className={styles.resultsEyebrow}>Your Perfect Match</span>
-          <h2 className={styles.resultsTitle}>{recommendation.name}</h2>
-          <p className={styles.resultsCollection}>{recommendation.collection}</p>
-          <p className={styles.resultsTagline}>&ldquo;{recommendation.tagline}&rdquo;</p>
-        </div>
-
-        {/* Score + Perfume Hero Row */}
-        <div className={`${styles.resultsHeroRow} ${resultsReady ? styles.animateIn : ""}`}>
-          {/* Match Score */}
-          <div className={styles.scoreCard}>
-            <svg viewBox="0 0 120 120" className={styles.scoreRing}>
-              <circle cx="60" cy="60" r="54" className={styles.scoreTrack} />
-              <circle
-                cx="60"
-                cy="60"
-                r="54"
-                className={styles.scoreFill}
-                style={{
-                  strokeDasharray: circumference,
-                  strokeDashoffset: offset,
-                }}
-              />
-            </svg>
-            <div className={styles.scoreValue}>
-              <span className={styles.scoreNumber}>{displayScore}</span>
-              <span className={styles.scorePercent}>%</span>
+        {/* 4. Elegant Loading Consultation Transition */}
+        {phase === "loading" && (
+          <div className={styles.loadingContainer}>
+            <div className={styles.paperGrainTexture} />
+            <div className={styles.loaderSpinner}>
+              <div className={styles.spinnerCircle} />
             </div>
-            <span className={styles.scoreLabel}>Match Score</span>
+            <h2 className={styles.loadingText}>Analyzing your profile...</h2>
+            <p className={styles.loadingSubtext}>
+              Selecting the ideal signature notes to reflect your desired presence
+            </p>
           </div>
+        )}
 
-          {/* Perfume Visual */}
-          <div className={styles.perfumeCard}>
-            <div className={styles.perfumeImage}>
-              <div className={styles.perfumePlaceholder}>
-                <span className={styles.perfumeInitial}>M</span>
+        {/* 5. Consultation Results Page */}
+        {phase === "results" && recommendation && (
+          <div className={styles.resultsContainer}>
+            <div className={styles.resultsInnerCard}>
+              <div className={styles.resultsHeader}>
+                <span className={styles.resultsLabel}>RECOMMENDED FOR YOU</span>
+                <span className={styles.matchBadge}>
+                  {recommendation.matchScore}% MATCH
+                </span>
               </div>
-            </div>
-            <p className={styles.perfumeDescription}>{recommendation.description}</p>
-          </div>
-        </div>
 
-        {/* Olfactory Profile */}
-        <div className={`${styles.profileSection} ${resultsReady ? styles.animateIn : ""}`}>
-          <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Scent Profile</h3>
-            <div className={styles.sectionLine} />
-          </div>
-          <div className={styles.profileBars}>
-            {recommendation.olfactoryProfile.map((bar, i) => (
-              <div key={bar.label} className={styles.profileBar} style={{ animationDelay: `${i * 0.1}s` }}>
-                <div className={styles.profileBarHeader}>
-                  <span className={styles.profileBarLabel}>{bar.label}</span>
-                  <span className={styles.profileBarValue}>{bar.value}%</span>
-                </div>
-                <div className={styles.profileBarTrack}>
-                  <div
-                    className={styles.profileBarFill}
-                    style={{
-                      width: resultsReady ? `${bar.value}%` : "0%",
-                      transitionDelay: `${0.5 + i * 0.1}s`,
-                    }}
+              <div className={styles.resultsContentLayout}>
+                {/* Left Side: Mockup Image */}
+                <div className={styles.resultsImgWrapper}>
+                  <Image
+                    src={recommendation.product.image}
+                    alt={recommendation.product.name}
+                    width={320}
+                    height={320}
+                    className={styles.resultsImg}
+                    priority
                   />
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Fragrance DNA */}
-        <div className={`${styles.dnaSection} ${resultsReady ? styles.animateIn : ""}`}>
-          <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>Scent Breakdown</h3>
-            <div className={styles.sectionLine} />
-          </div>
-          <div className={styles.dnaBars}>
-            {recommendation.fragranceDNA.map((dna, i) => (
-              <div key={dna.family} className={styles.dnaBar} style={{ animationDelay: `${i * 0.12}s` }}>
-                <div className={styles.dnaBarVisual}>
-                  <div
-                    className={styles.dnaBarFill}
-                    style={{
-                      height: resultsReady ? `${dna.percentage * 2.5}px` : "0px",
-                      backgroundColor: dna.color,
-                      transitionDelay: `${0.6 + i * 0.12}s`,
-                    }}
-                  />
+                {/* Right Side: Consultation Breakdown */}
+                <div className={styles.resultsDetails}>
+                  <h1 className={styles.resultsTitle}>
+                    Why {recommendation.product.name}?
+                  </h1>
+                  <p className={styles.resultsText}>{recommendation.reason}</p>
+
+                  <div className={styles.traitPills}>
+                    <div className={styles.traitPill}>
+                      <span className={styles.pillLabel}>Family:</span>{" "}
+                      {recommendation.product.family}
+                    </div>
+                    <div className={styles.traitPill}>
+                      <span className={styles.pillLabel}>Occasion:</span>{" "}
+                      {recommendation.product.occasion}
+                    </div>
+                    <div className={styles.traitPill}>
+                      <span className={styles.pillLabel}>Intensity:</span>{" "}
+                      {recommendation.product.meter}
+                    </div>
+                  </div>
+
+                  <div className={styles.resultsActions}>
+                    <button
+                      type="button"
+                      className={`${styles.btn} ${styles.btnBack}`}
+                      onClick={handleReset}
+                    >
+                      Try More
+                    </button>
+                    <button
+                      type="button"
+                      className={`${styles.btn} ${styles.btnNext}`}
+                      onClick={handleBuyNow}
+                    >
+                      Buy Now
+                    </button>
+                  </div>
                 </div>
-                <span className={styles.dnaBarLabel}>{dna.family}</span>
-                <span className={styles.dnaBarPercent}>{dna.percentage}%</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Notes */}
-        <div className={`${styles.notesSection} ${resultsReady ? styles.animateIn : ""}`}>
-          <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>What's Inside</h3>
-            <div className={styles.sectionLine} />
-          </div>
-          <div className={styles.notesGrid}>
-            {(["top", "heart", "base"] as const).map((tier, i) => (
-              <div
-                key={tier}
-                className={styles.noteCard}
-                style={{ animationDelay: `${0.7 + i * 0.15}s` }}
-              >
-                <span className={styles.noteLabel}>
-                  {tier === "top" ? "Opening Notes" : tier === "heart" ? "Middle Notes" : "Base Notes"}
-                </span>
-                <span className={styles.noteTier}>
-                  {tier === "top" ? "What you smell first" : tier === "heart" ? "Develops after a few minutes" : "Stays the longest"}
-                </span>
-                <ul className={styles.noteList}>
-                  {recommendation.notes[tier].map((note) => (
-                    <li key={note} className={styles.noteItem}>{note}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Performance */}
-        <div className={`${styles.performanceSection} ${resultsReady ? styles.animateIn : ""}`}>
-          <div className={styles.sectionHeader}>
-            <h3 className={styles.sectionTitle}>How It Performs</h3>
-            <div className={styles.sectionLine} />
-          </div>
-          <div className={styles.perfGrid}>
-            <div className={styles.perfItem}>
-              <div className={styles.perfHeader}>
-                <span className={styles.perfLabel}>How Long It Lasts</span>
-                <span className={styles.perfValue}>{recommendation.longevity}%</span>
-              </div>
-              <div className={styles.perfTrack}>
-                <div
-                  className={styles.perfFill}
-                  style={{
-                    width: resultsReady ? `${recommendation.longevity}%` : "0%",
-                    transitionDelay: "0.8s",
-                  }}
-                />
-              </div>
-            </div>
-            <div className={styles.perfItem}>
-              <div className={styles.perfHeader}>
-                <span className={styles.perfLabel}>How Far It Spreads</span>
-                <span className={styles.perfValue}>{recommendation.projection}%</span>
-              </div>
-              <div className={styles.perfTrack}>
-                <div
-                  className={styles.perfFill}
-                  style={{
-                    width: resultsReady ? `${recommendation.projection}%` : "0%",
-                    transitionDelay: "0.95s",
-                  }}
-                />
-              </div>
-            </div>
-            <div className={styles.perfMeta}>
-              <div className={styles.perfMetaItem}>
-                <span className={styles.perfMetaLabel}>Scent Trail</span>
-                <span className={styles.perfMetaValue}>{recommendation.sillage}</span>
-              </div>
-              <div className={styles.perfMetaItem}>
-                <span className={styles.perfMetaLabel}>Best Season</span>
-                <span className={styles.perfMetaValue}>{recommendation.season}</span>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* CTAs */}
-        <div className={`${styles.resultsCtas} ${resultsReady ? styles.animateIn : ""}`}>
-          <button className={styles.ctaSecondary} onClick={startOver}>
-            Start Over
-          </button>
-          <button className={styles.ctaPrimary}>
-            Add to Collection
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.navIcon}>
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </section>
-    );
-  };
-
-  /* ═══════════════════════════════════════════════
-     MAIN RENDER
-     ═══════════════════════════════════════════════ */
-  return (
-    <div className={styles.container}>
-      {phase === "hero" && renderHero()}
-      {phase === "consultation" && renderConsultation()}
-      {phase === "results" && renderResults()}
+        )}
+      </main>
     </div>
   );
 }

@@ -768,6 +768,8 @@ export default function JadeSerenityProductPage() {
               {recommendations.map((item, idx) => (
                 <ProductCard
                   key={idx}
+                  id={`rec-${idx}`}
+                  brand="Murakkaz"
                   name={item.name}
                   description={item.description}
                   rating={item.rating}

@@ -1,289 +1,184 @@
-export interface StepOption {
-  id: string;
-  title: string;
-  subtitle: string;
-  icon: string;
-}
+import { productsCatalog, Product } from "../../data/products";
 
-export interface ConsultationStep {
-  id: string;
+export interface ConsultationQuestion {
+  id: number;
   question: string;
-  caption: string;
-  multiSelect: boolean;
-  columns: number;
-  options: StepOption[];
+  type: "single" | "multi";
+  options: string[];
 }
 
-export interface OlfactoryBar {
-  label: string;
-  value: number;
-}
-
-export interface FragranceDNA {
-  family: string;
-  percentage: number;
-  color: string;
-}
-
-export interface Recommendation {
-  name: string;
-  collection: string;
-  tagline: string;
-  description: string;
-  matchScore: number;
-  olfactoryProfile: OlfactoryBar[];
-  fragranceDNA: FragranceDNA[];
-  notes: { top: string[]; heart: string[]; base: string[] };
-  longevity: number;
-  projection: number;
-  sillage: string;
-  season: string;
-}
-
-/* ────────────────────── Consultation Steps ────────────────────── */
-
-export const consultationSteps: ConsultationStep[] = [
+export const quizQuestions: ConsultationQuestion[] = [
   {
-    id: "daily-life",
-    question: "Where do you spend most of your day?",
-    caption: "This helps us pick a scent that fits your everyday life.",
-    multiSelect: false,
-    columns: 3,
+    id: 1,
+    question: "Who will be wearing this fragrance?",
+    type: "single",
+    options: ["Men", "Women", "Unisex"],
+  },
+  {
+    id: 2,
+    question: "What occasion are you shopping for?",
+    type: "single",
     options: [
-      { id: "office", title: "Office", subtitle: "Professional work environment", icon: "▣" },
-      { id: "university", title: "University / College", subtitle: "Campus life and classes", icon: "◈" },
-      { id: "home", title: "Home", subtitle: "Mostly at home during the day", icon: "⌂" },
-      { id: "outside", title: "Outside", subtitle: "Outdoor work, travel, or fieldwork", icon: "◎" },
-      { id: "different", title: "Different Places", subtitle: "Always on the move", icon: "⬡" },
+      "Everyday",
+      "Office",
+      "Date Night",
+      "Party",
+      "Formal Event",
+      "Special Occasion",
     ],
   },
   {
-    id: "occasion",
-    question: "When will you wear this perfume most?",
-    caption: "Different occasions call for different kinds of scents.",
-    multiSelect: false,
-    columns: 4,
+    id: 3,
+    question: "Which fragrance notes are you naturally drawn to?",
+    type: "multi",
     options: [
-      { id: "everyday", title: "Every Day", subtitle: "A go-to scent for daily use", icon: "◯" },
-      { id: "office_uni", title: "Office / University", subtitle: "Something professional and clean", icon: "▢" },
-      { id: "wedding", title: "Wedding & Family Events", subtitle: "Special gatherings and celebrations", icon: "◆" },
-      { id: "date", title: "Date or Special Day", subtitle: "Something memorable and attractive", icon: "✧" },
-      { id: "evening", title: "Evening", subtitle: "Nights out, dinners, social events", icon: "◐" },
-      { id: "eid", title: "Eid & Festivals", subtitle: "Festive occasions that deserve something rich", icon: "✦" },
-      { id: "one_for_all", title: "One Perfume for Everything", subtitle: "A versatile scent for all occasions", icon: "∞" },
+      "Rose",
+      "Vanilla",
+      "Oud",
+      "Sandalwood",
+      "Bergamot",
+      "Jasmine",
+      "Musk",
+      "Amber",
+      "Patchouli",
+      "Lavender",
+      "Leather",
+      "Tobacco",
     ],
   },
   {
-    id: "smell-preference",
-    question: "What kind of smell do you like?",
-    caption: "Pick up to 3 that you enjoy the most.",
-    multiSelect: true,
-    columns: 4,
-    options: [
-      { id: "fresh", title: "Fresh", subtitle: "Clean, airy, like after a shower", icon: "◇" },
-      { id: "woody", title: "Woody", subtitle: "Warm wood, like sandalwood or cedar", icon: "▧" },
-      { id: "sweet", title: "Sweet", subtitle: "Vanilla, caramel, cozy warmth", icon: "◈" },
-      { id: "floral", title: "Floral", subtitle: "Flowers like rose, jasmine, or lily", icon: "❋" },
-      { id: "citrus", title: "Citrus", subtitle: "Lemon, orange, bergamot — bright and zesty", icon: "◉" },
-      { id: "musky", title: "Musky", subtitle: "Smooth, soft, skin-like warmth", icon: "◌" },
-      { id: "spicy", title: "Spicy", subtitle: "Cinnamon, pepper, cardamom", icon: "✺" },
-      { id: "clean", title: "Clean & Soapy", subtitle: "Fresh laundry, gentle soap, light and pure", icon: "○" },
-    ],
+    id: 4,
+    question: "How intense do you prefer your fragrance?",
+    type: "single",
+    options: ["Soft & Skin-like", "Moderate", "Strong", "Very Strong"],
   },
   {
-    id: "strength",
-    question: "How strong do you want your perfume?",
-    caption: "Some people like a subtle scent, others want to leave a lasting impression.",
-    multiSelect: false,
-    columns: 3,
-    options: [
-      { id: "light", title: "Light", subtitle: "Soft and close to the skin, noticeable only up close", icon: "◦" },
-      { id: "medium", title: "Medium", subtitle: "Balanced — people nearby can smell it nicely", icon: "◎" },
-      { id: "strong", title: "Strong", subtitle: "Bold and powerful, leaves a trail behind you", icon: "◉" },
-    ],
+    id: 5,
+    question: "How long would you like your fragrance to last?",
+    type: "single",
+    options: ["4–6 Hours", "6–8 Hours", "8–10 Hours", "10+ Hours"],
   },
   {
-    id: "longevity",
-    question: "How long should your perfume last?",
-    caption: "This helps us choose the right concentration for you.",
-    multiSelect: false,
-    columns: 3,
-    options: [
-      { id: "short", title: "4–6 Hours", subtitle: "Good enough for half a day", icon: "◔" },
-      { id: "allday", title: "All Day", subtitle: "Morning to evening without reapplying", icon: "◑" },
-      { id: "maximum", title: "As Long As Possible", subtitle: "Maximum lasting power, even on clothes", icon: "●" },
-    ],
+    id: 6,
+    question: "Which season will you wear it most?",
+    type: "single",
+    options: ["Spring", "Summer", "Autumn", "Winter", "All Year"],
   },
   {
-    id: "weather",
-    question: "What's the weather like where you usually live?",
-    caption: "Heat and humidity affect how a perfume smells on your skin.",
-    multiSelect: false,
-    columns: 3,
-    options: [
-      { id: "hot", title: "Hot", subtitle: "Dry heat, mostly sunny and warm", icon: "△" },
-      { id: "hot_humid", title: "Hot & Humid", subtitle: "Tropical — warm and moist, like Dhaka", icon: "▽" },
-      { id: "mixed", title: "Mixed", subtitle: "Changes with the season — hot, cold, rainy", icon: "◇" },
-    ],
-  },
-  {
-    id: "style",
-    question: "Which style suits you best?",
-    caption: "Your perfume should match the way you carry yourself.",
-    multiSelect: false,
-    columns: 3,
-    options: [
-      { id: "simple", title: "Simple", subtitle: "Clean, minimal, no fuss", icon: "─" },
-      { id: "modern", title: "Modern", subtitle: "Trendy, sharp, up-to-date", icon: "◧" },
-      { id: "elegant", title: "Elegant", subtitle: "Sophisticated, polished, graceful", icon: "◆" },
-      { id: "traditional", title: "Traditional", subtitle: "Classic taste, timeless choices", icon: "□" },
-      { id: "trendy", title: "Trendy", subtitle: "Bold, eye-catching, fashion-forward", icon: "△" },
-    ],
-  },
-  {
-    id: "comfort-smell",
-    question: "Which smell makes you feel comfortable?",
-    caption: "Think about what naturally makes you feel calm or happy.",
-    multiSelect: false,
-    columns: 4,
-    options: [
-      { id: "rain", title: "Rain", subtitle: "The smell of earth right after it rains", icon: "◠" },
-      { id: "fresh_clothes", title: "Fresh Clothes", subtitle: "Clean laundry, warm from the sun", icon: "▫" },
-      { id: "garden", title: "Garden Flowers", subtitle: "A walk through a blooming garden", icon: "❁" },
-      { id: "coffee", title: "Coffee", subtitle: "Rich, roasted, warm and cozy", icon: "◍" },
-      { id: "forest", title: "Forest", subtitle: "Trees, moss, fresh green air", icon: "▲" },
-      { id: "ocean", title: "Ocean Breeze", subtitle: "Salty sea air, cool and refreshing", icon: "≈" },
-      { id: "luxury_hotel", title: "Luxury Hotel", subtitle: "That clean, premium smell in a fine hotel lobby", icon: "◇" },
-    ],
-  },
-  {
-    id: "priority",
-    question: "What's most important to you in a perfume?",
-    caption: "We'll prioritize this when choosing your recommendation.",
-    multiSelect: false,
-    columns: 3,
-    options: [
-      { id: "long_lasting", title: "Long-lasting", subtitle: "I want it to stay on all day", icon: "∞" },
-      { id: "fresh_smell", title: "Fresh Smell", subtitle: "Clean and refreshing is my priority", icon: "◇" },
-      { id: "compliments", title: "Gets Compliments", subtitle: "I want people to notice and ask about it", icon: "✧" },
-      { id: "daily_use", title: "Good for Daily Use", subtitle: "Something I can wear every single day", icon: "◯" },
-      { id: "unique", title: "Unique Scent", subtitle: "I don't want to smell like everyone else", icon: "◈" },
-      { id: "premium", title: "Premium Quality", subtitle: "I want the best ingredients and craftsmanship", icon: "◆" },
-    ],
+    id: 7,
+    question: "Which style best reflects your personality?",
+    type: "single",
+    options: ["Minimal", "Elegant", "Romantic", "Bold", "Mysterious", "Classic"],
   },
 ];
 
-/* ────────────────────── Recommendations ────────────────────── */
+export interface QuizRecommendation {
+  product: Product;
+  matchScore: number;
+  reason: string;
+}
 
-const recommendations: Record<string, Recommendation> = {
-  light: {
-    name: "Orvi Soq",
-    collection: "Édition Lumière",
-    tagline: "Where light meets skin",
-    description:
-      "A clean, effortless perfume that feels like a fresh morning breeze. It opens with sparkling bergamot and dewy green tea, unfolds into soft white iris and jasmine, and settles into gentle blonde wood and clean musk. Perfect for everyday wear — light, airy, and beautifully refreshing.",
-    matchScore: 92,
-    olfactoryProfile: [
-      { label: "Fresh", value: 90 },
-      { label: "Floral", value: 72 },
-      { label: "Woody", value: 45 },
-      { label: "Citrus", value: 82 },
-      { label: "Sweet", value: 30 },
-      { label: "Musky", value: 55 },
-    ],
-    fragranceDNA: [
-      { family: "Fresh", percentage: 35, color: "#A8C5A0" },
-      { family: "Floral", percentage: 28, color: "#D4A0B9" },
-      { family: "Citrus", percentage: 22, color: "#E8C87A" },
-      { family: "Woody", percentage: 15, color: "#B8977A" },
-    ],
-    notes: {
-      top: ["Bergamot", "Green Tea", "Pink Pepper"],
-      heart: ["White Iris", "Jasmine Sambac", "Peony"],
-      base: ["Blonde Wood", "White Musk", "Ambrette"],
-    },
-    longevity: 68,
-    projection: 45,
-    sillage: "Soft — noticed only up close",
-    season: "Spring / Summer",
-  },
-  balanced: {
-    name: "Orvi Soq",
-    collection: "Édition Classique",
-    tagline: "The art of quiet confidence",
-    description:
-      "A beautifully balanced perfume for someone who wants to smell premium without being too loud. It starts with Italian bergamot and cardamom, moves into rich rose and oud, and finishes with warm sandalwood and amber. Elegant, versatile, and perfect for both office and special occasions.",
-    matchScore: 96,
-    olfactoryProfile: [
-      { label: "Woody", value: 85 },
-      { label: "Spicy", value: 68 },
-      { label: "Sweet", value: 75 },
-      { label: "Floral", value: 52 },
-      { label: "Warm", value: 60 },
-      { label: "Musky", value: 70 },
-    ],
-    fragranceDNA: [
-      { family: "Woody", percentage: 32, color: "#8B7355" },
-      { family: "Warm", percentage: 28, color: "#C9A96E" },
-      { family: "Spicy", percentage: 22, color: "#B85C3A" },
-      { family: "Floral", percentage: 18, color: "#D4A0B9" },
-    ],
-    notes: {
-      top: ["Italian Bergamot", "Black Cardamom", "Saffron"],
-      heart: ["Rose Absolute", "Oud", "Iris"],
-      base: ["Mysore Sandalwood", "Amber", "Tonka Bean"],
-    },
-    longevity: 88,
-    projection: 72,
-    sillage: "Moderate — people nearby will notice",
-    season: "Autumn / Winter",
-  },
-  bold: {
-    name: "Orvi Soq",
-    collection: "Édition Noire",
-    tagline: "Make every entrance unforgettable",
-    description:
-      "A bold, powerful perfume for those who want to leave a lasting impression. It opens with deep oud and smoky incense, layered over rich rose and frankincense, and settles into aged sandalwood and warm musk. This scent fills a room and stays on for hours — made for someone who wants to be remembered.",
-    matchScore: 94,
-    olfactoryProfile: [
-      { label: "Warm", value: 92 },
-      { label: "Woody", value: 88 },
-      { label: "Spicy", value: 78 },
-      { label: "Musky", value: 82 },
-      { label: "Sweet", value: 65 },
-      { label: "Smoky", value: 70 },
-    ],
-    fragranceDNA: [
-      { family: "Warm", percentage: 38, color: "#C9A96E" },
-      { family: "Woody", percentage: 28, color: "#6B5240" },
-      { family: "Spicy", percentage: 20, color: "#A0422A" },
-      { family: "Musky", percentage: 14, color: "#7A6B60" },
-    ],
-    notes: {
-      top: ["Cambodian Oud", "Smoked Incense", "Black Pepper"],
-      heart: ["Turkish Rose", "Frankincense", "Cinnamon Bark"],
-      base: ["Aged Sandalwood", "Benzoin", "Warm Musk"],
-    },
-    longevity: 95,
-    projection: 88,
-    sillage: "Strong — fills the room",
-    season: "Late Autumn / Winter",
-  },
-};
-
-/* ────────────────────── Recommendation Logic ────────────────────── */
-
-export function getRecommendation(
+/**
+ * Recommendation algorithm matching quiz answers to productsCatalog
+ */
+export function getQuizRecommendation(
   answers: Record<number, string | string[]>
-): Recommendation {
-  // Use strength answer (step index 3) to pick recommendation tier
-  const strength = answers[3] as string | undefined;
+): QuizRecommendation {
+  const genderAns = answers[1] as string | undefined;
+  const occasionAns = answers[2] as string | undefined;
+  const notesAns = (answers[3] as string[]) || [];
+  const intensityAns = answers[4] as string | undefined;
+  const longevityAns = answers[5] as string | undefined;
+  const seasonAns = answers[6] as string | undefined;
+  const styleAns = answers[7] as string | undefined;
 
-  if (strength === "light") {
-    return recommendations.light;
+  // Map quiz occasion to product catalog occasion
+  let targetOccasions: string[] = [];
+  if (occasionAns === "Everyday") targetOccasions = ["Casual", "Daily Wear"];
+  else if (occasionAns === "Office") targetOccasions = ["Formal", "Daily Wear"];
+  else if (occasionAns === "Date Night") targetOccasions = ["Date Night", "Night Out"];
+  else if (occasionAns === "Party") targetOccasions = ["Night Out", "Casual"];
+  else if (occasionAns === "Formal Event" || occasionAns === "Special Occasion") {
+    targetOccasions = ["Formal"];
   }
-  if (strength === "strong") {
-    return recommendations.bold;
+
+  // Map notes to families
+  const targetFamilies: string[] = [];
+  notesAns.forEach((note) => {
+    if (["Rose", "Jasmine", "Lavender"].includes(note)) targetFamilies.push("Floral");
+    if (["Vanilla", "Amber"].includes(note)) targetFamilies.push("Oriental");
+    if (["Bergamot"].includes(note)) targetFamilies.push("Citrus", "Fresh");
+    if (["Oud", "Sandalwood", "Patchouli", "Leather", "Tobacco", "Musk"].includes(note)) {
+      targetFamilies.push("Woody");
+    }
+  });
+
+  // Map intensity/longevity to performance meters
+  let targetMeters: string[] = [];
+  if (intensityAns === "Soft & Skin-like") targetMeters = ["Intimate", "Moderate"];
+  else if (intensityAns === "Moderate") targetMeters = ["Moderate", "Long Lasting"];
+  else if (intensityAns === "Strong") targetMeters = ["Long Lasting", "Beast Mode"];
+  else if (intensityAns === "Very Strong") targetMeters = ["Beast Mode"];
+
+  let bestProduct = productsCatalog[0];
+  let highestScore = -1;
+
+  // Score all 120 products in the catalog to find the absolute best match
+  productsCatalog.forEach((prod) => {
+    let score = 0;
+
+    // 1. Gender Match (High Priority)
+    if (genderAns) {
+      if (prod.gender === genderAns) score += 4;
+      else if (prod.gender === "Unisex" || genderAns === "Unisex") score += 2;
+    }
+
+    // 2. Occasion Match
+    if (targetOccasions.length > 0) {
+      if (targetOccasions.includes(prod.occasion)) score += 3;
+    }
+
+    // 3. Performance Meter Match
+    if (targetMeters.length > 0) {
+      if (targetMeters.includes(prod.meter)) score += 3;
+    }
+
+    // 4. Fragrance Family Match
+    if (targetFamilies.length > 0) {
+      if (targetFamilies.includes(prod.family)) score += 2;
+    }
+
+    // 5. Season Affinity Match
+    if (seasonAns && seasonAns !== "All Year") {
+      if (prod.description.toLowerCase().includes(seasonAns.toLowerCase())) score += 1;
+    }
+
+    if (score > highestScore) {
+      highestScore = score;
+      bestProduct = prod;
+    }
+  });
+
+  // Calculate dynamic match score out of 100
+  const maxPossibleScore = 13;
+  const matchPercentage = Math.min(
+    99,
+    Math.max(85, Math.round((highestScore / maxPossibleScore) * 15 + 85))
+  );
+
+  // Generate personalized consultation reasons
+  let reason = `Based on your preferences, we selected ${bestProduct.name} for you. It perfectly aligns with your style and desired presence.`;
+  if (bestProduct.family === "Woody") {
+    reason = `Based on your choices, you need a scent that commands respect without overpowering the room. We handpicked ${bestProduct.name} for you because it perfectly bridges the gap between deep maturity and elegant comfort, utilizing rich ${bestProduct.family.toLowerCase()} undertones ideal for your chosen style.`;
+  } else if (bestProduct.family === "Fresh" || bestProduct.family === "Citrus") {
+    reason = `Based on your choices, you need a clean, refreshing presence. We handpicked ${bestProduct.name} for you because it offers a crisp, uplifting ${bestProduct.family.toLowerCase()} profile that feels light yet projectively sophisticated, keeping you clean and active all day.`;
+  } else if (bestProduct.family === "Oriental" || bestProduct.family === "Floral") {
+    reason = `Based on your choices, we selected ${bestProduct.name} because it wraps you in an alluring, warm, and romantic envelope. Its rich ${bestProduct.family.toLowerCase()} base notes create a captivating skin scent that stands out beautifully on dates and special gatherings.`;
   }
-  return recommendations.balanced;
+
+  return {
+    product: bestProduct,
+    matchScore: matchPercentage,
+    reason,
+  };
 }

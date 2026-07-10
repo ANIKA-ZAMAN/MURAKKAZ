@@ -30,8 +30,8 @@ export default function ProductGrid({
             <ProductCard
               key={`${product.id}-${index}`}
               id={product.id}
-              name={product.name}
               brand={product.brand}
+              name={product.name}
               description={product.description}
               rating={product.rating}
               reviews={product.reviews}
