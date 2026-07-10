@@ -107,7 +107,7 @@
 .cardStack {
   position: relative;
   width: 100%;
-  height: 480px; /* Refined slightly taller height to accommodate all elements */
+  height: 570px; /* Increased height to easily fit all elements inside */
   margin-bottom: 2rem;
 }
 
@@ -122,12 +122,29 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
   border: 1px solid rgba(130, 120, 100, 0.15);
   border-radius: 12px;
-  padding: 3rem 2.5rem;
+  padding: 2.25rem 2.25rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   transition: transform 0.75s cubic-bezier(0.25, 1, 0.5, 1), filter 0.75s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.75s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.7s ease;
   transform-origin: bottom left;
+}
+
+.cardInnerContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.cardActionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  width: 100%;
+  border-top: 1px solid rgba(130, 120, 100, 0.08);
 }
 
 .topCard {
@@ -557,15 +574,24 @@
   }
   
   .cardStack {
-    height: 520px; /* Give more height on tablet/mobile */
+    height: 610px; /* Increased height to easily fit all elements inside */
   }
 
   .paperCard {
-    padding: 2.25rem 1.75rem;
+    padding: 1.75rem 1.5rem;
   }
 
   .cardQuestion {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+  }
+
+  .optionBtn {
+    padding: 0.7rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .cardActionsRow {
+    padding-top: 1rem;
   }
 
   .multiGrid {
@@ -609,8 +635,31 @@
 
 @media (max-width: 480px) {
   .cardStack {
-    height: 820px; /* Accommodate single-column grid wrapping on small screens */
+    height: 900px; /* Increased to comfortably contain 12 single-column options and actions row on small devices */
   }
+  
+  .paperCard {
+    padding: 1.5rem 1rem 1rem 1rem;
+  }
+
+  .cardHeader {
+    margin-bottom: 1.25rem;
+  }
+
+  .cardQuestion {
+    font-size: 1.25rem;
+  }
+
+  .optionBtn {
+    padding: 0.6rem 0.85rem;
+    gap: 8px;
+    font-size: 0.825rem;
+  }
+
+  .cardActionsRow {
+    padding-top: 0.75rem;
+  }
+
   .marker {
     width: 32px;
   }

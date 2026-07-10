@@ -178,33 +178,13 @@ export default function ScentIndex() {
                     isTop={isTop}
                     depth={depth}
                     isLeaving={isLeaving}
+                    onNext={handleNext}
+                    onBack={handleBack}
+                    isNextDisabled={isNextDisabled()}
+                    showBackButton={currentStep > 0}
                   />
                 );
               })}
-            </div>
-
-            {/* 3. Navigation Buttons */}
-            <div className={styles.actionsRow}>
-              {currentStep > 0 ? (
-                <button
-                  type="button"
-                  className={`${styles.btn} ${styles.btnBack}`}
-                  onClick={handleBack}
-                >
-                  Previous
-                </button>
-              ) : (
-                <div style={{ width: "80px" }} /> // Spacing placeholder
-              )}
-
-              <button
-                type="button"
-                className={`${styles.btn} ${styles.btnNext}`}
-                onClick={handleNext}
-                disabled={isNextDisabled()}
-              >
-                Next
-              </button>
             </div>
           </div>
         )}

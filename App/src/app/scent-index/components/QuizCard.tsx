@@ -10,6 +10,10 @@ interface QuizCardProps {
   isTop: boolean;
   depth: number; // 0 = top, 1 = first underneath, etc.
   isLeaving: boolean;
+  onNext: () => void;
+  onBack: () => void;
+  isNextDisabled: boolean;
+  showBackButton: boolean;
 }
 
 // Organic offsets and rotations for realistic stationery fanned stack
@@ -41,6 +45,10 @@ export default function QuizCard({
   isTop,
   depth,
   isLeaving,
+  onNext,
+  onBack,
+  isNextDisabled,
+  showBackButton,
 }: QuizCardProps) {
   const isSelected = (option: string): boolean => {
     if (Array.isArray(selectedAnswers)) {
@@ -132,6 +140,31 @@ export default function QuizCard({
               </button>
             );
           })}
+        </div>
+
+        {/* Navigation Buttons inside the card */}
+        <div className={styles.cardActionsRow}>
+          {showBackButton ? (
+            <button
+              type="button"
+              className={`${styles.btn} ${styles.btnBack}`}
+              onClick={onBack}
+              disabled={!isTop}
+            >
+              Previous
+            </button>
+          ) : (
+            <div style={{ width: "100px" }} />
+          )}
+
+          <button
+            type="button"
+            className={`${styles.btn} ${styles.btnNext}`}
+            onClick={onNext}
+            disabled={isNextDisabled || !isTop}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
