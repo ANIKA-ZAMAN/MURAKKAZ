@@ -1,0 +1,397 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: transparent;
+  overflow-x: hidden;
+}
+
+.main {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+/* ========================================== */
+/* Header Section: Title & Search Bar         */
+/* ========================================== */
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.pageTitle {
+  font-family: var(--font-serif-title);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 400;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.searchWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 3rem 0.75rem 1.5rem;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.9rem;
+  background-color: rgba(49, 49, 52, 0.05); /* matching the light overlay background */
+  border: 1px solid rgba(49, 49, 52, 0.12);
+  border-radius: 50px;
+  color: var(--foreground);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.searchInput::placeholder {
+  color: #8c8c8f;
+}
+
+.searchInput:focus {
+  border-color: rgba(49, 49, 52, 0.3);
+  background-color: rgba(49, 49, 52, 0.08);
+}
+
+.searchIcon {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7a7a7d;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+/* ========================================== */
+/* Grid Layout & Blog Post Cards              */
+/* ========================================== */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem 2rem;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(49, 49, 52, 0.08);
+  border: 1px solid rgba(49, 49, 52, 0.1);
+}
+
+.postImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card:hover .postImage {
+  transform: scale(1.03);
+}
+
+.cardContent {
+  padding: 1.25rem 0.25rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.postDate {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.8rem;
+  color: #8c8c8f;
+  margin-bottom: 0.5rem;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.postTitle {
+  font-family: var(--font-serif-title);
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--foreground);
+  letter-spacing: -0.005em;
+  flex-grow: 1;
+}
+
+.wishlistBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #7a7a7d;
+  transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  min-width: 36px;
+}
+
+.wishlistBtn:hover {
+  color: #e54848;
+  transform: scale(1.1);
+}
+
+.wishlistBtnActive {
+  color: #e54848;
+}
+
+.heartIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.postDesc {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--foreground);
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 90px; /* Fixed height ensures equal card text alignment */
+}
+
+.actionRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.readMoreBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.75rem;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #E5DCCB;
+  background-color: #313134;
+  border: 1px solid #313134;
+  border-radius: 50px;
+  cursor: pointer;
+  min-height: 44px; /* Touch target safety */
+  transition: all 0.3s ease;
+  letter-spacing: 0.02em;
+}
+
+.readMoreBtn:hover {
+  background-color: transparent;
+  color: #313134;
+  transform: translateY(-1px);
+}
+
+.noResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-family: var(--font-serif-text), Georgia, serif;
+  color: #7a7a7d;
+}
+
+/* ========================================== */
+/* Pagination Section                         */
+/* ========================================== */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+  width: 100%;
+}
+
+.paginationArrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(49, 49, 52, 0.15);
+  background-color: transparent;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 44px; /* Touch safety */
+  min-width: 44px;
+}
+
+.paginationArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.paginationArrow:not(:disabled):hover {
+  background-color: rgba(49, 49, 52, 0.05);
+  border-color: rgba(49, 49, 52, 0.3);
+  transform: scale(1.05);
+}
+
+.pageNumbers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pageNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--foreground);
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.pageNumber:hover:not(.activePage) {
+  background-color: rgba(49, 49, 52, 0.05);
+}
+
+.activePage {
+  background-color: #313134;
+  color: #E5DCCB;
+  border-color: #313134;
+}
+
+/* ========================================== */
+/* RESPONSIVE BREAKPOINTS                     */
+/* ========================================== */
+
+/* Desktop / Extra Large Screens (1440px+) */
+@media (min-width: 1440px) {
+  .main {
+    max-width: 1100px;
+  }
+}
+
+/* Tablets Landscape & Portrait (768px to 1024px) */
+@media (max-width: 1024px) {
+  .main {
+    padding: 3.5rem 1.5rem;
+    gap: 3rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+
+  .postDesc {
+    height: 80px;
+    -webkit-line-clamp: 3;
+  }
+}
+
+/* Small Tablets / Large Mobile (601px to 767px) */
+@media (max-width: 768px) {
+  .headerRow {
+    gap: 2rem;
+  }
+}
+
+/* Mobile Devices (360px, 375px, 390px, 430px) */
+@media (max-width: 600px) {
+  .main {
+    padding: 2.5rem 1.25rem;
+    gap: 2.5rem;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .searchWrapper {
+    max-width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .cardContent {
+    padding-top: 1rem;
+  }
+
+  .postDesc {
+    height: auto;
+    max-height: 90px;
+    -webkit-line-clamp: 3;
+    margin-bottom: 1.25rem;
+  }
+
+  .readMoreBtn {
+    width: 100%;
+    min-height: 48px; /* Safe mobile height */
+  }
+
+  .pagination {
+    margin-top: 2.5rem;
+    gap: 1rem;
+  }
+  
+  .paginationArrow, .pageNumber {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Ultra Small Screens (below 360px) */
+@media (max-width: 360px) {
+  .main {
+    padding: 2rem 1rem;
+  }
+}
