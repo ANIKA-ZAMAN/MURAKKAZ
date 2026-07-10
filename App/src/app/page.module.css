@@ -1,20 +1,637 @@
 .page {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  font-family: var(--font-geist-sans);
+  width: 100%;
   background-color: transparent;
-  color: var(--foreground);
+  overflow-x: hidden;
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
   max-width: 1200px;
-  padding: 2rem 2rem 3rem 2rem;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  background-color: transparent;
+}
+
+/* ========================================== */
+/* Shared Headings & Utilities                */
+/* ========================================== */
+
+.sectionHeadingLarge {
+  font-family: var(--font-serif-title);
+  font-size: clamp(2.25rem, 3.8vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
+}
+
+.imagePlaceholder {
+  position: relative;
+  width: 100%;
+  background-color: rgba(49, 49, 52, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(49, 49, 52, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.imagePlaceholder:hover {
+  transform: scale(1.01);
+}
+
+.responsiveImage {
+  object-fit: cover;
+}
+
+/* ========================================== */
+/* SECTION 1: Curator                         */
+/* ========================================== */
+
+.curatorSection {
+  width: 100%;
+}
+
+.curatorContainer {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.curatorTextCol {
+  flex: 1.1;
+  max-width: 550px;
+}
+
+.curatorParagraph {
+  margin-top: 2rem;
+  font-family: var(--font-serif-text);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--foreground);
+  opacity: 0.9;
+  letter-spacing: -0.005em;
+}
+
+.curatorImageCol {
+  flex: 0.9;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.curatorImageCol .imagePlaceholder {
+  max-width: 460px;
+  aspect-ratio: 4 / 5;
+  box-shadow: 0 12px 32px rgba(49, 49, 52, 0.06);
+}
+
+/* ========================================== */
+/* SECTION 2: Journey                         */
+/* ========================================== */
+
+.journeySection {
+  width: 100%;
+}
+
+.journeyContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.journeyIntroRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+
+.journeyIntroText {
+  width: 100%;
+  max-width: 720px;
+  padding-left: 2rem;
+}
+
+.journeyIntroTitle {
+  font-family: var(--font-serif-title);
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 1.25rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.journeyIntroDesc {
+  font-family: var(--font-serif-text);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--foreground);
+  opacity: 0.85;
+}
+
+.journeyBigImageWrap {
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+.bigImagePlaceholder {
+  width: 100%;
+  aspect-ratio: 2.35 / 1;
+  background-color: rgba(49, 49, 52, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(49, 49, 52, 0.12);
+  transition: all 0.3s ease;
+}
+
+.bigImagePlaceholder:hover {
+  transform: scale(1.005);
+}
+
+.mockPhotoOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(49, 49, 52, 0.03);
+  color: rgba(49, 49, 52, 0.45);
+  font-family: var(--font-serif-title);
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.journeyDetailsRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.journeyDetailsCol {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding-left: 2rem;
+}
+
+.journeyDetailParagraph {
+  font-family: var(--font-serif-text);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--foreground);
+  opacity: 0.9;
+}
+
+/* ========================================== */
+/* SECTION 3: Behind the Brand                */
+/* ========================================== */
+
+.behindSection {
+  width: 100%;
+}
+
+.behindContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.behindHeading {
+  font-family: var(--font-serif-title);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 400;
+  text-align: center;
+  color: var(--foreground);
+  margin-bottom: 5rem;
+  letter-spacing: -0.01em;
+}
+
+.behindGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+}
+
+.behindCard {
+  background: rgba(244, 239, 230, 0.55);
+  border: 1px solid rgba(49, 49, 52, 0.12);
+  border-radius: 12px;
+  padding: 3rem 2.5rem;
+  display: flex;
+  gap: 2.25rem;
+  align-items: flex-start;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.behindCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(49, 49, 52, 0.05);
+  border-color: rgba(49, 49, 52, 0.25);
+  background: rgba(244, 239, 230, 0.8);
+}
+
+.cardNumber {
+  font-family: var(--font-serif-title);
+  font-size: 1.85rem;
+  color: var(--foreground);
+  opacity: 0.4;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cardTitle {
+  font-family: var(--font-serif-title);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--foreground);
+  letter-spacing: -0.005em;
+}
+
+.cardDesc {
+  font-family: var(--font-serif-text);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--foreground);
+  opacity: 0.8;
+}
+
+.behindFooterTextRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2.5rem;
+}
+
+.behindFooterText {
+  font-family: var(--font-serif-text);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--foreground);
+  opacity: 0.75;
+}
+
+/* ========================================== */
+/* SECTION 4: Event Gallery (Dark Section)    */
+/* ========================================== */
+
+.gallerySection {
+  width: 100%;
+  background-color: #313134;
+  color: #E5DCCB;
+  padding: 8rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.galleryContainer {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
+  display: flex;
+  gap: 6rem;
+  align-items: center;
+}
+
+.galleryLeftCol {
+  flex: 0.9;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.galleryHeading {
+  font-family: var(--font-serif-title);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 400;
+  margin-bottom: 2rem;
+  color: #E5DCCB;
+  letter-spacing: -0.01em;
+}
+
+.galleryParagraph {
+  font-family: var(--font-serif-text);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 3.5rem;
+  opacity: 0.85;
+}
+
+.exploreBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.1rem 2.2rem;
+  border: 1px solid rgba(229, 220, 203, 0.35);
+  border-radius: 50px;
+  font-family: var(--font-serif-title);
+  font-size: 0.95rem;
+  color: #E5DCCB;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+  min-height: 46px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.exploreBtn:hover {
+  background-color: #E5DCCB;
+  color: #313134;
+  border-color: #E5DCCB;
+  transform: translateY(-2px);
+}
+
+.exploreArrow {
+  font-size: 1rem;
+}
+
+.galleryRightCol {
+  flex: 1.1;
+}
+
+.galleryGrid {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.galleryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.galleryGridItem {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #4E4E52;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.galleryGridItem:hover {
+  transform: scale(1.02);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.itemShort {
+  aspect-ratio: 4 / 3;
+}
+
+.itemTall {
+  aspect-ratio: 3 / 4;
+}
+
+.darkMockPhoto {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ========================================== */
+/* RESPONSIVE OPTIMIZATIONS                   */
+/* ========================================== */
+
+/* Desktop / Large Displays (1440px to 2560px+) */
+@media (min-width: 1440px) {
+  .main, .galleryContainer {
+    max-width: 1320px;
+  }
+}
+
+/* Medium / Small Desktop (1025px to 1279px) */
+@media (max-width: 1200px) {
+  .main {
+    gap: 7rem;
+    padding: 5rem 2rem;
+  }
+  .curatorContainer {
+    gap: 3rem;
+  }
+  .galleryContainer {
+    gap: 4rem;
+  }
+}
+
+/* Tablets (768px, 820px, 834px, 912px, 1024px) */
+@media (max-width: 1024px) {
+  .main {
+    gap: 6rem;
+    padding: 4rem 1.5rem;
+  }
+  
+  .curatorContainer {
+    gap: 3rem;
+  }
+
+  .journeyIntroText {
+    padding-left: 0;
+    max-width: 100%;
+  }
+
+  .journeyDetailsCol {
+    padding-left: 0;
+    max-width: 100%;
+  }
+
+  .bigImagePlaceholder {
+    aspect-ratio: 2 / 1;
+  }
+
+  .behindCard {
+    padding: 2.25rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .gallerySection {
+    padding: 6rem 0;
+  }
+
+  .galleryContainer {
+    gap: 3rem;
+    padding: 0 1.5rem;
+  }
+
+  .galleryLeftCol {
+    max-width: 380px;
+  }
+}
+
+/* Small Tablets / Large Mobile (768px to 834px boundary) */
+@media (max-width: 834px) {
+  .curatorContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
+
+  .curatorTextCol {
+    max-width: 100%;
+  }
+
+  .curatorImageCol {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .curatorImageCol .imagePlaceholder {
+    max-width: 100%;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Landscape orientation is better when stacked */
+  }
+
+  .galleryContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+
+  .galleryLeftCol {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .galleryRightCol {
+    width: 100%;
+  }
+}
+
+/* Mobile Devices (360px, 375px, 390px, 430px) */
+@media (max-width: 600px) {
+  .main {
+    gap: 4.5rem;
+    padding: 3rem 1.25rem;
+  }
+
+  .curatorParagraph {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .journeyIntroRow {
+    margin-bottom: 2.5rem;
+  }
+
+  .journeyIntroDesc {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .journeyBigImageWrap {
+    margin-bottom: 2.5rem;
+  }
+
+  .bigImagePlaceholder {
+    aspect-ratio: 16 / 9;
+  }
+
+  .journeyDetailsCol {
+    gap: 1.25rem;
+  }
+
+  .journeyDetailParagraph {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .behindHeading {
+    margin-bottom: 3rem;
+  }
+
+  .behindGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .behindCard {
+    padding: 2rem 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .cardNumber {
+    font-size: 1.5rem;
+  }
+
+  .cardTitle {
+    font-size: 1.15rem;
+  }
+
+  .cardDesc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .behindFooterTextRow {
+    justify-content: center;
+    margin-top: 1.75rem;
+  }
+
+  .behindFooterText {
+    text-align: center;
+    font-size: 0.85rem;
+  }
+
+  .gallerySection {
+    padding: 4.5rem 0;
+  }
+
+  .galleryParagraph {
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+
+  .exploreBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    min-height: 48px; /* Extra touch safety */
+  }
+
+  .galleryGrid {
+    gap: 1rem;
+  }
+
+  .galleryColumn {
+    gap: 1rem;
+  }
+
+  .galleryGridItem {
+    border-radius: 6px;
+  }
+}
+
+/* Very Small Mobile Optimization (below 375px) */
+@media (max-width: 360px) {
+  .main {
+    padding: 2.5rem 1rem;
+    gap: 4rem;
+  }
+  
+  .behindCard {
+    padding: 1.75rem 1.25rem;
+  }
 }
