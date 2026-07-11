@@ -1073,8 +1073,8 @@
 }
 
 .quizHidden .cardStack > :first-child {
-  opacity: 0;
-  pointer-events: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Progress marker transitions */
