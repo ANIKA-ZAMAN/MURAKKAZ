@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import AccountDrawer from "./AccountDrawer";
 
 const navLinks = [
   { label: "Our Story", href: "/our-story" },
@@ -17,6 +18,7 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const [cartCount, setCartCount] = useState(0);
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
 
   const updateCount = () => {
     const saved = localStorage.getItem("cart-items");
@@ -135,12 +137,17 @@ export default function Navbar() {
               href="/account"
               aria-label="Account"
               className="w-8 h-8 cursor-pointer flex items-center justify-center border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsAccountOpen(true);
+              }}
               suppressHydrationWarning
             />
           </div>
         </div>
 
       </nav>
+      <AccountDrawer isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />
     </header>
   );
 }
