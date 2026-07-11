@@ -116,14 +116,14 @@ export default function QuizCard({
           {isMulti && <p className={styles.cardCaption}>Select all that apply</p>}
         </div>
 
-        <div className={isMulti ? styles.multiGrid : styles.optionsList}>
+        <div className={(isMulti || question.options.length > 5) ? styles.multiGrid : styles.optionsList}>
           {question.options.map((option) => {
             const checked = isSelected(option);
             return (
               <button
                 key={option}
                 type="button"
-                className={`${styles.optionBtn} ${checked ? styles.optionChecked : ""} ${isMulti ? styles.gridBtn : ""}`}
+                className={`${styles.optionBtn} ${checked ? styles.optionChecked : ""} ${(isMulti || question.options.length > 5) ? styles.gridBtn : ""}`}
                 onClick={() => isTop && onSelect(option)}
                 disabled={!isTop}
               >
