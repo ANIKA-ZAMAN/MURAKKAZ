@@ -57,7 +57,7 @@ export default function Hero() {
       </div>
 
       {/* 3. Gold Circle Background SVG (Aligned exactly to the page edge) */}
-      <div className="absolute right-0 bottom-0 w-[55%] max-w-[850px] min-w-[320px] sm:min-w-[450px] lg:min-w-[700px] h-auto z-0 pointer-events-none translate-x-[6%] translate-y-[4%] animate-fade-up animation-delay-400" suppressHydrationWarning>
+      <div className="absolute right-0 bottom-0 w-[55%] max-w-[850px] min-w-[320px] sm:min-w-[450px] lg:min-w-[700px] h-auto z-0 pointer-events-none translate-x-[2%] translate-y-[2%] animate-fade-up animation-delay-400" suppressHydrationWarning>
         <Image
           src="/images/hero-circle.svg"
           alt="Hero Circle"
