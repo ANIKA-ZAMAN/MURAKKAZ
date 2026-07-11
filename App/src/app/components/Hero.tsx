@@ -49,43 +49,20 @@ export default function Hero() {
             {description}
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 pt-4" suppressHydrationWarning>
-            {ctas.map((cta) => (
-              <Link 
-                key={cta.label}
-                href={cta.href} 
-                suppressHydrationWarning
-                style={
-                  cta.isPrimary
-                    ? { color: "#E5DCCB", backgroundColor: "#313134" }
-                    : { color: "#313134", borderColor: "rgba(49, 49, 52, 0.35)" }
-                }
-                className={
-                  cta.isPrimary
-                    ? "px-9 py-4 transition-all duration-300 font-serif-text text-[11px] rounded-full tracking-[0.18em] uppercase font-medium border border-transparent hover:border-luxury-gold/50 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
-                    : "px-9 py-4 border transition-all duration-300 font-serif-text text-[11px] rounded-full tracking-[0.18em] uppercase font-medium hover:bg-neutral-800/5 hover:-translate-y-0.5 active:translate-y-0"
-                }
-              >
-                {cta.label}
-              </Link>
-            ))}
-          </div>
         </div>
 
-        {/* Right Column: Large gold background circle & perfume bottle image */}
-        <div className="lg:col-span-6 relative flex justify-center lg:justify-end items-center h-[400px] sm:h-[500px] lg:h-[600px] w-full animate-fade-up animation-delay-400" suppressHydrationWarning>
-          
-          {/* Gold Circle Graphic & Rings */}
-          <div className="absolute right-[-10%] bottom-[-15%] w-[350px] h-[350px] sm:w-[450px] sm:h-[450px] lg:w-[550px] lg:h-[550px] rounded-full bg-gradient-to-tr from-[#a38258] via-[#c5a880] to-[#e4d3b8] shadow-2xl opacity-90" suppressHydrationWarning>
-            {/* Concentric Gold Ring 1 (Inner Outermost) */}
-            <div className="absolute -inset-6 border border-[#c5a880]/50 rounded-full pointer-events-none scale-102" suppressHydrationWarning></div>
-            
-            {/* Concentric Gold Ring 2 (Outer Outermost) */}
-            <div className="absolute -inset-12 border border-[#c5a880]/30 rounded-full pointer-events-none scale-105" suppressHydrationWarning></div>
-
-            {/* Concentric Gold Ring 3 (Delicate Offset) */}
-            <div className="absolute -inset-18 border border-[#c5a880]/15 rounded-full pointer-events-none scale-108 -translate-x-4 -translate-y-4" suppressHydrationWarning></div>
+        {/* Right Column: Large gold background circle SVG */}
+        <div className="lg:col-span-6 relative flex justify-end items-end h-[400px] sm:h-[500px] lg:h-[600px] w-full animate-fade-up animation-delay-400" suppressHydrationWarning>
+          <div className="absolute right-0 bottom-0 w-[120%] lg:w-[135%] h-auto z-0 translate-x-[5%] translate-y-[5%]" suppressHydrationWarning>
+            <Image
+              src="/images/hero-circle.svg"
+              alt="Hero Circle"
+              width={805}
+              height={492}
+              priority
+              className="w-full h-auto object-contain object-right-bottom"
+              suppressHydrationWarning
+            />
           </div>
 
 
