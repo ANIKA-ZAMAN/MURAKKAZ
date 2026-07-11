@@ -8,7 +8,6 @@ const navLinks = [
   { label: "Our Story", href: "/our-story" },
   { label: "Shop", href: "/shop" },
   { label: "Event", href: "/events" },
-  { label: "Library", href: "/" },
   { label: "Compare", href: "/compare" },
   { label: "Finder", href: "/scent-index" },
   { label: "Vlog", href: "/blog" },

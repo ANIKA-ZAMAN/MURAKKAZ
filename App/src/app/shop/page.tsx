@@ -98,7 +98,7 @@ export default function Shop() {
     <div className={styles.page}>
       <main className={styles.main}>
         {/* Header Row: Title & Search Bar */}
-        <CollectionHeader onSearch={handleSearch} />
+        <CollectionHeader title="Shop" subtitle="Explore our collections" onSearch={handleSearch} />
 
         {/* Content Layout: Sidebar + Product Grid */}
         <div className={styles.contentLayout}>
