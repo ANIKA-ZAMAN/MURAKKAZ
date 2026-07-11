@@ -743,7 +743,7 @@
 /* Left panel opens leftward with 1-2 degrees outward rotation */
 .introDoorLeft {
   left: 0;
-  border-right: 1px solid rgba(130, 120, 100, 0.2); /* Middle seam */
+  border-right: none; /* Middle seam */
   border-radius: 10px 0 0 10px;
   transform-origin: left center;
 }
@@ -751,7 +751,7 @@
 /* Right panel opens rightward with 1-2 degrees outward rotation */
 .introDoorRight {
   right: 0;
-  border-left: 1px solid rgba(130, 120, 100, 0.2); /* Middle seam */
+  border-left: none; /* Middle seam */
   border-radius: 0 10px 10px 0;
   transform-origin: right center;
 }
@@ -811,6 +811,25 @@
   pointer-events: none;
 }
 
+/* Intro Text Group (Absolute positioned at top zone to avoid overlapping centered seal) */
+.introTextGroup {
+  position: absolute;
+  top: 2.2rem;
+  left: 3.5rem;
+  right: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 480px) {
+  .introTextGroup {
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+}
+
 /* Intro typography matching premium styling */
 .introHeader {
   margin-bottom: 0.85rem;
@@ -848,29 +867,31 @@
   font-size: 0.925rem;
   color: #555558;
   line-height: 1.6;
-  margin: 0 0 1.25rem 0;
+  margin: 0;
   max-width: 520px;
 }
 
-/* Wax Seal Interaction Area */
+/* Wax Seal Interaction Area (Absolutely centered to align with door halves exactly) */
 .sealInteractionArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  margin-top: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 96px;
+  height: 48px;
   z-index: 5;
 }
 
 .waxSealWrapper {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 96px;
-  height: 48px;
   user-select: none;
 }
 
@@ -1005,14 +1026,20 @@
 
 /* Prompt styles */
 .sealPrompt {
+  position: absolute;
+  top: 58px; /* Rendered below the 48px wrapper */
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.725rem;
   letter-spacing: 0.1em;
   color: #767677;
   text-transform: uppercase;
-  margin-top: 0.85rem;
-  transition: color 0.3s ease;
+  width: max-content;
+  text-align: center;
+  pointer-events: none;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .waxSealWrapper:hover + .sealPrompt {
@@ -1021,11 +1048,22 @@
 
 /* Footer layout style */
 .introFooter {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
   color: #767677;
-  margin-bottom: 0px;
+  width: max-content;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .introFooter {
+    bottom: 1.5rem;
+  }
 }
 
 /* Underlying Quiz Container and Progress Markers handling */

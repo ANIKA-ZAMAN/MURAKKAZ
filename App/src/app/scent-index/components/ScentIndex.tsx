@@ -38,6 +38,15 @@ export default function ScentIndex() {
   const handleSealClick = () => {
     if (isSealPressed || isSealedCracked) return;
     
+    // Play satisfying crack sound effect
+    try {
+      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2972/2972-preview.mp3");
+      audio.volume = 0.5;
+      audio.play().catch(err => console.log("Audio playback blocked/failed:", err));
+    } catch (e) {
+      console.log("Audio initialization failed:", e);
+    }
+    
     // 1. Compress slightly
     setIsSealPressed(true);
     
@@ -221,14 +230,16 @@ export default function ScentIndex() {
 
             {/* The content overlay */}
             <div className={styles.introContent}>
-              <div className={styles.introHeader}>
-                <span className={styles.introLabel}>MURAKKAZ</span>
-                <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
+              <div className={styles.introTextGroup}>
+                <div className={styles.introHeader}>
+                  <span className={styles.introLabel}>MURAKKAZ</span>
+                  <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
+                </div>
+                
+                <p className={styles.introBody}>
+                  Every fragrance tells a different story. Answer seven carefully curated questions and we'll recommend the fragrances that best match your personality, preferences, and lifestyle.
+                </p>
               </div>
-              
-              <p className={styles.introBody}>
-                Every fragrance tells a different story. Answer seven carefully curated questions and we'll recommend the fragrances that best match your personality, preferences, and lifestyle.
-              </p>
               
               {/* Wax Seal Interaction Section (instead of button) */}
               <div className={styles.sealInteractionArea} suppressHydrationWarning>
