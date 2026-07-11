@@ -43,7 +43,7 @@ export default function Navbar() {
 
   return (
     <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50 animate-fade-up" suppressHydrationWarning>
-      <nav className="relative w-full max-w-[1348px] h-16 rounded-[20px] bg-[#E5DCCB]/80 backdrop-blur-md overflow-hidden select-none border border-[#767677]/30 shadow-sm flex items-center justify-between px-6" suppressHydrationWarning>
+      <nav className="relative w-full max-w-[1348px] h-16 rounded-[20px] bg-[#E5DCCB]/80 backdrop-blur-md overflow-hidden select-none flex items-center justify-between px-6" suppressHydrationWarning>
         
         {/* SVG background containing visual paths of the border rect, search bar, and icons */}
         <div className="absolute inset-0 z-0 pointer-events-none w-full h-full flex justify-center items-center">
