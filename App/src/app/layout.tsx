@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${lora.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", width: "100%" }} suppressHydrationWarning>
           <Navbar />
           {children}
           <Footer />

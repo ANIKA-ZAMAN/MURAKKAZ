@@ -12,7 +12,8 @@ import {
 import styles from "./ScentIndex.module.css";
 
 export default function ScentIndex() {
-  const [phase, setPhase] = useState<"consultation" | "loading" | "results">("consultation");
+  const [phase, setPhase] = useState<"intro" | "consultation" | "loading" | "results">("intro");
+  const [isTransitioningIntro, setIsTransitioningIntro] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
   const [transitioningStep, setTransitioningStep] = useState<number | null>(null);
@@ -30,6 +31,14 @@ export default function ScentIndex() {
     }));
     setParticles(pts);
   }, []);
+
+  const handleBegin = () => {
+    setIsTransitioningIntro(true);
+    setTimeout(() => {
+      setPhase("consultation");
+      setIsTransitioningIntro(false);
+    }, 800);
+  };
 
   const handleSelect = (questionId: number, option: string) => {
     const question = quizQuestions.find((q) => q.id === questionId);
@@ -90,7 +99,7 @@ export default function ScentIndex() {
     setAnswers({});
     setCurrentStep(0);
     setRecommendation(null);
-    setPhase("consultation");
+    setPhase("intro");
   };
 
   const handleBuyNow = () => {
@@ -152,8 +161,47 @@ export default function ScentIndex() {
 
       {/* Main Page Layout Wrapper */}
       <main className={styles.mainContent}>
-        {phase === "consultation" && (
-          <div className={styles.quizContainer}>
+        {(phase === "intro" || isTransitioningIntro) && (
+          <div className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}>
+            <div className={styles.introCard}>
+              <div className={styles.cardInnerContent}>
+                <div className={styles.introHeader}>
+                  <span className={styles.introLabel}>FRAGRANCE CONSULTATION</span>
+                  <h1 className={styles.introHeading}>Find Your Signature Scent</h1>
+                </div>
+                
+                <p className={styles.introBody}>
+                  Every fragrance tells a story. Answer a few carefully selected questions and we'll recommend the scents that best match your personality, preferences, and lifestyle.
+                </p>
+                
+                <ul className={styles.introHighlights}>
+                  <li className={styles.highlightItem}>
+                    <span className={styles.bullet}>•</span> 7 Curated Questions
+                  </li>
+                  <li className={styles.highlightItem}>
+                    <span className={styles.bullet}>•</span> Takes Less Than 2 Minutes
+                  </li>
+                  <li className={styles.highlightItem}>
+                    <span className={styles.bullet}>•</span> Personalized Recommendations
+                  </li>
+                </ul>
+
+                <div className={styles.introActions}>
+                  <button
+                    type="button"
+                    className={`${styles.btn} ${styles.btnBegin}`}
+                    onClick={handleBegin}
+                  >
+                    Begin Consultation →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {(phase === "consultation" || isTransitioningIntro) && (
+          <div className={`${styles.quizContainer} ${isTransitioningIntro ? styles.quizContainerEnter : ""}`}>
             {/* 1. Progress markers above the stack */}
             <div className={styles.progressMarkers}>
               {quizQuestions.map((_, idx) => (
