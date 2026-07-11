@@ -185,7 +185,17 @@ export default function ScentIndex() {
               {/* Left broken seal half attached to the edge */}
               {isSealedCracked && (
                 <div className={`${styles.waxSealHalf} ${styles.waxSealLeft}`}>
-                  <span className={styles.sealMonogramHalf}>M</span>
+                  <div className={styles.sealLogoWrapperHalfLeft}>
+                    <Image
+                      src="/images/logo-murakkaz.svg"
+                      alt="Murakkaz Logo Left"
+                      width={44}
+                      height={19}
+                      priority
+                      className={styles.sealLogo}
+                      suppressHydrationWarning
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -194,7 +204,17 @@ export default function ScentIndex() {
               {/* Right broken seal half attached to the edge */}
               {isSealedCracked && (
                 <div className={`${styles.waxSealHalf} ${styles.waxSealRight}`}>
-                  <span className={styles.sealMonogramHalf}>M</span>
+                  <div className={styles.sealLogoWrapperHalfRight}>
+                    <Image
+                      src="/images/logo-murakkaz.svg"
+                      alt="Murakkaz Logo Right"
+                      width={44}
+                      height={19}
+                      priority
+                      className={styles.sealLogo}
+                      suppressHydrationWarning
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -218,9 +238,19 @@ export default function ScentIndex() {
                     onClick={handleSealClick}
                     suppressHydrationWarning
                   >
-                    {/* The intact wax seal */}
+                    {/* The intact wax seal with official logo */}
                     <div className={styles.waxSealIntact}>
-                      <span className={styles.sealMonogram}>M</span>
+                      <div className={styles.sealLogoWrapper}>
+                        <Image
+                          src="/images/logo-murakkaz.svg"
+                          alt="Murakkaz Logo"
+                          width={44}
+                          height={19}
+                          priority
+                          className={styles.sealLogo}
+                          suppressHydrationWarning
+                        />
+                      </div>
                       <div className={styles.sealCrackLine} />
                     </div>
 
