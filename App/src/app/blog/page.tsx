@@ -53,7 +53,7 @@ export default function BlogPage() {
       <main className={styles.main}>
         {/* Header section: Title and Search bar */}
         <div className={styles.headerRow}>
-          <h1 className={styles.pageTitle}>Vlog</h1>
+          <h1 className={styles.pageTitle}>Blog</h1>
           <div className={styles.searchWrapper}>
             <input
               type="text"
