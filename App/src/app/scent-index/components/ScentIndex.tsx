@@ -38,14 +38,7 @@ export default function ScentIndex() {
   const handleSealClick = () => {
     if (isSealPressed || isSealedCracked) return;
     
-    // Play satisfying crack sound effect
-    try {
-      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2972/2972-preview.mp3");
-      audio.volume = 0.5;
-      audio.play().catch(err => console.log("Audio playback blocked/failed:", err));
-    } catch (e) {
-      console.log("Audio initialization failed:", e);
-    }
+
     
     // 1. Compress slightly
     setIsSealPressed(true);
