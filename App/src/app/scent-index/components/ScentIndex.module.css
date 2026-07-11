@@ -763,13 +763,13 @@
 
 /* Sliding & 3D swinging open door animations */
 .introLeaving .introDoorLeft {
-  transform: translateX(-105%) rotate(-2deg);
+  transform: translateX(-105%);
   opacity: 0;
   box-shadow: none;
 }
 
 .introLeaving .introDoorRight {
-  transform: translateX(105%) rotate(2deg);
+  transform: translateX(105%);
   opacity: 0;
   box-shadow: none;
 }
@@ -869,28 +869,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 68px;
-  height: 68px;
+  width: 96px;
+  height: 48px;
   user-select: none;
 }
 
-/* The Intact Wax Seal */
+/* The Intact Wax Seal (Transparent backdrop, showing only red logo) */
 .waxSealIntact {
-  width: 62px;
-  height: 62px;
-  background-color: #671d24; /* Deep Burgundy wax */
-  background-image: radial-gradient(circle at 35% 35%, #7e242b 0%, #671d24 60%, #4a1116 100%);
-  border-radius: 48% 52% 51% 49% / 52% 48% 52% 48%; /* Hand-poured irregular organic shape */
+  width: 88px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
-    0 6px 14px rgba(0, 0, 0, 0.28), 
-    inset 0 2px 4px rgba(255, 255, 255, 0.2), 
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Seal Logo styling */
@@ -898,23 +891,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 19px;
-  transform: translateY(-0.5px);
+  width: 88px;
+  height: 38px;
 }
 
 .sealLogo {
-  filter: brightness(0) invert(0.95); /* Soft cream/ivory color matching cards */
+  /* Real red color displays natively (no filter) */
   object-fit: contain;
 }
 
 /* Compression on press */
 .sealPressed .waxSealIntact {
-  transform: scale(0.92) translateY(1.5px);
-  box-shadow: 
-    0 2px 6px rgba(0, 0, 0, 0.18), 
-    inset 0 2px 4px rgba(255, 255, 255, 0.2), 
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+  transform: scale(0.94) translateY(0.5px);
 }
 
 /* Wax Crack Line */
@@ -922,10 +910,9 @@
   position: absolute;
   top: 0;
   left: 50%;
-  width: 2.5px;
+  width: 2px;
   height: 100%;
-  background-color: rgba(41, 6, 9, 0.95);
-  box-shadow: 0 0 1px rgba(0,0,0,0.5);
+  background-color: rgba(49, 49, 52, 0.4);
   transform: scaleY(0);
   opacity: 0;
   transform-origin: top center;
@@ -937,18 +924,13 @@
   opacity: 1;
 }
 
-/* Broken Wax Seal Halves Attached to Doors */
+/* Broken Wax Seal Halves Attached to Doors (No circles/shadows, only logo) */
 .waxSealHalf {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  height: 62px;
-  width: 31px; /* Half of 62px */
-  background-color: #671d24;
-  box-shadow: 
-    0 4px 10px rgba(0, 0, 0, 0.25), 
-    inset 0 2px 4px rgba(255, 255, 255, 0.2), 
-    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+  height: 38px;
+  width: 44px; /* Half of 88px */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -957,38 +939,32 @@
 
 /* Left Half styling */
 .waxSealLeft {
-  right: -1px; /* Aligns exactly on left door right seam */
-  border-radius: 31px 0 0 31px;
-  border-right: none;
-  background-image: radial-gradient(circle at 70% 35%, #7e242b 0%, #671d24 60%, #4a1116 100%);
+  right: 0px; /* Aligns exactly on left door right edge */
   justify-content: flex-start;
 }
 
 .sealLogoWrapperHalfLeft {
   position: absolute;
-  left: 9px;
+  left: 0px;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 19px;
+  width: 88px;
+  height: 38px;
 }
 
 /* Right Half styling */
 .waxSealRight {
-  left: -1px; /* Aligns exactly on right door left seam */
-  border-radius: 0 31px 31px 0;
-  border-left: none;
-  background-image: radial-gradient(circle at -20% 35%, #7e242b 0%, #671d24 60%, #4a1116 100%);
+  left: 0px; /* Aligns exactly on right door left edge */
   justify-content: flex-end;
 }
 
 .sealLogoWrapperHalfRight {
   position: absolute;
-  left: -22px;
+  left: -44px;
   top: 50%;
   transform: translateY(-50%);
-  width: 44px;
-  height: 19px;
+  width: 88px;
+  height: 38px;
 }
 
 /* Wax fragments falling keyframe animations */

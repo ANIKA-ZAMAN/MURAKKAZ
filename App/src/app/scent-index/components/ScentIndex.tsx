@@ -189,8 +189,8 @@ export default function ScentIndex() {
                     <Image
                       src="/images/logo-murakkaz.svg"
                       alt="Murakkaz Logo Left"
-                      width={44}
-                      height={19}
+                      width={88}
+                      height={38}
                       priority
                       className={styles.sealLogo}
                       suppressHydrationWarning
@@ -208,8 +208,8 @@ export default function ScentIndex() {
                     <Image
                       src="/images/logo-murakkaz.svg"
                       alt="Murakkaz Logo Right"
-                      width={44}
-                      height={19}
+                      width={88}
+                      height={38}
                       priority
                       className={styles.sealLogo}
                       suppressHydrationWarning
@@ -244,8 +244,8 @@ export default function ScentIndex() {
                         <Image
                           src="/images/logo-murakkaz.svg"
                           alt="Murakkaz Logo"
-                          width={44}
-                          height={19}
+                          width={88}
+                          height={38}
                           priority
                           className={styles.sealLogo}
                           suppressHydrationWarning
