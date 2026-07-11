@@ -163,38 +163,41 @@ export default function ScentIndex() {
       <main className={styles.mainContent}>
         {(phase === "intro" || isTransitioningIntro) && (
           <div className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}>
-            <div className={styles.introCard}>
-              <div className={styles.cardInnerContent}>
-                <div className={styles.introHeader}>
-                  <span className={styles.introLabel}>FRAGRANCE CONSULTATION</span>
-                  <h1 className={styles.introHeading}>Find Your Signature Scent</h1>
-                </div>
-                
-                <p className={styles.introBody}>
-                  Every fragrance tells a story. Answer a few carefully selected questions and we'll recommend the scents that best match your personality, preferences, and lifestyle.
-                </p>
-                
-                <ul className={styles.introHighlights}>
-                  <li className={styles.highlightItem}>
-                    <span className={styles.bullet}>•</span> 7 Curated Questions
-                  </li>
-                  <li className={styles.highlightItem}>
-                    <span className={styles.bullet}>•</span> Takes Less Than 2 Minutes
-                  </li>
-                  <li className={styles.highlightItem}>
-                    <span className={styles.bullet}>•</span> Personalized Recommendations
-                  </li>
-                </ul>
+            {/* The split wooden/paper doors */}
+            <div className={`${styles.introDoor} ${styles.introDoorLeft}`} />
+            <div className={`${styles.introDoor} ${styles.introDoorRight}`} />
 
-                <div className={styles.introActions}>
-                  <button
-                    type="button"
-                    className={`${styles.btn} ${styles.btnBegin}`}
-                    onClick={handleBegin}
-                  >
-                    Begin Consultation →
-                  </button>
-                </div>
+            {/* The content overlay */}
+            <div className={styles.introContent}>
+              <div className={styles.introHeader}>
+                <span className={styles.introLabel}>FRAGRANCE CONSULTATION</span>
+                <h1 className={styles.introHeading}>Find Your Signature Scent</h1>
+              </div>
+              
+              <p className={styles.introBody}>
+                Every fragrance tells a story. Answer a few carefully selected questions and we'll recommend the scents that best match your personality, preferences, and lifestyle.
+              </p>
+              
+              <ul className={styles.introHighlights}>
+                <li className={styles.highlightItem}>
+                  <span className={styles.bullet}>•</span> 7 Curated Questions
+                </li>
+                <li className={styles.highlightItem}>
+                  <span className={styles.bullet}>•</span> Takes Less Than 2 Minutes
+                </li>
+                <li className={styles.highlightItem}>
+                  <span className={styles.bullet}>•</span> Personalized Recommendations
+                </li>
+              </ul>
+
+              <div className={styles.introActions}>
+                <button
+                  type="button"
+                  className={`${styles.btn} ${styles.btnBegin}`}
+                  onClick={handleBegin}
+                >
+                  Begin Consultation →
+                </button>
               </div>
             </div>
           </div>
