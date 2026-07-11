@@ -51,24 +51,22 @@ export default function Hero() {
 
         </div>
 
-        {/* Right Column: Large gold background circle SVG */}
-        <div className="lg:col-span-6 relative flex justify-end items-end h-[400px] sm:h-[500px] lg:h-[600px] w-full animate-fade-up animation-delay-400" suppressHydrationWarning>
-          <div className="absolute right-0 bottom-0 w-[120%] lg:w-[135%] h-auto z-0 translate-x-[5%] translate-y-[5%]" suppressHydrationWarning>
-            <Image
-              src="/images/hero-circle.svg"
-              alt="Hero Circle"
-              width={805}
-              height={492}
-              priority
-              className="w-full h-auto object-contain object-right-bottom"
-              suppressHydrationWarning
-            />
-          </div>
+        {/* Right Column: Empty grid spacing */}
+        <div className="lg:col-span-6 h-[400px] sm:h-[500px] lg:h-[600px] w-full" suppressHydrationWarning></div>
 
+      </div>
 
-
-        </div>
-
+      {/* 3. Gold Circle Background SVG (Aligned exactly to the page edge) */}
+      <div className="absolute right-0 bottom-0 w-[55%] max-w-[850px] min-w-[320px] sm:min-w-[450px] lg:min-w-[700px] h-auto z-0 pointer-events-none translate-x-[6%] translate-y-[4%] animate-fade-up animation-delay-400" suppressHydrationWarning>
+        <Image
+          src="/images/hero-circle.svg"
+          alt="Hero Circle"
+          width={805}
+          height={492}
+          priority
+          className="w-full h-auto object-contain object-right-bottom"
+          suppressHydrationWarning
+        />
       </div>
     </section>
   );
