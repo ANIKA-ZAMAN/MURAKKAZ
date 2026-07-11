@@ -43,9 +43,9 @@ export default function Navbar() {
 
   return (
     <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50 animate-fade-up" suppressHydrationWarning>
-      <nav className="relative w-full max-w-[1348px] h-16 rounded-[20px] bg-[#E5DCCB]/80 backdrop-blur-md overflow-hidden select-none" suppressHydrationWarning>
+      <nav className="relative w-full max-w-[1348px] h-16 rounded-[20px] bg-[#E5DCCB]/80 backdrop-blur-md overflow-hidden select-none border border-[#767677]/30 shadow-sm flex items-center justify-between px-6" suppressHydrationWarning>
         
-        {/* SVG background containing visual paths of links, logo, and icons */}
+        {/* SVG background containing visual paths of the border rect, search bar, and icons */}
         <div className="absolute inset-0 z-0 pointer-events-none w-full h-full flex justify-center items-center">
           <Image
             src="/images/navbar-m.svg"
@@ -58,101 +58,79 @@ export default function Navbar() {
           />
         </div>
 
-        {/* Workable overlays (aligned by percentage position relative to 1348px viewBox) */}
-        <div className="absolute inset-0 z-10 w-full h-full" suppressHydrationWarning>
-          
-          {/* Logo overlay: Link to home "/" */}
-          <Link
-            href="/"
-            aria-label="Home"
-            className="absolute left-[1.5%] top-0 h-full w-[10%] cursor-pointer"
-            suppressHydrationWarning
-          />
+        {/* 1. Logo - Left aligned in HTML to match the mockup */}
+        <Link 
+          href="/" 
+          suppressHydrationWarning
+          className="font-serif-title text-[22px] font-medium text-neutral-800 tracking-wide hover:opacity-75 transition-opacity z-10 mr-8"
+        >
+          Murakkaz
+        </Link>
 
-          {/* Links overlay */}
-          {/* Our Story */}
-          <Link
-            href="/our-story"
-            className="absolute left-[20.8%] top-0 h-full w-[7%] cursor-pointer"
-            suppressHydrationWarning
-          />
+        {/* 2. Menu Links - Centered and distributed evenly in HTML to close all gaps! */}
+        <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
+          {navLinks.map((link) => (
+            <li key={link.label} suppressHydrationWarning>
+              <Link
+                href={link.href}
+                suppressHydrationWarning
+                className={`font-serif-text text-[13px] tracking-wide transition-colors ${
+                  pathname === link.href 
+                    ? "text-neutral-900 font-semibold" 
+                    : "text-neutral-700 hover:text-[#c5a880] hover:font-medium"
+                }`}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
 
-          {/* Shop */}
-          <Link
-            href="/shop"
-            className="absolute left-[28.5%] top-0 h-full w-[4.5%] cursor-pointer"
-            suppressHydrationWarning
-          />
-
-          {/* Event */}
-          <Link
-            href="/events"
-            className="absolute left-[34.4%] top-0 h-full w-[4.5%] cursor-pointer"
-            suppressHydrationWarning
-          />
-
-          {/* Compare */}
-          <Link
-            href="/compare"
-            className="absolute left-[47.2%] top-0 h-full w-[6.5%] cursor-pointer"
-            suppressHydrationWarning
-          />
-
-          {/* Finder */}
-          <Link
-            href="/scent-index"
-            className="absolute left-[54.8%] top-0 h-full w-[5.5%] cursor-pointer"
-            suppressHydrationWarning
-          />
-
-          {/* Vlog */}
-          <Link
-            href="/blog"
-            className="absolute left-[61.5%] top-0 h-full w-[4.5%] cursor-pointer"
-            suppressHydrationWarning
-          />
-
-          {/* Search Input overlay */}
-          <div className="absolute left-[78.8%] top-[20%] w-[10%] h-[60%] flex items-center" suppressHydrationWarning>
+        {/* 3. Right Section - Workable search input and icon overlays */}
+        <div className="flex items-center z-10 flex-shrink-0" suppressHydrationWarning>
+          {/* Spacer aligning with SVG search bar */}
+          <div className="w-[160px] xl:w-[180px] h-9 relative mr-2" suppressHydrationWarning>
             <input
               type="text"
               placeholder="Search"
-              className="w-full h-full border-none outline-none bg-transparent font-serif-text text-[13px] text-neutral-800 placeholder:text-transparent"
+              className="absolute left-[15%] top-0 w-[80%] h-full border-none outline-none bg-transparent font-serif-text text-[13px] text-neutral-800 placeholder:text-transparent"
               aria-label="Search"
             />
           </div>
 
-          {/* Icons overlay */}
-          {/* Wishlist */}
-          <Link
-            href="/wishlist"
-            aria-label="Wishlist"
-            className="absolute left-[90.0%] top-0 h-full w-[3%] cursor-pointer flex items-center justify-center"
-            suppressHydrationWarning
-          />
+          {/* Interactive Icon Overlays */}
+          <div className="flex items-center gap-1.5 xl:gap-2 ml-4" suppressHydrationWarning>
+            {/* Wishlist */}
+            <Link 
+              href="/wishlist" 
+              suppressHydrationWarning
+              className="w-8 h-8 cursor-pointer flex items-center justify-center hover:bg-neutral-800/5 rounded-full transition-colors" 
+              aria-label="Wishlist"
+            />
 
-          {/* Cart */}
-          <Link
-            href="/cart"
-            aria-label="Cart"
-            className="absolute left-[93.0%] top-0 h-full w-[3%] cursor-pointer flex items-center justify-center"
-            suppressHydrationWarning
-          >
-            {cartCount > 0 && (
-              <span className="absolute top-[14px] right-[10%] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
-                {cartCount}
-              </span>
-            )}
-          </Link>
+            {/* Cart */}
+            <Link 
+              href="/cart" 
+              suppressHydrationWarning
+              className="w-8 h-8 cursor-pointer flex items-center justify-center relative hover:bg-neutral-800/5 rounded-full transition-colors" 
+              aria-label="Cart"
+            >
+              {cartCount > 0 && (
+                <span className="absolute top-0 right-0 bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
-          {/* Account */}
-          <button
-            aria-label="Account"
-            className="absolute left-[96.0%] top-0 h-full w-[3%] cursor-pointer flex items-center justify-center border-none bg-transparent outline-none"
-            suppressHydrationWarning
-          />
-
+            {/* Account */}
+            <button 
+              aria-label="Account"
+              className="w-8 h-8 cursor-pointer flex items-center justify-center border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
+              suppressHydrationWarning
+            />
+          </div>
         </div>
+
       </nav>
     </header>
   );
