@@ -58,13 +58,21 @@ export default function Navbar() {
           />
         </div>
 
-        {/* 1. Logo - Left aligned in HTML to match the mockup */}
+        {/* 1. Logo - Left aligned SVG logo */}
         <Link 
           href="/" 
           suppressHydrationWarning
-          className="font-serif-title text-[22px] font-medium text-neutral-800 tracking-wide hover:opacity-75 transition-opacity z-10 mr-8"
+          className="hover:opacity-75 transition-opacity z-10 mr-8 flex items-center ml-3"
         >
-          Murakkaz
+          <Image
+            src="/images/logo-murakkaz.svg"
+            alt="Murakkaz Logo"
+            width={116}
+            height={50}
+            priority
+            className="h-9 w-auto object-contain"
+            suppressHydrationWarning
+          />
         </Link>
 
         {/* 2. Menu Links - Centered and distributed evenly in HTML to close all gaps! */}
