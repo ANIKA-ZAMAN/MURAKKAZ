@@ -55,7 +55,7 @@ export const quizQuestions: ConsultationQuestion[] = [
   {
     id: 5,
     question: "Which scent style do you like?",
-    type: "single",
+    type: "multi",
     options: [
       "Floral",
       "Citrus",
@@ -99,7 +99,7 @@ export function getQuizRecommendation(
   const occasionAns = answers[2] as string | undefined;
   const notesAns = (answers[3] as string[]) || [];
   const intensityAns = answers[4] as string | undefined;
-  const styleScentAns = answers[5] as string | undefined;
+  const styleScentAns = (answers[5] as string[]) || [];
   const seasonAns = answers[6] as string | undefined;
   const styleAns = answers[7] as string | undefined;
 
@@ -125,13 +125,13 @@ export function getQuizRecommendation(
   });
 
   // Map chosen scent style to families
-  if (styleScentAns) {
-    if (styleScentAns === "Floral" || styleScentAns === "Fruity") targetFamilies.push("Floral");
-    else if (styleScentAns === "Citrus") targetFamilies.push("Citrus");
-    else if (styleScentAns === "Sweet" || styleScentAns === "Spicy") targetFamilies.push("Oriental");
-    else if (styleScentAns === "Woody" || styleScentAns === "Oud" || styleScentAns === "Leather") targetFamilies.push("Woody");
-    else if (styleScentAns === "Fresh" || styleScentAns === "Aquatic") targetFamilies.push("Fresh");
-  }
+  styleScentAns.forEach((styleScent) => {
+    if (styleScent === "Floral" || styleScent === "Fruity") targetFamilies.push("Floral");
+    else if (styleScent === "Citrus") targetFamilies.push("Citrus");
+    else if (styleScent === "Sweet" || styleScent === "Spicy") targetFamilies.push("Oriental");
+    else if (styleScent === "Woody" || styleScent === "Oud" || styleScent === "Leather") targetFamilies.push("Woody");
+    else if (styleScent === "Fresh" || styleScent === "Aquatic") targetFamilies.push("Fresh");
+  });
 
   // Map intensity/longevity to performance meters
   let targetMeters: string[] = [];
