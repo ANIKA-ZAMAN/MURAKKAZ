@@ -787,7 +787,7 @@
 
 /* Intro typography matching premium styling */
 .introHeader {
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   width: 100%;
 }
 
@@ -826,42 +826,207 @@
   max-width: 520px;
 }
 
+/* Wax Seal Interaction Area */
+.sealInteractionArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  margin-top: auto;
+  z-index: 5;
+}
+
+.waxSealWrapper {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  user-select: none;
+}
+
+/* The Intact Wax Seal */
+.waxSealIntact {
+  width: 62px;
+  height: 62px;
+  background-color: #671d24; /* Deep Burgundy wax */
+  background-image: radial-gradient(circle at 35% 35%, #7e242b 0%, #671d24 60%, #4a1116 100%);
+  border-radius: 48% 52% 51% 49% / 52% 48% 52% 48%; /* Hand-poured irregular organic shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 6px 14px rgba(0, 0, 0, 0.28), 
+    inset 0 2px 4px rgba(255, 255, 255, 0.2), 
+    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease;
+}
+
+/* Monogram styling */
+.sealMonogram {
+  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1;
+  background: linear-gradient(135deg, #f5d061 0%, #dfb53c 30%, #b89120 70%, #f5d061 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
+  text-shadow: -0.5px -0.5px 0.5px rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Compression on press */
+.sealPressed .waxSealIntact {
+  transform: scale(0.92) translateY(1.5px);
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.18), 
+    inset 0 2px 4px rgba(255, 255, 255, 0.2), 
+    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* Wax Crack Line */
+.sealCrackLine {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2.5px;
+  height: 100%;
+  background-color: rgba(41, 6, 9, 0.95);
+  box-shadow: 0 0 1px rgba(0,0,0,0.5);
+  transform: scaleY(0);
+  opacity: 0;
+  transform-origin: top center;
+  transition: transform 0.2s ease 0.1s, opacity 0.15s ease 0.1s;
+}
+
+.sealCracked .sealCrackLine {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+/* Broken Wax Seal Halves Attached to Doors */
+.waxSealHalf {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 62px;
+  width: 31px; /* Half of 62px */
+  background-color: #671d24;
+  box-shadow: 
+    0 4px 10px rgba(0, 0, 0, 0.25), 
+    inset 0 2px 4px rgba(255, 255, 255, 0.2), 
+    inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Left Half styling */
+.waxSealLeft {
+  right: -1px; /* Aligns exactly on left door right seam */
+  border-radius: 31px 0 0 31px;
+  border-right: none;
+  background-image: radial-gradient(circle at 70% 35%, #7e242b 0%, #671d24 60%, #4a1116 100%);
+  justify-content: flex-start;
+}
+
+.waxSealLeft .sealMonogramHalf {
+  margin-left: 12.5px;
+}
+
+/* Right Half styling */
+.waxSealRight {
+  left: -1px; /* Aligns exactly on right door left seam */
+  border-radius: 0 31px 31px 0;
+  border-left: none;
+  background-image: radial-gradient(circle at -20% 35%, #7e242b 0%, #671d24 60%, #4a1116 100%);
+  justify-content: flex-end;
+}
+
+.waxSealRight .sealMonogramHalf {
+  margin-right: 12.5px;
+}
+
+.sealMonogramHalf {
+  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
+  font-size: 30px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #f5d061 0%, #dfb53c 30%, #b89120 70%, #f5d061 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
+  transform: translateY(-1px);
+  width: 62px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Wax fragments falling keyframe animations */
+.waxFragments {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fragment {
+  position: absolute;
+  background-color: #671d24;
+  border-radius: 2px;
+  opacity: 0;
+}
+
+.frag1 { width: 5px; height: 4px; left: 24px; top: 32px; animation: fall1 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+.frag2 { width: 4px; height: 5px; left: 36px; top: 16px; animation: fall2 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.05s forwards; }
+.frag3 { width: 5px; height: 5px; left: 28px; top: 44px; animation: fall3 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+.frag4 { width: 4px; height: 4px; left: 40px; top: 38px; animation: fall4 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.08s forwards; }
+
+@keyframes fall1 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-20px, 45px) scale(0.7) rotate(-140deg); opacity: 0; }
+}
+@keyframes fall2 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translate(22px, 50px) scale(0.7) rotate(200deg); opacity: 0; }
+}
+@keyframes fall3 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translate(-10px, 55px) scale(0.6) rotate(110deg); opacity: 0; }
+}
+@keyframes fall4 {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translate(16px, 40px) scale(0.6) rotate(-90deg); opacity: 0; }
+}
+
+/* Prompt styles */
+.sealPrompt {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.725rem;
+  letter-spacing: 0.1em;
+  color: #767677;
+  text-transform: uppercase;
+  margin-top: 0.85rem;
+  transition: color 0.3s ease;
+  font-weight: 500;
+}
+
+.waxSealWrapper:hover + .sealPrompt {
+  color: #313134;
+}
+
 /* Footer layout style */
 .introFooter {
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
   color: #767677;
-  margin-bottom: 1.5rem;
-}
-
-.introActions {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.btnBegin {
-  background-color: #313134;
-  border: 1px solid #313134;
-  color: #ffffff;
-  padding: 0 2.2rem;
-  height: 40px;
-  border-radius: 20px;
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.btnBegin:hover {
-  background-color: #1e1e20;
-  border-color: #1e1e20;
-  box-shadow: 0 6px 16px rgba(49, 49, 52, 0.18);
-  transform: translateY(-1px);
+  margin-bottom: 0px;
 }
 
 /* Underlying Quiz Container and Progress Markers handling */

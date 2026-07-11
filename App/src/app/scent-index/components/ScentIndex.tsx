@@ -32,12 +32,29 @@ export default function ScentIndex() {
     setParticles(pts);
   }, []);
 
-  const handleBegin = () => {
-    setIsTransitioningIntro(true);
+  const [isSealPressed, setIsSealPressed] = useState(false);
+  const [isSealedCracked, setIsSealedCracked] = useState(false);
+
+  const handleSealClick = () => {
+    if (isSealPressed || isSealedCracked) return;
+    
+    // 1. Compress slightly
+    setIsSealPressed(true);
+    
     setTimeout(() => {
-      setPhase("consultation");
-      setIsTransitioningIntro(false);
-    }, 800);
+      // 2. Crack appears & fragments fall
+      setIsSealPressed(false);
+      setIsSealedCracked(true);
+      
+      // 3. Doors split and slide open
+      setTimeout(() => {
+        setIsTransitioningIntro(true);
+        setTimeout(() => {
+          setPhase("consultation");
+          setIsTransitioningIntro(false);
+        }, 900); // 850ms transition duration
+      }, 500); // Wait 500ms for fragments to drop
+    }, 200);
   };
 
   const handleSelect = (questionId: number, option: string) => {
@@ -164,8 +181,23 @@ export default function ScentIndex() {
         {(phase === "intro" || isTransitioningIntro) && (
           <div className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}>
             {/* The split wooden/paper doors */}
-            <div className={`${styles.introDoor} ${styles.introDoorLeft}`} />
-            <div className={`${styles.introDoor} ${styles.introDoorRight}`} />
+            <div className={`${styles.introDoor} ${styles.introDoorLeft}`}>
+              {/* Left broken seal half attached to the edge */}
+              {isSealedCracked && (
+                <div className={`${styles.waxSealHalf} ${styles.waxSealLeft}`}>
+                  <span className={styles.sealMonogramHalf}>M</span>
+                </div>
+              )}
+            </div>
+            
+            <div className={`${styles.introDoor} ${styles.introDoorRight}`}>
+              {/* Right broken seal half attached to the edge */}
+              {isSealedCracked && (
+                <div className={`${styles.waxSealHalf} ${styles.waxSealRight}`}>
+                  <span className={styles.sealMonogramHalf}>M</span>
+                </div>
+              )}
+            </div>
 
             {/* The content overlay */}
             <div className={styles.introContent}>
@@ -175,21 +207,42 @@ export default function ScentIndex() {
               </div>
               
               <p className={styles.introBody}>
-                Every fragrance tells a story. Answer a few carefully selected questions and we'll recommend the scents that best match your personality, preferences, and lifestyle.
+                Every fragrance tells a different story. Answer seven carefully curated questions and we'll recommend the fragrances that best match your personality, preferences, and lifestyle.
               </p>
               
-              <div className={styles.introFooter}>
-                7 Questions &bull; Takes Less Than 2 Minutes
+              {/* Wax Seal Interaction Section (instead of button) */}
+              <div className={styles.sealInteractionArea} suppressHydrationWarning>
+                {!isTransitioningIntro && (
+                  <div 
+                    className={`${styles.waxSealWrapper} ${isSealPressed ? styles.sealPressed : ""} ${isSealedCracked ? styles.sealCracked : ""}`}
+                    onClick={handleSealClick}
+                    suppressHydrationWarning
+                  >
+                    {/* The intact wax seal */}
+                    <div className={styles.waxSealIntact}>
+                      <span className={styles.sealMonogram}>M</span>
+                      <div className={styles.sealCrackLine} />
+                    </div>
+
+                    {/* Falling wax fragments */}
+                    {isSealedCracked && (
+                      <div className={styles.waxFragments}>
+                        <span className={`${styles.fragment} ${styles.frag1}`} />
+                        <span className={`${styles.fragment} ${styles.frag2}`} />
+                        <span className={`${styles.fragment} ${styles.frag3}`} />
+                        <span className={`${styles.fragment} ${styles.frag4}`} />
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                <span className={styles.sealPrompt}>
+                  {isSealedCracked ? "Opening..." : "Unseal Your Consultation"}
+                </span>
               </div>
 
-              <div className={styles.introActions}>
-                <button
-                  type="button"
-                  className={`${styles.btn} ${styles.btnBegin}`}
-                  onClick={handleBegin}
-                >
-                  Begin Consultation
-                </button>
+              <div className={styles.introFooter}>
+                7 Questions &bull; Takes Less Than 2 Minutes
               </div>
             </div>
           </div>
