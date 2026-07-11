@@ -124,7 +124,7 @@ export default function Navbar() {
               aria-label="Cart"
             >
               {cartCount > 0 && (
-                <span className="absolute top-[2px] right-[6px] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
+                <span className="absolute top-[2px] right-[12px] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
                   {cartCount}
                 </span>
               )}
