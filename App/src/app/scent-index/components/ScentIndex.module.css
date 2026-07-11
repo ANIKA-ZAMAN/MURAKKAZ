@@ -685,21 +685,21 @@
   position: relative;
   width: 100%;
   max-width: 720px;
-  height: 470px;
+  height: 410px; /* Same height as cardStack */
   margin-bottom: 1.5rem;
   z-index: 10;
-  perspective: 1200px; /* Enable 3D rotation perspective */
+  perspective: 1200px;
 }
 
 @media (max-width: 768px) {
   .introContainer {
-    height: 560px;
+    height: 500px;
   }
 }
 
 @media (max-width: 480px) {
   .introContainer {
-    height: 810px;
+    height: 750px;
   }
 }
 
@@ -714,11 +714,12 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
   border: 1px solid rgba(130, 120, 100, 0.15);
   box-shadow: 0 15px 35px rgba(47, 9, 9, 0.04);
-  transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s ease, box-shadow 0.85s ease;
+  /* Easing transition for box opening effect */
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.3, 1), opacity 0.3s ease 0.55s, box-shadow 0.85s ease;
   z-index: 1;
 }
 
-/* Left panel opens leftward */
+/* Left panel opens leftward with 1-2 degrees outward rotation */
 .introDoorLeft {
   left: 0;
   border-right: 1px solid rgba(130, 120, 100, 0.2); /* Middle seam */
@@ -726,7 +727,7 @@
   transform-origin: left center;
 }
 
-/* Right panel opens rightward */
+/* Right panel opens rightward with 1-2 degrees outward rotation */
 .introDoorRight {
   right: 0;
   border-left: 1px solid rgba(130, 120, 100, 0.2); /* Middle seam */
@@ -734,35 +735,38 @@
   transform-origin: right center;
 }
 
-/* Overlapping absolute positioning during transition to allow cards behind to show through */
+/* Overlapping absolute positioning during transition to align exactly with cardStack */
 .introLeaving {
   position: absolute;
-  top: 0;
+  top: 43px; /* Aligns exactly with top of cardStack (below progress markers) */
   left: 50%;
   transform: translateX(-50%);
+  z-index: 20;
 }
 
 /* Sliding & 3D swinging open door animations */
 .introLeaving .introDoorLeft {
-  transform: translateX(-100%) rotateY(-30deg);
+  transform: translateX(-105%) rotate(-2deg);
   opacity: 0;
   box-shadow: none;
 }
 
 .introLeaving .introDoorRight {
-  transform: translateX(100%) rotateY(30deg);
+  transform: translateX(105%) rotate(2deg);
   opacity: 0;
   box-shadow: none;
 }
 
-/* Text Content overlaying the doors */
+/* Text Content overlaying the doors (Centering all text for premium balance) */
 .introContent {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 2.2rem 3rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2.2rem 3.5rem;
   z-index: 2;
   transition: opacity 0.3s ease;
   width: 100%;
@@ -783,70 +787,57 @@
 
 /* Intro typography matching premium styling */
 .introHeader {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .introLabel {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
   color: #c9a96e;
   font-weight: 600;
   display: block;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
 }
 
 .introHeading {
   font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   font-weight: 400;
   color: #313134;
   margin: 0;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 @media (max-width: 480px) {
   .introHeading {
-    font-size: 1.6rem;
+    font-size: 1.55rem;
   }
 }
 
 .introBody {
   font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.95rem;
+  font-size: 0.925rem;
   color: #555558;
   line-height: 1.6;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.25rem 0;
+  max-width: 520px;
 }
 
-.introHighlights {
-  list-style: none;
-  margin: 0 0 2.2rem 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.highlightItem {
+/* Footer layout style */
+.introFooter {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.85rem;
-  color: #555558;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.bullet {
-  color: #c9a96e;
-  font-weight: bold;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: #767677;
+  margin-bottom: 1.5rem;
 }
 
 .introActions {
-  margin-top: auto;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
 }
 
@@ -854,33 +845,79 @@
   background-color: #313134;
   border: 1px solid #313134;
   color: #ffffff;
-  padding: 0 2rem;
-  height: 38px;
-  border-radius: 19px;
+  padding: 0 2.2rem;
+  height: 40px;
+  border-radius: 20px;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .btnBegin:hover {
   background-color: #1e1e20;
   border-color: #1e1e20;
-  box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
+  box-shadow: 0 6px 16px rgba(49, 49, 52, 0.18);
+  transform: translateY(-1px);
 }
 
-/* Ensure underlying quiz cards appear smooth */
+/* Underlying Quiz Container and Progress Markers handling */
 .quizContainer {
-  opacity: 1;
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transition: opacity 0.5s ease;
 }
 
-.quizContainerEnter {
-  animation: contentFadeIn 0.8s ease both;
+/* Hide indicators and first card initially on intro load */
+.quizHidden .progressMarkers {
+  opacity: 0;
+  pointer-events: none;
 }
 
-@keyframes contentFadeIn {
+.quizHidden .cardStack > :first-child {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Progress marker transitions */
+.progressMarkers {
+  opacity: 1;
+  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+/* Animate cardStack to fade in and rise 12px during transition */
+.quizContainerEnter .progressMarkers {
+  animation: markerFadeIn 0.85s cubic-bezier(0.25, 1, 0.3, 1) both;
+}
+
+.quizContainerEnter .cardStack {
+  animation: cardFadeInRise 0.85s cubic-bezier(0.25, 1, 0.3, 1) both;
+}
+
+@keyframes markerFadeIn {
   0% {
-    opacity: 0.3;
+    opacity: 0;
   }
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes cardFadeInRise {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

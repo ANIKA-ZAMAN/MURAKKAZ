@@ -170,25 +170,17 @@ export default function ScentIndex() {
             {/* The content overlay */}
             <div className={styles.introContent}>
               <div className={styles.introHeader}>
-                <span className={styles.introLabel}>FRAGRANCE CONSULTATION</span>
-                <h1 className={styles.introHeading}>Find Your Signature Scent</h1>
+                <span className={styles.introLabel}>MURAKKAZ</span>
+                <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
               </div>
               
               <p className={styles.introBody}>
                 Every fragrance tells a story. Answer a few carefully selected questions and we'll recommend the scents that best match your personality, preferences, and lifestyle.
               </p>
               
-              <ul className={styles.introHighlights}>
-                <li className={styles.highlightItem}>
-                  <span className={styles.bullet}>•</span> 7 Curated Questions
-                </li>
-                <li className={styles.highlightItem}>
-                  <span className={styles.bullet}>•</span> Takes Less Than 2 Minutes
-                </li>
-                <li className={styles.highlightItem}>
-                  <span className={styles.bullet}>•</span> Personalized Recommendations
-                </li>
-              </ul>
+              <div className={styles.introFooter}>
+                7 Questions &bull; Takes Less Than 2 Minutes
+              </div>
 
               <div className={styles.introActions}>
                 <button
@@ -196,15 +188,15 @@ export default function ScentIndex() {
                   className={`${styles.btn} ${styles.btnBegin}`}
                   onClick={handleBegin}
                 >
-                  Begin Consultation →
+                  Begin Consultation
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {(phase === "consultation" || isTransitioningIntro) && (
-          <div className={`${styles.quizContainer} ${isTransitioningIntro ? styles.quizContainerEnter : ""}`}>
+        {(phase === "intro" || phase === "consultation" || isTransitioningIntro) && (
+          <div className={`${styles.quizContainer} ${phase === "intro" && !isTransitioningIntro ? styles.quizHidden : ""} ${isTransitioningIntro ? styles.quizContainerEnter : ""}`}>
             {/* 1. Progress markers above the stack */}
             <div className={styles.progressMarkers}>
               {quizQuestions.map((_, idx) => (
