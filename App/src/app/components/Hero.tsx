@@ -1,73 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-
-
-// Separated Mock Data for easy replacement
-export const heroData = {
-  title: "Murakkaz",
-  subheading: {
-    prefix: "Luxury Inspired ",
-    highlight: "Fragrances.",
-    suffix: "Without The Luxury Price Tag"
-  },
-  description: "Handpicked and crafted by Murkkaz, inspired by the world's most iconic fragrances.",
-  ctas: [
-    { label: "Shop Collection", href: "/shop", isPrimary: true },
-    { label: "Explore Scents", href: "/scent-index", isPrimary: false }
-  ],
-  perfumeImage: "/images/perfume-placeholder.png",
-  perfumeAlt: "Murakkaz YSL Y Perfume Bottle"
-};
 
 export default function Hero() {
-  const { title, subheading, description, ctas, perfumeImage, perfumeAlt } = heroData;
-
   return (
-    <section className="relative w-full min-h-[calc(100vh-80px)] flex flex-col justify-between overflow-hidden bg-transparent py-8 md:py-12 select-none" suppressHydrationWarning>
+    <section className="relative w-full min-h-[calc(100vh-100px)] flex flex-col justify-between overflow-hidden bg-transparent py-8 select-none" suppressHydrationWarning>
+      
       {/* 1. Main Huge Centered Heading */}
-      <div className="w-full flex justify-center items-center px-4 mt-2 mb-10 md:mb-16 z-10 animate-fade-up" suppressHydrationWarning>
-        <h1 className="font-serif-title font-bold tracking-[0.05em] text-center uppercase text-neutral-800 text-[10.5vw] leading-none select-none drop-shadow-sm" suppressHydrationWarning>
-          {title}
+      <div className="w-full flex-1 flex justify-center items-center px-4 z-10 animate-fade-up" suppressHydrationWarning>
+        <h1 
+          className="font-serif-title font-normal tracking-[0.02em] text-center uppercase text-[#b29977] text-[13.5vw] leading-none select-none drop-shadow-sm" 
+          suppressHydrationWarning
+          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+        >
+          MURAKKAZ
         </h1>
       </div>
 
-      {/* 2. Content Grid (Left and Right Columns) */}
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center flex-1 z-10" suppressHydrationWarning>
+      {/* 2. Bottom Content Layout: Description on Left, Button Centered */}
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-end z-10 animate-fade-up animation-delay-200" suppressHydrationWarning>
         
-        {/* Left Column: Heading, Description, CTAs */}
-        <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-6 md:space-y-8 animate-fade-up animation-delay-200" suppressHydrationWarning>
-          <h2 className="font-serif-title text-4xl sm:text-5xl lg:text-[3.5rem] leading-[1.15] font-medium text-neutral-800 tracking-tight" suppressHydrationWarning>
-            {subheading.prefix}
-            <span className="text-[#c5a880] italic">{subheading.highlight}</span>
-            <br />
-            {subheading.suffix}
-          </h2>
-          
-          <p className="font-serif-text text-neutral-600 text-base sm:text-lg max-w-lg leading-relaxed" suppressHydrationWarning>
-            {description}
+        {/* Left Col: Description */}
+        <div className="text-left max-w-xs" suppressHydrationWarning>
+          <p 
+            className="font-serif-text text-neutral-800 text-[14px] sm:text-base leading-relaxed"
+            style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+          >
+            Handpicked and crafted by Murkkaz, inspired by the world's most iconic fragrances.
           </p>
-
         </div>
 
-        {/* Right Column: Empty grid spacing */}
-        <div className="lg:col-span-6 h-[400px] sm:h-[500px] lg:h-[600px] w-full" suppressHydrationWarning></div>
+        {/* Center Col: Shop Now Button */}
+        <div className="flex justify-center" suppressHydrationWarning>
+          <Link
+            href="/shop"
+            suppressHydrationWarning
+            className="px-12 py-3.5 rounded-[14px] border border-[#4a4a4a] bg-transparent font-serif-text text-[15px] sm:text-[16px] text-[#4a4a4a] hover:bg-[#4a4a4a] hover:text-white transition-all duration-300 shadow-sm"
+            style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+          >
+            Shop Now
+          </Link>
+        </div>
+
+        {/* Right Col: Spacer for alignment */}
+        <div className="hidden md:block" suppressHydrationWarning></div>
 
       </div>
 
-      {/* 3. Gold Circle Background SVG (Aligned exactly to the page edge) */}
-      <div className="absolute right-0 bottom-0 w-[55%] max-w-[850px] min-w-[320px] sm:min-w-[450px] lg:min-w-[700px] h-auto z-0 pointer-events-none translate-x-[2%] translate-y-[2%] animate-fade-up animation-delay-400" suppressHydrationWarning>
-        <Image
-          src="/images/hero-circle.svg"
-          alt="Hero Circle"
-          width={805}
-          height={492}
-          priority
-          className="w-full h-auto object-contain object-right-bottom"
-          suppressHydrationWarning
-        />
-      </div>
     </section>
   );
 }
+
