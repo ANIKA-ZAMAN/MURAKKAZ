@@ -40,9 +40,11 @@ export default function AccountPage() {
   const [newsletterEnabled, setNewsletterEnabled] = useState(false);
   const [consultationReminders, setConsultationReminders] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Load session & user preferences on mount
   useEffect(() => {
+    setIsMounted(true);
     const savedUser = localStorage.getItem("murakkaz-user");
     if (savedUser) {
       try {
@@ -188,6 +190,18 @@ export default function AccountPage() {
     e.preventDefault();
     setIsEditingBilling(false);
   };
+
+  if (!isMounted) {
+    return (
+      <div className={styles.page} suppressHydrationWarning>
+        <div style={{ padding: "8rem 0", display: "flex", justifyContent: "center", alignItems: "center", minHeight: "80vh" }}>
+          <span style={{ fontSize: "1.2rem", fontStyle: "italic", color: "var(--muted)" }}>
+            Loading account details...
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
