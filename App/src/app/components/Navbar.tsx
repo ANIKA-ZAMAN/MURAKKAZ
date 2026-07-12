@@ -238,16 +238,19 @@ export default function Navbar() {
             <Link 
               href="/wishlist" 
               suppressHydrationWarning
-              className="w-8 h-8 cursor-pointer flex items-center justify-center hover:bg-neutral-800/5 rounded-full transition-colors" 
+              className="w-8 h-8 block cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
               aria-label="Wishlist"
-            />
+            >
+              <span className="sr-only">Wishlist</span>
+            </Link>
 
             <Link 
               href="/cart" 
               suppressHydrationWarning
-              className="w-8 h-8 cursor-pointer flex items-center justify-center relative hover:bg-neutral-800/5 rounded-full transition-colors" 
+              className="w-8 h-8 block relative cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
               aria-label="Cart"
             >
+              <span className="sr-only">Cart</span>
               {cartCount > 0 && (
                 <span className="absolute top-[2px] right-[12px] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
                   {cartCount}
@@ -258,9 +261,11 @@ export default function Navbar() {
             <Link 
               href="/account"
               aria-label="Account"
-              className="w-8 h-8 cursor-pointer flex items-center justify-center border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
+              className="w-8 h-8 block cursor-pointer border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
               suppressHydrationWarning
-            />
+            >
+              <span className="sr-only">Account</span>
+            </Link>
           </div>
         </div>
 
