@@ -193,6 +193,21 @@ export default function CartPage() {
     .filter(item => item.selected)
     .reduce((sum, item) => sum + item.prices[item.selectedSize] * item.quantity, 0);
 
+  if (!isMounted) {
+    return (
+      <div className={styles.page} suppressHydrationWarning>
+        <main className={styles.main}>
+          <h1 className={styles.title}>Your Bag</h1>
+          <div style={{ padding: "4rem 0", display: "flex", justifyContent: "center", alignItems: "center", minHeight: "300px" }}>
+            <span style={{ fontSize: "1.1rem", fontStyle: "italic", color: "var(--muted)" }}>
+              Loading your bag...
+            </span>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
