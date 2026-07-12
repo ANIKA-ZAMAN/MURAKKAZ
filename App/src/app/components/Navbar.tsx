@@ -29,6 +29,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [cartCount, setCartCount] = useState(0);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const updateCount = () => {
     const saved = localStorage.getItem("cart-items");
@@ -48,6 +49,7 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    setMounted(true);
     updateCount();
     window.addEventListener("cart-updated", updateCount);
     return () => window.removeEventListener("cart-updated", updateCount);
@@ -165,7 +167,7 @@ export default function Navbar() {
           </div>
 
         </nav>
-        <AccountDrawer isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />
+        {mounted && <AccountDrawer isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />}
       </header>
     );
   }
@@ -270,7 +272,7 @@ export default function Navbar() {
         </div>
 
       </nav>
-      <AccountDrawer isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />
+      {mounted && <AccountDrawer isOpen={isAccountOpen} onClose={() => setIsAccountOpen(false)} />}
     </header>
   );
 }

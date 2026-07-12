@@ -1,53 +1,119 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Hero() {
+  const [ripples, setRipples] = useState<{ id: number; x: number; y: number; size: number }[]>([]);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const size = Math.max(rect.width, rect.height) * 2.5;
+    
+    const newRipple = {
+      id: Date.now() + Math.random(),
+      x,
+      y,
+      size,
+    };
+    
+    setRipples((prev) => [...prev, newRipple]);
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 600);
+  };
+
+  useEffect(() => {
+    if (ripples.length > 0) {
+      const timer = setTimeout(() => {
+        setRipples((prev) => prev.slice(1));
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [ripples]);
+
   return (
     <section className="relative w-full min-h-[calc(100vh-100px)] flex flex-col justify-between overflow-hidden bg-transparent py-8 select-none" suppressHydrationWarning>
       
-      {/* 1. Main Huge Centered Heading */}
-      <div className="w-full flex-1 flex justify-center items-center px-4 z-10 animate-fade-up" suppressHydrationWarning>
-        <h1 
-          className="font-serif-title font-normal tracking-[0.02em] text-center uppercase text-[#b29977] text-[13.5vw] leading-none select-none drop-shadow-sm" 
-          suppressHydrationWarning
-          style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-        >
-          MURAKKAZ
-        </h1>
+      {/* 1. Main Huge Centered Heading + Description aligned to the "M" */}
+      <div className="w-full flex-1 flex flex-col justify-center items-center px-4 z-10 animate-fade-up" suppressHydrationWarning>
+        <div className="relative w-fit flex flex-col items-start" suppressHydrationWarning>
+          <h1 
+            className="font-serif-title font-normal tracking-[0.02em] text-center uppercase text-[#b29977] text-[13.5vw] leading-none select-none drop-shadow-sm" 
+            suppressHydrationWarning
+            style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+          >
+            MURAKKAZ
+          </h1>
+          
+          <div className="max-w-xs mt-12 md:mt-20 md:-ml-[8vw] self-start text-left" suppressHydrationWarning>
+            <p 
+              className="font-serif-text text-neutral-800 text-[14px] sm:text-base leading-relaxed"
+              style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+            >
+              Handpicked and crafted by Murkkaz, inspired by the world's most iconic fragrances.
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* 2. Bottom Content Layout: Description on Left, Button Centered */}
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-end z-10 animate-fade-up animation-delay-200" suppressHydrationWarning>
-        
-        {/* Left Col: Description */}
-        <div className="text-left max-w-xs" suppressHydrationWarning>
-          <p 
-            className="font-serif-text text-neutral-800 text-[14px] sm:text-base leading-relaxed"
-            style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+      {/* 2. Bottom Content Layout: Button Centered */}
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 flex justify-center items-end pb-4 z-10 animate-fade-up animation-delay-200" suppressHydrationWarning>
+        <Link
+          href="/shop"
+          suppressHydrationWarning
+          onClick={handleClick}
+          className={`group relative flex items-center justify-center bg-transparent text-[#313134] hover:bg-[#313134] hover:text-[#E5DCCB] transition-all duration-300 active:scale-[0.97] ease-out select-none overflow-hidden ${
+            isClicked ? "animate-click-ring" : ""
+          }`}
+          style={{ 
+            width: "229px", 
+            height: "56px",
+            borderRadius: "10px",
+          }}
+        >
+          {/* Click Ripple elements */}
+          {ripples.map((ripple) => (
+            <span
+              key={ripple.id}
+              className="absolute rounded-full bg-current opacity-25 animate-ripple pointer-events-none"
+              style={{
+                left: ripple.x,
+                top: ripple.y,
+                width: ripple.size,
+                height: ripple.size,
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          ))}
+          
+          {/* Embedded shop now.svg content */}
+          <svg 
+            width="229" 
+            height="56" 
+            viewBox="0 0 229 56" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute inset-0 w-full h-full pointer-events-none"
           >
-            Handpicked and crafted by Murkkaz, inspired by the world's most iconic fragrances.
-          </p>
-        </div>
-
-        {/* Center Col: Shop Now Button */}
-        <div className="flex justify-center" suppressHydrationWarning>
-          <Link
-            href="/shop"
-            suppressHydrationWarning
-            className="px-14 py-3.5 border border-[#313134] bg-transparent font-serif-text text-[15px] sm:text-[16px] text-[#313134] hover:bg-[#313134] hover:text-white transition-all duration-300"
-            style={{ borderRadius: "12px", fontFamily: "var(--font-lora), Georgia, serif" }}
-          >
-            Shop Now
-          </Link>
-        </div>
-
-        {/* Right Col: Spacer for alignment */}
-        <div className="hidden md:block" suppressHydrationWarning></div>
-
+            {/* Border path */}
+            <path 
+              d="M10 0.5H219C224.247 0.5 228.5 4.7533 228.5 10V46C228.5 51.2467 224.247 55.5 219 55.5H10C4.7533 55.5 0.5 51.2467 0.5 46V10C0.5 4.75329 4.75329 0.5 10 0.5Z" 
+              stroke="currentColor" 
+              className="transition-colors duration-300"
+            />
+            {/* Text path */}
+            <path 
+              d="M72.9 36.24C72.06 36.24 71.3733 36.1133 70.84 35.86C70.32 35.5933 69.9533 35.24 69.74 34.8H69.64V36H68.2V31.9H69.64V32.82C69.64 33.1533 69.6867 33.4667 69.78 33.76C69.8867 34.04 70.0533 34.2867 70.28 34.5C70.52 34.7133 70.8267 34.88 71.2 35C71.5867 35.12 72.0533 35.18 72.6 35.18C73.76 35.18 74.5933 34.9333 75.1 34.44C75.62 33.9467 75.88 33.2867 75.88 32.46C75.88 31.7533 75.68 31.2 75.28 30.8C74.8933 30.4 74.28 30.0867 73.44 29.86L72.34 29.58C71.1 29.26 70.14 28.78 69.46 28.14C68.78 27.5 68.44 26.62 68.44 25.5C68.44 24.94 68.5467 24.4333 68.76 23.98C68.9733 23.5133 69.2733 23.12 69.66 22.8C70.0467 22.48 70.5067 22.2333 71.04 22.06C71.5867 21.8867 72.1867 21.8 72.84 21.8C73.6 21.8 74.22 21.92 74.7 22.16C75.1933 22.3867 75.54 22.7067 75.74 23.12H75.86V22.04H77.3V25.94H75.86V25.02C75.86 24.6867 75.8067 24.3867 75.7 24.12C75.6067 23.8533 75.44 23.6267 75.2 23.44C74.96 23.2533 74.6467 23.1133 74.26 23.02C73.8733 22.9133 73.4 22.86 72.84 22.86C71.9067 22.86 71.2067 23.0733 70.74 23.5C70.2733 23.9267 70.04 24.4867 70.04 25.18C70.04 25.9 70.2467 26.4667 70.66 26.88C71.0867 27.28 71.7533 27.6 72.66 27.84L73.68 28.1C74.8933 28.42 75.8267 28.9 76.48 29.54C77.1333 30.18 77.46 31.02 77.46 32.06C77.46 32.66 77.36 33.22 77.16 33.74C76.96 34.2467 76.6667 34.6867 76.28 35.06C75.8933 35.4333 75.4133 35.7267 74.84 35.94C74.28 36.14 73.6333 36.24 72.9 36.24ZM79.4578 35.08H80.9378V22.34L79.4578 22.08V21.38L82.5778 20.8V27.22H82.6578C82.7378 27.02 82.8578 26.8133 83.0178 26.6C83.1778 26.3867 83.3778 26.1933 83.6178 26.02C83.8711 25.8467 84.1578 25.7067 84.4778 25.6C84.8111 25.4933 85.1845 25.44 85.5978 25.44C86.8378 25.44 87.7245 25.7667 88.2578 26.42C88.7911 27.06 89.0578 28.0267 89.0578 29.32V35.08H90.5378V36H85.9378V35.08H87.4178V29.46C87.4178 28.4867 87.2245 27.7667 86.8378 27.3C86.4511 26.82 85.8378 26.58 84.9978 26.58C84.7045 26.58 84.4111 26.62 84.1178 26.7C83.8378 26.78 83.5778 26.9067 83.3378 27.08C83.1111 27.2533 82.9245 27.4667 82.7778 27.72C82.6445 27.9733 82.5778 28.2733 82.5778 28.62V35.08H84.0578V36H79.4578V35.08ZM96.8783 35.26C97.3716 35.26 97.7983 35.18 98.1583 35.02C98.5316 34.8467 98.8316 34.6133 99.0583 34.32C99.2983 34.0133 99.4716 33.66 99.5783 33.26C99.6983 32.8467 99.7583 32.4 99.7583 31.92V29.76C99.7583 29.28 99.6983 28.84 99.5783 28.44C99.4716 28.0267 99.2983 27.6733 99.0583 27.38C98.8316 27.0733 98.5316 26.84 98.1583 26.68C97.7983 26.5067 97.3716 26.42 96.8783 26.42C96.3716 26.42 95.9383 26.5067 95.5783 26.68C95.2183 26.84 94.9183 27.0733 94.6783 27.38C94.4516 27.6733 94.2783 28.0267 94.1583 28.44C94.0516 28.84 93.9983 29.28 93.9983 29.76V31.92C93.9983 32.4 94.0516 32.8467 94.1583 33.26C94.2783 33.66 94.4516 34.0133 94.6783 34.32C94.9183 34.6133 95.2183 34.8467 95.5783 35.02C95.9383 35.18 96.3716 35.26 96.8783 35.26ZM96.8783 36.24C96.1716 36.24 95.5249 36.1133 94.9383 35.86C94.3516 35.6067 93.8516 35.2467 93.4383 34.78C93.0249 34.3 92.7049 33.7333 92.4783 33.08C92.2516 32.4133 92.1383 31.6667 92.1383 30.84C92.1383 30.0267 92.2516 29.2867 92.4783 28.62C92.7049 27.9533 93.0249 27.3867 93.4383 26.92C93.8516 26.44 94.3516 26.0733 94.9383 25.82C95.5249 25.5667 96.1716 25.44 96.8783 25.44C97.5849 25.44 98.2316 25.5667 98.8183 25.82C99.4049 26.0733 99.9049 26.44 100.318 26.92C100.732 27.3867 101.052 27.9533 101.278 28.62C101.505 29.2867 101.618 30.0267 101.618 30.84C101.618 31.6667 101.505 32.4133 101.278 33.08C101.052 33.7333 100.732 34.3 100.318 34.78C99.9049 35.2467 99.4049 35.6067 98.8183 35.86C98.2316 36.1133 97.5849 36.24 96.8783 36.24ZM103.327 39.08H104.807V26.98L103.327 26.72V26.04L106.447 25.44V27.24H106.527C106.754 26.7467 107.114 26.3267 107.607 25.98C108.101 25.62 108.754 25.44 109.567 25.44C110.847 25.44 111.867 25.9067 112.627 26.84C113.401 27.76 113.787 29.0933 113.787 30.84C113.787 32.5867 113.401 33.9267 112.627 34.86C111.867 35.78 110.847 36.24 109.567 36.24C108.767 36.24 108.114 36.0667 107.607 35.72C107.114 35.3733 106.754 34.9533 106.527 34.46H106.447V39.08H108.327V40H103.327V39.08ZM109.087 35.1C110.007 35.1 110.721 34.7933 111.227 34.18C111.747 33.5533 112.007 32.72 112.007 31.68V30C112.007 28.96 111.747 28.1333 111.227 27.52C110.721 26.8933 110.007 26.58 109.087 26.58C108.767 26.58 108.447 26.6267 108.127 26.72C107.807 26.8133 107.521 26.9467 107.267 27.12C107.027 27.2933 106.827 27.5133 106.667 27.78C106.521 28.0333 106.447 28.32 106.447 28.64V33.04C106.447 33.36 106.521 33.6533 106.667 33.92C106.827 34.1733 107.027 34.3867 107.267 34.56C107.521 34.7333 107.807 34.8667 108.127 34.96C108.447 35.0533 108.767 35.1 109.087 35.1ZM120.541 35.08H122.041V22.96H120.541V22.04H123.921L131.421 33.24H131.501V22.96H130.001V22.04H134.101V22.96H132.601V36H131.261L123.221 23.98H123.141V35.08H124.641V36H120.541V35.08ZM140.55 35.26C141.043 35.26 141.47 35.18 141.83 35.02C142.203 34.8467 142.503 34.6133 142.73 34.32C142.97 34.0133 143.143 33.66 143.25 33.26C143.37 32.8467 143.43 32.4 143.43 31.92V29.76C143.43 29.28 143.37 28.84 143.25 28.44C143.143 28.0267 142.97 27.6733 142.73 27.38C142.503 27.0733 142.203 26.84 141.83 26.68C141.47 26.5067 141.043 26.42 140.55 26.42C140.043 26.42 139.61 26.5067 139.25 26.68C138.89 26.84 138.59 27.0733 138.35 27.38C138.123 27.6733 137.95 28.0267 137.83 28.44C137.723 28.84 137.67 29.28 137.67 29.76V31.92C137.67 32.4 137.723 32.8467 137.83 33.26C137.95 33.66 138.123 34.0133 138.35 34.32C138.59 34.6133 138.89 34.8467 139.25 35.02C139.61 35.18 140.043 35.26 140.55 35.26ZM140.55 36.24C139.843 36.24 139.197 36.1133 138.61 35.86C138.023 35.6067 137.523 35.2467 137.11 34.78C136.697 34.3 136.377 33.7333 136.15 33.08C135.923 32.4133 135.81 31.6667 135.81 30.84C135.81 30.0267 135.923 29.2867 136.15 28.62C136.377 27.9533 136.697 27.3867 137.11 26.92C137.523 26.44 138.023 26.0733 138.61 25.82C139.197 25.5667 139.843 25.44 140.55 25.44C141.257 25.44 141.903 25.5667 142.49 25.82C143.077 26.0733 143.577 26.44 143.99 26.92C144.403 27.3867 144.723 27.9533 144.95 28.62C145.177 29.2867 145.29 30.0267 145.29 30.84C145.29 31.6667 145.177 32.4133 144.95 33.08C144.723 33.7333 144.403 34.3 143.99 34.78C143.577 35.2467 143.077 35.6067 142.49 35.86C141.903 36.1133 141.257 36.24 140.55 36.24ZM147.263 26.6H146.223V25.68H150.363V26.6H148.923L150.983 34.4H151.062L153.563 25.68H154.943L157.243 34.4H157.323L159.423 26.6H157.983V25.68H161.443V26.6H160.403L157.783 36H156.183L153.963 27.9H153.883L151.463 36H149.863L147.263 26.6Z" 
+              fill="currentColor" 
+              className="transition-colors duration-300"
+            />
+          </svg>
+        </Link>
       </div>
 
     </section>
   );
 }
-
