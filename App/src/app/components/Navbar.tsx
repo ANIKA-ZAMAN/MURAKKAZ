@@ -58,7 +58,7 @@ export default function Navbar() {
   if (isHome) {
     // 1. Homepage Navbar: Clean, transparent background, custom outline SVG elements and pill search input, no border/box.
     return (
-      <header className="w-full px-6 pt-10 pb-4 flex justify-center items-center sticky top-0 z-50 animate-fade-up bg-transparent" suppressHydrationWarning>
+      <header className="w-full px-12 md:px-20 pt-10 pb-4 flex justify-center items-center sticky top-0 z-50 animate-fade-up bg-transparent" suppressHydrationWarning>
         <nav className="w-full max-w-[1400px] select-none flex items-center justify-between bg-transparent" suppressHydrationWarning>
           
           {/* Logo - Clickable red SVG logo */}
