@@ -35,7 +35,7 @@ export default function Hero() {
           <Link
             href="/shop"
             suppressHydrationWarning
-            className="px-12 py-3.5 rounded-[14px] border border-[#4a4a4a] bg-transparent font-serif-text text-[15px] sm:text-[16px] text-[#4a4a4a] hover:bg-[#4a4a4a] hover:text-white transition-all duration-300 shadow-sm"
+            className="px-14 py-3.5 rounded-[12px] border border-[#313134] bg-transparent font-serif-text text-[15px] sm:text-[16px] text-[#313134] hover:bg-[#313134] hover:text-white transition-all duration-300"
             style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           >
             Shop Now
