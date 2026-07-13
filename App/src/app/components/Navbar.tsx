@@ -59,7 +59,7 @@ export default function Navbar() {
   if (isHome) {
     // 1. Homepage Navbar: Mockup-based alignment matching other pages, but transparent and without outer border.
     return (
-      <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50 animate-fade-up bg-transparent" suppressHydrationWarning>
+      <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50 bg-transparent" suppressHydrationWarning>
         <nav className="relative w-full max-w-[1348px] h-16 overflow-hidden select-none flex items-center justify-between px-6 bg-transparent" suppressHydrationWarning>
           
           {/* SVG background mockup without border */}
@@ -164,8 +164,8 @@ export default function Navbar() {
 
   // 2. Other Pages Navbar: Bordered layout with mockup background SVG navbar-m.svg
   return (
-    <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50 animate-fade-up" suppressHydrationWarning>
-      <nav className="relative w-full max-w-[1348px] h-16 rounded-[20px] bg-[#E5DCCB]/80 backdrop-blur-md overflow-hidden select-none flex items-center justify-between px-6" suppressHydrationWarning>
+    <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50" suppressHydrationWarning>
+      <nav className="relative w-full max-w-[1348px] h-16 rounded-[20px] bg-[#F5F1E8]/80 backdrop-blur-md overflow-hidden select-none flex items-center justify-between px-6" suppressHydrationWarning>
         
         {/* SVG background mockup */}
         <div className="absolute inset-0 z-0 pointer-events-none w-full h-full flex justify-center items-center">

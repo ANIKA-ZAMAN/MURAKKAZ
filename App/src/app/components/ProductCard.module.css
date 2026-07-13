@@ -189,10 +189,10 @@
   position: fixed;
   top: 100px;
   right: 24px;
-  background-color: #E5DCCB;
-  background-image: url('/plaster-stone-texture.png');
-  background-repeat: repeat;
-  background-size: 400px;
+  background-color: #F5F1E8;
+  /* background-image: url('/plaster-stone-texture.png'); */
+  /* background-repeat: repeat; */
+  /* background-size: 400px; */
   border: 1px solid #767677;
   border-radius: 8px;
   padding: 1.2rem 1.5rem;

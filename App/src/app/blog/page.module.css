@@ -205,7 +205,7 @@
   font-family: var(--font-serif-text), Georgia, serif;
   font-size: 0.82rem;
   font-weight: 500;
-  color: #E5DCCB;
+  color: #F5F1E8;
   background-color: #313134;
   border: 1px solid #313134;
   border-radius: 50px;
@@ -299,7 +299,7 @@
 
 .activePage {
   background-color: #313134;
-  color: #E5DCCB;
+  color: #F5F1E8;
   border-color: #313134;
 }
 

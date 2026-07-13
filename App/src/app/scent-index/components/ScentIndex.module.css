@@ -6,10 +6,10 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-color: #E5DCCB;
-  background-image: url('/plaster-stone-texture.png');
-  background-repeat: repeat;
-  background-size: 800px;
+  background-color: #F5F1E8;
+  /* background-image: url('/plaster-stone-texture.png'); */
+  /* background-repeat: repeat; */
+  /* background-size: 800px; */
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -293,7 +293,7 @@
 .gallerySection {
   width: 100%;
   background-color: #313134;
-  color: #E5DCCB;
+  color: #F5F1E8;
   padding: 4rem 0;
   display: flex;
   justify-content: center;
@@ -321,7 +321,7 @@
   font-size: clamp(1.65rem, 2.5vw, 2.25rem);
   font-weight: 400;
   margin-bottom: 1.5rem;
-  color: #E5DCCB;
+  color: #F5F1E8;
   letter-spacing: -0.01em;
 }
 
@@ -342,7 +342,7 @@
   border-radius: 50px;
   font-family: var(--font-serif-title);
   font-size: 0.9rem;
-  color: #E5DCCB;
+  color: #F5F1E8;
   text-decoration: none;
   background-color: transparent;
   cursor: pointer;
@@ -354,9 +354,9 @@
 }
 
 .exploreBtn:hover {
-  background-color: #E5DCCB;
+  background-color: #F5F1E8;
   color: #313134;
-  border-color: #E5DCCB;
+  border-color: #F5F1E8;
   transform: translateY(-2px);
 }
 
