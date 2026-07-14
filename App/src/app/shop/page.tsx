@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterSidebar from "../components/FilterSidebar";
 import ProductGrid from "../components/ProductGrid";
@@ -17,8 +18,17 @@ export default function Shop() {
   });
 
   const [maxPrice, setMaxPrice] = useState<number>(3000);
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q !== null) {
+      setSearchQuery(q);
+      setCurrentPage(1);
+    }
+  }, [searchParams]);
 
   const handleCheckboxChange = (categoryId: string, option: string) => {
     setSelectedFilters((prev) => {

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const homeNavLinks = [
@@ -26,9 +26,18 @@ const originalNavLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [cartCount, setCartCount] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   const updateCount = () => {
     const saved = localStorage.getItem("cart-items");
@@ -143,14 +152,16 @@ export default function Navbar() {
 
           {/* Right Section spacer & overlay icons aligning with background SVG */}
           <div className="flex items-center z-10 flex-shrink-0" suppressHydrationWarning>
-            <div className="w-[160px] xl:w-[180px] h-9 relative mr-2" suppressHydrationWarning>
+            <form onSubmit={handleSearchSubmit} className="w-[160px] xl:w-[180px] h-9 relative mr-2" suppressHydrationWarning>
               <input
                 type="text"
                 placeholder="Search"
-                className="absolute left-[15%] top-0 w-[80%] h-full border-none outline-none bg-transparent font-serif-text text-[13px] text-neutral-800 placeholder:text-transparent"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="absolute left-[3%] top-[10%] w-[94%] h-[80%] border-none outline-none bg-[#FAF7F2] rounded-full px-3 font-serif-text text-[13px] text-neutral-800 placeholder:text-neutral-400"
                 aria-label="Search"
               />
-            </div>
+            </form>
           </div>
 
           <Link 
@@ -279,14 +290,16 @@ export default function Navbar() {
 
         {/* Right Section spacer & overlay icons aligning with background SVG */}
         <div className="flex items-center z-10 flex-shrink-0" suppressHydrationWarning>
-          <div className="w-[160px] xl:w-[180px] h-9 relative mr-2" suppressHydrationWarning>
+          <form onSubmit={handleSearchSubmit} className="w-[160px] xl:w-[180px] h-9 relative mr-2" suppressHydrationWarning>
             <input
               type="text"
               placeholder="Search"
-              className="absolute left-[15%] top-0 w-[80%] h-full border-none outline-none bg-transparent font-serif-text text-[13px] text-neutral-800 placeholder:text-transparent"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="absolute left-[3%] top-[10%] w-[94%] h-[80%] border-none outline-none bg-[#FAF7F2] rounded-full px-3 font-serif-text text-[13px] text-neutral-800 placeholder:text-neutral-400"
               aria-label="Search"
             />
-          </div>
+          </form>
         </div>
 
         <Link 
