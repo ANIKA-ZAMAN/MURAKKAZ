@@ -128,10 +128,11 @@ export default function Navbar() {
                 <Link
                   href={link.href}
                   suppressHydrationWarning
+                  style={{ color: pathname === link.href ? "#820011" : undefined }}
                   className={`font-serif-text text-[13px] tracking-wide transition-colors ${
                     pathname === link.href 
-                      ? "text-[#820011] font-semibold" 
-                      : "text-neutral-700 hover:text-[#820011] hover:font-medium"
+                      ? "text-brand-maroon font-semibold" 
+                      : "text-neutral-700 hover:text-brand-maroon hover:font-medium"
                   }`}
                 >
                   {link.label}
@@ -263,10 +264,11 @@ export default function Navbar() {
               <Link
                 href={link.href}
                 suppressHydrationWarning
+                style={{ color: pathname === link.href ? "#820011" : undefined }}
                 className={`font-serif-text text-[13px] tracking-wide transition-colors ${
                   pathname === link.href 
-                    ? "text-[#820011] font-semibold" 
-                    : "text-neutral-700 hover:text-[#820011] hover:font-medium"
+                    ? "text-brand-maroon font-semibold" 
+                    : "text-neutral-700 hover:text-brand-maroon hover:font-medium"
                 }`}
               >
                 {link.label}
