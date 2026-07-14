@@ -768,12 +768,12 @@
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(47, 9, 9, 0.04);
-  min-height: 720px;
+  min-height: 580px;
 }
 
 .authFormColumn {
   flex: 1;
-  padding: 4rem 5rem;
+  padding: 2.5rem 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -783,7 +783,7 @@
   flex: 1.25;
   position: relative;
   background-color: #eeeae0;
-  min-height: 720px;
+  min-height: 580px;
   display: block;
 }
 
