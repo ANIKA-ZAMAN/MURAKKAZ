@@ -29,6 +29,10 @@ export default function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const [mounted, setMounted] = useState(false);
 
+  const isWishlistActive = pathname === "/wishlist";
+  const isCartActive = pathname === "/cart";
+  const isAccountActive = pathname === "/account" || pathname.startsWith("/account/");
+
   const updateCount = () => {
     const saved = localStorage.getItem("cart-items");
     if (saved) {
@@ -125,7 +129,11 @@ export default function Navbar() {
           <Link 
             href="/wishlist" 
             suppressHydrationWarning
-            className="absolute right-[103px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+            className={`absolute right-[103px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer rounded-full transition-colors ${
+              isWishlistActive 
+                ? "bg-[#820011]/15 hover:bg-[#820011]/25" 
+                : "hover:bg-[#820011]/10"
+            }`}
             aria-label="Wishlist"
           >
             <span className="sr-only">Wishlist</span>
@@ -134,7 +142,11 @@ export default function Navbar() {
           <Link 
             href="/cart" 
             suppressHydrationWarning
-            className="absolute right-[64px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+            className={`absolute right-[64px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer rounded-full transition-colors ${
+              isCartActive 
+                ? "bg-[#820011]/15 hover:bg-[#820011]/25" 
+                : "hover:bg-[#820011]/10"
+            }`}
             aria-label="Cart"
           >
             <span className="sr-only">Cart</span>
@@ -148,7 +160,11 @@ export default function Navbar() {
           <Link 
             href="/account"
             aria-label="Account"
-            className="absolute right-[25px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
+            className={`absolute right-[25px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer border-none bg-transparent outline-none rounded-full transition-colors ${
+              isAccountActive 
+                ? "bg-[#820011]/15 hover:bg-[#820011]/25" 
+                : "hover:bg-[#820011]/10"
+            }`}
             suppressHydrationWarning
           >
             <span className="sr-only">Account</span>
@@ -228,7 +244,11 @@ export default function Navbar() {
         <Link 
           href="/wishlist" 
           suppressHydrationWarning
-          className="absolute right-[103px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+          className={`absolute right-[103px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer rounded-full transition-colors ${
+            isWishlistActive 
+              ? "bg-[#820011]/15 hover:bg-[#820011]/25" 
+              : "hover:bg-[#820011]/10"
+          }`}
           aria-label="Wishlist"
         >
           <span className="sr-only">Wishlist</span>
@@ -237,7 +257,11 @@ export default function Navbar() {
         <Link 
           href="/cart" 
           suppressHydrationWarning
-          className="absolute right-[64px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+          className={`absolute right-[64px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer rounded-full transition-colors ${
+            isCartActive 
+              ? "bg-[#820011]/15 hover:bg-[#820011]/25" 
+              : "hover:bg-[#820011]/10"
+          }`}
           aria-label="Cart"
         >
           <span className="sr-only">Cart</span>
@@ -251,7 +275,11 @@ export default function Navbar() {
         <Link 
           href="/account"
           aria-label="Account"
-          className="absolute right-[25px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
+          className={`absolute right-[25px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer border-none bg-transparent outline-none rounded-full transition-colors ${
+            isAccountActive 
+              ? "bg-[#820011]/15 hover:bg-[#820011]/25" 
+              : "hover:bg-[#820011]/10"
+          }`}
           suppressHydrationWarning
         >
           <span className="sr-only">Account</span>
