@@ -130,8 +130,8 @@ export default function Navbar() {
                   suppressHydrationWarning
                   className={`font-serif-text text-[13px] tracking-wide transition-colors ${
                     pathname === link.href 
-                      ? "text-neutral-900 font-semibold" 
-                      : "text-neutral-700 hover:text-[#c5a880] hover:font-medium"
+                      ? "text-[#820011] font-semibold" 
+                      : "text-neutral-700 hover:text-[#820011] hover:font-medium"
                   }`}
                 >
                   {link.label}
@@ -265,8 +265,8 @@ export default function Navbar() {
                 suppressHydrationWarning
                 className={`font-serif-text text-[13px] tracking-wide transition-colors ${
                   pathname === link.href 
-                    ? "text-neutral-900 font-semibold" 
-                    : "text-neutral-700 hover:text-[#c5a880] hover:font-medium"
+                    ? "text-[#820011] font-semibold" 
+                    : "text-neutral-700 hover:text-[#820011] hover:font-medium"
                 }`}
               >
                 {link.label}
