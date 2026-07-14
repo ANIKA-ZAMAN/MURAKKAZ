@@ -737,3 +737,263 @@
   }
 }
 
+/* ==============================
+   Modal Overlay & Content
+   ============================== */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(49, 49, 52, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modalContent {
+  background-color: #F5F1E8; /* warm cream */
+  border: 1px solid #d8d5cd;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 480px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: #7a7a7d;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+  color: #313134;
+}
+
+.modalTitle {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 1.65rem;
+  font-weight: 500;
+  color: #313134;
+  margin-bottom: 0.5rem;
+}
+
+.modalSubtitle {
+  font-size: 0.85rem;
+  color: #7a7a7d;
+  line-height: 1.4;
+  margin-bottom: 1.75rem;
+}
+
+/* Event Summary Box in Modal */
+.modalEventSummary {
+  display: flex;
+  gap: 1.25rem;
+  background-color: #eeeae0;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1.75rem;
+  align-items: center;
+}
+
+.modalEventDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #313134;
+  color: #ffffff;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.modalEventDay {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.modalEventMonth {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.modalEventInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.modalEventInfo h4 {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #313134;
+  line-height: 1.25;
+}
+
+.modalEventInfo p {
+  font-size: 0.78rem;
+  color: #7a7a7d;
+}
+
+.modalEventTime {
+  font-weight: 500;
+}
+
+/* Form Styling */
+.modalFormGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.modalInputWrapper {
+  width: 100%;
+}
+
+.modalInput {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.9rem;
+  background-color: transparent;
+  border: 1px solid #d8d5cd;
+  border-radius: 8px;
+  color: #313134;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modalInput::placeholder {
+  color: #a3a3a6;
+}
+
+.modalInput:focus {
+  border-color: #313134;
+  box-shadow: 0 0 0 2px rgba(49, 49, 52, 0.05);
+}
+
+.modalSubmitBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #313134;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.modalSubmitBtn:hover {
+  opacity: 0.9;
+}
+
+/* Success State */
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.successIconWrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(46, 125, 50, 0.1);
+  color: #2e7d32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.successIcon {
+  width: 32px;
+  height: 32px;
+}
+
+.successText {
+  font-size: 0.88rem;
+  color: #7a7a7d;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.successSummaryBox {
+  background-color: #eeeae0;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  width: 100%;
+  margin-bottom: 1.75rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.successSummaryBox p {
+  font-size: 0.8rem;
+  color: #313134;
+}
+
+.successSummaryBox strong {
+  color: #313134;
+}
+
+.modalCloseDoneBtn {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #313134;
+  background-color: transparent;
+  border: 1px solid #d8d5cd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modalCloseDoneBtn:hover {
+  background-color: #eeeae0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+

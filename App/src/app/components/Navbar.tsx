@@ -5,7 +5,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
-
 const homeNavLinks = [
   { label: "Our Story", href: "/our-story" },
   { label: "Shop", href: "/shop" },
@@ -121,41 +120,39 @@ export default function Navbar() {
                 aria-label="Search"
               />
             </div>
-
-            <div className="flex items-center gap-1.5 xl:gap-2 ml-4" suppressHydrationWarning>
-              <Link 
-                href="/wishlist" 
-                suppressHydrationWarning
-                className="w-8 h-8 block cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
-                aria-label="Wishlist"
-              >
-                <span className="sr-only">Wishlist</span>
-              </Link>
-
-              <Link 
-                href="/cart" 
-                suppressHydrationWarning
-                className="w-8 h-8 block relative cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
-                aria-label="Cart"
-              >
-                <span className="sr-only">Cart</span>
-                {cartCount > 0 && (
-                  <span className="absolute top-[2px] right-[12px] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-
-              <Link 
-                href="/account"
-                aria-label="Account"
-                className="w-8 h-8 block cursor-pointer border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
-                suppressHydrationWarning
-              >
-                <span className="sr-only">Account</span>
-              </Link>
-            </div>
           </div>
+
+          <Link 
+            href="/wishlist" 
+            suppressHydrationWarning
+            className="absolute right-[103px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+            aria-label="Wishlist"
+          >
+            <span className="sr-only">Wishlist</span>
+          </Link>
+
+          <Link 
+            href="/cart" 
+            suppressHydrationWarning
+            className="absolute right-[64px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+            aria-label="Cart"
+          >
+            <span className="sr-only">Cart</span>
+            {cartCount > 0 && (
+              <span className="absolute top-[-3px] right-[-3px] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
+          <Link 
+            href="/account"
+            aria-label="Account"
+            className="absolute right-[25px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
+            suppressHydrationWarning
+          >
+            <span className="sr-only">Account</span>
+          </Link>
 
         </nav>
       </header>
@@ -226,41 +223,39 @@ export default function Navbar() {
               aria-label="Search"
             />
           </div>
-
-          <div className="flex items-center gap-1.5 xl:gap-2 ml-4" suppressHydrationWarning>
-            <Link 
-              href="/wishlist" 
-              suppressHydrationWarning
-              className="w-8 h-8 block cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
-              aria-label="Wishlist"
-            >
-              <span className="sr-only">Wishlist</span>
-            </Link>
-
-            <Link 
-              href="/cart" 
-              suppressHydrationWarning
-              className="w-8 h-8 block relative cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
-              aria-label="Cart"
-            >
-              <span className="sr-only">Cart</span>
-              {cartCount > 0 && (
-                <span className="absolute top-[2px] right-[12px] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-
-            <Link 
-              href="/account"
-              aria-label="Account"
-              className="w-8 h-8 block cursor-pointer border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
-              suppressHydrationWarning
-            >
-              <span className="sr-only">Account</span>
-            </Link>
-          </div>
         </div>
+
+        <Link 
+          href="/wishlist" 
+          suppressHydrationWarning
+          className="absolute right-[103px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+          aria-label="Wishlist"
+        >
+          <span className="sr-only">Wishlist</span>
+        </Link>
+
+        <Link 
+          href="/cart" 
+          suppressHydrationWarning
+          className="absolute right-[64px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer hover:bg-neutral-800/5 rounded-full transition-colors" 
+          aria-label="Cart"
+        >
+          <span className="sr-only">Cart</span>
+          {cartCount > 0 && (
+            <span className="absolute top-[-3px] right-[-3px] bg-[#820011] text-white font-serif-text text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center pointer-events-none shadow" suppressHydrationWarning>
+              {cartCount}
+            </span>
+          )}
+        </Link>
+
+        <Link 
+          href="/account"
+          aria-label="Account"
+          className="absolute right-[25px] top-1/2 -translate-y-1/2 w-6 h-6 z-20 cursor-pointer border-none bg-transparent outline-none hover:bg-neutral-800/5 rounded-full transition-colors"
+          suppressHydrationWarning
+        >
+          <span className="sr-only">Account</span>
+        </Link>
 
       </nav>
     </header>

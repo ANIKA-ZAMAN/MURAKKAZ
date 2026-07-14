@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
 import {
@@ -8,6 +8,7 @@ import {
   previousEvents,
   galleryImages,
   storeLocations,
+  UpcomingEvent,
 } from "../data/eventsData";
 
 export default function EventsPage() {
@@ -15,6 +16,74 @@ export default function EventsPage() {
   const [meetGreetEmail, setMeetGreetEmail] = useState("");
   const [locationSearch, setLocationSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+
+  // States for Event Reminder Modal
+  const [selectedEvent, setSelectedEvent] = useState<UpcomingEvent | null>(null);
+  const [reminderName, setReminderName] = useState("");
+  const [reminderEmail, setReminderEmail] = useState("");
+  const [reminderSubmitted, setReminderSubmitted] = useState(false);
+
+  // Prefill reminder fields if user is logged in
+  useEffect(() => {
+    if (typeof window !== "undefined" && selectedEvent) {
+      const savedUser = localStorage.getItem("murakkaz-user");
+      if (savedUser) {
+        try {
+          const parsed = JSON.parse(savedUser);
+          if (parsed.name) setReminderName(parsed.name);
+          if (parsed.email) setReminderEmail(parsed.email);
+        } catch (e) {
+          console.error("Failed to parse user session", e);
+        }
+      }
+    }
+  }, [selectedEvent]);
+
+  const handleSetReminderSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reminderName || !reminderEmail || !selectedEvent) return;
+
+    // Save reminder locally to simulate admin capture / backend queue
+    const newReminder = {
+      eventName: selectedEvent.title,
+      eventDate: `${selectedEvent.day} ${selectedEvent.month}`,
+      eventLocation: selectedEvent.location,
+      name: reminderName,
+      email: reminderEmail,
+      registeredAt: new Date().toISOString(),
+    };
+
+    const existingRemindersRaw = localStorage.getItem("murakkaz-event-reminders");
+    let reminders = [];
+    if (existingRemindersRaw) {
+      try {
+        reminders = JSON.parse(existingRemindersRaw);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    reminders.push(newReminder);
+    localStorage.setItem("murakkaz-event-reminders", JSON.stringify(reminders));
+
+    // Open mailto link so they can email details to organizer
+    const subject = encodeURIComponent(`Reminder Subscription: ${selectedEvent.title}`);
+    const body = encodeURIComponent(
+      `Hello Murakkaz Team,\n\n` +
+      `I would like to set an email reminder for the following event:\n` +
+      `- Event: ${selectedEvent.title}\n` +
+      `- Date: ${selectedEvent.day} ${selectedEvent.month}\n` +
+      `- Location: ${selectedEvent.location}\n\n` +
+      `My Details:\n` +
+      `- Name: ${reminderName}\n` +
+      `- Email: ${reminderEmail}\n\n` +
+      `Please notify me when this event is starting.\n\n` +
+      `Thank you!\n` +
+      `${reminderName}`
+    );
+    
+    window.open(`mailto:sadid@murakkaz.com?subject=${subject}&body=${body}`, "_self");
+    setReminderSubmitted(true);
+  };
 
   const itemsPerPage = 3;
   const totalPages = Math.ceil(upcomingEvents.length / itemsPerPage);
@@ -55,7 +124,15 @@ export default function EventsPage() {
                   <h3 className={styles.upcomingTitle}>{event.title}</h3>
                   <p className={styles.upcomingLocation}>{event.location}</p>
                   <p className={styles.upcomingDaysLeft}>{event.daysLeft}</p>
-                  <button className={styles.setReminderBtn}>Set Reminder</button>
+                  <button
+                    className={styles.setReminderBtn}
+                    onClick={() => {
+                      setSelectedEvent(event);
+                      setReminderSubmitted(false);
+                    }}
+                  >
+                    Set Reminder
+                  </button>
                 </div>
 
                 {/* Col 3 & 4: Image and Description — alternating */}
@@ -295,6 +372,82 @@ export default function EventsPage() {
           </div>
         </section>
       </main>
+
+      {/* Event Reminder Modal Dialog */}
+      {selectedEvent && (
+        <div className={styles.modalOverlay} onClick={() => setSelectedEvent(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.modalCloseBtn} onClick={() => setSelectedEvent(null)} aria-label="Close modal">
+              &times;
+            </button>
+            
+            {!reminderSubmitted ? (
+              <form onSubmit={handleSetReminderSubmit}>
+                <h3 className={styles.modalTitle}>Set Reminder</h3>
+                <p className={styles.modalSubtitle}>Receive an email reminder before the event starts.</p>
+                
+                <div className={styles.modalEventSummary}>
+                  <div className={styles.modalEventDate}>
+                    <span className={styles.modalEventDay}>{selectedEvent.day}</span>
+                    <span className={styles.modalEventMonth}>{selectedEvent.month}</span>
+                  </div>
+                  <div className={styles.modalEventInfo}>
+                    <h4>{selectedEvent.title}</h4>
+                    <p>{selectedEvent.location}</p>
+                    <p className={styles.modalEventTime}>{selectedEvent.time.replace('\n', ' ')}</p>
+                  </div>
+                </div>
+                
+                <div className={styles.modalFormGroups}>
+                  <div className={styles.modalInputWrapper}>
+                    <input
+                      type="text"
+                      required
+                      className={styles.modalInput}
+                      placeholder="Your Name"
+                      value={reminderName}
+                      onChange={(e) => setReminderName(e.target.value)}
+                    />
+                  </div>
+                  <div className={styles.modalInputWrapper}>
+                    <input
+                      type="email"
+                      required
+                      className={styles.modalInput}
+                      placeholder="Email Address"
+                      value={reminderEmail}
+                      onChange={(e) => setReminderEmail(e.target.value)}
+                    />
+                  </div>
+                </div>
+                
+                <button type="submit" className={styles.modalSubmitBtn}>
+                  Confirm Reminder <span className={styles.btnArrow}>↗</span>
+                </button>
+              </form>
+            ) : (
+              <div className={styles.successState}>
+                <div className={styles.successIconWrapper}>
+                  <svg className={styles.successIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <h3 className={styles.modalTitle}>Reminder Saved!</h3>
+                <p className={styles.successText}>
+                  We have queued your reminder registration. Click Close to return.
+                </p>
+                <div className={styles.successSummaryBox}>
+                  <p><strong>Event:</strong> {selectedEvent.title}</p>
+                  <p><strong>Registered Email:</strong> {reminderEmail}</p>
+                </div>
+                <button className={styles.modalCloseDoneBtn} onClick={() => setSelectedEvent(null)}>
+                  Close
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
