@@ -96,6 +96,9 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
 }
 
 .formGroup {
@@ -759,27 +762,28 @@
 .authCardWide {
   display: flex;
   width: 100%;
-  max-width: 960px;
+  max-width: 1348px;
   background-color: #faf7f2;
   border: 1px solid rgba(130, 120, 100, 0.15);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(47, 9, 9, 0.04);
+  min-height: 720px;
 }
 
 .authFormColumn {
   flex: 1;
-  padding: 3rem 2.5rem;
+  padding: 4rem 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .authImageColumn {
-  flex: 1.1;
+  flex: 1.25;
   position: relative;
   background-color: #eeeae0;
-  min-height: 580px;
+  min-height: 720px;
   display: block;
 }
 
