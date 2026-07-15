@@ -236,7 +236,7 @@ export default function EventsPage() {
             <div className={styles.galleryText}>
               <p className={styles.galleryDesc}>
                 Catch the highlights and unforgettable moments from our past events.
-                Browse through our curated gallery of fragrance showcases, meetups,
+                Browse through our created gallery of fragrance showcases, meetups,
                 and exclusive product launches across Bangladesh and beyond.
               </p>
               <a href="#" className={styles.readMoreLink}>Read More &gt;</a>

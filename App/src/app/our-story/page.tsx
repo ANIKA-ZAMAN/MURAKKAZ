@@ -7,15 +7,15 @@ export default function OurStoryPage() {
     <div className={styles.page}>
       <main className={styles.main}>
         {/* ========================================== */}
-        {/* SECTION 1: The Curator: Meet Murakkaz      */}
+        {/* SECTION 1: The Creator: Meet Murakkaz      */}
         {/* ========================================== */}
-        <section className={styles.curatorSection} aria-labelledby="curator-heading">
-          <div className={styles.curatorContainer}>
-            <div className={styles.curatorTextCol}>
-              <h1 id="curator-heading" className={styles.sectionHeadingLarge}>
-                The Curator: Meet<br />Murakkaz
+        <section className={styles.creatorSection} aria-labelledby="creator-heading">
+          <div className={styles.creatorContainer}>
+            <div className={styles.creatorTextCol}>
+              <h1 id="creator-heading" className={styles.sectionHeadingLarge}>
+                The Creator: Meet<br />Murakkaz
               </h1>
-              <p className={styles.curatorParagraph}>
+              <p className={styles.creatorParagraph}>
                 I didn&apos;t start Murakkaz to just sell bottles of perfume. I started
                 it to combine memories, heritage, and design, and wood sillage
                 luxury—making it unavoidable for our fragrance lovers in
@@ -23,11 +23,11 @@ export default function OurStoryPage() {
                 hand-picked, every detail is handled by my personal view.
               </p>
             </div>
-            <div className={styles.curatorImageCol}>
-              <div className={styles.imagePlaceholder} aria-label="Portrait of the Curator">
+            <div className={styles.creatorImageCol}>
+              <div className={styles.imagePlaceholder} aria-label="Portrait of the Creator">
                 <Image
                   src="/images/events/sadid.jpg"
-                  alt="The Curator of Murakkaz"
+                  alt="The Creator of Murakkaz"
                   fill
                   sizes="(max-width: 768px) 100vw, 500px"
                   className={styles.responsiveImage}
@@ -50,7 +50,7 @@ export default function OurStoryPage() {
             <div className={styles.journeyIntroRow}>
               <div className={styles.journeyIntroText}>
                 <h3 className={styles.journeyIntroTitle}>
-                  From an Obsession to curated fragrances.
+                  From an Obsession to created fragrances.
                 </h3>
                 <p className={styles.journeyIntroDesc}>
                   My obsession with fragrance started with a simple question: Why

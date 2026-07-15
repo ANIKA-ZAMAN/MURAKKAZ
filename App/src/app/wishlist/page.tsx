@@ -466,7 +466,7 @@ export default function WishlistPage() {
               <span>Murakkaz</span>
             </div>
             <p className={styles.footerDesc}>
-              Crafted and curated by Murakkaj. Redefining luxury fragrances in Bangladesh by bringing you world-class olfactory art with beast-mode longevity, without the ridiculous designer markups.
+              Crafted and created by Murakkaj. Redefining luxury fragrances in Bangladesh by bringing you world-class olfactory art with beast-mode longevity, without the ridiculous designer markups.
             </p>
           </div>
           <div className={styles.footerLinksCol}>

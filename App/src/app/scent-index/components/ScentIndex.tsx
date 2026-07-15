@@ -243,7 +243,11 @@ export default function ScentIndex() {
       {/* Main Page Layout Wrapper */}
       <main className={`${styles.mainContent} ${phase === "results" ? styles.mainContentResults : ""}`}>
         {(phase === "intro" || isTransitioningIntro) && (
-          <div className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}>
+          <div 
+            className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}
+            onClick={handleSealClick}
+            style={{ cursor: (!isSealPressed && !isSealedCracked) ? "pointer" : "default" }}
+          >
             {/* The split wooden/paper doors */}
             <div className={`${styles.introDoor} ${styles.introDoorLeft}`}>
               {/* Left broken seal half attached to the edge */}
@@ -292,7 +296,7 @@ export default function ScentIndex() {
                 </div>
                 
                 <p className={styles.introBody}>
-                  Every fragrance tells a different story. Answer seven carefully curated questions and we'll recommend the fragrances that best match your personality, preferences, and lifestyle.
+                  Every fragrance tells a different story. Answer seven carefully created questions and we'll recommend the fragrances that best match your personality, preferences, and lifestyle.
                 </p>
               </div>
               

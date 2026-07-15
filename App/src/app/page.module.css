@@ -49,26 +49,26 @@
 }
 
 /* ========================================== */
-/* SECTION 1: Curator                         */
+/* SECTION 1: Creator                         */
 /* ========================================== */
 
-.curatorSection {
+.creatorSection {
   width: 100%;
 }
 
-.curatorContainer {
+.creatorContainer {
   display: flex;
   gap: 3.5rem;
   align-items: center;
   justify-content: space-between;
 }
 
-.curatorTextCol {
+.creatorTextCol {
   flex: 1.1;
   max-width: 480px;
 }
 
-.curatorParagraph {
+.creatorParagraph {
   margin-top: 1.5rem;
   font-family: var(--font-serif-text);
   font-size: 0.95rem;
@@ -78,13 +78,13 @@
   letter-spacing: -0.005em;
 }
 
-.curatorImageCol {
+.creatorImageCol {
   flex: 0.9;
   display: flex;
   justify-content: flex-end;
 }
 
-.curatorImageCol .imagePlaceholder {
+.creatorImageCol .imagePlaceholder {
   max-width: 380px;
   aspect-ratio: 4 / 5;
   box-shadow: 0 10px 24px rgba(49, 49, 52, 0.05);
@@ -430,7 +430,7 @@
     gap: 5rem;
     padding: 4rem 2rem;
   }
-  .curatorContainer {
+  .creatorContainer {
     gap: 2.5rem;
   }
   .galleryContainer {
@@ -445,7 +445,7 @@
     padding: 3.5rem 1.5rem;
   }
   
-  .curatorContainer {
+  .creatorContainer {
     gap: 2.5rem;
   }
 
@@ -484,22 +484,22 @@
 
 /* Small Tablets / Large Mobile (768px to 834px boundary) */
 @media (max-width: 834px) {
-  .curatorContainer {
+  .creatorContainer {
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
   }
 
-  .curatorTextCol {
+  .creatorTextCol {
     max-width: 100%;
   }
 
-  .curatorImageCol {
+  .creatorImageCol {
     width: 100%;
     justify-content: center;
   }
 
-  .curatorImageCol .imagePlaceholder {
+  .creatorImageCol .imagePlaceholder {
     max-width: 100%;
     width: 100%;
     aspect-ratio: 16 / 9;
@@ -528,7 +528,7 @@
     padding: 2.5rem 1.25rem;
   }
 
-  .curatorParagraph {
+  .creatorParagraph {
     margin-top: 1.25rem;
     font-size: 0.9rem;
     line-height: 1.6;
