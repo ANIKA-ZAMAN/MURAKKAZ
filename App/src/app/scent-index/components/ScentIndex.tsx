@@ -420,66 +420,69 @@ export default function ScentIndex() {
                   router.push(`/product/${rec.product.id}`);
                 };
 
-                return (
                   <div 
                     key={rec.product.id} 
-                    className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
-                    style={{ animationDelay: `${0.15 * index}s`, cursor: "pointer" }}
-                    onClick={handleCardClick}
+                    className={styles.cardEntryWrapper}
+                    style={{ animationDelay: `${0.22 * index}s` }}
                   >
-                  <div className={styles.cardHeader}>
-                    <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
-                      {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
-                    </span>
-                  </div>
-
-                  <div className={styles.cardImgWrapper}>
-                    <Image
-                      src={rec.product.image}
-                      alt={rec.product.name}
-                      width={280}
-                      height={200}
-                      className={styles.cardImg}
-                      priority={index === 0}
-                    />
-                  </div>
-
-                  <h3 className={styles.cardTitle}>{rec.product.name}</h3>
-                  <p className={styles.cardInspiration}>{rec.inspiration}</p>
-                  <p className={styles.cardText}>{rec.reason}</p>
-
-                  {/* Scent Profile Tags */}
-                  <div className={styles.scentProfileTags}>
-                    {rec.profileTags?.map((tag) => (
-                      <span key={tag} className={styles.scentTag}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Performance */}
-                  <div className={styles.performanceLine}>
-                    {rec.performance}
-                  </div>
-
-                  <div className={styles.cardActions}>
-                    <button
-                      type="button"
-                      className={styles.quizAddBagBtn}
-                      onClick={() => handleAddToCart(rec.product)}
+                    <div 
+                      className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
+                      style={{ cursor: "pointer" }}
+                      onClick={handleCardClick}
                     >
-                      Add to Bag
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.quizBuyNowBtn}
-                      onClick={() => handleBuyNow(rec.product)}
-                    >
-                      Buy Now
-                    </button>
+                      <div className={styles.cardHeader}>
+                        <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
+                          {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
+                        </span>
+                      </div>
+
+                      <div className={styles.cardImgWrapper}>
+                        <Image
+                          src={rec.product.image}
+                          alt={rec.product.name}
+                          width={280}
+                          height={200}
+                          className={styles.cardImg}
+                          priority={index === 0}
+                        />
+                      </div>
+
+                      <h3 className={styles.cardTitle}>{rec.product.name}</h3>
+                      <p className={styles.cardInspiration}>{rec.inspiration}</p>
+                      <p className={styles.cardText}>{rec.reason}</p>
+
+                      {/* Scent Profile Tags */}
+                      <div className={styles.scentProfileTags}>
+                        {rec.profileTags?.map((tag) => (
+                          <span key={tag} className={styles.scentTag}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* Performance */}
+                      <div className={styles.performanceLine}>
+                        {rec.performance}
+                      </div>
+
+                      <div className={styles.cardActions}>
+                        <button
+                          type="button"
+                          className={styles.quizAddBagBtn}
+                          onClick={() => handleAddToCart(rec.product)}
+                        >
+                          Add to Bag
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.quizBuyNowBtn}
+                          onClick={() => handleBuyNow(rec.product)}
+                        >
+                          Buy Now
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              );
             })}
             </div>
 
