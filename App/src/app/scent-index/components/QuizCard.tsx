@@ -112,8 +112,12 @@ export default function QuizCard({
       >
         <div className={styles.cardHeader}>
           <span className={styles.cardQId}>Q.0{question.id}</span>
-          <h2 className={styles.cardQuestion}>{question.question}</h2>
-          {isMulti && <p className={styles.cardCaption}>Select all that apply</p>}
+          <h2 className={styles.cardQuestion}>
+            {question.question}
+            <span className={styles.cardSelectionHint}>
+              ({isMulti ? "select multiple" : "select one"})
+            </span>
+          </h2>
         </div>
 
         <div className={(isMulti || question.options.length > 5) ? styles.multiGrid : styles.optionsList}>
