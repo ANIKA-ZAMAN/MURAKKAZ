@@ -256,10 +256,8 @@ export default function ScentIndex() {
                           height={38}
                           priority
                           className={styles.sealLogo}
-                          suppressHydrationWarning
                         />
                       </div>
-                      <div className={styles.sealCrackLine} />
                     </div>
 
                     {/* Falling wax fragments */}
