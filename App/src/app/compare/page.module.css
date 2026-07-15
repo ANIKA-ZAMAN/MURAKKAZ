@@ -349,7 +349,7 @@
   font-family: var(--font-playfair), var(--font-lora), serif;
   font-size: 1.02rem;
   font-weight: 400;
-  color: #820011; /* Murakkaz Red */
+  color: #820011 !important; /* Murakkaz Red */
   background-color: #f0ece0; /* Slightly darker warm beige for row headers */
   width: 22%;
   min-width: 190px;
