@@ -1251,11 +1251,11 @@ export default function AccountPage() {
                       />
                     </div>
                     <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>
-                      <button type="submit" className={styles.btnPrimary} style={{ maxWidth: "200px" }}>Save Password</button>
+                      <button type="submit" className={styles.btnPrimarySave} style={{ maxWidth: "200px" }}>Save Password</button>
                       <button 
                         type="button" 
-                        className={styles.btnPrimary} 
-                        style={{ maxWidth: "150px", backgroundColor: "transparent", border: "1px solid #767677", color: "#555558" }}
+                        className={styles.btnResetProfile} 
+                        style={{ maxWidth: "150px" }}
                         onClick={() => {
                           setCurrentPassword("");
                           setNewPassword("");

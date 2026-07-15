@@ -896,13 +896,13 @@
 }
 
 .navItemActive {
-  background-color: #820011;
+  background-color: transparent;
   border-color: #820011; /* Red border when clicked/active */
-  color: #fff !important;
+  color: #820011 !important; /* Red text when clicked/active */
 }
 
 .navItemActive .navIcon {
-  color: #fff;
+  color: #820011;
 }
 
 .navItem:hover:not(.navItemActive) {
@@ -1100,45 +1100,27 @@
   top: 100px;
 }
 
-.btnPrimarySave {
-  display: block;
-  width: 100%;
-  padding: 0.85rem;
-  border-radius: 8px;
-  border: none;
-  background-color: #820011;
-  font-family: var(--font-lora), Georgia, serif;
-  font-size: 0.95rem;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-align: center;
-}
-
-.btnPrimarySave:hover {
-  background-color: #61000b;
-  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.15);
-}
-
+.btnPrimarySave,
 .btnResetProfile {
   display: block;
   width: 100%;
   padding: 0.85rem;
   border-radius: 8px;
-  border: 1px solid rgba(130, 0, 17, 0.25);
+  border: 1px solid rgba(197, 168, 128, 0.45); /* Brownish border frame by default */
   background-color: transparent;
   font-family: var(--font-lora), Georgia, serif;
   font-size: 0.95rem;
-  color: #820011;
+  color: #555558; /* Brownish/grey text by default */
   cursor: pointer;
   transition: all 0.25s ease;
   text-align: center;
 }
 
+.btnPrimarySave:hover,
 .btnResetProfile:hover {
-  background-color: rgba(130, 0, 17, 0.05);
-  border-color: #820011;
-  color: #820011;
+  background-color: rgba(130, 0, 17, 0.05); /* Subtle pinkish red background on hover */
+  border-color: #820011; /* Red border on hover */
+  color: #820011; /* Red text on hover */
 }
 
 .tabContentPanel {
