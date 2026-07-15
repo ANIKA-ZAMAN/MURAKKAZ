@@ -143,6 +143,13 @@ function CompareContent() {
           }
           return nextSlots;
         });
+
+        // Clean up the URL parameters so they don't linger in the address bar
+        if (typeof window !== "undefined") {
+          const url = new URL(window.location.href);
+          url.search = "";
+          window.history.replaceState({}, "", url.toString());
+        }
       }
     }
   }, [searchParams]);
