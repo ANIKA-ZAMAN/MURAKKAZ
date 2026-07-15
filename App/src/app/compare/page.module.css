@@ -254,6 +254,48 @@
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Custom Scrollbar for modal list */
+.modalList::-webkit-scrollbar {
+  width: 6px;
+}
+.modalList::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modalList::-webkit-scrollbar-thumb {
+  background: #d8d5cd;
+  border-radius: 3px;
+}
+.modalList::-webkit-scrollbar-thumb:hover {
+  background: #767677;
+}
+
+.modalSearchWrapper {
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+
+.modalSearchInput {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  color: var(--foreground);
+  background-color: #fcfbfa;
+  border: 1px solid #d8d5cd;
+  border-radius: 8px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modalSearchInput:focus {
+  border-color: #313134;
+  box-shadow: 0 0 0 2px rgba(49, 49, 52, 0.08);
+  background-color: #ffffff;
 }
 
 .modalItem {

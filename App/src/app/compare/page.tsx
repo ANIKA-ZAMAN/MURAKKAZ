@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { productsCatalog } from "../data/products";
 import styles from "./page.module.css";
 
 interface CompareProduct {
@@ -20,71 +21,99 @@ interface CompareProduct {
   isRecommended?: boolean;
 }
 
-const mockProducts: CompareProduct[] = [
-  {
-    name: "Jade Serenity",
-    image: "/images/products/jade_serenity.png",
-    brand: "Own",
-    inspiredBy: "Dior Sauvage",
-    price: "1,720tk",
-    rating: "4.8 (250)",
-    profile: "Clean, crisp green tea twist layered over the classic fresh metallic base.",
-    longevity: "Beast Mode (8+ Hours)",
-    isRecommended: true,
-    projection: "Heavy (Cuts through humid air beautifully)",
-    sweetness: "●●○○○ (Subtle Crispness)",
-    bestFor: "Office, hot summer afternoons, and high-end formal setups.",
-    accords: [
+const mockProducts: CompareProduct[] = productsCatalog.map((prod) => {
+  let name = prod.name;
+  let inspiredBy = `Inspired by ${prod.brand}`;
+  let profile = prod.description;
+  let longevity = prod.meter;
+  let projection = "Moderate";
+  let sweetness = "●●○○○";
+  let bestFor = prod.occasion;
+  let accords = [
+    { name: "Fresh", value: 80 },
+    { name: "Citrus", value: 70 },
+  ];
+
+  if (prod.image.includes("jade_serenity")) {
+    name = "Jade Serenity";
+    inspiredBy = "Creed Original Vetiver";
+    profile = "Clean, crisp green tea twist layered over the classic fresh metallic base.";
+    longevity = "Beast Mode (8+ Hours)";
+    projection = "Heavy (Cuts through humid air beautifully)";
+    sweetness = "●●○○○ (Subtle Crispness)";
+    bestFor = "Office, hot summer afternoons, and high-end formal setups.";
+    accords = [
       { name: "Woody", value: 80 },
       { name: "Vanilla", value: 65 },
       { name: "Balsamic", value: 55 },
       { name: "Warm Spicy", value: 50 },
-    ],
-  },
-  {
-    name: "Mageration",
-    image: "/images/products/coral_sea.png",
-    brand: "After Rain",
-    inspiredBy: "Dior",
-    price: "1,210tk",
-    rating: "3.5 (50)",
-    profile: "Raw, sharp, high-concentration classic amber-spicy formulation.",
-    longevity: "Strong (6-7 Hours)",
-    projection: "Moderate (Creates a close personal aura)",
-    sweetness: "●○○○○ (Very Dry / Spicy)",
-    bestFor: "Casual hangouts, post-gym refreshes, and daily signatures.",
-    accords: [
+    ];
+  } else if (prod.image.includes("coral_sea")) {
+    name = "Mageration";
+    inspiredBy = "Dior Sauvage";
+    profile = "Raw, sharp, high-concentration classic amber-spicy formulation.";
+    longevity = "Strong (6-7 Hours)";
+    projection = "Moderate (Creates a close personal aura)";
+    sweetness = "●○○○○ (Very Dry / Spicy)";
+    bestFor = "Casual hangouts, post-gym refreshes, and daily signatures.";
+    accords = [
       { name: "Woody", value: 75 },
       { name: "Vanilla", value: 60 },
       { name: "Balsamic", value: 55 },
       { name: "Warm Spicy", value: 70 },
-    ],
-  },
-  {
-    name: "Magnetism",
-    image: "/images/products/magnetism.png",
-    brand: "Own",
-    inspiredBy: "YSL Y EDP",
-    price: "1,220tk",
-    rating: "4.7 (120)",
-    profile: "Sweet, fresh, highly aromatic ginger-apple opening with a deep woody trails.",
-    longevity: "Long Lasting (7-8 Hours)",
-    projection: "Heavy (Fills the room initially)",
-    sweetness: "●●●○○ (Sweet & Fresh)",
-    bestFor: "Clubbing, date nights, and winter evening gatherings.",
-    accords: [
+    ];
+  } else if (prod.image.includes("magnetism")) {
+    name = "Magnetism";
+    inspiredBy = "YSL Y EDP";
+    profile = "Sweet, fresh, highly aromatic ginger-apple opening with a deep woody trails.";
+    longevity = "Long Lasting (7-8 Hours)";
+    projection = "Heavy (Fills the room initially)";
+    sweetness = "●●●○○ (Sweet & Fresh)";
+    bestFor = "Clubbing, date nights, and winter evening gatherings.";
+    accords = [
       { name: "Woody", value: 70 },
       { name: "Vanilla", value: 50 },
       { name: "Balsamic", value: 45 },
       { name: "Warm Spicy", value: 65 },
-    ],
-  },
-];
+    ];
+  } else if (prod.image.includes("hellenist")) {
+    name = "Hellenist";
+    inspiredBy = "Baccarat Rouge 540";
+    profile = "Stunningly sweet amber profile. Highly projecting and elegant, ideal for special occasions.";
+    longevity = "Long Lasting (7-8 Hours)";
+    projection = "Heavy";
+    sweetness = "●●●●○ (Sweet & Rich)";
+    bestFor = "Special occasions, cold nights, and luxury events.";
+    accords = [
+      { name: "Sweet", value: 90 },
+      { name: "Amber", value: 85 },
+      { name: "Woody", value: 70 },
+      { name: "Warm Spicy", value: 50 },
+    ];
+  }
+
+  return {
+    name: `${name} (Slot ${prod.id})`,
+    image: prod.image,
+    brand: prod.brand,
+    inspiredBy,
+    price: prod.price,
+    rating: `${prod.rating.toFixed(1)} (${prod.reviews})`,
+    profile,
+    longevity,
+    projection,
+    sweetness,
+    bestFor,
+    accords,
+    isRecommended: prod.id === "1",
+  };
+});
 
 function CompareContent() {
   const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([null, null, null]);
   const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
   const [showComparison, setShowComparison] = useState(false);
+  const [modalSearchQuery, setModalSearchQuery] = useState("");
   const tableRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
 
@@ -156,6 +185,16 @@ function CompareContent() {
     }
   };
 
+  const filteredModalProducts = mockProducts.filter((prod) => {
+    if (!modalSearchQuery) return true;
+    const q = modalSearchQuery.toLowerCase();
+    return (
+      prod.name.toLowerCase().includes(q) ||
+      prod.brand.toLowerCase().includes(q) ||
+      prod.inspiredBy.toLowerCase().includes(q)
+    );
+  });
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -221,11 +260,24 @@ function CompareContent() {
 
         {/* Modal/Dropdown to select product */}
         {activeSelectIndex !== null && (
-          <div className={styles.modalOverlay} onClick={() => setActiveSelectIndex(null)}>
+          <div className={styles.modalOverlay} onClick={() => { setActiveSelectIndex(null); setModalSearchQuery(""); }}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
               <h3 className={styles.modalTitle}>Select Product to Compare</h3>
+              
+              {/* Search Box */}
+              <div className={styles.modalSearchWrapper}>
+                <input
+                  type="text"
+                  placeholder="Search perfume..."
+                  className={styles.modalSearchInput}
+                  value={modalSearchQuery}
+                  onChange={(e) => setModalSearchQuery(e.target.value)}
+                  autoFocus
+                />
+              </div>
+
               <div className={styles.modalList}>
-                {mockProducts.map((prod) => {
+                {filteredModalProducts.map((prod) => {
                   const isAlreadySelected = selectedSlots.some(
                     (slot, idx) => idx !== activeSelectIndex && slot?.name === prod.name
                   );
@@ -252,8 +304,14 @@ function CompareContent() {
                     </div>
                   );
                 })}
+
+                {filteredModalProducts.length === 0 && (
+                  <div style={{ padding: "2rem 1rem", textAlign: "center", color: "#8c8c90", fontSize: "0.88rem" }}>
+                    No matching perfumes found.
+                  </div>
+                )}
               </div>
-              <button className={styles.modalCloseBtn} onClick={() => setActiveSelectIndex(null)}>
+              <button className={styles.modalCloseBtn} onClick={() => { setActiveSelectIndex(null); setModalSearchQuery(""); }}>
                 Cancel
               </button>
             </div>
