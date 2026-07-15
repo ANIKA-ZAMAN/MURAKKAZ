@@ -136,10 +136,7 @@ export default function ComparePage() {
             {selectedSlots.map((slot, index) => (
               <div key={index} className={styles.slotColumn}>
                 {slot ? (
-                  <div className={`${styles.filledSlot} ${slot.name === "Jade Serenity" ? styles.recommendedCard : ""}`}>
-                    {slot.name === "Jade Serenity" && (
-                      <span className={styles.cardRecommendedBadge}>Recommended</span>
-                    )}
+                  <div className={styles.filledSlot}>
                     <button 
                       className={styles.removeBtn} 
                       onClick={() => handleRemoveProduct(index)}
@@ -194,22 +191,33 @@ export default function ComparePage() {
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
               <h3 className={styles.modalTitle}>Select Product to Compare</h3>
               <div className={styles.modalList}>
-                {mockProducts.map((prod) => (
-                  <div 
-                    key={prod.name} 
-                    className={styles.modalItem}
-                    onClick={() => handleSelectProduct(prod)}
-                  >
-                    <img
-                      src={prod.image}
-                      alt={prod.name}
-                      width={64}
-                      height={64}
-                      className={styles.modalItemImage}
-                    />
-                    <span>{prod.name}</span>
-                  </div>
-                ))}
+                {mockProducts.map((prod) => {
+                  const isAlreadySelected = selectedSlots.some(
+                    (slot, idx) => idx !== activeSelectIndex && slot?.name === prod.name
+                  );
+                  return (
+                    <div 
+                      key={prod.name} 
+                      className={`${styles.modalItem} ${isAlreadySelected ? styles.modalItemDisabled : ""}`}
+                      onClick={() => !isAlreadySelected && handleSelectProduct(prod)}
+                      style={{ 
+                        opacity: isAlreadySelected ? 0.45 : 1, 
+                        cursor: isAlreadySelected ? "not-allowed" : "pointer" 
+                      }}
+                    >
+                      <img
+                        src={prod.image}
+                        alt={prod.name}
+                        width={64}
+                        height={64}
+                        className={styles.modalItemImage}
+                      />
+                      <span>
+                        {prod.name} {isAlreadySelected && " (Selected)"}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
               <button className={styles.modalCloseBtn} onClick={() => setActiveSelectIndex(null)}>
                 Cancel
