@@ -533,3 +533,21 @@
     overflow-x: auto;
   }
 }
+
+/* Table Corner Cell border-radius to prevent background masking of rounded container borders */
+.compareTable tr:first-child td:first-child {
+  border-top-left-radius: 7px;
+}
+
+.compareTable tr:first-child td:last-child {
+  border-top-right-radius: 7px;
+}
+
+.compareTable tr:last-child td:first-child {
+  border-bottom-left-radius: 7px;
+}
+
+.compareTable tr:last-child td:last-child {
+  border-bottom-right-radius: 7px;
+}
+
