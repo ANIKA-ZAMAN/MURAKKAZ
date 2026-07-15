@@ -544,8 +544,6 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
-  border-bottom: 1px solid rgba(130, 120, 100, 0.08);
-  padding-bottom: 0.75rem;
 }
 
 .resultsLabel {
