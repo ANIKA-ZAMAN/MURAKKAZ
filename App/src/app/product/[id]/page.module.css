@@ -183,8 +183,9 @@
 }
 
 .badge {
-  background-color: #313134;
-  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid #820011;
+  color: #820011;
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.35rem 0.8rem;
