@@ -342,7 +342,7 @@
 }
 
 .stickyHeaderRow td.recommendedColumn {
-  background-color: #dfd2b9 !important; /* Darker beige sticky header column */
+  background-color: #eae2d5 !important; /* Original light beige sticky header column */
 }
 
 .featureTitle {
@@ -358,9 +358,9 @@
 
 /* Recommended Perfume Highlight column */
 .recommendedColumn {
-  background-color: #dfd2b9 !important; /* Slightly darker beige accent color */
-  border-left: 1.2px solid #b8a786 !important;
-  border-right: 1.2px solid #b8a786 !important;
+  background-color: #eae2d5 !important; /* Original light beige accent color */
+  border-left: 1.2px solid #e1d3b7 !important;
+  border-right: 1.2px solid #e1d3b7 !important;
 }
 
 /* productName styling */
