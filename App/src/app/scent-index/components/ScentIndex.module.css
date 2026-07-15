@@ -286,10 +286,10 @@
 }
 
 .optionChecked {
-  border-color: #7c6853 !important; /* Warm brown border */
-  color: #7c6853 !important;
+  border-color: #820011 !important; /* Murakkaz Red */
+  color: #820011 !important;
   background-color: #FAF6EE !important; /* Soft beige background */
-  box-shadow: 0 4px 14px rgba(124, 104, 83, 0.08);
+  box-shadow: 0 2px 8px rgba(130, 0, 17, 0.06); /* Soft, non-prominent red shadow */
   transform: translateY(-1px);
 }
 
@@ -312,7 +312,7 @@
 }
 
 .optionChecked .radioCircle {
-  border-color: #A8844B;
+  border-color: #820011;
   background-color: #FAF6EE;
 }
 
@@ -320,7 +320,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #A8844B; /* Muted gold accent instead of bright red */
+  background-color: #820011; /* Murakkaz Red */
   transform: scale(0);
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -347,8 +347,8 @@
 }
 
 .optionChecked .checkboxBox {
-  border-color: #A8844B;
-  background-color: #A8844B;
+  border-color: #820011;
+  background-color: #820011;
 }
 
 .checkmark {
