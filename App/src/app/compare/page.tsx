@@ -114,7 +114,6 @@ function CompareContent() {
           }
           return nextSlots;
         });
-        setShowComparison(true);
       }
     }
   }, [searchParams]);
