@@ -7,8 +7,10 @@ import QuizCard from "./QuizCard";
 import {
   quizQuestions,
   getQuizRecommendation,
+  getTop3Recommendations,
   type QuizRecommendation,
 } from "../data/scentIndexData";
+import { Product } from "../../data/products";
 import styles from "./ScentIndex.module.css";
 
 export default function ScentIndex() {
@@ -17,7 +19,7 @@ export default function ScentIndex() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
   const [transitioningStep, setTransitioningStep] = useState<number | null>(null);
-  const [recommendation, setRecommendation] = useState<QuizRecommendation | null>(null);
+  const [recommendations, setRecommendations] = useState<QuizRecommendation[]>([]);
   const [particles, setParticles] = useState<Array<{ id: number; left: string; top: string; delay: string; size: string }>>([]);
 
   // Generate random particles positions on mount
@@ -103,8 +105,8 @@ export default function ScentIndex() {
         setTransitioningStep(null);
 
         // Calculate recommendation and transition to results
-        const rec = getQuizRecommendation(answers);
-        setRecommendation(rec);
+        const recs = getTop3Recommendations(answers);
+        setRecommendations(recs);
 
         setTimeout(() => {
           setPhase("results");
@@ -122,14 +124,11 @@ export default function ScentIndex() {
   const handleReset = () => {
     setAnswers({});
     setCurrentStep(0);
-    setRecommendation(null);
+    setRecommendations([]);
     setPhase("intro");
   };
 
-  const handleBuyNow = () => {
-    if (!recommendation) return;
-    const prod = recommendation.product;
-
+  const handleBuyNow = (prod: Product) => {
     const saved = localStorage.getItem("cart-items");
     let cart = [];
     if (saved) {
@@ -344,69 +343,75 @@ export default function ScentIndex() {
         )}
 
         {/* 5. Consultation Results Page */}
-        {phase === "results" && recommendation && (
-          <div className={styles.resultsContainer}>
-            <div className={styles.resultsInnerCard}>
-              <div className={styles.resultsHeader}>
-                <span className={styles.resultsLabel}>RECOMMENDED FOR YOU</span>
-                <span className={styles.matchBadge}>
-                  {recommendation.matchScore}% MATCH
-                </span>
-              </div>
+        {phase === "results" && recommendations.length > 0 && (
+          <div className={styles.resultsGridWrapper}>
+            <div className={styles.resultsGrid}>
+              {recommendations.map((rec, index) => (
+                <div 
+                  key={rec.product.id} 
+                  className={styles.resultsNarrowCard}
+                  style={{ animationDelay: `${0.15 * index}s` }}
+                >
+                  <div className={styles.cardHeader}>
+                    <span className={styles.resultsLabel}>RECOMMENDED</span>
+                    <span className={styles.matchBadge}>
+                      {rec.matchScore}% MATCH
+                    </span>
+                  </div>
 
-              <div className={styles.resultsContentLayout}>
-                {/* Left Side: Mockup Image */}
-                <div className={styles.resultsImgWrapper}>
-                  <Image
-                    src={recommendation.product.image}
-                    alt={recommendation.product.name}
-                    width={320}
-                    height={320}
-                    className={styles.resultsImg}
-                    priority
-                  />
-                </div>
+                  <div className={styles.cardImgWrapper}>
+                    <Image
+                      src={rec.product.image}
+                      alt={rec.product.name}
+                      width={280}
+                      height={200}
+                      className={styles.cardImg}
+                      priority={index === 0}
+                    />
+                  </div>
 
-                {/* Right Side: Consultation Breakdown */}
-                <div className={styles.resultsDetails}>
-                  <h1 className={styles.resultsTitle}>
-                    Why {recommendation.product.name}?
-                  </h1>
-                  <p className={styles.resultsText}>{recommendation.reason}</p>
+                  <h3 className={styles.cardTitle}>{rec.product.name}</h3>
+                  <p className={styles.cardText}>{rec.reason}</p>
 
-                  <div className={styles.traitPills}>
-                    <div className={styles.traitPill}>
+                  <div className={styles.cardTraitPills}>
+                    <div className={styles.cardTraitPill}>
                       <span className={styles.pillLabel}>Family:</span>{" "}
-                      {recommendation.product.family}
+                      <span>{rec.product.family}</span>
                     </div>
-                    <div className={styles.traitPill}>
+                    <div className={styles.cardTraitPill}>
                       <span className={styles.pillLabel}>Occasion:</span>{" "}
-                      {recommendation.product.occasion}
+                      <span>{rec.product.occasion}</span>
                     </div>
-                    <div className={styles.traitPill}>
+                    <div className={styles.cardTraitPill}>
                       <span className={styles.pillLabel}>Intensity:</span>{" "}
-                      {recommendation.product.meter}
+                      <span>{rec.product.meter}</span>
                     </div>
                   </div>
 
-                  <div className={styles.resultsActions}>
-                    <button
-                      type="button"
-                      className={`${styles.btn} ${styles.btnBack}`}
-                      onClick={handleReset}
-                    >
-                      Try More
-                    </button>
+                  <div className={styles.cardActions}>
                     <button
                       type="button"
                       className={`${styles.btn} ${styles.btnNext}`}
-                      onClick={handleBuyNow}
+                      style={{ width: "100%" }}
+                      onClick={() => handleBuyNow(rec.product)}
                     >
                       Buy Now
                     </button>
                   </div>
                 </div>
-              </div>
+              ))}
+            </div>
+
+            {/* Centered Try Again Button at the bottom */}
+            <div className={styles.resultsResetContainer}>
+              <button
+                type="button"
+                className={`${styles.btn} ${styles.btnBack}`}
+                style={{ padding: "0.5rem 2rem", height: "40px", borderRadius: "20px" }}
+                onClick={handleReset}
+              >
+                Try Quiz Again
+              </button>
             </div>
           </div>
         )}

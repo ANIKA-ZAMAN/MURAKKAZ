@@ -202,3 +202,122 @@ export function getQuizRecommendation(
     reason,
   };
 }
+
+/**
+ * Recommendation algorithm matching quiz answers to productsCatalog, returning top 3 matches
+ */
+export function getTop3Recommendations(
+  answers: Record<number, string | string[]>
+): QuizRecommendation[] {
+  const genderAns = answers[1] as string | undefined;
+  const occasionAns = answers[2] as string | undefined;
+  const notesAns = (answers[3] as string[]) || [];
+  const intensityAns = answers[4] as string | undefined;
+  const styleScentAns = (answers[5] as string[]) || [];
+  const seasonAns = answers[6] as string | undefined;
+  const styleAns = answers[7] as string | undefined;
+
+  // Map quiz occasion to product catalog occasion
+  let targetOccasions: string[] = [];
+  if (occasionAns === "Everyday") targetOccasions = ["Casual", "Daily Wear"];
+  else if (occasionAns === "Office") targetOccasions = ["Formal", "Daily Wear"];
+  else if (occasionAns === "Date Night") targetOccasions = ["Date Night", "Night Out"];
+  else if (occasionAns === "Party") targetOccasions = ["Night Out", "Casual"];
+  else if (occasionAns === "Formal Event" || occasionAns === "Special Occasion") {
+    targetOccasions = ["Formal"];
+  }
+
+  // Map notes to families
+  const targetFamilies: string[] = [];
+  notesAns.forEach((note) => {
+    if (["Rose", "Jasmine", "Lavender"].includes(note)) targetFamilies.push("Floral");
+    if (["Vanilla", "Amber"].includes(note)) targetFamilies.push("Oriental");
+    if (["Bergamot"].includes(note)) targetFamilies.push("Citrus", "Fresh");
+    if (["Oud", "Sandalwood", "Patchouli", "Leather", "Tobacco", "Musk"].includes(note)) {
+      targetFamilies.push("Woody");
+    }
+  });
+
+  // Map chosen scent style to families
+  styleScentAns.forEach((styleScent) => {
+    if (styleScent === "Floral" || styleScent === "Fruity") targetFamilies.push("Floral");
+    else if (styleScent === "Citrus") targetFamilies.push("Citrus");
+    else if (styleScent === "Sweet" || styleScent === "Spicy") targetFamilies.push("Oriental");
+    else if (styleScent === "Woody" || styleScent === "Oud" || styleScent === "Leather") targetFamilies.push("Woody");
+    else if (styleScent === "Fresh" || styleScent === "Aquatic") targetFamilies.push("Fresh");
+  });
+
+  // Map intensity/longevity to performance meters
+  let targetMeters: string[] = [];
+  if (intensityAns === "Soft & Skin-like") targetMeters = ["Intimate", "Moderate"];
+  else if (intensityAns === "Moderate") targetMeters = ["Moderate", "Long Lasting"];
+  else if (intensityAns === "Strong") targetMeters = ["Long Lasting", "Beast Mode"];
+  else if (intensityAns === "Very Strong") targetMeters = ["Beast Mode"];
+
+  const scoredProducts: Array<{ product: Product; score: number }> = [];
+
+  productsCatalog.forEach((prod) => {
+    let score = 0;
+
+    // 1. Gender Match (High Priority)
+    if (genderAns) {
+      if (prod.gender === genderAns) score += 4;
+      else if (prod.gender === "Unisex" || genderAns === "Unisex") score += 2;
+    }
+
+    // 2. Occasion Match
+    if (targetOccasions.length > 0) {
+      if (targetOccasions.includes(prod.occasion)) score += 3;
+    }
+
+    // 3. Performance Meter Match
+    if (targetMeters.length > 0) {
+      if (targetMeters.includes(prod.meter)) score += 3;
+    }
+
+    // 4. Fragrance Family Match
+    if (targetFamilies.length > 0) {
+      if (targetFamilies.includes(prod.family)) score += 2;
+    }
+
+    // 5. Season Affinity Match
+    if (seasonAns && seasonAns !== "All Year") {
+      if (prod.description.toLowerCase().includes(seasonAns.toLowerCase())) score += 1;
+    }
+
+    scoredProducts.push({ product: prod, score });
+  });
+
+  // Sort by score descending
+  scoredProducts.sort((a, b) => b.score - a.score);
+
+  // Take top 3 distinct products
+  const top3 = scoredProducts.slice(0, 3);
+  const maxPossibleScore = 13;
+
+  return top3.map((item, index) => {
+    const highestScore = item.score;
+    const bestProduct = item.product;
+
+    const matchPercentage = Math.min(
+      99 - index * 3,
+      Math.max(82, Math.round((highestScore / maxPossibleScore) * 15 + 85) - index * 4)
+    );
+
+    // Generate personalized consultation reasons
+    let reason = `Based on your preferences, we selected ${bestProduct.name} for you. It perfectly aligns with your style and desired presence.`;
+    if (bestProduct.family === "Woody") {
+      reason = `Matches your preference for a scent that commands respect. Bridges deep maturity and elegant comfort.`;
+    } else if (bestProduct.family === "Fresh" || bestProduct.family === "Citrus") {
+      reason = `Offers a crisp, uplifting ${bestProduct.family.toLowerCase()} profile that feels light yet projectively sophisticated.`;
+    } else if (bestProduct.family === "Oriental" || bestProduct.family === "Floral") {
+      reason = `Wraps you in an alluring, warm, and romantic envelope of rich ${bestProduct.family.toLowerCase()} base notes.`;
+    }
+
+    return {
+      product: bestProduct,
+      matchScore: matchPercentage,
+      reason,
+    };
+  });
+}
