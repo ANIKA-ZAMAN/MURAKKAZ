@@ -876,7 +876,7 @@
   gap: 8px;
   padding: 0.65rem 1.25rem;
   border-radius: 50px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(197, 168, 128, 0.45); /* Brownish border by default */
   font-family: var(--font-lora), Georgia, serif;
   font-size: 0.9rem;
   color: #555558;
@@ -897,6 +897,7 @@
 
 .navItemActive {
   background-color: #820011;
+  border-color: #820011; /* Red border when clicked/active */
   color: #fff !important;
 }
 
@@ -907,17 +908,18 @@
 .navItem:hover:not(.navItemActive) {
   background-color: rgba(197, 168, 128, 0.1);
   color: #313134;
-  border-color: rgba(197, 168, 128, 0.2);
+  border-color: rgba(197, 168, 128, 0.85); /* Darker brownish border on hover */
 }
 
 .logoutNav {
   color: #820011;
+  border-color: rgba(130, 0, 17, 0.2); /* Reddish border for logout default */
 }
 
 .logoutNav:hover {
   background-color: rgba(130, 0, 17, 0.05) !important;
   color: #820011 !important;
-  border-color: rgba(130, 0, 17, 0.1) !important;
+  border-color: #820011 !important; /* Solid red border on hover */
 }
 
 .premiumBody {
