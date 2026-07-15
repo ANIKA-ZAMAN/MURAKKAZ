@@ -836,9 +836,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(130, 120, 100, 0.12);
-  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .greetingSection {
@@ -849,7 +847,7 @@
 .greetingSub {
   font-family: var(--font-lora), Georgia, serif;
   font-size: 1.05rem;
-  color: #820011;
+  color: #313134;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
