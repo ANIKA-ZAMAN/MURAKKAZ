@@ -366,9 +366,9 @@
 /* productName styling */
 .productNameCell {
   font-family: var(--font-playfair), var(--font-lora), serif;
-  font-size: 1.45rem;
-  font-weight: 400;
-  color: #1e1e20; /* Murakkaz Black */
+  font-size: 1.55rem;
+  font-weight: 700 !important;
+  color: #000000 !important;
 }
 
 .nameHeaderContainer {
