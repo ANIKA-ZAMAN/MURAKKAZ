@@ -848,8 +848,8 @@
 
 .greetingSub {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 0.85rem;
-  color: #767677;
+  font-size: 1.05rem;
+  color: #820011;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -894,7 +894,7 @@
 }
 
 .navItemActive {
-  background-color: #313134;
+  background-color: #820011;
   color: #fff !important;
 }
 
