@@ -41,6 +41,17 @@ export default function RootLayout({
         <Script id="hydration-fix" strategy="beforeInteractive">
           {`
             (function() {
+              try {
+                const isDark = localStorage.getItem('pref-darkmode') === 'true';
+                if (isDark) {
+                  document.body.classList.add('dark-theme');
+                }
+                const isAmbient = localStorage.getItem('pref-ambient') === 'false';
+                if (isAmbient) {
+                  document.body.classList.add('no-ambient');
+                }
+              } catch (e) {}
+
               const ignoreAttrs = ['bis_skin_checked', 'cz-shortcut-listen', 'data-new-gr-c-s-check-loaded', 'data-gr-ext-installed'];
               const removeAttrs = (node) => {
                 if (node.nodeType === 1) {

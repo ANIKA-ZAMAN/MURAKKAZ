@@ -22,6 +22,11 @@ export default function ScentIndex() {
 
   // Generate random particles positions on mount
   useEffect(() => {
+    const isAmbientDisabled = localStorage.getItem("pref-ambient") === "false";
+    if (isAmbientDisabled) {
+      setParticles([]);
+      return;
+    }
     const pts = Array.from({ length: 15 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,

@@ -108,6 +108,23 @@ export default function AccountPage() {
     setDarkMode(localStorage.getItem("pref-darkmode") === "true");
   }, []);
 
+  // Synchronize document.body classes with preferences
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark-theme");
+    } else {
+      document.body.classList.remove("dark-theme");
+    }
+  }, [darkMode]);
+
+  useEffect(() => {
+    if (ambientEnabled) {
+      document.body.classList.remove("no-ambient");
+    } else {
+      document.body.classList.add("no-ambient");
+    }
+  }, [ambientEnabled]);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
