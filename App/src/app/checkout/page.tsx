@@ -235,47 +235,59 @@ function CheckoutContent() {
                 <h3 className={styles.cardTitle}>Payment Method</h3>
                 
                 <div className={styles.paymentOptions}>
-                  <label className={`${styles.paymentLabel} ${formData.paymentMethod === "cod" ? styles.selectedPayment : ""}`}>
+                  <div
+                    className={`${styles.paymentLabel} ${formData.paymentMethod === "cod" ? styles.selectedPayment : ""}`}
+                    onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: "cod" }))}
+                  >
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="cod"
                       checked={formData.paymentMethod === "cod"}
-                      onChange={handleInputChange}
+                      readOnly
+                      style={{ cursor: "pointer" }}
                     />
                     <div className={styles.paymentInfo}>
                       <span className={styles.paymentName}>Cash on Delivery</span>
                       <span className={styles.paymentDesc}>Pay with cash upon receiving your delivery</span>
                     </div>
-                  </label>
+                  </div>
 
-                  <label className={`${styles.paymentLabel} ${formData.paymentMethod === "bkash" ? styles.selectedPayment : ""}`}>
+                  <div
+                    className={`${styles.paymentLabel} ${formData.paymentMethod === "bkash" ? styles.selectedPayment : ""}`}
+                    onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: "bkash" }))}
+                  >
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="bkash"
                       checked={formData.paymentMethod === "bkash"}
-                      onChange={handleInputChange}
+                      readOnly
+                      style={{ cursor: "pointer" }}
                     />
                     <div className={styles.paymentInfo}>
                       <span className={styles.paymentName}>bKash / Mobile Wallets</span>
                       <span className={styles.paymentDesc}>Pay securely using bKash, Nagad or Rocket</span>
                     </div>
-                  </label>
+                  </div>
 
-                  <label className={`${styles.paymentLabel} ${formData.paymentMethod === "card" ? styles.selectedPayment : ""}`}>
+                  <div
+                    className={`${styles.paymentLabel} ${formData.paymentMethod === "card" ? styles.selectedPayment : ""}`}
+                    onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: "card" }))}
+                  >
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="card"
                       checked={formData.paymentMethod === "card"}
-                      onChange={handleInputChange}
+                      readOnly
+                      style={{ cursor: "pointer" }}
                     />
                     <div className={styles.paymentInfo}>
                       <span className={styles.paymentName}>Credit / Debit Card</span>
                       <span className={styles.paymentDesc}>Visa, Mastercard, or AMEX cards supported</span>
                     </div>
-                  </label>
+                  </div>
                 </div>
               </div>
             </div>
