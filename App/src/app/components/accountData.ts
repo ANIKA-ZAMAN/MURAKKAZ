@@ -32,6 +32,9 @@ export interface UserProfile {
   memberSince: string;
   memberTier: string;
   points: number;
+  photo?: string;
+  phone?: string;
+  primaryLocation?: string;
 }
 
 export const mockUserProfile: UserProfile = {

@@ -1,6 +1,6 @@
 "use client";
-
-import { useState, useEffect } from "react";
+ 
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { 
   mockUserProfile, 
@@ -11,18 +11,43 @@ import {
 } from "./accountData";
 import styles from "./page.module.css";
 
+const defaultUser: UserProfile = {
+  name: "Sadid Bin Hasan",
+  email: "sadidbinhasan@gmail.com",
+  memberSince: "November 2025",
+  memberTier: "Gold Collection Circle",
+  points: 1250,
+  photo: "/images/events/sadid.jpg",
+  phone: "0178900****",
+  primaryLocation: "Dhanmondi***",
+};
+
 export default function AccountPage() {
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [activeTab, setActiveTab] = useState<"dashboard" | "orders" | "addresses" | "settings">("dashboard");
+  const [activeTab, setActiveTab] = useState<"profile" | "orders" | "addresses" | "password">("profile");
+  const [activeSubTab, setActiveSubTab] = useState<"basic" | "advance">("basic");
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
+
+  // Profile Form inputs
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userLocation, setUserLocation] = useState("");
+
+  // Change Password inputs
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  // Avatar Upload ref
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Auth Inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [name, setName] = useState("");
 
   const [loginMethod, setLoginMethod] = useState<"email" | "phone">("email");
@@ -50,13 +75,30 @@ export default function AccountPage() {
   useEffect(() => {
     setIsMounted(true);
     const savedUser = localStorage.getItem("murakkaz-user");
+    let currentUser: UserProfile;
     if (savedUser) {
       try {
-        setUser(JSON.parse(savedUser));
+        currentUser = JSON.parse(savedUser);
       } catch (e) {
-        console.error("Failed to parse user session", e);
+        currentUser = defaultUser;
       }
+    } else {
+      currentUser = defaultUser;
+      localStorage.setItem("murakkaz-user", JSON.stringify(defaultUser));
+      // Dispatch custom event to notify Navbar on first load
+      setTimeout(() => {
+        window.dispatchEvent(new Event("murakkaz-user-updated"));
+      }, 100);
     }
+    setUser(currentUser);
+
+    // Bind form fields
+    const parts = currentUser.name.split(" ");
+    setFirstName(parts[0] || "");
+    setLastName(parts.slice(1).join(" ") || "");
+    setUserEmail(currentUser.email || "");
+    setUserPhone(currentUser.phone || "");
+    setUserLocation(currentUser.primaryLocation || "");
 
     // Load preferences
     setSoundEnabled(localStorage.getItem("pref-sound") !== "false");
@@ -79,12 +121,23 @@ export default function AccountPage() {
         memberSince: "July 2026",
         memberTier: "Collector Circle",
         points: 100,
+        photo: "/images/events/sadid.jpg",
+        phone: "0178900****",
+        primaryLocation: "Dhanmondi***",
       };
 
       localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
       setUser(mockUser);
       setLoading(false);
+      window.dispatchEvent(new Event("murakkaz-user-updated"));
       
+      // Bind form fields
+      setFirstName(mockUser.name.split(" ")[0]);
+      setLastName(mockUser.name.split(" ").slice(1).join(" "));
+      setUserEmail(mockUser.email);
+      setUserPhone(mockUser.phone || "");
+      setUserLocation(mockUser.primaryLocation || "");
+
       // Clear forms
       setEmail("");
       setPassword("");
@@ -110,12 +163,23 @@ export default function AccountPage() {
         memberSince: "July 2026",
         memberTier: "Collector Circle",
         points: 100,
+        photo: "/images/events/sadid.jpg",
+        phone: "0178900****",
+        primaryLocation: "Dhanmondi***",
       };
 
       localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
       setUser(mockUser);
       setLoading(false);
+      window.dispatchEvent(new Event("murakkaz-user-updated"));
       
+      // Bind form fields
+      setFirstName(mockUser.name.split(" ")[0]);
+      setLastName(mockUser.name.split(" ").slice(1).join(" "));
+      setUserEmail(mockUser.email);
+      setUserPhone(mockUser.phone || "");
+      setUserLocation(mockUser.primaryLocation || "");
+
       // Clear forms
       setEmail("");
       setFirstName("");
@@ -129,15 +193,26 @@ export default function AccountPage() {
     setLoading(true);
     setTimeout(() => {
       const mockUser: UserProfile = {
-        name: "Google Explorer",
-        email: "google.user@murakkaz.com",
+        name: "Sadid Bin Hasan",
+        email: "sadidbinhasan@gmail.com",
         memberSince: "July 2026",
         memberTier: "Gold Collection Circle",
         points: 150,
+        photo: "/images/events/sadid.jpg",
+        phone: "0178900****",
+        primaryLocation: "Dhanmondi***",
       };
       localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
       setUser(mockUser);
       setLoading(false);
+      window.dispatchEvent(new Event("murakkaz-user-updated"));
+
+      // Bind form fields
+      setFirstName("Sadid");
+      setLastName("Bin Hasan");
+      setUserEmail(mockUser.email);
+      setUserPhone(mockUser.phone || "");
+      setUserLocation(mockUser.primaryLocation || "");
     }, 1000);
   };
 
@@ -161,6 +236,9 @@ export default function AccountPage() {
           memberSince: "July 2026",
           memberTier: "Collector Circle",
           points: 100,
+          photo: "/images/events/sadid.jpg",
+          phone: phoneNumber,
+          primaryLocation: "Dhanmondi***",
         };
         localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
         setUser(mockUser);
@@ -169,6 +247,14 @@ export default function AccountPage() {
         setPhoneNumber("");
         setOtp("");
         setName("");
+        window.dispatchEvent(new Event("murakkaz-user-updated"));
+
+        // Bind form fields
+        setFirstName(mockUser.name.split(" ")[0]);
+        setLastName(mockUser.name.split(" ").slice(1).join(" "));
+        setUserEmail(mockUser.email);
+        setUserPhone(mockUser.phone || "");
+        setUserLocation(mockUser.primaryLocation || "");
       }, 1000);
     }
   };
@@ -176,22 +262,83 @@ export default function AccountPage() {
   const handleLogout = () => {
     localStorage.removeItem("murakkaz-user");
     setUser(null);
-    setActiveTab("dashboard");
+    setActiveTab("profile");
+    // Clear forms
+    setFirstName("");
+    setLastName("");
+    setUserEmail("");
+    setUserPhone("");
+    setUserLocation("");
+    window.dispatchEvent(new Event("murakkaz-user-updated"));
   };
 
   // Preference Toggle handlers
   const togglePreference = (key: string, val: boolean, setter: (v: boolean) => void) => {
     setter(val);
     localStorage.setItem(key, String(val));
-    // Trigger global event if needed
     window.dispatchEvent(new Event("preferences-updated"));
   };
 
   const handleSaveProfile = (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
-    localStorage.setItem("murakkaz-user", JSON.stringify(user));
+    const updatedUser: UserProfile = {
+      ...user,
+      name: `${firstName} ${lastName}`.trim(),
+      email: userEmail,
+      phone: userPhone,
+      primaryLocation: userLocation,
+    };
+    setUser(updatedUser);
+    localStorage.setItem("murakkaz-user", JSON.stringify(updatedUser));
+    window.dispatchEvent(new Event("murakkaz-user-updated"));
     alert("Profile saved successfully.");
+  };
+
+  const handleResetProfile = () => {
+    if (!user) return;
+    const parts = user.name.split(" ");
+    setFirstName(parts[0] || "");
+    setLastName(parts.slice(1).join(" ") || "");
+    setUserEmail(user.email || "");
+    setUserPhone(user.phone || "");
+    setUserLocation(user.primaryLocation || "");
+  };
+
+  const handlePasswordChange = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword !== confirmNewPassword) {
+      alert("New passwords do not match!");
+      return;
+    }
+    alert("Password updated successfully.");
+    setCurrentPassword("");
+    setNewPassword("");
+    setConfirmNewPassword("");
+  };
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Maximum file size is 2MB.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result && user) {
+          const updatedUser = { ...user, photo: event.target.result as string };
+          setUser(updatedUser);
+          localStorage.setItem("murakkaz-user", JSON.stringify(updatedUser));
+          window.dispatchEvent(new Event("murakkaz-user-updated"));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
   };
 
   const handleSaveShipping = (e: React.FormEvent) => {
@@ -554,84 +701,288 @@ export default function AccountPage() {
             </div>
           </div>
         ) : (
-          /* Authenticated Dashboard View */
-          <div className={styles.dashboardLayout}>
+          /* Redesigned Authenticated Dashboard View */
+          <div className={styles.premiumDashboard}>
             
-            {/* Sidebar Navigation */}
-            <aside className={styles.sidebar}>
-              <button 
-                type="button"
-                className={`${styles.sidebarBtn} ${activeTab === "dashboard" ? styles.sidebarBtnActive : ""}`}
-                onClick={() => setActiveTab("dashboard")}
-              >
-                <span className={styles.sidebarIcon}>📊</span>
-                Dashboard
-              </button>
-              <button 
-                type="button"
-                className={`${styles.sidebarBtn} ${activeTab === "orders" ? styles.sidebarBtnActive : ""}`}
-                onClick={() => setActiveTab("orders")}
-              >
-                <span className={styles.sidebarIcon}>📦</span>
-                Order History
-              </button>
-              <button 
-                type="button"
-                className={`${styles.sidebarBtn} ${activeTab === "addresses" ? styles.sidebarBtnActive : ""}`}
-                onClick={() => setActiveTab("addresses")}
-              >
-                <span className={styles.sidebarIcon}>📍</span>
-                Addresses
-              </button>
-              <button 
-                type="button"
-                className={`${styles.sidebarBtn} ${activeTab === "settings" ? styles.sidebarBtnActive : ""}`}
-                onClick={() => setActiveTab("settings")}
-              >
-                <span className={styles.sidebarIcon}>⚙️</span>
-                Account Settings
-              </button>
-              <button 
-                type="button"
-                className={`${styles.sidebarBtn} ${styles.logoutBtn}`}
-                onClick={handleLogout}
-              >
-                <span className={styles.sidebarIcon}>🚪</span>
-                Sign Out
-              </button>
-            </aside>
+            {/* Header Row: Greeting (left) & Horizontal Navigation (right) */}
+            <div className={styles.premiumHeaderRow}>
+              <div className={styles.greetingSection}>
+                <span className={styles.greetingSub}>Good Morning.</span>
+                <h2 className={styles.greetingName}>{user.name}</h2>
+              </div>
 
-            {/* Content Display Panels */}
-            <section className={styles.contentPanel}>
-              
-              {/* TAB: Dashboard Summary */}
-              {activeTab === "dashboard" && (
-                <div>
-                  <h2 className={styles.contentTitle}>Dashboard</h2>
-                  <div className={styles.welcomeCard}>
-                    <p className={styles.welcomeTitle}>Welcome back, {user.name}!</p>
-                    <p style={{ fontSize: "0.875rem", color: "#555558" }}>
-                      Manage your profile, track shipping details, and access scent configurations from one central hub.
-                    </p>
+              <nav className={styles.premiumNavBar}>
+                <button 
+                  type="button" 
+                  className={`${styles.navItem} ${activeTab === "profile" ? styles.navItemActive : ""}`}
+                  onClick={() => setActiveTab("profile")}
+                >
+                  <svg className={styles.navIcon} viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                  </svg>
+                  Profile
+                </button>
+
+                <button 
+                  type="button" 
+                  className={`${styles.navItem} ${activeTab === "orders" ? styles.navItemActive : ""}`}
+                  onClick={() => setActiveTab("orders")}
+                >
+                  <svg className={styles.navIcon} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                  My Order
+                </button>
+
+                <button 
+                  type="button" 
+                  className={`${styles.navItem} ${activeTab === "addresses" ? styles.navItemActive : ""}`}
+                  onClick={() => setActiveTab("addresses")}
+                >
+                  <svg className={styles.navIcon} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <circle cx="12" cy="11" r="3" />
+                  </svg>
+                  Saved Address
+                </button>
+
+                <button 
+                  type="button" 
+                  className={`${styles.navItem} ${activeTab === "password" ? styles.navItemActive : ""}`}
+                  onClick={() => setActiveTab("password")}
+                >
+                  <svg className={styles.navIcon} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  Change Password
+                </button>
+
+                <button 
+                  type="button" 
+                  className={`${styles.navItem} ${styles.logoutNav}`}
+                  onClick={handleLogout}
+                >
+                  <svg className={styles.navIcon} viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+                  </svg>
+                  Logout
+                </button>
+              </nav>
+            </div>
+
+            {/* Main Content Body */}
+            <div className={styles.premiumBody}>
+              {activeTab === "profile" && (
+                <div className={styles.profileLayoutGrid}>
+                  
+                  {/* Left Column: Sub-tabs */}
+                  <div className={styles.subTabsColumn}>
+                    <button 
+                      type="button"
+                      className={`${styles.subTabBtn} ${activeSubTab === "basic" ? styles.subTabBtnActive : ""}`}
+                      onClick={() => setActiveSubTab("basic")}
+                    >
+                      Basic
+                    </button>
+                    <button 
+                      type="button"
+                      className={`${styles.subTabBtn} ${activeSubTab === "advance" ? styles.subTabBtnActive : ""}`}
+                      onClick={() => setActiveSubTab("advance")}
+                    >
+                      Advance
+                    </button>
                   </div>
-                  <div className={styles.statGrid}>
-                    <div className={styles.statCard}>
-                      <span className={styles.statLabel}>Membership Tier</span>
-                      <span className={styles.statValue} style={{ fontSize: "1.25rem", color: "#c5a880", fontWeight: "600", textTransform: "uppercase" }}>
-                        {user.memberTier}
-                      </span>
-                    </div>
-                    <div className={styles.statCard}>
-                      <span className={styles.statLabel}>Reward Points</span>
-                      <span className={styles.statValue}>{user.points} pts</span>
-                    </div>
+
+                  {/* Middle Column: Boxes */}
+                  <div className={styles.middleBoxesColumn}>
+                    {activeSubTab === "basic" ? (
+                      <>
+                        {/* Top Box: Avatar uploading */}
+                        <div className={styles.profileBox}>
+                          <div className={styles.avatarContainer}>
+                            <div className={styles.avatarPreviewWrapper}>
+                              {user.photo ? (
+                                <img src={user.photo} alt="Profile Photo" className={styles.avatarImage} />
+                              ) : (
+                                <div className={styles.avatarPlaceholder}>
+                                  <svg viewBox="0 0 24 24" width="48" height="48" fill="#a38258">
+                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                  </svg>
+                                </div>
+                              )}
+                            </div>
+                            <div className={styles.avatarUploadControls}>
+                              <input 
+                                type="file" 
+                                ref={fileInputRef} 
+                                onChange={handlePhotoUpload} 
+                                accept="image/*" 
+                                style={{ display: "none" }} 
+                              />
+                              <button 
+                                type="button" 
+                                className={styles.btnSecondary} 
+                                onClick={triggerFileInput}
+                              >
+                                Update cover
+                              </button>
+                              <span className={styles.uploadSubtext}>
+                                Supports JPG or PNG only. Maximum file size: 2MB.
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bottom Box: Profile Details form fields */}
+                        <div className={styles.profileBox}>
+                          <form onSubmit={handleSaveProfile} className={styles.detailsForm}>
+                            
+                            <div className={styles.formRow}>
+                              <label className={styles.formLabel}>Name:</label>
+                              <div className={styles.nameInputs}>
+                                <input 
+                                  type="text" 
+                                  required 
+                                  className={styles.inputField} 
+                                  placeholder="First Name"
+                                  value={firstName} 
+                                  onChange={(e) => setFirstName(e.target.value)}
+                                />
+                                <input 
+                                  type="text" 
+                                  required 
+                                  className={styles.inputField} 
+                                  placeholder="Last Name"
+                                  value={lastName} 
+                                  onChange={(e) => setLastName(e.target.value)}
+                                />
+                              </div>
+                            </div>
+
+                            <div className={styles.formRow}>
+                              <label className={styles.formLabel}>Email:</label>
+                              <input 
+                                type="email" 
+                                required 
+                                className={styles.inputField} 
+                                placeholder="Email Address"
+                                value={userEmail} 
+                                onChange={(e) => setUserEmail(e.target.value)}
+                              />
+                            </div>
+
+                            <div className={styles.formRow}>
+                              <label className={styles.formLabel}>Phone:</label>
+                              <input 
+                                type="text" 
+                                className={styles.inputField} 
+                                placeholder="Phone Number"
+                                value={userPhone} 
+                                onChange={(e) => setUserPhone(e.target.value)}
+                              />
+                            </div>
+
+                            <div className={styles.formRow}>
+                              <label className={styles.formLabel}>Primary Location:</label>
+                              <input 
+                                type="text" 
+                                className={styles.inputField} 
+                                placeholder="Primary Location"
+                                value={userLocation} 
+                                onChange={(e) => setUserLocation(e.target.value)}
+                              />
+                            </div>
+
+                          </form>
+                        </div>
+                      </>
+                    ) : (
+                      /* Advance subtab: Keep existing settings/preferences */
+                      <div className={styles.profileBox}>
+                        <h3 className={styles.boxTitle}>Premium Preferences</h3>
+                        <div className={styles.togglesList}>
+                          
+                          <div className={styles.toggleRow}>
+                            <div className={styles.toggleMeta}>
+                              <span className={styles.toggleLabel}>Dark Aesthetics</span>
+                              <span className={styles.toggleDesc}>Enable modern charcoal-black backdrop aesthetic across pages.</span>
+                            </div>
+                            <label className={styles.switch}>
+                              <input 
+                                type="checkbox" 
+                                className={styles.switchInput}
+                                checked={darkMode}
+                                onChange={(e) => togglePreference("pref-darkmode", e.target.checked, setDarkMode)}
+                              />
+                              <span className={styles.switchSlider} />
+                            </label>
+                          </div>
+                          
+                          <div className={styles.toggleRow}>
+                            <div className={styles.toggleMeta}>
+                              <span className={styles.toggleLabel}>Ambient Particle Rendering</span>
+                              <span className={styles.toggleDesc}>Render floating ambient dust particles inside headers & scent selector.</span>
+                            </div>
+                            <label className={styles.switch}>
+                              <input 
+                                type="checkbox" 
+                                className={styles.switchInput}
+                                checked={ambientEnabled}
+                                onChange={(e) => togglePreference("pref-ambient", e.target.checked, setAmbientEnabled)}
+                              />
+                              <span className={styles.switchSlider} />
+                            </label>
+                          </div>
+
+                          <div className={styles.toggleRow}>
+                            <div className={styles.toggleMeta}>
+                              <span className={styles.toggleLabel}>Sound Effects</span>
+                              <span className={styles.toggleDesc}>Play micro-feedback audio sounds when interacting with buttons.</span>
+                            </div>
+                            <label className={styles.switch}>
+                              <input 
+                                type="checkbox" 
+                                className={styles.switchInput}
+                                checked={soundEnabled}
+                                onChange={(e) => togglePreference("pref-sound", e.target.checked, setSoundEnabled)}
+                              />
+                              <span className={styles.switchSlider} />
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
+
+                  {/* Right Column: Actions (Save/Reset) */}
+                  <div className={styles.actionsColumn}>
+                    {activeSubTab === "basic" && (
+                      <>
+                        <button 
+                          type="button" 
+                          className={styles.btnPrimarySave} 
+                          onClick={handleSaveProfile}
+                        >
+                          Save
+                        </button>
+                        <button 
+                          type="button" 
+                          className={styles.btnResetProfile} 
+                          onClick={handleResetProfile}
+                        >
+                          Reset
+                        </button>
+                      </>
+                    )}
+                  </div>
+
                 </div>
               )}
 
-              {/* TAB: Orders History */}
+              {/* Orders View */}
               {activeTab === "orders" && (
-                <div>
+                <div className={styles.tabContentPanel}>
                   <h2 className={styles.contentTitle}>Order History</h2>
                   <div className={styles.ordersList}>
                     {mockOrders.map((order) => (
@@ -688,18 +1039,16 @@ export default function AccountPage() {
                 </div>
               )}
 
-              {/* TAB: Address Details */}
+              {/* Addresses View */}
               {activeTab === "addresses" && (
-                <div>
-                  <h2 className={styles.contentTitle}>Shipping & Billing</h2>
+                <div className={styles.tabContentPanel}>
+                  <h2 className={styles.contentTitle}>Shipping & Billing Addresses</h2>
                   <div className={styles.addressGrid}>
                     
-                    {/* Shipping address info */}
                     <div className={styles.addressCard}>
                       <div className={styles.addressHeader}>
                         <span className={styles.addressType}>Shipping Address</span>
                       </div>
-                      
                       {!isEditingShipping ? (
                         <>
                           <p className={styles.addressName}>{shippingAddress.fullName}</p>
@@ -761,7 +1110,7 @@ export default function AccountPage() {
                             <button 
                               type="button" 
                               className={styles.btnPrimary} 
-                              style={{ flex: 1, backgroundColor: "#transparent", border: "1px solid #767677", color: "#555558" }}
+                              style={{ flex: 1, backgroundColor: "transparent", border: "1px solid #767677", color: "#555558" }}
                               onClick={() => setIsEditingShipping(false)}
                             >
                               Cancel
@@ -771,12 +1120,10 @@ export default function AccountPage() {
                       )}
                     </div>
 
-                    {/* Billing address info */}
                     <div className={styles.addressCard}>
                       <div className={styles.addressHeader}>
                         <span className={styles.addressType}>Billing Address</span>
                       </div>
-
                       {!isEditingBilling ? (
                         <>
                           <p className={styles.addressName}>{billingAddress.fullName}</p>
@@ -837,7 +1184,7 @@ export default function AccountPage() {
                             <button 
                               type="button" 
                               className={styles.btnPrimary} 
-                              style={{ flex: 1, backgroundColor: "#transparent", border: "1px solid #767677", color: "#555558" }}
+                              style={{ flex: 1, backgroundColor: "transparent", border: "1px solid #767677", color: "#555558" }}
                               onClick={() => setIsEditingBilling(false)}
                             >
                               Cancel
@@ -846,136 +1193,68 @@ export default function AccountPage() {
                         </form>
                       )}
                     </div>
+
                   </div>
                 </div>
               )}
 
-              {/* TAB: Settings & preferences */}
-              {activeTab === "settings" && (
-                <div>
-                  <h2 className={styles.contentTitle}>Account Settings</h2>
-                  
-                  <form onSubmit={handleSaveProfile} className={styles.form} style={{ marginBottom: "2.5rem" }}>
-                    <h3 className={styles.sectionHeader}>Profile Details</h3>
+              {/* Change Password View */}
+              {activeTab === "password" && (
+                <div className={styles.tabContentPanel}>
+                  <h2 className={styles.contentTitle}>Change Password</h2>
+                  <form onSubmit={handlePasswordChange} className={styles.form} style={{ maxWidth: "500px", padding: "1rem 0" }}>
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Profile Name</label>
-                      <input 
-                        type="text" 
-                        className={styles.input} 
-                        value={user.name} 
-                        onChange={(e) => setUser({ ...user, name: e.target.value })}
+                      <label className={styles.label}>Current Password</label>
+                      <input
+                        type="password"
+                        required
+                        className={styles.input}
+                        placeholder="Current Password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
                       />
                     </div>
                     <div className={styles.formGroup}>
-                      <label className={styles.label}>Email Address</label>
-                      <input 
-                        type="email" 
-                        className={styles.input} 
-                        value={user.email} 
-                        onChange={(e) => setUser({ ...user, email: e.target.value })}
+                      <label className={styles.label}>New Password</label>
+                      <input
+                        type="password"
+                        required
+                        className={styles.input}
+                        placeholder="New Password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
                       />
                     </div>
-                    <button type="submit" className={styles.btnPrimary} style={{ maxWidth: "200px" }}>
-                      Save Changes
-                    </button>
+                    <div className={styles.formGroup}>
+                      <label className={styles.label}>Confirm New Password</label>
+                      <input
+                        type="password"
+                        required
+                        className={styles.input}
+                        placeholder="Confirm New Password"
+                        value={confirmNewPassword}
+                        onChange={(e) => setConfirmNewPassword(e.target.value)}
+                      />
+                    </div>
+                    <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>
+                      <button type="submit" className={styles.btnPrimary} style={{ maxWidth: "200px" }}>Save Password</button>
+                      <button 
+                        type="button" 
+                        className={styles.btnPrimary} 
+                        style={{ maxWidth: "150px", backgroundColor: "transparent", border: "1px solid #767677", color: "#555558" }}
+                        onClick={() => {
+                          setCurrentPassword("");
+                          setNewPassword("");
+                          setConfirmNewPassword("");
+                        }}
+                      >
+                        Reset
+                      </button>
+                    </div>
                   </form>
-
-                  <div className={styles.settingsSection}>
-                    <h3 className={styles.sectionHeader}>Premium Preferences</h3>
-                    
-                    <div className={styles.togglesList}>
-                      
-                      {/* Toggle: Dark mode */}
-                      <div className={styles.toggleRow}>
-                        <div className={styles.toggleMeta}>
-                          <span className={styles.toggleLabel}>Dark Aesthetics</span>
-                          <span className={styles.toggleDesc}>Enable modern charcoal-black backdrop aesthetic across pages.</span>
-                        </div>
-                        <label className={styles.switch}>
-                          <input 
-                            type="checkbox" 
-                            className={styles.switchInput}
-                            checked={darkMode}
-                            onChange={(e) => togglePreference("pref-darkmode", e.target.checked, setDarkMode)}
-                          />
-                          <span className={styles.switchSlider} />
-                        </label>
-                      </div>
-
-                      {/* Toggle: Ambient particles */}
-                      <div className={styles.toggleRow}>
-                        <div className={styles.toggleMeta}>
-                          <span className={styles.toggleLabel}>Ambient Particle Rendering</span>
-                          <span className={styles.toggleDesc}>Render floating ambient dust particles inside headers & scent selector.</span>
-                        </div>
-                        <label className={styles.switch}>
-                          <input 
-                            type="checkbox" 
-                            className={styles.switchInput}
-                            checked={ambientEnabled}
-                            onChange={(e) => togglePreference("pref-ambient", e.target.checked, setAmbientEnabled)}
-                          />
-                          <span className={styles.switchSlider} />
-                        </label>
-                      </div>
-
-                      {/* Toggle: Sounds */}
-                      <div className={styles.toggleRow}>
-                        <div className={styles.toggleMeta}>
-                          <span className={styles.toggleLabel}>Sound Effects</span>
-                          <span className={styles.toggleDesc}>Play micro-feedback audio sounds when interacting with buttons.</span>
-                        </div>
-                        <label className={styles.switch}>
-                          <input 
-                            type="checkbox" 
-                            className={styles.switchInput}
-                            checked={soundEnabled}
-                            onChange={(e) => togglePreference("pref-sound", e.target.checked, setSoundEnabled)}
-                          />
-                          <span className={styles.switchSlider} />
-                        </label>
-                      </div>
-
-                      {/* Toggle: Scent Consultation reminders */}
-                      <div className={styles.toggleRow}>
-                        <div className={styles.toggleMeta}>
-                          <span className={styles.toggleLabel}>Consultation Reminders</span>
-                          <span className={styles.toggleDesc}>Receive reminders to revisit your scent preferences every season.</span>
-                        </div>
-                        <label className={styles.switch}>
-                          <input 
-                            type="checkbox" 
-                            className={styles.switchInput}
-                            checked={consultationReminders}
-                            onChange={(e) => togglePreference("pref-reminders", e.target.checked, setConsultationReminders)}
-                          />
-                          <span className={styles.switchSlider} />
-                        </label>
-                      </div>
-
-                      {/* Toggle: Newsletter */}
-                      <div className={styles.toggleRow}>
-                        <div className={styles.toggleMeta}>
-                          <span className={styles.toggleLabel}>Exclusive Circle Newsletter</span>
-                          <span className={styles.toggleDesc}>Get notified about new limited-edition batches and special collections.</span>
-                        </div>
-                        <label className={styles.switch}>
-                          <input 
-                            type="checkbox" 
-                            className={styles.switchInput}
-                            checked={newsletterEnabled}
-                            onChange={(e) => togglePreference("pref-newsletter", e.target.checked, setNewsletterEnabled)}
-                          />
-                          <span className={styles.switchSlider} />
-                        </label>
-                      </div>
-
-                    </div>
-                  </div>
                 </div>
               )}
-
-            </section>
+            </div>
           </div>
         )}
         
