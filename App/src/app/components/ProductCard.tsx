@@ -83,10 +83,22 @@ export default function ProductCard({
     router.push("/cart");
   };
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (
+      target.closest(`.${styles.compareBtn}`) ||
+      target.closest(`.${styles.wishlistBtn}`) ||
+      target.closest(`.${styles.readMoreBtn}`)
+    ) {
+      return;
+    }
+    router.push(`/product/${id}`);
+  };
+
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={handleCardClick} style={{ cursor: "pointer" }}>
       {/* Product Image */}
-      <Link href={`/product/${id}`} className={styles.imageContainer}>
+      <div className={styles.imageContainer}>
         <Image
           src={image}
           alt={name}
@@ -94,16 +106,14 @@ export default function ProductCard({
           height={240}
           className={styles.image}
         />
-      </Link>
+      </div>
 
       {/* Card Content */}
       <div className={styles.content}>
         {/* Name + Heart Row */}
         <div className={styles.nameRow}>
           <h3 className={styles.name}>
-            <Link href={`/product/${id}`} style={{ textDecoration: "none", color: "inherit" }}>
-              {name}
-            </Link>
+            {name}
           </h3>
           <button
             className={`${styles.wishlistBtn} ${isWishlisted ? styles.active : ""}`}

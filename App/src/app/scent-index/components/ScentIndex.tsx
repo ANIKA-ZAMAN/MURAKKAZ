@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import QuizCard from "./QuizCard";
 import {
   quizQuestions,
@@ -14,6 +15,7 @@ import { Product } from "../../data/products";
 import styles from "./ScentIndex.module.css";
 
 export default function ScentIndex() {
+  const router = useRouter();
   const [phase, setPhase] = useState<"intro" | "consultation" | "loading" | "results">("intro");
   const [isTransitioningIntro, setIsTransitioningIntro] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -344,12 +346,22 @@ export default function ScentIndex() {
         {phase === "results" && recommendations.length > 0 && (
           <div className={styles.resultsGridWrapper}>
             <div className={styles.resultsGrid}>
-              {recommendations.map((rec, index) => (
-                <div 
-                  key={rec.product.id} 
-                  className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
-                  style={{ animationDelay: `${0.15 * index}s` }}
-                >
+              {recommendations.map((rec, index) => {
+                const handleCardClick = (e: React.MouseEvent) => {
+                  const target = e.target as HTMLElement;
+                  if (target.closest(`.${styles.btnNext}`)) {
+                    return;
+                  }
+                  router.push(`/product/${rec.product.id}`);
+                };
+
+                return (
+                  <div 
+                    key={rec.product.id} 
+                    className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
+                    style={{ animationDelay: `${0.15 * index}s`, cursor: "pointer" }}
+                    onClick={handleCardClick}
+                  >
                   <div className={styles.cardHeader}>
                     <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
                       {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
@@ -396,7 +408,8 @@ export default function ScentIndex() {
                     </button>
                   </div>
                 </div>
-              ))}
+              );
+            })}
             </div>
 
             {/* Centered Action Buttons at the bottom */}
