@@ -456,17 +456,17 @@ export default function ScentIndex() {
                   <div className={styles.cardActions}>
                     <button
                       type="button"
-                      className={styles.quizBuyNowBtn}
-                      onClick={() => handleBuyNow(rec.product)}
-                    >
-                      Buy Now
-                    </button>
-                    <button
-                      type="button"
                       className={styles.quizAddBagBtn}
                       onClick={() => handleAddToCart(rec.product)}
                     >
                       Add to Bag
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.quizBuyNowBtn}
+                      onClick={() => handleBuyNow(rec.product)}
+                    >
+                      Buy Now
                     </button>
                   </div>
                 </div>
