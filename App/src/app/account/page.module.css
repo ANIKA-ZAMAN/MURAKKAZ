@@ -846,10 +846,14 @@
 
 .greetingSub {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 1.05rem;
-  color: #313134;
+  font-size: 1.15rem;
+  color: #820011;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.exclamationMark {
+  color: #313134;
 }
 
 .greetingName {
