@@ -497,7 +497,7 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.025 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)'/%3E%3C/svg%3E");
   border: 1px solid rgba(130, 120, 100, 0.12);
   border-radius: 12px;
-  padding: 2.25rem 2rem;
+  padding: 1.75rem 1.5rem;
   box-shadow: 
     0 10px 30px rgba(47, 9, 9, 0.03),
     0 20px 60px rgba(47, 9, 9, 0.04);
@@ -537,7 +537,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid rgba(130, 120, 100, 0.08);
   padding-bottom: 0.75rem;
 }
@@ -575,7 +575,7 @@
   height: 220px;
   border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
@@ -592,30 +592,30 @@
 
 .cardTitle {
   font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 500;
   color: #313134;
-  margin: 0 0 0.4rem 0;
+  margin: 0 0 0.25rem 0;
   letter-spacing: 0.02em;
   line-height: 1.2;
 }
 
 .cardInspiration {
   font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-style: italic;
   color: #8c8c90;
-  margin: -0.4rem 0 1.25rem 0;
+  margin: -0.2rem 0 0.75rem 0;
   letter-spacing: 0.02em;
   line-height: 1.4;
 }
 
 .cardText {
   font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: #555558;
-  line-height: 1.6;
-  margin: 0 0 1.5rem 0;
+  line-height: 1.4;
+  margin: 0 0 1rem 0;
   flex-grow: 1;
 }
 
@@ -623,18 +623,18 @@
   display: flex;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
   flex-wrap: wrap;
   width: 100%;
 }
 
 .scentTag {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   color: #555558;
   background-color: rgba(130, 120, 100, 0.04);
   border: 1px solid rgba(130, 120, 100, 0.15);
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.65rem;
   border-radius: 20px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -663,7 +663,7 @@
   color: #8c8c90;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.25rem;
   text-align: center;
   font-weight: 500;
 }

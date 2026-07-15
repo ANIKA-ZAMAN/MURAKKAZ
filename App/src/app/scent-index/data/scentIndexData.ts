@@ -301,45 +301,74 @@ export function getTop3Recommendations(
 
   return top3.map((item, index) => {
     const highestScore = item.score;
-    const bestProduct = item.product;
+    const bestProduct = { ...item.product };
 
     const matchPercentage = Math.min(
       99 - index * 3,
       Math.max(82, Math.round((highestScore / maxPossibleScore) * 15 + 85) - index * 4)
     );
 
-    // Generate personalized premium consultation reasons and inspirations
-    let reason = `A seamless composition of delicate florals and soft musks, resting quietly on the skin like a light linen shirt in late summer.`;
-    let inspiration = `Inspired by moments of stillness and memory`;
+    let name = bestProduct.name;
+    let reason = "A timeless balance of delicate florals and soft musks.";
+    let inspiration = "Inspired by Le Labo Santal 33";
     let profileTags = ["Floral", "Musky", "Elegant"];
-    let keyNotes = ["Jasmine", "Rose", "White Musk"];
     let performance = "7+ Hours • Elegant Presence";
 
-    if (bestProduct.family === "Woody") {
-      reason = `A grounding sanctuary of smoked woods and quiet resilience, evoking the scent of sun-warmed cedar and fresh rain over mossy forest beds.`;
-      inspiration = `Inspired by misty cedar forests and damp earth`;
+    const img = bestProduct.image.toLowerCase();
+    if (img.includes("magnetism")) {
+      name = "Murakkaz Noir";
+      inspiration = "Inspired by Dior Sauvage Elixir";
+      reason = "Warm woody fragrance with smoky elegance.";
       profileTags = ["Woody", "Amber", "Smoky"];
-      keyNotes = ["Sandalwood", "Cedarwood", "Vetiver"];
       performance = "8+ Hours • Strong Projection";
-    } else if (bestProduct.family === "Citrus") {
-      reason = `A bright, expansive breath of seaside air over open orchards. Crisp salinity paired with the sharp energy of freshly sliced citrus.`;
-      inspiration = `Inspired by Mediterranean groves and coastal sea salt`;
-      profileTags = ["Citrus", "Fresh", "Zesty"];
-      keyNotes = ["Bergamot", "Neroli", "Mandarin"];
+    } else if (img.includes("jade_serenity")) {
+      name = "Verde Jade";
+      inspiration = "Inspired by Creed Original Vetiver";
+      reason = "Vibrant zesty citrus notes balanced with earthy, fresh vetiver.";
+      profileTags = ["Citrus", "Fresh", "Green"];
       performance = "6+ Hours • Moderate Projection";
-    } else if (bestProduct.family === "Fresh") {
-      reason = `A vibrant breath of morning air over sun-drenched orchards, capturing the crisp clarity of sea breeze and dew-kissed leaves.`;
-      inspiration = `Inspired by Mediterranean groves and coastal sea salt`;
+    } else if (img.includes("coral_sea")) {
+      name = "Coral Sea";
+      inspiration = "Inspired by Jo Malone Wood Sage & Sea Salt";
+      reason = "A crisp aquatic breeze with fresh sea salt and sage.";
       profileTags = ["Fresh", "Aquatic", "Green"];
-      keyNotes = ["Sea Salt", "Sage", "Mint"];
       performance = "6+ Hours • Moderate Projection";
-    } else if (bestProduct.family === "Oriental" || bestProduct.family === "Floral") {
-      reason = `A soft, whispered embrace of velvet petals and warm amber, weaving an intimate story of mystery, sweet warmth, and elegance.`;
-      inspiration = `Inspired by midnight gardens and whispered secrets`;
+    } else if (img.includes("hellenist")) {
+      name = "Hellenist";
+      inspiration = "Inspired by Baccarat Rouge 540";
+      reason = "Velvet petals blended with a warm, sophisticated amber embrace.";
       profileTags = ["Oriental", "Spicy", "Warm"];
-      keyNotes = ["Amber", "Vanilla", "Cardamom"];
       performance = "8+ Hours • Strong Projection";
+    } else {
+      // Fallback based on family
+      if (bestProduct.family === "Woody") {
+        name = "Murakkaz Noir";
+        inspiration = "Inspired by Dior Sauvage Elixir";
+        reason = "Warm woody fragrance with smoky elegance.";
+        profileTags = ["Woody", "Amber", "Smoky"];
+        performance = "8+ Hours • Strong Projection";
+      } else if (bestProduct.family === "Citrus") {
+        name = "Verde Jade";
+        inspiration = "Inspired by Creed Original Vetiver";
+        reason = "Vibrant zesty citrus notes balanced with earthy, fresh vetiver.";
+        profileTags = ["Citrus", "Fresh", "Green"];
+        performance = "6+ Hours • Moderate Projection";
+      } else if (bestProduct.family === "Fresh") {
+        name = "Coral Sea";
+        inspiration = "Inspired by Jo Malone Wood Sage & Sea Salt";
+        reason = "A crisp aquatic breeze with fresh sea salt and sage.";
+        profileTags = ["Fresh", "Aquatic", "Green"];
+        performance = "6+ Hours • Moderate Projection";
+      } else if (bestProduct.family === "Oriental") {
+        name = "Hellenist";
+        inspiration = "Inspired by Baccarat Rouge 540";
+        reason = "Velvet petals blended with a warm, sophisticated amber embrace.";
+        profileTags = ["Oriental", "Spicy", "Warm"];
+        performance = "8+ Hours • Strong Projection";
+      }
     }
+
+    bestProduct.name = name;
 
     return {
       product: bestProduct,
@@ -347,7 +376,6 @@ export function getTop3Recommendations(
       reason,
       inspiration,
       profileTags,
-      keyNotes,
       performance,
     };
   });

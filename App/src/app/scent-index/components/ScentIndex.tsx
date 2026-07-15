@@ -382,11 +382,6 @@ export default function ScentIndex() {
                     ))}
                   </div>
 
-                  {/* Key Fragrance Notes */}
-                  <div className={styles.keyNotesLine}>
-                    {rec.keyNotes?.join("  •  ")}
-                  </div>
-
                   {/* Performance */}
                   <div className={styles.performanceLine}>
                     {rec.performance}
