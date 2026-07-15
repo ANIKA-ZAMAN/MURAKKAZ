@@ -316,19 +316,20 @@
 
 .buyNowBtn {
   flex: 2;
-  background-color: #313134;
-  color: #ffffff;
-  border: none;
+  background-color: transparent;
+  color: #820011;
+  border: 1.5px solid #820011;
   padding: 1rem;
   font-size: 1rem;
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .buyNowBtn:hover {
-  opacity: 0.9;
+  background-color: #820011;
+  color: #ffffff;
 }
 
 .addToCartBtn {
@@ -341,11 +342,12 @@
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .addToCartBtn:hover {
-  background-color: #f7f7f7;
+  background-color: #313134;
+  color: #ffffff;
 }
 
 .wishlistCircle {

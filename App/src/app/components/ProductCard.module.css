@@ -165,26 +165,28 @@
 
 .compareBtn {
   background: transparent;
+  border: 1px solid #820011;
+  color: #820011;
+}
+
+.compareBtn:hover {
+  background-color: #820011;
+  border-color: #820011;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.15);
+}
+
+.readMoreBtn {
+  background: transparent;
   border: 1px solid #313134;
   color: #313134;
 }
 
-.compareBtn:hover {
-  background-color: #7c6853;
-  border-color: #7c6853;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(124, 104, 83, 0.15);
-}
-
-.readMoreBtn {
-  background: #313134;
-  border: 1px solid #313134;
-  color: #ffffff;
-}
-
 .readMoreBtn:hover {
-  background-color: #1e1e20;
-  border-color: #1e1e20;
+  background-color: #313134;
+  border-color: #313134;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
 }
 
 /* ── Toast ── */
