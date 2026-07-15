@@ -353,7 +353,6 @@ export default function ScentIndex() {
                   style={{ animationDelay: `${0.15 * index}s` }}
                 >
                   <div className={styles.cardHeader}>
-                    <span className={styles.resultsLabel}>RECOMMENDED</span>
                     <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
                       {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
                     </span>
