@@ -373,19 +373,23 @@ export default function ScentIndex() {
                   <p className={styles.cardInspiration}>{rec.inspiration}</p>
                   <p className={styles.cardText}>{rec.reason}</p>
 
-                  <div className={styles.cardTraitPills}>
-                    <div className={styles.cardTraitPill}>
-                      <span className={styles.pillLabel}>Family:</span>{" "}
-                      <span>{rec.product.family}</span>
-                    </div>
-                    <div className={styles.cardTraitPill}>
-                      <span className={styles.pillLabel}>Occasion:</span>{" "}
-                      <span>{rec.product.occasion}</span>
-                    </div>
-                    <div className={styles.cardTraitPill}>
-                      <span className={styles.pillLabel}>Intensity:</span>{" "}
-                      <span>{rec.product.meter}</span>
-                    </div>
+                  {/* Scent Profile Tags */}
+                  <div className={styles.scentProfileTags}>
+                    {rec.profileTags?.map((tag) => (
+                      <span key={tag} className={styles.scentTag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Key Fragrance Notes */}
+                  <div className={styles.keyNotesLine}>
+                    {rec.keyNotes?.join("  •  ")}
+                  </div>
+
+                  {/* Performance */}
+                  <div className={styles.performanceLine}>
+                    {rec.performance}
                   </div>
 
                   <div className={styles.cardActions}>

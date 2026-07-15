@@ -88,6 +88,9 @@ export interface QuizRecommendation {
   matchScore: number;
   reason: string;
   inspiration?: string;
+  profileTags?: string[];
+  keyNotes?: string[];
+  performance?: string;
 }
 
 /**
@@ -306,18 +309,36 @@ export function getTop3Recommendations(
     );
 
     // Generate personalized premium consultation reasons and inspirations
-    let reason = `A harmonious balance of timeless notes designed to wrap you in a subtle, sophisticated aura of quiet confidence.`;
+    let reason = `A seamless composition of delicate florals and soft musks, resting quietly on the skin like a light linen shirt in late summer.`;
     let inspiration = `Inspired by moments of stillness and memory`;
+    let profileTags = ["Floral", "Musky", "Elegant"];
+    let keyNotes = ["Jasmine", "Rose", "White Musk"];
+    let performance = "7+ Hours • Elegant Presence";
 
     if (bestProduct.family === "Woody") {
       reason = `A grounding sanctuary of smoked woods and quiet resilience, evoking the scent of sun-warmed cedar and fresh rain over mossy forest beds.`;
       inspiration = `Inspired by misty cedar forests and damp earth`;
-    } else if (bestProduct.family === "Fresh" || bestProduct.family === "Citrus") {
+      profileTags = ["Woody", "Amber", "Smoky"];
+      keyNotes = ["Sandalwood", "Cedarwood", "Vetiver"];
+      performance = "8+ Hours • Strong Projection";
+    } else if (bestProduct.family === "Citrus") {
+      reason = `A bright, expansive breath of seaside air over open orchards. Crisp salinity paired with the sharp energy of freshly sliced citrus.`;
+      inspiration = `Inspired by Mediterranean groves and coastal sea salt`;
+      profileTags = ["Citrus", "Fresh", "Zesty"];
+      keyNotes = ["Bergamot", "Neroli", "Mandarin"];
+      performance = "6+ Hours • Moderate Projection";
+    } else if (bestProduct.family === "Fresh") {
       reason = `A vibrant breath of morning air over sun-drenched orchards, capturing the crisp clarity of sea breeze and dew-kissed leaves.`;
       inspiration = `Inspired by Mediterranean groves and coastal sea salt`;
+      profileTags = ["Fresh", "Aquatic", "Green"];
+      keyNotes = ["Sea Salt", "Sage", "Mint"];
+      performance = "6+ Hours • Moderate Projection";
     } else if (bestProduct.family === "Oriental" || bestProduct.family === "Floral") {
       reason = `A soft, whispered embrace of velvet petals and warm amber, weaving an intimate story of mystery, sweet warmth, and elegance.`;
       inspiration = `Inspired by midnight gardens and whispered secrets`;
+      profileTags = ["Oriental", "Spicy", "Warm"];
+      keyNotes = ["Amber", "Vanilla", "Cardamom"];
+      performance = "8+ Hours • Strong Projection";
     }
 
     return {
@@ -325,6 +346,9 @@ export function getTop3Recommendations(
       matchScore: matchPercentage,
       reason,
       inspiration,
+      profileTags,
+      keyNotes,
+      performance,
     };
   });
 }

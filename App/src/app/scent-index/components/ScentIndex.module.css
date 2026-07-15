@@ -619,29 +619,53 @@
   flex-grow: 1;
 }
 
-.cardTraitPills {
+.scentProfileTags {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
   width: 100%;
-  margin-bottom: 1.75rem;
 }
 
-.cardTraitPill {
+.scentTag {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   color: #555558;
-  background-color: rgba(130, 120, 100, 0.06);
-  padding: 0.4rem 0.75rem;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: rgba(130, 120, 100, 0.04);
+  border: 1px solid rgba(130, 120, 100, 0.15);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-.pillLabel {
+.resultsNarrowCard:hover .scentTag {
+  background-color: rgba(130, 120, 100, 0.08);
+  border-color: rgba(130, 120, 100, 0.25);
+}
+
+.keyNotesLine {
+  font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
+  font-size: 0.8rem;
+  color: #313134;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+  text-align: center;
   font-weight: 500;
-  color: #767677;
+}
+
+.performanceLine {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.65rem;
+  color: #8c8c90;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.75rem;
+  text-align: center;
+  font-weight: 500;
 }
 
 .cardActions {
