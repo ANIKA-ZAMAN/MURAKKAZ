@@ -99,7 +99,7 @@
 .filledSlot {
   width: 100%;
   aspect-ratio: 349 / 300;
-  background-color: #fcfbfa;
+  background-color: #eae2d5;
   border: 1.5px solid #313134;
   border-radius: 10px;
   display: flex;
