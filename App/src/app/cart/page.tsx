@@ -342,9 +342,11 @@ export default function CartPage() {
                 <div className={styles.totalValue}>
                   {totalAmount.toLocaleString()}tk
                 </div>
-                <button className={styles.processBtn}>
-                  Process To Pay
-                </button>
+                <Link href="/checkout" style={{ width: '100%', display: 'block' }}>
+                  <button className={styles.processBtn}>
+                    Process To Pay
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
