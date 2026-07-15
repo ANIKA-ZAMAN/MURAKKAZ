@@ -329,18 +329,7 @@ export default function ComparePage() {
                     </td>
                   ))}
                 </tr>
-                {/* Row 9: Sweetness Level */}
-                <tr>
-                  <td className={styles.featureTitle}>Sweetness Level</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.sweetness : ""}
-                    </td>
-                  ))}
-                </tr>
+
                 {/* Row 10: Best For */}
                 <tr>
                   <td className={styles.featureTitle}>Best For</td>

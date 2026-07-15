@@ -296,7 +296,7 @@
   width: 100%;
   max-width: 1249px;
   margin: 2rem auto 0;
-  border: 1px solid #e5e2da;
+  border: 1px solid #b0a99a;
   border-radius: 8px;
   overflow: visible; /* Allows sticky table headers to render correctly */
   background-color: var(--background); /* Same background color as the page */
@@ -313,8 +313,8 @@
   padding: 1.5rem 2rem;
   font-size: 0.9rem;
   color: #2d2d2f;
-  border-right: 1px solid #e5e2da;
-  border-bottom: 1px solid #e5e2da;
+  border-right: 1px solid #b0a99a;
+  border-bottom: 1px solid #b0a99a;
   vertical-align: middle;
   transition: background-color 0.25s ease;
 }
@@ -337,7 +337,7 @@
   top: 80px; /* Sits cleanly below header */
   z-index: 40;
   background-color: var(--background) !important; /* Matches page background */
-  border-bottom: 1.5px solid #d9c49e !important;
+  border-bottom: 1.5px solid #b0a99a !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
 
@@ -349,7 +349,7 @@
   font-family: var(--font-playfair), var(--font-lora), serif;
   font-size: 1.02rem;
   font-weight: 400;
-  color: #8c8a82;
+  color: #1e1e20; /* Murakkaz Black */
   background-color: #f0ece0; /* Slightly darker warm beige for row headers */
   width: 22%;
   min-width: 190px;
@@ -368,7 +368,7 @@
   font-family: var(--font-playfair), var(--font-lora), serif;
   font-size: 1.45rem;
   font-weight: 400;
-  color: #2d2d2f;
+  color: #820011; /* Murakkaz Red */
 }
 
 .nameHeaderContainer {
