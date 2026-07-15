@@ -10,7 +10,7 @@ interface CollectionHeaderProps {
 }
 
 export default function CollectionHeader({
-  title = "Perfume Library",
+  title = "Perfume Collection",
   subtitle = "Universe of perfume",
   onSearch,
 }: CollectionHeaderProps) {

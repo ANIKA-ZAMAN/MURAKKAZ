@@ -9,7 +9,7 @@ const homeNavLinks = [
   { label: "Our Story", href: "/our-story" },
   { label: "Shop", href: "/shop" },
   { label: "Event", href: "/events" },
-  { label: "Library", href: "/library" },
+  { label: "Collections", href: "/collections" },
   { label: "Compare", href: "/compare" },
   { label: "Finder", href: "/scent-index" },
   { label: "Vlog", href: "/blog" },
