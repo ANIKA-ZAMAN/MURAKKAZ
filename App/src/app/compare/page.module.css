@@ -74,7 +74,7 @@
 /* Empty Slot */
 .emptySlot {
   width: 100%;
-  aspect-ratio: 349 / 249;
+  aspect-ratio: 349 / 300;
   background-color: var(--background);
   border: 1.5px solid #5f5f61;
   border-radius: 10px;
@@ -98,7 +98,7 @@
 /* Filled Slot */
 .filledSlot {
   width: 100%;
-  aspect-ratio: 349 / 249;
+  aspect-ratio: 349 / 300;
   background-color: #fcfbfa;
   border: 1.5px solid #313134;
   border-radius: 10px;
@@ -141,7 +141,7 @@
 
 .productImage {
   object-fit: contain;
-  max-height: 175px;
+  max-height: 210px;
 }
 
 .productLabel {

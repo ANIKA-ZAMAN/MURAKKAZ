@@ -150,8 +150,8 @@ export default function ComparePage() {
                       <img
                         src={slot.image}
                         alt={slot.name}
-                        width={220}
-                        height={220}
+                        width={260}
+                        height={260}
                         className={styles.productImage}
                       />
                     </div>
