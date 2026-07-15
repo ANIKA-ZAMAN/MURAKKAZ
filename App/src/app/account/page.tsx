@@ -707,7 +707,7 @@ export default function AccountPage() {
             {/* Header Row: Greeting (left) & Horizontal Navigation (right) */}
             <div className={styles.premiumHeaderRow}>
               <div className={styles.greetingSection}>
-                <span className={styles.greetingSub}>Good Morning.</span>
+                <span className={styles.greetingSub}>Hello</span>
                 <h2 className={styles.greetingName}>{user.name}</h2>
               </div>
 
