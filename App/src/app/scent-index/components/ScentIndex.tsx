@@ -420,6 +420,7 @@ export default function ScentIndex() {
                   router.push(`/product/${rec.product.id}`);
                 };
 
+                return (
                   <div 
                     key={rec.product.id} 
                     className={styles.cardEntryWrapper}
@@ -483,6 +484,7 @@ export default function ScentIndex() {
                       </div>
                     </div>
                   </div>
+                );
             })}
             </div>
 
