@@ -402,15 +402,23 @@ export default function ScentIndex() {
               ))}
             </div>
 
-            {/* Centered Try Again Button at the bottom */}
+            {/* Centered Action Buttons at the bottom */}
             <div className={styles.resultsResetContainer}>
               <button
                 type="button"
-                className={`${styles.btn} ${styles.btnBack}`}
+                className={`${styles.btn} ${styles.btnRedOutline}`}
                 style={{ padding: "0.5rem 2rem", height: "40px", borderRadius: "20px" }}
                 onClick={handleReset}
               >
                 Try Quiz Again
+              </button>
+              <button
+                type="button"
+                className={`${styles.btn} ${styles.btnRedOutline}`}
+                style={{ padding: "0.5rem 2rem", height: "40px", borderRadius: "20px" }}
+                onClick={() => { window.location.href = "/compare"; }}
+              >
+                Compare Scents
               </button>
             </div>
           </div>
