@@ -349,13 +349,13 @@ export default function ScentIndex() {
               {recommendations.map((rec, index) => (
                 <div 
                   key={rec.product.id} 
-                  className={styles.resultsNarrowCard}
+                  className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
                   style={{ animationDelay: `${0.15 * index}s` }}
                 >
                   <div className={styles.cardHeader}>
                     <span className={styles.resultsLabel}>RECOMMENDED</span>
-                    <span className={styles.matchBadge}>
-                      {rec.matchScore}% MATCH
+                    <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
+                      {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
                     </span>
                   </div>
 
@@ -371,6 +371,7 @@ export default function ScentIndex() {
                   </div>
 
                   <h3 className={styles.cardTitle}>{rec.product.name}</h3>
+                  <p className={styles.cardInspiration}>{rec.inspiration}</p>
                   <p className={styles.cardText}>{rec.reason}</p>
 
                   <div className={styles.cardTraitPills}>

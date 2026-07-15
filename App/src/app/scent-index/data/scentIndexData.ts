@@ -87,6 +87,7 @@ export interface QuizRecommendation {
   product: Product;
   matchScore: number;
   reason: string;
+  inspiration?: string;
 }
 
 /**
@@ -304,20 +305,26 @@ export function getTop3Recommendations(
       Math.max(82, Math.round((highestScore / maxPossibleScore) * 15 + 85) - index * 4)
     );
 
-    // Generate personalized consultation reasons
-    let reason = `Based on your preferences, we selected ${bestProduct.name} for you. It perfectly aligns with your style and desired presence.`;
+    // Generate personalized premium consultation reasons and inspirations
+    let reason = `A harmonious balance of timeless notes designed to wrap you in a subtle, sophisticated aura of quiet confidence.`;
+    let inspiration = `Inspired by moments of stillness and memory`;
+
     if (bestProduct.family === "Woody") {
-      reason = `Matches your preference for a scent that commands respect. Bridges deep maturity and elegant comfort.`;
+      reason = `A grounding sanctuary of smoked woods and quiet resilience, evoking the scent of sun-warmed cedar and fresh rain over mossy forest beds.`;
+      inspiration = `Inspired by misty cedar forests and damp earth`;
     } else if (bestProduct.family === "Fresh" || bestProduct.family === "Citrus") {
-      reason = `Offers a crisp, uplifting ${bestProduct.family.toLowerCase()} profile that feels light yet projectively sophisticated.`;
+      reason = `A vibrant breath of morning air over sun-drenched orchards, capturing the crisp clarity of sea breeze and dew-kissed leaves.`;
+      inspiration = `Inspired by Mediterranean groves and coastal sea salt`;
     } else if (bestProduct.family === "Oriental" || bestProduct.family === "Floral") {
-      reason = `Wraps you in an alluring, warm, and romantic envelope of rich ${bestProduct.family.toLowerCase()} base notes.`;
+      reason = `A soft, whispered embrace of velvet petals and warm amber, weaving an intimate story of mystery, sweet warmth, and elegance.`;
+      inspiration = `Inspired by midnight gardens and whispered secrets`;
     }
 
     return {
       product: bestProduct,
       matchScore: matchPercentage,
       reason,
+      inspiration,
     };
   });
 }
