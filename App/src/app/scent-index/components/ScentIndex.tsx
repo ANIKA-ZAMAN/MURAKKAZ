@@ -183,7 +183,7 @@ export default function ScentIndex() {
       </div>
 
       {/* Main Page Layout Wrapper */}
-      <main className={styles.mainContent}>
+      <main className={`${styles.mainContent} ${phase === "results" ? styles.mainContentResults : ""}`}>
         {(phase === "intro" || isTransitioningIntro) && (
           <div className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}>
             {/* The split wooden/paper doors */}
