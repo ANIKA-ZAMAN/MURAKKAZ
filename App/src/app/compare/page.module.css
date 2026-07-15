@@ -185,38 +185,36 @@
   padding: 0.85rem 3.5rem;
   font-size: 0.92rem;
   font-weight: 600;
-  color: #820011;
-  background-color: transparent;
+  color: #ffffff;
+  background-color: #820011;
   border: 1.5px solid #820011;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .compareBtn:hover {
-  background-color: #820011;
-  color: #ffffff;
+  background-color: #a30e21; /* Slightly brighter red for hover */
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.15);
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.25);
 }
 
 .resetBtn {
   padding: 0.85rem 3.5rem;
   font-size: 0.92rem;
   font-weight: 600;
-  color: #1e1e20;
-  background-color: transparent;
+  color: #ffffff;
+  background-color: #1e1e20;
   border: 1.5px solid #1e1e20;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .resetBtn:hover {
-  background-color: #1e1e20;
-  color: #ffffff;
+  background-color: #313134; /* Slightly lighter charcoal for hover */
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(30, 30, 32, 0.15);
+  box-shadow: 0 4px 12px rgba(30, 30, 32, 0.25);
 }
 
 /* Modal Selector */
