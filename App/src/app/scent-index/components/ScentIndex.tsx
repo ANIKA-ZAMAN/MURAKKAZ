@@ -424,7 +424,7 @@ export default function ScentIndex() {
                   <div 
                     key={rec.product.id} 
                     className={styles.cardEntryWrapper}
-                    style={{ animationDelay: `${0.38 * index}s` }}
+                    style={{ animationDelay: `${0.15 + 0.38 * index}s` }}
                   >
                     <div 
                       className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
