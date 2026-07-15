@@ -189,36 +189,7 @@ export default function Navbar() {
             ))}
           </ul>
 
-          {/* Right Section search input container (percentage positioned for perfect scaling) */}
-          <div 
-            style={{ 
-              position: "absolute", 
-              left: "83.531%", 
-              width: "10.386%", 
-              top: "50%", 
-              height: "37px", 
-              transform: "translate(-50%, -50%)" 
-            }} 
-            className="z-10"
-            suppressHydrationWarning
-          >
-            <form onSubmit={handleSearchSubmit} className="w-full h-full relative" suppressHydrationWarning>
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setIsSearchFocused(false)}
-                className={`absolute left-[10%] top-[10%] w-[80%] h-[80%] border-none outline-none font-serif-text text-[13px] text-neutral-800 transition-colors rounded-full px-2 ${
-                  isSearchFocused || searchQuery.length > 0
-                    ? "bg-[#FAF7F2] placeholder:text-neutral-400"
-                    : "bg-transparent placeholder:text-transparent"
-                }`}
-                aria-label="Search"
-              />
-            </form>
-          </div>
+
 
           {/* Wishlist Link (percentage positioned for perfect scaling) */}
           <Link 
@@ -377,36 +348,7 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Right Section search input container (percentage positioned for perfect scaling) */}
-        <div 
-          style={{ 
-            position: "absolute", 
-            left: "83.531%", 
-            width: "10.386%", 
-            top: "50%", 
-            height: "37px", 
-            transform: "translate(-50%, -50%)" 
-          }} 
-          className="z-10"
-          suppressHydrationWarning
-        >
-          <form onSubmit={handleSearchSubmit} className="w-full h-full relative" suppressHydrationWarning>
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
-              className={`absolute left-[10%] top-[10%] w-[80%] h-[80%] border-none outline-none font-serif-text text-[13px] text-neutral-800 transition-colors rounded-full px-2 ${
-                isSearchFocused || searchQuery.length > 0
-                  ? "bg-[#FAF7F2] placeholder:text-neutral-400"
-                  : "bg-transparent placeholder:text-transparent"
-              }`}
-              aria-label="Search"
-            />
-          </form>
-        </div>
+
 
         {/* Wishlist Link (percentage positioned for perfect scaling) */}
         <Link 
