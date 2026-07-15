@@ -16,6 +16,7 @@ interface CompareProduct {
   sweetness: string;
   bestFor: string;
   accords: { name: string; value: number }[];
+  isRecommended?: boolean;
 }
 
 const mockProducts: CompareProduct[] = [
@@ -28,6 +29,7 @@ const mockProducts: CompareProduct[] = [
     rating: "4.8 (250)",
     profile: "Clean, crisp green tea twist layered over the classic fresh metallic base.",
     longevity: "Beast Mode (8+ Hours)",
+    isRecommended: true,
     projection: "Heavy (Cuts through humid air beautifully)",
     sweetness: "●●○○○ (Subtle Crispness)",
     bestFor: "Office, hot summer afternoons, and high-end formal setups.",
@@ -247,11 +249,11 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={`${styles.productNameCell} ${slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}`}
+                      className={`${styles.productNameCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
                     >
                       {slot ? (
                         <div className={styles.nameHeaderContainer}>
-                          {slot.name === "Jade Serenity" && (
+                          {slot.isRecommended && (
                             <span className={styles.recommendedBadge}>Recommended</span>
                           )}
                           <span className={styles.productNameText}>{slot.name}</span>
@@ -266,7 +268,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
+                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
                     >
                       {slot ? slot.brand : ""}
                     </td>
@@ -278,7 +280,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
+                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
                     >
                       {slot ? slot.inspiredBy : ""}
                     </td>
@@ -290,7 +292,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
+                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
                     >
                       {slot ? slot.price : ""}
                     </td>
@@ -302,7 +304,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
+                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
                     >
                       {slot ? (
                         <div className={styles.ratingWrapper}>
@@ -318,7 +320,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={`${styles.profileCell} ${slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}`}
+                      className={`${styles.profileCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
                     >
                       {slot ? slot.profile : ""}
                     </td>
@@ -330,7 +332,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
+                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
                     >
                       {slot ? slot.longevity : ""}
                     </td>
@@ -342,7 +344,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
+                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
                     >
                       {slot ? slot.projection : ""}
                     </td>
@@ -355,7 +357,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={`${styles.bestForCell} ${slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}`}
+                      className={`${styles.bestForCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
                     >
                       {slot ? slot.bestFor : ""}
                     </td>
@@ -367,7 +369,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}
+                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
                     >
                       {slot ? (
                         <div className={styles.accordsList}>
@@ -394,7 +396,7 @@ export default function ComparePage() {
                   {selectedSlots.map((slot, idx) => (
                     <td 
                       key={idx} 
-                      className={`${styles.notesCell} ${slot?.name === "Jade Serenity" ? styles.recommendedColumn : ""}`}
+                      className={`${styles.notesCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
                     >
                       {/* Left blank / empty matching the screenshot block */}
                     </td>
