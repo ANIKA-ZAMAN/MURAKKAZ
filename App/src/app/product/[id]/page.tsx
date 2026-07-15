@@ -82,17 +82,16 @@ const productsDetailMap: Record<string, {
       "/images/products/magnetism.png",
     ],
     topNotes: [
-      { name: "Sea Salt", image: "sea_salt.png" },
-      { name: "Ambrette Seeds", image: "ambrette.png" },
-      { name: "Grapefruit", image: "grapefruit.png" },
+      { name: "Bergamot", image: "bergamot.png" },
+      { name: "Mandarin", image: "mandarin.png" },
     ],
     middleNotes: [
-      { name: "Sage", image: "sage.png" },
-      { name: "Red Algae", image: "red_algae.png" },
+      { name: "Peach", image: "peach.png" },
+      { name: "Neroli", image: "neroli.png" },
     ],
     baseNotes: [
-      { name: "Musk", image: "musk.png" },
-      { name: "Cedarwood", image: "cedar.png" },
+      { name: "Cedar", image: "cedar.png" },
+      { name: "Sandalwood", image: "sandalwood.png" },
       { name: "Amber", image: "amber.png" },
     ],
     accords: [
@@ -121,20 +120,20 @@ const productsDetailMap: Record<string, {
       "/images/products/velvet_oud.png",
     ],
     topNotes: [
-      { name: "Cardamom", image: "cardamom.png" },
       { name: "Cinnamon", image: "cinnamon.png" },
-      { name: "Nutmeg", image: "nutmeg.png" },
-      { name: "Grapefruit", image: "grapefruit.png" },
+      { name: "Bergamot", image: "bergamot.png" },
+      { name: "Mandarin", image: "mandarin.png" },
     ],
     middleNotes: [
-      { name: "Lavender", image: "lavender.png" },
+      { name: "Neroli", image: "neroli.png" },
+      { name: "May Rose", image: "may_rose.png" },
     ],
     baseNotes: [
       { name: "Sandalwood", image: "sandalwood.png" },
-      { name: "Licorice", image: "licorice.png" },
+      { name: "Vetiver", image: "vetiver.png" },
       { name: "Amber", image: "amber.png" },
       { name: "Patchouli", image: "patchouli.png" },
-      { name: "Vetiver", image: "vetiver.png" },
+      { name: "Cedar", image: "cedar.png" },
     ],
     accords: [
       { name: "Warm Spicy", pct: 100, color: "#e89f65", path: "M4 18L18 4" },
@@ -162,16 +161,16 @@ const productsDetailMap: Record<string, {
       "/images/products/amber_gold.png",
     ],
     topNotes: [
-      { name: "Saffron", image: "saffron.png" },
       { name: "Jasmine", image: "jasmine.png" },
+      { name: "Mandarin", image: "mandarin.png" },
     ],
     middleNotes: [
-      { name: "Amberwood", image: "amberwood.png" },
-      { name: "Ambergris", image: "ambergris.png" },
+      { name: "Neroli", image: "neroli.png" },
+      { name: "May Rose", image: "may_rose.png" },
     ],
     baseNotes: [
-      { name: "Fir Resin", image: "fir_resin.png" },
-      { name: "Cedarwood", image: "cedar.png" },
+      { name: "Cedar", image: "cedar.png" },
+      { name: "Amber", image: "amber.png" },
     ],
     accords: [
       { name: "Amber", pct: 100, color: "#e2cc9e", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
@@ -433,8 +432,6 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
           <Link href="/shop" className={styles.backLink}>
             <span className={styles.arrowLeft}>←</span> Shop
           </Link>
-          <span className={styles.divider}>/</span>
-          <span className={styles.currentBreadcrumb}>{details.name}</span>
         </div>
 
         {/* Product Details Section */}

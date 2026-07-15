@@ -235,8 +235,6 @@ export default function JadeSerenityProductPage() {
           <Link href="/" className={styles.backLink}>
             <span className={styles.arrowLeft}>←</span> Shop
           </Link>
-          <span className={styles.divider}>/</span>
-          <span className={styles.currentBreadcrumb}>Jade Serenity</span>
         </div>
 
         {/* Product Details Section */}
