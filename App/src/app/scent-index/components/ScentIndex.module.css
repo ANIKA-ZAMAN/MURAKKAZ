@@ -124,7 +124,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #FAF6EE; /* Premium paper color slightly lighter than page background */
+  background-color: #f7f3eb; /* Premium paper color matching intro card */
   background-image: 
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.015 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
   border: 1px solid #DDD4C8; /* Thin 1px warm beige border */
@@ -288,7 +288,7 @@
 .optionChecked {
   border-color: #820011 !important; /* Murakkaz Red */
   color: #820011 !important;
-  background-color: #FAF6EE !important; /* Soft beige background */
+  background-color: #f7f3eb !important; /* Soft beige background */
   box-shadow: 0 2px 8px rgba(130, 0, 17, 0.06); /* Soft, non-prominent red shadow */
   transform: translateY(-1px);
 }
@@ -313,7 +313,7 @@
 
 .optionChecked .radioCircle {
   border-color: #820011;
-  background-color: #FAF6EE;
+  background-color: #f7f3eb;
 }
 
 .radioDot {
@@ -412,14 +412,14 @@
 .btnNext {
   background-color: #4B4036; /* Warm charcoal background */
   border: 1px solid #4B4036;
-  color: #FAF6EE; /* Ivory text */
+  color: #f7f3eb; /* Ivory text */
   text-transform: none;
 }
 
 .btnNext:hover:not(:disabled) {
   background-color: #3b322a;
   border-color: #3b322a;
-  color: #FAF6EE;
+  color: #f7f3eb;
   box-shadow: 0 4px 12px rgba(75, 64, 54, 0.15);
 }
 
@@ -542,7 +542,7 @@
 }
 
 .resultsFirstCard {
-  background-color: #faf6ee !important;
+  background-color: #f7f3eb !important;
   border: 1.5px solid rgba(197, 168, 128, 0.45) !important;
   box-shadow: 
     0 15px 40px rgba(47, 9, 9, 0.06),
