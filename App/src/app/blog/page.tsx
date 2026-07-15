@@ -57,7 +57,7 @@ export default function BlogPage() {
           <div className={styles.searchWrapper}>
             <input
               type="text"
-              placeholder="Search your perfume"
+              placeholder="Search blog"
               className={styles.searchInput}
               value={searchQuery}
               onChange={(e) => {

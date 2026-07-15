@@ -17,7 +17,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "post-2",
     date: "16th May, 2026",
-    title: "Curation & The Value of Heritage Craftsmanship",
+    title: "Creation & The Value of Heritage Craftsmanship",
     description: "Craftsmanship is the preservation of time and skill. By focusing on handmade details and local materials, we honor the legacy of creators who define premium design.",
     image: "/images/events/sadid.jpg",
   },
@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
     id: "post-3",
     date: "15th May, 2026",
     title: "Aesthetic Harmony in Modern Living Spaces",
-    description: "Aesthetically rich spaces require a careful balance of textures, lighting, and placement. Discover the key principles of curating layouts that inspire and soothe the mind.",
+    description: "Aesthetically rich spaces require a careful balance of textures, lighting, and placement. Discover the key principles of creating layouts that inspire and soothe the mind.",
     image: "/images/events/sadid.jpg",
   },
   {
@@ -38,7 +38,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "post-5",
     date: "16th May, 2026",
-    title: "Curation & The Value of Heritage Craftsmanship",
+    title: "Creation & The Value of Heritage Craftsmanship",
     description: "Craftsmanship is the preservation of time and skill. By focusing on handmade details and local materials, we honor the legacy of creators who define premium design.",
     image: "/images/events/sadid.jpg",
   },
@@ -46,7 +46,7 @@ export const blogPosts: BlogPost[] = [
     id: "post-6",
     date: "15th May, 2026",
     title: "Aesthetic Harmony in Modern Living Spaces",
-    description: "Aesthetically rich spaces require a careful balance of textures, lighting, and placement. Discover the key principles of curating layouts that inspire and soothe the mind.",
+    description: "Aesthetically rich spaces require a careful balance of textures, lighting, and placement. Discover the key principles of creating layouts that inspire and soothe the mind.",
     image: "/images/events/sadid.jpg",
   },
 ];
