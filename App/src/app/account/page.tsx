@@ -387,11 +387,6 @@ export default function AccountPage() {
         {/* Header section */}
         <div className={styles.headerRow}>
           <h1 className={styles.title}>My Account</h1>
-          {user && (
-            <span className={styles.membershipTier}>
-              {user.memberTier}
-            </span>
-          )}
         </div>
 
         {/* Unauthenticated View */}
