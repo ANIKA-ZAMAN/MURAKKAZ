@@ -107,7 +107,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .removeBtn {
@@ -141,7 +141,7 @@
 
 .productImage {
   object-fit: contain;
-  max-height: 140px;
+  max-height: 175px;
 }
 
 .productLabel {
