@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./ProductCard.module.css";
@@ -33,9 +33,33 @@ export default function ProductCard({
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleBuyNow = () => {
-    const priceVal = parseInt(price.replace(/[^0-9]/g, ""), 10) || 0;
+  const { displayName, inspiredBy } = useMemo(() => {
+    if (image.includes("jade_serenity")) {
+      return { displayName: "Jade Serenity", inspiredBy: "Inspired by Dio Savotage" };
+    }
+    if (image.includes("coral_sea")) {
+      return { displayName: "Coral Sea", inspiredBy: "Inspired by Jo Malone Wood Sage & Sea Salt" };
+    }
+    if (image.includes("magnetism")) {
+      return { displayName: "Murakkaz Noir", inspiredBy: "Inspired by Dior Sauvage Elixir" };
+    }
+    if (image.includes("hellenist")) {
+      return { displayName: "Hellenist", inspiredBy: "Inspired by Baccarat Rouge 540" };
+    }
+    return { displayName: name, inspiredBy: `Inspired by ${brand}` };
+  }, [name, image, brand]);
 
+  // Auto-hide toast messages
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => {
+        setToastMessage(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
+
+  const handleAddToCart = () => {
     const savedCart = localStorage.getItem("cart-items");
     let cartItems = [];
     if (savedCart) {
@@ -50,15 +74,15 @@ export default function ProductCard({
       cartItems = [];
     }
 
-    const existingIndex = cartItems.findIndex((item: any) => item.name === name && item.selectedSize === "12ml");
+    const existingIndex = cartItems.findIndex((item: any) => item.name === displayName && item.selectedSize === "12ml");
     if (existingIndex > -1) {
       cartItems[existingIndex].quantity += 1;
     } else {
       const newItem = {
         id: `cart-${id}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-        name: name,
+        name: displayName,
         image: image,
-        inspiredBy: description,
+        inspiredBy: inspiredBy,
         selectedSize: "12ml",
         quantity: 1,
         prices: {
@@ -80,6 +104,11 @@ export default function ProductCard({
 
     localStorage.setItem("cart-items", JSON.stringify(cartItems));
     window.dispatchEvent(new Event("cart-updated"));
+    setToastMessage(`Added 1x ${displayName} (12ml) to your bag!`);
+  };
+
+  const handleBuyNow = () => {
+    handleAddToCart();
     router.push("/cart");
   };
 
@@ -101,7 +130,7 @@ export default function ProductCard({
       <div className={styles.imageContainer}>
         <Image
           src={image}
-          alt={name}
+          alt={displayName}
           width={240}
           height={240}
           className={styles.image}
@@ -113,7 +142,7 @@ export default function ProductCard({
         {/* Name + Heart Row */}
         <div className={styles.nameRow}>
           <h3 className={styles.name}>
-            {name}
+            {displayName}
           </h3>
           <button
             className={`${styles.wishlistBtn} ${isWishlisted ? styles.active : ""}`}
@@ -131,22 +160,24 @@ export default function ProductCard({
           </button>
         </div>
 
-        {/* Brand + Rating Row */}
-        <div className={styles.metaRow}>
-          <span className={styles.brand}>Brand: {brand}</span>
+        {/* Inspired + Price Row */}
+        <div className={styles.inspiredRow}>
+          <span className={styles.inspiredText}>{inspiredBy}</span>
+          <span className={styles.priceText}>{price}</span>
+        </div>
+
+        {/* Rating Group */}
+        <div className={styles.ratingRow}>
           <div className={styles.ratingGroup}>
             <span className={styles.star}>★</span>
-            <span className={styles.ratingText}>{rating.toFixed(1)}/{reviews}</span>
+            <span className={styles.ratingText}>{rating.toFixed(1)} ({reviews})</span>
           </div>
         </div>
 
-        {/* Description */}
-        <p className={styles.description}>{description}</p>
-
         {/* Action Buttons */}
         <div className={styles.actions}>
-          <button className={styles.compareBtn} onClick={handleBuyNow}>Buy now</button>
-          <button className={styles.readMoreBtn} onClick={() => router.push(`/product/${id}`)}>Read more</button>
+          <button className={styles.readMoreBtn} onClick={handleAddToCart}>Add to Bag</button>
+          <button className={styles.compareBtn} onClick={handleBuyNow}>Buy Now</button>
         </div>
       </div>
 
