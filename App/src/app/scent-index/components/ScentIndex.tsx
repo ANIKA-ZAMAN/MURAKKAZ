@@ -23,6 +23,7 @@ export default function ScentIndex() {
   const [transitioningStep, setTransitioningStep] = useState<number | null>(null);
   const [recommendations, setRecommendations] = useState<QuizRecommendation[]>([]);
   const [particles, setParticles] = useState<Array<{ id: number; left: string; top: string; delay: string; size: string }>>([]);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Generate random particles positions on mount
   useEffect(() => {
@@ -130,7 +131,17 @@ export default function ScentIndex() {
     setPhase("intro");
   };
 
-  const handleBuyNow = (prod: Product) => {
+  // Auto-hide toast messages
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => {
+        setToastMessage(null);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
+
+  const handleAddToCart = (prod: Product) => {
     const saved = localStorage.getItem("cart-items");
     let cart = [];
     if (saved) {
@@ -140,7 +151,7 @@ export default function ScentIndex() {
         cart = [];
       }
     }
-    const existing = cart.find((item: any) => item.id === prod.id);
+    const existing = cart.find((item: any) => item.name === prod.name);
     if (existing) {
       existing.quantity += 1;
     } else {
@@ -151,6 +162,51 @@ export default function ScentIndex() {
         priceVal: prod.priceVal,
         image: prod.image,
         quantity: 1,
+        selectedSize: "100ml", // default size for quiz results
+        prices: {
+          "100ml": prod.priceVal
+        },
+        originalPrices: {
+          "100ml": prod.priceVal * 1.2
+        },
+        selected: true
+      });
+    }
+    localStorage.setItem("cart-items", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cart-updated"));
+    setToastMessage(`Added 1x ${prod.name} (100ml) to your bag!`);
+  };
+
+  const handleBuyNow = (prod: Product) => {
+    // Add item to cart
+    const saved = localStorage.getItem("cart-items");
+    let cart = [];
+    if (saved) {
+      try {
+        cart = JSON.parse(saved);
+      } catch (e) {
+        cart = [];
+      }
+    }
+    const existing = cart.find((item: any) => item.name === prod.name);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        id: prod.id,
+        name: prod.name,
+        price: prod.price,
+        priceVal: prod.priceVal,
+        image: prod.image,
+        quantity: 1,
+        selectedSize: "100ml",
+        prices: {
+          "100ml": prod.priceVal
+        },
+        originalPrices: {
+          "100ml": prod.priceVal * 1.2
+        },
+        selected: true
       });
     }
     localStorage.setItem("cart-items", JSON.stringify(cart));
@@ -400,11 +456,17 @@ export default function ScentIndex() {
                   <div className={styles.cardActions}>
                     <button
                       type="button"
-                      className={`${styles.btn} ${styles.btnNext}`}
-                      style={{ width: "100%" }}
+                      className={styles.quizBuyNowBtn}
                       onClick={() => handleBuyNow(rec.product)}
                     >
-                      Buy now
+                      Buy Now
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.quizAddBagBtn}
+                      onClick={() => handleAddToCart(rec.product)}
+                    >
+                      Add to Bag
                     </button>
                   </div>
                 </div>
@@ -434,6 +496,23 @@ export default function ScentIndex() {
           </div>
         )}
       </main>
+
+      {/* Toast Alert Box Wrapper */}
+      <div className={styles.toastWrapper}>
+        {toastMessage && (
+          <div className={styles.toast}>
+            <div className={styles.toastText}>{toastMessage}</div>
+            <div className={styles.toastActions}>
+              <span className={styles.toastLink} onClick={() => { window.location.href = "/cart"; }}>
+                View Bag
+              </span>
+              <button className={styles.toastClose} onClick={() => setToastMessage(null)}>
+                Dismiss
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
