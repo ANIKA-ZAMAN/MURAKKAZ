@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./page.module.css";
 
 interface CompareProduct {
@@ -82,6 +82,17 @@ export default function ComparePage() {
   const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([null, null, null]);
   const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
   const [showComparison, setShowComparison] = useState(false);
+  const tableRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showComparison) {
+      setTimeout(() => {
+        if (tableRef.current) {
+          tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 80);
+    }
+  }, [showComparison]);
 
   const handleSelectProduct = (product: CompareProduct) => {
     if (activeSelectIndex !== null) {
@@ -219,7 +230,7 @@ export default function ComparePage() {
 
         {/* Comparison Table */}
         {showComparison && (
-          <div className={styles.tableContainer}>
+          <div ref={tableRef} className={styles.tableContainer}>
             <table className={styles.compareTable}>
               <tbody>
                 {/* Row 1: Name (Sticky Header Row) */}
