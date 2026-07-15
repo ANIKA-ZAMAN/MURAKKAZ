@@ -361,9 +361,9 @@
 }
 
 .wishlistCircleActive {
-  background-color: #820011;
+  background-color: transparent;
   border-color: #820011;
-  color: #ffffff;
+  color: #820011;
 }
 
 .heartIcon {
