@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterSidebar from "../components/FilterSidebar";
@@ -9,7 +9,7 @@ import RecommendationSlider from "../components/RecommendationSlider";
 import { productsCatalog } from "../data/products";
 import styles from "./page.module.css";
 
-export default function Shop() {
+function ShopContent() {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
     family: [],
     gender: [],
@@ -130,5 +130,17 @@ export default function Shop() {
         <RecommendationSlider />
       </main>
     </div>
+  );
+}
+
+export default function Shop() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh', color: '#8c8c90' }}>
+        Loading catalog...
+      </div>
+    }>
+      <ShopContent />
+    </Suspense>
   );
 }

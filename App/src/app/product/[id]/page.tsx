@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import { productsCatalog } from "../../data/products";
 import styles from "./page.module.css";
@@ -188,8 +188,10 @@ const productsDetailMap: Record<string, {
   }
 };
 
-export default function ProductDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const fromQuiz = searchParams.get("from") === "quiz";
   const { id } = React.use(params);
   const [countdown, setCountdown] = useState(9026); // 2 hours, 30 minutes, 26 seconds
   const [isMounted, setIsMounted] = useState(false);
@@ -429,9 +431,15 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
       <div className={styles.mainContainer}>
         {/* Breadcrumbs */}
         <div className={styles.breadcrumbs}>
-          <Link href="/shop" className={styles.backLink}>
-            <span className={styles.arrowLeft}>←</span> Shop
-          </Link>
+          {fromQuiz ? (
+            <Link href="/scent-index" className={styles.backLink}>
+              <span className={styles.arrowLeft}>←</span> Back
+            </Link>
+          ) : (
+            <Link href="/shop" className={styles.backLink}>
+              <span className={styles.arrowLeft}>←</span> Shop
+            </Link>
+          )}
         </div>
 
         {/* Product Details Section */}
@@ -876,5 +884,17 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
         </section>
       </div>
     </div>
+  );
+}
+
+export default function ProductDetailsPage(props: any) {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh', color: '#8c8c90' }}>
+        Loading product...
+      </div>
+    }>
+      <ProductDetailsContent {...props} />
+    </Suspense>
   );
 }

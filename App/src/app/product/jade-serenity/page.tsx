@@ -1,14 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import styles from "./page.module.css";
 
-export default function JadeSerenityProductPage() {
+function JadeSerenityProductContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const fromQuiz = searchParams.get("from") === "quiz";
   const [countdown, setCountdown] = useState(9026); // 2 hours, 30 minutes, 26 seconds (02.30.26)
   const [isMounted, setIsMounted] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -232,9 +234,15 @@ export default function JadeSerenityProductPage() {
       <div className={styles.mainContainer}>
         {/* Breadcrumbs */}
         <div className={styles.breadcrumbs}>
-          <Link href="/" className={styles.backLink}>
-            <span className={styles.arrowLeft}>←</span> Shop
-          </Link>
+          {fromQuiz ? (
+            <Link href="/scent-index" className={styles.backLink}>
+              <span className={styles.arrowLeft}>←</span> Back
+            </Link>
+          ) : (
+            <Link href="/" className={styles.backLink}>
+              <span className={styles.arrowLeft}>←</span> Shop
+            </Link>
+          )}
         </div>
 
         {/* Product Details Section */}
@@ -806,5 +814,17 @@ export default function JadeSerenityProductPage() {
         </section>
       </div>
     </div>
+  );
+}
+
+export default function JadeSerenityProductPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh', color: '#8c8c90' }}>
+        Loading product...
+      </div>
+    }>
+      <JadeSerenityProductContent />
+    </Suspense>
   );
 }

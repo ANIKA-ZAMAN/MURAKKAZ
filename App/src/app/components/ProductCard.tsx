@@ -176,8 +176,8 @@ export default function ProductCard({
 
         {/* Action Buttons */}
         <div className={styles.actions}>
-          <button className={styles.readMoreBtn} onClick={handleAddToCart}>Add to Bag</button>
           <button className={styles.compareBtn} onClick={handleBuyNow}>Buy Now</button>
+          <button className={styles.readMoreBtn} onClick={handleAddToCart}>Add to Bag</button>
         </div>
       </div>
 

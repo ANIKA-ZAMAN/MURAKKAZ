@@ -25,6 +25,50 @@ export default function ScentIndex() {
   const [particles, setParticles] = useState<Array<{ id: number; left: string; top: string; delay: string; size: string }>>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
+  // Restore quiz state from sessionStorage on mount
+  useEffect(() => {
+    try {
+      const savedPhase = sessionStorage.getItem("scent-quiz-phase");
+      const savedAnswers = sessionStorage.getItem("scent-quiz-answers");
+      const savedRecommendations = sessionStorage.getItem("scent-quiz-recommendations");
+      const savedCurrentStep = sessionStorage.getItem("scent-quiz-current-step");
+
+      if (savedPhase) {
+        setPhase(savedPhase as any);
+      }
+      if (savedAnswers) {
+        setAnswers(JSON.parse(savedAnswers));
+      }
+      if (savedRecommendations) {
+        setRecommendations(JSON.parse(savedRecommendations));
+      }
+      if (savedCurrentStep) {
+        setCurrentStep(Number(savedCurrentStep));
+      }
+    } catch (e) {
+      console.error("Failed to restore quiz state", e);
+    }
+  }, []);
+
+  // Save quiz state to sessionStorage when it changes
+  useEffect(() => {
+    try {
+      if (phase === "intro") {
+        sessionStorage.removeItem("scent-quiz-phase");
+        sessionStorage.removeItem("scent-quiz-answers");
+        sessionStorage.removeItem("scent-quiz-recommendations");
+        sessionStorage.removeItem("scent-quiz-current-step");
+      } else {
+        sessionStorage.setItem("scent-quiz-phase", phase);
+        sessionStorage.setItem("scent-quiz-answers", JSON.stringify(answers));
+        sessionStorage.setItem("scent-quiz-recommendations", JSON.stringify(recommendations));
+        sessionStorage.setItem("scent-quiz-current-step", String(currentStep));
+      }
+    } catch (e) {
+      console.error("Failed to save quiz state", e);
+    }
+  }, [phase, answers, recommendations, currentStep]);
+
   // Generate random particles positions on mount
   useEffect(() => {
     const isAmbientDisabled = localStorage.getItem("pref-ambient") === "false";
@@ -414,10 +458,10 @@ export default function ScentIndex() {
               {recommendations.map((rec, index) => {
                 const handleCardClick = (e: React.MouseEvent) => {
                   const target = e.target as HTMLElement;
-                  if (target.closest(`.${styles.btnNext}`)) {
+                  if (target.closest("button")) {
                     return;
                   }
-                  router.push(`/product/${rec.product.id}`);
+                  router.push(`/product/${rec.product.id}?from=quiz`);
                 };
 
                 return (
@@ -469,17 +513,17 @@ export default function ScentIndex() {
                       <div className={styles.cardActions}>
                         <button
                           type="button"
-                          className={styles.quizAddBagBtn}
-                          onClick={() => handleAddToCart(rec.product)}
-                        >
-                          Add to Bag
-                        </button>
-                        <button
-                          type="button"
                           className={styles.quizBuyNowBtn}
                           onClick={() => handleBuyNow(rec.product)}
                         >
                           Buy Now
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.quizAddBagBtn}
+                          onClick={() => handleAddToCart(rec.product)}
+                        >
+                          Add to Bag
                         </button>
                       </div>
                     </div>

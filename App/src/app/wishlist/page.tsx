@@ -338,8 +338,8 @@ export default function WishlistPage() {
                   </div>
                 </div>
                 <div className={styles.actionButtons}>
-                  <button className={styles.addBagBtn}>Add to Bag</button>
                   <button className={styles.buyNowBtn}>Buy Now</button>
+                  <button className={styles.addBagBtn}>Add to Bag</button>
                 </div>
               </div>
             </div>
@@ -431,8 +431,8 @@ export default function WishlistPage() {
                           </div>
                         </div>
                         <div className={styles.actionButtons}>
-                          <button className={styles.addBagBtn}>Add to Bag</button>
                           <button className={styles.buyNowBtn}>Buy Now</button>
+                          <button className={styles.addBagBtn}>Add to Bag</button>
                         </div>
                       </div>
                     </div>
