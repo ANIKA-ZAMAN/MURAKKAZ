@@ -68,7 +68,7 @@ export default function CollectionCard({
 
   const handleCompare = (e: React.MouseEvent) => {
     e.stopPropagation();
-    router.push("/compare");
+    router.push(`/compare?add=${id}&image=${encodeURIComponent(image)}&name=${encodeURIComponent(name)}`);
   };
 
   const handleReadMore = (e: React.MouseEvent) => {

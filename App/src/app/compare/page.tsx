@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 
 interface CompareProduct {
@@ -80,11 +81,43 @@ const mockProducts: CompareProduct[] = [
   },
 ];
 
-export default function ComparePage() {
+function CompareContent() {
   const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([null, null, null]);
   const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
   const [showComparison, setShowComparison] = useState(false);
   const tableRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const addId = searchParams.get("add");
+    const addImage = searchParams.get("image");
+    const addName = searchParams.get("name");
+
+    if (addImage || addName || addId) {
+      const match = mockProducts.find(
+        (p) =>
+          (addImage && p.image === addImage) ||
+          (addName && p.name.toLowerCase() === addName.toLowerCase())
+      );
+
+      if (match) {
+        setSelectedSlots((prev) => {
+          const alreadyExists = prev.some((slot) => slot?.name === match.name);
+          if (alreadyExists) return prev;
+
+          const nextSlots = [...prev];
+          const emptyIdx = nextSlots.findIndex((slot) => slot === null);
+          if (emptyIdx !== -1) {
+            nextSlots[emptyIdx] = match;
+          } else {
+            nextSlots[0] = match;
+          }
+          return nextSlots;
+        });
+        setShowComparison(true);
+      }
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (showComparison) {
@@ -408,5 +441,17 @@ export default function ComparePage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function ComparePage() {
+  return (
+    <Suspense fallback={
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh', color: '#8c8c90' }}>
+        Loading comparison...
+      </div>
+    }>
+      <CompareContent />
+    </Suspense>
   );
 }

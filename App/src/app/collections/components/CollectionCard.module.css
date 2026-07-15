@@ -161,23 +161,24 @@
 
 .compareBtn {
   background: transparent;
-  border: 1px solid #c0b0a0;
-  color: #313134;
+  border: 1px solid #820011;
+  color: #820011;
 }
 
 .compareBtn:hover {
-  background-color: rgba(49, 49, 52, 0.03);
-  border-color: #313134;
+  background-color: #820011;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.15);
 }
 
 .readMoreBtn {
-  background: #313134;
+  background: transparent;
   border: 1px solid #313134;
-  color: #ffffff;
+  color: #313134;
 }
 
 .readMoreBtn:hover {
-  background-color: #1a1a1a;
-  border-color: #1a1a1a;
+  background-color: #313134;
+  color: #ffffff;
   box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
 }
