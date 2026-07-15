@@ -344,22 +344,26 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background-color: #313134;
-  border: none;
-  color: #ffffff;
+  background-color: transparent;
+  border: 1px solid #313134;
+  color: #313134;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .wishlistCircle:hover {
-  background-color: #820011;
+  background-color: rgba(130, 0, 17, 0.05);
+  border-color: #820011;
+  color: #820011;
 }
 
 .wishlistCircleActive {
   background-color: #820011;
+  border-color: #820011;
+  color: #ffffff;
 }
 
 .heartIcon {

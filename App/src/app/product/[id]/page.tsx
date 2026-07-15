@@ -551,7 +551,7 @@ export default function ProductDetailsPage({ params }: { params: Promise<{ id: s
                 onClick={handleTryNow}
                 className={styles.buyNowBtn}
               >
-                Try Now
+                Buy now
               </button>
               <button
                 onClick={handleAddToCart}

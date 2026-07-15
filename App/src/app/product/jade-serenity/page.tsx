@@ -353,7 +353,7 @@ export default function JadeSerenityProductPage() {
                 onClick={handleTryNow}
                 className={styles.buyNowBtn}
               >
-                Try Now
+                Buy now
               </button>
               <button
                 onClick={handleAddToCart}
