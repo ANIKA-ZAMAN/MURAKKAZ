@@ -61,6 +61,11 @@ export default function ScentIndex() {
       // 3. Doors split and slide open
       setTimeout(() => {
         setIsTransitioningIntro(true);
+        if (typeof window !== 'undefined') {
+          const audio = new Audio('/audio/paper-sound.wav');
+          audio.volume = 0.8;
+          audio.play().catch((err) => console.log('Audio play failed:', err));
+        }
         setTimeout(() => {
           setPhase("consultation");
           setIsTransitioningIntro(false);
