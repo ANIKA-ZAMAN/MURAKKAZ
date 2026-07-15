@@ -635,9 +635,9 @@
 .scentTag {
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.65rem;
-  color: #555558;
-  background-color: rgba(130, 120, 100, 0.04);
-  border: 1px solid rgba(130, 120, 100, 0.15);
+  color: #7c6853;
+  background-color: rgba(124, 104, 83, 0.06);
+  border: 1px solid rgba(124, 104, 83, 0.18);
   padding: 0.2rem 0.65rem;
   border-radius: 20px;
   letter-spacing: 0.05em;
@@ -647,8 +647,8 @@
 }
 
 .resultsNarrowCard:hover .scentTag {
-  background-color: rgba(130, 120, 100, 0.08);
-  border-color: rgba(130, 120, 100, 0.25);
+  background-color: rgba(124, 104, 83, 0.1);
+  border-color: rgba(124, 104, 83, 0.28);
 }
 
 .keyNotesLine {
