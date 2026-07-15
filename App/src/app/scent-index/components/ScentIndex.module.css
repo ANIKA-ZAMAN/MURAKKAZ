@@ -278,11 +278,11 @@
 }
 
 .optionBtn:hover:not(:disabled) {
-  border-color: #A8844B;
+  border-color: #820011; /* Murakkaz Red hover frame */
   background-color: rgba(255, 255, 255, 0.9);
   color: #1e1e20;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(168, 132, 75, 0.06);
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.04);
 }
 
 .optionChecked {
