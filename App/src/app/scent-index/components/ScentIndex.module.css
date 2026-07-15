@@ -396,15 +396,17 @@
 }
 
 .btnNext {
-  background-color: #313134;
+  background-color: transparent;
   border: 1px solid #313134;
-  color: #ffffff;
+  color: #313134;
+  text-transform: none;
 }
 
 .btnNext:hover:not(:disabled) {
-  background-color: #1e1e20;
-  border-color: #1e1e20;
-  box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
+  background-color: #7c6853;
+  border-color: #7c6853;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(124, 104, 83, 0.15);
 }
 
 .btn:disabled {

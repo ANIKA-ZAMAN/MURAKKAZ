@@ -392,7 +392,7 @@ export default function ScentIndex() {
                       style={{ width: "100%" }}
                       onClick={() => handleBuyNow(rec.product)}
                     >
-                      Buy Now
+                      Buy now
                     </button>
                   </div>
                 </div>
