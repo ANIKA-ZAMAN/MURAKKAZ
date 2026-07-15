@@ -517,15 +517,15 @@
   flex: 1;
   max-width: 380px;
   opacity: 0;
-  transform: translateX(-35px);
-  animation: premiumFadeInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform: translateX(-65px);
+  animation: premiumFadeInRight 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   display: flex;
 }
 
 @keyframes premiumFadeInRight {
   0% {
     opacity: 0;
-    transform: translateX(-35px);
+    transform: translateX(-65px);
   }
   100% {
     opacity: 1;
