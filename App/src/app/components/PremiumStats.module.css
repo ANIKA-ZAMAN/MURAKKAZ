@@ -1,0 +1,78 @@
+.statsSection {
+  background-color: transparent;
+  padding: 50px 0;
+  width: 100%;
+}
+
+.statsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: statsFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes statsFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 1025px) {
+  .statItem:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -0.75rem;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: rgba(49, 49, 52, 0.2); /* 20% opacity dividers */
+  }
+}
+
+.statNumber {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #313134;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+}
+
+.statLabel {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #767677;
+  line-height: 1.4;
+}
+
+@media (max-width: 1024px) and (min-width: 601px) {
+  .statsContainer {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .statsContainer {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

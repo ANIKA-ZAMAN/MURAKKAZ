@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import styles from "./homepage.module.css";
 
 export default function Hero() {
   const [ripples, setRipples] = useState<{ id: number; x: number; y: number; size: number }[]>([]);
@@ -190,20 +191,13 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Middle Column: Centered Shop Now Button */}
-        <div className="w-full flex flex-col justify-center items-center gap-3">
+        {/* Middle Column: Centered Shop Collection Button */}
+        <div className="w-full flex flex-col justify-center items-center">
           <Link
             href="/shop"
             suppressHydrationWarning
             onClick={handleClick}
-            className={`group relative flex items-center justify-center bg-transparent border border-[#313134] text-[#313134] hover:bg-[#313134] hover:text-[#F5F1E8] hover:border-[#c5a880] transition-all duration-500 hover:-translate-y-[3px] hover:shadow-[0_8px_20px_rgba(49,49,52,0.08)] active:scale-[0.97] ease-[cubic-bezier(0.25,1,0.5,1)] select-none overflow-hidden ${
-              isClicked ? "animate-click-ring" : ""
-            }`}
-            style={{ 
-              width: "232px", 
-              height: "56px",
-              borderRadius: "10px",
-            }}
+            className={`${styles.heroPrimaryBtn} ${isClicked ? "animate-click-ring" : ""}`}
           >
             {/* Click Ripple elements */}
             {ripples.map((ripple) => (
@@ -220,20 +214,35 @@ export default function Hero() {
               />
             ))}
             
-            {/* Clean, high-performance HTML text */}
-            <span className="font-serif-text text-[13.5px] tracking-[0.15em] uppercase font-medium transition-colors duration-300 z-10">
-              SHOP NOW
+            <span className="z-10">
+              SHOP COLLECTION
             </span>
           </Link>
 
-          {/* Understated Secondary Link */}
-          <Link
-            href="/scent-index"
-            className="font-serif-text text-[12px] tracking-[0.08em] text-neutral-600 hover:text-brand-maroon transition-colors duration-300 flex items-center gap-1 nav-link-underline"
-            suppressHydrationWarning
-          >
-            Find Your Perfect Fragrance &rarr;
-          </Link>
+          {/* Elegant Divider */}
+          <div className={styles.heroDivider}>
+            <span className={styles.heroDividerLine} />
+            <span className={styles.heroDividerText}>Explore More</span>
+            <span className={styles.heroDividerLine} />
+          </div>
+
+          {/* Centered Dual Text Links */}
+          <div className={styles.heroLinksContainer}>
+            <Link
+              href="/scent-index"
+              className={`group ${styles.heroLink} nav-link-underline`}
+              suppressHydrationWarning
+            >
+              Find Your Perfect Fragrance <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+            </Link>
+            <Link
+              href="/compare"
+              className={`group ${styles.heroLink} nav-link-underline`}
+              suppressHydrationWarning
+            >
+              Compare Perfumes <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
+            </Link>
+          </div>
         </div>
         
         {/* Right Column: Empty spacer to balance columns */}
