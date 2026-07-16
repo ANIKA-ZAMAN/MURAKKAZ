@@ -2,12 +2,12 @@
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  background-color: transparent;
-  padding: 0.9rem 0;
-  border-top: 1px solid rgba(130, 120, 100, 0.08);
+  background-color: rgba(197, 168, 128, 0.04);
+  padding: 0.8rem 0;
+  margin: 1.25rem 0 0 0;
+  border-top: 1px solid #b5966d; /* Brownish-golden top border */
+  border-bottom: 1px solid #b5966d; /* Brownish-golden bottom border */
   position: relative;
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 
 .tickerTrack {
@@ -48,4 +48,8 @@
   100% {
     transform: translateX(-33.3333%);
   }
+}
+
+:global(body.dark-theme) .tickerItem {
+  color: #f5f1e8;
 }

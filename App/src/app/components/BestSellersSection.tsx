@@ -19,7 +19,7 @@ export default function BestSellersSection() {
         </div>
 
         <div className={styles.bestSellersGrid}>
-          {bestSellers.map((product) => (
+          {bestSellers.map((product, idx) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -31,6 +31,7 @@ export default function BestSellersSection() {
               price={product.price}
               volume={product.volume}
               image={product.image}
+              delay={idx * 100}
             />
           ))}
         </div>

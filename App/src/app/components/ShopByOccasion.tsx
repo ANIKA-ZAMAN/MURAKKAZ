@@ -53,6 +53,7 @@ export default function ShopByOccasion() {
               href={occ.link}
               key={idx}
               className={styles.occasionCard}
+              style={{ "--delay": `${idx * 100}ms` } as React.CSSProperties}
               suppressHydrationWarning
             >
               <div className={styles.occasionImageContainer}>

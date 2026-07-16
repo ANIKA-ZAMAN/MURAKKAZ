@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./homepage.module.css";
@@ -35,15 +33,22 @@ export default function FeaturedCollections() {
   return (
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionLabel}>THE COLLECTIONS</span>
-          <h2 className={styles.sectionTitle}>Featured Collections</h2>
-          <p className={styles.sectionSubtitle}>Curated profiles for every fragrance connoisseur</p>
+        <div className={styles.sectionHeader} style={{ marginBottom: "2rem" }}>
+          <h2 className={styles.sectionTitle}>
+            Our <span style={{ color: "#c5a880" }}>Featured Collection</span>
+          </h2>
+          <p className={styles.sectionSubtitle}>Handpicked fragrances loved by our customers.</p>
         </div>
 
         <div className={styles.collectionsGrid}>
           {collections.map((col, idx) => (
-            <Link href={col.link} key={idx} className={styles.collectionCard} suppressHydrationWarning>
+            <Link 
+              href={col.link} 
+              key={idx} 
+              className={styles.collectionCard} 
+              style={{ "--delay": `${idx * 100}ms` } as React.CSSProperties}
+              suppressHydrationWarning
+            >
               <div className={styles.collectionImageWrap}>
                 <Image
                   src={col.image}
@@ -64,6 +69,12 @@ export default function FeaturedCollections() {
               </span>
             </Link>
           ))}
+        </div>
+
+        <div className={styles.centerActions} style={{ marginTop: "2.5rem" }}>
+          <Link href="/collections" className={styles.secondaryButton} suppressHydrationWarning>
+            View All Collections
+          </Link>
         </div>
       </div>
     </section>

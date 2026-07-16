@@ -11,7 +11,7 @@ import ScrollReveal from "./components/ScrollReveal";
 
 export default function Home() {
   return (
-    <div className="w-full min-h-[calc(100vh-120px)] bg-transparent flex flex-col justify-between" suppressHydrationWarning>
+    <div className="w-full min-h-[calc(100vh-96px)] bg-transparent flex flex-col justify-between" suppressHydrationWarning>
       {/* Instant static body background override to prevent flashing and texture in header */}
       <style dangerouslySetInnerHTML={{ __html: `
         html, body {

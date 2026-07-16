@@ -40,7 +40,7 @@
     top: 15%;
     height: 70%;
     width: 1px;
-    background-color: rgba(49, 49, 52, 0.2); /* 20% opacity dividers */
+    background: linear-gradient(to bottom, transparent, rgba(181, 150, 109, 0.8) 15%, rgba(181, 150, 109, 0.8) 85%, transparent); /* Premium fading brownish-gold divider */
   }
 }
 

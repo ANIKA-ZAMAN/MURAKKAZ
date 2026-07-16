@@ -19,7 +19,12 @@ export default function UpcomingEventsSection() {
 
         <div className={styles.eventsGrid}>
           {events.map((event, idx) => (
-            <div key={idx} className={styles.eventCard} suppressHydrationWarning>
+            <div 
+              key={idx} 
+              className={styles.eventCard} 
+              style={{ "--delay": `${idx * 100}ms` } as React.CSSProperties}
+              suppressHydrationWarning
+            >
               <div className={styles.eventImageWrap}>
                 <Image
                   src={`/images/events/${event.image}`}

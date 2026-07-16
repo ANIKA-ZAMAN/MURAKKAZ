@@ -13,32 +13,41 @@ export default function ScrollReveal({ children, delay = 0 }: ScrollRevealProps)
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.05,
-        rootMargin: "0px 0px -40px 0px"
-      }
-    );
+    let observer: IntersectionObserver | null = null;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    const timer = setTimeout(() => {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            if (ref.current && observer) {
+              observer.unobserve(ref.current);
+            }
+          }
+        },
+        {
+          threshold: 0.05,
+          rootMargin: "0px 0px -80px 0px"
+        }
+      );
+
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    }, 150);
 
     return () => {
-      observer.disconnect();
+      clearTimeout(timer);
+      if (observer) {
+        observer.disconnect();
+      }
     };
   }, []);
 
   return (
     <div
       ref={ref}
-      className={`${styles.reveal} ${isVisible ? styles.visible : ""}`}
+      className={`reveal ${isVisible ? "visible" : ""}`}
       style={{ transitionDelay: `${delay}ms` }}
       suppressHydrationWarning
     >

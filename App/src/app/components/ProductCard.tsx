@@ -16,6 +16,7 @@ interface ProductCardProps {
   price: string;
   volume: string;
   image: string;
+  delay?: number;
 }
 
 export default function ProductCard({
@@ -28,6 +29,7 @@ export default function ProductCard({
   price,
   volume,
   image,
+  delay = 0,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -125,7 +127,11 @@ export default function ProductCard({
   };
 
   return (
-    <div className={styles.card} onClick={handleCardClick} style={{ cursor: "pointer" }}>
+    <div
+      className={styles.card}
+      onClick={handleCardClick}
+      style={{ cursor: "pointer", "--delay": `${delay}ms` } as React.CSSProperties}
+    >
       {/* Product Image */}
       <div className={styles.imageContainer}>
         <Image

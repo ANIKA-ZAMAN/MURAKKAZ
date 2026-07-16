@@ -75,7 +75,7 @@
     top: 15%;
     height: 70%;
     width: 1px;
-    background-color: rgba(130, 120, 100, 0.16);
+    background-color: #CCBFA9; /* Gold-beige grid/divider color */
   }
 }
 
@@ -116,7 +116,7 @@
 }
 
 .collectionCard {
-  background-color: var(--card-bg);
+  background-color: #ede6d8; /* Softer warm beige background */
   border: 1px solid var(--card-border);
   border-radius: 12px;
   padding: 1.5rem;
@@ -125,9 +125,25 @@
   align-items: center;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+:global(.reveal) .collectionCard {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .collectionCard {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: var(--delay, 0ms);
+}
+
+:global(body.dark-theme) .collectionCard {
+  background-color: #1c1c1f;
 }
 
 .collectionCard:hover {
@@ -137,12 +153,15 @@
 }
 
 .collectionImageWrap {
-  width: 100%;
+  width: calc(100% + 3rem); /* Fills the card width completely */
+  margin: -1.5rem -1.5rem 1.5rem -1.5rem; /* Extends to touch the top, left, and right borders */
   aspect-ratio: 1 / 1;
   position: relative;
-  border-radius: 8px;
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   overflow: hidden;
-  margin-bottom: 1.5rem;
   background-color: rgba(49, 49, 52, 0.03);
 }
 
@@ -150,7 +169,18 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:global(.reveal) .collectionImage {
+  opacity: 0;
+  transform: scale(0.96);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .collectionImage {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .collectionCard:hover .collectionImage {
@@ -176,19 +206,37 @@
 
 .collectionLink {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #820011;
+  background-color: #313134; /* Dark charcoal pill button */
+  color: #F5F1E8;
+  padding: 0.6rem 1.5rem;
+  border-radius: 9999px; /* Pill shape */
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: opacity 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  margin-top: auto;
 }
 
 .collectionCard:hover .collectionLink {
-  opacity: 0.8;
+  background-color: #820011; /* Turn brand maroon on card hover */
+  color: #F5F1E8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.2);
+}
+
+:global(body.dark-theme) .collectionLink {
+  background-color: #faf7f2;
+  color: #111112;
+}
+
+:global(body.dark-theme) .collectionCard:hover .collectionLink {
+  background-color: #820011;
+  color: #faf7f2;
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.35);
 }
 
 /* ── Find Your Fragrance ── */
@@ -385,8 +433,20 @@
   border: 1px solid rgba(130, 120, 100, 0.08);
   cursor: pointer;
   background-color: #f0ebe3;
-  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+}
+
+:global(.reveal) .occasionCard {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .occasionCard {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: var(--delay, 0ms);
 }
 
 .occasionCard:hover {
@@ -404,7 +464,18 @@
 
 .occasionImage {
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:global(.reveal) .occasionImage {
+  opacity: 0;
+  transform: scale(0.96);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .occasionImage {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .occasionCard:hover .occasionImage {
@@ -541,7 +612,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:global(.reveal) .reviewCard {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .reviewCard {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .starsRow {
@@ -823,8 +905,20 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
   box-shadow: 0 4px 15px rgba(47, 9, 9, 0.02);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+:global(.reveal) .diffCard {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .diffCard {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: var(--delay, 0ms);
 }
 
 .diffCard:hover {
@@ -932,7 +1026,19 @@
 }
 
 .eventCard {
-  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease, border-color 0.5s ease !important;
+}
+
+:global(.reveal) .eventCard {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .eventCard {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: var(--delay, 0ms) !important;
 }
 
 .eventCard:hover {
@@ -942,7 +1048,18 @@
 }
 
 .eventImage {
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important, opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+:global(.reveal) .eventImage {
+  opacity: 0;
+  transform: scale(0.96);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .eventImage {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .eventCard:hover .eventImage {
@@ -1041,4 +1158,76 @@
     gap: 15px;
     margin-top: 10px;
   }
+}
+
+/* ── Section Heading Reveal (opacity 0 -> 1, translateY 35px -> 0, duration 0.8s) ── */
+.sectionHeader {
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:global(.reveal) .sectionHeader {
+  opacity: 0;
+  transform: translateY(35px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .sectionHeader {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Button Reveal (fade-in 200ms after text, translateY 15px -> 0, duration 0.7s) ── */
+.secondaryButton, .primaryButton, .discoveryBtn {
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+:global(.reveal) .secondaryButton,
+:global(.reveal) .primaryButton,
+:global(.reveal) .discoveryBtn {
+  opacity: 0;
+  transform: translateY(15px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .secondaryButton,
+:global(.reveal.visible) .primaryButton,
+:global(.reveal.visible) .discoveryBtn {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 200ms;
+}
+
+/* ── Description & Special Texts Reveal (staggered delay, translateY 25px -> 0, duration 0.8s) ── */
+.quizDesc, .discoveryDesc {
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:global(.reveal) .quizDesc,
+:global(.reveal) .discoveryDesc {
+  opacity: 0;
+  transform: translateY(25px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .quizDesc,
+:global(.reveal.visible) .discoveryDesc {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 100ms;
+}
+
+/* ── Discovery Title (translateY 35px -> 0, duration 0.8s) ── */
+.discoveryTitle {
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:global(.reveal) .discoveryTitle {
+  opacity: 0;
+  transform: translateY(35px);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .discoveryTitle {
+  opacity: 1;
+  transform: translateY(0);
 }

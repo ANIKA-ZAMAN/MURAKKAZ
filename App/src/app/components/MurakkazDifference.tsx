@@ -56,6 +56,7 @@ export default function MurakkazDifference() {
             <div
               key={idx}
               className={styles.diffCard}
+              style={{ "--delay": `${idx * 100}ms` } as React.CSSProperties}
               suppressHydrationWarning
             >
               <div className={styles.diffIconWrapper}>

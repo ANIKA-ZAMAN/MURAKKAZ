@@ -4,14 +4,13 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
 import PremiumStats from "./PremiumStats";
-import TrustBar from "./TrustBar";
 import BrandTicker from "./BrandTicker";
 
 export default function Hero() {
   const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
 
   return (
-    <section className="relative w-full min-h-[calc(100vh-120px)] md:h-[calc(100vh-120px)] flex flex-col justify-between items-center overflow-hidden bg-transparent py-2 select-none" suppressHydrationWarning>
+    <section className="relative w-full h-[calc(100vh-96px)] flex flex-col justify-between items-center overflow-hidden bg-transparent pt-2 pb-0 select-none" suppressHydrationWarning>
       
       {/* Responsive Conic Ray Angle Style Block */}
       <style suppressHydrationWarning>{`
@@ -103,7 +102,7 @@ export default function Hero() {
 
       {/* Gentle ambient glow around the bottle area */}
       <div 
-        className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[580px] rounded-full pointer-events-none"
+        className="absolute top-[47%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[580px] rounded-full pointer-events-none"
         style={{
           background: "radial-gradient(circle, rgba(197, 168, 128, 0.12) 0%, rgba(197, 168, 128, 0.02) 65%, transparent 100%)",
           filter: "blur(40px)",
@@ -134,9 +133,9 @@ export default function Hero() {
       </div>
 
       {/* 2. Middle Layer: Floating Transparent WebM Video (No loop, no entry transition animation) */}
-      <div className="flex flex-col justify-center items-center z-10 w-full px-4 pt-4 pb-2" suppressHydrationWarning>
+      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-8 pb-2" suppressHydrationWarning>
         <div 
-          className="relative h-[46vh] sm:h-[50vh] md:h-[54vh] max-h-[calc(100vh-420px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none -translate-y-[1.5vh]"
+          className="relative h-[64vh] sm:h-[76vh] md:h-[88vh] max-h-[calc(100vh-280px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none -translate-y-[1.5vh]"
           suppressHydrationWarning
         >
           <video
@@ -152,10 +151,9 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 3. Foreground Layer: Stats Bar, Feature Bar & Brand Ticker */}
+      {/* 3. Foreground Layer: Stats Bar & Brand Ticker */}
       <div className="w-full z-20 mt-auto flex flex-col items-center justify-center" suppressHydrationWarning>
         <PremiumStats />
-        <TrustBar />
         <BrandTicker />
       </div>
     </section>

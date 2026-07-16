@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./PremiumStats.module.css";
 
 function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; suffix?: string; decimals?: number }) {
-  const [count, setCount] = useState(number > 1000 ? number - 150 : 0);
+  const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
 
@@ -13,7 +13,7 @@ function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; 
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
-          const start = number > 1000 ? number - 150 : 0;
+          const start = 0;
           const end = number;
           const duration = 1400; // Gentle 1.4s duration
           const startTime = performance.now();
@@ -55,7 +55,11 @@ function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; 
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals,
       })}
-      {suffix}
+      {suffix === "★" ? (
+        <span style={{ color: "#c5a880", marginLeft: "2px" }}>★</span>
+      ) : (
+        suffix
+      )}
     </span>
   );
 }
