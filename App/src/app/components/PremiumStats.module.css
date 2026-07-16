@@ -1,11 +1,11 @@
 .statsSection {
   background-color: transparent;
-  padding: 50px 0;
+  padding: 15px 0;
   width: 100%;
 }
 
 .statsContainer {
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);

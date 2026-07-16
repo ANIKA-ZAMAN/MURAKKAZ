@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
+import PremiumStats from "./PremiumStats";
+import TrustBar from "./TrustBar";
 
 export default function Hero() {
   const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
 
   return (
-    <section className="relative w-full h-[calc(100vh-120px)] flex flex-col justify-between items-center overflow-hidden bg-transparent py-2 select-none" suppressHydrationWarning>
+    <section className="relative w-full min-h-[calc(100vh-120px)] md:h-[calc(100vh-120px)] flex flex-col justify-between items-center overflow-hidden bg-transparent py-2 select-none" suppressHydrationWarning>
       
       {/* Responsive Conic Ray Angle Style Block */}
       <style suppressHydrationWarning>{`
@@ -149,24 +151,10 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 3. Foreground Layer: Subtext on bottom left, Button in bottom middle */}
-      <div className="w-full max-w-[1348px] mx-auto px-6 flex flex-col md:grid md:grid-cols-3 items-center justify-between gap-6 md:gap-0 z-20 pb-10" suppressHydrationWarning>
-        {/* Left Column: Description subtext */}
-        <div className="w-full flex justify-center md:justify-start text-center md:text-left">
-          <p 
-            className="md:hidden font-serif-text text-[#313134] text-[13.5px] max-w-[300px] leading-relaxed"
-            style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
-            suppressHydrationWarning
-          >
-            Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
-          </p>
-        </div>
-
-        {/* Middle Column: Empty Spacer */}
-        <div className="w-full"></div>
-        
-        {/* Right Column: Empty spacer to balance columns */}
-        <div className="hidden md:block w-full"></div>
+      {/* 3. Foreground Layer: Stats Bar & Feature Bar */}
+      <div className="w-full z-20 mt-auto flex flex-col items-center justify-center" suppressHydrationWarning>
+        <PremiumStats />
+        <TrustBar />
       </div>
     </section>
   );

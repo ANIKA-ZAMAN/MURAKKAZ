@@ -42,16 +42,15 @@
 /* ── Trust Bar ── */
 .trustBar {
   background-color: transparent;
-  border-top: 1px solid var(--card-border);
-  border-bottom: 1px solid var(--card-border);
-  padding: 1.85rem 0;
+  border-top: 1px solid rgba(130, 120, 100, 0.08);
+  padding: 1.15rem 0;
   width: 100%;
   z-index: 10;
   backdrop-filter: blur(10px);
 }
 
 .trustContainer {
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);

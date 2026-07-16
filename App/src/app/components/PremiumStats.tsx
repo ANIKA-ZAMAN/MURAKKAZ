@@ -15,15 +15,15 @@ function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; 
           setHasAnimated(true);
           let start = 0;
           const end = number;
-          const duration = 1000; // 1s
+          const duration = 2200; // 2.2s count up duration
           const startTime = performance.now();
 
           const animate = (currentTime: number) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Ease out quad
-            const easeProgress = progress * (2 - progress);
+            // Ease out cubic
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
             const currentVal = start + easeProgress * (end - start);
             
             setCount(currentVal);

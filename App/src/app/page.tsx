@@ -1,5 +1,4 @@
 import Hero from "./components/Hero";
-import TrustBar from "./components/TrustBar";
 import FeaturedCollections from "./components/FeaturedCollections";
 import FindYourFragrance from "./components/FindYourFragrance";
 import BestSellersSection from "./components/BestSellersSection";
@@ -9,7 +8,6 @@ import CompareBanner from "./components/CompareBanner";
 import CustomerReviews from "./components/CustomerReviews";
 import UpcomingEventsSection from "./components/UpcomingEventsSection";
 import ScrollReveal from "./components/ScrollReveal";
-import PremiumStats from "./components/PremiumStats";
 
 export default function Home() {
   return (
@@ -22,8 +20,6 @@ export default function Home() {
         }
       `}} />
       <Hero />
-      <ScrollReveal><PremiumStats /></ScrollReveal>
-      <ScrollReveal><TrustBar /></ScrollReveal>
       <ScrollReveal><FeaturedCollections /></ScrollReveal>
       <ScrollReveal><FindYourFragrance /></ScrollReveal>
       <ScrollReveal><BestSellersSection /></ScrollReveal>
