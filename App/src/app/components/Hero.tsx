@@ -117,6 +117,25 @@ export default function Hero() {
         </div>
       )}
       
+      {/* Soft vignette overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, transparent 65%, rgba(47, 9, 9, 0.05) 100%)",
+          zIndex: 1
+        }}
+      />
+
+      {/* Gentle ambient glow around the bottle area */}
+      <div 
+        className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[580px] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(197, 168, 128, 0.12) 0%, rgba(197, 168, 128, 0.02) 65%, transparent 100%)",
+          filter: "blur(40px)",
+          zIndex: 0
+        }}
+      />
+      
       {/* 1. Background Layers: Giant Watermark Typography (No gold circle) */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
         <div className="absolute w-full text-center z-0 select-none opacity-100 -translate-y-[6vh]" suppressHydrationWarning>
@@ -129,8 +148,8 @@ export default function Hero() {
               MURAKKAZ
             </h1>
             <p 
-              className="hidden md:block absolute left-[4.5%] top-[100%] mt-4 font-serif-text text-neutral-800 text-[13px] sm:text-sm max-w-[280px] sm:max-w-[320px] leading-relaxed text-left pointer-events-auto"
-              style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+              className="hidden md:block absolute left-[4.5%] top-[100%] mt-6 font-serif-text text-[#313134] text-[13.5px] max-w-[340px] leading-loose text-left pointer-events-auto"
+              style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
               suppressHydrationWarning
             >
               Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
@@ -159,12 +178,12 @@ export default function Hero() {
       </div>
 
       {/* 3. Foreground Layer: Subtext on bottom left, Button in bottom middle */}
-      <div className="w-full max-w-[1348px] mx-auto px-6 flex flex-col md:grid md:grid-cols-3 items-center justify-between gap-6 md:gap-0 z-20 pb-6" suppressHydrationWarning>
+      <div className="w-full max-w-[1348px] mx-auto px-6 flex flex-col md:grid md:grid-cols-3 items-center justify-between gap-6 md:gap-0 z-20 pb-10" suppressHydrationWarning>
         {/* Left Column: Description subtext */}
         <div className="w-full flex justify-center md:justify-start text-center md:text-left">
           <p 
-            className="md:hidden font-serif-text text-neutral-800 text-[13px] sm:text-sm max-w-[280px] sm:max-w-[320px] leading-relaxed"
-            style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+            className="md:hidden font-serif-text text-[#313134] text-[13.5px] max-w-[300px] leading-relaxed"
+            style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
             suppressHydrationWarning
           >
             Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
@@ -172,16 +191,16 @@ export default function Hero() {
         </div>
 
         {/* Middle Column: Centered Shop Now Button */}
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center gap-3">
           <Link
             href="/shop"
             suppressHydrationWarning
             onClick={handleClick}
-            className={`group relative flex items-center justify-center bg-transparent border border-[#313134] text-[#313134] hover:bg-[#313134] hover:text-[#F5F1E8] transition-all duration-300 active:scale-[0.97] ease-out select-none overflow-hidden ${
+            className={`group relative flex items-center justify-center bg-transparent border border-[#313134] text-[#313134] hover:bg-[#313134] hover:text-[#F5F1E8] hover:border-[#c5a880] transition-all duration-500 hover:-translate-y-[3px] hover:shadow-[0_8px_20px_rgba(49,49,52,0.08)] active:scale-[0.97] ease-[cubic-bezier(0.25,1,0.5,1)] select-none overflow-hidden ${
               isClicked ? "animate-click-ring" : ""
             }`}
             style={{ 
-              width: "229px", 
+              width: "232px", 
               height: "56px",
               borderRadius: "10px",
             }}
@@ -206,11 +225,43 @@ export default function Hero() {
               SHOP NOW
             </span>
           </Link>
+
+          {/* Understated Secondary Link */}
+          <Link
+            href="/scent-index"
+            className="font-serif-text text-[12px] tracking-[0.08em] text-neutral-600 hover:text-brand-maroon transition-colors duration-300 flex items-center gap-1 nav-link-underline"
+            suppressHydrationWarning
+          >
+            Find Your Perfect Fragrance &rarr;
+          </Link>
         </div>
         
         {/* Right Column: Empty spacer to balance columns */}
         <div className="hidden md:block w-full"></div>
       </div>
+
+      {/* 4. Scroll Indicator */}
+      {(() => {
+        const handleScrollDown = () => {
+          const nextSection = document.querySelector(".trustBar") || document.querySelector("section:nth-of-type(2)");
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: "smooth" });
+          }
+        };
+        return (
+          <div 
+            onClick={handleScrollDown}
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer z-25 opacity-35 hover:opacity-85 hover:-translate-y-0.5 transition-all duration-300"
+            style={{ animation: "bounceIndicator 2s infinite" }}
+            suppressHydrationWarning
+          >
+            <span className="text-[12px] font-medium leading-none">&darr;</span>
+            <span className="font-serif-text text-[8px] tracking-[0.15em] uppercase text-neutral-800 font-semibold">
+              Explore Collection
+            </span>
+          </div>
+        );
+      })()}
     </section>
   );
 }

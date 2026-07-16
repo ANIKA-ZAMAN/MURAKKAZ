@@ -171,17 +171,17 @@ export default function Navbar() {
           </Link>
 
           {/* Links */}
-          <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
+          <ul className="hidden lg:flex items-center gap-8 xl:gap-10 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
             {homeNavLinks.map((link) => (
               <li key={link.label} suppressHydrationWarning>
                 <Link
                   href={link.href}
                   suppressHydrationWarning
                   style={{ color: pathname === link.href ? "#820011" : undefined }}
-                  className={`font-serif-text text-[13px] tracking-wide transition-colors ${
+                  className={`relative font-serif-text text-[13px] tracking-wide transition-colors nav-link-underline ${
                     pathname === link.href 
                       ? "text-brand-maroon font-semibold" 
-                      : "text-neutral-700 hover:text-brand-maroon hover:font-medium"
+                      : "text-neutral-700 hover:text-brand-maroon"
                   }`}
                 >
                   {link.label}
@@ -330,17 +330,17 @@ export default function Navbar() {
         </Link>
 
         {/* Links */}
-        <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
+        <ul className="hidden lg:flex items-center gap-8 xl:gap-10 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
           {originalNavLinks.map((link) => (
             <li key={link.label} suppressHydrationWarning>
               <Link
                 href={link.href}
                 suppressHydrationWarning
                 style={{ color: pathname === link.href ? "#820011" : undefined }}
-                className={`font-serif-text text-[13px] tracking-wide transition-colors ${
+                className={`relative font-serif-text text-[13px] tracking-wide transition-colors nav-link-underline ${
                   pathname === link.href 
                     ? "text-brand-maroon font-semibold" 
-                    : "text-neutral-700 hover:text-brand-maroon hover:font-medium"
+                    : "text-neutral-700 hover:text-brand-maroon"
                 }`}
               >
                 {link.label}

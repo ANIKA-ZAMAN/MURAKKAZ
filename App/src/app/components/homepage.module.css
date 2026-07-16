@@ -44,7 +44,7 @@
   background-color: transparent;
   border-top: 1px solid var(--card-border);
   border-bottom: 1px solid var(--card-border);
-  padding: 1.5rem 0;
+  padding: 1.85rem 0;
   width: 100%;
   z-index: 10;
   backdrop-filter: blur(10px);
@@ -64,25 +64,48 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
+  position: relative;
+  transition: color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@media (min-width: 1025px) {
+  .trustItem:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -0.75rem;
+    top: 15%;
+    height: 70%;
+    width: 1px;
+    background-color: rgba(130, 120, 100, 0.16);
+  }
 }
 
 .trustIcon {
-  color: var(--foreground);
+  color: #820011;
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  align-items: center;
 }
 
 .trustItem:hover .trustIcon {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.05);
 }
 
 .trustText {
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.725rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--foreground);
+  opacity: 0.75;
+  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.trustItem:hover .trustText {
+  opacity: 1;
+  color: #313134;
 }
 
 /* ── Featured Collections ── */
