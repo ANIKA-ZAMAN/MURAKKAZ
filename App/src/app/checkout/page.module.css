@@ -153,9 +153,10 @@
 
 .paymentLabel {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 1.25rem;
   background-color: #ffffff;
   border: 1px solid #d8d5cd;
   border-radius: 8px;
@@ -163,14 +164,65 @@
   transition: all 0.2s ease;
 }
 
-.paymentLabel input {
+.paymentLabelHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.paymentLabel input[type="radio"] {
   margin-top: 0.25rem;
   accent-color: #313134;
 }
 
 .selectedPayment {
   border-color: #313134;
-  background-color: rgba(49, 49, 52, 0.02);
+  background-color: rgba(49, 49, 52, 0.01);
+}
+
+.paymentMethodDetails {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed #d8d5cd;
+  width: 100%;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.paymentInstructions {
+  background-color: #f5f1e8;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #555558;
+}
+
+.paymentInstructions p {
+  margin: 0;
+}
+
+.paymentInstructions p:first-child {
+  margin-bottom: 0.35rem;
+}
+
+.paymentMethodNotice {
+  font-size: 0.82rem;
+  color: #2b7a4a;
+  margin: 0;
+  font-weight: 500;
 }
 
 .paymentInfo {

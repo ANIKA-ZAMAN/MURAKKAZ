@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 export default function Hero() {
   const [ripples, setRipples] = useState<{ id: number; x: number; y: number; size: number }[]>([]);
   const [isClicked, setIsClicked] = useState(false);
-  const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('sunbeams');
+  const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -120,13 +120,22 @@ export default function Hero() {
       {/* 1. Background Layers: Giant Watermark Typography (No gold circle) */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
         <div className="absolute w-full text-center z-0 select-none opacity-100 -translate-y-[6vh]" suppressHydrationWarning>
-          <h1 
-            className="font-serif-title font-normal tracking-[0.04em] uppercase text-[#BB9E78] text-[12vw] leading-none select-none" 
-            suppressHydrationWarning
-            style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
-          >
-            MURAKKAZ
-          </h1>
+          <div className="inline-block text-left relative">
+            <h1 
+              className="font-serif-title font-normal tracking-[0.04em] uppercase text-[#BB9E78] text-[12vw] leading-none select-none" 
+              suppressHydrationWarning
+              style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+            >
+              MURAKKAZ
+            </h1>
+            <p 
+              className="hidden md:block absolute left-[4.5%] top-[100%] mt-4 font-serif-text text-neutral-800 text-[13px] sm:text-sm max-w-[280px] sm:max-w-[320px] leading-relaxed text-left pointer-events-auto"
+              style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+              suppressHydrationWarning
+            >
+              Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -154,11 +163,11 @@ export default function Hero() {
         {/* Left Column: Description subtext */}
         <div className="w-full flex justify-center md:justify-start text-center md:text-left">
           <p 
-            className="font-serif-text text-neutral-800 text-[13px] sm:text-sm max-w-[280px] sm:max-w-[320px] leading-relaxed"
+            className="md:hidden font-serif-text text-neutral-800 text-[13px] sm:text-sm max-w-[280px] sm:max-w-[320px] leading-relaxed"
             style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             suppressHydrationWarning
           >
-            Handpicked and crafted by Murkkaz, inspired by the world's most iconic fragrances.
+            Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
           </p>
         </div>
 
@@ -201,46 +210,6 @@ export default function Hero() {
         
         {/* Right Column: Empty spacer to balance columns */}
         <div className="hidden md:block w-full"></div>
-      </div>
-      {/* Floating Glassmorphic Light Effect Selector Control Panel */}
-      <div 
-        className="fixed bottom-6 right-6 bg-[#F5F1E8]/90 border border-[#313134]/30 backdrop-blur-md px-3 py-2 rounded-full shadow-lg flex items-center gap-2 select-none"
-        style={{ zIndex: 100000 }}
-        suppressHydrationWarning
-      >
-        <span className="text-[10px] font-sans tracking-widest uppercase font-semibold text-[#313134]/60 px-2">
-          Light Effect:
-        </span>
-        <button
-          onClick={() => setLightStyle('sunbeams')}
-          className={`text-[10px] font-sans tracking-wider uppercase font-semibold px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-            lightStyle === 'sunbeams' 
-              ? 'bg-[#313134] text-[#F5F1E8]' 
-              : 'text-[#313134] hover:bg-[#313134]/10'
-          }`}
-        >
-          Sunbeams
-        </button>
-        <button
-          onClick={() => setLightStyle('spotlight')}
-          className={`text-[10px] font-sans tracking-wider uppercase font-semibold px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-            lightStyle === 'spotlight' 
-              ? 'bg-[#313134] text-[#F5F1E8]' 
-              : 'text-[#313134] hover:bg-[#313134]/10'
-          }`}
-        >
-          Spotlight
-        </button>
-        <button
-          onClick={() => setLightStyle('off')}
-          className={`text-[10px] font-sans tracking-wider uppercase font-semibold px-3 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-            lightStyle === 'off' 
-              ? 'bg-[#313134] text-[#F5F1E8]' 
-              : 'text-[#313134] hover:bg-[#313134]/10'
-          }`}
-        >
-          Off
-        </button>
       </div>
     </section>
   );
