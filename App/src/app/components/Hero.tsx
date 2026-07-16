@@ -248,29 +248,6 @@ export default function Hero() {
         {/* Right Column: Empty spacer to balance columns */}
         <div className="hidden md:block w-full"></div>
       </div>
-
-      {/* 4. Scroll Indicator */}
-      {(() => {
-        const handleScrollDown = () => {
-          const nextSection = document.querySelector(".trustBar") || document.querySelector("section:nth-of-type(2)");
-          if (nextSection) {
-            nextSection.scrollIntoView({ behavior: "smooth" });
-          }
-        };
-        return (
-          <div 
-            onClick={handleScrollDown}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 cursor-pointer z-25 opacity-35 hover:opacity-85 hover:-translate-y-0.5 transition-all duration-300"
-            style={{ animation: "bounceIndicator 2s infinite" }}
-            suppressHydrationWarning
-          >
-            <span className="text-[12px] font-medium leading-none">&darr;</span>
-            <span className="font-serif-text text-[8px] tracking-[0.15em] uppercase text-neutral-800 font-semibold">
-              Explore Collection
-            </span>
-          </div>
-        );
-      })()}
     </section>
   );
 }
