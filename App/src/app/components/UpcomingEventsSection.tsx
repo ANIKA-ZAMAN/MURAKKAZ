@@ -22,7 +22,7 @@ export default function UpcomingEventsSection() {
             <div 
               key={idx} 
               className={styles.eventCard} 
-              style={{ "--delay": `${idx * 100}ms` } as React.CSSProperties}
+              style={{ "--delay": `${idx * 180}ms` } as React.CSSProperties}
               suppressHydrationWarning
             >
               <div className={styles.eventImageWrap}>

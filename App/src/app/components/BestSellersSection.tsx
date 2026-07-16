@@ -31,7 +31,7 @@ export default function BestSellersSection() {
               price={product.price}
               volume={product.volume}
               image={product.image}
-              delay={idx * 100}
+              delay={idx * 180}
             />
           ))}
         </div>
