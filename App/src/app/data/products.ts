@@ -13,6 +13,7 @@ export interface Product {
   gender: string;
   occasion: string;
   meter: string;
+  notes: string[];
 }
 
 // Mock data templates — replace with real API data later
@@ -28,6 +29,7 @@ const mockProducts: Array<{
   gender: string;
   occasion: string;
   meter: string;
+  notes: string[];
 }> = [
   {
     name: "Orvi Soq",
@@ -41,6 +43,7 @@ const mockProducts: Array<{
     gender: "Unisex",
     occasion: "Casual",
     meter: "Moderate",
+    notes: ["Bergamot", "Lemon", "Amber", "Vetiver"],
   },
   {
     name: "Orvi Soq",
@@ -54,6 +57,7 @@ const mockProducts: Array<{
     gender: "Men",
     occasion: "Formal",
     meter: "Long Lasting",
+    notes: ["Sea Salt", "Sage", "Bergamot", "Grapefruit"],
   },
   {
     name: "Orvi Soq",
@@ -67,6 +71,7 @@ const mockProducts: Array<{
     gender: "Men",
     occasion: "Night Out",
     meter: "Moderate",
+    notes: ["Lavender", "Sandalwood", "Amber", "Vanilla", "Leather"],
   },
   {
     name: "Orvi Soq",
@@ -80,6 +85,7 @@ const mockProducts: Array<{
     gender: "Women",
     occasion: "Date Night",
     meter: "Beast Mode",
+    notes: ["Saffron", "Jasmine", "Amberwood", "Cedarwood", "Rose"],
   },
   {
     name: "Orvi Soq",
@@ -93,6 +99,7 @@ const mockProducts: Array<{
     gender: "Men",
     occasion: "Daily Wear",
     meter: "Intimate",
+    notes: ["Bergamot", "Mandarin", "Vetiver", "Patchouli"],
   },
   {
     name: "Orvi Soq",
@@ -106,6 +113,7 @@ const mockProducts: Array<{
     gender: "Women",
     occasion: "Formal",
     meter: "Beast Mode",
+    notes: ["Vanilla", "Orchid", "Amber", "Sandalwood"],
   },
   {
     name: "Orvi Soq",
@@ -119,6 +127,7 @@ const mockProducts: Array<{
     gender: "Unisex",
     occasion: "Casual",
     meter: "Moderate",
+    notes: ["Bergamot", "Neroli", "Amber", "Musk"],
   },
   {
     name: "Orvi Soq",
@@ -132,6 +141,7 @@ const mockProducts: Array<{
     gender: "Men",
     occasion: "Daily Wear",
     meter: "Long Lasting",
+    notes: ["Mint", "Green Apple", "Lemon", "Rose", "Vanilla"],
   },
 ];
 
@@ -154,5 +164,6 @@ export const productsCatalog: Product[] = Array.from({ length: 24 }, (_, i) => {
     gender: template.gender,
     occasion: template.occasion,
     meter: template.meter,
+    notes: template.notes || [],
   };
 });

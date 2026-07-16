@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterSidebar from "../components/FilterSidebar";
@@ -10,25 +10,27 @@ import { productsCatalog } from "../data/products";
 import styles from "./page.module.css";
 
 function ShopContent() {
+  const searchParams = useSearchParams();
+  
+  // Initialize state directly from URL query parameters
+  const initialQ = searchParams.get("q") || "";
+  const initialFamily = searchParams.get("family") ? searchParams.get("family")!.split(",") : [];
+  const initialGender = searchParams.get("gender") ? searchParams.get("gender")!.split(",") : [];
+  const initialOccasion = searchParams.get("occasion") ? searchParams.get("occasion")!.split(",") : [];
+  const initialMeter = searchParams.get("meter") ? searchParams.get("meter")!.split(",") : [];
+  const initialNotes = searchParams.get("notes") ? searchParams.get("notes")!.split(",") : [];
+
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
-    family: [],
-    gender: [],
-    occasion: [],
-    meter: [],
+    family: initialFamily,
+    gender: initialGender,
+    occasion: initialOccasion,
+    meter: initialMeter,
+    notes: initialNotes,
   });
 
   const [maxPrice, setMaxPrice] = useState<number>(3000);
-  const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [currentPage, setCurrentPage] = useState<number>(1);
-
-  useEffect(() => {
-    const q = searchParams.get("q");
-    if (q !== null) {
-      setSearchQuery(q);
-      setCurrentPage(1);
-    }
-  }, [searchParams]);
 
   const handleCheckboxChange = (categoryId: string, option: string) => {
     setSelectedFilters((prev) => {
@@ -94,6 +96,12 @@ function ShopContent() {
       if (!selectedFilters.meter.includes(product.meter)) return false;
     }
 
+    // 7. Notes Match
+    if (selectedFilters.notes && selectedFilters.notes.length > 0) {
+      const productNotes = product.notes || [];
+      if (!selectedFilters.notes.some((note) => productNotes.includes(note))) return false;
+    }
+
     return true;
   });
 
@@ -140,7 +148,12 @@ export default function Shop() {
         Loading catalog...
       </div>
     }>
-      <ShopContent />
+      <ShopContentWrapper />
     </Suspense>
   );
+}
+
+function ShopContentWrapper() {
+  const searchParams = useSearchParams();
+  return <ShopContent key={searchParams.toString()} />;
 }
