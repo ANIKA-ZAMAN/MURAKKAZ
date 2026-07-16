@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
 import PremiumStats from "./PremiumStats";
 import TrustBar from "./TrustBar";
+import BrandTicker from "./BrandTicker";
 
 export default function Hero() {
   const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
@@ -151,10 +152,11 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 3. Foreground Layer: Stats Bar & Feature Bar */}
+      {/* 3. Foreground Layer: Stats Bar, Feature Bar & Brand Ticker */}
       <div className="w-full z-20 mt-auto flex flex-col items-center justify-center" suppressHydrationWarning>
         <PremiumStats />
         <TrustBar />
+        <BrandTicker />
       </div>
     </section>
   );
