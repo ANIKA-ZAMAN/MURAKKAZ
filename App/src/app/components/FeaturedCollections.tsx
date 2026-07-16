@@ -36,6 +36,7 @@ export default function FeaturedCollections() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>THE COLLECTIONS</span>
           <h2 className={styles.sectionTitle}>Featured Collections</h2>
           <p className={styles.sectionSubtitle}>Curated profiles for every fragrance connoisseur</p>
         </div>

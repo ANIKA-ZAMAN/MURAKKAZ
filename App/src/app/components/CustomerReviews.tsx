@@ -39,6 +39,7 @@ export default function CustomerReviews() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>TESTIMONIALS</span>
           <h2 className={styles.sectionTitle}>Customer Reviews</h2>
           <p className={styles.sectionSubtitle}>Words from our fragrance collectors</p>
         </div>
@@ -65,7 +66,7 @@ export default function CustomerReviews() {
                 </blockquote>
                 <div className={styles.reviewerMeta}>
                   <div className={styles.reviewerAvatar}>
-                    <div className="w-full h-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center font-serif-title font-medium text-lg text-neutral-600 dark:text-neutral-300">
+                    <div className={styles.reviewerInitials}>
                       {rev.name.charAt(0)}
                     </div>
                   </div>

@@ -118,6 +118,40 @@ function CompareContent() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    const p1 = searchParams.get("p1");
+    const p2 = searchParams.get("p2");
+    const p3 = searchParams.get("p3");
+
+    if (p1 || p2 || p3) {
+      const newSlots: (CompareProduct | null)[] = [null, null, null];
+      const params = [p1, p2, p3];
+
+      params.forEach((param, idx) => {
+        if (param) {
+          const match = mockProducts.find(
+            (p) =>
+              p.image === param ||
+              p.image.includes(param) ||
+              p.name.toLowerCase().includes(param.toLowerCase())
+          );
+          if (match) {
+            newSlots[idx] = match;
+          }
+        }
+      });
+
+      setSelectedSlots(newSlots);
+      setShowComparison(true);
+
+      // Clean up the URL parameters so they don't linger in the address bar
+      if (typeof window !== "undefined") {
+        const url = new URL(window.location.href);
+        url.search = "";
+        window.history.replaceState({}, "", url.toString());
+      }
+      return;
+    }
+
     const addId = searchParams.get("add");
     const addImage = searchParams.get("image");
     const addName = searchParams.get("name");

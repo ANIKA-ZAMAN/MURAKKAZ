@@ -3,13 +3,12 @@ import TrustBar from "./components/TrustBar";
 import FeaturedCollections from "./components/FeaturedCollections";
 import FindYourFragrance from "./components/FindYourFragrance";
 import BestSellersSection from "./components/BestSellersSection";
-
 import ShopByOccasion from "./components/ShopByOccasion";
-
 import MurakkazDifference from "./components/MurakkazDifference";
 import CompareBanner from "./components/CompareBanner";
 import CustomerReviews from "./components/CustomerReviews";
 import UpcomingEventsSection from "./components/UpcomingEventsSection";
+import ScrollReveal from "./components/ScrollReveal";
 
 export default function Home() {
   return (
@@ -22,17 +21,15 @@ export default function Home() {
         }
       `}} />
       <Hero />
-      <TrustBar />
-      <FeaturedCollections />
-      <FindYourFragrance />
-      <BestSellersSection />
-
-      <ShopByOccasion />
-
-      <MurakkazDifference />
-      <CompareBanner />
-      <CustomerReviews />
-      <UpcomingEventsSection />
+      <ScrollReveal><TrustBar /></ScrollReveal>
+      <ScrollReveal><FeaturedCollections /></ScrollReveal>
+      <ScrollReveal><FindYourFragrance /></ScrollReveal>
+      <ScrollReveal><BestSellersSection /></ScrollReveal>
+      <ScrollReveal><ShopByOccasion /></ScrollReveal>
+      <ScrollReveal><MurakkazDifference /></ScrollReveal>
+      <ScrollReveal><CompareBanner /></ScrollReveal>
+      <ScrollReveal><CustomerReviews /></ScrollReveal>
+      <ScrollReveal><UpcomingEventsSection /></ScrollReveal>
     </div>
   );
 }

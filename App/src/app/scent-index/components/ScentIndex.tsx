@@ -1,17 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import QuizCard from "./QuizCard";
 import {
   quizQuestions,
-  getQuizRecommendation,
   getTop3Recommendations,
   type QuizRecommendation,
 } from "../data/scentIndexData";
-import { Product } from "../../data/products";
 import styles from "./ScentIndex.module.css";
 
 export default function ScentIndex() {
@@ -162,7 +159,7 @@ export default function ScentIndex() {
 
         setTimeout(() => {
           setPhase("results");
-        }, 2500); // Elegant loading delay
+        }, 1500); // Elegant loading delay (1-2 seconds)
       }, 500);
     }
   };
@@ -190,78 +187,7 @@ export default function ScentIndex() {
     }
   }, [toastMessage]);
 
-  const handleAddToCart = (prod: Product) => {
-    const saved = localStorage.getItem("cart-items");
-    let cart = [];
-    if (saved) {
-      try {
-        cart = JSON.parse(saved);
-      } catch (e) {
-        cart = [];
-      }
-    }
-    const existing = cart.find((item: any) => item.name === prod.name);
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({
-        id: prod.id,
-        name: prod.name,
-        price: prod.price,
-        priceVal: prod.priceVal,
-        image: prod.image,
-        quantity: 1,
-        selectedSize: "100ml", // default size for quiz results
-        prices: {
-          "100ml": prod.priceVal
-        },
-        originalPrices: {
-          "100ml": prod.priceVal * 1.2
-        },
-        selected: true
-      });
-    }
-    localStorage.setItem("cart-items", JSON.stringify(cart));
-    window.dispatchEvent(new Event("cart-updated"));
-    setToastMessage(`Added 1x ${prod.name} (100ml) to your bag!`);
-  };
 
-  const handleBuyNow = (prod: Product) => {
-    // Add item to cart
-    const saved = localStorage.getItem("cart-items");
-    let cart = [];
-    if (saved) {
-      try {
-        cart = JSON.parse(saved);
-      } catch (e) {
-        cart = [];
-      }
-    }
-    const existing = cart.find((item: any) => item.name === prod.name);
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({
-        id: prod.id,
-        name: prod.name,
-        price: prod.price,
-        priceVal: prod.priceVal,
-        image: prod.image,
-        quantity: 1,
-        selectedSize: "100ml",
-        prices: {
-          "100ml": prod.priceVal
-        },
-        originalPrices: {
-          "100ml": prod.priceVal * 1.2
-        },
-        selected: true
-      });
-    }
-    localStorage.setItem("cart-items", JSON.stringify(cart));
-    window.dispatchEvent(new Event("cart-updated"));
-    window.location.href = "/cart";
-  };
 
   const isNextDisabled = () => {
     const currentQ = quizQuestions[currentStep];
@@ -345,7 +271,7 @@ export default function ScentIndex() {
                 </div>
                 
                 <p className={styles.introBody}>
-                  Every fragrance tells a different story. Answer seven carefully created questions and we'll recommend the fragrances that best match your personality, preferences, and lifestyle.
+                  Every fragrance tells a different story. Answer seven carefully created questions and we&apos;ll recommend the fragrances that best match your personality, preferences, and lifestyle.
                 </p>
               </div>
               
@@ -454,102 +380,148 @@ export default function ScentIndex() {
         {/* 5. Consultation Results Page */}
         {phase === "results" && recommendations.length > 0 && (
           <div className={styles.resultsGridWrapper}>
-            <div className={styles.resultsGrid}>
-              {recommendations.map((rec, index) => {
-                const handleCardClick = (e: React.MouseEvent) => {
-                  const target = e.target as HTMLElement;
-                  if (target.closest("button")) {
-                    return;
-                  }
-                  router.push(`/product/${rec.product.id}?from=quiz`);
-                };
-
+            <div className={styles.fadeUpProfile}>
+              {(() => {
+                const profile = getFragranceProfile(answers);
                 return (
-                  <div 
-                    key={rec.product.id} 
-                    className={styles.cardEntryWrapper}
-                    style={{ animationDelay: `${0.15 + 0.38 * index}s` }}
-                  >
-                    <div 
-                      className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
-                      style={{ cursor: "pointer" }}
-                      onClick={handleCardClick}
-                    >
-                      <div className={styles.cardHeader}>
-                        <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
-                          {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
+                  <div className={styles.profileSection}>
+                    <div className={styles.profileIcon}>✨ Your Fragrance Profile</div>
+                    <h2 className={styles.profileHeading}>{profile.name}</h2>
+                    <div className={styles.profileDivider} />
+                    <p className={styles.profileDescription}>{profile.description}</p>
+                    <div className={styles.profileDivider} />
+                    <div className={styles.profileTags}>
+                      {profile.tags.map((tag) => (
+                        <span key={tag} className={styles.profileTag}>
+                          {tag}
                         </span>
-                      </div>
-
-                      <div className={styles.cardImgWrapper}>
-                        <Image
-                          src={rec.product.image}
-                          alt={rec.product.name}
-                          width={280}
-                          height={200}
-                          className={styles.cardImg}
-                          priority={index === 0}
-                        />
-                      </div>
-
-                      <h3 className={styles.cardTitle}>{rec.product.name}</h3>
-                      <p className={styles.cardInspiration}>{rec.inspiration}</p>
-                      <p className={styles.cardText}>{rec.reason}</p>
-
-                      {/* Scent Profile Tags */}
-                      <div className={styles.scentProfileTags}>
-                        {rec.profileTags?.map((tag) => (
-                          <span key={tag} className={styles.scentTag}>
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Performance */}
-                      <div className={styles.performanceLine}>
-                        {rec.performance}
-                      </div>
-
-                      <div className={styles.cardActions}>
-                        <button
-                          type="button"
-                          className={styles.quizBuyNowBtn}
-                          onClick={() => handleBuyNow(rec.product)}
-                        >
-                          Buy Now
-                        </button>
-                        <button
-                          type="button"
-                          className={styles.quizAddBagBtn}
-                          onClick={() => handleAddToCart(rec.product)}
-                        >
-                          Add to Bag
-                        </button>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 );
-            })}
+              })()}
             </div>
 
-            {/* Centered Action Buttons at the bottom */}
-            <div className={styles.resultsResetContainer}>
-              <button
-                type="button"
-                className={`${styles.btn} ${styles.btnRedOutline}`}
-                style={{ padding: "0.5rem 2rem", height: "40px", borderRadius: "20px" }}
-                onClick={handleReset}
-              >
-                Try Quiz Again
-              </button>
-              <button
-                type="button"
-                className={`${styles.btn} ${styles.btnRedOutline}`}
-                style={{ padding: "0.5rem 2rem", height: "40px", borderRadius: "20px" }}
-                onClick={() => { window.location.href = "/compare"; }}
-              >
-                Compare Scents
-              </button>
+            <div className={styles.fadeUpRecommendations}>
+              <div className={styles.recommendationHeader}>
+                <h3 className={styles.recommendationHeading}>Recommended For You</h3>
+                <p className={styles.recommendationSubheading}>
+                  Based on your fragrance profile, these Murakkaz selections are the closest match to your preferences.
+                </p>
+              </div>
+
+              <div className={styles.resultsGrid}>
+                {recommendations.map((rec, index) => {
+                  const handleCardClick = (e: React.MouseEvent) => {
+                    const target = e.target as HTMLElement;
+                    if (target.closest("button")) {
+                      return;
+                    }
+                    router.push(`/product/${rec.product.id}?from=quiz`);
+                  };
+
+                  return (
+                    <div 
+                      key={rec.product.id} 
+                      className={styles.cardEntryWrapper}
+                    >
+                      <div 
+                        className={`${styles.resultsNarrowCard} ${index === 0 ? styles.resultsFirstCard : ""}`}
+                        style={{ cursor: "pointer" }}
+                        onClick={handleCardClick}
+                      >
+                        <div className={styles.cardHeader}>
+                          <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
+                            {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
+                          </span>
+                        </div>
+
+                        <div className={styles.cardImgWrapper}>
+                          <Image
+                            src={rec.product.image}
+                            alt={rec.product.name}
+                            width={280}
+                            height={200}
+                            className={styles.cardImg}
+                            priority={index === 0}
+                          />
+                        </div>
+
+                        <h3 className={styles.cardTitle}>{rec.product.name}</h3>
+                        <p className={styles.cardInspiration}>{rec.inspiration}</p>
+                        <p className={styles.cardText}>{rec.reason}</p>
+
+                        {/* Scent Profile Tags */}
+                        <div className={styles.scentProfileTags}>
+                          {rec.profileTags?.map((tag) => (
+                            <span key={tag} className={styles.scentTag}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Performance */}
+                        <div className={styles.performanceLine}>
+                          {rec.performance}
+                        </div>
+
+                        <div className={styles.cardActions}>
+                          <button
+                            type="button"
+                            className={styles.quizBuyNowBtn}
+                            onClick={() => {
+                              router.push(`/product/${rec.product.id}?from=quiz`);
+                            }}
+                          >
+                            View Details
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.quizAddBagBtn}
+                            onClick={() => {
+                              router.push(`/compare?add=${rec.product.id}&image=${encodeURIComponent(rec.product.image)}&name=${encodeURIComponent(rec.product.name)}`);
+                            }}
+                          >
+                            Compare
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className={styles.fadeUpActions}>
+              {/* Premium Action Section Header */}
+              <div className={styles.stillExploringHeader}>
+                <h4 className={styles.stillExploringHeading}>Still exploring your signature scent?</h4>
+              </div>
+
+              {/* Centered Action Buttons at the bottom */}
+              <div className={styles.resultsResetContainer}>
+                <button
+                  type="button"
+                  className={`${styles.btn} ${styles.btnNext}`}
+                  style={{ padding: "0.5rem 2.5rem", height: "42px", borderRadius: "21px", minWidth: "180px", textTransform: "none", fontSize: "0.85rem" }}
+                  onClick={() => {
+                    const rec1 = recommendations[0];
+                    const rec2 = recommendations[1];
+                    const rec3 = recommendations[2];
+                    router.push(`/compare?p1=${encodeURIComponent(rec1.product.image)}&p2=${encodeURIComponent(rec2.product.image)}&p3=${encodeURIComponent(rec3.product.image)}`);
+                  }}
+                >
+                  Compare All Three
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.btn} ${styles.btnRedOutline}`}
+                  style={{ padding: "0.5rem 2.5rem", height: "42px", borderRadius: "21px", minWidth: "180px", textTransform: "none", fontSize: "0.85rem" }}
+                  onClick={handleReset}
+                >
+                  Retake Quiz
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -573,4 +545,64 @@ export default function ScentIndex() {
       </div>
     </div>
   );
+}
+
+interface FragranceProfile {
+  name: string;
+  description: string;
+  tags: string[];
+}
+
+function getFragranceProfile(answers: Record<number, string | string[]>): FragranceProfile {
+  const occasion = answers[2] as string | undefined;
+  const scentStyles = (answers[5] as string[]) || [];
+  const personality = answers[7] as string | undefined;
+
+  if (personality === "Bold" || scentStyles.includes("Oud") || scentStyles.includes("Leather")) {
+    return {
+      name: "Bold & Intense",
+      description: "A powerful statement of confidence and raw sophistication. Formulated for those who seek to command attention, combining deep woods and commanding accords that linger beautifully.",
+      tags: ["Bold", "Woody", "Warm", "Confident"]
+    };
+  }
+  if (personality === "Mysterious") {
+    return {
+      name: "Warm & Mysterious",
+      description: "You prefer fragrances that carry a sense of intrigue, drawing others in slowly. The blend of rich spices, warm amber, and deep notes matches your desire for a magnetic presence that keeps people guessing.",
+      tags: ["Warm", "Elegant", "Sophisticated", "Romantic"]
+    };
+  }
+  if (personality === "Romantic" || scentStyles.includes("Floral") || scentStyles.includes("Fruity")) {
+    return {
+      name: "Romantic & Charming",
+      description: "You are drawn to soft, floral, and slightly sweet compositions that evoke warmth and intimacy. This profile is perfect for special dates and moments where you want to leave a gentle, charming trail.",
+      tags: ["Romantic", "Fresh", "Elegant", "Sophisticated"]
+    };
+  }
+  if (occasion === "Office" || personality === "Elegant") {
+    return {
+      name: "Professional & Refined",
+      description: "Your taste leans towards structured, clean, and balanced accords. You appreciate fragrances that convey poise, polish, and understated elegance, making them suitable for professional environments and formal occasions.",
+      tags: ["Elegant", "Sophisticated", "Minimal", "Confident"]
+    };
+  }
+  if (scentStyles.includes("Citrus") || scentStyles.includes("Fresh") || scentStyles.includes("Aquatic")) {
+    return {
+      name: "Fresh & Energetic",
+      description: "You enjoy bright, uplifting, and crisp notes that mimic the clean air of the ocean or citrus groves. This energetic profile matches an active, modern lifestyle where clean comfort is paramount.",
+      tags: ["Fresh", "Minimal", "Modern", "Confident"]
+    };
+  }
+  if (personality === "Minimal") {
+    return {
+      name: "Modern & Minimal",
+      description: "You appreciate clean, subtle skin scents that whisper rather than shout. This minimal profile matches your modern, streamlined aesthetic, focusing on pure, high-quality ingredients that complement your natural presence.",
+      tags: ["Minimal", "Modern", "Fresh", "Elegant"]
+    };
+  }
+  return {
+    name: "Classic & Timeless",
+    description: "You appreciate balanced, traditional fragrance structures that never go out of style. Combining elements of citrus freshness with woody refinement, this classic profile matches your appreciation for quality and heritage.",
+    tags: ["Classic", "Elegant", "Sophisticated", "Sophisticated"]
+  };
 }

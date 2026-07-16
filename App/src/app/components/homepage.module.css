@@ -174,24 +174,53 @@
   background-color: transparent;
   border-top: 1px solid var(--card-border);
   border-bottom: 1px solid var(--card-border);
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0;
+}
+
+.quizRadialGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(197, 168, 128, 0.08) 0%, rgba(197, 168, 128, 0.01) 70%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .quizContainer {
-  max-width: 800px;
+  max-width: 750px;
   margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.quizHeaderDivider {
+  width: 40px;
+  height: 1px;
+  background-color: rgba(130, 120, 100, 0.22);
+  margin: 1.25rem auto 1rem auto;
 }
 
 .quizDesc {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 1.05rem;
-  line-height: 1.7;
+  font-size: 1.025rem;
+  line-height: 1.75;
   color: var(--foreground);
-  opacity: 0.9;
-  margin-bottom: 2.5rem;
+  opacity: 0.85;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.quizButtonWrapper {
+  position: relative;
 }
 
 .primaryButton {
@@ -210,13 +239,14 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .primaryButton:hover {
   background-color: transparent;
   color: #313134;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(49, 49, 52, 0.1);
 }
 
 .secondaryButton {
@@ -235,13 +265,14 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .secondaryButton:hover {
   background-color: #313134;
   color: #F5F1E8;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(49, 49, 52, 0.1);
 }
 
 /* ── Best Sellers ── */
@@ -327,39 +358,83 @@
 .occasionCard {
   position: relative;
   aspect-ratio: 4 / 3;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid var(--card-border);
+  border: 1px solid rgba(130, 120, 100, 0.08);
   cursor: pointer;
   background-color: #f0ebe3;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
 
 .occasionCard:hover {
-  transform: scale(1.015);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transform: translateY(-4px) scale(1.005);
+  box-shadow: 0 12px 30px rgba(47, 9, 9, 0.06);
+}
+
+.occasionImageContainer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.occasionImage {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.occasionCard:hover .occasionImage {
+  transform: scale(1.05);
 }
 
 .occasionOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(49, 49, 52, 0.75) 0%, rgba(49, 49, 52, 0.15) 60%, rgba(49, 49, 52, 0) 100%);
+  background: linear-gradient(to top, rgba(17, 17, 18, 0.85) 0%, rgba(17, 17, 18, 0.3) 60%, rgba(17, 17, 18, 0.1) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 1.5rem;
-  transition: background 0.3s ease;
+  z-index: 2;
+  transition: background 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .occasionCard:hover .occasionOverlay {
-  background: linear-gradient(to top, rgba(49, 49, 52, 0.85) 0%, rgba(49, 49, 52, 0.25) 60%, rgba(49, 49, 52, 0) 100%);
+  background: linear-gradient(to top, rgba(17, 17, 18, 0.95) 0%, rgba(17, 17, 18, 0.4) 60%, rgba(17, 17, 18, 0.15) 100%);
 }
 
 .occasionName {
   font-family: var(--font-serif-title), Georgia, serif;
   font-size: 1.35rem;
-  color: #F5F1E8;
+  color: #ffffff;
   font-weight: 500;
+  margin: 0;
+  transform: translateY(4px);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.occasionCard:hover .occasionName {
+  transform: translateY(0);
+}
+
+.occasionCta {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c5a880;
+  margin-top: 0.35rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.occasionCard:hover .occasionCta {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ── Notes Grid ── */
@@ -684,4 +759,170 @@
     grid-template-columns: 1fr;
     gap: 0.75rem;
   }
+}
+
+/* ── Typography & Label Refinements ── */
+.sectionLabel {
+  display: block;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #c5a880; /* gold accent */
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+/* ── The Murakkaz Difference V2.0 ── */
+.diffGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .diffGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .diffGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.diffCard {
+  background: #faf7f2;
+  border: 1px solid rgba(130, 120, 100, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 15px rgba(47, 9, 9, 0.02);
+}
+
+.diffCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(47, 9, 9, 0.06);
+  border-color: rgba(197, 168, 128, 0.25);
+}
+
+.diffIconWrapper {
+  background-color: rgba(130, 0, 17, 0.04);
+  padding: 0.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease;
+}
+
+.diffCard:hover .diffIconWrapper {
+  transform: scale(1.08) rotate(4deg);
+}
+
+.diffIcon {
+  width: 24px;
+  height: 24px;
+  color: #820011;
+}
+
+.diffCardTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #313134;
+  margin: 0;
+}
+
+.diffCardDesc {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.85rem;
+  color: #767677;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Compare Banner spotlight glow ── */
+.discoverySection {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlightGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(197, 168, 128, 0.06) 0%, rgba(197, 168, 128, 0.01) 60%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.discoveryContainer {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Customer Reviews Avatar Refinements ── */
+.reviewerInitials {
+  width: 100%;
+  height: 100%;
+  background-color: #f0ebe3;
+  border: 1px solid rgba(130, 120, 100, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #820011;
+  border-radius: 50%;
+}
+
+/* ── Upcoming Events editorial tag overlay ── */
+.eventImageWrap {
+  position: relative;
+}
+
+.eventGoldLabel {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #faf7f2;
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  color: #820011;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.eventCard {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.eventCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(47, 9, 9, 0.06);
+  border-color: rgba(197, 168, 128, 0.25) !important;
+}
+
+.eventImage {
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.eventCard:hover .eventImage {
+  transform: scale(1.04);
 }

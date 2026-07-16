@@ -6,6 +6,7 @@ import styles from "./homepage.module.css";
 export default function CompareBanner() {
   return (
     <section className={`${styles.section} ${styles.discoverySection}`} suppressHydrationWarning>
+      <div className={styles.spotlightGlow} />
       <div className={`${styles.container} ${styles.discoveryContainer}`}>
         <h2 className={styles.discoveryTitle}>Can&apos;t decide between two fragrances?</h2>
         <p className={styles.discoveryDesc}>

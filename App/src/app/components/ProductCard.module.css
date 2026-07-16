@@ -1,10 +1,21 @@
 .card {
   display: flex;
   flex-direction: column;
-  background: transparent;
+  background: #faf7f2;
+  border: 1px solid rgba(130, 120, 100, 0.08);
+  border-radius: 12px;
+  padding: 0.85rem;
   width: 100%;
   font-family: var(--font-serif-text), Georgia, serif;
   position: relative;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 15px rgba(47, 9, 9, 0.02);
+}
+
+.card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(47, 9, 9, 0.06);
+  border-color: rgba(197, 168, 128, 0.25);
 }
 
 /* ── Image ── */
@@ -13,26 +24,21 @@
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  background-color: #f0ebe3;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover .imageContainer {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  background-color: #f5f1e8;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .card:hover .image {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 /* ── Content ── */
@@ -105,6 +111,12 @@
   color: #767677;
   letter-spacing: 0.01em;
   font-style: italic;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.card:hover .inspiredText {
+  opacity: 1;
 }
 
 .priceText {

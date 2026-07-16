@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./homepage.module.css";
 
 export default function ShopByOccasion() {
@@ -8,32 +9,32 @@ export default function ShopByOccasion() {
     {
       name: "Office",
       link: "/shop?occasion=Formal",
-      bgGrad: "linear-gradient(135deg, #e4ded5 0%, #c3b9aa 100%)"
+      image: "/images/occasions/office.png"
     },
     {
       name: "Daily Wear",
       link: "/shop?occasion=Daily+Wear",
-      bgGrad: "linear-gradient(135deg, #dfd8cd 0%, #bdb2a1 100%)"
+      image: "/images/occasions/daily.png"
     },
     {
       name: "Date Night",
       link: "/shop?occasion=Date+Night",
-      bgGrad: "linear-gradient(135deg, #d3c8b8 0%, #b2a490 100%)"
+      image: "/images/occasions/date_night.png"
     },
     {
       name: "Wedding",
       link: "/shop?occasion=Formal",
-      bgGrad: "linear-gradient(135deg, #cbbfaf 0%, #a79782 100%)"
+      image: "/images/occasions/wedding.png"
     },
     {
       name: "Summer",
       link: "/shop?family=Citrus,Fresh",
-      bgGrad: "linear-gradient(135deg, #e2dcd0 0%, #bfb4a1 100%)"
+      image: "/images/occasions/summer.png"
     },
     {
       name: "Winter",
       link: "/shop?family=Woody,Oriental",
-      bgGrad: "linear-gradient(135deg, #c7baa7 0%, #a1907b 100%)"
+      image: "/images/occasions/winter.png"
     }
   ];
 
@@ -41,6 +42,7 @@ export default function ShopByOccasion() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
+          <span className={styles.sectionLabel}>THE OCCASIONS</span>
           <h2 className={styles.sectionTitle}>Shop by Occasion</h2>
           <p className={styles.sectionSubtitle}>Find the perfect silhouette for any moment</p>
         </div>
@@ -51,11 +53,20 @@ export default function ShopByOccasion() {
               href={occ.link}
               key={idx}
               className={styles.occasionCard}
-              style={{ background: occ.bgGrad }}
               suppressHydrationWarning
             >
+              <div className={styles.occasionImageContainer}>
+                <Image
+                  src={occ.image}
+                  alt={occ.name}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className={styles.occasionImage}
+                />
+              </div>
               <div className={styles.occasionOverlay}>
                 <h3 className={styles.occasionName}>{occ.name}</h3>
+                <span className={styles.occasionCta}>Explore Collection &rarr;</span>
               </div>
             </Link>
           ))}
