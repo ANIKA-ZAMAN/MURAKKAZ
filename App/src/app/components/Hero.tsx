@@ -191,33 +191,8 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Middle Column: Centered Shop Collection Button */}
+        {/* Middle Column: Centered Navigation */}
         <div className="w-full flex flex-col justify-center items-center">
-          <Link
-            href="/shop"
-            suppressHydrationWarning
-            onClick={handleClick}
-            className={`${styles.heroPrimaryBtn} ${isClicked ? "animate-click-ring" : ""}`}
-          >
-            {/* Click Ripple elements */}
-            {ripples.map((ripple) => (
-              <span
-                key={ripple.id}
-                className="absolute rounded-full bg-current opacity-25 animate-ripple pointer-events-none"
-                style={{
-                  left: ripple.x,
-                  top: ripple.y,
-                  width: ripple.size,
-                  height: ripple.size,
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
-            ))}
-            
-            <span className="z-10">
-              SHOP COLLECTION
-            </span>
-          </Link>
 
           {/* Elegant Divider */}
           <div className={styles.heroDivider}>
