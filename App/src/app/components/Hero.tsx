@@ -5,36 +5,7 @@ import { useState, useEffect } from "react";
 import styles from "./homepage.module.css";
 
 export default function Hero() {
-  const [ripples, setRipples] = useState<{ id: number; x: number; y: number; size: number }[]>([]);
-  const [isClicked, setIsClicked] = useState(false);
   const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const size = Math.max(rect.width, rect.height) * 2.5;
-    
-    const newRipple = {
-      id: Date.now() + Math.random(),
-      x,
-      y,
-      size,
-    };
-    
-    setRipples((prev) => [...prev, newRipple]);
-    setIsClicked(true);
-    setTimeout(() => setIsClicked(false), 600);
-  };
-
-  useEffect(() => {
-    if (ripples.length > 0) {
-      const timer = setTimeout(() => {
-        setRipples((prev) => prev.slice(1));
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [ripples]);
 
   return (
     <section className="relative w-full h-[calc(100vh-120px)] flex flex-col justify-between items-center overflow-hidden bg-transparent py-2 select-none" suppressHydrationWarning>
@@ -191,34 +162,8 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Middle Column: Centered Navigation */}
-        <div className="w-full flex flex-col justify-center items-center">
-
-          {/* Elegant Divider */}
-          <div className={styles.heroDivider}>
-            <span className={styles.heroDividerLine} />
-            <span className={styles.heroDividerText}>Explore More</span>
-            <span className={styles.heroDividerLine} />
-          </div>
-
-          {/* Centered Dual Text Links */}
-          <div className={styles.heroLinksContainer}>
-            <Link
-              href="/scent-index"
-              className={`group ${styles.heroLink} nav-link-underline`}
-              suppressHydrationWarning
-            >
-              Find Your Perfect Fragrance <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-            </Link>
-            <Link
-              href="/compare"
-              className={`group ${styles.heroLink} nav-link-underline`}
-              suppressHydrationWarning
-            >
-              Compare Perfumes <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-            </Link>
-          </div>
-        </div>
+        {/* Middle Column: Empty Spacer */}
+        <div className="w-full"></div>
         
         {/* Right Column: Empty spacer to balance columns */}
         <div className="hidden md:block w-full"></div>
