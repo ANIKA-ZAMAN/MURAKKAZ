@@ -20,7 +20,7 @@ function HeroActions() {
   };
 
   return (
-    <div className="flex items-center gap-3 mt-4 pointer-events-auto z-30" suppressHydrationWarning>
+    <div className="flex items-center justify-center gap-3 mt-4 pointer-events-auto z-30" suppressHydrationWarning>
       {/* 1. Shop Now Button (Exact match with Picture 1 spec) */}
       <Link
         href="/shop"
@@ -198,19 +198,19 @@ export default function Hero() {
       {/* 1. Background Layers: Giant Watermark Typography (No gold circle) */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
         <div className="absolute w-full text-center z-0 select-none opacity-100 -translate-y-[6vh]" suppressHydrationWarning>
-          <div className="inline-block text-left relative">
+          <div className="inline-block text-center relative">
             <h1 
-              className="font-serif-title font-normal tracking-[0.04em] uppercase text-[#BB9E78] text-[12vw] leading-none select-none" 
+              className="font-serif-title font-normal tracking-[0.04em] uppercase text-[#BB9E78] text-[12vw] leading-none select-none text-center" 
               suppressHydrationWarning
               style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
             >
               MURAKKAZ
             </h1>
 
-            {/* Left Content Block: Paragraph + Shop Now Button + Expanding Search Bar (Exactly in pink marked places) */}
-            <div className="hidden md:block absolute left-[4.5%] top-[100%] mt-6 max-w-[420px] text-left pointer-events-auto z-30">
+            {/* Centered Content Block: Paragraph + Shop Now Button + Expanding Search Bar (Centered under MURAKKAZ) */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-[100%] mt-6 w-full max-w-[520px] flex flex-col items-center justify-center text-center pointer-events-auto z-30">
               <p 
-                className="font-serif-text text-[#313134] text-[13.5px] max-w-[340px] leading-loose text-left"
+                className="font-serif-text text-[#313134] text-[14px] max-w-[400px] leading-relaxed text-center"
                 style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
                 suppressHydrationWarning
               >
