@@ -44,7 +44,7 @@ export default function BrandTicker() {
         {displayBrands.map((brand, idx) => (
           <span key={idx} className={styles.tickerItem}>
             {brand}
-            <span className={styles.tickerDot}>&bull;</span>
+            <span className={styles.tickerDot}>✦</span>
           </span>
         ))}
       </div>

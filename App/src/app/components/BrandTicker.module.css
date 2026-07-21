@@ -3,42 +3,50 @@
   overflow: hidden;
   white-space: nowrap;
   background-color: rgba(197, 168, 128, 0.04);
-  padding: 0.8rem 0;
+  padding: 0.85rem 0;
   margin: 1.25rem 0 0 0;
-  border-top: 1px solid #b5966d; /* Brownish-golden top border */
-  border-bottom: 1px solid #b5966d; /* Brownish-golden bottom border */
+  border-top: 1px solid rgba(181, 150, 109, 0.35);
+  border-bottom: 1px solid rgba(181, 150, 109, 0.35);
   position: relative;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
 .tickerTrack {
   display: inline-flex;
   align-items: center;
-  gap: 3rem;
-  animation: marqueeMove 45s linear infinite;
+  gap: 3.5rem;
+  animation: marqueeMove 70s linear infinite;
   width: max-content;
 }
 
+.tickerContainer:hover .tickerTrack {
+  animation-play-state: paused;
+}
+
 .tickerItem {
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 10.5px;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #242426;
-  opacity: 0.72;
+  color: #313134;
+  opacity: 0.82;
   display: inline-flex;
   align-items: center;
-  gap: 3rem;
-  transition: opacity 0.3s ease;
+  gap: 3.5rem;
+  transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .tickerItem:hover {
   opacity: 1;
+  color: #820011;
 }
 
 .tickerDot {
   color: #c5a880;
-  font-size: 14px;
+  font-size: 10px;
+  opacity: 0.85;
 }
 
 @keyframes marqueeMove {

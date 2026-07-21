@@ -1,15 +1,15 @@
 .statsSection {
   background-color: transparent;
-  padding: 15px 0;
+  padding: 22px 0;
   width: 100%;
 }
 
 .statsContainer {
-  max-width: 960px;
+  max-width: 1020px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1.75rem;
   padding: 0 1.5rem;
 }
 
@@ -23,6 +23,11 @@
   opacity: 0;
   transform: translateY(12px);
   animation: statsFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transition: transform 0.35s ease-out;
+}
+
+.statItem:hover {
+  transform: translateY(-3px);
 }
 
 @keyframes statsFadeUp {
@@ -36,31 +41,33 @@
   .statItem:not(:last-child)::after {
     content: "";
     position: absolute;
-    right: -0.75rem;
-    top: 15%;
-    height: 70%;
+    right: -0.875rem;
+    top: 10%;
+    height: 80%;
     width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(181, 150, 109, 0.8) 15%, rgba(181, 150, 109, 0.8) 85%, transparent); /* Premium fading brownish-gold divider */
+    background: linear-gradient(to bottom, transparent, rgba(179, 155, 125, 0.45) 15%, rgba(179, 155, 125, 0.45) 85%, transparent);
   }
 }
 
 .statNumber {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 28px;
-  font-weight: 600;
-  color: #313134;
-  line-height: 1.25;
-  margin-bottom: 0.35rem;
+  font-size: 34px;
+  font-weight: 500;
+  color: #2c2925;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.2rem;
 }
 
 .statLabel {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #767677;
+  color: #6e675d;
   line-height: 1.4;
+  margin-top: 0.25rem;
 }
 
 @media (max-width: 1024px) and (min-width: 601px) {
