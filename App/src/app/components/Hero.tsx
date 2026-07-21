@@ -251,9 +251,9 @@ export default function Hero() {
       </div>
 
       {/* 2. Middle Layer: Floating Transparent WebM Video (No loop, no entry transition animation) */}
-      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-8 pb-2" suppressHydrationWarning>
+      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-8 pb-0" suppressHydrationWarning>
         <div 
-          className="relative h-[64vh] sm:h-[76vh] md:h-[88vh] max-h-[calc(100vh-280px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none -translate-y-[1.5vh]"
+          className="relative h-[60vh] sm:h-[72vh] md:h-[82vh] max-h-[calc(100vh-320px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none -translate-y-[1.5vh]"
           suppressHydrationWarning
         >
           <video
@@ -267,15 +267,11 @@ export default function Hero() {
             Your browser does not support the video tag.
           </video>
         </div>
-
-        {/* Centered Action Buttons: Placed lower directly below the bottle presentation */}
-        <div className="z-30 pointer-events-auto mt-2 mb-4 flex items-center justify-center w-full">
-          <HeroActions />
-        </div>
       </div>
 
-      {/* 3. Foreground Layer: Stats Bar & Brand Ticker */}
-      <div className="w-full z-20 mt-auto flex flex-col items-center justify-center" suppressHydrationWarning>
+      {/* 3. Foreground Layer: Centered Action Buttons, Stats Bar & Brand Ticker */}
+      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-1 gap-2" suppressHydrationWarning>
+        <HeroActions />
         <PremiumStats />
         <BrandTicker />
       </div>
