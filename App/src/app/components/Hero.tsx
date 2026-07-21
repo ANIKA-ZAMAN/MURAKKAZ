@@ -35,25 +35,27 @@ function HeroActions() {
           <span className="relative z-10 w-full text-center pl-[0.14em]">Shop Now</span>
         </Link>
 
-        {/* 2. Expandable Search Bar */}
+        {/* 2. Expandable Luxury Search Bar */}
         <form
           onSubmit={handleSearchSubmit}
           onMouseEnter={() => setIsExpanded(true)}
           onMouseLeave={() => {
-            if (!searchQuery) setIsExpanded(false);
+            if (!searchQuery && document.activeElement?.tagName !== "INPUT") {
+              setIsExpanded(false);
+            }
           }}
-          className={`relative flex items-center h-12 rounded-full border border-[#B8A082]/70 bg-gradient-to-r from-[#FAF6F0]/80 via-[#EFE6D8]/80 to-[#E2D4BF]/80 backdrop-blur-md shadow-[0_4px_20px_rgba(49,49,52,0.06)] transition-all duration-500 ease-out overflow-hidden ${
-            isExpanded || searchQuery ? "w-64 px-4 shadow-[0_8px_25px_rgba(184,160,130,0.35)]" : "w-12 justify-center cursor-pointer hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(184,160,130,0.3)]"
+          onClick={() => setIsExpanded(true)}
+          className={`relative flex items-center h-12 rounded-full border border-[#B8A082]/70 bg-gradient-to-r from-[#FAF6F0]/90 via-[#EFE6D8]/90 to-[#E2D4BF]/90 backdrop-blur-md shadow-[0_4px_20px_rgba(49,49,52,0.06)] transition-all duration-500 ease-out overflow-hidden ${
+            isExpanded || searchQuery 
+              ? "w-72 sm:w-80 pl-4.5 pr-3.5 shadow-[0_8px_25px_rgba(184,160,130,0.35)] border-[#820011]/30" 
+              : "w-12 justify-center cursor-pointer hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(184,160,130,0.3)]"
           }`}
           suppressHydrationWarning
         >
           <button
             type="submit"
-            className="flex items-center justify-center text-[#313134] hover:text-[#820011] transition-colors outline-none border-none bg-transparent cursor-pointer shrink-0"
+            className="flex items-center justify-center w-5 h-5 text-[#313134] hover:text-[#820011] transition-colors outline-none border-none bg-transparent cursor-pointer shrink-0"
             aria-label="Search Fragrances"
-            onClick={() => {
-              if (!isExpanded) setIsExpanded(true);
-            }}
           >
             <svg
               className="w-4 h-4"
@@ -75,7 +77,10 @@ function HeroActions() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsExpanded(true)}
-            className={`ml-2.5 bg-transparent text-[#313134] font-serif-text text-[13.5px] outline-none border-none w-full placeholder:text-[#6e675d] ${
+            onBlur={() => {
+              if (!searchQuery) setIsExpanded(false);
+            }}
+            className={`ml-3 bg-transparent text-[#313134] font-serif-text text-[13.5px] font-medium outline-none border-none w-full placeholder:text-[#6e675d]/80 ${
               isExpanded || searchQuery ? "opacity-100 block" : "opacity-0 hidden"
             }`}
             style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
@@ -84,8 +89,12 @@ function HeroActions() {
           {searchQuery && (
             <button
               type="button"
-              onClick={() => setSearchQuery("")}
-              className="text-[#6e675d] hover:text-[#313134] text-xs px-1 cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSearchQuery("");
+              }}
+              className="text-[#6e675d] hover:text-[#820011] text-xs px-1 cursor-pointer shrink-0 ml-1"
+              aria-label="Clear search"
             >
               ✕
             </button>
