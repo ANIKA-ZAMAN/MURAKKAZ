@@ -216,11 +216,6 @@ export default function Hero() {
               Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
             </p>
 
-            {/* 2. Buttons: Centered significantly lower vertically under the bottle */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-[100%] mt-[32vh] sm:mt-[34vh] flex items-center justify-center pointer-events-auto z-30">
-              <HeroActions />
-            </div>
-
           </div>
         </div>
       </div>
@@ -241,6 +236,11 @@ export default function Hero() {
             <source src="/videos/BottleAnimation.webm" type="video/webm" />
             Your browser does not support the video tag.
           </video>
+        </div>
+
+        {/* Centered Action Buttons: Placed lower directly below the bottle presentation */}
+        <div className="z-30 pointer-events-auto mt-2 mb-4 flex items-center justify-center w-full">
+          <HeroActions />
         </div>
       </div>
 
