@@ -135,24 +135,11 @@ export default function Navbar() {
   const isAccountActive = pathname === "/account" || pathname.startsWith("/account/");
 
   if (isHome) {
-    // 1. Homepage Navbar: Mockup-based alignment matching other pages, but transparent and without outer border.
+    // 1. Homepage Navbar: Completely transparent floating overlay over the Hero section.
     return (
-      <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50 bg-transparent" suppressHydrationWarning>
-        <nav className="relative w-full max-w-[1348px] h-16 overflow-hidden select-none flex items-center justify-between px-6 bg-transparent" suppressHydrationWarning>
+      <header className="absolute top-0 left-0 right-0 w-full px-8 py-5 flex justify-center items-center z-50 bg-transparent pointer-events-auto" suppressHydrationWarning>
+        <nav className="relative w-full max-w-[1400px] h-20 overflow-hidden select-none flex items-center justify-between px-6 bg-transparent" suppressHydrationWarning>
           
-          {/* SVG background mockup without border */}
-          <div className="absolute inset-0 z-0 pointer-events-none w-full h-full flex justify-center items-center">
-            <Image
-              src="/images/navbar-home.svg"
-              alt="Navbar Mock"
-              width={1348}
-              height={64}
-              priority
-              className="w-full h-full object-fill"
-              suppressHydrationWarning
-            />
-          </div>
-
           {/* Logo */}
           <Link 
             href="/" 
@@ -162,26 +149,26 @@ export default function Navbar() {
             <Image
               src="/images/logo-murakkaz.svg"
               alt="Murakkaz Logo"
-              width={116}
-              height={50}
+              width={130}
+              height={56}
               priority
-              className="h-9 w-auto object-contain"
+              className="h-11 w-auto object-contain"
               suppressHydrationWarning
             />
           </Link>
 
           {/* Links */}
-          <ul className="hidden lg:flex items-center gap-8 xl:gap-10 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
+          <ul className="hidden lg:flex items-center gap-9 xl:gap-11 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
             {homeNavLinks.map((link) => (
               <li key={link.label} suppressHydrationWarning>
                 <Link
                   href={link.href}
                   suppressHydrationWarning
                   style={{ color: pathname === link.href ? "#820011" : undefined }}
-                  className={`relative font-serif-text text-[13px] tracking-wide transition-colors nav-link-underline ${
+                  className={`relative font-serif-text text-[14.5px] tracking-wide transition-colors nav-link-underline ${
                     pathname === link.href 
                       ? "text-brand-maroon font-semibold" 
-                      : "text-neutral-700 hover:text-brand-maroon"
+                      : "text-neutral-800 hover:text-brand-maroon"
                   }`}
                 >
                   {link.label}
@@ -202,7 +189,7 @@ export default function Navbar() {
               top: "50%", 
               transform: "translate(-50%, -50%)" 
             }}
-            className="w-6 h-6 z-20 cursor-pointer rounded-full flex items-center justify-center" 
+            className="w-7 h-7 z-20 cursor-pointer rounded-full flex items-center justify-center" 
             aria-label="Wishlist"
             onMouseEnter={() => setHoveredIcon("wishlist")}
             onMouseLeave={() => setHoveredIcon(null)}
@@ -230,7 +217,7 @@ export default function Navbar() {
               top: "50%", 
               transform: "translate(-50%, -50%)" 
             }}
-            className="w-6 h-6 z-20 cursor-pointer rounded-full flex items-center justify-center" 
+            className="w-7 h-7 z-20 cursor-pointer rounded-full flex items-center justify-center" 
             aria-label="Cart"
             onMouseEnter={() => setHoveredIcon("cart")}
             onMouseLeave={() => setHoveredIcon(null)}
@@ -241,7 +228,7 @@ export default function Navbar() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path 
-                d="M1276.67 28V26.0333C1276.67 25.4205 1276.55 24.8136 1276.31 24.2474C1276.08 23.6813 1275.73 23.1668 1275.3 22.7335C1274.87 22.3001 1274.35 21.9564 1273.79 21.7219C1273.22 21.4873 1272.61 21.3666 1272 21.3666C1271.39 21.3666 1270.78 21.4873 1270.21 21.7219C1269.65 21.9564 1269.13 22.3001 1268.7 22.7335C1268.27 23.1668 1267.92 23.6813 1267.69 24.2474C1267.45 24.8136 1267.33 25.4205 1267.33 26.0333V30.7C1267.33 30.8768 1267.4 31.0463 1267.53 31.1714C1267.65 31.2964 1267.82 31.3666 1268 31.3666C1268.18 31.3666 1268.35 31.2964 1268.47 31.1714C1268.6 31.0463 1268.67 30.8768 1268.67 30.7V29.3333H1274V28H1268.67V26.0333C1268.67 25.1492 1269.02 24.3014 1269.64 23.6763C1270.27 23.0512 1271.12 22.7 1272 22.7C1272.88 22.7 1273.73 23.0512 1274.36 23.6763C1274.98 24.3014 1275.33 25.1492 1275.33 26.0333V30.6666C1275.33 30.8434 1275.4 31.013 1275.53 31.138C1275.65 31.2631 1275.82 31.3333 1276 31.3333C1276.18 31.3333 1276.35 31.2631 1276.47 31.138C1276.6 31.013 1276.67 30.8434 1276.67 30.6666V29.3333H1280V41.3333H1264V29.3333H1266V28H1262.67V41.3933C1262.67 41.731 1262.8 42.0549 1263.04 42.2937C1263.28 42.5325 1263.6 42.6666 1263.94 42.6666H1280.06C1280.4 42.6666 1280.72 42.5325 1280.96 42.2937C1281.2 42.0549 1281.33 41.731 1281.33 41.3933V28H1276.67Z"  
+                d="M1276.67 28V26.0333C1276.67 25.4205 1276.55 24.8136 1276.31 24.2474C1276.08 23.6813 1275.73 23.1668 1275.3 22.7335C1274.87 22.3001 1274.35 21.9564 1273.79 21.7219C1273.22 21.4873 1272.61 21.3666 1272 21.3666C1271.39 21.3666 1270.78 21.4873 1270.21 21.7219C1269.65 21.9564 1269.13 22.3001 1268.7 22.7335C1268.27 23.1668 1267.92 23.6813 1267.69 24.2474C1267.45 24.8136 1267.33 25.4205 1267.33 26.0333V30.7C1267.33 30.8768 1267.4 31.0463 1267.53 31.1714C1267.65 31.2964 1267.82 31.3666 1268 31.3666C1268.18 31.3666 1268.35 31.2964 1268.47 31.1714C1268.6 31.0463 1268.67 30.8768 1268.67 30.7V29.3333H1274V28H1268.67V26.0333C1268.67 25.1492 1269.02 24.3014 1269.64 23.6763C1270.27 23.0512 1271.12 22.7 1272 22.7C1272.88 22.7 1273.73 23.0512 1274.36 23.6763C1274.98 24.3014 1275.33 25.1492 1275.33 26.0333V30.6666C1275.33 30.8434 1275.4 31.013 1275.53 31.138C1275.65 31.2631 1275.82 31.3333 1276 31.3333C1276.18 31.3333 1276.35 31.2631 1276.47 31.138C1276.6 31.013 1276.67 30.8434 1276.67 30.6666V29.3333H1280V41.3333H1264V29.3333H1266V28H1262.67V41.3933C1262.67 41.731 1262.8 42.0549 1263.04 42.2937C1263.28 42.5325 1263.6 42.6666 1263.94 42.6666H1280.06C1280.4 42.6666 1280.72 42.5325 1280.96 42.2937C1281.2 42.0549 1281.33 41.731 1281.33 41.3933V28H1276.67Z" 
                 fill={isCartActive || hoveredIcon === "cart" ? "#820011" : "#5F5F61"}
                 style={{ transition: "fill 0.2s ease" }}
               />
@@ -263,7 +250,7 @@ export default function Navbar() {
               top: "50%", 
               transform: "translate(-50%, -50%)" 
             }}
-            className="w-6 h-6 z-20 cursor-pointer border-none bg-transparent outline-none rounded-full flex items-center justify-center"
+            className="w-7 h-7 z-20 cursor-pointer border-none bg-transparent outline-none rounded-full flex items-center justify-center"
             suppressHydrationWarning
             onMouseEnter={() => setHoveredIcon("account")}
             onMouseLeave={() => setHoveredIcon(null)}
@@ -294,10 +281,10 @@ export default function Navbar() {
     );
   }
 
-  // 2. Other Pages Navbar: Bordered layout with mockup background SVG navbar-m.svg
+  // 2. Other Pages Navbar: Completely transparent layout
   return (
-    <header className="w-full px-6 py-4 flex justify-center items-center sticky top-3 z-50" suppressHydrationWarning>
-      <nav className="relative w-full max-w-[1348px] h-16 rounded-[20px] bg-[#F5F1E8]/80 backdrop-blur-md overflow-hidden select-none flex items-center justify-between px-6" suppressHydrationWarning>
+    <header className="w-full px-8 py-5 flex justify-center items-center sticky top-0 z-50 bg-transparent" suppressHydrationWarning>
+      <nav className="relative w-full max-w-[1400px] h-20 bg-transparent overflow-hidden select-none flex items-center justify-between px-6" suppressHydrationWarning>
         
         {/* SVG background mockup */}
         <div className="absolute inset-0 z-0 pointer-events-none w-full h-full flex justify-center items-center">

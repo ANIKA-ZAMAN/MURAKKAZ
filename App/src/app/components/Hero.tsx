@@ -10,7 +10,7 @@ export default function Hero() {
   const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
 
   return (
-    <section className="relative w-full h-[calc(100vh-96px)] flex flex-col justify-between items-center overflow-hidden bg-transparent pt-2 pb-0 select-none" suppressHydrationWarning>
+    <section className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-20 pb-0 select-none" suppressHydrationWarning>
       
       {/* Responsive Conic Ray Angle Style Block */}
       <style suppressHydrationWarning>{`
