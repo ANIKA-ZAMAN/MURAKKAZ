@@ -26,13 +26,13 @@ function HeroActions() {
         {/* 1. Primary Luxury CTA Button */}
         <Link
           href="/shop"
-          className="group relative inline-flex items-center justify-center px-9 h-12 rounded-full border border-[#B8A082]/70 bg-gradient-to-r from-[#FAF6F0] via-[#EFE6D8] to-[#E2D4BF] text-[#313134] font-serif-text text-[13.5px] font-medium tracking-[0.16em] uppercase shadow-[0_4px_20px_rgba(49,49,52,0.08)] transition-all duration-350 ease-out hover:-translate-y-[3px] hover:shadow-[0_10px_28px_rgba(184,160,130,0.45)] hover:border-[#820011]/40 overflow-hidden select-none shrink-0"
+          className="group relative inline-flex items-center justify-center min-w-[210px] sm:min-w-[220px] px-12 h-12 rounded-full border border-[#B8A082]/70 bg-gradient-to-r from-[#FAF6F0] via-[#EFE6D8] to-[#E2D4BF] text-[#313134] font-serif-text text-[13.5px] font-medium tracking-[0.14em] uppercase shadow-[0_4px_20px_rgba(49,49,52,0.08)] transition-all duration-350 ease-out hover:-translate-y-[3px] hover:shadow-[0_10px_28px_rgba(184,160,130,0.45)] hover:border-[#820011]/40 overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
           {/* Subtle light sweep shimmer effect on hover */}
           <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/45 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none" />
-          <span className="relative z-10">Shop Now</span>
+          <span className="relative z-10 w-full text-center pl-[0.14em]">Shop Now</span>
         </Link>
 
         {/* 2. Expandable Search Bar */}
