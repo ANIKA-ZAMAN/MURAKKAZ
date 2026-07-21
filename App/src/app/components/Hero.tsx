@@ -253,7 +253,7 @@ export default function Hero() {
       {/* 2. Middle Layer: Floating Transparent WebM Video (No loop, no entry transition animation) */}
       <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-8 pb-0" suppressHydrationWarning>
         <div 
-          className="relative h-[66vh] sm:h-[78vh] md:h-[90vh] max-h-[calc(100vh-250px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none translate-y-[2.5vh]"
+          className="relative h-[66vh] sm:h-[78vh] md:h-[90vh] max-h-[calc(100vh-250px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none translate-y-[5.5vh]"
           suppressHydrationWarning
         >
           <video
