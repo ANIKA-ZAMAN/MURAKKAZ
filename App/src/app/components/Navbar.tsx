@@ -80,52 +80,12 @@ export default function Navbar() {
     updateCount();
     updateUserPhoto();
 
-    const playClickSound = () => {
-      const isSoundEnabled = localStorage.getItem("pref-sound") !== "false";
-      if (!isSoundEnabled) return;
-      try {
-        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(800, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.08);
-        
-        gain.gain.setValueAtTime(0.04, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
-        
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        
-        osc.start();
-        osc.stop(ctx.currentTime + 0.15);
-      } catch (e) {
-        // AudioContext might be blocked before first user interaction
-      }
-    };
-
-    const handleGlobalClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.tagName === "BUTTON" || 
-        target.closest("button") || 
-        target.tagName === "A" || 
-        target.closest("a") || 
-        target.getAttribute("role") === "button"
-      ) {
-        playClickSound();
-      }
-    };
-
     window.addEventListener("cart-updated", updateCount);
     window.addEventListener("murakkaz-user-updated", updateUserPhoto);
-    window.addEventListener("click", handleGlobalClick);
     
     return () => {
       window.removeEventListener("cart-updated", updateCount);
       window.removeEventListener("murakkaz-user-updated", updateUserPhoto);
-      window.removeEventListener("click", handleGlobalClick);
     };
   }, []);
 
