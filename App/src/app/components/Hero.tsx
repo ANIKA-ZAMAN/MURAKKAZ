@@ -93,7 +93,7 @@ function HeroActions() {
                 e.stopPropagation();
                 setSearchQuery("");
               }}
-              className="text-[#6e675d] hover:text-[#820011] text-xs px-1 cursor-pointer shrink-0 ml-1"
+              className="text-[#6e675d] hover:text-[#820011] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-3.5 transition-colors"
               aria-label="Clear search"
             >
               ✕
