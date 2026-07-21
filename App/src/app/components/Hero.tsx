@@ -207,15 +207,17 @@ export default function Hero() {
               MURAKKAZ
             </h1>
 
-            {/* Centered Content Block: Paragraph + Shop Now Button + Expanding Search Bar (Centered under MURAKKAZ) */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-[100%] mt-6 w-full max-w-[520px] flex flex-col items-center justify-center text-center pointer-events-auto z-30">
-              <p 
-                className="font-serif-text text-[#313134] text-[14px] max-w-[400px] leading-relaxed text-center"
-                style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
-                suppressHydrationWarning
-              >
-                Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
-              </p>
+            {/* 1. Subtext: Restored to original left position under MURAKKAZ */}
+            <p 
+              className="hidden md:block absolute left-[4.5%] top-[100%] mt-6 font-serif-text text-[#313134] text-[13.5px] max-w-[340px] leading-loose text-left pointer-events-auto z-30"
+              style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
+              suppressHydrationWarning
+            >
+              Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
+            </p>
+
+            {/* 2. Buttons: Centered in the middle under the big MURAKKAZ text */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-[100%] mt-6 flex items-center justify-center pointer-events-auto z-30">
               <HeroActions />
             </div>
 
