@@ -279,10 +279,10 @@ export default function Hero() {
       </div>
 
       {/* 3. Foreground Layer: Centered Action Buttons, Stats Bar & Brand Ticker */}
-      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-0 gap-1" suppressHydrationWarning>
+      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-0 gap-0" suppressHydrationWarning>
         <HeroActions />
         <PremiumStats />
-        <div className="w-full mt-0.5 mb-0">
+        <div className="w-full mt-1 mb-0">
           <BrandTicker />
         </div>
       </div>
