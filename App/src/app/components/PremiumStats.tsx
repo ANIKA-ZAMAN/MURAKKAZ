@@ -3,8 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./PremiumStats.module.css";
 
+function getStartValue(target: number, decimals: number): number {
+  if (decimals > 0) {
+    return Math.max(0, target - 0.7);
+  }
+  if (target >= 1000) {
+    return target - 60;
+  }
+  if (target >= 50) {
+    return Math.max(0, target - 15);
+  }
+  return 0;
+}
+
 function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; suffix?: string; decimals?: number }) {
-  const [count, setCount] = useState(0);
+  const startVal = getStartValue(number, decimals);
+  const [count, setCount] = useState(startVal);
   const ref = useRef<HTMLSpanElement>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
 
@@ -13,17 +27,17 @@ function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; 
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
-          const start = 0;
+          const start = startVal;
           const end = number;
-          const duration = 3500; // Luxurious, smooth & low 3.5s duration
+          const duration = 1600; // Calm, readable 1.6s duration
           const startTime = performance.now();
 
           const animate = (currentTime: number) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Ultra-smooth Ease Out Quart
-            const easeProgress = 1 - Math.pow(1 - progress, 4);
+            // Smooth ease out cubic
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
             const currentVal = start + easeProgress * (end - start);
             
             setCount(currentVal);
@@ -47,7 +61,7 @@ function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; 
     }
 
     return () => observer.disconnect();
-  }, [number, hasAnimated]);
+  }, [number, hasAnimated, startVal]);
 
   return (
     <span ref={ref}>
