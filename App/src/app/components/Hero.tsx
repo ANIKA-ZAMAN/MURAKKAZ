@@ -2,9 +2,94 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./homepage.module.css";
 import PremiumStats from "./PremiumStats";
 import BrandTicker from "./BrandTicker";
+
+function HeroActions() {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-3 mt-4 pointer-events-auto z-30" suppressHydrationWarning>
+      {/* 1. Shop Now Button (Exact match with Picture 1 spec) */}
+      <Link
+        href="/shop"
+        className="inline-flex items-center justify-center px-7 h-11 rounded-[12px] border border-[#4a453e] bg-transparent text-[#313134] font-serif-text text-[14.5px] font-medium tracking-wide transition-all duration-300 hover:bg-[#313134] hover:text-[#F5F1E8] hover:shadow-md select-none shrink-0"
+        style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+        suppressHydrationWarning
+      >
+        Shop Now
+      </Link>
+
+      {/* 2. Expandable Search Bar (Exact match with Picture 2 right pink mark) */}
+      <form
+        onSubmit={handleSearchSubmit}
+        onMouseEnter={() => setIsExpanded(true)}
+        onMouseLeave={() => {
+          if (!searchQuery) setIsExpanded(false);
+        }}
+        className={`relative flex items-center h-11 rounded-[12px] border border-[#4a453e] bg-transparent transition-all duration-500 ease-out overflow-hidden ${
+          isExpanded || searchQuery ? "w-64 px-3 bg-[#CBB9A1]/40 backdrop-blur-md shadow-sm" : "w-11 justify-center cursor-pointer"
+        }`}
+        suppressHydrationWarning
+      >
+        <button
+          type="submit"
+          className="flex items-center justify-center text-[#313134] hover:text-[#820011] transition-colors outline-none border-none bg-transparent cursor-pointer shrink-0"
+          aria-label="Search Fragrances"
+          onClick={() => {
+            if (!isExpanded) setIsExpanded(true);
+          }}
+        >
+          <svg
+            className="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <input
+          type="text"
+          placeholder="Search any perfume..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setIsExpanded(true)}
+          className={`ml-2 bg-transparent text-[#313134] font-serif-text text-[13.5px] outline-none border-none w-full placeholder:text-[#5f5950] ${
+            isExpanded || searchQuery ? "opacity-100 block" : "opacity-0 hidden"
+          }`}
+          style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+        />
+
+        {searchQuery && (
+          <button
+            type="button"
+            onClick={() => setSearchQuery("")}
+            className="text-[#5f5950] hover:text-[#313134] text-xs px-1 cursor-pointer"
+          >
+            ✕
+          </button>
+        )}
+      </form>
+    </div>
+  );
+}
 
 export default function Hero() {
   const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
@@ -121,13 +206,19 @@ export default function Hero() {
             >
               MURAKKAZ
             </h1>
-            <p 
-              className="hidden md:block absolute left-[4.5%] top-[100%] mt-6 font-serif-text text-[#313134] text-[13.5px] max-w-[340px] leading-loose text-left pointer-events-auto"
-              style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
-              suppressHydrationWarning
-            >
-              Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
-            </p>
+
+            {/* Left Content Block: Paragraph + Shop Now Button + Expanding Search Bar (Exactly in pink marked places) */}
+            <div className="hidden md:block absolute left-[4.5%] top-[100%] mt-6 max-w-[420px] text-left pointer-events-auto z-30">
+              <p 
+                className="font-serif-text text-[#313134] text-[13.5px] max-w-[340px] leading-loose text-left"
+                style={{ fontFamily: "var(--font-lora), Georgia, serif", letterSpacing: "0.02em" }}
+                suppressHydrationWarning
+              >
+                Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
+              </p>
+              <HeroActions />
+            </div>
+
           </div>
         </div>
       </div>
