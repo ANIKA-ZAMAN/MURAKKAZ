@@ -260,9 +260,9 @@ export default function Hero() {
       </div>
 
       {/* 2. Middle Layer: Floating Transparent WebM Video (No loop, no entry transition animation) */}
-      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-8 pb-0" suppressHydrationWarning>
+      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-4 pb-0" suppressHydrationWarning>
         <div 
-          className="relative h-[66vh] sm:h-[78vh] md:h-[90vh] max-h-[calc(100vh-250px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none translate-y-[5.5vh]"
+          className="relative h-[58vh] sm:h-[70vh] md:h-[80vh] max-h-[calc(100vh-290px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.05] pointer-events-none translate-y-[5.5vh]"
           suppressHydrationWarning
         >
           <video
@@ -279,10 +279,12 @@ export default function Hero() {
       </div>
 
       {/* 3. Foreground Layer: Centered Action Buttons, Stats Bar & Brand Ticker */}
-      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-1 gap-2" suppressHydrationWarning>
+      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-0 gap-1" suppressHydrationWarning>
         <HeroActions />
         <PremiumStats />
-        <BrandTicker />
+        <div className="w-full mt-0.5 mb-0">
+          <BrandTicker />
+        </div>
       </div>
     </section>
   );
