@@ -216,8 +216,8 @@ export default function Hero() {
               Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
             </p>
 
-            {/* 2. Buttons: Centered lower in the middle under the big MURAKKAZ text */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-[100%] mt-24 flex items-center justify-center pointer-events-auto z-30">
+            {/* 2. Buttons: Centered significantly lower vertically under the bottle */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-[100%] mt-[32vh] sm:mt-[34vh] flex items-center justify-center pointer-events-auto z-30">
               <HeroActions />
             </div>
 
