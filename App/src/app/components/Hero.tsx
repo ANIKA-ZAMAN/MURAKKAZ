@@ -47,7 +47,7 @@ function HeroActions() {
           onClick={() => setIsExpanded(true)}
           className={`relative flex items-center h-12 rounded-full border border-[#B8A082]/70 bg-gradient-to-r from-[#FAF6F0]/90 via-[#EFE6D8]/90 to-[#E2D4BF]/90 backdrop-blur-md shadow-[0_4px_20px_rgba(49,49,52,0.06)] transition-all duration-500 ease-out overflow-hidden ${
             isExpanded || searchQuery 
-              ? "w-72 sm:w-80 pl-4.5 pr-3.5 shadow-[0_8px_25px_rgba(184,160,130,0.35)] border-[#820011]/30" 
+              ? "w-64 pl-5 pr-3.5 shadow-[0_8px_25px_rgba(184,160,130,0.35)] border-[#820011]/30" 
               : "w-12 justify-center cursor-pointer hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(184,160,130,0.3)]"
           }`}
           suppressHydrationWarning
