@@ -20,7 +20,7 @@ function HeroActions() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-5 mt-2 pointer-events-auto z-30" suppressHydrationWarning>
+    <div className="flex flex-col items-center justify-center gap-4.5 -translate-y-3 sm:-translate-y-4 pointer-events-auto z-30" suppressHydrationWarning>
       {/* Primary CTA + Search Bar Row */}
       <div className="flex items-center justify-center gap-3.5">
         {/* 1. Primary Luxury CTA Button */}
