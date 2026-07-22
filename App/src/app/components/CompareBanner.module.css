@@ -5,7 +5,7 @@
 .section {
   width: 100%;
   padding: 7.5rem 2rem;
-  background: linear-gradient(180deg, #1C1B1A 0%, #151413 100%);
+  background: linear-gradient(180deg, #1E1A17 0%, #2A241F 50%, #1E1A17 100%);
   position: relative;
   overflow: hidden;
   display: flex;
