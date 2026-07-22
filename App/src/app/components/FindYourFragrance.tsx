@@ -13,17 +13,15 @@ export default function FindYourFragrance() {
       {/* Floating invitation card */}
       <div className={styles.cardWrapper}>
         <div className={styles.invitationCard}>
-          {/* Embossed wax seal at top */}
-          <div className={styles.waxSeal}>
-            <div className={styles.sealInner}>
-              <Image
-                src="/images/logo-murakkaz.svg"
-                alt="Murakkaz"
-                width={28}
-                height={28}
-                className={styles.sealLogo}
-              />
-            </div>
+          {/* Murakkaz Logo */}
+          <div className={styles.logoWrapper}>
+            <Image
+              src="/images/logo-murakkaz.svg"
+              alt="Murakkaz"
+              width={120}
+              height={50}
+              className={styles.invitationLogo}
+            />
           </div>
 
           {/* Decorative top flourish */}

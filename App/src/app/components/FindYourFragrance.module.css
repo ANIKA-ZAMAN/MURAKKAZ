@@ -91,39 +91,18 @@
     0 24px 64px -8px rgba(80, 60, 30, 0.10);
 }
 
-/* ── Wax Seal ── */
-.waxSeal {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #b8965c 0%, #9a7a42 50%, #7d6134 100%);
+/* ── Murakkaz Logo ── */
+.logoWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.5rem;
-  box-shadow:
-    0 2px 8px rgba(154, 122, 66, 0.25),
-    0 0 0 3px rgba(185, 155, 108, 0.12),
-    inset 0 1px 2px rgba(255, 245, 220, 0.25);
-  position: relative;
 }
 
-.sealInner {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 245, 220, 0.30);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sealLogo {
-  width: 26px;
-  height: 26px;
+.invitationLogo {
+  width: 120px;
+  height: auto;
   object-fit: contain;
-  filter: brightness(0) invert(0.95);
-  opacity: 0.9;
 }
 
 /* ── Decorative Flourish Lines ── */
