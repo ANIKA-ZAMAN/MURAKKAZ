@@ -82,22 +82,25 @@ function HeroActions() {
     <div className="flex flex-col items-center justify-center gap-4.5 -translate-y-14 sm:-translate-y-[64px] pointer-events-auto z-30" suppressHydrationWarning>
       {/* Primary CTA + Search Bar Row */}
       <div className="flex items-center justify-center gap-4">
-        {/* 1. Primary Luxury CTA Button with Sliding Arrow */}
+        {/* 1. Primary Luxury CTA Button with Sliding Arrow & Subtle Pulse Glow */}
         <Link
           href="/shop"
-          className="group relative inline-flex items-center justify-center min-w-[240px] sm:min-w-[255px] px-10 h-[54px] rounded-full border border-[#C5A880]/70 bg-gradient-to-r from-[#FAF6F0] via-[#F3E8D8] to-[#E2D2BC] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[4px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#C5A880] overflow-hidden select-none shrink-0 text-center"
-          style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+          className="group relative inline-flex items-center justify-center min-w-[250px] sm:min-w-[270px] px-10 h-[56px] rounded-full border border-[#C5A880] bg-gradient-to-r from-[#FDFBF7] via-[#F6EEDF] to-[#E9D9C3] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.08)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C] overflow-hidden select-none shrink-0 text-center"
+          style={{ 
+            fontFamily: "var(--font-lora), Georgia, serif",
+            animation: "ctaPulseGlow 5s ease-in-out infinite alternate"
+          }}
           suppressHydrationWarning
         >
           {/* Shimmer light sweep on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition-all duration-1000 ease-in-out group-hover:left-[100%] pointer-events-none" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-all duration-1000 ease-in-out group-hover:left-[100%] pointer-events-none" />
           <span className="relative z-10 w-full flex items-center justify-center gap-2.5 pl-[0.2em]">
             <span>Shop Collection</span>
-            <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-1.5 text-[#C5A880]">→</span>
+            <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-2 text-[#B8965C]">→</span>
           </span>
         </Link>
 
-        {/* 2. Search Button (Perfect Design System Match) */}
+        {/* 2. Search Button (Perfect Height & Design System Match) */}
         <form
           onSubmit={handleSearchSubmit}
           onMouseEnter={() => setIsExpanded(true)}
@@ -107,16 +110,16 @@ function HeroActions() {
             }
           }}
           onClick={() => setIsExpanded(true)}
-          className={`group relative flex items-center h-[54px] rounded-full border border-[#C5A880]/70 bg-gradient-to-r from-[#FAF6F0]/95 via-[#F3E8D8]/95 to-[#E2D2BC]/95 backdrop-blur-md shadow-[0_8px_28px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out overflow-hidden ${
+          className={`group relative flex items-center h-[56px] rounded-full border border-[#C5A880] bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md shadow-[0_8px_28px_rgba(49,49,52,0.08)] transition-all duration-500 ease-out overflow-hidden ${
             isExpanded || searchQuery 
-              ? "w-64 px-5.5 shadow-[0_14px_32px_rgba(197,168,128,0.4)] border-[#C5A880]" 
-              : "w-[54px] justify-center cursor-pointer hover:-translate-y-[4px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#C5A880]"
+              ? "w-64 px-5.5 shadow-[0_14px_32px_rgba(197,168,128,0.4)] border-[#B8965C]" 
+              : "w-[56px] justify-center cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C]"
           }`}
           suppressHydrationWarning
         >
           <button
             type="submit"
-            className="flex items-center justify-center w-5 h-5 text-[#313134] group-hover:scale-110 hover:text-[#C5A880] transition-all duration-400 outline-none border-none bg-transparent cursor-pointer shrink-0"
+            className="flex items-center justify-center w-5 h-5 text-[#313134] group-hover:scale-115 hover:text-[#B8965C] transition-all duration-400 outline-none border-none bg-transparent cursor-pointer shrink-0"
             aria-label="Search Fragrances"
           >
             <svg
@@ -155,7 +158,7 @@ function HeroActions() {
                 e.stopPropagation();
                 setSearchQuery("");
               }}
-              className="text-[#6e675d] hover:text-[#C5A880] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-3.5 transition-colors"
+              className="text-[#6e675d] hover:text-[#B8965C] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-3.5 transition-colors"
               aria-label="Clear search"
             >
               ✕
@@ -164,32 +167,32 @@ function HeroActions() {
         </form>
       </div>
 
-      {/* Secondary Actions: Prominent Larger Luxury Cards */}
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 mt-4" suppressHydrationWarning>
+      {/* Secondary Actions: Equalized Dimensions & Smooth Hover Lift */}
+      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4" suppressHydrationWarning>
         {/* Button 1: Find Your Fragrance */}
         <Link
           href="/scent-index"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/70 bg-gradient-to-r from-[#FAF6F0]/95 via-[#F3E8D8]/95 to-[#E2D2BC]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-400 ease-out hover:-translate-y-[4px] hover:shadow-[0_12px_32px_rgba(197,168,128,0.4)] hover:border-[#C5A880] overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
           {/* Subtle light sweep shimmer on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
           <span className="relative z-10">Find Your Fragrance</span>
-          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#C5A880]">→</span>
+          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#B8965C]">→</span>
         </Link>
 
         {/* Button 2: Compare Perfumes */}
         <Link
           href="/compare"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[240px] sm:min-w-[260px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/70 bg-gradient-to-r from-[#FAF6F0]/95 via-[#F3E8D8]/95 to-[#E2D2BC]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-400 ease-out hover:-translate-y-[4px] hover:shadow-[0_12px_32px_rgba(197,168,128,0.4)] hover:border-[#C5A880] overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
           {/* Subtle light sweep shimmer on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
           <span className="relative z-10">Compare Perfumes</span>
-          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#C5A880]">→</span>
+          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#B8965C]">→</span>
         </Link>
       </div>
     </div>
@@ -202,7 +205,7 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-20 pb-0 select-none" suppressHydrationWarning>
       
-      {/* Global CSS for Animations */}
+      {/* Global CSS for GPU Animations */}
       <style suppressHydrationWarning>{`
         @keyframes goldDustFloat {
           0% { transform: translateY(0px) translateX(0px); opacity: 0.15; }
@@ -214,6 +217,18 @@ export default function Hero() {
           15% { opacity: 0.14; }
           35% { transform: translateX(220%) rotate(25deg); opacity: 0; }
           100% { transform: translateX(220%) rotate(25deg); opacity: 0; }
+        }
+        @keyframes spotlightBreathe {
+          0%, 100% { opacity: 0.48; transform: scale(1); }
+          50% { opacity: 0.65; transform: scale(1.02); }
+        }
+        @keyframes bottlePerpetualFloat {
+          0%, 100% { transform: translateY(2vh) rotate(0deg); }
+          50% { transform: translateY(calc(2vh - 8px)) rotate(0.6deg); }
+        }
+        @keyframes ctaPulseGlow {
+          0%, 100% { box-shadow: 0 8px 28px rgba(49, 49, 52, 0.08), 0 0 0 0 rgba(197, 168, 128, 0); }
+          50% { box-shadow: 0 12px 32px rgba(197, 168, 128, 0.28), 0 0 18px 2px rgba(197, 168, 128, 0.35); }
         }
         @media (max-width: 768px) {
           .volumetric-ray {
@@ -239,32 +254,33 @@ export default function Hero() {
       {/* Floating Golden Dust Ambient Particles */}
       <HeroDustParticles />
 
-      {/* Background Volumetric Light Ray & Glow (Constrained to bottle height) */}
+      {/* Background Volumetric Light Ray & Glow (Constrained to bottle height with breathing animation) */}
       {lightStyle !== 'off' && (
         <div className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
           <div 
-            className="absolute inset-0 opacity-55 mix-blend-screen volumetric-ray"
+            className="absolute inset-0 mix-blend-screen volumetric-ray"
             style={{
+              animation: "spotlightBreathe 8s ease-in-out infinite alternate",
               background: lightStyle === 'sunbeams'
                 ? `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.44) 0deg, rgba(255, 250, 235, 0.24) 2deg, rgba(255, 250, 235, 0) 4deg,
-                    rgba(255, 250, 235, 0) 10deg, rgba(255, 250, 235, 0.24) 12.5deg, rgba(255, 250, 235, 0.32) 14deg, rgba(255, 250, 235, 0.24) 15.5deg, rgba(255, 250, 235, 0) 18deg,
-                    rgba(255, 250, 235, 0) 342deg, rgba(255, 250, 235, 0.24) 344.5deg, rgba(255, 250, 235, 0.32) 346deg, rgba(255, 250, 235, 0.24) 347.5deg, rgba(255, 250, 235, 0) 350deg,
-                    rgba(255, 250, 235, 0) 356deg, rgba(255, 250, 235, 0.24) 358deg, rgba(255, 250, 235, 0.44) 360deg
+                    rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.26) 2deg, rgba(255, 250, 235, 0) 4deg,
+                    rgba(255, 250, 235, 0) 10deg, rgba(255, 250, 235, 0.26) 12.5deg, rgba(255, 250, 235, 0.35) 14deg, rgba(255, 250, 235, 0.26) 15.5deg, rgba(255, 250, 235, 0) 18deg,
+                    rgba(255, 250, 235, 0) 342deg, rgba(255, 250, 235, 0.26) 344.5deg, rgba(255, 250, 235, 0.35) 346deg, rgba(255, 250, 235, 0.26) 347.5deg, rgba(255, 250, 235, 0) 350deg,
+                    rgba(255, 250, 235, 0) 356deg, rgba(255, 250, 235, 0.26) 358deg, rgba(255, 250, 235, 0.48) 360deg
                   )`
                 : `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.25) 12deg, rgba(255, 250, 235, 0) 25deg,
-                    rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.25) 348deg, rgba(255, 250, 235, 0.48) 360deg
+                    rgba(255, 250, 235, 0.52) 0deg, rgba(255, 250, 235, 0.28) 12deg, rgba(255, 250, 235, 0) 25deg,
+                    rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.28) 348deg, rgba(255, 250, 235, 0.52) 360deg
                   )`,
-              WebkitMaskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)",
-              maskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)"
+              WebkitMaskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.75) 35%, transparent 60%)",
+              maskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.75) 35%, transparent 60%)"
             }}
           />
           {/* Soft ambient source glow */}
           <div 
-            className="absolute top-[-5vh] left-[68%] -translate-x-1/2 w-[40%] aspect-square rounded-full opacity-55 mix-blend-screen"
+            className="absolute top-[-5vh] left-[68%] -translate-x-1/2 w-[40%] aspect-square rounded-full opacity-60 mix-blend-screen"
             style={{
-              background: "radial-gradient(circle at 50% 0%, rgba(255, 250, 235, 0.45) 0%, rgba(255, 250, 235, 0) 70%)",
+              background: "radial-gradient(circle at 50% 0%, rgba(255, 250, 235, 0.50) 0%, rgba(255, 250, 235, 0) 70%)",
               filter: "blur(35px)",
             }}
           />
@@ -285,7 +301,7 @@ export default function Hero() {
           <div 
             className="absolute inset-0 mix-blend-screen volumetric-ray"
             style={{
-              opacity: 0.48,
+              animation: "spotlightBreathe 8s ease-in-out infinite alternate",
               background: lightStyle === 'sunbeams'
                 ? `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
                     rgba(255, 250, 235, 0.44) 0deg, rgba(255, 250, 235, 0.24) 2deg, rgba(255, 250, 235, 0) 4deg,
@@ -304,48 +320,63 @@ export default function Hero() {
         </div>
       )}
       
-      {/* Soft vignette overlay */}
+      {/* Soft vignette overlay for 10-15% contrast boost */}
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(circle, transparent 65%, rgba(47, 9, 9, 0.05) 100%)",
+          background: "radial-gradient(circle, transparent 60%, rgba(35, 15, 10, 0.08) 100%)",
           zIndex: 1
         }}
       />
 
-      {/* Enhanced cinematic radial warm glow behind bottle */}
+      {/* Ambient Depth Shadow behind bottle separating it from MURAKKAZ typography */}
       <div 
-        className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] h-[640px] rounded-full pointer-events-none"
+        className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[520px] rounded-full pointer-events-none opacity-30 z-0"
         style={{
-          background: "radial-gradient(circle, rgba(255, 248, 235, 0.42) 0%, rgba(197, 168, 128, 0.16) 50%, transparent 100%)",
-          filter: "blur(48px)",
-          zIndex: 0
+          background: "radial-gradient(ellipse at 50% 50%, rgba(30, 20, 15, 0.45) 0%, rgba(40, 25, 15, 0.15) 50%, transparent 80%)",
+          filter: "blur(42px)",
+        }}
+      />
+
+      {/* Warm Golden Halo Rim Highlight around the Bottle */}
+      <div 
+        className="absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[540px] rounded-full pointer-events-none mix-blend-screen z-0"
+        style={{
+          background: "radial-gradient(circle, rgba(248, 222, 172, 0.35) 0%, rgba(212, 175, 55, 0.14) 45%, transparent 75%)",
+          filter: "blur(38px)",
+          animation: "spotlightBreathe 7s ease-in-out infinite alternate"
         }}
       />
 
       {/* Grounding Contact Shadow positioned directly under bottle base */}
       <div 
-        className="absolute top-[67%] sm:top-[68%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[40px] rounded-full pointer-events-none"
+        className="absolute top-[67%] sm:top-[68%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[36px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 50% 50%, rgba(30, 20, 15, 0.26) 0%, rgba(30, 20, 15, 0.06) 50%, transparent 80%)",
-          filter: "blur(10px)",
+          background: "radial-gradient(ellipse at 50% 50%, rgba(25, 15, 10, 0.35) 0%, rgba(30, 20, 15, 0.10) 50%, transparent 85%)",
+          filter: "blur(8px)",
           zIndex: 5
         }}
       />
       
-      {/* 1. Background Layers: Giant Watermark Typography */}
+      {/* 1. Background Layers: Giant Watermark Engraved Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
         <div className="absolute w-full text-center z-0 select-none opacity-100 -translate-y-[6vh]" suppressHydrationWarning>
           <div className="inline-block text-center relative">
             <h1 
-              className="font-serif-title font-normal tracking-[0.04em] uppercase text-[#BB9E78] text-[12vw] leading-none select-none text-center" 
+              className="font-serif-title font-normal tracking-[0.04em] uppercase text-[12vw] leading-none select-none text-center" 
               suppressHydrationWarning
-              style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+              style={{ 
+                fontFamily: "var(--font-playfair), Georgia, serif",
+                background: "linear-gradient(180deg, #D4B890 0%, #BA9C72 45%, #9E8158 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                filter: "drop-shadow(0px 1.5px 2px rgba(255, 252, 242, 0.55)) drop-shadow(0px -1px 2px rgba(40, 25, 12, 0.30))"
+              }}
             >
               MURAKKAZ
             </h1>
 
-            {/* Subtext: Refined luxury typography, line height & width */}
+            {/* Subtext: Refined luxury typography */}
             <p 
               className="hidden md:block absolute left-[4.5%] top-[100%] mt-7 font-serif-text text-[#3a3530] text-[14px] md:text-[14.5px] max-w-[340px] leading-[1.9] tracking-[0.04em] text-left pointer-events-auto z-30 font-normal"
               style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
@@ -357,10 +388,14 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 2. Middle Layer: Floating Transparent WebM Video (Plays 1 full rotation cycle & stops) */}
+      {/* 2. Middle Layer: Floating Transparent WebM Video with Perpetual Gentle Float */}
       <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-4 pb-0" suppressHydrationWarning>
         <div 
           className="relative h-[58vh] sm:h-[70vh] md:h-[80vh] max-h-[calc(100vh-270px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh]"
+          style={{
+            animation: "bottlePerpetualFloat 7s ease-in-out infinite alternate",
+            willChange: "transform"
+          }}
           suppressHydrationWarning
         >
           <video
