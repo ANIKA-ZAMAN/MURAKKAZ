@@ -82,6 +82,116 @@ const reviewsData: Review[] = [
     projection: "Moderate Sillage",
     compliments: "★ 9.6/10 Compliments",
   },
+  {
+    perfume: "Saffron Leather",
+    inspired: "Inspired by Memo Paris African Leather",
+    stars: 5,
+    quote: "Rich spicy saffron with supple leather notes. It gives an undeniable aura of confidence and sophistication. Easily a signature winter scent.",
+    name: "Zaynab M.",
+    verified: "Verified Collector",
+    longevity: "13+ Hours",
+    projection: "Strong Sillage",
+    compliments: "★ 9.8/10 Compliments",
+  },
+  {
+    perfume: "Imperial Rose 04",
+    inspired: "Inspired by Parfums de Marly Delina",
+    stars: 5,
+    quote: "Sensual Turkish rose and lychee with a creamy cashmere finish. I receive compliments every single time I step out wearing this.",
+    name: "Ayesha N.",
+    verified: "Verified Collector",
+    longevity: "14+ Hours",
+    projection: "Radiant Aura",
+    compliments: "★ 9.9/10 Compliments",
+  },
+  {
+    perfume: "Smoky Iris Noir",
+    inspired: "Inspired by Dior Bois d'Argent",
+    stars: 5,
+    quote: "A silky, powdery iris with warm myrrh and honey nuances. It is regal, subtle, and incredibly long-lasting on skin and clothing.",
+    name: "Tariq H.",
+    verified: "Verified Collector",
+    longevity: "12+ Hours",
+    projection: "Intimate Elegance",
+    compliments: "★ 9.7/10 Compliments",
+  },
+  {
+    perfume: "Citrus Vetiver",
+    inspired: "Inspired by Tom Ford Grey Vetiver",
+    stars: 5,
+    quote: "The ultimate clean gentleman scent. Crisp orange blossom and refined earthy vetiver that feels sharp, professional, and luxurious.",
+    name: "Rafiq M.",
+    verified: "Verified Collector",
+    longevity: "10+ Hours",
+    projection: "Clean Projection",
+    compliments: "★ 9.6/10 Compliments",
+  },
+  {
+    perfume: "Vanilla Bourbon",
+    inspired: "Inspired by Nishane Ani",
+    stars: 5,
+    quote: "Complex spicy bergamot giving way to a rich, warm Madagascar vanilla. Highly addictive projection that lasts all day and evening.",
+    name: "Samin K.",
+    verified: "Verified Collector",
+    longevity: "15+ Hours",
+    projection: "Enveloping Trail",
+    compliments: "★ 9.9/10 Compliments",
+  },
+  {
+    perfume: "Oceanic Drift",
+    inspired: "Inspired by Acqua di Parma Fico di Amalfi",
+    stars: 5,
+    quote: "Bright Mediterranean fig and sea breeze notes. It instantly transports you to a luxury coastal resort. Refreshing and deeply elegant.",
+    name: "Laila T.",
+    verified: "Verified Collector",
+    longevity: "9+ Hours",
+    projection: "Breezy Aura",
+    compliments: "★ 9.5/10 Compliments",
+  },
+  {
+    perfume: "Cardamom Musk",
+    inspired: "Inspired by Byredo Gypsy Water",
+    stars: 5,
+    quote: "Soft pine needles, warm amber, and fresh juniper berries. It creates a subtle, magnetic aura that feels intimate and personal.",
+    name: "Imran U.",
+    verified: "Verified Collector",
+    longevity: "10+ Hours",
+    projection: "Soft Projection",
+    compliments: "★ 9.6/10 Compliments",
+  },
+  {
+    perfume: "Golden Vanilla Oud",
+    inspired: "Inspired by Roja Parfums Amber Aoud",
+    stars: 5,
+    quote: "Unbelievably opulent. Rich agarwood resin kissed by sweet vanilla and royal rose. This is pure luxury in a bottle.",
+    name: "Sabrina P.",
+    verified: "Verified Collector",
+    longevity: "18+ Hours",
+    projection: "Extrait Power",
+    compliments: "★ 10/10 Compliments",
+  },
+  {
+    perfume: "Celestial Bloom",
+    inspired: "Inspired by Baccarat Rouge 540 Extrait",
+    stars: 5,
+    quote: "Saffron, bitter almond, and warm cedarwood. The airy sillage leaves a mesmerizing scent trail that lingers wherever you go.",
+    name: "Kazi F.",
+    verified: "Verified Collector",
+    longevity: "16+ Hours",
+    projection: "Hypnotic Trail",
+    compliments: "★ 9.9/10 Compliments",
+  },
+  {
+    perfume: "Wild Tobacco 12",
+    inspired: "Inspired by Tom Ford Tobacco Vanille",
+    stars: 5,
+    quote: "Rich aromatic tobacco leaf, sweet tonka bean, and warm spices. Perfectly balanced for cool evenings and formal occasions.",
+    name: "Arman S.",
+    verified: "Verified Collector",
+    longevity: "14+ Hours",
+    projection: "Bold Projection",
+    compliments: "★ 9.8/10 Compliments",
+  },
 ];
 
 export default function CustomerReviews() {
@@ -91,12 +201,12 @@ export default function CustomerReviews() {
   const touchEndX = useRef<number | null>(null);
   const total = reviewsData.length;
 
-  // Auto-play interval (4.5s)
+  // Continuous Auto-play interval (4s)
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % total);
-    }, 4500);
+    }, 4000);
     return () => clearInterval(timer);
   }, [isPaused, total]);
 
@@ -130,26 +240,18 @@ export default function CustomerReviews() {
     touchEndX.current = null;
   };
 
-  // 3D Offset calculation for stacked carousel cards
+  // Continuous 3D conveyor positioning logic
   const getCardPositionStyle = (idx: number) => {
     let offset = idx - current;
     if (offset < -Math.floor(total / 2)) offset += total;
     if (offset > Math.floor(total / 2)) offset -= total;
 
     if (offset === 0) {
-      // Center Active Card
+      // Active Center Card (comes from next card smoothly)
       return {
         transform: "translateX(0%) scale(1) translateZ(0px)",
         opacity: 1,
         zIndex: 10,
-        pointerEvents: "auto" as const,
-      };
-    } else if (offset === -1) {
-      // Left Peek Card (25-35% visible on left)
-      return {
-        transform: "translateX(-58%) scale(0.88) translateZ(-40px)",
-        opacity: 0.55,
-        zIndex: 5,
         pointerEvents: "auto" as const,
       };
     } else if (offset === 1) {
@@ -160,11 +262,35 @@ export default function CustomerReviews() {
         zIndex: 5,
         pointerEvents: "auto" as const,
       };
+    } else if (offset === -1) {
+      // Left Peek Card (25-35% visible on left)
+      return {
+        transform: "translateX(-58%) scale(0.88) translateZ(-40px)",
+        opacity: 0.55,
+        zIndex: 5,
+        pointerEvents: "auto" as const,
+      };
+    } else if (offset === 2) {
+      // Incoming Right Queue Card
+      return {
+        transform: "translateX(110%) scale(0.76) translateZ(-80px)",
+        opacity: 0,
+        zIndex: 2,
+        pointerEvents: "none" as const,
+      };
+    } else if (offset === -2) {
+      // Outgoing Left Queue Card
+      return {
+        transform: "translateX(-110%) scale(0.76) translateZ(-80px)",
+        opacity: 0,
+        zIndex: 2,
+        pointerEvents: "none" as const,
+      };
     } else {
-      // Off-screen hidden cards
+      // Hidden cards far off-screen
       const direction = offset > 0 ? 1 : -1;
       return {
-        transform: `translateX(${direction * 115}%) scale(0.75) translateZ(-100px)`,
+        transform: `translateX(${direction * 150}%) scale(0.70) translateZ(-120px)`,
         opacity: 0,
         zIndex: 1,
         pointerEvents: "none" as const,
@@ -187,7 +313,7 @@ export default function CustomerReviews() {
           <p className={styles.sectionSubtitle}>Words from our fragrance collectors</p>
         </div>
 
-        {/* Stacked 3D Carousel Stage */}
+        {/* Stacked 3D Continuous Conveyor Stage */}
         <div
           className={styles.carouselStage}
           onMouseEnter={() => setIsPaused(true)}
