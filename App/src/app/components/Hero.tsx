@@ -239,9 +239,9 @@ export default function Hero() {
       {/* Floating Golden Dust Ambient Particles */}
       <HeroDustParticles />
 
-      {/* Background Volumetric Light Ray & Glow */}
+      {/* Background Volumetric Light Ray & Glow (Constrained to bottle height) */}
       {lightStyle !== 'off' && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
+        <div className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
           <div 
             className="absolute inset-0 opacity-55 mix-blend-screen volumetric-ray"
             style={{
@@ -256,8 +256,8 @@ export default function Hero() {
                     rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.25) 12deg, rgba(255, 250, 235, 0) 25deg,
                     rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.25) 348deg, rgba(255, 250, 235, 0.48) 360deg
                   )`,
-              WebkitMaskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)",
-              maskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)"
+              WebkitMaskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)",
+              maskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)"
             }}
           />
           {/* Soft ambient source glow */}
@@ -271,10 +271,10 @@ export default function Hero() {
         </div>
       )}
 
-      {/* Foreground Volumetric Light Ray Overlay */}
+      {/* Foreground Volumetric Light Ray Overlay (Terminates at bottle base) */}
       {lightStyle !== 'off' && (
         <div 
-          className="fixed inset-0 pointer-events-none overflow-hidden" 
+          className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" 
           style={{ 
             zIndex: 15, 
             transform: "translateZ(0)",
@@ -297,8 +297,8 @@ export default function Hero() {
                     rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.25) 12deg, rgba(255, 250, 235, 0) 25deg,
                     rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.25) 348deg, rgba(255, 250, 235, 0.48) 360deg
                   )`,
-              WebkitMaskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)",
-              maskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)"
+              WebkitMaskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)",
+              maskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)"
             }}
           />
         </div>
