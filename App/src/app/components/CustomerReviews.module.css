@@ -332,7 +332,7 @@
 }
 
 .navButton:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(0) scale(0.93);
 }
 
 /* ── Responsive Mobile Geometry ── */

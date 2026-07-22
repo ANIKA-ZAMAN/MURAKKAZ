@@ -225,6 +225,10 @@
   box-shadow: 0 4px 12px rgba(130, 0, 17, 0.15);
 }
 
+.compareBtn:active {
+  transform: scale(0.96);
+}
+
 .readMoreBtn {
   background: transparent;
   border: 1px solid #313134;
@@ -236,6 +240,10 @@
   border-color: #313134;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
+}
+
+.readMoreBtn:active {
+  transform: scale(0.96);
 }
 
 /* ── Toast ── */

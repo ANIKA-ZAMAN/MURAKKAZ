@@ -38,7 +38,7 @@ export default function BestSellersSection() {
         <div className={styles.centerActions}>
           <Link
             href="/shop"
-            className="group relative inline-flex items-center justify-center min-w-[240px] sm:min-w-[265px] px-10 h-[54px] rounded-full border border-[#C5A880]/70 bg-gradient-to-r from-[#FAF6F0] via-[#F3E8D8] to-[#E2D2BC] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[4px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#C5A880] overflow-hidden select-none shrink-0 text-center"
+            className="group relative inline-flex items-center justify-center min-w-[240px] sm:min-w-[265px] px-10 h-[54px] rounded-full border border-[#C5A880]/70 bg-gradient-to-r from-[#FAF6F0] via-[#F3E8D8] to-[#E2D2BC] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[4px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#C5A880] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
             style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             suppressHydrationWarning
           >

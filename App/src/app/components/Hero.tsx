@@ -85,7 +85,7 @@ function HeroActions() {
         {/* 1. Primary Luxury CTA Button with Sliding Arrow & Subtle Pulse Glow */}
         <Link
           href="/shop"
-          className="group relative inline-flex items-center justify-center min-w-[250px] sm:min-w-[270px] px-10 h-[56px] rounded-full border border-[#C5A880] bg-gradient-to-r from-[#FDFBF7] via-[#F6EEDF] to-[#E9D9C3] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.08)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C] overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center min-w-[250px] sm:min-w-[270px] px-10 h-[56px] rounded-full border border-[#C5A880] bg-gradient-to-r from-[#FDFBF7] via-[#F6EEDF] to-[#E9D9C3] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.08)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ 
             fontFamily: "var(--font-lora), Georgia, serif",
             animation: "ctaPulseGlow 5s ease-in-out infinite alternate"
@@ -113,7 +113,7 @@ function HeroActions() {
           className={`group relative flex items-center h-[56px] rounded-full border border-[#C5A880] bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md shadow-[0_8px_28px_rgba(49,49,52,0.08)] transition-all duration-500 ease-out overflow-hidden ${
             isExpanded || searchQuery 
               ? "w-64 px-5.5 shadow-[0_14px_32px_rgba(197,168,128,0.4)] border-[#B8965C]" 
-              : "w-[56px] justify-center cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C]"
+              : "w-[56px] justify-center cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0"
           }`}
           suppressHydrationWarning
         >
@@ -172,7 +172,7 @@ function HeroActions() {
         {/* Button 1: Find Your Fragrance */}
         <Link
           href="/scent-index"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
@@ -185,7 +185,7 @@ function HeroActions() {
         {/* Button 2: Compare Perfumes */}
         <Link
           href="/compare"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >

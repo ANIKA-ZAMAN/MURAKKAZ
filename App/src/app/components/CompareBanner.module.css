@@ -166,6 +166,10 @@
   border-color: rgba(165, 130, 85, 0.75);
 }
 
+.ctaButton:active {
+  transform: translateY(0) scale(0.97);
+}
+
 /* Shimmer light sweep on hover */
 .buttonShimmer {
   position: absolute;

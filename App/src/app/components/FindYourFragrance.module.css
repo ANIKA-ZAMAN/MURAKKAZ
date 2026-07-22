@@ -237,8 +237,12 @@
 
 .ctaButton:hover {
   background: linear-gradient(135deg, #4a443c 0%, #3a352e 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(42, 37, 32, 0.18);
+  transform: translateY(-3px) scale(1.015);
+  box-shadow: 0 12px 28px rgba(42, 37, 32, 0.25), 0 0 16px rgba(197, 168, 128, 0.2);
+}
+
+.ctaButton:active {
+  transform: translateY(0) scale(0.97);
 }
 
 .ctaText {

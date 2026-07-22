@@ -329,6 +329,10 @@
   box-shadow: 0 8px 24px rgba(49, 49, 52, 0.1);
 }
 
+.primaryButton:active {
+  transform: translateY(0) scale(0.97);
+}
+
 .secondaryButton {
   display: inline-flex;
   align-items: center;
@@ -353,6 +357,10 @@
   color: #F5F1E8;
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(49, 49, 52, 0.1);
+}
+
+.secondaryButton:active {
+  transform: translateY(0) scale(0.97);
 }
 
 /* ── Best Sellers ── */
