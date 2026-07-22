@@ -24,13 +24,6 @@ export default function FindYourFragrance() {
             />
           </div>
 
-          {/* Decorative top flourish */}
-          <div className={styles.flourishLine}>
-            <span className={styles.flourishDash} />
-            <span className={styles.flourishDiamond}>◆</span>
-            <span className={styles.flourishDash} />
-          </div>
-
           {/* Section label */}
           <span className={styles.sectionLabel}>SIGNATURE FINDER</span>
 
@@ -78,13 +71,6 @@ export default function FindYourFragrance() {
             <span className={styles.ctaText}>Begin Consultation</span>
             <span className={styles.ctaArrow}>→</span>
           </Link>
-
-          {/* Bottom flourish */}
-          <div className={styles.bottomFlourish}>
-            <span className={styles.flourishDash} />
-            <span className={styles.flourishDiamond}>◆</span>
-            <span className={styles.flourishDash} />
-          </div>
         </div>
       </div>
     </section>
