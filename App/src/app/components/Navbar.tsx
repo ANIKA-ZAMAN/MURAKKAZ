@@ -34,6 +34,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,10 +81,16 @@ export default function Navbar() {
     updateCount();
     updateUserPhoto();
 
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
     window.addEventListener("cart-updated", updateCount);
     window.addEventListener("murakkaz-user-updated", updateUserPhoto);
     
     return () => {
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("cart-updated", updateCount);
       window.removeEventListener("murakkaz-user-updated", updateUserPhoto);
     };
@@ -95,16 +102,23 @@ export default function Navbar() {
   const isAccountActive = pathname === "/account" || pathname.startsWith("/account/");
 
   if (isHome) {
-    // 1. Homepage Navbar: Completely transparent floating overlay over the Hero section.
+    // 1. Homepage Navbar: Floating overlay with soft blur & shadow on scroll
     return (
-      <header className="absolute top-0 left-0 right-0 w-full px-8 py-5 flex justify-center items-center z-50 bg-transparent pointer-events-auto" suppressHydrationWarning>
-        <nav className="relative w-full max-w-[1400px] h-20 overflow-hidden select-none flex items-center justify-between px-6 bg-transparent" suppressHydrationWarning>
+      <header 
+        className={`fixed top-0 left-0 right-0 w-full px-8 transition-all duration-500 ease-out flex justify-center items-center z-50 pointer-events-auto ${
+          isScrolled 
+            ? "py-3 bg-[#FAF6F0]/85 backdrop-blur-md shadow-[0_4px_20px_rgba(49,49,52,0.04)]" 
+            : "py-5 bg-transparent"
+        }`} 
+        suppressHydrationWarning
+      >
+        <nav className="relative w-full max-w-[1400px] h-16 sm:h-20 overflow-hidden select-none flex items-center justify-between px-6 bg-transparent" suppressHydrationWarning>
           
           {/* Logo */}
           <Link 
             href="/" 
             suppressHydrationWarning
-            className="hover:opacity-75 transition-opacity z-10 mr-8 flex items-center ml-3"
+            className="hover:opacity-80 transition-opacity duration-300 z-10 mr-8 flex items-center ml-3"
           >
             <Image
               src="/images/logo-murakkaz.svg"
@@ -118,7 +132,7 @@ export default function Navbar() {
           </Link>
 
           {/* Links */}
-          <ul className="hidden lg:flex items-center gap-10 xl:gap-12 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
+          <ul className="hidden lg:flex items-center gap-11 xl:gap-14 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
             {homeNavLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -126,10 +140,10 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     suppressHydrationWarning
-                    className={`relative font-serif-text text-[13.5px] font-medium tracking-[0.15em] uppercase transition-colors duration-300 py-1 after:block after:absolute after:bottom-[-2px] after:left-0 after:h-[1.5px] after:bg-[#820011] after:transition-all after:duration-300 ease-out ${
+                    className={`relative font-serif-text text-[13.5px] font-medium tracking-[0.16em] uppercase transition-colors duration-400 ease-out py-1.5 after:block after:absolute after:bottom-[-2px] after:left-1/2 after:-translate-x-1/2 after:h-[1.5px] after:transition-all after:duration-500 ease-out ${
                       isActive 
-                        ? "text-[#820011] after:w-full" 
-                        : "text-[#313134] hover:text-[#820011] after:w-0 hover:after:w-full"
+                        ? "text-[#820011] after:w-full after:bg-[#820011]" 
+                        : "text-[#313134] hover:text-[#C5A880] after:w-0 hover:after:w-full after:bg-[#C5A880]"
                     }`}
                   >
                     {link.label}

@@ -29,14 +29,13 @@ function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; 
           setHasAnimated(true);
           const start = startVal;
           const end = number;
-          const duration = 1600; // Calm, readable 1.6s duration
+          const duration = 1600;
           const startTime = performance.now();
 
           const animate = (currentTime: number) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Smooth ease out cubic
             const easeProgress = 1 - Math.pow(1 - progress, 3);
             const currentVal = start + easeProgress * (end - start);
             
@@ -70,7 +69,7 @@ function CountUpNumber({ number, suffix = "", decimals = 0 }: { number: number; 
         maximumFractionDigits: decimals,
       })}
       {suffix === "★" ? (
-        <span style={{ color: "#c5a880", marginLeft: "2px" }}>★</span>
+        <span style={{ color: "#c5a880", marginLeft: "3px" }}>★</span>
       ) : (
         suffix
       )}
@@ -87,21 +86,29 @@ export default function PremiumStats() {
   ];
 
   return (
-    <section className={styles.statsSection} suppressHydrationWarning>
-      <div className={styles.statsContainer}>
-        {stats.map((stat, idx) => (
-          <div 
-            key={idx} 
-            className={styles.statItem} 
-            style={{ animationDelay: `${idx * 100}ms` }}
-          >
+    <aside className={styles.bookmarkWrapper} aria-label="Key Brand Statistics" suppressHydrationWarning>
+      {stats.map((stat, idx) => (
+        <div 
+          key={idx} 
+          className={styles.bookmarkCard} 
+          style={{ animationDelay: `${200 + idx * 200}ms` }}
+        >
+          {/* Gold Ribbon Stitch Line on left */}
+          <div className={styles.ribbonStitch} />
+          
+          <div className={styles.bookmarkContent}>
             <div className={styles.statNumber}>
               <CountUpNumber number={stat.number} suffix={stat.suffix} decimals={stat.decimals} />
             </div>
-            <div className={styles.statLabel}>{stat.label}</div>
+            <div className={styles.statLabel}>
+              <span>{stat.label}</span>
+              <span className={styles.goldDot} />
+            </div>
           </div>
-        ))}
-      </div>
-    </section>
+        </div>
+      ))}
+    </aside>
   );
 }
+
+
