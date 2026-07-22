@@ -145,14 +145,17 @@ export default function ProductCard({
 
       {/* Card Content */}
       <div className={styles.content}>
-        {/* Name + Heart Row */}
+        {/* Row 1: Name + Heart Row */}
         <div className={styles.nameRow}>
           <h3 className={styles.name}>
             {displayName}
           </h3>
           <button
             className={`${styles.wishlistBtn} ${isWishlisted ? styles.active : ""}`}
-            onClick={() => setIsWishlisted(!isWishlisted)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsWishlisted(!isWishlisted);
+            }}
             aria-label="Add to wishlist"
           >
             <svg
@@ -166,24 +169,40 @@ export default function ProductCard({
           </button>
         </div>
 
-        {/* Inspired + Price Row */}
-        <div className={styles.inspiredRow}>
-          <span className={styles.inspiredText}>{inspiredBy}</span>
-          <span className={styles.priceText}>{price}</span>
-        </div>
-
-        {/* Rating Group */}
-        <div className={styles.ratingRow}>
+        {/* Row 2: Brand + Rating Row */}
+        <div className={styles.brandRatingRow}>
+          <span className={styles.brandText}>Brand: {brand}</span>
           <div className={styles.ratingGroup}>
             <span className={styles.star}>★</span>
             <span className={styles.ratingText}>{rating.toFixed(1)} ({reviews})</span>
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Row 3: Description */}
+        <p className={styles.description}>
+          {description}
+        </p>
+
+        {/* Row 4: Action Buttons */}
         <div className={styles.actions}>
-          <button className={styles.compareBtn} onClick={handleBuyNow}>Buy Now</button>
-          <button className={styles.readMoreBtn} onClick={handleAddToCart}>Add to Bag</button>
+          <button 
+            className={styles.compareBtn} 
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/compare?p1=${id}`);
+            }}
+          >
+            Compare
+          </button>
+          <button 
+            className={styles.readMoreBtn} 
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/product/${id}`);
+            }}
+          >
+            Read more
+          </button>
         </div>
       </div>
 
