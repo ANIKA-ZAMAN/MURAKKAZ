@@ -35,7 +35,7 @@ export default function FeaturedCollections() {
       <div className={styles.container}>
         <div className={styles.sectionHeader} style={{ marginBottom: "2rem" }}>
           <h2 className={styles.sectionTitle}>
-            Our <span style={{ color: "#c5a880" }}>Featured Collection</span>
+            Our <span style={{ color: "#8A6632", fontStyle: "normal" }}>Featured Collection</span>
           </h2>
           <p className={styles.sectionSubtitle}>Handpicked fragrances loved by our customers.</p>
         </div>

@@ -23,8 +23,8 @@
 .sectionTitle {
   font-family: var(--font-serif-title), Georgia, serif;
   font-size: clamp(2rem, 3.5vw, 2.75rem);
-  color: var(--foreground);
-  font-weight: 400;
+  color: #1f1c18;
+  font-weight: 500;
   line-height: 1.2;
   margin-bottom: 0.75rem;
   letter-spacing: -0.015em;
@@ -32,8 +32,8 @@
 
 .sectionSubtitle {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: clamp(0.85rem, 1.5vw, 1rem);
-  color: #767677;
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  color: #3d372e;
   font-weight: 400;
   font-style: italic;
   letter-spacing: 0.02em;
