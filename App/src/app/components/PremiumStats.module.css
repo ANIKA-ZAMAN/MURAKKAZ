@@ -21,17 +21,17 @@
   min-height: 40px;
   padding: 5px 16px 5px 22px;
   
-  /* Soft Warm Ivory Parchment Finish */
-  background: linear-gradient(135deg, rgba(253, 248, 240, 0.88) 0%, rgba(244, 235, 222, 0.82) 100%);
+  /* Subtle Warm Ivory Parchment Finish */
+  background: linear-gradient(135deg, rgba(251, 246, 238, 0.78) 0%, rgba(242, 234, 222, 0.70) 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   
-  /* Distinct Darker Champagne Gold Border & 18px Rounded Corners */
-  border: 1px solid rgba(160, 125, 80, 0.65);
+  /* Subtle Champagne Gold Border & 18px Rounded Corners */
+  border: 1px solid rgba(160, 125, 80, 0.42);
   border-radius: 18px;
   
-  /* Soft Definition Layered Shadow */
-  box-shadow: 0 4px 18px -2px rgba(49, 49, 52, 0.07), 0 2px 8px rgba(160, 125, 80, 0.12);
+  /* Soft Layered Shadow */
+  box-shadow: 0 4px 16px -2px rgba(49, 49, 52, 0.05), 0 2px 6px rgba(160, 125, 80, 0.08);
   
   /* Staggered entrance animation */
   opacity: 0;
@@ -43,9 +43,9 @@
 
 .bookmarkCard:hover {
   transform: translateY(-3px);
-  border-color: rgba(160, 125, 80, 0.95);
-  background: linear-gradient(135deg, rgba(255, 252, 246, 0.96) 0%, rgba(248, 240, 228, 0.92) 100%);
-  box-shadow: 0 10px 28px -4px rgba(49, 49, 52, 0.10), 0 4px 16px rgba(160, 125, 80, 0.22);
+  border-color: rgba(160, 125, 80, 0.75);
+  background: linear-gradient(135deg, rgba(253, 248, 240, 0.88) 0%, rgba(244, 236, 224, 0.82) 100%);
+  box-shadow: 0 8px 24px -4px rgba(49, 49, 52, 0.07), 0 3px 12px rgba(160, 125, 80, 0.16);
 }
 
 
@@ -61,17 +61,17 @@
   }
 }
 
-/* Distinct Darker Champagne Accent Stitch Line on Left */
+/* Subtle Champagne Accent Stitch Line on Left */
 .ribbonStitch {
   position: absolute;
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  height: 52%;
-  width: 2px;
-  background: linear-gradient(180deg, #B59567 0%, #8C6F45 100%);
+  height: 50%;
+  width: 1.8px;
+  background: linear-gradient(180deg, rgba(181, 149, 103, 0.75) 0%, rgba(140, 111, 69, 0.60) 100%);
   border-radius: 3px;
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 /* Internal typography alignment inside the card */
@@ -90,7 +90,7 @@
   font-family: var(--font-serif-title), Georgia, serif;
   font-size: 16.5px;
   font-weight: 500;
-  color: #36322b;
+  color: #443e35;
   line-height: 1.1;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -102,7 +102,7 @@
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #615a4f;
+  color: #736b5d;
   line-height: 1.1;
   white-space: nowrap;
   display: inline-flex;
@@ -110,14 +110,14 @@
   gap: 6px;
 }
 
-/* Crisp Darker Golden Dot Inline Right After Text */
+/* Subtle Golden Dot Inline Right After Text */
 .goldDot {
   display: inline-block;
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: #A07D50;
-  opacity: 0.85;
+  background-color: #B59567;
+  opacity: 0.65;
   flex-shrink: 0;
 }
 
