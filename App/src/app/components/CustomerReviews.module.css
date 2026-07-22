@@ -112,11 +112,11 @@
   /* Deep physical shadow for center active card */
   box-shadow: 0 16px 45px -8px rgba(80, 60, 30, 0.14), 0 4px 14px rgba(120, 95, 60, 0.06);
 
-  /* Smooth spring physics transition (500ms cubic-bezier) */
-  transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 550ms cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 550ms cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 550ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* Smooth spring physics transition (800ms cubic-bezier) */
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 800ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 800ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, opacity;
   user-select: none;
   display: flex;
@@ -126,7 +126,7 @@
 
 /* Active Card Hover Micro-interaction */
 .activeCard:hover {
-  transform: translateX(0) translateY(-6px) scale(1.015) !important;
+  transform: translateX(0) translateY(-5px) scale(1.015) !important;
   box-shadow: 0 22px 55px -10px rgba(80, 60, 30, 0.20), 0 6px 20px rgba(160, 125, 80, 0.12) !important;
   border-color: rgba(197, 168, 128, 0.65) !important;
 }

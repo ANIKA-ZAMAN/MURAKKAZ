@@ -14,7 +14,7 @@ export default function FindYourFragrance() {
       <div className={styles.cardWrapper}>
         <div className={styles.invitationCard}>
           {/* Murakkaz Logo */}
-          <div className={styles.logoWrapper}>
+          <div className={`${styles.logoWrapper} ${styles.slideLeft}`}>
             <Image
               src="/images/logo-murakkaz.svg"
               alt="Murakkaz"
@@ -25,20 +25,20 @@ export default function FindYourFragrance() {
           </div>
 
           {/* Section label */}
-          <span className={styles.sectionLabel}>SIGNATURE FINDER</span>
+          <span className={`${styles.sectionLabel} ${styles.slideLeft}`}>SIGNATURE FINDER</span>
 
           {/* Heading */}
-          <h2 className={styles.heading}>Find Your Perfect Match</h2>
+          <h2 className={`${styles.heading} ${styles.slideLeft}`}>Find Your Perfect Match</h2>
 
           {/* Description */}
-          <p className={styles.description}>
+          <p className={`${styles.description} ${styles.slideRight}`}>
             Allow our created consultation to guide you through a refined selection 
             of fragrances, thoughtfully matched to your lifestyle, memories, and 
             personal aesthetic.
           </p>
 
           {/* Metadata row */}
-          <div className={styles.metaRow}>
+          <div className={`${styles.metaRow} ${styles.slideRight}`}>
             <span className={styles.metaItem}>
               <svg className={styles.metaIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="9" />
@@ -67,7 +67,7 @@ export default function FindYourFragrance() {
           </div>
 
           {/* CTA button */}
-          <Link href="/scent-index" className={styles.ctaButton} suppressHydrationWarning>
+          <Link href="/scent-index" className={`${styles.ctaButton} ${styles.fadeInLast}`} suppressHydrationWarning>
             <span className={styles.ctaText}>Begin Consultation</span>
             <span className={styles.ctaArrow}>→</span>
           </Link>

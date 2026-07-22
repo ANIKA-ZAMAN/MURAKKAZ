@@ -333,3 +333,41 @@
     display: none;
   }
 }
+
+/* ── Split Reveal Animations ── */
+:global(.reveal) .slideLeft {
+  opacity: 0;
+  transform: translateX(-35px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .slideLeft {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+:global(.reveal) .slideRight {
+  opacity: 0;
+  transform: translateX(35px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .slideRight {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+:global(.reveal) .fadeInLast {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 200ms, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 200ms, box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .fadeInLast {
+  opacity: 1;
+  transform: translateY(0);
+}
+

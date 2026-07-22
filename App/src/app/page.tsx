@@ -20,14 +20,14 @@ export default function Home() {
         }
       `}} />
       <Hero />
-      <ScrollReveal><FeaturedCollections /></ScrollReveal>
-      <ScrollReveal><FindYourFragrance /></ScrollReveal>
-      <ScrollReveal><BestSellersSection /></ScrollReveal>
-      <ScrollReveal><ShopByOccasion /></ScrollReveal>
-      <ScrollReveal><MurakkazDifference /></ScrollReveal>
-      <ScrollReveal><CompareBanner /></ScrollReveal>
-      <ScrollReveal><CustomerReviews /></ScrollReveal>
-      <ScrollReveal><UpcomingEventsSection /></ScrollReveal>
+      <ScrollReveal variant="fade-up"><FeaturedCollections /></ScrollReveal>
+      <ScrollReveal variant="none"><FindYourFragrance /></ScrollReveal>
+      <ScrollReveal variant="scale-fade"><BestSellersSection /></ScrollReveal>
+      <ScrollReveal variant="scale-fade"><ShopByOccasion /></ScrollReveal>
+      <ScrollReveal variant="none"><MurakkazDifference /></ScrollReveal>
+      <ScrollReveal variant="spotlight-reveal"><CompareBanner /></ScrollReveal>
+      <ScrollReveal variant="fade-up"><CustomerReviews /></ScrollReveal>
+      <ScrollReveal variant="slide-horizontal"><UpcomingEventsSection /></ScrollReveal>
     </div>
   );
 }

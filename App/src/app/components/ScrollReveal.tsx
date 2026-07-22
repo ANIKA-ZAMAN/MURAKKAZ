@@ -3,38 +3,48 @@
 import { useEffect, useRef, useState, ReactNode } from "react";
 import styles from "./ScrollReveal.module.css";
 
+export type RevealVariant = "fade-up" | "scale-fade" | "slide-horizontal" | "spotlight-reveal" | "none";
+
 interface ScrollRevealProps {
   children: ReactNode;
   delay?: number;
+  variant?: RevealVariant;
+  className?: string;
 }
 
-export default function ScrollReveal({ children, delay = 0 }: ScrollRevealProps) {
+export default function ScrollReveal({
+  children,
+  delay = 0,
+  variant = "fade-up",
+  className = "",
+}: ScrollRevealProps) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let observer: IntersectionObserver | null = null;
+    const currentRef = ref.current;
 
     const timer = setTimeout(() => {
       observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            if (ref.current && observer) {
-              observer.unobserve(ref.current);
+            if (currentRef && observer) {
+              observer.unobserve(currentRef);
             }
           }
         },
         {
-          threshold: 0.05,
-          rootMargin: "0px 0px -80px 0px"
+          threshold: 0.08,
+          rootMargin: "0px 0px -60px 0px",
         }
       );
 
-      if (ref.current) {
-        observer.observe(ref.current);
+      if (currentRef) {
+        observer.observe(currentRef);
       }
-    }, 150);
+    }, 50);
 
     return () => {
       clearTimeout(timer);
@@ -44,10 +54,14 @@ export default function ScrollReveal({ children, delay = 0 }: ScrollRevealProps)
     };
   }, []);
 
+  const variantClass = variant !== "none" ? styles[variant] || styles["fade-up"] : "";
+
   return (
     <div
       ref={ref}
-      className={`reveal ${isVisible ? "visible" : ""}`}
+      className={`reveal ${styles.revealContainer} ${variantClass} ${
+        isVisible ? `visible ${styles.visible}` : ""
+      } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
       suppressHydrationWarning
     >
@@ -55,3 +69,4 @@ export default function ScrollReveal({ children, delay = 0 }: ScrollRevealProps)
     </div>
   );
 }
+

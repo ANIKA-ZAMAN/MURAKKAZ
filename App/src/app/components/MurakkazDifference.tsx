@@ -60,7 +60,7 @@ export default function MurakkazDifference({
             <div
               key={pt.id || idx}
               className={styles.diffCard}
-              style={{ "--delay": `${idx * 180}ms` } as React.CSSProperties}
+              style={{ "--delay": `${idx * 90}ms` } as React.CSSProperties}
               suppressHydrationWarning
             >
               {/* Gold Shimmer Sweep across top edge on hover */}

@@ -201,9 +201,22 @@ function HeroActions() {
 
 export default function Hero() {
   const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (typeof window === "undefined") return;
+    const { clientX, clientY } = e;
+    const x = ((clientX / window.innerWidth) - 0.5) * 6; // 3px max shift
+    const y = ((clientY / window.innerHeight) - 0.5) * 6;
+    setParallax({ x, y });
+  };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-20 pb-0 select-none" suppressHydrationWarning>
+    <section 
+      onMouseMove={handleMouseMove}
+      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-20 pb-0 select-none" 
+      suppressHydrationWarning
+    >
       
       {/* Global CSS for GPU Animations */}
       <style suppressHydrationWarning>{`
@@ -226,9 +239,16 @@ export default function Hero() {
           0%, 100% { transform: translateY(2vh) rotate(0deg); }
           50% { transform: translateY(calc(2vh - 8px)) rotate(0.6deg); }
         }
+        @keyframes heroTextFadeIn {
+          0% { opacity: 0; transform: translateY(16px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
         @keyframes ctaPulseGlow {
           0%, 100% { box-shadow: 0 8px 28px rgba(49, 49, 52, 0.08), 0 0 0 0 rgba(197, 168, 128, 0); }
           50% { box-shadow: 0 12px 32px rgba(197, 168, 128, 0.28), 0 0 18px 2px rgba(197, 168, 128, 0.35); }
+        }
+        .hero-fade-enter {
+          animation: heroTextFadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         @media (max-width: 768px) {
           .volumetric-ray {
@@ -241,6 +261,7 @@ export default function Hero() {
           }
         }
       `}</style>
+
 
       {/* Animated Light Sweep Beam Across Background every 14 seconds */}
       <div 
@@ -338,12 +359,14 @@ export default function Hero() {
         }}
       />
 
-      {/* Warm Golden Halo Rim Highlight around the Bottle */}
+      {/* Warm Golden Halo Rim Highlight around the Bottle with Subtle Parallax */}
       <div 
         className="absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[540px] rounded-full pointer-events-none mix-blend-screen z-0"
         style={{
           background: "radial-gradient(circle, rgba(248, 222, 172, 0.35) 0%, rgba(212, 175, 55, 0.14) 45%, transparent 75%)",
           filter: "blur(38px)",
+          transform: `translate(calc(-50% + ${parallax.x}px), calc(-50% + ${parallax.y}px))`,
+          transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
           animation: "spotlightBreathe 7s ease-in-out infinite alternate"
         }}
       />
@@ -360,7 +383,7 @@ export default function Hero() {
       
       {/* 1. Background Layers: Giant Watermark Engraved Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
-        <div className="absolute w-full text-center z-0 select-none opacity-100 -translate-y-[6vh]" suppressHydrationWarning>
+        <div className="absolute w-full text-center z-0 select-none opacity-100 -translate-y-[6vh] hero-fade-enter" suppressHydrationWarning>
           <div className="inline-block text-center relative">
             <h1 
               className="font-serif-title font-normal tracking-[0.04em] uppercase text-[12vw] leading-none select-none text-center" 
@@ -378,8 +401,8 @@ export default function Hero() {
 
             {/* Subtext: Refined luxury typography */}
             <p 
-              className="hidden md:block absolute left-[4.5%] top-[100%] mt-7 font-serif-text text-[#3a3530] text-[14px] md:text-[14.5px] max-w-[340px] leading-[1.9] tracking-[0.04em] text-left pointer-events-auto z-30 font-normal"
-              style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+              className="hidden md:block absolute left-[4.5%] top-[100%] mt-7 font-serif-text text-[#3a3530] text-[14px] md:text-[14.5px] max-w-[340px] leading-[1.9] tracking-[0.04em] text-left pointer-events-auto z-30 font-normal hero-fade-enter"
+              style={{ fontFamily: "var(--font-lora), Georgia, serif", animationDelay: "200ms" }}
               suppressHydrationWarning
             >
               Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
@@ -394,6 +417,7 @@ export default function Hero() {
           className="relative h-[58vh] sm:h-[70vh] md:h-[80vh] max-h-[calc(100vh-270px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh]"
           style={{
             animation: "bottlePerpetualFloat 7s ease-in-out infinite alternate",
+            transform: `translate(${parallax.x * 0.5}px, calc(2vh + ${parallax.y * 0.5}px))`,
             willChange: "transform"
           }}
           suppressHydrationWarning
@@ -418,7 +442,7 @@ export default function Hero() {
       <PremiumStats />
 
       {/* 4. Foreground Layer: Centered Action Buttons & Brand Ticker */}
-      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-0 gap-0" suppressHydrationWarning>
+      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-0 gap-0 hero-fade-enter" style={{ animationDelay: "350ms" }} suppressHydrationWarning>
         <HeroActions />
         <div className="w-full mt-1 mb-0">
           <BrandTicker />
