@@ -59,14 +59,16 @@ export default function FeaturedCollections() {
                   loading="lazy"
                 />
               </div>
-              <h3 className={styles.collectionTitle}>{col.title}</h3>
-              <p className={styles.collectionDesc}>{col.desc}</p>
-              <span className={styles.collectionLink}>
-                Explore Collection
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </span>
+              <div className={styles.collectionContent}>
+                <h3 className={styles.collectionTitle}>{col.title}</h3>
+                <p className={styles.collectionDesc}>{col.desc}</p>
+                <span className={styles.collectionLink}>
+                  Explore Collection
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
             </Link>
           ))}
         </div>

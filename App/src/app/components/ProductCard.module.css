@@ -3,13 +3,14 @@
   flex-direction: column;
   background: transparent;
   border: none;
-  border-radius: 0;
+  border-radius: 14px;
   padding: 0;
   width: 100%;
   font-family: var(--font-serif-text), Georgia, serif;
   position: relative;
-  box-shadow: none;
-  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 12px rgba(80, 60, 30, 0.06);
+  overflow: hidden;
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
 :global(.reveal) .card {
@@ -26,8 +27,7 @@
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: none;
-  border-color: transparent;
+  box-shadow: 0 8px 28px rgba(80, 60, 30, 0.10);
 }
 
 /* ── Image ── */
@@ -36,9 +36,9 @@
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 12px;
+  border-radius: 0;
   overflow: hidden;
-  background-color: transparent;
+  background-color: #ede8df;
   transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -64,13 +64,14 @@
   transform: scale(1.05);
 }
 
-/* ── Content ── */
+/* ── Content (muted lower card) ── */
 .content {
   display: flex;
   flex-direction: column;
-  padding: 0.6rem 0 0 0;
+  padding: 0.75rem 0.85rem 0.85rem;
   flex-grow: 1;
   gap: 0.2rem;
+  background: rgba(237, 232, 223, 0.55);
 }
 
 /* ── Name + Heart Row ── */
