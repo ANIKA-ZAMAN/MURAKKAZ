@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./FindYourFragrance.module.css";
 
 export default function FindYourFragrance() {
@@ -15,7 +16,13 @@ export default function FindYourFragrance() {
           {/* Embossed wax seal at top */}
           <div className={styles.waxSeal}>
             <div className={styles.sealInner}>
-              <span className={styles.sealLetter}>M</span>
+              <Image
+                src="/images/logo-murakkaz.svg"
+                alt="Murakkaz"
+                width={28}
+                height={28}
+                className={styles.sealLogo}
+              />
             </div>
           </div>
 
@@ -34,7 +41,7 @@ export default function FindYourFragrance() {
 
           {/* Description */}
           <p className={styles.description}>
-            Allow our curated consultation to guide you through a refined selection 
+            Allow our created consultation to guide you through a refined selection 
             of fragrances, thoughtfully matched to your lifestyle, memories, and 
             personal aesthetic.
           </p>
