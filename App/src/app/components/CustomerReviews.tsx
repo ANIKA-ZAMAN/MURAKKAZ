@@ -1,98 +1,300 @@
 "use client";
 
-import { useState } from "react";
-import styles from "./homepage.module.css";
+import { useState, useEffect, useRef } from "react";
+import styles from "./CustomerReviews.module.css";
+
+interface Review {
+  perfume: string;
+  inspired: string;
+  stars: number;
+  quote: string;
+  name: string;
+  verified: string;
+  longevity: string;
+  projection: string;
+  compliments: string;
+}
+
+const reviewsData: Review[] = [
+  {
+    perfume: "Murakkaz Noir",
+    inspired: "Inspired by Tom Ford Noir de Noir",
+    stars: 5,
+    quote: "The longevity of Murakkaz Noir is absolutely incredible. It lasted over 14 hours on my skin with a rich, dark rose and vanilla trail that garnered endless compliments.",
+    name: "Adnan S.",
+    verified: "Verified Collector",
+    longevity: "14+ Hours",
+    projection: "Enveloping Sillage",
+    compliments: "★ 9.9/10 Compliments",
+  },
+  {
+    perfume: "Jade Serenity",
+    inspired: "Inspired by Creed Silver Mountain Water",
+    stars: 5,
+    quote: "Jade Serenity is an absolute masterpiece. Crisp green tea and fresh citrus notes that feel impossibly refined. It matches the quality of $400 designer extraits.",
+    name: "Tasnim R.",
+    verified: "Verified Collector",
+    longevity: "10+ Hours",
+    projection: "Radiant Aura",
+    compliments: "★ 9.8/10 Compliments",
+  },
+  {
+    perfume: "Coral Sea Extrait",
+    inspired: "Inspired by Louis Vuitton Pacific Chill",
+    stars: 5,
+    quote: "An exquisite fragrance experience. The signature finder quiz recommended Coral Sea, and the juicy blackcurrant and mint notes are breathtakingly luxurious.",
+    name: "Farhan K.",
+    verified: "Verified Collector",
+    longevity: "12+ Hours",
+    projection: "Bold Projection",
+    compliments: "★ 9.7/10 Compliments",
+  },
+  {
+    perfume: "Velvet Oud Imperial",
+    inspired: "Inspired by MFK Oud Satin Mood",
+    stars: 5,
+    quote: "Opulent, velvety, and deeply intoxicating. One spray on my coat lasted for three days. Everyone at the evening reception asked what fragrance I was wearing.",
+    name: "Nabila Z.",
+    verified: "Verified Collector",
+    longevity: "16+ Hours",
+    projection: "Heavy Trail",
+    compliments: "★ 10/10 Compliments",
+  },
+  {
+    perfume: "Amber Elixir 10",
+    inspired: "Inspired by Kilian Angels' Share",
+    stars: 5,
+    quote: "Warm cognac, cinnamon, and aged oak barrel notes blended to absolute perfection. It has a rich gourmand warmth that feels extraordinarily expensive.",
+    name: "Shahriar H.",
+    verified: "Verified Collector",
+    longevity: "12+ Hours",
+    projection: "Enveloping Sillage",
+    compliments: "★ 9.9/10 Compliments",
+  },
+  {
+    perfume: "Royal Santal 33",
+    inspired: "Inspired by Le Labo Santal 33",
+    stars: 5,
+    quote: "The smoothest sandalwood and cardamom profile I have ever smelled. Remarkable quality and craftsmanship at a fraction of niche retail pricing.",
+    name: "Mahmud A.",
+    verified: "Verified Collector",
+    longevity: "11+ Hours",
+    projection: "Moderate Sillage",
+    compliments: "★ 9.6/10 Compliments",
+  },
+];
 
 export default function CustomerReviews() {
   const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+  const total = reviewsData.length;
 
-  const reviews = [
-    {
-      stars: 5,
-      quote: "The longevity of Murakkaz Noir is absolutely incredible. It lasted over 12 hours on my skin and the projection was outstanding.",
-      name: "Adnan S.",
-      meta: "Verified Buyer"
-    },
-    {
-      stars: 5,
-      quote: "Jade Serenity is a masterpiece. Clean, elegant, and matches the premium quality of high-end designers.",
-      name: "Tasnim R.",
-      meta: "Verified Buyer"
-    },
-    {
-      stars: 5,
-      quote: "An exquisite fragrance experience. The quiz recommended Coral Sea, and it is exactly what I was looking for.",
-      name: "Farhan K.",
-      meta: "Verified Buyer"
-    }
-  ];
+  // Auto-play interval (4.5s)
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % total);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isPaused, total]);
 
   const handlePrev = () => {
-    setCurrent((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+    setCurrent((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrent((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    setCurrent((prev) => (prev + 1) % total);
   };
+
+  // Touch Swipe Handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 40;
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  // 3D Offset calculation for stacked carousel cards
+  const getCardPositionStyle = (idx: number) => {
+    let offset = idx - current;
+    if (offset < -Math.floor(total / 2)) offset += total;
+    if (offset > Math.floor(total / 2)) offset -= total;
+
+    if (offset === 0) {
+      // Center Active Card
+      return {
+        transform: "translateX(0%) scale(1) translateZ(0px)",
+        opacity: 1,
+        zIndex: 10,
+        pointerEvents: "auto" as const,
+      };
+    } else if (offset === -1) {
+      // Left Peek Card (25-35% visible on left)
+      return {
+        transform: "translateX(-58%) scale(0.88) translateZ(-40px)",
+        opacity: 0.55,
+        zIndex: 5,
+        pointerEvents: "auto" as const,
+      };
+    } else if (offset === 1) {
+      // Right Peek Card (25-35% visible on right)
+      return {
+        transform: "translateX(58%) scale(0.88) translateZ(-40px)",
+        opacity: 0.55,
+        zIndex: 5,
+        pointerEvents: "auto" as const,
+      };
+    } else {
+      // Off-screen hidden cards
+      const direction = offset > 0 ? 1 : -1;
+      return {
+        transform: `translateX(${direction * 115}%) scale(0.75) translateZ(-100px)`,
+        opacity: 0,
+        zIndex: 1,
+        pointerEvents: "none" as const,
+      };
+    }
+  };
+
+  const formatNumber = (num: number) => (num < 9 ? `0${num + 1}` : `${num + 1}`);
 
   return (
     <section className={styles.section} suppressHydrationWarning>
+      {/* Ambient Spotlight & Vignette Glow */}
+      <div className={styles.spotlightGlow} />
+      <div className={styles.vignetteOverlay} />
+
       <div className={styles.container}>
+        {/* Section Header */}
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Customer Reviews</h2>
           <p className={styles.sectionSubtitle}>Words from our fragrance collectors</p>
         </div>
 
-        <div className={styles.reviewsCarousel}>
-          <div className={styles.reviewCardWrapper}>
-            {reviews.map((rev, idx) => (
+        {/* Stacked 3D Carousel Stage */}
+        <div
+          className={styles.carouselStage}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {reviewsData.map((rev, idx) => {
+            let offset = idx - current;
+            if (offset < -Math.floor(total / 2)) offset += total;
+            if (offset > Math.floor(total / 2)) offset -= total;
+
+            const isCenter = offset === 0;
+            const isSide = offset === -1 || offset === 1;
+
+            return (
               <div
                 key={idx}
-                className={styles.reviewCard}
-                style={{
-                  display: idx === current ? "flex" : "none",
-                  opacity: idx === current ? 1 : 0,
-                  transform: idx === current ? "scale(1)" : "scale(0.98)",
+                className={`${styles.card} ${isCenter ? styles.activeCard : ""} ${isSide ? styles.sideCard : ""}`}
+                style={getCardPositionStyle(idx)}
+                onClick={() => {
+                  if (offset === -1) handlePrev();
+                  if (offset === 1) handleNext();
                 }}
               >
-                <div className={styles.starsRow}>
-                  {Array.from({ length: rev.stars }).map((_, i) => (
-                    <span key={i}>★</span>
-                  ))}
-                </div>
-                <blockquote className={styles.reviewQuote}>
-                  &ldquo;{rev.quote}&rdquo;
-                </blockquote>
-                <div className={styles.reviewerMeta}>
-                  <div className={styles.reviewerAvatar}>
-                    <div className={styles.reviewerInitials}>
-                      {rev.name.charAt(0)}
+                <div>
+                  {/* Card Header: Perfume Badge & Star Rating */}
+                  <div className={styles.cardHeader}>
+                    <div className={styles.perfumeBadge}>
+                      <span className={styles.perfumeName}>{rev.perfume}</span>
+                      <span className={styles.inspiredTag}>{rev.inspired}</span>
+                    </div>
+
+                    <div className={styles.starsRow}>
+                      {Array.from({ length: rev.stars }).map((_, i) => (
+                        <span key={i}>★</span>
+                      ))}
                     </div>
                   </div>
-                  <div className={styles.reviewerInfo}>
-                    <h4 className={styles.reviewerName}>{rev.name}</h4>
-                    <span className={styles.reviewerVerified}>{rev.meta}</span>
+
+                  {/* Quote Body */}
+                  <blockquote className={styles.quoteText}>
+                    &ldquo;{rev.quote}&rdquo;
+                  </blockquote>
+                </div>
+
+                <div>
+                  {/* Performance Ratings Pills */}
+                  <div className={styles.performanceRow}>
+                    <span className={styles.perfPill}>
+                      <span className={styles.pillIcon}>⏳</span> {rev.longevity}
+                    </span>
+                    <span className={styles.perfPill}>
+                      <span className={styles.pillIcon}>✨</span> {rev.projection}
+                    </span>
+                    <span className={styles.perfPill}>
+                      <span className={styles.pillIcon}>💬</span> {rev.compliments}
+                    </span>
+                  </div>
+
+                  {/* Author Details Footer */}
+                  <div className={styles.authorFooter}>
+                    <div className={styles.authorMeta}>
+                      <div className={styles.authorAvatar}>
+                        {rev.name.charAt(0)}
+                      </div>
+                      <div className={styles.authorDetails}>
+                        <h4 className={styles.authorName}>{rev.name}</h4>
+                        <span className={styles.verifiedBadge}>
+                          <span className={styles.verifiedCheck}>✓</span> {rev.verified}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
+            );
+          })}
+        </div>
+
+        {/* Circular Navigation Buttons & Progress Counter */}
+        <div className={styles.controlsRow}>
+          <button
+            className={styles.navButton}
+            onClick={handlePrev}
+            aria-label="Previous Review"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+
+          <div className={styles.progressCounter}>
+            <span className={styles.currentNum}>{formatNumber(current)}</span>
+            <span className={styles.totalNum}> / {formatNumber(total - 1)}</span>
           </div>
 
-          <div className={styles.carouselControls}>
-            <button className={styles.carouselBtn} onClick={handlePrev} aria-label="Previous review">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-              </svg>
-            </button>
-            <span className="font-serif-text text-sm text-neutral-400">
-              {current + 1} / {reviews.length}
-            </span>
-            <button className={styles.carouselBtn} onClick={handleNext} aria-label="Next review">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
-            </button>
-          </div>
+          <button
+            className={styles.navButton}
+            onClick={handleNext}
+            aria-label="Next Review"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>

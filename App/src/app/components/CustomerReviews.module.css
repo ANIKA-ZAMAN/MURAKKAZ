@@ -1,0 +1,370 @@
+/* ═══════════════════════════════════════════════════════
+   Customer Reviews — Editorial 3D Stacked Carousel
+   ═══════════════════════════════════════════════════════ */
+
+.section {
+  width: 100%;
+  padding: 6.5rem 1.5rem 7rem;
+  background: var(--background, #CBB9A1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Faint ambient spotlight glow behind active card */
+.spotlightGlow {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 750px;
+  height: 420px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 248, 235, 0.45) 0%,
+    rgba(225, 205, 175, 0.20) 45%,
+    transparent 75%
+  );
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(48px);
+  animation: glowPulse 7s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { opacity: 0.65; transform: translate(-50%, -50%) scale(0.97); }
+  100% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.03); }
+}
+
+/* Subtle ambient vignette to focus on center card */
+.vignetteOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 50%, transparent 55%, rgba(60, 45, 30, 0.05) 100%);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Section Header */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  max-width: 600px;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 400;
+  color: #2D251C;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.5rem;
+}
+
+.sectionSubtitle {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+  color: #5C5042;
+  font-style: italic;
+}
+
+/* ── Stacked 3D Carousel Stage ── */
+.carouselStage {
+  position: relative;
+  width: 100%;
+  max-width: 1080px;
+  height: 440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.carouselStage:active {
+  cursor: grabbing;
+}
+
+/* ── Individual Review Card Geometry ── */
+.card {
+  position: absolute;
+  width: 100%;
+  max-width: 580px;
+  padding: 2.25rem 2.5rem;
+  border-radius: 24px;
+
+  /* Warm ivory paper surface with subtle champagne gradient */
+  background: linear-gradient(165deg, #FCF9F5 0%, #F5EEDF 100%);
+  
+  /* Thin gold border */
+  border: 1px solid rgba(197, 168, 128, 0.38);
+
+  /* Deep physical shadow for center active card */
+  box-shadow: 0 16px 45px -8px rgba(80, 60, 30, 0.14), 0 4px 14px rgba(120, 95, 60, 0.06);
+
+  /* Smooth spring physics transition (500ms cubic-bezier) */
+  transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 550ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 550ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 550ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Active Card Hover Micro-interaction */
+.activeCard:hover {
+  transform: translateX(0) translateY(-6px) scale(1.015) !important;
+  box-shadow: 0 22px 55px -10px rgba(80, 60, 30, 0.20), 0 6px 20px rgba(160, 125, 80, 0.12) !important;
+  border-color: rgba(197, 168, 128, 0.65) !important;
+}
+
+/* Side Peek Cards Hover Micro-interaction */
+.sideCard:hover {
+  opacity: 0.75 !important;
+  cursor: pointer;
+}
+
+/* ── Card Header: Perfume Badge & Star Rating ── */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  gap: 12px;
+}
+
+.perfumeBadge {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.perfumeName {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #2D251C;
+  line-height: 1.2;
+}
+
+.inspiredTag {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.72rem;
+  color: #8C7254;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.starsRow {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #D4AF37;
+  font-size: 1rem;
+  text-shadow: 0 0 6px rgba(212, 175, 55, 0.35);
+}
+
+/* ── Quote Body Text ── */
+.quoteText {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: clamp(0.98rem, 1.4vw, 1.1rem);
+  line-height: 1.7;
+  color: #3D352B;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Performance Rating Pills Row ── */
+.performanceRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.perfPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background-color: rgba(235, 222, 204, 0.65);
+  border: 1px solid rgba(197, 168, 128, 0.30);
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.74rem;
+  color: #524638;
+  font-weight: 500;
+}
+
+.pillIcon {
+  color: #A88B60;
+  font-size: 0.8rem;
+}
+
+/* ── Reviewer Author Footer ── */
+.authorFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(197, 168, 128, 0.22);
+}
+
+.authorMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.authorAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #EFE3CE 0%, #DFCEB4 100%);
+  border: 1.5px solid rgba(197, 168, 128, 0.50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #3D352B;
+  box-shadow: 0 2px 8px rgba(120, 95, 60, 0.08);
+}
+
+.authorDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.authorName {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: #2D251C;
+}
+
+.verifiedBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.72rem;
+  color: #7A664D;
+  font-weight: 500;
+}
+
+.verifiedCheck {
+  color: #8C7254;
+  font-weight: 700;
+}
+
+/* ── Controls Row (Progress Counter & Buttons) ── */
+.controlsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2.75rem;
+}
+
+.progressCounter {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.12em;
+  color: #4A3E30;
+  font-weight: 500;
+  min-width: 70px;
+  text-align: center;
+}
+
+.currentNum {
+  color: #2D251C;
+  font-weight: 600;
+}
+
+.totalNum {
+  color: #8C7A65;
+}
+
+.navButton {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FCF9F5 0%, #F3E9D7 100%);
+  border: 1.5px solid rgba(197, 168, 128, 0.45);
+  box-shadow: 0 4px 14px rgba(120, 95, 60, 0.08);
+  color: #3D352B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 400ms ease,
+              background 400ms ease;
+}
+
+.navButton:hover {
+  transform: translateY(-2px) scale(1.06);
+  border-color: rgba(197, 168, 128, 0.80);
+  box-shadow: 0 8px 22px rgba(120, 95, 60, 0.16);
+  background: linear-gradient(135deg, #FFFDF8 0%, #F7EDDD 100%);
+}
+
+.navButton:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ── Responsive Mobile Geometry ── */
+@media (max-width: 768px) {
+  .section {
+    padding: 5rem 1rem 5.5rem;
+  }
+  
+  .carouselStage {
+    height: 480px;
+  }
+  
+  .card {
+    max-width: 88vw;
+    padding: 1.75rem 1.5rem;
+    border-radius: 20px;
+  }
+  
+  .quoteText {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    -webkit-line-clamp: 5;
+  }
+  
+  .controlsRow {
+    margin-top: 2rem;
+    gap: 1.5rem;
+  }
+  
+  .navButton {
+    width: 44px;
+    height: 44px;
+  }
+}
