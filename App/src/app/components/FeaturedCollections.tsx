@@ -46,7 +46,7 @@ export default function FeaturedCollections() {
               href={col.link} 
               key={idx} 
               className={styles.collectionCard} 
-              style={{ "--delay": `${idx * 180}ms` } as React.CSSProperties}
+              style={{ "--delay": `${idx * 240}ms` } as React.CSSProperties}
               suppressHydrationWarning
             >
               <div className={styles.collectionImageWrap}>
