@@ -2,208 +2,28 @@
 
 import { useState, useEffect, useRef } from "react";
 import styles from "./CustomerReviews.module.css";
+import { reviewsData as defaultReviews, Review } from "@/app/data/reviewsData";
 
-interface Review {
-  perfume: string;
-  inspired: string;
-  stars: number;
-  quote: string;
-  name: string;
-  verified: string;
-  longevity: string;
-  projection: string;
-  compliments: string;
+interface CustomerReviewsProps {
+  items?: Review[];
+  title?: string;
+  subtitle?: string;
 }
 
-const reviewsData: Review[] = [
-  {
-    perfume: "Murakkaz Noir",
-    inspired: "Inspired by Tom Ford Noir de Noir",
-    stars: 5,
-    quote: "The longevity of Murakkaz Noir is absolutely incredible. It lasted over 14 hours on my skin with a rich, dark rose and vanilla trail that garnered endless compliments.",
-    name: "Adnan S.",
-    verified: "Verified Collector",
-    longevity: "14+ Hours",
-    projection: "Enveloping Sillage",
-    compliments: "★ 9.9/10 Compliments",
-  },
-  {
-    perfume: "Jade Serenity",
-    inspired: "Inspired by Creed Silver Mountain Water",
-    stars: 5,
-    quote: "Jade Serenity is an absolute masterpiece. Crisp green tea and fresh citrus notes that feel impossibly refined. It matches the quality of $400 designer extraits.",
-    name: "Tasnim R.",
-    verified: "Verified Collector",
-    longevity: "10+ Hours",
-    projection: "Radiant Aura",
-    compliments: "★ 9.8/10 Compliments",
-  },
-  {
-    perfume: "Coral Sea Extrait",
-    inspired: "Inspired by Louis Vuitton Pacific Chill",
-    stars: 5,
-    quote: "An exquisite fragrance experience. The signature finder quiz recommended Coral Sea, and the juicy blackcurrant and mint notes are breathtakingly luxurious.",
-    name: "Farhan K.",
-    verified: "Verified Collector",
-    longevity: "12+ Hours",
-    projection: "Bold Projection",
-    compliments: "★ 9.7/10 Compliments",
-  },
-  {
-    perfume: "Velvet Oud Imperial",
-    inspired: "Inspired by MFK Oud Satin Mood",
-    stars: 5,
-    quote: "Opulent, velvety, and deeply intoxicating. One spray on my coat lasted for three days. Everyone at the evening reception asked what fragrance I was wearing.",
-    name: "Nabila Z.",
-    verified: "Verified Collector",
-    longevity: "16+ Hours",
-    projection: "Heavy Trail",
-    compliments: "★ 10/10 Compliments",
-  },
-  {
-    perfume: "Amber Elixir 10",
-    inspired: "Inspired by Kilian Angels' Share",
-    stars: 5,
-    quote: "Warm cognac, cinnamon, and aged oak barrel notes blended to absolute perfection. It has a rich gourmand warmth that feels extraordinarily expensive.",
-    name: "Shahriar H.",
-    verified: "Verified Collector",
-    longevity: "12+ Hours",
-    projection: "Enveloping Sillage",
-    compliments: "★ 9.9/10 Compliments",
-  },
-  {
-    perfume: "Royal Santal 33",
-    inspired: "Inspired by Le Labo Santal 33",
-    stars: 5,
-    quote: "The smoothest sandalwood and cardamom profile I have ever smelled. Remarkable quality and craftsmanship at a fraction of niche retail pricing.",
-    name: "Mahmud A.",
-    verified: "Verified Collector",
-    longevity: "11+ Hours",
-    projection: "Moderate Sillage",
-    compliments: "★ 9.6/10 Compliments",
-  },
-  {
-    perfume: "Saffron Leather",
-    inspired: "Inspired by Memo Paris African Leather",
-    stars: 5,
-    quote: "Rich spicy saffron with supple leather notes. It gives an undeniable aura of confidence and sophistication. Easily a signature winter scent.",
-    name: "Zaynab M.",
-    verified: "Verified Collector",
-    longevity: "13+ Hours",
-    projection: "Strong Sillage",
-    compliments: "★ 9.8/10 Compliments",
-  },
-  {
-    perfume: "Imperial Rose 04",
-    inspired: "Inspired by Parfums de Marly Delina",
-    stars: 5,
-    quote: "Sensual Turkish rose and lychee with a creamy cashmere finish. I receive compliments every single time I step out wearing this.",
-    name: "Ayesha N.",
-    verified: "Verified Collector",
-    longevity: "14+ Hours",
-    projection: "Radiant Aura",
-    compliments: "★ 9.9/10 Compliments",
-  },
-  {
-    perfume: "Smoky Iris Noir",
-    inspired: "Inspired by Dior Bois d'Argent",
-    stars: 5,
-    quote: "A silky, powdery iris with warm myrrh and honey nuances. It is regal, subtle, and incredibly long-lasting on skin and clothing.",
-    name: "Tariq H.",
-    verified: "Verified Collector",
-    longevity: "12+ Hours",
-    projection: "Intimate Elegance",
-    compliments: "★ 9.7/10 Compliments",
-  },
-  {
-    perfume: "Citrus Vetiver",
-    inspired: "Inspired by Tom Ford Grey Vetiver",
-    stars: 5,
-    quote: "The ultimate clean gentleman scent. Crisp orange blossom and refined earthy vetiver that feels sharp, professional, and luxurious.",
-    name: "Rafiq M.",
-    verified: "Verified Collector",
-    longevity: "10+ Hours",
-    projection: "Clean Projection",
-    compliments: "★ 9.6/10 Compliments",
-  },
-  {
-    perfume: "Vanilla Bourbon",
-    inspired: "Inspired by Nishane Ani",
-    stars: 5,
-    quote: "Complex spicy bergamot giving way to a rich, warm Madagascar vanilla. Highly addictive projection that lasts all day and evening.",
-    name: "Samin K.",
-    verified: "Verified Collector",
-    longevity: "15+ Hours",
-    projection: "Enveloping Trail",
-    compliments: "★ 9.9/10 Compliments",
-  },
-  {
-    perfume: "Oceanic Drift",
-    inspired: "Inspired by Acqua di Parma Fico di Amalfi",
-    stars: 5,
-    quote: "Bright Mediterranean fig and sea breeze notes. It instantly transports you to a luxury coastal resort. Refreshing and deeply elegant.",
-    name: "Laila T.",
-    verified: "Verified Collector",
-    longevity: "9+ Hours",
-    projection: "Breezy Aura",
-    compliments: "★ 9.5/10 Compliments",
-  },
-  {
-    perfume: "Cardamom Musk",
-    inspired: "Inspired by Byredo Gypsy Water",
-    stars: 5,
-    quote: "Soft pine needles, warm amber, and fresh juniper berries. It creates a subtle, magnetic aura that feels intimate and personal.",
-    name: "Imran U.",
-    verified: "Verified Collector",
-    longevity: "10+ Hours",
-    projection: "Soft Projection",
-    compliments: "★ 9.6/10 Compliments",
-  },
-  {
-    perfume: "Golden Vanilla Oud",
-    inspired: "Inspired by Roja Parfums Amber Aoud",
-    stars: 5,
-    quote: "Unbelievably opulent. Rich agarwood resin kissed by sweet vanilla and royal rose. This is pure luxury in a bottle.",
-    name: "Sabrina P.",
-    verified: "Verified Collector",
-    longevity: "18+ Hours",
-    projection: "Extrait Power",
-    compliments: "★ 10/10 Compliments",
-  },
-  {
-    perfume: "Celestial Bloom",
-    inspired: "Inspired by Baccarat Rouge 540 Extrait",
-    stars: 5,
-    quote: "Saffron, bitter almond, and warm cedarwood. The airy sillage leaves a mesmerizing scent trail that lingers wherever you go.",
-    name: "Kazi F.",
-    verified: "Verified Collector",
-    longevity: "16+ Hours",
-    projection: "Hypnotic Trail",
-    compliments: "★ 9.9/10 Compliments",
-  },
-  {
-    perfume: "Wild Tobacco 12",
-    inspired: "Inspired by Tom Ford Tobacco Vanille",
-    stars: 5,
-    quote: "Rich aromatic tobacco leaf, sweet tonka bean, and warm spices. Perfectly balanced for cool evenings and formal occasions.",
-    name: "Arman S.",
-    verified: "Verified Collector",
-    longevity: "14+ Hours",
-    projection: "Bold Projection",
-    compliments: "★ 9.8/10 Compliments",
-  },
-];
-
-export default function CustomerReviews() {
+export default function CustomerReviews({
+  items = defaultReviews,
+  title = "Customer Reviews",
+  subtitle = "Words from our fragrance collectors",
+}: CustomerReviewsProps) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
-  const total = reviewsData.length;
+  const total = items.length;
 
   // Continuous Auto-play interval (4s)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || total === 0) return;
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % total);
     }, 4000);
@@ -211,10 +31,12 @@ export default function CustomerReviews() {
   }, [isPaused, total]);
 
   const handlePrev = () => {
+    if (total === 0) return;
     setCurrent((prev) => (prev === 0 ? total - 1 : prev - 1));
   };
 
   const handleNext = () => {
+    if (total === 0) return;
     setCurrent((prev) => (prev + 1) % total);
   };
 
@@ -247,7 +69,6 @@ export default function CustomerReviews() {
     if (offset > Math.floor(total / 2)) offset -= total;
 
     if (offset === 0) {
-      // Active Center Card (comes from next card smoothly)
       return {
         transform: "translateX(0%) scale(1) translateZ(0px)",
         opacity: 1,
@@ -255,7 +76,6 @@ export default function CustomerReviews() {
         pointerEvents: "auto" as const,
       };
     } else if (offset === 1) {
-      // Right Peek Card (25-35% visible on right)
       return {
         transform: "translateX(58%) scale(0.88) translateZ(-40px)",
         opacity: 0.55,
@@ -263,7 +83,6 @@ export default function CustomerReviews() {
         pointerEvents: "auto" as const,
       };
     } else if (offset === -1) {
-      // Left Peek Card (25-35% visible on left)
       return {
         transform: "translateX(-58%) scale(0.88) translateZ(-40px)",
         opacity: 0.55,
@@ -271,7 +90,6 @@ export default function CustomerReviews() {
         pointerEvents: "auto" as const,
       };
     } else if (offset === 2) {
-      // Incoming Right Queue Card
       return {
         transform: "translateX(110%) scale(0.76) translateZ(-80px)",
         opacity: 0,
@@ -279,7 +97,6 @@ export default function CustomerReviews() {
         pointerEvents: "none" as const,
       };
     } else if (offset === -2) {
-      // Outgoing Left Queue Card
       return {
         transform: "translateX(-110%) scale(0.76) translateZ(-80px)",
         opacity: 0,
@@ -287,7 +104,6 @@ export default function CustomerReviews() {
         pointerEvents: "none" as const,
       };
     } else {
-      // Hidden cards far off-screen
       const direction = offset > 0 ? 1 : -1;
       return {
         transform: `translateX(${direction * 150}%) scale(0.70) translateZ(-120px)`,
@@ -309,8 +125,8 @@ export default function CustomerReviews() {
       <div className={styles.container}>
         {/* Section Header */}
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Customer Reviews</h2>
-          <p className={styles.sectionSubtitle}>Words from our fragrance collectors</p>
+          <h2 className={styles.sectionTitle}>{title}</h2>
+          <p className={styles.sectionSubtitle}>{subtitle}</p>
         </div>
 
         {/* Stacked 3D Continuous Conveyor Stage */}
@@ -322,7 +138,7 @@ export default function CustomerReviews() {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {reviewsData.map((rev, idx) => {
+          {items.map((rev, idx) => {
             let offset = idx - current;
             if (offset < -Math.floor(total / 2)) offset += total;
             if (offset > Math.floor(total / 2)) offset -= total;
