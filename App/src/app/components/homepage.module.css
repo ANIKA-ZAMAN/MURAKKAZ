@@ -42,7 +42,7 @@
 /* ── Trust Bar ── */
 .trustBar {
   background-color: transparent;
-  border-top: 1px solid rgba(130, 120, 100, 0.08);
+  border-top: none;
   padding: 1.15rem 0;
   width: 100%;
   z-index: 10;
@@ -242,8 +242,8 @@
 /* ── Find Your Fragrance ── */
 .quizSection {
   background-color: transparent;
-  border-top: 1px solid var(--card-border);
-  border-bottom: 1px solid var(--card-border);
+  border-top: none;
+  border-bottom: none;
   position: relative;
   overflow: hidden;
   padding: 6rem 0;
@@ -362,8 +362,8 @@
 .discoverySection {
   background-color: #313134;
   color: #F5F1E8;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: none;
+  border-bottom: none;
 }
 
 .discoveryContainer {
