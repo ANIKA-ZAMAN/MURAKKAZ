@@ -113,6 +113,10 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
   width: 100%;
+
+  /* Homepage warm parchment card overrides */
+  --card-content-bg: rgba(237, 232, 223, 0.55);
+  --card-image-bg: #ede8df;
 }
 
 .collectionCard {
@@ -158,7 +162,7 @@
   position: relative;
   border-radius: 0;
   overflow: hidden;
-  background-color: #ede8df;
+  background-color: var(--card-image-bg, #eae5dc);
 }
 
 .collectionContent {
@@ -166,7 +170,7 @@
   flex-direction: column;
   align-items: center;
   padding: 1.25rem 1.25rem 1.5rem;
-  background: rgba(237, 232, 223, 0.55);
+  background: var(--card-content-bg, rgba(255, 255, 255, 0.70));
   width: 100%;
   flex-grow: 1;
 }
@@ -357,6 +361,10 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem 2rem;
   margin-bottom: 4rem;
+
+  /* Homepage warm parchment card overrides */
+  --card-content-bg: rgba(237, 232, 223, 0.55);
+  --card-image-bg: #ede8df;
 }
 
 .centerActions {

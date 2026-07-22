@@ -11,6 +11,10 @@
   box-shadow: 0 2px 12px rgba(80, 60, 30, 0.06);
   overflow: hidden;
   transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+
+  /* Adaptive card content bg — default for lighter (#F5F1E8) pages */
+  --card-content-bg: rgba(255, 255, 255, 0.70);
+  --card-image-bg: #eae5dc;
 }
 
 :global(.reveal) .card {
@@ -38,7 +42,7 @@
   aspect-ratio: 1 / 1;
   border-radius: 0;
   overflow: hidden;
-  background-color: #ede8df;
+  background-color: var(--card-image-bg, #eae5dc);
   transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -71,7 +75,7 @@
   padding: 0.75rem 0.85rem 0.85rem;
   flex-grow: 1;
   gap: 0.2rem;
-  background: rgba(237, 232, 223, 0.55);
+  background: var(--card-content-bg);
 }
 
 /* ── Name + Heart Row ── */
