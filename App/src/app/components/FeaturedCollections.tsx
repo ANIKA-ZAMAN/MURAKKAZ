@@ -72,8 +72,18 @@ export default function FeaturedCollections() {
         </div>
 
         <div className={styles.centerActions} style={{ marginTop: "2.5rem" }}>
-          <Link href="/collections" className={styles.secondaryButton} suppressHydrationWarning>
-            View All Collections
+          <Link
+            href="/collections"
+            className="group relative inline-flex items-center justify-center min-w-[240px] sm:min-w-[265px] px-10 h-[54px] rounded-full border border-[#C5A880]/70 bg-gradient-to-r from-[#FAF6F0] via-[#F3E8D8] to-[#E2D2BC] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[4px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#C5A880] overflow-hidden select-none shrink-0 text-center"
+            style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+            suppressHydrationWarning
+          >
+            {/* Shimmer light sweep on hover */}
+            <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition-all duration-1000 ease-in-out group-hover:left-[100%] pointer-events-none" />
+            <span className="relative z-10 w-full flex items-center justify-center gap-2.5 pl-[0.2em]">
+              <span>View All Collections</span>
+              <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-1.5 text-[#C5A880]">→</span>
+            </span>
           </Link>
         </div>
       </div>
