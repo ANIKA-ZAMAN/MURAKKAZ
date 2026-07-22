@@ -5,7 +5,7 @@
 .section {
   width: 100%;
   padding: 6.5rem 2rem;
-  background: linear-gradient(180deg, #F7F2E8 0%, #EFE3CF 50%, #E7D4B4 100%);
+  background: linear-gradient(180deg, #D4C3AC 0%, #CBB9A1 50%, #C1AF96 100%);
   position: relative;
   overflow: hidden;
 }
@@ -18,7 +18,7 @@
   transform: translateX(-50%);
   width: 700px;
   height: 350px;
-  background: radial-gradient(ellipse at 50% 20%, rgba(255, 253, 248, 0.65) 0%, rgba(247, 242, 232, 0) 70%);
+  background: radial-gradient(ellipse at 50% 20%, rgba(255, 248, 235, 0.28) 0%, rgba(203, 185, 161, 0) 70%);
   pointer-events: none;
   z-index: 0;
 }
