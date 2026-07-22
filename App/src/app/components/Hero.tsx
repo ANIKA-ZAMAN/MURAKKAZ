@@ -227,101 +227,8 @@ export default function Hero() {
         }
       `}</style>
 
-      {/* Animated Light Sweep Beam Across Background every 14 seconds */}
-      <div 
-        className="absolute top-0 left-0 w-[40vw] h-[150vh] pointer-events-none z-0"
-        style={{
-          background: "linear-gradient(90deg, transparent 0%, rgba(255, 245, 230, 0.22) 50%, transparent 100%)",
-          animation: "bgLightSweep 14s cubic-bezier(0.4, 0, 0.2, 1) infinite",
-        }}
-      />
-
       {/* Floating Golden Dust Ambient Particles */}
       <HeroDustParticles />
-
-      {/* Background Volumetric Light Ray & Glow */}
-      {lightStyle !== 'off' && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
-          <div 
-            className="absolute inset-0 opacity-55 mix-blend-screen volumetric-ray"
-            style={{
-              background: lightStyle === 'sunbeams'
-                ? `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.44) 0deg, rgba(255, 250, 235, 0.24) 2deg, rgba(255, 250, 235, 0) 4deg,
-                    rgba(255, 250, 235, 0) 10deg, rgba(255, 250, 235, 0.24) 12.5deg, rgba(255, 250, 235, 0.32) 14deg, rgba(255, 250, 235, 0.24) 15.5deg, rgba(255, 250, 235, 0) 18deg,
-                    rgba(255, 250, 235, 0) 342deg, rgba(255, 250, 235, 0.24) 344.5deg, rgba(255, 250, 235, 0.32) 346deg, rgba(255, 250, 235, 0.24) 347.5deg, rgba(255, 250, 235, 0) 350deg,
-                    rgba(255, 250, 235, 0) 356deg, rgba(255, 250, 235, 0.24) 358deg, rgba(255, 250, 235, 0.44) 360deg
-                  )`
-                : `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.25) 12deg, rgba(255, 250, 235, 0) 25deg,
-                    rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.25) 348deg, rgba(255, 250, 235, 0.48) 360deg
-                  )`,
-              WebkitMaskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)",
-              maskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)"
-            }}
-          />
-          {/* Soft ambient source glow */}
-          <div 
-            className="absolute top-[-5vh] left-[68%] -translate-x-1/2 w-[40%] aspect-square rounded-full opacity-55 mix-blend-screen"
-            style={{
-              background: "radial-gradient(circle at 50% 0%, rgba(255, 250, 235, 0.45) 0%, rgba(255, 250, 235, 0) 70%)",
-              filter: "blur(35px)",
-            }}
-          />
-        </div>
-      )}
-
-      {/* Foreground Volumetric Light Ray Overlay */}
-      {lightStyle !== 'off' && (
-        <div 
-          className="fixed inset-0 pointer-events-none overflow-hidden" 
-          style={{ 
-            zIndex: 15, 
-            transform: "translateZ(0)",
-            WebkitTransform: "translateZ(0)"
-          }} 
-          suppressHydrationWarning
-        >
-          <div 
-            className="absolute inset-0 mix-blend-screen volumetric-ray"
-            style={{
-              opacity: 0.48,
-              background: lightStyle === 'sunbeams'
-                ? `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.44) 0deg, rgba(255, 250, 235, 0.24) 2deg, rgba(255, 250, 235, 0) 4deg,
-                    rgba(255, 250, 235, 0) 10deg, rgba(255, 250, 235, 0.24) 12.5deg, rgba(255, 250, 235, 0.32) 14deg, rgba(255, 250, 235, 0.24) 15.5deg, rgba(255, 250, 235, 0) 18deg,
-                    rgba(255, 250, 235, 0) 342deg, rgba(255, 250, 235, 0.24) 344.5deg, rgba(255, 250, 235, 0.32) 346deg, rgba(255, 250, 235, 0.24) 347.5deg, rgba(255, 250, 235, 0) 350deg,
-                    rgba(255, 250, 235, 0) 356deg, rgba(255, 250, 235, 0.24) 358deg, rgba(255, 250, 235, 0.44) 360deg
-                  )`
-                : `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.25) 12deg, rgba(255, 250, 235, 0) 25deg,
-                    rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.25) 348deg, rgba(255, 250, 235, 0.48) 360deg
-                  )`,
-              WebkitMaskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)",
-              maskImage: "radial-gradient(circle at 68% -5vh, black 15%, rgba(0, 0, 0, 0.8) 45%, transparent 145%)"
-            }}
-          />
-        </div>
-      )}
-      
-      {/* Soft vignette overlay */}
-      <div 
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, transparent 65%, rgba(47, 9, 9, 0.05) 100%)",
-          zIndex: 1
-        }}
-      />
-
-      {/* Enhanced cinematic radial warm glow behind bottle */}
-      <div 
-        className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[440px] h-[640px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(255, 248, 235, 0.42) 0%, rgba(197, 168, 128, 0.16) 50%, transparent 100%)",
-          filter: "blur(48px)",
-          zIndex: 0
-        }}
-      />
 
       {/* Grounding Contact Shadow positioned directly under bottle base */}
       <div 
@@ -357,10 +264,29 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 2. Middle Layer: Floating Transparent WebM Video (Plays 1 full rotation cycle & stops) */}
-      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-4 pb-0" suppressHydrationWarning>
+      {/* 2. Middle Layer: Floating Transparent WebM Video with Spotlight Targeted ONLY on the Bottle */}
+      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-4 pb-0 relative" suppressHydrationWarning>
+        {/* Studio Spotlight Cone Beam focused directly onto the Bottle */}
         <div 
-          className="relative h-[58vh] sm:h-[70vh] md:h-[80vh] max-h-[calc(100vh-270px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh]"
+          className="absolute top-[-8%] left-1/2 -translate-x-1/2 w-[340px] sm:w-[440px] h-[120%] pointer-events-none mix-blend-screen opacity-75 z-0"
+          style={{
+            background: "conic-gradient(from 166deg at 50% -5%, rgba(255, 252, 242, 0.58) 0deg, rgba(255, 248, 230, 0.30) 14deg, rgba(255, 248, 230, 0) 28deg, rgba(255, 248, 230, 0) 332deg, rgba(255, 248, 230, 0.30) 346deg, rgba(255, 252, 242, 0.58) 360deg)",
+            WebkitMaskImage: "radial-gradient(ellipse 65% 75% at 50% 45%, black 25%, rgba(0, 0, 0, 0.8) 55%, transparent 100%)",
+            maskImage: "radial-gradient(ellipse 65% 75% at 50% 45%, black 25%, rgba(0, 0, 0, 0.8) 55%, transparent 100%)",
+          }}
+        />
+
+        {/* Soft Source Light Glow directly over top of bottle */}
+        <div 
+          className="absolute top-[2%] left-1/2 -translate-x-1/2 w-[260px] h-[260px] rounded-full pointer-events-none mix-blend-screen z-0"
+          style={{
+            background: "radial-gradient(circle, rgba(255, 250, 235, 0.55) 0%, rgba(212, 175, 55, 0.18) 50%, transparent 80%)",
+            filter: "blur(28px)",
+          }}
+        />
+
+        <div 
+          className="relative h-[58vh] sm:h-[70vh] md:h-[80vh] max-h-[calc(100vh-270px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh] z-10"
           suppressHydrationWarning
         >
           <video
