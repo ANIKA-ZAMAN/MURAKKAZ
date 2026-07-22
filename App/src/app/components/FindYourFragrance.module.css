@@ -19,12 +19,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 520px;
-  height: 420px;
+  width: 840px;
+  height: 380px;
   background: radial-gradient(
     ellipse at center,
-    rgba(197, 168, 128, 0.14) 0%,
-    rgba(197, 168, 128, 0.06) 40%,
+    rgba(197, 168, 128, 0.16) 0%,
+    rgba(197, 168, 128, 0.07) 40%,
     rgba(197, 168, 128, 0.015) 70%,
     transparent 100%
   );
@@ -37,6 +37,8 @@
 .cardWrapper {
   position: relative;
   z-index: 2;
+  width: 100%;
+  max-width: 780px;
   animation: invitationFloat 6s ease-in-out infinite;
 }
 
@@ -45,12 +47,11 @@
   50% { transform: translateY(-3px); }
 }
 
-/* ── Invitation Card ── */
+/* ── Invitation Card (Wide Rectangular Landscape Layout) ── */
 .invitationCard {
   position: relative;
-  max-width: 480px;
   width: 100%;
-  padding: 3rem 2.75rem 2.5rem;
+  padding: 2.5rem 3.5rem 2.25rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -72,7 +73,7 @@
   border-radius: 24px;
 
   /* Subtle warm champagne border */
-  border: 1px solid rgba(185, 155, 108, 0.30);
+  border: 1px solid rgba(185, 155, 108, 0.32);
 
   /* Layered soft shadows for depth */
   box-shadow:
@@ -96,11 +97,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .invitationLogo {
-  width: 120px;
+  width: 115px;
   height: auto;
   object-fit: contain;
 }
@@ -110,8 +111,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 1.25rem;
+  gap: 12px;
+  margin-bottom: 1rem;
 }
 
 .bottomFlourish {
@@ -121,7 +122,7 @@
 
 .flourishDash {
   display: block;
-  width: 32px;
+  width: 48px;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, rgba(170, 140, 90, 0.35) 50%, transparent 100%);
 }
@@ -137,31 +138,31 @@
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.65rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   color: #9a8562;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 /* ── Heading ── */
 .heading {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
   font-weight: 500;
   color: #2a2520;
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  margin: 0 0 1rem 0;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.75rem 0;
 }
 
 /* ── Description ── */
 .description {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.92rem;
-  line-height: 1.75;
+  font-size: 0.95rem;
+  line-height: 1.65;
   color: #5a5147;
-  max-width: 380px;
-  margin: 0 0 1.5rem 0;
+  max-width: 620px;
+  margin: 0 0 1.25rem 0;
   font-style: italic;
 }
 
@@ -170,8 +171,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 1.75rem;
+  gap: 12px;
+  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
@@ -195,10 +196,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  height: 48px;
-  padding: 0 2rem;
-  border-radius: 24px;
+  gap: 10px;
+  height: 50px;
+  padding: 0 2.5rem;
+  border-radius: 25px;
   background: linear-gradient(135deg, #3a352e 0%, #2a2520 100%);
   color: #f3ebe0;
   text-decoration: none;
@@ -206,7 +207,7 @@
   transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
   position: relative;
   overflow: hidden;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .ctaButton::before {
