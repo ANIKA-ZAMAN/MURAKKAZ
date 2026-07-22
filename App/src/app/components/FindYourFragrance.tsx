@@ -1,28 +1,65 @@
 "use client";
 
 import Link from "next/link";
-import styles from "./homepage.module.css";
+import styles from "./FindYourFragrance.module.css";
 
 export default function FindYourFragrance() {
   return (
-    <section className={`${styles.section} ${styles.quizSection}`} suppressHydrationWarning>
-      <div className={styles.quizRadialGlow} />
-      <div className={`${styles.container} ${styles.quizContainer}`}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionLabel}>SIGNATURE CONSULTATION</span>
-          <h2 className={styles.sectionTitle}>Find Your Signature Fragrance</h2>
-          <div className={styles.quizHeaderDivider} />
-          <p className={styles.sectionSubtitle}>Your journey to signature discovery starts here</p>
-        </div>
-        
-        <p className={styles.quizDesc}>
-          Answer a few refined questions about your lifestyle, memories, and personal aesthetic to discover the Murakkaz creation that best complements your identity.
-        </p>
+    <section className={styles.invitationSection} suppressHydrationWarning>
+      {/* Soft golden ambient glow behind card */}
+      <div className={styles.ambientGlow} />
 
-        <div className={styles.quizButtonWrapper}>
-          <Link href="/scent-index" className={styles.primaryButton} suppressHydrationWarning>
-            Start the Quiz
+      {/* Floating invitation card */}
+      <div className={styles.cardWrapper}>
+        <div className={styles.invitationCard}>
+          {/* Embossed wax seal at top */}
+          <div className={styles.waxSeal}>
+            <div className={styles.sealInner}>
+              <span className={styles.sealLetter}>M</span>
+            </div>
+          </div>
+
+          {/* Decorative top flourish */}
+          <div className={styles.flourishLine}>
+            <span className={styles.flourishDash} />
+            <span className={styles.flourishDiamond}>◆</span>
+            <span className={styles.flourishDash} />
+          </div>
+
+          {/* Section label */}
+          <span className={styles.sectionLabel}>SIGNATURE FINDER</span>
+
+          {/* Heading */}
+          <h2 className={styles.heading}>Find Your Perfect Match</h2>
+
+          {/* Description */}
+          <p className={styles.description}>
+            Allow our curated consultation to guide you through a refined selection 
+            of fragrances, thoughtfully matched to your lifestyle, memories, and 
+            personal aesthetic.
+          </p>
+
+          {/* Metadata row */}
+          <div className={styles.metaRow}>
+            <span className={styles.metaItem}>2 Minutes</span>
+            <span className={styles.metaDot}>·</span>
+            <span className={styles.metaItem}>8 Questions</span>
+            <span className={styles.metaDot}>·</span>
+            <span className={styles.metaItem}>Top 3 Recommendations</span>
+          </div>
+
+          {/* CTA button */}
+          <Link href="/scent-index" className={styles.ctaButton} suppressHydrationWarning>
+            <span className={styles.ctaText}>Begin Consultation</span>
+            <span className={styles.ctaArrow}>→</span>
           </Link>
+
+          {/* Bottom flourish */}
+          <div className={styles.bottomFlourish}>
+            <span className={styles.flourishDash} />
+            <span className={styles.flourishDiamond}>◆</span>
+            <span className={styles.flourishDash} />
+          </div>
         </div>
       </div>
     </section>

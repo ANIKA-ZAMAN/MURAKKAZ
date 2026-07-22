@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════════
+   FindYourFragrance — Premium Invitation Card
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Section Wrapper ── */
+.invitationSection {
+  width: 100%;
+  padding: 5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Soft Golden Ambient Glow ── */
+.ambientGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 420px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(197, 168, 128, 0.14) 0%,
+    rgba(197, 168, 128, 0.06) 40%,
+    rgba(197, 168, 128, 0.015) 70%,
+    transparent 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(30px);
+}
+
+/* ── Card Wrapper — provides float animation ── */
+.cardWrapper {
+  position: relative;
+  z-index: 2;
+  animation: invitationFloat 6s ease-in-out infinite;
+}
+
+@keyframes invitationFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ── Invitation Card ── */
+.invitationCard {
+  position: relative;
+  max-width: 480px;
+  width: 100%;
+  padding: 3rem 2.75rem 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* Warm ivory paper surface */
+  background: linear-gradient(
+    168deg,
+    #fdfaf5 0%,
+    #f9f4ec 30%,
+    #f5efe4 65%,
+    #f2ead9 100%
+  );
+
+  /* Subtle paper texture overlay via noise */
+  background-image:
+    linear-gradient(168deg, #fdfaf5 0%, #f9f4ec 30%, #f5efe4 65%, #f2ead9 100%);
+
+  border-radius: 24px;
+
+  /* Subtle warm champagne border */
+  border: 1px solid rgba(185, 155, 108, 0.30);
+
+  /* Layered soft shadows for depth */
+  box-shadow:
+    0 2px 8px rgba(120, 95, 60, 0.04),
+    0 8px 24px rgba(120, 95, 60, 0.06),
+    0 20px 56px -8px rgba(80, 60, 30, 0.08);
+
+  transition: box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+.invitationCard:hover {
+  border-color: rgba(185, 155, 108, 0.45);
+  box-shadow:
+    0 2px 8px rgba(120, 95, 60, 0.05),
+    0 12px 32px rgba(120, 95, 60, 0.08),
+    0 24px 64px -8px rgba(80, 60, 30, 0.10);
+}
+
+/* ── Wax Seal ── */
+.waxSeal {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #b8965c 0%, #9a7a42 50%, #7d6134 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow:
+    0 2px 8px rgba(154, 122, 66, 0.25),
+    0 0 0 3px rgba(185, 155, 108, 0.12),
+    inset 0 1px 2px rgba(255, 245, 220, 0.25);
+  position: relative;
+}
+
+.sealInner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 245, 220, 0.30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sealLetter {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #faf3e4;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Decorative Flourish Lines ── */
+.flourishLine, .bottomFlourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.bottomFlourish {
+  margin-bottom: 0;
+  margin-top: 0.25rem;
+}
+
+.flourishDash {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(170, 140, 90, 0.35) 50%, transparent 100%);
+}
+
+.flourishDiamond {
+  font-size: 5px;
+  color: rgba(170, 140, 90, 0.40);
+  line-height: 1;
+}
+
+/* ── Section Label ── */
+.sectionLabel {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #9a8562;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Heading ── */
+.heading {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 1.85rem);
+  font-weight: 500;
+  color: #2a2520;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0 0 1rem 0;
+}
+
+/* ── Description ── */
+.description {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: #5a5147;
+  max-width: 380px;
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+}
+
+/* ── Metadata Row ── */
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #7a6f60;
+  text-transform: uppercase;
+}
+
+.metaDot {
+  font-size: 0.75rem;
+  color: rgba(170, 140, 90, 0.45);
+  line-height: 1;
+}
+
+/* ── CTA Button ── */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 2rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #3a352e 0%, #2a2520 100%);
+  color: #f3ebe0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.ctaButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 245, 220, 0.08) 50%, transparent 100%);
+  transition: left 0.65s ease;
+}
+
+.ctaButton:hover::before {
+  left: 100%;
+}
+
+.ctaButton:hover {
+  background: linear-gradient(135deg, #4a443c 0%, #3a352e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(42, 37, 32, 0.18);
+}
+
+.ctaText {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaArrow {
+  font-size: 1rem;
+  color: #c5a880;
+  transition: transform 0.35s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaButton:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+/* ══════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  .invitationSection {
+    padding: 3.5rem 1rem;
+  }
+
+  .invitationCard {
+    padding: 2.5rem 1.75rem 2rem;
+    max-width: 100%;
+    border-radius: 20px;
+  }
+
+  .waxSeal {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1.25rem;
+  }
+
+  .sealInner {
+    width: 36px;
+    height: 36px;
+  }
+
+  .sealLetter {
+    font-size: 17px;
+  }
+
+  .heading {
+    font-size: 1.35rem;
+  }
+
+  .description {
+    font-size: 0.875rem;
+  }
+
+  .metaRow {
+    gap: 6px;
+  }
+
+  .metaItem {
+    font-size: 0.62rem;
+  }
+
+  .ctaButton {
+    height: 44px;
+    padding: 0 1.5rem;
+  }
+
+  .ctaText {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .invitationCard {
+    padding: 2rem 1.25rem 1.75rem;
+  }
+
+  .metaRow {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .metaDot {
+    display: none;
+  }
+}
