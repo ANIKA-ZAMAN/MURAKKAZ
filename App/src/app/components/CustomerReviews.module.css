@@ -248,6 +248,15 @@
   font-size: 1rem;
   color: #3D352B;
   box-shadow: 0 2px 8px rgba(120, 95, 60, 0.08);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .authorDetails {

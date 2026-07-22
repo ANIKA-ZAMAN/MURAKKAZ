@@ -195,13 +195,14 @@ export default function CustomerReviews({
                   <div className={styles.authorFooter}>
                     <div className={styles.authorMeta}>
                       <div className={styles.authorAvatar}>
-                        {rev.name.charAt(0)}
+                        {rev.avatar ? (
+                          <img src={rev.avatar} alt={rev.name} className={styles.avatarImg} />
+                        ) : (
+                          <span>{rev.name.charAt(0)}</span>
+                        )}
                       </div>
                       <div className={styles.authorDetails}>
                         <h4 className={styles.authorName}>{rev.name}</h4>
-                        <span className={styles.verifiedBadge}>
-                          <span className={styles.verifiedCheck}>✓</span> {rev.verified}
-                        </span>
                       </div>
                     </div>
                   </div>
