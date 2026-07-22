@@ -13,7 +13,6 @@ export default function BestSellersSection() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionLabel}>THE BEST SELLERS</span>
           <h2 className={styles.sectionTitle}>Best Sellers</h2>
           <p className={styles.sectionSubtitle}>Indulge in our most celebrated creations</p>
         </div>

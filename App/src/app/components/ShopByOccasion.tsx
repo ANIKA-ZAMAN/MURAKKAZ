@@ -42,7 +42,6 @@ export default function ShopByOccasion() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionLabel}>THE OCCASIONS</span>
           <h2 className={styles.sectionTitle}>Shop by Occasion</h2>
           <p className={styles.sectionSubtitle}>Find the perfect silhouette for any moment</p>
         </div>

@@ -46,7 +46,6 @@ export default function MurakkazDifference() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionLabel}>OUR PHILOSOPHY</span>
           <h2 className={styles.sectionTitle}>The Murakkaz Difference</h2>
           <p className={styles.sectionSubtitle}>Standard of excellence in every bottle</p>
         </div>

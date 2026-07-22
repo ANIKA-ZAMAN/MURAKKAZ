@@ -39,7 +39,6 @@ export default function CustomerReviews() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionLabel}>TESTIMONIALS</span>
           <h2 className={styles.sectionTitle}>Customer Reviews</h2>
           <p className={styles.sectionSubtitle}>Words from our fragrance collectors</p>
         </div>

@@ -12,7 +12,6 @@ export default function UpcomingEventsSection() {
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
-          <span className={styles.sectionLabel}>EVENTS & EXPERIENCE</span>
           <h2 className={styles.sectionTitle}>Upcoming Events</h2>
           <p className={styles.sectionSubtitle}>Join us in person to explore our collection</p>
         </div>
