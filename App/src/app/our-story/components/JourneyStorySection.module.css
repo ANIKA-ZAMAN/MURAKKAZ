@@ -1,0 +1,201 @@
+/* ========================================== */
+/* Fixed Rail Timeline Section with Sliding & Fading Beads */
+/* ========================================== */
+
+.pinnedTimelineSection {
+  position: relative;
+  width: 100%;
+  background-color: var(--background, #F5F1E8);
+}
+
+.stickyViewport {
+  position: relative;
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--background, #F5F1E8);
+}
+
+.storyContainer {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.svgCol {
+  width: 380px;
+  min-width: 380px;
+  position: relative;
+  flex-shrink: 0;
+  margin-left: -60px;
+}
+
+.curveWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 381 / 725;
+}
+
+/* Static, 100% Fixed Arc Curve SVG */
+.halfCircleSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.arcPath {
+  fill: #7E766C; /* Warm taupe fixed rail */
+}
+
+/* Individual Milestone Beads Sliding Along Rail */
+.beadGroup {
+  will-change: transform, opacity, filter;
+  cursor: pointer;
+}
+
+.milestoneCircle {
+  fill: #F5F1E8;
+  stroke: #7E766C;
+  stroke-width: 8;
+  transition: stroke 0.45s ease,
+              fill 0.45s ease,
+              r 0.45s ease;
+  transform-origin: center;
+}
+
+.milestoneText {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 27px;
+  font-weight: 400;
+  fill: #767677;
+  text-anchor: middle;
+  dominant-baseline: central;
+  user-select: none;
+  transition: fill 0.4s ease, font-weight 0.4s ease;
+  pointer-events: none;
+}
+
+/* Active Center Milestone Bead (Stops at Center 263, 363 every time) */
+.activeMilestoneCircle {
+  stroke: #D6B36A !important;
+  fill: #FAF7F0 !important;
+  stroke-width: 5 !important;
+  r: 46px !important;
+  filter: drop-shadow(0 8px 18px rgba(214, 179, 106, 0.35));
+}
+
+.activeMilestoneText {
+  fill: #313134 !important;
+  font-weight: 500 !important;
+}
+
+/* Editorial Content Column */
+.contentCol {
+  flex: 1;
+  padding-left: 2.5rem;
+  padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 300px;
+  position: relative;
+}
+
+.storyContentBox {
+  width: 100%;
+  max-width: 620px;
+  will-change: transform, opacity;
+}
+
+.headingTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: clamp(2.2rem, 3.8vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.35;
+  color: #313134;
+  letter-spacing: -0.01em;
+  margin-bottom: 0;
+}
+
+.storyText {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.85;
+  color: #313134;
+  max-width: 600px;
+  letter-spacing: -0.005em;
+  opacity: 0.92;
+}
+
+/* Step Indicator Dots */
+.stepIndicatorRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2.25rem;
+}
+
+.stepDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: rgba(49, 49, 52, 0.25);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.stepDotActive {
+  background-color: #D6B36A;
+  transform: scale(1.35);
+  box-shadow: 0 0 8px rgba(214, 179, 106, 0.5);
+}
+
+/* ========================================== */
+/* RESPONSIVE DESIGN                         */
+/* ========================================== */
+
+@media (max-width: 900px) {
+  .stickyViewport {
+    min-height: auto;
+    padding: 3rem 0;
+  }
+
+  .storyContainer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .svgCol {
+    width: 280px;
+    min-width: 280px;
+    margin-left: -40px;
+    margin-bottom: 1.5rem;
+  }
+
+  .contentCol {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .storyText {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 480px) {
+  .svgCol {
+    width: 220px;
+    min-width: 220px;
+    margin-left: -30px;
+  }
+}
