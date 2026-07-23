@@ -196,8 +196,9 @@
   height: 50px;
   padding: 0 2.5rem;
   border-radius: 25px;
-  background: linear-gradient(135deg, #3a352e 0%, #2a2520 100%);
-  color: #f3ebe0;
+  background: transparent;
+  border: 1.5px solid #313134;
+  color: #313134;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
