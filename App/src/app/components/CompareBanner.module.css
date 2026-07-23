@@ -5,8 +5,7 @@
 .section {
   width: 100%;
   padding: 7.5rem 2rem;
-  /* Rich warm champagne-to-bronze gold canvas that harmonizes with #CBB9A1 while standing out */
-  background: linear-gradient(180deg, #D4C3AC 0%, #C4B097 50%, #B8A389 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -16,22 +15,7 @@
 
 /* ── Subtle Warm Ambient Spotlight Glow ── */
 .spotlightGlow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 850px;
-  height: 440px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 248, 235, 0.45) 0%,
-    rgba(242, 230, 212, 0.18) 45%,
-    transparent 75%
-  );
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(45px);
-  animation: spotlightPulse 8s ease-in-out infinite alternate;
+  display: none;
 }
 
 @keyframes spotlightPulse {

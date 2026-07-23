@@ -11,26 +11,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: transparent;
 }
 
 /* ── Soft Golden Ambient Glow ── */
 .ambientGlow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 840px;
-  height: 380px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(197, 168, 128, 0.16) 0%,
-    rgba(197, 168, 128, 0.07) 40%,
-    rgba(197, 168, 128, 0.015) 70%,
-    transparent 100%
-  );
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(30px);
+  display: none;
 }
 
 /* ── Card Wrapper — provides float animation ── */

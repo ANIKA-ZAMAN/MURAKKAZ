@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import Hero from "./components/Hero";
 import FeaturedCollections from "./components/FeaturedCollections";
 import FindYourFragrance from "./components/FindYourFragrance";
@@ -10,15 +13,19 @@ import UpcomingEventsSection from "./components/UpcomingEventsSection";
 import ScrollReveal from "./components/ScrollReveal";
 
 export default function Home() {
+  // Apply #CBB9A1 background ONLY while on the Home page, and clean up when navigating to other pages
+  useEffect(() => {
+    document.body.style.backgroundColor = "#CBB9A1";
+    document.body.style.backgroundImage = "none";
+
+    return () => {
+      document.body.style.backgroundColor = "";
+      document.body.style.backgroundImage = "";
+    };
+  }, []);
+
   return (
-    <div className="w-full min-h-[calc(100vh-96px)] bg-transparent flex flex-col justify-between" suppressHydrationWarning>
-      {/* Instant static body background override to prevent flashing and texture in header */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        html, body {
-          background-color: #CBB9A1 !important;
-          background-image: none !important;
-        }
-      `}} />
+    <div className="w-full min-h-[calc(100vh-96px)] bg-[#CBB9A1] flex flex-col justify-between" suppressHydrationWarning>
       <Hero />
       <ScrollReveal variant="fade-up"><FeaturedCollections /></ScrollReveal>
       <ScrollReveal variant="none"><FindYourFragrance /></ScrollReveal>
@@ -31,6 +38,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-

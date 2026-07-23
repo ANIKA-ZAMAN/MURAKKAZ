@@ -341,14 +341,7 @@ export default function Hero() {
         </div>
       )}
       
-      {/* Soft vignette overlay for 10-15% contrast boost */}
-      <div 
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, transparent 60%, rgba(35, 15, 10, 0.08) 100%)",
-          zIndex: 1
-        }}
-      />
+
 
       {/* Ambient Depth Shadow behind bottle separating it from MURAKKAZ typography */}
       <div 
