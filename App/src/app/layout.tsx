@@ -30,6 +30,8 @@ export const metadata: Metadata = {
   description: "Recreated UI from elements design references",
 };
 
+import SmoothScrollProvider from "./components/SmoothScrollProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -93,11 +95,13 @@ export default function RootLayout({
             })();
           `}
         </Script>
-        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", width: "100%" }} suppressHydrationWarning>
-          <Navbar />
-          {children}
-          <Footer />
-        </div>
+        <SmoothScrollProvider>
+          <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", width: "100%" }} suppressHydrationWarning>
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

@@ -11,8 +11,9 @@ export default function CreatorSection() {
     <section className={styles.creatorSection} aria-labelledby="creator-heading">
       <div className={styles.creatorContainer}>
         <div className={styles.creatorTextCol}>
-          <h1 id="creator-heading" className={styles.sectionHeadingLarge}>
-            {creator.headingLine1}<br />{creator.headingLine2}
+          <span className={styles.creatorSubheading}>{creator.headingLine1}</span>
+          <h1 id="creator-heading" className={styles.creatorMainHeading}>
+            {creator.headingLine2}
           </h1>
           <p className={styles.creatorParagraph}>
             {creator.paragraph}

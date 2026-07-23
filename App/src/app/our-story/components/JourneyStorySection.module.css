@@ -1,10 +1,11 @@
 /* ========================================== */
-/* Fixed Rail Timeline Section with Sliding & Fading Beads */
+/* Fixed Semi-Circle Rail Timeline Section   */
 /* ========================================== */
 
 .pinnedTimelineSection {
   position: relative;
   width: 100%;
+  padding-top: 5rem;
   background-color: var(--background, #F5F1E8);
 }
 
@@ -21,7 +22,7 @@
 
 .storyContainer {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -29,20 +30,20 @@
 }
 
 .svgCol {
-  width: 380px;
-  min-width: 380px;
+  width: 320px;
+  min-width: 320px;
   position: relative;
   flex-shrink: 0;
-  margin-left: -60px;
+  margin-left: -40px;
 }
 
 .curveWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 381 / 725;
+  aspect-ratio: 320 / 725;
 }
 
-/* Static, 100% Fixed Arc Curve SVG */
+/* 180° Perfect Semi-Circle Arc SVG Flush to Screen Edge */
 .halfCircleSvg {
   width: 100%;
   height: 100%;
@@ -51,10 +52,10 @@
 }
 
 .arcPath {
-  fill: #7E766C; /* Warm taupe fixed rail */
+  fill: #313134; /* Murakkaz Black */
 }
 
-/* Individual Milestone Beads Sliding Along Rail */
+/* Milestone Beads Sliding Along Rail */
 .beadGroup {
   will-change: transform, opacity, filter;
   cursor: pointer;
@@ -62,8 +63,8 @@
 
 .milestoneCircle {
   fill: #F5F1E8;
-  stroke: #7E766C;
-  stroke-width: 8;
+  stroke: #820011; /* Murakkaz Red Border */
+  stroke-width: 7;
   transition: stroke 0.45s ease,
               fill 0.45s ease,
               r 0.45s ease;
@@ -72,9 +73,9 @@
 
 .milestoneText {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 27px;
+  font-size: 26px;
   font-weight: 400;
-  fill: #767677;
+  fill: #313134;
   text-anchor: middle;
   dominant-baseline: central;
   user-select: none;
@@ -82,33 +83,34 @@
   pointer-events: none;
 }
 
-/* Active Center Milestone Bead (Stops at Center 263, 363 every time) */
+/* Active Center Milestone Bead (Murakkaz Red Border & Soft Glow) */
 .activeMilestoneCircle {
-  stroke: #D6B36A !important;
+  stroke: #820011 !important; /* Murakkaz Red Border */
   fill: #FAF7F0 !important;
-  stroke-width: 5 !important;
-  r: 46px !important;
-  filter: drop-shadow(0 8px 18px rgba(214, 179, 106, 0.35));
+  stroke-width: 6 !important;
+  r: 45px !important;
+  filter: drop-shadow(0 8px 18px rgba(130, 0, 17, 0.35));
 }
 
 .activeMilestoneText {
-  fill: #313134 !important;
-  font-weight: 500 !important;
+  fill: #820011 !important;
+  font-weight: 600 !important;
 }
 
-/* Editorial Content Column */
+/* Editorial Content Column Grid Stack (Prevents layout thrashing & lag) */
 .contentCol {
   flex: 1;
-  padding-left: 2.5rem;
+  padding-left: 3rem;
   padding-right: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 300px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  min-height: 320px;
   position: relative;
 }
 
 .storyContentBox {
+  grid-area: 1 / 1;
   width: 100%;
   max-width: 620px;
   will-change: transform, opacity;
@@ -154,9 +156,9 @@
 }
 
 .stepDotActive {
-  background-color: #D6B36A;
+  background-color: #820011;
   transform: scale(1.35);
-  box-shadow: 0 0 8px rgba(214, 179, 106, 0.5);
+  box-shadow: 0 0 8px rgba(130, 0, 17, 0.5);
 }
 
 /* ========================================== */
@@ -175,9 +177,9 @@
   }
 
   .svgCol {
-    width: 280px;
-    min-width: 280px;
-    margin-left: -40px;
+    width: 260px;
+    min-width: 260px;
+    margin-left: -20px;
     margin-bottom: 1.5rem;
   }
 
@@ -188,14 +190,14 @@
 
   .storyText {
     font-size: 1rem;
-    line-height: 1.65;
+    line-height: 1.7;
   }
 }
 
 @media (max-width: 480px) {
   .svgCol {
-    width: 220px;
-    min-width: 220px;
-    margin-left: -30px;
+    width: 210px;
+    min-width: 210px;
+    margin-left: -15px;
   }
 }
