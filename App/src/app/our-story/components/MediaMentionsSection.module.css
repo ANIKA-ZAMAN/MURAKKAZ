@@ -5,11 +5,13 @@
   padding: 5rem 2rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
 }
 
 .headingGroup {
   margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .title {
@@ -28,7 +30,7 @@
   letter-spacing: 0.02em;
 }
 
-/* Luxury Compact Video Frame (Smaller & Aligned with page layout) */
+/* Luxury Compact Video Frame (Centered Exactly in the Middle of the Page) */
 .videoContainer {
   position: relative;
   width: 100%;
@@ -40,6 +42,7 @@
   overflow: hidden;
   background-color: #EAE5DB;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
 }
 
 .videoElement {
