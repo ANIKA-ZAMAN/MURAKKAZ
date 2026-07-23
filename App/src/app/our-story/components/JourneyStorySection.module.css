@@ -52,7 +52,7 @@
 }
 
 .arcPath {
-  fill: #313134; /* Murakkaz Black */
+  fill: #59595B; /* Charcoal Grey matching reference image */
 }
 
 /* Milestone Beads Sliding Along Rail */
@@ -63,8 +63,8 @@
 
 .milestoneCircle {
   fill: #F5F1E8;
-  stroke: #820011; /* Murakkaz Red Border */
-  stroke-width: 7;
+  stroke: #59595B; /* Charcoal Grey Border matching reference image */
+  stroke-width: 6.5;
   transition: stroke 0.45s ease,
               fill 0.45s ease,
               r 0.45s ease;
@@ -73,9 +73,9 @@
 
 .milestoneText {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 26px;
+  font-size: 25px;
   font-weight: 400;
-  fill: #313134;
+  fill: #59595B;
   text-anchor: middle;
   dominant-baseline: central;
   user-select: none;
@@ -83,18 +83,22 @@
   pointer-events: none;
 }
 
-/* Active Center Milestone Bead (Murakkaz Red Border & Soft Glow) */
+/* Active Center Milestone Bead */
 .activeMilestoneCircle {
-  stroke: #820011 !important; /* Murakkaz Red Border */
-  fill: #FAF7F0 !important;
-  stroke-width: 6 !important;
-  r: 45px !important;
-  filter: drop-shadow(0 8px 18px rgba(130, 0, 17, 0.35));
+  stroke: #59595B !important;
+  fill: #F5F1E8 !important;
+  stroke-width: 6.5 !important;
+  r: 42px !important;
 }
 
 .activeMilestoneText {
-  fill: #820011 !important;
-  font-weight: 600 !important;
+  fill: #59595B !important;
+  font-weight: 500 !important;
+}
+
+.pointyPointer {
+  fill: #59595B;
+  transition: opacity 0.3s ease;
 }
 
 /* Editorial Content Column Grid Stack (Prevents layout thrashing & lag) */
@@ -156,9 +160,9 @@
 }
 
 .stepDotActive {
-  background-color: #820011;
+  background-color: #59595B;
   transform: scale(1.35);
-  box-shadow: 0 0 8px rgba(130, 0, 17, 0.5);
+  box-shadow: 0 0 8px rgba(89, 89, 91, 0.4);
 }
 
 /* ========================================== */

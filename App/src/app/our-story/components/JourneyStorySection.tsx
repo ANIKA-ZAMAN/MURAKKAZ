@@ -192,6 +192,12 @@ export default function JourneyStorySection() {
                           isActive ? styles.activeMilestoneCircle : ""
                         }`}
                       />
+                      {isActive && (
+                        <path
+                          d={`M ${initPos.x + 39} ${initPos.y - 11} L ${initPos.x + 58} ${initPos.y} L ${initPos.x + 39} ${initPos.y + 11} Z`}
+                          className={styles.pointyPointer}
+                        />
+                      )}
                       <text
                         x={initPos.x}
                         y={initPos.y + 1}
