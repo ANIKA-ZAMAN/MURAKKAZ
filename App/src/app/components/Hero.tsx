@@ -82,24 +82,25 @@ function HeroActions() {
     <div className="flex flex-col items-center justify-center gap-4.5 -translate-y-14 sm:-translate-y-[64px] pointer-events-auto z-30" suppressHydrationWarning>
       {/* Primary CTA + Search Bar Row */}
       <div className="flex items-center justify-center gap-4">
-        {/* 1. Primary Luxury CTA Button with Sliding Arrow */}
+        {/* 1. Primary Luxury CTA Button with Sliding Arrow & Subtle Pulse Glow */}
         <Link
           href="/shop"
-          className="group relative inline-flex items-center justify-center min-w-[250px] sm:min-w-[270px] px-10 h-[56px] rounded-full border-1.5 border-[#313134] bg-transparent text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] hover:border-[#313134] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center min-w-[250px] sm:min-w-[270px] px-10 h-[56px] rounded-full border border-[#C5A880] bg-gradient-to-r from-[#FDFBF7] via-[#F6EEDF] to-[#E9D9C3] text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase shadow-[0_8px_28px_rgba(49,49,52,0.08)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ 
             fontFamily: "var(--font-lora), Georgia, serif",
+            animation: "ctaPulseGlow 5s ease-in-out infinite alternate"
           }}
           suppressHydrationWarning
         >
           {/* Shimmer light sweep on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-1000 ease-in-out group-hover:left-[100%] pointer-events-none" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/60 to-transparent transition-all duration-1000 ease-in-out group-hover:left-[100%] pointer-events-none" />
           <span className="relative z-10 w-full flex items-center justify-center gap-2.5 pl-[0.2em]">
             <span>Shop Collection</span>
-            <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-2 text-[#313134]">→</span>
+            <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-2 text-[#B8965C]">→</span>
           </span>
         </Link>
 
-        {/* 2. Search Button */}
+        {/* 2. Search Button (Perfect Height & Design System Match) */}
         <form
           onSubmit={handleSearchSubmit}
           onMouseEnter={() => setIsExpanded(true)}
@@ -109,16 +110,16 @@ function HeroActions() {
             }
           }}
           onClick={() => setIsExpanded(true)}
-          className={`group relative flex items-center h-[56px] rounded-full border-1.5 border-[#313134] bg-transparent text-[#313134] transition-all duration-500 ease-out overflow-hidden ${
+          className={`group relative flex items-center h-[56px] rounded-full border border-[#C5A880] bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md shadow-[0_8px_28px_rgba(49,49,52,0.08)] transition-all duration-500 ease-out overflow-hidden ${
             isExpanded || searchQuery 
-              ? "w-64 px-5.5 bg-[#FAF7F0] shadow-[0_12px_28px_rgba(49,49,52,0.18)]" 
-              : "w-[56px] justify-center cursor-pointer hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] active:scale-[0.97] active:translate-y-0"
+              ? "w-64 px-5.5 shadow-[0_14px_32px_rgba(197,168,128,0.4)] border-[#B8965C]" 
+              : "w-[56px] justify-center cursor-pointer hover:-translate-y-[3px] hover:shadow-[0_16px_36px_rgba(197,168,128,0.45)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0"
           }`}
           suppressHydrationWarning
         >
           <button
             type="submit"
-            className="flex items-center justify-center w-5 h-5 text-[#313134] group-hover:scale-115 transition-all duration-400 outline-none border-none bg-transparent cursor-pointer shrink-0"
+            className="flex items-center justify-center w-5 h-5 text-[#313134] group-hover:scale-115 hover:text-[#B8965C] transition-all duration-400 outline-none border-none bg-transparent cursor-pointer shrink-0"
             aria-label="Search Fragrances"
           >
             <svg
@@ -144,7 +145,7 @@ function HeroActions() {
             onBlur={() => {
               if (!searchQuery) setIsExpanded(false);
             }}
-            className={`ml-3 bg-transparent text-[#313134] font-serif-text text-[13.5px] font-medium outline-none border-none w-full placeholder:text-[#313134]/70 ${
+            className={`ml-3 bg-transparent text-[#313134] font-serif-text text-[13.5px] font-medium outline-none border-none w-full placeholder:text-[#6e675d]/80 ${
               isExpanded || searchQuery ? "opacity-100 block" : "opacity-0 hidden"
             }`}
             style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
@@ -157,7 +158,7 @@ function HeroActions() {
                 e.stopPropagation();
                 setSearchQuery("");
               }}
-              className="text-[#313134] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-3.5 transition-colors"
+              className="text-[#6e675d] hover:text-[#B8965C] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-3.5 transition-colors"
               aria-label="Clear search"
             >
               ✕
@@ -171,27 +172,27 @@ function HeroActions() {
         {/* Button 1: Find Your Fragrance */}
         <Link
           href="/scent-index"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border-1.5 border-[#313134] bg-transparent text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
           {/* Subtle light sweep shimmer on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
           <span className="relative z-10">Find Your Fragrance</span>
-          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#313134]">→</span>
+          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#B8965C]">→</span>
         </Link>
 
         {/* Button 2: Compare Perfumes */}
         <Link
           href="/compare"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border-1.5 border-[#313134] bg-transparent text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border border-[#C5A880]/80 bg-gradient-to-r from-[#FDFBF7]/95 via-[#F6EEDF]/95 to-[#E9D9C3]/95 backdrop-blur-md text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase shadow-[0_6px_22px_rgba(49,49,52,0.07)] transition-all duration-500 ease-out hover:-translate-y-[3px] hover:shadow-[0_14px_32px_rgba(197,168,128,0.4)] hover:border-[#B8965C] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
           {/* Subtle light sweep shimmer on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
           <span className="relative z-10">Compare Perfumes</span>
-          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#313134]">→</span>
+          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#B8965C]">→</span>
         </Link>
       </div>
     </div>
