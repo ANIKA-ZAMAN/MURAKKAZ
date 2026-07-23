@@ -136,15 +136,13 @@
 }
 
 :global(.reveal) .collectionCard {
-  opacity: 0;
-  transform: translateY(35px);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 :global(.reveal.visible) .collectionCard {
   opacity: 1;
-  transform: translateY(0);
-  transition-delay: var(--delay, 0ms);
+  transform: none;
 }
 
 :global(body.dark-theme) .collectionCard {
@@ -183,14 +181,13 @@
 }
 
 :global(.reveal) .collectionImage {
-  opacity: 0;
-  transform: scale(0.96);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 :global(.reveal.visible) .collectionImage {
   opacity: 1;
-  transform: scale(1);
+  transform: none;
 }
 
 .collectionCard:hover .collectionImage {
@@ -460,15 +457,13 @@
 }
 
 :global(.reveal) .occasionCard {
-  opacity: 0;
-  transform: translateY(30px);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 :global(.reveal.visible) .occasionCard {
   opacity: 1;
-  transform: translateY(0);
-  transition-delay: var(--delay, 0ms);
+  transform: none;
 }
 
 .occasionCard:hover {
@@ -490,14 +485,13 @@
 }
 
 :global(.reveal) .occasionImage {
-  opacity: 0;
-  transform: scale(0.96);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 :global(.reveal.visible) .occasionImage {
   opacity: 1;
-  transform: scale(1);
+  transform: none;
 }
 
 .occasionCard:hover .occasionImage {
@@ -743,15 +737,13 @@
 }
 
 :global(.reveal) .eventCard {
-  opacity: 0;
-  transform: translateX(-35px);
-  will-change: opacity, transform;
+  opacity: 1;
+  transform: none;
 }
 
 :global(.reveal.visible) .eventCard {
   opacity: 1;
-  transform: translateX(0);
-  transition-delay: var(--delay, 0ms);
+  transform: none;
 }
 
 .eventCard:hover {
