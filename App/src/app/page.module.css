@@ -149,10 +149,10 @@
   width: 100%;
   max-width: 620px;
   aspect-ratio: 1.32 / 1;
-  border: 5px solid #2b2e33;
-  border-radius: 16px;
+  border: 7px solid #2d3036;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
   transition: transform 0.3s ease;
 }
 
@@ -162,6 +162,7 @@
 
 .creatorImage {
   object-fit: cover;
+  filter: grayscale(100%) contrast(108%);
 }
 
 
