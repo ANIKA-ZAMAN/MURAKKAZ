@@ -29,8 +29,8 @@ const ANGLE_SPACING_DEG = 58; // Spacious angle matching Picture 2
 const getRailPos = (angleDeg: number) => {
   const rad = (angleDeg * Math.PI) / 180;
   return {
-    x: XC + R * Math.cos(rad),
-    y: YC + R * Math.sin(rad),
+    x: Math.round((XC + R * Math.cos(rad)) * 1000) / 1000,
+    y: Math.round((YC + R * Math.sin(rad)) * 1000) / 1000,
   };
 };
 
@@ -55,13 +55,13 @@ export default function JourneyStorySection() {
     const trigger = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: "top top",
-      end: `+=${totalSteps * 85}%`,
+      end: `+=${totalSteps * 100}%`,
       pin: true,
       pinSpacing: true,
       onUpdate: (self) => {
         const step = Math.min(
           totalSteps - 1,
-          Math.floor(self.progress * totalSteps)
+          Math.floor(self.progress * totalSteps * 0.999)
         );
         setActiveIdx((prev) => (prev !== step ? step : prev));
       },

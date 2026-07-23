@@ -1,0 +1,125 @@
+.wrapper {
+  width: 100%;
+  background-color: #222224; /* Dark charcoal background matching screenshot */
+  color: #F5F1E8;
+  padding: 6rem 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+
+.leftCol {
+  flex: 1;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  color: #F5F1E8;
+  line-height: 1.2;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.015em;
+}
+
+/* Interactive Award Tabs Grid */
+.tabsGrid {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  flex: 1;
+  min-width: 160px;
+  padding: 1.15rem 1.25rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #EFEADF;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tabBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #D6B36A;
+}
+
+.activeTabBtn {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: #D6B36A !important;
+  color: #FAF7F0 !important;
+  box-shadow: 0 4px 14px rgba(214, 179, 106, 0.2);
+}
+
+/* Detail Description Box */
+.detailBox {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 2.25rem;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.detailText {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.96rem;
+  line-height: 1.8;
+  color: #E0DACD;
+  opacity: 0.92;
+}
+
+/* Right Column: Media Showcase Frame */
+.rightCol {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mediaFrame {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  aspect-ratio: 1.35 / 1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mediaImage {
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  .wrapper {
+    padding: 4rem 0;
+  }
+  .container {
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .leftCol, .rightCol {
+    max-width: 100%;
+  }
+  .tabsGrid {
+    flex-direction: column;
+  }
+}

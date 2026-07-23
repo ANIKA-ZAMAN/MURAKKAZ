@@ -8,6 +8,7 @@ export const ourStoryData = {
     image: "/images/events/eliyas.jpg",
     imageAlt: "Eliyash Hossain - The Creator of Murakkaz",
   },
+
   journeySections: [
     {
       id: "journey-heading",
@@ -47,27 +48,63 @@ export const ourStoryData = {
       text: "Driven by friends and close circles, small private displays at personal gatherings instantly resonated. But to maintain uncompromising luxury, a strict policy was set: every single raw material would be imported directly from international sources, refusing to dilute the art with compromised local ingredients.",
     },
   ],
+
+  mediaMentions: {
+    heading: "Trust Signals & Media Mentions",
+    subheading: "Recognized Taste & Community Authority",
+    videoUrl: "", // Place video URL here when ready (HTML5 video / MP4 / embed)
+    posterImage: "/images/events/eliyas.jpg",
+  },
+
   behindBrand: {
     heading: "Behind The Brand",
     cards: [
       {
         number: "01",
-        title: "Sourced Globally, Matured Locally",
-        desc: "We import high-grade perfume oil globally and dry-mix it in Bangladesh, making it ideal for our tropical weather. Each formula is hand-crafted and batch-matured.",
+        title: "Sourced Globally, Mastered Locally",
+        desc: "We source high-grade perfume oils from traditional European glasshouses, re-architecting them to retain strong projection and beast-mode longevity tailored for our local landscape.",
       },
       {
         number: "02",
-        title: "The Founder's Soul",
-        desc: "Not only do we import bottle formulations, we develop them from scratch. Each bottle is a canvas for art, representing our heritage and luxury.",
+        title: "The Founder's Seal",
+        desc: "Not a single bottle leaves our facility without my personal sensory audit. If a batch doesn't earn heads or last through the day, it doesn't get the Murakkaz label.",
       },
       {
         number: "03",
         title: "Honest Premium Pricing",
-        desc: "We believe high-quality fragrance shouldn't cost a fortune. By removing middle-men, we bring you premium fragrances at a fraction of the cost.",
+        desc: "We source high-grade perfume oils from traditional European glasshouses, re-architecting them to retain strong projection and beast-mode longevity tailored for our local landscape.",
       },
     ],
-    footerText: "Not only made in Bangladesh, MATURED in here.",
+    footerText: "No Compromises. No Shortcuts. Just Pure Luxury.",
   },
+
+  awards: {
+    heading: "Award Winning Collections",
+    tabs: [
+      {
+        id: "sme",
+        title: "Midas SME & Rajshahi Award",
+        description:
+          "A foundational milestone in our brand's journey came through the recognition by Midas SME and the prestigious Rajshahi SME Fair award. This honor acknowledged our unique craftsmanship, innovative micro-enterprise model, and uncompromised dedication to bringing authentic, raw-material-driven perfumery to the local landscape. It served as a powerful institutional validation of our core philosophy: that true luxury relies on meticulous formulation and raw-material purity rather than mass commercial scaling.",
+        image: "/images/events/eliyas.jpg",
+      },
+      {
+        id: "brac",
+        title: "BRAC University Accolades",
+        description:
+          "Recognized for artisanal excellence and entrepreneurial innovation during the BRAC University National Youth Entrepreneurship Showcase, establishing Murakkaz as a pioneering fragrance house.",
+        image: "/images/events/eliyas.jpg",
+      },
+      {
+        id: "nsu",
+        title: "North South University Honor",
+        description:
+          "Awarded by North South University's School of Business & Economics for excellence in local manufacturing, brand authenticity, and luxury fragrance formulation.",
+        image: "/images/events/eliyas.jpg",
+      },
+    ],
+  },
+
   gallery: {
     heading: "Event Gallery",
     paragraph:
