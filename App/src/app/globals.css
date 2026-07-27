@@ -228,13 +228,13 @@ body.no-ambient::before {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
+/* ── Hide Next.js Dev Indicator Badge ── */
+nextjs-portal,
+[data-nextjs-toast-wrapper],
+[data-nextjs-dev-tools-button],
+#nextjs-dev-tools {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}

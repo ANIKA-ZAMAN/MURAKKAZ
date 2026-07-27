@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import Hero from "./components/Hero";
 import FeaturedCollections from "./components/FeaturedCollections";
 import FindYourFragrance from "./components/FindYourFragrance";
-import BestSellersSection from "./components/BestSellersSection";
 import ShopByOccasion from "./components/ShopByOccasion";
 import MurakkazDifference from "./components/MurakkazDifference";
 import CompareBanner from "./components/CompareBanner";
@@ -25,11 +24,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full min-h-[calc(100vh-96px)] bg-[#CBB9A1] flex flex-col justify-between" suppressHydrationWarning>
+    <div className="w-full min-h-[calc(100vh-96px)] bg-[#CBB9A1] flex flex-col justify-between overflow-x-hidden" suppressHydrationWarning>
       <Hero />
       <ScrollReveal variant="fade-up"><FeaturedCollections /></ScrollReveal>
       <ScrollReveal variant="none"><FindYourFragrance /></ScrollReveal>
-      <ScrollReveal variant="scale-fade"><BestSellersSection /></ScrollReveal>
       <ScrollReveal variant="scale-fade"><ShopByOccasion /></ScrollReveal>
       <ScrollReveal variant="none"><MurakkazDifference /></ScrollReveal>
       <ScrollReveal variant="spotlight-reveal"><CompareBanner /></ScrollReveal>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const homeNavLinks = [
   { label: "Our Story", href: "/our-story" },
@@ -29,13 +29,39 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [hoveredIcon, setHoveredIcon] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Swipe-to-close touch ref
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchCurrentX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchCurrentX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current !== null && touchCurrentX.current !== null) {
+      const diffX = touchStartX.current - touchCurrentX.current;
+      if (diffX > 50) {
+        setIsMobileMenuOpen(false);
+      }
+    }
+    touchStartX.current = null;
+    touchCurrentX.current = null;
+  };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,6 +88,22 @@ export default function Navbar() {
     setCartCount(0);
   };
 
+  const updateWishlistCount = () => {
+    const saved = localStorage.getItem("wishlist-items");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setWishlistCount(parsed.length);
+          return;
+        }
+      } catch (e) {
+        console.error("Error reading wishlist count", e);
+      }
+    }
+    setWishlistCount(0);
+  };
+
   const updateUserPhoto = () => {
     const savedUser = localStorage.getItem("murakkaz-user");
     if (savedUser) {
@@ -69,18 +111,21 @@ export default function Navbar() {
         const parsed = JSON.parse(savedUser);
         if (parsed.photo) setUserPhoto(parsed.photo);
         if (parsed.name) setUserName(parsed.name);
+        setIsLoggedIn(true);
         return;
       } catch (e) {
-        console.error("Error reading user photo", e);
+        console.error("Error reading user info", e);
       }
     }
     setUserPhoto(null);
     setUserName(null);
+    setIsLoggedIn(false);
   };
 
   useEffect(() => {
     setMounted(true);
     updateCount();
+    updateWishlistCount();
     updateUserPhoto();
 
     const handleScroll = () => {
@@ -89,11 +134,13 @@ export default function Navbar() {
 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("cart-updated", updateCount);
+    window.addEventListener("wishlist-updated", updateWishlistCount);
     window.addEventListener("murakkaz-user-updated", updateUserPhoto);
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("cart-updated", updateCount);
+      window.removeEventListener("wishlist-updated", updateWishlistCount);
       window.removeEventListener("murakkaz-user-updated", updateUserPhoto);
     };
   }, []);
@@ -124,6 +171,36 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Drawer Keyframes for Staggered Menu & Profile entrance */}
+      <style suppressHydrationWarning>{`
+        @keyframes menuStaggerIn {
+          from {
+            opacity: 0;
+            transform: translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes profileFadeUp {
+          from {
+            opacity: 0;
+            transform: scale(0.98) translateY(12px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+        .stagger-item-enter {
+          animation: menuStaggerIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .stagger-profile-enter {
+          animation: profileFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.28s forwards;
+        }
+      `}</style>
+
       {/* ── Main Header ── */}
       <header 
         className={`fixed top-0 left-0 right-0 w-full transition-all duration-500 ease-out flex justify-center items-center z-50 pointer-events-auto ${
@@ -137,11 +214,11 @@ export default function Navbar() {
       >
         <nav className="relative w-full max-w-[1400px] h-14 sm:h-18 lg:h-20 select-none flex items-center justify-between px-4 sm:px-6 bg-transparent" suppressHydrationWarning>
           
-          {/* Mobile Hamburger Toggle Button (< 992px) */}
+          {/* Mobile Hamburger Toggle Button (< 992px) - min 44x44px target */}
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
-            className="lg:hidden flex items-center justify-center w-11 h-11 text-[#313134] hover:text-[#820011] transition-colors rounded-full focus:outline-none z-20 cursor-pointer"
+            className="lg:hidden flex items-center justify-center w-11 h-11 text-[#313134] hover:text-[#820011] active:scale-95 transition-all rounded-full focus:outline-none z-20 cursor-pointer"
             aria-label="Open Navigation Drawer"
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -166,7 +243,7 @@ export default function Navbar() {
             />
           </Link>
 
-          {/* Desktop Links (>= 992px) */}
+          {/* Desktop Links (>= 992px) - Untouched */}
           <ul className="hidden lg:flex items-center gap-8 xl:gap-14 list-none m-0 p-0 flex-1 justify-center z-10" suppressHydrationWarning>
             {currentNavLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -188,7 +265,7 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop Percentage-Positioned Icons (>= 992px) */}
+          {/* Desktop Percentage-Positioned Icons (>= 992px) - Untouched */}
           <div className="hidden lg:block">
             {/* Wishlist Link */}
             <Link 
@@ -288,12 +365,12 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Right Icons Container (< 992px) */}
+          {/* Mobile Right Icons Container (< 992px) - min 44x44px touch target */}
           <div className="flex lg:hidden items-center gap-3.5 sm:gap-5 z-20">
             {/* Mobile Wishlist Icon */}
             <Link 
               href="/wishlist" 
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors" 
+              className="relative w-11 h-11 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all" 
               aria-label="Wishlist"
             >
               <svg viewBox="1221 20 24 24" className="w-5.5 h-5.5" xmlns="http://www.w3.org/2000/svg">
@@ -302,12 +379,17 @@ export default function Navbar() {
                   fill={isWishlistActive ? "#820011" : "#5F5F61"}
                 />
               </svg>
+              {wishlistCount > 0 && (
+                <span className="absolute top-1 right-1 bg-[#820011] text-white font-serif-text text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
 
             {/* Mobile Cart Icon */}
             <Link 
               href="/cart" 
-              className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors" 
+              className="relative w-11 h-11 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all" 
               aria-label="Cart"
             >
               <svg viewBox="1260 20 24 24" className="w-5.5 h-5.5" xmlns="http://www.w3.org/2000/svg">
@@ -317,7 +399,7 @@ export default function Navbar() {
                 />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute top-0.5 right-0.5 bg-[#820011] text-white font-serif-text text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">
+                <span className="absolute top-1 right-1 bg-[#820011] text-white font-serif-text text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow">
                   {cartCount}
                 </span>
               )}
@@ -326,7 +408,7 @@ export default function Navbar() {
             {/* Mobile Account Icon */}
             <Link 
               href="/account" 
-              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors" 
+              className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-black/5 active:scale-95 transition-all" 
               aria-label="Account"
             >
               {userPhoto ? (
@@ -338,7 +420,7 @@ export default function Navbar() {
               ) : (
                 <svg viewBox="1299 20 24 24" className="w-5.5 h-5.5" xmlns="http://www.w3.org/2000/svg">
                   <path 
-                    d="M1304.85 37.1C1305.7 36.45 1306.65 35.9375 1307.7 35.5625C1308.75 35.1875 1309.85 35 1311 35C1312.15 35 1313.25 35.1875 1314.3 35.5625C1315.35 35.9375 1316.3 36.45 1317.15 37.1C1317.73 36.4167 1318.19 35.6417 1318.51 34.775C1318.84 33.9083 1319 32.9833 1319 32C1319 29.7833 1318.22 27.8958 1316.66 26.3375C1315.1 24.7792 1313.22 24 1311 24C1308.78 24 1306.9 24.7792 1305.34 26.3375C1303.78 27.8958 1303 29.7833 1303 32C1303 32.9833 1303.16 33.9083 1303.49 34.775C1303.81 35.6417 1304.27 36.4167 1304.85 37.1ZM1311 33C1310.02 33 1309.19 32.6625 1308.51 31.9875C1307.5 31.3125 1307.5 30.4833 1307.5 29.5C1307.5 28.5167 1307.84 27.6875 1308.51 27.0125C1309.19 26.3375 1310.02 26 1311 26C1311.98 26 1312.81 26.3375 1313.49 27.0125C1314.16 27.6875 1314.5 28.5167 1314.5 29.5C1314.5 30.4833 1314.16 31.3125 1313.49 31.9875C1312.81 32.6625 1311.98 33 1311 33ZM1311 42C1309.62 42 1308.32 41.7375 1307.1 41.2125C1305.88 40.6875 1304.83 39.975 1303.92 39.075C1303.02 38.175 1302.31 37.1167 1301.79 35.9C1301.26 34.6833 1301 33.3833 1301 32C1301 30.6167 1301.26 29.3167 1301.79 28.1C1302.31 26.8833 1303.02 25.825 1303.92 24.925C1304.83 24.025 1305.88 23.3125 1307.1 22.7875C1308.32 22.2625 1309.62 22 1311 22C1312.38 22 1313.68 22.2625 1314.9 22.7875C1316.12 23.3125 1317.18 24.025 1318.08 24.925C1318.98 25.825 1319.69 26.8833 1320.21 28.1C1320.74 29.3167 1321 30.6167 1321 32C1321 33.3833 1320.74 34.6833 1320.21 35.9C1319.69 37.1167 1318.98 38.175 1318.08 39.075C1317.18 39.975 1316.12 40.6875 1314.9 41.2125C1313.68 41.731 1312.38 42 1311 42Z" 
+                    d="M1304.85 37.1C1305.7 36.45 1306.65 35.9375 1307.7 35.5625C1308.75 35.1875 1309.85 35 1311 35C1312.15 35 1313.25 35.1875 1314.3 35.5625C1315.35 35.9375 1316.3 36.45 1317.15 37.1C1317.73 36.4167 1318.19 35.6417 1318.51 34.775C1318.84 33.9083 1319 32.9833 1319 32C1319 29.7833 1318.22 27.8958 1316.66 26.3375C1315.1 24.7792 1313.22 24 1311 24C1308.78 24 1306.9 24.7792 1305.34 26.3375C1303.78 27.8958 1303 29.7833 1303 32C1303 32.9833 1303.16 33.9083 1303.49 34.775C1303.81 35.6417 1304.27 36.4167 1304.85 37.1ZM1311 33C1310.02 33 1309.19 32.6625 1308.51 31.9875C1307.5 31.3125 1307.5 30.4833 1307.5 29.5C1307.5 28.5167 1307.84 27.6875 1308.51 27.0125C1309.19 26.3375 1310.02 26 1311 26C1311.98 26 1312.81 26.3375 1313.49 27.0125C1314.16 27.6875 1314.5 28.5167 1314.5 29.5C1314.5 30.4833 1314.16 31.3125 1313.49 31.9875C1312.81 32.6625 1311.98 33 1311 33ZM1311 42C1309.62 42 1308.32 41.7375 1307.1 41.2125C1305.88 40.6875 1304.83 39.975 1303.92 39.075C1303.02 38.175 1302.31 37.1167 1301.79 35.9C1301.26 34.6833 1301 33.3833 1301 32C1301 30.6167 1301.26 29.3167 1301.79 28.1C1302.31 26.8833 1303.02 25.825 1303.92 24.925C1304.83 24.025 1305.88 23.3125 1307.1 22.7875C1308.32 22.2625 1309.62 22 1311 22C1312.38 22 1313.68 22.2625 1314.9 22.7875C1316.12 23.3125 1317.18 24.025 1318.08 24.925C1318.98 25.825 1319.69 26.8833 1320.21 28.1C1320.74 29.3167 1320.74 34.6833 1320.21 35.9C1319.69 37.1167 1318.98 38.175 1318.08 39.075C1317.18 39.975 1316.12 40.6875 1314.9 41.2125C1313.68 41.731 1312.38 42 1311 42Z" 
                     fill={isAccountActive ? "#820011" : "#5F5F61"}
                   />
                 </svg>
@@ -350,119 +432,161 @@ export default function Navbar() {
       </header>
 
       {/* ── Left-Slide Full-Height Mobile Drawer Navigation (< 992px) ── */}
-      {/* Backdrop Overlay */}
+      {/* Backdrop Overlay with 320ms Fade */}
       <div 
         onClick={() => setIsMobileMenuOpen(false)}
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-400 ease-out lg:hidden ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-320 ease-out lg:hidden ${
           isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
       />
 
-      {/* Drawer Box */}
+      {/* Drawer Box (320ms cubic-bezier transition + swipe-to-close touch handlers + 24px px-6 grid system) */}
       <aside 
-        className={`fixed top-0 left-0 bottom-0 z-50 w-[320px] sm:w-[350px] max-w-[88vw] h-full shadow-2xl transition-transform duration-400 ease-out flex flex-col justify-between overflow-y-auto lg:hidden pt-safe pb-safe ${
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className={`fixed top-0 left-0 bottom-0 z-50 w-[320px] sm:w-[360px] max-w-[88vw] h-full shadow-2xl transition-transform duration-320 ease-out flex flex-col justify-between overflow-y-auto lg:hidden pt-safe pb-safe ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         style={{
+          transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
           background: "linear-gradient(180deg, #FAF6F0 0%, #F4ECE1 100%)",
           borderRight: "1px solid rgba(184, 150, 92, 0.25)"
         }}
         aria-label="Mobile Navigation Drawer"
       >
-        {/* Top Header Row: Logo Top Left & Close Button Top Right with generous top padding */}
-        <div className="relative flex items-center justify-between w-full px-6 pt-8 sm:pt-10 pb-4">
-          <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-            <Image
-              src="/images/logo-murakkaz.svg"
-              alt="Murakkaz Logo"
-              width={130}
-              height={50}
-              priority
-              className="h-9.5 w-auto object-contain"
-            />
-          </Link>
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="w-10 h-10 flex items-center justify-center text-[#313134] hover:text-[#820011] rounded-full transition-colors cursor-pointer bg-white/70 border border-[#B8965C]/25 shadow-xs"
-            aria-label="Close Mobile Menu"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Search Bar: Positioned lower with generous top/bottom padding and left space for input text */}
-        <div className="px-6 mt-5 sm:mt-6 mb-8 sm:mb-10">
-          <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
-            <input
-              type="text"
-              placeholder="Search perfumes, notes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-12.5 pl-10 sm:pl-11 pr-11 rounded-2xl border border-[#B8965C]/40 bg-white/95 text-[#313134] font-serif-text text-[13.5px] leading-normal outline-none focus:border-[#820011] focus:ring-2 focus:ring-[#820011]/15 transition-all placeholder:text-[#7E7569] shadow-xs"
-              style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
-            />
+        <div>
+          {/* Top Header Row: Logo Centered in Exact Middle & Close Button Absolute Right (48-56px luxury top padding) */}
+          <div className="relative flex items-center justify-center w-full px-6 pt-12 sm:pt-14 pb-6">
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="inline-block mx-auto">
+              <Image
+                src="/images/logo-murakkaz.svg"
+                alt="Murakkaz Logo"
+                width={140}
+                height={55}
+                priority
+                className="h-10 sm:h-11 w-auto object-contain"
+              />
+            </Link>
+            
+            {/* Animated Close Button: Absolute Right */}
             <button
-              type="submit"
-              onClick={handleSearchSubmit}
-              className="absolute right-3.5 w-8 h-8 flex items-center justify-center text-[#313134] hover:text-[#820011] cursor-pointer rounded-lg hover:bg-[#B8965C]/10 transition-colors"
-              aria-label="Submit Search"
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute right-6 top-12 sm:top-14 w-11 h-11 flex items-center justify-center text-[#313134] hover:text-[#820011] hover:rotate-90 active:scale-95 rounded-full transition-all duration-300 cursor-pointer bg-white/80 border border-[#B8965C]/30 shadow-xs"
+              aria-label="Close Navigation Menu"
             >
-              <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-          </form>
-        </div>
+          </div>
 
-        {/* Drawer Nav Links: Top-Aligned with generous spacing from search bar and large gaps between names */}
-        <div className="flex-1 flex flex-col justify-start items-center pt-6 sm:pt-8 pb-6 w-full">
-          <ul className="flex flex-col items-center justify-start w-full list-none m-0 p-0 gap-6 sm:gap-7.5 text-center">
-            {currentNavLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <li key={link.label} className="w-full text-center">
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`inline-block font-serif-text text-[15.5px] sm:text-[17px] font-medium tracking-[0.18em] uppercase transition-all duration-300 py-1.5 px-4 ${
-                      isActive 
-                        ? "text-[#820011] font-semibold scale-105" 
-                        : "text-[#313134] hover:text-[#820011] hover:scale-105"
-                    }`}
+          {/* Search Bar Container (Generous 32-40px top margin & 48-64px bottom margin) */}
+          <div className="px-6 mt-8 sm:mt-10 mb-12 sm:mb-16">
+            <form onSubmit={handleSearchSubmit} className="relative flex items-center w-full">
+              <input
+                type="text"
+                placeholder="Search perfumes, notes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-13 pl-10 sm:pl-11 pr-11 rounded-2xl border border-[#B8965C]/40 bg-white/95 text-[#313134] font-serif-text text-[13.5px] leading-normal outline-none focus:border-[#820011] focus:ring-2 focus:ring-[#820011]/15 transition-all placeholder:text-[#7E7569] shadow-xs"
+                style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+              />
+              <button
+                type="submit"
+                onClick={handleSearchSubmit}
+                className="absolute right-2.5 w-9 h-9 flex items-center justify-center text-[#313134] hover:text-[#820011] active:scale-95 cursor-pointer rounded-lg hover:bg-[#B8965C]/10 transition-all"
+                aria-label="Submit Search"
+              >
+                <svg className="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          {/* Drawer Nav Links: Positioned significantly lower with 48-64px top space from search bar */}
+          <div className="flex-1 flex flex-col justify-start items-center pt-12 sm:pt-16 pb-8 w-full">
+            <ul className="flex flex-col items-center justify-start w-full list-none m-0 p-0 gap-6 sm:gap-7.5 text-center px-6">
+              {currentNavLinks.map((link, idx) => {
+                const isActive = pathname === link.href;
+                return (
+                  <li 
+                    key={link.label} 
+                    className={`w-full text-center ${isMobileMenuOpen ? "stagger-item-enter" : "opacity-0"}`}
+                    style={{ animationDelay: `${idx * 40}ms` }}
                   >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`inline-block font-serif-text text-[15.5px] sm:text-[17px] font-medium tracking-[0.18em] uppercase transition-all duration-300 py-1.5 px-4 ${
+                        isActive 
+                          ? "text-[#820011] font-semibold scale-105" 
+                          : "text-[#313134] hover:text-[#820011] hover:scale-105"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
 
-        {/* Drawer Footer: Centered Luxury Profile Card (Format matching bottom of Screenshot 2) */}
-        <div className="px-6 pb-6 pt-2 flex flex-col items-center justify-center">
-          <Link
-            href="/account"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="group flex items-center gap-3 px-5 py-3 rounded-full border border-[#B8965C]/40 bg-gradient-to-r from-white/95 via-[#FDFBF7] to-[#F7F1E7] text-[#313134] shadow-xs hover:border-[#820011] hover:shadow-md transition-all duration-300 cursor-pointer"
-          >
-            <div className="w-8 h-8 rounded-full border border-[#B8965C] overflow-hidden flex items-center justify-center bg-[#820011] text-white font-serif font-semibold text-xs shrink-0 group-hover:scale-105 transition-transform">
-              {userPhoto ? (
-                <img src={userPhoto} alt="User" className="w-full h-full object-cover" />
-              ) : (
-                <span>{userName ? userName.charAt(0).toUpperCase() : "M"}</span>
-              )}
-            </div>
-            <span className="font-serif-text text-[12.5px] font-semibold tracking-wider text-[#313134] group-hover:text-[#820011] transition-colors">
-              {userName ? userName : "My Account"}
-            </span>
-          </Link>
+          {/* Centered Profile Section in lower-middle of drawer (around 70–75% height) */}
+          <div className="mt-8 mb-6 sm:mt-10 sm:mb-8 w-full flex flex-col items-center justify-center text-center px-6">
+            <Link
+              href="/account"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`group flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 active:scale-97 ${
+                isMobileMenuOpen ? "stagger-profile-enter" : "opacity-0"
+              }`}
+            >
+              {/* 56–64px Circular Avatar Centered */}
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-[#B8965C] overflow-hidden flex items-center justify-center bg-[#820011] text-white font-serif font-bold text-lg sm:text-xl shrink-0 shadow-xs group-hover:scale-105 transition-transform duration-300 mx-auto">
+                {isLoggedIn && userPhoto ? (
+                  <img src={userPhoto} alt="User Profile" className="w-full h-full object-cover" />
+                ) : isLoggedIn && userName ? (
+                  <span>{userName.charAt(0).toUpperCase()}</span>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-[#FAF6F0] text-[#820011]">
+                    <svg className="w-6.5 h-6.5 sm:w-7 sm:h-7 text-[#820011]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                  </div>
+                )}
+              </div>
 
-          <p className="mt-3 text-center font-serif-text text-[10px] text-[#7E7569] tracking-wider">
+              {/* 16px Spacing: User Name / Welcome Title */}
+              <h3 className="mt-4 font-serif-text text-[15.5px] sm:text-[17px] font-semibold tracking-wide text-[#313134] group-hover:text-[#820011] transition-colors text-center">
+                {isLoggedIn && userName ? userName : isLoggedIn ? "My Account" : "Welcome to Murakkaz"}
+              </h3>
+
+              {/* 6px Spacing: View Profile Link or Sign In / Create Account Buttons */}
+              <div className="mt-1.5 font-serif-text text-[11.5px] sm:text-[12px] text-[#7E7569] tracking-wider text-center">
+                {isLoggedIn ? (
+                  <span className="inline-flex items-center gap-1 text-[#7E7569] group-hover:text-[#820011] transition-colors">
+                    <span>View Profile</span>
+                    <span className="inline-block group-hover:translate-x-1 transition-transform">→</span>
+                  </span>
+                ) : (
+                  <div className="flex items-center justify-center gap-2 text-[#7E7569]">
+                    <span className="text-[#820011] font-medium hover:underline">Sign In</span>
+                    <span className="text-[#B8965C]">•</span>
+                    <span className="text-[#820011] font-medium hover:underline">Create Account</span>
+                  </div>
+                )}
+              </div>
+            </Link>
+          </div>
+
+        {/* Tiny Centered Footer Pinned to Very Bottom */}
+        <div className="pb-4 pt-1 text-center w-full mt-auto">
+          <p className="font-serif-text text-[9.5px] text-[#7E7569]/60 tracking-widest uppercase">
             Murakkaz © Fine Extraits de Parfum
           </p>
         </div>

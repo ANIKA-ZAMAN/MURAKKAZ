@@ -17,6 +17,7 @@ interface ProductCardProps {
   volume: string;
   image: string;
   delay?: number;
+  badge?: string;
 }
 
 export default function ProductCard({
@@ -30,6 +31,7 @@ export default function ProductCard({
   volume,
   image,
   delay = 0,
+  badge,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -141,6 +143,9 @@ export default function ProductCard({
           height={240}
           className={styles.image}
         />
+        {badge && (
+          <span className={styles.badge}>{badge}</span>
+        )}
       </div>
 
       {/* Card Content */}

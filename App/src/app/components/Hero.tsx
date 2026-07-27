@@ -377,18 +377,18 @@ export default function Hero() {
       
       {/* 1. Background Layers: Giant Watermark Engraved Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
-        <div className="absolute w-full px-2 sm:px-4 text-center z-0 select-none opacity-100 -translate-y-[5vh] sm:-translate-y-[6vh] hero-fade-enter" suppressHydrationWarning>
-          <div className="inline-block text-center relative max-w-full">
+        <div className="absolute w-full px-2 sm:px-4 text-center z-0 select-none opacity-100 -translate-y-[6vh] sm:-translate-y-[7vh] hero-fade-enter" suppressHydrationWarning>
+          <div className="inline-block text-center relative max-w-full overflow-hidden">
             <h1 
-              className="font-serif-title font-normal tracking-[0.04em] uppercase text-center leading-none select-none" 
+              className="font-serif-title font-semibold tracking-[0.02em] uppercase text-center leading-none select-none max-w-full shrink-0" 
               suppressHydrationWarning
               style={{ 
                 fontFamily: "var(--font-playfair), Georgia, serif",
-                fontSize: "clamp(3.4rem, 14.5vw, 9.5rem)",
+                fontSize: "clamp(3.8rem, 16.8vw, 12rem)",
                 background: "linear-gradient(180deg, #D4B890 0%, #BA9C72 45%, #9E8158 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                filter: "drop-shadow(0px 1.5px 2px rgba(255, 252, 242, 0.55)) drop-shadow(0px -1px 2px rgba(40, 25, 12, 0.30))"
+                filter: "drop-shadow(0px 2px 3px rgba(255, 252, 242, 0.6)) drop-shadow(0px -1px 2px rgba(40, 25, 12, 0.35))"
               }}
             >
               MURAKKAZ
