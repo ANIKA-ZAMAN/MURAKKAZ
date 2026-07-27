@@ -246,12 +246,12 @@ export default function Hero() {
         }
         @media (max-width: 768px) {
           .volumetric-ray {
-            --ray-angle: 13.8deg !important;
+            --ray-angle: 16.5deg !important;
           }
         }
         @media (min-width: 769px) {
           .volumetric-ray {
-            --ray-angle: 37.8deg !important;
+            --ray-angle: 42.5deg !important;
           }
         }
       `}</style>
@@ -268,24 +268,24 @@ export default function Hero() {
       {/* Floating Golden Dust Ambient Particles */}
       <HeroDustParticles />
 
-      {/* Enhanced Visible Volumetric Spotlight Rays & Glow */}
+      {/* Enhanced Visible Volumetric Spotlight Rays & Glow (Slightly wider spread) */}
       <div className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
         <div 
           className="absolute inset-0 mix-blend-screen volumetric-ray"
           style={{
             animation: "spotlightBreathe 8s ease-in-out infinite alternate",
-            background: `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
+            background: `conic-gradient(from calc(180deg + var(--ray-angle, 42.5deg)) at 68% -5vh, 
                 rgba(255, 248, 225, 0.78) 0deg, 
-                rgba(255, 240, 210, 0.48) 12deg, 
-                rgba(255, 235, 195, 0.22) 20deg, 
-                rgba(255, 250, 235, 0) 30deg,
-                rgba(255, 250, 235, 0) 330deg, 
-                rgba(255, 235, 195, 0.22) 340deg, 
-                rgba(255, 240, 210, 0.48) 348deg, 
+                rgba(255, 240, 210, 0.50) 15deg, 
+                rgba(255, 235, 195, 0.25) 26deg, 
+                rgba(255, 250, 235, 0) 38deg,
+                rgba(255, 250, 235, 0) 322deg, 
+                rgba(255, 235, 195, 0.25) 334deg, 
+                rgba(255, 240, 210, 0.50) 345deg, 
                 rgba(255, 248, 225, 0.78) 360deg
               )`,
-            WebkitMaskImage: "radial-gradient(ellipse 95% 75% at 68% -5vh, black 15%, rgba(0, 0, 0, 0.85) 45%, transparent 75%)",
-            maskImage: "radial-gradient(ellipse 95% 75% at 68% -5vh, black 15%, rgba(0, 0, 0, 0.85) 45%, transparent 75%)"
+            WebkitMaskImage: "radial-gradient(ellipse 110% 85% at 68% -5vh, black 20%, rgba(0, 0, 0, 0.85) 55%, transparent 82%)",
+            maskImage: "radial-gradient(ellipse 110% 85% at 68% -5vh, black 20%, rgba(0, 0, 0, 0.85) 55%, transparent 82%)"
           }}
         />
         {/* Warm Golden Source Spotlight Glow */}
