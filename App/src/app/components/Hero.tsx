@@ -323,17 +323,6 @@ export default function Hero() {
           animation: "spotlightBreathe 7s ease-in-out infinite alternate"
         }}
       />
-
-      {/* Grounding Contact Shadow positioned directly under bottle base with pulsating animation */}
-      <div 
-        className="absolute top-[52%] sm:top-[55%] md:top-[63%] lg:top-[68%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[210px] sm:w-[240px] h-[34px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at 50% 50%, rgba(25, 15, 10, 0.40) 0%, rgba(30, 20, 15, 0.12) 50%, transparent 85%)",
-          filter: "blur(8px)",
-          animation: "bottleShadowPulse 7s ease-in-out infinite alternate",
-          zIndex: 5
-        }}
-      />
       
       {/* 1. Background Layers: Giant Watermark Engraved Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
@@ -366,10 +355,10 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 2. Middle Layer: Floating Transparent WebM Video with Perpetual Gentle Float */}
+      {/* 2. Middle Layer: Floating Transparent WebM Video with Synchronized Base Shadow */}
       <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-1 sm:pt-4 pb-0" suppressHydrationWarning>
         <div 
-          className="relative h-[40vh] sm:h-[54vh] md:h-[68vh] lg:h-[78vh] max-h-[calc(100vh-230px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh]"
+          className="relative h-[40vh] sm:h-[54vh] md:h-[68vh] lg:h-[78vh] max-h-[calc(100vh-230px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh] flex flex-col items-center justify-center"
           style={{
             animation: "bottlePerpetualFloat 7s ease-in-out infinite alternate",
             transform: "translate(calc(var(--parallax-x, 0px) * 0.5), calc(2vh + var(--parallax-y, 0px) * 0.5))",
@@ -384,12 +373,22 @@ export default function Hero() {
             onEnded={(e) => {
               e.currentTarget.pause();
             }}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain relative z-10"
             suppressHydrationWarning
           >
             <source src="/videos/BottleAnimation.webm" type="video/webm" />
             Your browser does not support the video tag.
           </video>
+
+          {/* Contact Shadow directly attached & perfectly aligned under bottle base */}
+          <div 
+            className="absolute bottom-[2%] sm:bottom-[3%] left-1/2 -translate-x-1/2 w-[72%] sm:w-[68%] h-[18px] sm:h-[24px] rounded-[50%] pointer-events-none z-0"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, rgba(20, 12, 8, 0.60) 0%, rgba(35, 20, 10, 0.25) 50%, transparent 85%)",
+              filter: "blur(6px)",
+              animation: "bottleShadowPulse 7s ease-in-out infinite alternate",
+            }}
+          />
         </div>
       </div>
 
