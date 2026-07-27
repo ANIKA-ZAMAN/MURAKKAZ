@@ -32,7 +32,7 @@ const dustParticlesData = [
   { size: 1.9, left: 82, top: 46, delay: 1.9, duration: 10.0, opacity: 0.34 },
 ];
 
-/* Floating Golden Dust Particles Component */
+/* Floating Golden Dust Ambient Particles Component */
 function HeroDustParticles() {
   const [mounted, setMounted] = useState(false);
 
@@ -64,7 +64,7 @@ function HeroDustParticles() {
   );
 }
 
-/* Primary CTA Buttons Component - Unchanged styling as requested */
+/* Primary CTA Buttons Component - Unchanged styling & interactive animations */
 function HeroActions() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
@@ -194,11 +194,12 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const rafIdRef = useRef<number | null>(null);
 
+  /* Interactive 3D Parallax Mouse Tracking Animation */
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (typeof window === "undefined" || !sectionRef.current) return;
     const { clientX, clientY } = e;
-    const x = ((clientX / window.innerWidth) - 0.5) * 6; // 3px max shift
-    const y = ((clientY / window.innerHeight) - 0.5) * 6;
+    const x = ((clientX / window.innerWidth) - 0.5) * 8; // 4px max shift
+    const y = ((clientY / window.innerHeight) - 0.5) * 8;
     
     if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
     rafIdRef.current = requestAnimationFrame(() => {
@@ -237,6 +238,10 @@ export default function Hero() {
           0%, 100% { transform: translateY(2vh) rotate(0deg); }
           50% { transform: translateY(calc(2vh - 8px)) rotate(0.6deg); }
         }
+        @keyframes bottleShadowPulse {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.40; }
+          50% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.28; }
+        }
         @keyframes heroTextFadeIn {
           0% { opacity: 0; transform: translateY(16px); }
           100% { opacity: 1; transform: translateY(0); }
@@ -268,7 +273,7 @@ export default function Hero() {
       {/* Floating Golden Dust Ambient Particles */}
       <HeroDustParticles />
 
-      {/* Enhanced Visible Volumetric Spotlight Rays & Glow (Slightly wider spread) */}
+      {/* Volumetric Spotlight Rays & Warm Radiance */}
       <div className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
         <div 
           className="absolute inset-0 mix-blend-screen volumetric-ray"
@@ -307,12 +312,25 @@ export default function Hero() {
         />
       </div>
 
-      {/* Grounding Contact Shadow positioned directly under bottle base */}
+      {/* Warm Golden Halo Rim Highlight around the Bottle with Subtle Parallax */}
+      <div 
+        className="absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[540px] rounded-full pointer-events-none mix-blend-screen z-0"
+        style={{
+          background: "radial-gradient(circle, rgba(248, 222, 172, 0.35) 0%, rgba(212, 175, 55, 0.14) 45%, transparent 75%)",
+          filter: "blur(38px)",
+          transform: "translate(calc(-50% + var(--parallax-x, 0px)), calc(-50% + var(--parallax-y, 0px)))",
+          transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+          animation: "spotlightBreathe 7s ease-in-out infinite alternate"
+        }}
+      />
+
+      {/* Grounding Contact Shadow positioned directly under bottle base with pulsating animation */}
       <div 
         className="absolute top-[52%] sm:top-[55%] md:top-[63%] lg:top-[68%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[210px] sm:w-[240px] h-[34px] rounded-full pointer-events-none"
         style={{
           background: "radial-gradient(ellipse at 50% 50%, rgba(25, 15, 10, 0.40) 0%, rgba(30, 20, 15, 0.12) 50%, transparent 85%)",
           filter: "blur(8px)",
+          animation: "bottleShadowPulse 7s ease-in-out infinite alternate",
           zIndex: 5
         }}
       />
