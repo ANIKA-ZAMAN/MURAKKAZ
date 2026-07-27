@@ -192,9 +192,7 @@ export default function Navbar() {
               ? isScrolled
                 ? "bg-[#FAF6F0]/90 backdrop-blur-md shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-[rgba(120,105,85,0.18)]"
                 : "bg-transparent border-none shadow-none"
-              : isScrolled
-                ? "bg-[#FAF6F0]/90 backdrop-blur-md shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-[rgba(120,105,85,0.18)]"
-                : "bg-transparent backdrop-blur-xs border border-[rgba(120,105,85,0.18)] shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
+              : "bg-[#FAF6F0] border border-[rgba(120,105,85,0.18)] shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
           }`}
           suppressHydrationWarning
         >
