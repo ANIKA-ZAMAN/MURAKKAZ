@@ -270,7 +270,7 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* Cart Link (Tote Bag SVG matching reference picture 1:1) */}
+            {/* Cart Link (Rectangular Shopping Bag SVG matching reference picture 1:1) */}
             <Link
               href="/cart"
               className="relative p-1.5 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
@@ -287,8 +287,8 @@ export default function Navbar() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="M6 8h12l1 12H5L6 8z" />
-                <path d="M9 8V6a3 3 0 016 0v2" />
+                <rect x="5" y="8.5" width="14" height="12.5" rx="1.5" />
+                <path d="M9 10.5V6.5a3 3 0 016 0v4" />
               </svg>
               {cartCount > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 bg-[#820011] text-white font-sans text-[9.5px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs">
@@ -344,8 +344,8 @@ export default function Navbar() {
 
             <Link href="/cart" className="relative p-1 text-[#313134]" aria-label="Cart">
               <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 8h12l1 12H5L6 8z" />
-                <path d="M9 8V6a3 3 0 016 0v2" />
+                <rect x="5" y="8.5" width="14" height="12.5" rx="1.5" />
+                <path d="M9 10.5V6.5a3 3 0 016 0v4" />
               </svg>
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-[#820011] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
