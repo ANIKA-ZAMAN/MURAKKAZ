@@ -177,13 +177,13 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* ── Main Floating Navbar Header ── */}
+      {/* ── Main Floating Navbar Header (Balanced 32-48px outer margins) ── */}
       <header
-        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-6 px-8 sm:px-10 pb-2 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-6 px-8 sm:px-10 lg:px-12 pb-2 transition-all duration-300"
         suppressHydrationWarning
       >
         <nav
-          className={`pointer-events-auto relative w-full max-w-[1360px] h-16 select-none flex items-center justify-between px-6 sm:px-10 lg:px-12 rounded-[20px] transition-all duration-300 ${
+          className={`pointer-events-auto relative w-full max-w-[1360px] h-16 select-none flex items-center justify-between px-6 sm:px-10 lg:px-14 rounded-[20px] transition-all duration-300 ${
             isHome
               ? isScrolled
                 ? "bg-[#FAF6F0]/90 backdrop-blur-md shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-[rgba(120,105,85,0.18)]"
@@ -206,10 +206,10 @@ export default function Navbar() {
             </svg>
           </button>
 
-          {/* Logo */}
+          {/* Logo (Aligned with left inset) */}
           <Link
             href="/"
-            className="hover:opacity-85 transition-opacity duration-300 flex items-center shrink-0 ml-1 sm:ml-2"
+            className="hover:opacity-85 transition-opacity duration-300 flex items-center shrink-0"
           >
             <Image
               src="/images/logo-murakkaz.svg"
@@ -242,8 +242,8 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop Right Actions: Wishlist + Cart + Account Avatar (Shifted left on all pages) */}
-          <div className="hidden lg:flex items-center gap-5 sm:gap-6 shrink-0 mr-4 sm:mr-6 lg:mr-8">
+          {/* Desktop Right Actions: Wishlist + Cart + Account Avatar (Aligned with right inset & 20-24px spacing) */}
+          <div className="hidden lg:flex items-center gap-5 sm:gap-6 shrink-0">
             {/* Wishlist Link */}
             <Link
               href="/wishlist"
