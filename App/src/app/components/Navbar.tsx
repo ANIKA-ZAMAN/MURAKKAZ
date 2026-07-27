@@ -177,13 +177,17 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* ── Main Floating Navbar Header (Balanced 32-48px outer margins) ── */}
+      {/* ── Main Floating Navbar Header (Symmetric 32-48px outer margins) ── */}
       <header
-        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-6 px-8 sm:px-10 lg:px-12 pb-2 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-6 px-4 sm:px-8 lg:px-10 pb-2 transition-all duration-300"
         suppressHydrationWarning
       >
         <nav
-          className={`pointer-events-auto relative w-full max-w-[1360px] h-16 select-none flex items-center justify-between px-6 sm:px-10 lg:px-14 rounded-[20px] transition-all duration-300 ${
+          style={{
+            paddingLeft: "clamp(32px, 4vw, 56px)",
+            paddingRight: "clamp(32px, 4vw, 56px)",
+          }}
+          className={`pointer-events-auto relative w-full max-w-[1360px] h-16 select-none flex items-center justify-between rounded-[20px] transition-all duration-300 ${
             isHome
               ? isScrolled
                 ? "bg-[#FAF6F0]/90 backdrop-blur-md shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-[rgba(120,105,85,0.18)]"
@@ -206,7 +210,7 @@ export default function Navbar() {
             </svg>
           </button>
 
-          {/* Logo (Aligned with left inset) */}
+          {/* Logo (Centered content container left edge) */}
           <Link
             href="/"
             className="hover:opacity-85 transition-opacity duration-300 flex items-center shrink-0"
@@ -222,7 +226,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links (>= 1024px) */}
-          <ul className="hidden lg:flex items-center gap-6 xl:gap-10 list-none m-0 p-0 flex-1 justify-center">
+          <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -242,8 +246,8 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop Right Actions: Wishlist + Cart + Account Avatar (Aligned with right inset & 20-24px spacing) */}
-          <div className="hidden lg:flex items-center gap-5 sm:gap-6 shrink-0">
+          {/* Desktop Right Actions: Wishlist + Cart + Account Avatar (Moved inward for symmetric alignment) */}
+          <div className="hidden lg:flex items-center gap-5 sm:gap-6 shrink-0 mr-2 sm:mr-4 lg:mr-6">
             {/* Wishlist Link */}
             <Link
               href="/wishlist"
