@@ -230,8 +230,8 @@ export default function Hero() {
           100% { transform: translateX(220%) rotate(25deg); opacity: 0; }
         }
         @keyframes spotlightBreathe {
-          0%, 100% { opacity: 0.48; transform: scale(1); }
-          50% { opacity: 0.65; transform: scale(1.02); }
+          0%, 100% { opacity: 0.72; transform: scale(1); }
+          50% { opacity: 0.95; transform: scale(1.03); }
         }
         @keyframes bottlePerpetualFloat {
           0%, 100% { transform: translateY(2vh) rotate(0deg); }
@@ -258,9 +258,9 @@ export default function Hero() {
 
       {/* Animated Light Sweep Beam Across Background from top right */}
       <div 
-        className="absolute top-0 right-0 w-[45vw] h-[150vh] pointer-events-none z-0"
+        className="absolute top-0 right-0 w-[45vw] h-[150vh] pointer-events-none z-0 opacity-60"
         style={{
-          background: "linear-gradient(90deg, transparent 0%, rgba(255, 245, 230, 0.22) 50%, transparent 100%)",
+          background: "linear-gradient(90deg, transparent 0%, rgba(255, 245, 230, 0.35) 50%, transparent 100%)",
           animation: "bgLightSweep 14s cubic-bezier(0.4, 0, 0.2, 1) infinite",
         }}
       />
@@ -268,26 +268,41 @@ export default function Hero() {
       {/* Floating Golden Dust Ambient Particles */}
       <HeroDustParticles />
 
-      {/* Background Volumetric Light Ray & Glow */}
+      {/* Enhanced Visible Volumetric Spotlight Rays & Glow */}
       <div className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
         <div 
           className="absolute inset-0 mix-blend-screen volumetric-ray"
           style={{
             animation: "spotlightBreathe 8s ease-in-out infinite alternate",
             background: `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                rgba(255, 250, 235, 0.52) 0deg, rgba(255, 250, 235, 0.28) 12deg, rgba(255, 250, 235, 0) 25deg,
-                rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.28) 348deg, rgba(255, 250, 235, 0.52) 360deg
+                rgba(255, 248, 225, 0.78) 0deg, 
+                rgba(255, 240, 210, 0.48) 12deg, 
+                rgba(255, 235, 195, 0.22) 20deg, 
+                rgba(255, 250, 235, 0) 30deg,
+                rgba(255, 250, 235, 0) 330deg, 
+                rgba(255, 235, 195, 0.22) 340deg, 
+                rgba(255, 240, 210, 0.48) 348deg, 
+                rgba(255, 248, 225, 0.78) 360deg
               )`,
-            WebkitMaskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.75) 35%, transparent 60%)",
-            maskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.75) 35%, transparent 60%)"
+            WebkitMaskImage: "radial-gradient(ellipse 95% 75% at 68% -5vh, black 15%, rgba(0, 0, 0, 0.85) 45%, transparent 75%)",
+            maskImage: "radial-gradient(ellipse 95% 75% at 68% -5vh, black 15%, rgba(0, 0, 0, 0.85) 45%, transparent 75%)"
           }}
         />
-        {/* Soft ambient source glow */}
+        {/* Warm Golden Source Spotlight Glow */}
         <div 
-          className="absolute top-[-5vh] left-[68%] -translate-x-1/2 w-[40%] aspect-square rounded-full opacity-60 mix-blend-screen"
+          className="absolute top-[-5vh] left-[68%] -translate-x-1/2 w-[45%] aspect-square rounded-full opacity-85 mix-blend-screen"
           style={{
-            background: "radial-gradient(circle at 50% 0%, rgba(255, 250, 235, 0.50) 0%, rgba(255, 250, 235, 0) 70%)",
-            filter: "blur(35px)",
+            background: "radial-gradient(circle at 50% 0%, rgba(255, 248, 225, 0.82) 0%, rgba(248, 222, 172, 0.45) 40%, transparent 70%)",
+            filter: "blur(32px)",
+          }}
+        />
+
+        {/* Secondary Centered Ambient Spotlight Highlight */}
+        <div 
+          className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[600px] sm:w-[850px] h-[550px] rounded-full opacity-45 mix-blend-screen pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse at 50% 30%, rgba(255, 248, 225, 0.55) 0%, rgba(248, 222, 172, 0.20) 50%, transparent 75%)",
+            filter: "blur(40px)",
           }}
         />
       </div>
