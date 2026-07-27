@@ -242,8 +242,8 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop Right Actions: Wishlist + Cart + Account Avatar (Shifted left for proper alignment) */}
-          <div className="hidden lg:flex items-center gap-5 sm:gap-6 shrink-0 mr-2 sm:mr-3 lg:mr-4">
+          {/* Desktop Right Actions: Wishlist + Cart + Account Avatar (Shifted left on all pages) */}
+          <div className="hidden lg:flex items-center gap-5 sm:gap-6 shrink-0 mr-4 sm:mr-6 lg:mr-8">
             {/* Wishlist Link */}
             <Link
               href="/wishlist"
@@ -258,17 +258,19 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 stroke={isWishlistActive || hoveredIcon === "wishlist" ? "#820011" : "#313134"}
                 strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
               {wishlistCount > 0 && (
-                <span className="absolute top-0 right-0 bg-[#820011] text-white font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute top-0 right-0 bg-[#820011] text-white font-sans text-[9.5px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs">
                   {wishlistCount}
                 </span>
               )}
             </Link>
 
-            {/* Cart Link */}
+            {/* Cart Link (Tote Bag SVG matching reference picture 1:1) */}
             <Link
               href="/cart"
               className="relative p-1.5 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
@@ -282,17 +284,20 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 stroke={isCartActive || hoveredIcon === "cart" ? "#820011" : "#313134"}
                 strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+                <path d="M6 8h12l1 12H5L6 8z" />
+                <path d="M9 8V6a3 3 0 016 0v2" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 bg-[#820011] text-white font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute -top-0.5 -right-0.5 bg-[#820011] text-white font-sans text-[9.5px] font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center shadow-xs">
                   {cartCount}
                 </span>
               )}
             </Link>
 
-            {/* Account Link (with avatar photo if uploaded) */}
+            {/* Account Link (with avatar photo matching reference picture 1:1) */}
             <Link
               href="/account"
               className="relative text-[#313134] hover:text-[#820011] hover:scale-105 transition-all duration-200 flex items-center justify-center rounded-full"
@@ -301,7 +306,7 @@ export default function Navbar() {
               onMouseLeave={() => setHoveredIcon(null)}
             >
               {userPhoto ? (
-                <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-[#820011]/70 shadow-xs flex items-center justify-center bg-white shrink-0">
+                <div className="w-8 h-8 rounded-full overflow-hidden border-1.5 border-white shadow-xs flex items-center justify-center bg-white shrink-0">
                   <img
                     src={userPhoto}
                     alt={userName || "Account Avatar"}
@@ -315,17 +320,19 @@ export default function Navbar() {
                   viewBox="0 0 24 24"
                   stroke={isAccountActive || hoveredIcon === "account" ? "#820011" : "#313134"}
                   strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               )}
             </Link>
           </div>
 
-          {/* Mobile Right Actions (< 1024px) */}
-          <div className="flex lg:hidden items-center gap-3">
+          {/* Mobile Right Actions (< 1024px, Shifted left away from right edge) */}
+          <div className="flex lg:hidden items-center gap-3.5 mr-2 sm:mr-4">
             <Link href="/wishlist" className="relative p-1 text-[#313134]" aria-label="Wishlist">
-              <svg className="w-5.5 h-5.5" fill={isWishlistActive ? "#820011" : "none"} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+              <svg className="w-5.5 h-5.5" fill={isWishlistActive ? "#820011" : "none"} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
               {wishlistCount > 0 && (
@@ -336,8 +343,9 @@ export default function Navbar() {
             </Link>
 
             <Link href="/cart" className="relative p-1 text-[#313134]" aria-label="Cart">
-              <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+              <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 8h12l1 12H5L6 8z" />
+                <path d="M9 8V6a3 3 0 016 0v2" />
               </svg>
               {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-[#820011] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
@@ -348,12 +356,12 @@ export default function Navbar() {
 
             <Link href="/account" className="p-0.5 text-[#313134]" aria-label="Account">
               {userPhoto ? (
-                <div className="w-7 h-7 rounded-full overflow-hidden border border-[#820011]/70 shadow-xs flex items-center justify-center bg-white shrink-0">
+                <div className="w-7.5 h-7.5 rounded-full overflow-hidden border-1.5 border-white shadow-xs flex items-center justify-center bg-white shrink-0">
                   <img src={userPhoto} alt="Account" className="w-full h-full rounded-full object-cover" />
                 </div>
               ) : (
-                <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               )}
             </Link>
