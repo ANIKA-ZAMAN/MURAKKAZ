@@ -136,13 +136,15 @@
 }
 
 :global(.reveal) .collectionCard {
-  opacity: 1;
-  transform: none;
+  opacity: 0;
+  transform: translateY(35px);
+  will-change: opacity, transform;
 }
 
 :global(.reveal.visible) .collectionCard {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
+  transition-delay: var(--delay, 0ms);
 }
 
 :global(body.dark-theme) .collectionCard {
@@ -181,13 +183,14 @@
 }
 
 :global(.reveal) .collectionImage {
-  opacity: 1;
-  transform: none;
+  opacity: 0;
+  transform: scale(0.96);
+  will-change: opacity, transform;
 }
 
 :global(.reveal.visible) .collectionImage {
   opacity: 1;
-  transform: none;
+  transform: scale(1);
 }
 
 .collectionCard:hover .collectionImage {
@@ -457,13 +460,15 @@
 }
 
 :global(.reveal) .occasionCard {
-  opacity: 1;
-  transform: none;
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: opacity, transform;
 }
 
 :global(.reveal.visible) .occasionCard {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
+  transition-delay: var(--delay, 0ms);
 }
 
 .occasionCard:hover {
@@ -485,13 +490,14 @@
 }
 
 :global(.reveal) .occasionImage {
-  opacity: 1;
-  transform: none;
+  opacity: 0;
+  transform: scale(0.96);
+  will-change: opacity, transform;
 }
 
 :global(.reveal.visible) .occasionImage {
   opacity: 1;
-  transform: none;
+  transform: scale(1);
 }
 
 .occasionCard:hover .occasionImage {
@@ -737,13 +743,15 @@
 }
 
 :global(.reveal) .eventCard {
-  opacity: 1;
-  transform: none;
+  opacity: 0;
+  transform: translateX(-35px);
+  will-change: opacity, transform;
 }
 
 :global(.reveal.visible) .eventCard {
   opacity: 1;
-  transform: none;
+  transform: translateX(0);
+  transition-delay: var(--delay, 0ms);
 }
 
 .eventCard:hover {
@@ -843,88 +851,117 @@
   color: #313134;
 }
 
-/* ── Responsive media queries ── */
-@media (max-width: 1024px) {
-  .collectionsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .bestSellersGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .occasionsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .notesGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .eventsGrid {
-    grid-template-columns: repeat(2, 1fr);
+/* ── Comprehensive Breakpoints & Height-based Responsive Media Queries ── */
+
+/* 1920px+ (Ultra Wide / Large Desktop) */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1440px;
   }
 }
 
-@media (max-width: 768px) {
+/* 1536px – 1919px (Desktop) */
+@media (min-width: 1536px) and (max-width: 1919px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* 1280px – 1535px (Laptop / Laptop L) */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .container {
+    max-width: 1180px;
+  }
+  .collectionsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* 1024px – 1279px (Tablet Landscape / Small Laptop) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .collectionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .bestSellersGrid,
+  .occasionsGrid,
+  .eventsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* 992px – 1023px (Tablet) */
+@media (max-width: 1023px) {
+  .collectionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .bestSellersGrid,
+  .occasionsGrid,
+  .eventsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .diffGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* 768px – 991px (Tablet Portrait) */
+@media (max-width: 991px) {
   .trustContainer {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 1.25rem;
   }
   .section {
-    padding: 4rem 1.25rem;
-  }
-  .sectionHeader {
-    margin-bottom: 2.5rem;
+    padding: clamp(3.25rem, 5vw, 4.5rem) 1.25rem;
   }
 }
 
-@media (max-width: 600px) {
-  .collectionsGrid {
-    grid-template-columns: 1fr;
+/* 576px – 767px (Large Mobile) */
+@media (max-width: 767px) {
+  .sectionHeader {
+    margin-bottom: 2.25rem;
   }
-  .bestSellersGrid {
+}
+
+/* 480px – 575px (Mobile) */
+@media (max-width: 575px) {
+  .collectionsGrid,
+  .bestSellersGrid,
+  .occasionsGrid,
+  .eventsGrid,
+  .diffGrid {
     grid-template-columns: 1fr;
-  }
-  .occasionsGrid {
-    grid-template-columns: 1fr;
-  }
-  .notesGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .eventsGrid {
-    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
   .trustContainer {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-}
-
-/* ── Typography & Label Refinements ── */
-.sectionLabel {
-  display: block;
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #c5a880; /* gold accent */
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-/* ── The Murakkaz Difference V2.0 ── */
-.diffGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-@media (max-width: 1024px) {
-  .diffGrid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
   }
 }
 
-@media (max-width: 600px) {
-  .diffGrid {
+/* < 390px (iPhone & Small Android 360px) */
+@media (max-width: 389px) {
+  .trustContainer {
     grid-template-columns: 1fr;
+  }
+  .section {
+    padding: 2.75rem 0.85rem;
+  }
+}
+
+/* Viewport Height Media Queries (600px - 750px short laptop & mobile screens) */
+@media (max-height: 720px) {
+  .section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  .sectionHeader {
+    margin-bottom: 1.75rem;
   }
 }
 
