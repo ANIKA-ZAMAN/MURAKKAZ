@@ -37,8 +37,8 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
         </div>
         <p className={styles.postDesc}>{post.description}</p>
         <div className={styles.actionRow}>
-          <button type="button" className={styles.readMoreBtn} aria-label={`Read more about ${post.title}`}>
-            Read More
+          <button type="button" className={styles.readMoreBtn} aria-label={`Read details about ${post.title}`}>
+            Details
           </button>
         </div>
       </div>

@@ -206,7 +206,7 @@ export default function ProductCard({
               router.push(`/product/${id}`);
             }}
           >
-            Read more
+            Details
           </button>
         </div>
       </div>

@@ -135,7 +135,7 @@ export default function CollectionCard({
             Compare
           </button>
           <button className={styles.readMoreBtn} onClick={handleReadMore}>
-            Read more
+            Details
           </button>
         </div>
       </div>

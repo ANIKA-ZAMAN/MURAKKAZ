@@ -13,7 +13,7 @@ export default function EventGallerySection() {
             Browse through our created gallery of fragrance showcases, meetups,
             and exclusive product launches across Bangladesh and beyond.
           </p>
-          <a href="#" className={styles.readMoreLink}>Read More &gt;</a>
+          <a href="#" className={styles.readMoreLink}>Details &gt;</a>
         </div>
 
         <div className={styles.galleryGrid}>

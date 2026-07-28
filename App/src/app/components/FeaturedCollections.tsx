@@ -183,7 +183,7 @@ export default function FeaturedCollections() {
 
         {/* Carousel Container */}
         <div
-          className="relative w-full overflow-hidden py-2"
+          className="relative w-full overflow-hidden py-4 px-10 sm:px-14 xl:px-14"
           onMouseEnter={stopAutoPlay}
           onMouseLeave={startAutoPlay}
         >
@@ -195,7 +195,7 @@ export default function FeaturedCollections() {
               stopAutoPlay();
               startAutoPlay();
             }}
-            className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 border border-[#D5C9B3] text-[#313134] hover:bg-[#820011] hover:text-white hover:border-[#820011] shadow-md flex items-center justify-center transition-all duration-300 z-20 active:scale-95 cursor-pointer"
+            className="absolute left-1 sm:left-2 md:left-3 xl:left-2 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] sm:w-11 sm:h-11 xl:w-11 xl:h-11 rounded-full bg-white/95 border border-[#D5C9B3] text-[#313134] hover:bg-[#820011] hover:text-white hover:border-[#820011] shadow-md flex items-center justify-center transition-all duration-300 z-20 active:scale-95 cursor-pointer"
             aria-label="Previous"
           >
             <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
@@ -211,7 +211,7 @@ export default function FeaturedCollections() {
               stopAutoPlay();
               startAutoPlay();
             }}
-            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 border border-[#D5C9B3] text-[#313134] hover:bg-[#820011] hover:text-white hover:border-[#820011] shadow-md flex items-center justify-center transition-all duration-300 z-20 active:scale-95 cursor-pointer"
+            className="absolute right-1 sm:right-2 md:right-3 xl:right-2 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] sm:w-11 sm:h-11 xl:w-11 xl:h-11 rounded-full bg-white/95 border border-[#D5C9B3] text-[#313134] hover:bg-[#820011] hover:text-white hover:border-[#820011] shadow-md flex items-center justify-center transition-all duration-300 z-20 active:scale-95 cursor-pointer"
             aria-label="Next"
           >
             <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
@@ -219,34 +219,49 @@ export default function FeaturedCollections() {
             </svg>
           </button>
 
-          {/* Carousel Track Container (Fully Responsive) */}
-          <div className="mx-8 sm:mx-14 overflow-hidden">
+          {/* Carousel Track Container (Fully Responsive & Perfectly Centered with Active Focus & Side Peeks) */}
+          <div className="overflow-hidden w-full">
             <div
-              className="flex transition-transform duration-700 ease-in-out gap-4 sm:gap-6"
+              className={`flex items-stretch gap-4 sm:gap-5 xl:gap-6 ${
+                visibleCount === 1 ? "pl-[12%]" : visibleCount === 2 ? "pl-[16%]" : "pl-0"
+              }`}
               style={{
-                transform: `translateX(calc(-${currentIndex} * (100% / ${visibleCount} + ${(visibleCount - 1) * 1.5 / visibleCount}rem / ${visibleCount})))`,
+                transition: "transform 550ms cubic-bezier(0.22, 1, 0.36, 1)",
+                transform:
+                  visibleCount === 1
+                    ? `translateX(calc(-${currentIndex} * (76% + 1rem)))`
+                    : visibleCount === 2
+                    ? `translateX(calc(-${currentIndex} * (68% + 1.25rem)))`
+                    : `translateX(calc(-${currentIndex} * (100% / 4 + 0.375rem)))`,
               }}
             >
-              {displayItems.map((product, idx) => (
-                <div
-                  key={`${product.id}-${idx}`}
-                  className="w-full min-w-full sm:min-w-[calc((100%-1.5rem)/2)] lg:min-w-[calc((100%-4.5rem)/4)] max-w-[275px] shrink-0 mx-auto"
-                >
-                  <ProductCard
-                    id={product.id}
-                    name={product.name}
-                    brand={product.brand}
-                    description={product.description}
-                    rating={product.rating}
-                    reviews={product.reviews}
-                    price={product.price}
-                    volume={product.volume}
-                    image={product.image}
-                    badge={product.badge}
-                    delay={0}
-                  />
-                </div>
-              ))}
+              {displayItems.map((product, idx) => {
+                const isActive = visibleCount < 4 ? (idx % maxIndex) === currentIndex : true;
+                return (
+                  <div
+                    key={`${product.id}-${idx}`}
+                    className={`w-[76%] sm:w-[68%] xl:w-[calc((100%-4.5rem)/4)] xl:min-w-[calc((100%-4.5rem)/4)] max-w-[320px] sm:max-w-[360px] xl:max-w-none shrink-0 flex flex-col transition-all duration-500 ease-out ${
+                      isActive
+                        ? "scale-100 opacity-100 z-10 shadow-lg xl:scale-100 xl:opacity-100"
+                        : "scale-[0.93] opacity-70 z-0 xl:scale-100 xl:opacity-100"
+                    }`}
+                  >
+                    <ProductCard
+                      id={product.id}
+                      name={product.name}
+                      brand={product.brand}
+                      description={product.description}
+                      rating={product.rating}
+                      reviews={product.reviews}
+                      price={product.price}
+                      volume={product.volume}
+                      image={product.image}
+                      badge={product.badge}
+                      delay={0}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
