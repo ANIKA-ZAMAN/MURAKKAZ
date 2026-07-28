@@ -864,13 +864,13 @@
 
 @media (max-width: 768px) {
   .introContainer {
-    height: 543px; /* 43px + 500px */
+    height: 540px; /* 43px + 490px */
   }
 }
 
 @media (max-width: 480px) {
   .introContainer {
-    height: 793px; /* 43px + 750px */
+    height: 530px; /* Compact height for mobile without empty space */
   }
 }
 
@@ -892,13 +892,13 @@
 
 @media (max-width: 768px) {
   .introDoor {
-    height: 500px;
+    height: 490px;
   }
 }
 
 @media (max-width: 480px) {
   .introDoor {
-    height: 750px;
+    height: 480px;
   }
 }
 
