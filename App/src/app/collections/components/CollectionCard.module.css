@@ -147,10 +147,10 @@
 .compareBtn,
 .readMoreBtn {
   flex: 1;
-  height: 30px;
-  border-radius: 15px;
+  min-height: 44px;
+  border-radius: 22px;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.6875rem;
+  font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;

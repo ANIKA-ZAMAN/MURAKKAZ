@@ -206,10 +206,10 @@
 .compareBtn,
 .readMoreBtn {
   flex: 1;
-  height: 30px;
-  border-radius: 15px;
+  min-height: 44px;
+  border-radius: 22px;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);

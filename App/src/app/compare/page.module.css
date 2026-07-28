@@ -555,29 +555,44 @@
 
 @media (max-width: 768px) {
   .main {
-    padding: 2rem 1rem 4rem;
+    padding: 1.5rem 1rem 3rem;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: clamp(1.75rem, 5.5vw, 2.2rem);
   }
 
   .compareFrame {
-    padding: 1.5rem;
+    padding: 1.25rem 1rem;
   }
 
   .slotsContainer {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.25rem;
   }
 
   .emptySlot, .filledSlot {
     max-width: 100%;
   }
 
-  .compareTable {
-    display: block;
+  .actionButtons {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .compareBtn, .resetBtn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+  }
+
+  .tableContainer {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compareTable {
+    min-width: 600px;
   }
 }
 
