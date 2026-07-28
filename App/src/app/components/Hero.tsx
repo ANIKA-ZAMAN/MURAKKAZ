@@ -380,12 +380,22 @@ export default function Hero() {
             Your browser does not support the video tag.
           </video>
 
-          {/* Contact Shadow directly attached & perfectly aligned under bottle base */}
+          {/* Real Ground Shadow Effect: Tight Contact Shadow + Soft Ambient Shadow under the bottle base */}
+          {/* 1. Soft Ambient Ground Shadow */}
           <div 
-            className="absolute bottom-[2%] sm:bottom-[3%] left-1/2 -translate-x-1/2 w-[72%] sm:w-[68%] h-[18px] sm:h-[24px] rounded-[50%] pointer-events-none z-0"
+            className="absolute top-[82%] left-[48.5%] w-[64%] sm:w-[56%] h-[20px] sm:h-[26px] rounded-[50%] pointer-events-none z-0"
             style={{
-              background: "radial-gradient(ellipse at 50% 50%, rgba(20, 12, 8, 0.60) 0%, rgba(35, 20, 10, 0.25) 50%, transparent 85%)",
-              filter: "blur(6px)",
+              background: "radial-gradient(ellipse at 50% 50%, rgba(20, 12, 7, 0.55) 0%, rgba(35, 20, 10, 0.22) 55%, transparent 88%)",
+              filter: "blur(9px)",
+              animation: "bottleShadowPulse 7s ease-in-out infinite alternate",
+            }}
+          />
+          {/* 2. Dark Sharp Contact Shadow right where bottle base ends */}
+          <div 
+            className="absolute top-[80.5%] left-[48.5%] w-[44%] sm:w-[38%] h-[12px] sm:h-[16px] rounded-[50%] pointer-events-none z-0"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, rgba(10, 6, 3, 0.85) 0%, rgba(25, 14, 6, 0.40) 50%, transparent 85%)",
+              filter: "blur(4px)",
               animation: "bottleShadowPulse 7s ease-in-out infinite alternate",
             }}
           />

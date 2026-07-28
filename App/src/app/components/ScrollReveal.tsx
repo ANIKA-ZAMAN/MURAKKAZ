@@ -33,16 +33,6 @@ export default function ScrollReveal({
     const currentRef = ref.current;
     if (!currentRef) return;
 
-    // If the element is already in the viewport, skip the animation entirely
-    const rect = currentRef.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 50) {
-      setPhase("visible");
-      return;
-    }
-
-    // Element is below the viewport — hide it, then reveal on scroll
-    setPhase("hidden");
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -51,17 +41,26 @@ export default function ScrollReveal({
         }
       },
       {
-        threshold: 0.05,
-        rootMargin: "80px 0px 0px 0px",
+        threshold: 0.25,
+        rootMargin: "0px 0px -40px 0px",
       }
     );
 
-    observer.observe(currentRef);
+    const rect = currentRef.getBoundingClientRect();
+    
+    // If element is below the initial fold or near viewport bottom
+    if (rect.top > 100) {
+      setPhase("hidden");
+      observer.observe(currentRef);
+    } else {
+      // Element is at the top of the viewport on initial load
+      setPhase("visible");
+    }
 
-    // Safety fallback: if still hidden after 3 seconds, force visible
+    // Safety fallback: if still hidden after 2 seconds, force visible
     const fallbackTimer = setTimeout(() => {
       setPhase((prev) => (prev === "hidden" ? "visible" : prev));
-    }, 3000);
+    }, 2000);
 
     return () => {
       observer.disconnect();

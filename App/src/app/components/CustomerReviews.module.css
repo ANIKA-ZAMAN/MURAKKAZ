@@ -53,6 +53,30 @@
   font-style: italic;
 }
 
+:global(.reveal) .sectionHeader {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .sectionHeader {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:global(.reveal) .carouselStage {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 150ms, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 150ms;
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .carouselStage {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── Stacked 3D Carousel Stage ── */
 .carouselStage {
   position: relative;

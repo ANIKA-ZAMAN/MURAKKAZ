@@ -4,7 +4,7 @@
 
 .section {
   width: 100%;
-  padding: 7.5rem 2rem;
+  padding: clamp(5.5rem, 8vw, 8.5rem) 2rem;
   background: transparent;
   position: relative;
   overflow: hidden;
@@ -16,17 +16,6 @@
 /* ── Subtle Warm Ambient Spotlight Glow ── */
 .spotlightGlow {
   display: none;
-}
-
-@keyframes spotlightPulse {
-  0% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.04);
-  }
 }
 
 /* ── Low-Opacity Floating Fragrance Note Particles ── */
@@ -62,9 +51,9 @@
   }
 }
 
-/* ── Container Layout ── */
+/* ── Container Layout (Desktop max-width: 1200px) ── */
 .container {
-  max-width: 900px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   position: relative;
@@ -73,6 +62,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 0 clamp(24px, 4vw, 32px);
 }
 
 /* ── Decorative Gold Flourish Divider ── */
@@ -81,7 +71,7 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .flourishLine {
@@ -96,32 +86,32 @@
   line-height: 1;
 }
 
-/* ── Heading ── */
+/* ── 1. Heading (Clear Focal Point: 56–64px serif, bold) ── */
 .heading {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: clamp(2.2rem, 4.2vw, 3.25rem);
-  font-weight: 400;
+  font-size: clamp(2.35rem, 4.8vw, 3.75rem); /* ~56px–62px on desktop */
+  font-weight: 600;
   color: #2D251C;
-  line-height: 1.22;
-  letter-spacing: -0.015em;
-  margin-bottom: 1.25rem;
-  max-width: 820px;
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+  margin-bottom: 1.5rem;
+  max-width: 860px;
   text-shadow: 0 1px 2px rgba(255, 250, 240, 0.5);
 }
 
-/* ── Description (reduced width for optimal readability) ── */
+/* ── 2. Description (Width 650–700px, Increased Line-Height) ── */
 .description {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: clamp(0.98rem, 1.6vw, 1.08rem);
-  line-height: 1.75;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  line-height: 1.85;
   color: #4D4233;
   font-style: italic;
-  max-width: 620px;
-  margin-bottom: 2.75rem;
+  max-width: 680px;
+  margin-bottom: 40px; /* 40px spacing between description and CTA */
   letter-spacing: 0.01em;
 }
 
-/* ── Luxury Exclusive CTA Button ── */
+/* ── 3. CTA Button (Own Visual Element with Generous Whitespace) ── */
 .ctaButton {
   display: inline-flex;
   align-items: center;
@@ -155,49 +145,179 @@
   transform: translateY(0) scale(0.97);
 }
 
-/* Shimmer light sweep on hover */
-.buttonShimmer {
-  position: absolute;
-  top: 0;
-  left: -100%;
+/* ── 4. Popular Comparisons Subsection (32–40px below CTA) ── */
+.popularSection {
+  margin-top: 36px; /* 36px below CTA */
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
-  transition: left 800ms cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.ctaButton:hover .buttonShimmer {
-  left: 100%;
-}
-
-.ctaText {
+.popularLabel {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.85rem;
+  font-size: clamp(0.68rem, 1vw, 0.75rem);
   font-weight: 500;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  position: relative;
-  z-index: 1;
+  color: #7A6952;
+  margin-bottom: 1.1rem;
+  opacity: 0.9;
 }
 
-.ctaArrow {
-  font-size: 1.1rem;
-  color: #a88b60;
-  transition: transform 400ms ease;
-  position: relative;
-  z-index: 1;
+/* ── 5. Popular Grid Layout ── */
+.popularGrid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.65rem, 1.2vw, 1.1rem);
+  width: 100%;
+  max-width: 1080px;
 }
 
-.ctaButton:hover .ctaArrow {
-  transform: translateX(6px);
-  color: #8c7045;
+/* ── 6. Comparison Pills (Height 48–52px, Slightly Smaller Typography) ── */
+.popularPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  height: 50px; /* 48-52px height */
+  padding: 0 1.35rem;
+  border-radius: 9999px;
+  background: rgba(248, 242, 232, 0.75);
+  border: 1px solid rgba(185, 155, 108, 0.38);
+  color: #313134;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: clamp(0.78rem, 1.1vw, 0.84rem); /* Slightly smaller typography */
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(80, 60, 30, 0.04);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  user-select: none;
 }
 
-/* ── Responsive adjustments ── */
-@media (max-width: 768px) {
+/* Hover: Lift 2px, warm champagne glow, 200ms transition */
+.popularPill:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #FDFBF7 0%, #F5ECDF 100%);
+  border-color: rgba(184, 150, 92, 0.75);
+  box-shadow: 0 8px 24px rgba(184, 150, 92, 0.28), 0 0 12px rgba(212, 175, 55, 0.18);
+}
+
+.popularPill:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.pillText {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.versusSymbol {
+  color: #B8965C;
+  font-size: 0.9em;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.pillArrow {
+  font-size: 0.88rem;
+  color: #B8965C;
+  transition: transform 200ms ease-out, color 200ms ease-out;
+}
+
+.popularPill:hover .pillArrow {
+  transform: translateX(3px);
+  color: #8A6632;
+}
+
+/* Scroll Reveal Mask + Fade Up Animations */
+:global(.reveal) .flourishDivider {
+  opacity: 0;
+  transform: scaleX(0.3);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .flourishDivider {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+:global(.reveal) .heading {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 120ms, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .heading {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:global(.reveal) .description {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 220ms, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 220ms;
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:global(.reveal) .popularPill {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger-delay, 0ms),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--stagger-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .popularPill {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Responsive Layout Rules ── */
+/* Laptop (1024–1279px): Preserve proportions */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .container {
+    max-width: 1020px;
+  }
+}
+
+/* Tablet (768–1023px): 2 comparison pills per row */
+@media (min-width: 768px) and (max-width: 1023px) {
   .section {
-    padding: 5.5rem 1.5rem;
+    padding: 5.5rem 1.75rem;
+  }
+
+  .popularGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    max-width: 700px;
+  }
+
+  .popularPill {
+    width: 100%;
+  }
+}
+
+/* Mobile (320–767px): Stack pills vertically, 24-32px padding, full-width CTA */
+@media (max-width: 767px) {
+  .section {
+    padding: 4rem 1.25rem;
   }
   
   .flourishLine {
@@ -205,11 +325,30 @@
   }
   
   .description {
-    margin-bottom: 2.25rem;
+    margin-bottom: 32px;
   }
   
   .ctaButton {
     height: 52px;
-    padding: 0 2.25rem;
+    padding: 0 2rem;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .popularSection {
+    margin-top: 32px;
+  }
+
+  .popularGrid {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .popularPill {
+    width: 100%;
+    height: 48px;
+    padding: 0 1.15rem;
+    justify-content: space-between;
   }
 }

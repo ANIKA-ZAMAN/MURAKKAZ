@@ -21,101 +21,171 @@ interface CompareProduct {
   isRecommended?: boolean;
 }
 
-const mockProducts: CompareProduct[] = productsCatalog.map((prod) => {
-  let name = prod.name;
-  let inspiredBy = `Inspired by ${prod.brand}`;
-  let profile = prod.description;
-  let longevity = prod.meter;
-  let projection = "Moderate";
-  let sweetness = "●●○○○";
-  let bestFor = prod.occasion;
-  let accords = [
-    { name: "Fresh", value: 80 },
-    { name: "Citrus", value: 70 },
-  ];
-
-  if (prod.image.includes("jade_serenity")) {
-    name = "Jade Serenity";
-    inspiredBy = "Creed Original Vetiver";
-    profile = "Clean, crisp green tea twist layered over the classic fresh metallic base.";
-    longevity = "Beast Mode (8+ Hours)";
-    projection = "Heavy (Cuts through humid air beautifully)";
-    sweetness = "●●○○○ (Subtle Crispness)";
-    bestFor = "Office, hot summer afternoons, and high-end formal setups.";
-    accords = [
-      { name: "Woody", value: 80 },
-      { name: "Vanilla", value: 65 },
-      { name: "Balsamic", value: 55 },
-      { name: "Warm Spicy", value: 50 },
-    ];
-  } else if (prod.image.includes("coral_sea")) {
-    name = "Mageration";
-    inspiredBy = "Dior Sauvage";
-    profile = "Raw, sharp, high-concentration classic amber-spicy formulation.";
-    longevity = "Strong (6-7 Hours)";
-    projection = "Moderate (Creates a close personal aura)";
-    sweetness = "●○○○○ (Very Dry / Spicy)";
-    bestFor = "Casual hangouts, post-gym refreshes, and daily signatures.";
-    accords = [
+const availablePerfumes: CompareProduct[] = [
+  {
+    name: "Dior Sauvage",
+    image: "/images/products/coral_sea.png",
+    brand: "Dior",
+    inspiredBy: "Dior Sauvage",
+    price: "৳450 – ৳6,800",
+    rating: "4.8 (240)",
+    profile: "Raw, sharp bergamot & Sichuan pepper opening with a powerful ambroxan trail.",
+    longevity: "Strong (7-8 Hours)",
+    projection: "Heavy (Room filling initially)",
+    sweetness: "●○○○○ (Fresh & Spicy)",
+    bestFor: "Casual hangouts, evening dates, and daily signatures.",
+    accords: [
+      { name: "Fresh Spicy", value: 90 },
+      { name: "Amber", value: 80 },
+      { name: "Citrus", value: 75 },
+    ],
+  },
+  {
+    name: "Carolina Herrera Bad Boy",
+    image: "/images/products/magnetism.png",
+    brand: "Carolina Herrera",
+    inspiredBy: "Carolina Herrera Bad Boy",
+    price: "৳480 – ৳7,000",
+    rating: "4.7 (195)",
+    profile: "Bold white & black pepper blended with cedarwood, tonka bean, and cocoa notes.",
+    longevity: "Long Lasting (6-8 Hours)",
+    projection: "Moderate to Heavy",
+    sweetness: "●●●○○ (Warm & Spicy Sweet)",
+    bestFor: "Night outs, winter events, and party occasions.",
+    accords: [
+      { name: "Warm Spicy", value: 85 },
+      { name: "Cacao", value: 80 },
+      { name: "Woody", value: 70 },
+    ],
+  },
+  {
+    name: "YSL Y EDP",
+    image: "/images/products/jade_serenity.png",
+    brand: "Yves Saint Laurent",
+    inspiredBy: "YSL Y EDP",
+    price: "৳500 – ৳7,200",
+    rating: "4.9 (310)",
+    profile: "Aromatic crisp apple, sage, and ginger leading into a smooth vetiver & amberwood dry down.",
+    longevity: "Beast Mode (8+ Hours)",
+    projection: "Heavy (Fills personal aura)",
+    sweetness: "●●●○○ (Sweet & Aromatic)",
+    bestFor: "All-year versatile signature, clubbing, and formal meetings.",
+    accords: [
+      { name: "Aromatic", value: 90 },
+      { name: "Fruity", value: 82 },
       { name: "Woody", value: 75 },
-      { name: "Vanilla", value: 60 },
-      { name: "Balsamic", value: 55 },
-      { name: "Warm Spicy", value: 70 },
-    ];
-  } else if (prod.image.includes("magnetism")) {
-    name = "Magnetism";
-    inspiredBy = "YSL Y EDP";
-    profile = "Sweet, fresh, highly aromatic ginger-apple opening with a deep woody trails.";
-    longevity = "Long Lasting (7-8 Hours)";
-    projection = "Heavy (Fills the room initially)";
-    sweetness = "●●●○○ (Sweet & Fresh)";
-    bestFor = "Clubbing, date nights, and winter evening gatherings.";
-    accords = [
-      { name: "Woody", value: 70 },
-      { name: "Vanilla", value: 50 },
-      { name: "Balsamic", value: 45 },
-      { name: "Warm Spicy", value: 65 },
-    ];
-  } else if (prod.image.includes("hellenist")) {
-    name = "Hellenist";
-    inspiredBy = "Baccarat Rouge 540";
-    profile = "Stunningly sweet amber profile. Highly projecting and elegant, ideal for special occasions.";
-    longevity = "Long Lasting (7-8 Hours)";
-    projection = "Heavy";
-    sweetness = "●●●●○ (Sweet & Rich)";
-    bestFor = "Special occasions, cold nights, and luxury events.";
-    accords = [
-      { name: "Sweet", value: 90 },
-      { name: "Amber", value: 85 },
-      { name: "Woody", value: 70 },
-      { name: "Warm Spicy", value: 50 },
-    ];
-  }
-
-  return {
-    name: `${name} (Slot ${prod.id})`,
-    image: prod.image,
-    brand: prod.brand,
-    inspiredBy,
-    price: prod.price,
-    rating: `${prod.rating.toFixed(1)} (${prod.reviews})`,
-    profile,
-    longevity,
-    projection,
-    sweetness,
-    bestFor,
-    accords,
-    isRecommended: prod.id === "1",
-  };
-});
+    ],
+  },
+  {
+    name: "Bleu de Chanel",
+    image: "/images/products/hellenist.png",
+    brand: "Chanel",
+    inspiredBy: "Bleu de Chanel",
+    price: "৳550 – ৳8,200",
+    rating: "4.9 (420)",
+    profile: "Timeless grapefruit, mint, and incense blended over deep cedar and sandalwood.",
+    longevity: "Long Lasting (7-8 Hours)",
+    projection: "Moderate (Sophisticated & Clean)",
+    sweetness: "●●○○○ (Crisp & Woody)",
+    bestFor: "Executive meetings, dates, and black-tie formal events.",
+    accords: [
+      { name: "Citrus", value: 88 },
+      { name: "Woody", value: 82 },
+      { name: "Smoky", value: 65 },
+    ],
+  },
+  {
+    name: "Afnan 9PM",
+    image: "/images/products/coral_sea.png",
+    brand: "Afnan",
+    inspiredBy: "Afnan 9PM",
+    price: "৳420 – ৳6,200",
+    rating: "4.8 (280)",
+    profile: "Irresistible apple, cinnamon, lavender, and rich vanilla trail.",
+    longevity: "Beast Mode (9+ Hours)",
+    projection: "Heavy",
+    sweetness: "●●●●○ (Sweet & Intoxicating)",
+    bestFor: "Evening parties, cool nights, and clubbing.",
+    accords: [
+      { name: "Vanilla", value: 90 },
+      { name: "Sweet", value: 85 },
+      { name: "Fruity", value: 75 },
+    ],
+  },
+  {
+    name: "JPG Ultra Male",
+    image: "/images/products/magnetism.png",
+    brand: "Jean Paul Gaultier",
+    inspiredBy: "JPG Ultra Male",
+    price: "৳580 – ৳8,500",
+    rating: "4.9 (350)",
+    profile: "Juicy black lavender, pear, mint, and spicy cinnamon vanilla blend.",
+    longevity: "Beast Mode (10+ Hours)",
+    projection: "Room Filling",
+    sweetness: "●●●●● (Ultra Sweet)",
+    bestFor: "Nightlife, cold winter nights, and statement entrances.",
+    accords: [
+      { name: "Sweet", value: 95 },
+      { name: "Fruity", value: 88 },
+      { name: "Vanilla", value: 85 },
+    ],
+  },
+  {
+    name: "Jade Serenity",
+    image: "/images/products/jade_serenity.png",
+    brand: "Creed",
+    inspiredBy: "Creed Original Vetiver",
+    price: "৳650 – ৳9,500",
+    rating: "4.7 (180)",
+    profile: "Clean, crisp green tea twist layered over fresh metallic vetiver base.",
+    longevity: "Beast Mode (8+ Hours)",
+    projection: "Heavy",
+    sweetness: "●●○○○ (Subtle Crispness)",
+    bestFor: "Office, hot summer afternoons, and high-end formal setups.",
+    accords: [
+      { name: "Woody", value: 80 },
+      { name: "Citrus", value: 75 },
+      { name: "Green", value: 70 },
+    ],
+    isRecommended: true,
+  },
+  {
+    name: "Hellenist",
+    image: "/images/products/hellenist.png",
+    brand: "Maison Francis Kurkdjian",
+    inspiredBy: "Baccarat Rouge 540",
+    price: "৳750 – ৳11,000",
+    rating: "4.9 (510)",
+    profile: "Stunningly sweet jasmine, saffron, and ambergris crystal woods.",
+    longevity: "Beast Mode (12+ Hours)",
+    projection: "Enormous",
+    sweetness: "●●●●○ (Sweet & Rich)",
+    bestFor: "Special occasions, cold nights, and luxury gala events.",
+    accords: [
+      { name: "Amber", value: 95 },
+      { name: "Woody", value: 85 },
+      { name: "Warm Spicy", value: 75 },
+    ],
+  },
+];
 
 function CompareContent() {
   const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([null, null, null]);
   const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
   const [showComparison, setShowComparison] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [modalSearchQuery, setModalSearchQuery] = useState("");
   const tableRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
+
+  const triggerAnalysis = (slots: (CompareProduct | null)[]) => {
+    setIsAnalyzing(true);
+    setShowComparison(false);
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      setShowComparison(true);
+    }, 1200);
+  };
 
   useEffect(() => {
     const p1 = searchParams.get("p1");
@@ -128,11 +198,13 @@ function CompareContent() {
 
       params.forEach((param, idx) => {
         if (param) {
-          const match = mockProducts.find(
+          const match = availablePerfumes.find(
             (p) =>
               p.image === param ||
               p.image.includes(param) ||
-              p.name.toLowerCase().includes(param.toLowerCase())
+              p.name.toLowerCase().includes(param.toLowerCase()) ||
+              p.inspiredBy.toLowerCase().includes(param.toLowerCase()) ||
+              p.brand.toLowerCase().includes(param.toLowerCase())
           );
           if (match) {
             newSlots[idx] = match;
@@ -141,9 +213,9 @@ function CompareContent() {
       });
 
       setSelectedSlots(newSlots);
-      setShowComparison(true);
+      triggerAnalysis(newSlots);
 
-      // Clean up the URL parameters so they don't linger in the address bar
+      // Clean up URL parameters
       if (typeof window !== "undefined") {
         const url = new URL(window.location.href);
         url.search = "";
@@ -157,7 +229,7 @@ function CompareContent() {
     const addName = searchParams.get("name");
 
     if (addImage || addName || addId) {
-      const match = mockProducts.find(
+      const match = availablePerfumes.find(
         (p) =>
           (addImage && p.image === addImage) ||
           (addName && p.name.toLowerCase() === addName.toLowerCase())
@@ -178,7 +250,6 @@ function CompareContent() {
           return nextSlots;
         });
 
-        // Clean up the URL parameters so they don't linger in the address bar
         if (typeof window !== "undefined") {
           const url = new URL(window.location.href);
           url.search = "";
@@ -189,12 +260,17 @@ function CompareContent() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (showComparison) {
+    if (showComparison && tableRef.current) {
       setTimeout(() => {
         if (tableRef.current) {
-          tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+          const navbarOffset = 110;
+          const elementTop = tableRef.current.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementTop - navbarOffset,
+            behavior: "smooth",
+          });
         }
-      }, 80);
+      }, 100);
     }
   }, [showComparison]);
 
@@ -218,15 +294,16 @@ function CompareContent() {
   const handleReset = () => {
     setSelectedSlots([null, null, null]);
     setShowComparison(false);
+    setIsAnalyzing(false);
   };
 
   const handleCompare = () => {
     if (selectedSlots.some((slot) => slot !== null)) {
-      setShowComparison(true);
+      triggerAnalysis(selectedSlots);
     }
   };
 
-  const filteredModalProducts = mockProducts.filter((prod) => {
+  const filteredModalProducts = availablePerfumes.filter((prod) => {
     if (!modalSearchQuery) return true;
     const q = modalSearchQuery.toLowerCase();
     return (
@@ -362,12 +439,20 @@ function CompareContent() {
         {/* Action buttons */}
         <div className={styles.actionButtons}>
           <button className={styles.compareBtn} onClick={handleCompare}>
-            Compare
+            {isAnalyzing ? "Comparing..." : "Compare"}
           </button>
           <button className={styles.resetBtn} onClick={handleReset}>
             Reset
           </button>
         </div>
+
+        {/* Analyzing Progress Banner */}
+        {isAnalyzing && (
+          <div className={styles.analyzingBanner}>
+            <div className={styles.analyzingSpinner} />
+            <span>Analyzing olfactory profiles, longevity & scent notes...</span>
+          </div>
+        )}
 
         {/* Comparison Table */}
         {showComparison && (

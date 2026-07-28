@@ -27,12 +27,12 @@ export default function Home() {
     <div className="w-full min-h-[calc(100vh-96px)] bg-[#CBB9A1] flex flex-col justify-between overflow-x-hidden" suppressHydrationWarning>
       <Hero />
       <ScrollReveal variant="fade-up"><FeaturedCollections /></ScrollReveal>
-      <ScrollReveal variant="none"><FindYourFragrance /></ScrollReveal>
-      <ScrollReveal variant="scale-fade"><ShopByOccasion /></ScrollReveal>
-      <ScrollReveal variant="none"><MurakkazDifference /></ScrollReveal>
+      <ScrollReveal variant="scale-fade"><FindYourFragrance /></ScrollReveal>
+      <ScrollReveal variant="fade-up"><ShopByOccasion /></ScrollReveal>
       <ScrollReveal variant="spotlight-reveal"><CompareBanner /></ScrollReveal>
       <ScrollReveal variant="fade-up"><CustomerReviews /></ScrollReveal>
       <ScrollReveal variant="slide-horizontal"><UpcomingEventsSection /></ScrollReveal>
+      <ScrollReveal variant="spotlight-reveal"><MurakkazDifference /></ScrollReveal>
     </div>
   );
 }

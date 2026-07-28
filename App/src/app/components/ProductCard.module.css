@@ -10,7 +10,7 @@
   position: relative;
   box-shadow: 0 2px 12px rgba(80, 60, 30, 0.06);
   overflow: hidden;
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 450ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 450ms cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Adaptive card content bg — default for lighter (#F5F1E8) pages */
   --card-content-bg: rgba(255, 255, 255, 0.70);
@@ -19,7 +19,7 @@
 
 :global(.reveal) .card {
   opacity: 0;
-  transform: translateY(25px) scale(0.97);
+  transform: translateY(28px) scale(0.98);
   will-change: opacity, transform;
 }
 
@@ -30,8 +30,8 @@
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(80, 60, 30, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 36px rgba(80, 60, 30, 0.10);
 }
 
 /* ── Image ── */

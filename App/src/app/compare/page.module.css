@@ -346,6 +346,7 @@
   border-radius: 8px;
   overflow: visible; /* Allows sticky table headers to render correctly */
   background-color: var(--background); /* Same background color as the page */
+  scroll-margin-top: 110px;
 }
 
 .compareTable {
@@ -595,5 +596,48 @@
 
 .compareTable tr:last-child td:last-child {
   border-bottom-right-radius: 7px;
+}
+
+/* ── Analyzing Loading Indicator ── */
+.analyzingBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 1rem 2rem;
+  background: rgba(248, 242, 232, 0.95);
+  border: 1px solid rgba(185, 155, 108, 0.45);
+  border-radius: 12px;
+  color: #313134;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.92rem;
+  margin: 1.25rem auto 0;
+  max-width: 580px;
+  box-shadow: 0 4px 20px rgba(80, 60, 30, 0.08);
+  animation: fadeInPulse 1.2s ease-in-out infinite alternate;
+}
+
+.analyzingSpinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(184, 150, 92, 0.3);
+  border-top-color: #820011;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInPulse {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
