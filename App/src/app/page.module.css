@@ -104,11 +104,12 @@
 }
 
 .scrollDownBtn {
-  margin-top: 2.25rem;
+  margin-top: 0;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.55rem;
-  padding: 0.7rem 1.4rem;
+  padding: 0.7rem 1.6rem;
   border: 1.5px solid #820011; /* Murakkaz Red Border */
   border-radius: 8px;
   background-color: transparent;
@@ -118,6 +119,7 @@
   color: #313134; /* Black Text */
   cursor: pointer;
   transition: all 0.25s ease;
+  align-self: center;
 }
 
 .scrollDownBtn:hover {
@@ -141,7 +143,9 @@
 .creatorImageCol {
   flex: 1.35;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 .creatorImageFrame {

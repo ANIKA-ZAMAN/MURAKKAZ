@@ -51,11 +51,13 @@ export default function JourneyStorySection() {
     if (!sectionRef.current) return;
 
     const totalSteps = journeySections.length;
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 900;
+    const scrollMultiplier = isMobile ? 50 : 100;
 
     const trigger = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: "top top",
-      end: `+=${totalSteps * 100}%`,
+      end: `+=${totalSteps * scrollMultiplier}%`,
       pin: true,
       pinSpacing: true,
       onUpdate: (self) => {
