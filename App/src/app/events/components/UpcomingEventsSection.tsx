@@ -25,19 +25,28 @@ export default function UpcomingEventsSection({
 
       <div className={styles.upcomingList}>
         {paginatedEvents.map((event, idx) => (
-          <div key={idx} className={styles.upcomingRow}>
+          <div
+            key={idx}
+            className={`${styles.upcomingRow} ${
+              idx % 2 === 1 ? styles.upcomingRowOdd : ""
+            }`}
+          >
             {/* Col 1: Date */}
             <div className={styles.dateBlock}>
-              <span className={styles.dateDay}>{event.day}</span>
-              <span className={styles.dateMonth}>{event.month}</span>
+              <div className={styles.dateHeader}>
+                <span className={styles.dateDay}>{event.day}</span>
+                <span className={styles.dateMonth}>{event.month}</span>
+              </div>
               <p className={styles.upcomingTime}>{event.time}</p>
             </div>
 
             {/* Col 2: Title + Location + Days Left + Button */}
             <div className={styles.upcomingInfo}>
-              <h3 className={styles.upcomingTitle}>{event.title}</h3>
-              <p className={styles.upcomingLocation}>{event.location}</p>
-              <p className={styles.upcomingDaysLeft}>{event.daysLeft}</p>
+              <div className={styles.upcomingDetails}>
+                <h3 className={styles.upcomingTitle}>{event.title}</h3>
+                <p className={styles.upcomingLocation}>{event.location}</p>
+                <p className={styles.upcomingDaysLeft}>{event.daysLeft}</p>
+              </div>
               <button
                 className={styles.setReminderBtn}
                 onClick={() => onSetReminder(event)}
@@ -46,40 +55,28 @@ export default function UpcomingEventsSection({
               </button>
             </div>
 
-            {/* Col 3 & 4: Image and Description — alternating */}
-            {idx % 2 === 0 ? (
-              <>
-                <div className={styles.upcomingImageWrap}>
-                  <Image
-                    src={`/images/events/${event.image}`}
-                    alt="Event Image"
-                    width={302}
-                    height={212}
-                    className={styles.boxSvgImage}
-                    priority
-                  />
-                </div>
-                <div className={styles.upcomingDescWrap}>
-                  <p className={styles.upcomingDesc}>{event.description}</p>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={styles.upcomingDescWrap}>
-                  <p className={styles.upcomingDesc}>{event.description}</p>
-                </div>
-                <div className={styles.upcomingImageWrap}>
-                  <Image
-                    src={`/images/events/${event.image}`}
-                    alt="Event Image"
-                    width={302}
-                    height={212}
-                    className={styles.boxSvgImage}
-                    priority
-                  />
-                </div>
-              </>
-            )}
+            {/* Col 3: Image */}
+            <div className={styles.upcomingImageWrap}>
+              <Image
+                src={`/images/events/${event.image}`}
+                alt={event.title || "Event Image"}
+                width={302}
+                height={212}
+                className={styles.boxSvgImage}
+                priority
+              />
+            </div>
+
+            {/* Col 4: Description */}
+            <div className={styles.upcomingDescWrap}>
+              <p className={styles.upcomingDesc}>{event.description}</p>
+              <button
+                className={styles.seeDetailsBtn}
+                onClick={() => onSetReminder(event)}
+              >
+                See details &gt;
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -117,3 +114,4 @@ export default function UpcomingEventsSection({
     </section>
   );
 }
+

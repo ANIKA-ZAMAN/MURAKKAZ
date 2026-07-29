@@ -159,13 +159,107 @@ export const previousEvents: PreviousEvent[] = [
   },
 ];
 
+export interface GalleryImage {
+  src: string;
+  alt: string;
+  title?: string;
+  category?: string;
+  date?: string;
+  location?: string;
+  accentColor?: string;
+}
+
 export const galleryImages: GalleryImage[] = [
-  { src: "/images/events/gallery_1.jpg", alt: "Event gallery photo 1" },
-  { src: "/images/events/gallery_2.jpg", alt: "Event gallery photo 2" },
-  { src: "/images/events/gallery_3.jpg", alt: "Event gallery photo 3" },
-  { src: "/images/events/gallery_4.jpg", alt: "Event gallery photo 4" },
-  { src: "/images/events/gallery_5.jpg", alt: "Event gallery photo 5" },
-  { src: "/images/events/gallery_6.jpg", alt: "Event gallery photo 6" },
+  {
+    src: "/images/events/gallery_1.jpg",
+    alt: "Live Olfactory Blending Station",
+    title: "Live Olfactory Station",
+    category: "Exhibition",
+    date: "Jan 15, 2025",
+    location: "Dhaka Club, Gulshan",
+    accentColor: "#ded6c9",
+  },
+  {
+    src: "/images/events/gallery_2.jpg",
+    alt: "Luxury Pop-up Stall Banani",
+    title: "Luxury Pop-up Stall",
+    category: "Pop-up",
+    date: "Dec 20, 2024",
+    location: "Banani 11, Dhaka",
+    accentColor: "#d6cebf",
+  },
+  {
+    src: "/images/events/gallery_3.jpg",
+    alt: "Live Bottle-Painting Workshop",
+    title: "Bottle-Painting Workshop",
+    category: "Workshop",
+    date: "Nov 08, 2024",
+    location: "NSU Campus Gallery",
+    accentColor: "#e2dcd2",
+  },
+  {
+    src: "/images/events/gallery_4.jpg",
+    alt: "Exclusive Scent Reveal Gala",
+    title: "Exclusive Scent Reveal",
+    category: "Launch",
+    date: "Oct 25, 2024",
+    location: "Radisson Blu, Dhaka",
+    accentColor: "#cfc6b5",
+  },
+  {
+    src: "/images/events/gallery_5.jpg",
+    alt: "Founder Meet & Greet Window",
+    title: "Founder Meet & Greet",
+    category: "Meetup",
+    date: "Sep 14, 2024",
+    location: "BRACU Auditorium",
+    accentColor: "#d9d0c2",
+  },
+  {
+    src: "/images/events/gallery_6.jpg",
+    alt: "Autumn Perfumer Showcase",
+    title: "Gala Night Showcase",
+    category: "Gala",
+    date: "Aug 30, 2024",
+    location: "ICCB Pavilion 3",
+    accentColor: "#e5ded4",
+  },
+  {
+    src: "/images/events/gallery_7.jpg",
+    alt: "Summer Scent Festival",
+    title: "Summer Scent Fest",
+    category: "Festival",
+    date: "Jul 18, 2024",
+    location: "Chattogram Club",
+    accentColor: "#dbd2c3",
+  },
+  {
+    src: "/images/events/gallery_8.jpg",
+    alt: "VIP Fragrance Tasting Lounge",
+    title: "VIP Fragrance Tasting",
+    category: "VIP Lounge",
+    date: "Jun 10, 2024",
+    location: "Westin, Gulshan",
+    accentColor: "#d2c9b8",
+  },
+  {
+    src: "/images/events/gallery_9.jpg",
+    alt: "Artisan Olfactory Blending Masterclass",
+    title: "Artisan Blending Lab",
+    category: "Masterclass",
+    date: "May 22, 2024",
+    location: "Sylhet Grand Hotel",
+    accentColor: "#ded7cb",
+  },
+  {
+    src: "/images/events/gallery_10.jpg",
+    alt: "Exclusive Oud & Perfume Launch",
+    title: "Royal Oud Collection",
+    category: "Exhibition",
+    date: "Apr 05, 2024",
+    location: "Shimanto Square",
+    accentColor: "#e8e1d5",
+  },
 ];
 
 export const storeLocations: StoreLocation[] = [
