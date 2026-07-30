@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { productsCatalog } from "../data/products";
 import styles from "./page.module.css";
 
-interface CompareProduct {
+export interface CompareProduct {
   name: string;
   image: string;
   brand: string;
@@ -19,6 +19,11 @@ interface CompareProduct {
   bestFor: string;
   accords: { name: string; value: number }[];
   isRecommended?: boolean;
+  notes?: {
+    top: string[];
+    heart: string[];
+    base: string[];
+  };
 }
 
 const availablePerfumes: CompareProduct[] = [
@@ -39,6 +44,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Amber", value: 80 },
       { name: "Citrus", value: 75 },
     ],
+    notes: {
+      top: ["Calabrian Bergamot", "Pepper"],
+      heart: ["Sichuan Pepper", "Lavender", "Vetiver", "Patchouli"],
+      base: ["Ambroxan", "Cedarwood", "Labdanum"],
+    },
   },
   {
     name: "Carolina Herrera Bad Boy",
@@ -57,6 +67,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Cacao", value: 80 },
       { name: "Woody", value: 70 },
     ],
+    notes: {
+      top: ["Black Pepper", "White Pepper", "Italian Bergamot"],
+      heart: ["Cedarwood", "Sage"],
+      base: ["Tonka Bean", "Cocoa", "Amberwood"],
+    },
   },
   {
     name: "YSL Y EDP",
@@ -75,6 +90,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Fruity", value: 82 },
       { name: "Woody", value: 75 },
     ],
+    notes: {
+      top: ["Crisp Apple", "Ginger", "Bergamot"],
+      heart: ["Sage", "Juniper Berries", "Geranium"],
+      base: ["Amberwood", "Tonka Bean", "Vetiver"],
+    },
   },
   {
     name: "Bleu de Chanel",
@@ -93,6 +113,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Woody", value: 82 },
       { name: "Smoky", value: 65 },
     ],
+    notes: {
+      top: ["Grapefruit", "Lemon", "Mint", "Pink Pepper"],
+      heart: ["Ginger", "Nutmeg", "Jasmine"],
+      base: ["Incense", "Vetiver", "Cedarwood", "Sandalwood"],
+    },
   },
   {
     name: "Afnan 9PM",
@@ -111,6 +136,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Sweet", value: 85 },
       { name: "Fruity", value: 75 },
     ],
+    notes: {
+      top: ["Apple", "Cinnamon", "Wild Lavender", "Bergamot"],
+      heart: ["Orange Blossom", "Lily-of-the-Valley"],
+      base: ["Vanilla", "Tonka Bean", "Amber", "Patchouli"],
+    },
   },
   {
     name: "JPG Ultra Male",
@@ -129,6 +159,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Fruity", value: 88 },
       { name: "Vanilla", value: 85 },
     ],
+    notes: {
+      top: ["Pear", "Lavender", "Mint", "Bergamot", "Lemon"],
+      heart: ["Cinnamon", "Clary Sage", "Caraway"],
+      base: ["Black Vanilla Husk", "Amber", "Patchouli", "Cedarwood"],
+    },
   },
   {
     name: "Jade Serenity",
@@ -147,6 +182,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Citrus", value: 75 },
       { name: "Green", value: 70 },
     ],
+    notes: {
+      top: ["Crisp Bergamot", "Mandarin", "Lemon Zest"],
+      heart: ["Green Tea", "Florentine Iris", "Wet Vetiver"],
+      base: ["Sandalwood", "White Musk", "Ambergris"],
+    },
     isRecommended: true,
   },
   {
@@ -166,6 +206,11 @@ const availablePerfumes: CompareProduct[] = [
       { name: "Woody", value: 85 },
       { name: "Warm Spicy", value: 75 },
     ],
+    notes: {
+      top: ["Grandiflorum Jasmine", "Saffron"],
+      heart: ["Bitter Almond", "Cedarwood"],
+      base: ["Ambergris Accord", "Woody Musk"],
+    },
   },
 ];
 
@@ -175,6 +220,7 @@ const allAvailablePerfumes: CompareProduct[] = (() => {
 
   productsCatalog.forEach((p) => {
     if (!mapByName.has(p.name.toLowerCase())) {
+      const rawNotes = p.notes || [];
       mapByName.set(p.name.toLowerCase(), {
         name: p.name,
         image: p.image || "/images/products/jade_serenity.png",
@@ -182,15 +228,20 @@ const allAvailablePerfumes: CompareProduct[] = (() => {
         inspiredBy: p.inspiredBy || p.name,
         price: p.price || `৳${p.priceVal || 1500}`,
         rating: `${p.rating || 4.5} (${p.reviews || 120})`,
-        profile: p.description || `${p.name} - ${p.family} fragrance with ${(p.notes || []).join(", ")}.`,
+        profile: p.description || `${p.name} - ${p.family} fragrance with ${rawNotes.join(", ")}.`,
         longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
         projection: "Moderate to Heavy",
         sweetness: "●●●○○",
         bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
-        accords: (p.notes || []).slice(0, 3).map((note, i) => ({
+        accords: rawNotes.slice(0, 3).map((note, i) => ({
           name: note,
           value: 85 - i * 10,
         })),
+        notes: {
+          top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
+          heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
+          base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+        },
       });
     }
   });
@@ -653,6 +704,25 @@ function CompareContent() {
                         key={idx} 
                         className={`${styles.notesCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
                       >
+                        {slot ? (
+                          <div className={styles.notesListWrapper}>
+                            <ul className={styles.notesBulletList}>
+                              {slot.notes ? (
+                                <>
+                                  <li><strong className={styles.noteCategory}>Top:</strong> {slot.notes.top.join(", ")}</li>
+                                  <li><strong className={styles.noteCategory}>Heart:</strong> {slot.notes.heart.join(", ")}</li>
+                                  <li><strong className={styles.noteCategory}>Base:</strong> {slot.notes.base.join(", ")}</li>
+                                </>
+                              ) : (
+                                <>
+                                  <li><strong className={styles.noteCategory}>Top:</strong> Bergamot, Crisp Apple</li>
+                                  <li><strong className={styles.noteCategory}>Heart:</strong> Lavender, Warm Spices</li>
+                                  <li><strong className={styles.noteCategory}>Base:</strong> Cedarwood, Ambergris, Musk</li>
+                                </>
+                              )}
+                            </ul>
+                          </div>
+                        ) : ""}
                       </td>
                     ))}
                   </tr>
@@ -721,6 +791,24 @@ function CompareContent() {
                           </div>
                         </div>
                       )}
+                      <div className={styles.cardNotesBlock}>
+                        <span className={styles.cardLabel}>Fragrance Notes</span>
+                        <ul className={styles.notesBulletList}>
+                          {slot!.notes ? (
+                            <>
+                              <li><strong className={styles.noteCategory}>Top:</strong> {slot!.notes.top.join(", ")}</li>
+                              <li><strong className={styles.noteCategory}>Heart:</strong> {slot!.notes.heart.join(", ")}</li>
+                              <li><strong className={styles.noteCategory}>Base:</strong> {slot!.notes.base.join(", ")}</li>
+                            </>
+                          ) : (
+                            <>
+                              <li><strong className={styles.noteCategory}>Top:</strong> Bergamot, Crisp Apple</li>
+                              <li><strong className={styles.noteCategory}>Heart:</strong> Lavender, Warm Spices</li>
+                              <li><strong className={styles.noteCategory}>Base:</strong> Cedarwood, Ambergris</li>
+                            </>
+                          )}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -787,6 +875,24 @@ function CompareContent() {
                         </div>
                       </div>
                     )}
+                    <div className={styles.cardNotesBlock}>
+                      <span className={styles.cardLabel}>Fragrance Notes</span>
+                      <ul className={styles.notesBulletList}>
+                        {slot!.notes ? (
+                          <>
+                            <li><strong className={styles.noteCategory}>Top:</strong> {slot!.notes.top.join(", ")}</li>
+                            <li><strong className={styles.noteCategory}>Heart:</strong> {slot!.notes.heart.join(", ")}</li>
+                            <li><strong className={styles.noteCategory}>Base:</strong> {slot!.notes.base.join(", ")}</li>
+                          </>
+                        ) : (
+                          <>
+                            <li><strong className={styles.noteCategory}>Top:</strong> Bergamot, Crisp Apple</li>
+                            <li><strong className={styles.noteCategory}>Heart:</strong> Lavender, Warm Spices</li>
+                            <li><strong className={styles.noteCategory}>Base:</strong> Cedarwood, Ambergris</li>
+                          </>
+                        )}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               ))}
