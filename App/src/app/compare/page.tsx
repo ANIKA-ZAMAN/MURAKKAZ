@@ -169,14 +169,67 @@ const availablePerfumes: CompareProduct[] = [
   },
 ];
 
+const allAvailablePerfumes: CompareProduct[] = (() => {
+  const mapByName = new Map<string, CompareProduct>();
+  availablePerfumes.forEach((p) => mapByName.set(p.name.toLowerCase(), p));
+
+  productsCatalog.forEach((p) => {
+    if (!mapByName.has(p.name.toLowerCase())) {
+      mapByName.set(p.name.toLowerCase(), {
+        name: p.name,
+        image: p.image || "/images/products/jade_serenity.png",
+        brand: p.brand || "Murakkaz",
+        inspiredBy: p.inspiredBy || p.name,
+        price: p.price || `৳${p.priceVal || 1500}`,
+        rating: `${p.rating || 4.5} (${p.reviews || 120})`,
+        profile: p.description || `${p.name} - ${p.family} fragrance with ${(p.notes || []).join(", ")}.`,
+        longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+        projection: "Moderate to Heavy",
+        sweetness: "●●●○○",
+        bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
+        accords: (p.notes || []).slice(0, 3).map((note, i) => ({
+          name: note,
+          value: 85 - i * 10,
+        })),
+      });
+    }
+  });
+
+  return Array.from(mapByName.values());
+})();
+
 function CompareContent() {
-  const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([null, null, null]);
+  const searchParams = useSearchParams();
+  const initialP1 = searchParams.get("p1");
+
+  const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([
+    null,
+    null,
+    null,
+  ]);
+
   const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
+  const [modalSearchQuery, setModalSearchQuery] = useState("");
   const [showComparison, setShowComparison] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [modalSearchQuery, setModalSearchQuery] = useState("");
+
   const tableRef = useRef<HTMLDivElement>(null);
-  const searchParams = useSearchParams();
+
+  // Sync initial URL param p1
+  useEffect(() => {
+    if (initialP1) {
+      const match = allAvailablePerfumes.find(
+        (p) =>
+          p.name.toLowerCase().includes(initialP1.toLowerCase()) ||
+          p.inspiredBy.toLowerCase().includes(initialP1.toLowerCase())
+      );
+      if (match) {
+        const nextSlots = [match, availablePerfumes[1] || null, availablePerfumes[2] || null];
+        setSelectedSlots(nextSlots);
+        triggerAnalysis(nextSlots);
+      }
+    }
+  }, [initialP1]);
 
   const triggerAnalysis = (slots: (CompareProduct | null)[]) => {
     setIsAnalyzing(true);
