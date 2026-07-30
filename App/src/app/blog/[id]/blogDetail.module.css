@@ -1,0 +1,346 @@
+/* ═══════════════════════════════════════════════════
+   BLOG DETAIL PAGE STYLES — MURAKKAZ LUXURY SYSTEM
+   ═══════════════════════════════════════════════════ */
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background, #F5F1E8);
+  color: var(--foreground, #313134);
+}
+
+.articlePage {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem 1.5rem;
+}
+
+/* ───── Breadcrumb & Back Link ───── */
+.navigationRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.825rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #767677;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.backBtn:hover {
+  color: #820011;
+}
+
+.backArrow {
+  transition: transform 0.2s ease;
+}
+
+.backBtn:hover .backArrow {
+  transform: translateX(-3px);
+}
+
+.categoryBadge {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #820011;
+  background-color: rgba(130, 0, 17, 0.05);
+  border: 1px solid rgba(130, 0, 17, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+/* ───── Article Header ───── */
+.articleHeader {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.articleTitle {
+  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
+  font-size: clamp(2rem, 4.5vw, 3.2rem);
+  font-weight: 400;
+  color: #313134;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.01em;
+}
+
+.articleSubtitle {
+  font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  font-style: italic;
+  color: #666668;
+  max-width: 720px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.5;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(130, 120, 100, 0.15);
+  flex-wrap: wrap;
+}
+
+.authorWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.authorAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #c9a96e;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.authorName {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #313134;
+}
+
+.authorRole {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.725rem;
+  color: #767677;
+}
+
+.metaDivider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #c9a96e;
+}
+
+.publishDate, .readTime {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.8rem;
+  color: #767677;
+  letter-spacing: 0.02em;
+}
+
+/* ───── Featured Image ───── */
+.heroImageWrapper {
+  position: relative;
+  width: 100%;
+  height: clamp(260px, 45vw, 480px);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  box-shadow: 0 15px 40px rgba(47, 9, 9, 0.06);
+  border: 1px solid rgba(130, 120, 100, 0.15);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+/* ───── Article Body Content ───── */
+.articleBody {
+  max-width: 740px;
+  margin: 0 auto 4rem auto;
+}
+
+.paragraph {
+  font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.85;
+  color: #444446;
+  margin-bottom: 2rem;
+  letter-spacing: 0.01em;
+}
+
+.quoteBlock {
+  position: relative;
+  margin: 3rem 0;
+  padding: 2rem 2.5rem;
+  background-color: #f7f3eb;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
+  border-left: 3px solid #820011;
+  border-radius: 0 8px 8px 0;
+}
+
+.quoteText {
+  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
+  font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+  font-style: italic;
+  color: #313134;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ───── Action Bar (Like / Share / Bookmark) ───── */
+.actionBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 740px;
+  margin: 0 auto 4rem auto;
+  padding: 1.25rem 2rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(130, 120, 100, 0.15);
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.actionBtnGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1px solid rgba(130, 120, 100, 0.25);
+  border-radius: 20px;
+  padding: 0.45rem 1rem;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.8rem;
+  color: #555558;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actionBtn:hover {
+  border-color: #820011;
+  color: #820011;
+  background-color: rgba(130, 0, 17, 0.03);
+}
+
+.actionBtnActive {
+  border-color: #820011;
+  background-color: #820011;
+  color: #ffffff !important;
+}
+
+.actionIcon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ───── Related Posts Section ───── */
+.relatedSection {
+  width: 100%;
+  max-width: 1100px;
+  margin: 4rem auto 0 auto;
+  padding-top: 3.5rem;
+  border-top: 1px solid rgba(130, 120, 100, 0.15);
+}
+
+.relatedTitle {
+  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 400;
+  color: #313134;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* ───── Toast Notification ───── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: #313134;
+  color: #F5F1E8;
+  padding: 0.85rem 1.5rem;
+  border-radius: 8px;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.85rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: toastSlideIn 0.3s ease;
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ───── Responsive Breakpoints ───── */
+@media (max-width: 900px) {
+  .relatedGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .articlePage {
+    padding: 4rem 1rem 3rem 1rem;
+  }
+
+  .navigationRow {
+    margin-bottom: 1.5rem;
+  }
+
+  .articleHeader {
+    margin-bottom: 1.75rem;
+  }
+
+  .articleTitle {
+    font-size: 1.75rem;
+  }
+
+  .articleSubtitle {
+    font-size: 0.95rem;
+  }
+
+  .heroImageWrapper {
+    height: 220px;
+    margin-bottom: 2rem;
+  }
+
+  .quoteBlock {
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .actionBar {
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 16px;
+    padding: 1rem;
+  }
+
+  .relatedGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
