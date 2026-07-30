@@ -208,7 +208,6 @@ export default function ScentIndex() {
             <div className={styles.introContent}>
               <div className={styles.introTextGroup}>
                 <div className={styles.introHeader}>
-                  <span className={styles.introLabel}>MURAKKAZ</span>
                   <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
                 </div>
                 <p className={styles.introBody}>
