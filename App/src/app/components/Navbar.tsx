@@ -374,7 +374,7 @@ export default function Navbar() {
       {/* ── Left-Slide Full-Height Mobile Drawer Navigation (< 1024px) ── */}
       <div
         onClick={() => setIsMobileMenuOpen(false)}
-        className={`fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity duration-350 ease-out lg:hidden ${
+        className={`fixed inset-0 bg-black/55 backdrop-blur-xs z-50 transition-opacity duration-380 ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
           isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
@@ -384,33 +384,35 @@ export default function Navbar() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={`fixed top-0 left-0 bottom-0 z-50 w-[320px] sm:w-[360px] max-w-[85vw] h-full shadow-2xl transition-transform duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-y-auto lg:hidden pt-safe pb-safe bg-[#F5F1E8] text-[#313134]`}
+        className={`fixed top-0 left-0 bottom-0 z-50 w-[90vw] sm:w-[380px] max-w-[90vw] h-full shadow-[0_10px_40px_rgba(0,0,0,0.12)] transition-all duration-380 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-y-auto lg:hidden pt-safe pb-safe bg-gradient-to-b from-[#FBF8F2] to-[#F5EEE2] text-[#313134]`}
         style={{
           transform: isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
           padding: "24px",
+          paddingBottom: "44px",
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.015 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E"), linear-gradient(to bottom, #FBF8F2, #F5EEE2)`,
         }}
       >
         <div className="flex flex-col w-full">
           {/* Header Row: Centered Murakkaz Logo + Top-Right Close (×) Button */}
-          <div className="relative w-full flex items-center justify-center min-h-[40px]">
+          <div className="relative w-full flex items-center justify-center min-h-[44px]">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="hover:opacity-80 transition-opacity flex items-center justify-center"
+              className="hover:opacity-85 transition-opacity flex items-center justify-center"
             >
               <Image
                 src="/images/logo-murakkaz.svg"
                 alt="Murakkaz Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto object-contain"
+                width={125}
+                height={42}
+                className="h-8.5 w-auto object-contain"
               />
             </Link>
 
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="absolute right-0 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/70 border border-[#D8D2C5] text-[#313134] hover:bg-[#820011] hover:text-white transition-all flex items-center justify-center cursor-pointer shadow-xs"
+              className="absolute right-0 top-1/2 -translate-y-1/2 w-9.5 h-9.5 rounded-full bg-white/80 border border-[#E0D5C5] text-[#313134] hover:bg-[#8C1D2E] hover:text-white transition-all duration-200 flex items-center justify-center cursor-pointer shadow-xs"
               aria-label="Close menu"
             >
               <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
@@ -419,11 +421,10 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* 24px Vertical Spacing before Search Bar */}
-          <div className="mt-6 w-full">
-            {/* Full-width premium search bar (48px height) with fixed search icon & centered placeholder */}
-            <form onSubmit={handleSearchSubmit} className="relative w-full h-[48px]">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none text-[#767677]">
+          {/* Search Bar with 52px height & fixed vertical centering */}
+          <div className="mt-7 w-full">
+            <form onSubmit={handleSearchSubmit} className="relative w-full h-[52px] flex items-center">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none text-[#8A8477] z-10">
                 <svg
                   className="w-4.5 h-4.5"
                   fill="none"
@@ -440,13 +441,13 @@ export default function Navbar() {
                 placeholder="Search fragrances, notes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-[48px] pl-11 pr-4 rounded-full bg-white/90 border border-[#D8D2C5] text-[#313134] placeholder-[#8A8477] font-serif-text text-[14px] leading-[48px] focus:outline-none focus:border-[#820011] focus:bg-white transition-colors shadow-xs"
+                className="w-full h-[52px] pl-12 pr-4 rounded-full bg-white/80 border border-[#DDD3C4] text-[#313134] placeholder-[#8A8477] font-serif-text text-[14px] leading-[52px] focus:outline-none focus:border-[#D4C0A7] focus:bg-white focus:shadow-[0_4px_16px_rgba(140,29,46,0.06)] transition-all shadow-xs"
               />
             </form>
           </div>
 
-          {/* 32px Spacing before Navigation Links */}
-          <nav className="flex flex-col gap-5 sm:gap-6 mt-8 w-full">
+          {/* Navigation Links with 40px spacing before list */}
+          <nav className="flex flex-col gap-5 sm:gap-6 mt-9 w-full">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.href;
               return (
@@ -454,40 +455,66 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  style={{ animationDelay: `${idx * 40}ms` }}
-                  className={`stagger-item-enter font-serif-text text-[15px] sm:text-[16px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1 ${
+                  style={{ animationDelay: `${idx * 35}ms` }}
+                  className={`stagger-item-enter relative self-start font-serif-text text-[15px] sm:text-[16px] tracking-[0.18em] uppercase transition-colors duration-200 text-left py-1 group ${
                     isActive
-                      ? "text-[#820011] font-semibold"
-                      : "text-[#313134] hover:text-[#820011] hover:translate-x-1"
+                      ? "text-[#8C1D2E] font-semibold"
+                      : "text-[#313134] hover:text-[#8C1D2E] active:opacity-75"
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  {/* Thin 1px underline growing from left to right over 250ms */}
+                  <span
+                    className={`absolute bottom-0 left-0 h-[1px] bg-[#8C1D2E] transition-transform duration-[250ms] ease-out origin-left ${
+                      isActive ? "w-full scale-x-100" : "w-full scale-x-0 group-hover:scale-x-100"
+                    }`}
+                  />
                 </Link>
               );
             })}
           </nav>
         </div>
 
-        {/* Footer Account Section inside Mobile Drawer (Pushed to bottom, subtle divider) */}
-        <div className="w-full pt-5 mt-6 border-t border-[#E2D9CC] flex flex-col items-center justify-center">
+        {/* Footer Account Section inside Mobile Drawer (Pushed 45px higher, monogram divider) */}
+        <div className="w-full mb-10 mt-8 flex flex-col items-center justify-center">
+          {/* Monogram Divider Line */}
+          <div className="relative w-full flex items-center justify-center mb-6">
+            <div className="w-full h-[1px] bg-[#E5DCD0]" />
+            <div className="absolute px-3.5 bg-[#FAF4EB] text-[#8C1D2E] flex items-center justify-center">
+              <Image
+                src="/images/logo-murakkaz.svg"
+                alt="Murakkaz Emblem"
+                width={22}
+                height={22}
+                className="h-4.5 w-auto object-contain opacity-85"
+              />
+            </div>
+          </div>
+
+          {/* Account Link */}
           <Link
             href="/account"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="flex flex-col items-center justify-center gap-2 group hover:opacity-85 transition-opacity"
+            className="flex flex-col items-center justify-center gap-1.5 group transition-opacity active:opacity-75"
           >
             {userPhoto ? (
-              <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-[#820011] shadow-xs flex items-center justify-center bg-white shrink-0">
+              <div className="w-13 h-13 rounded-full overflow-hidden border-2 border-[#D4C0A7] shadow-xs flex items-center justify-center bg-white shrink-0 group-hover:border-[#8C1D2E] transition-colors">
                 <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
               </div>
             ) : (
-              <div className="w-11 h-11 rounded-full bg-white border border-[#D8D2C5] text-[#313134] group-hover:border-[#820011] group-hover:text-[#820011] transition-colors flex items-center justify-center shadow-xs shrink-0">
-                <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6">
+              <div className="w-13 h-13 rounded-full bg-white border border-[#D4C0A7] text-[#313134] group-hover:border-[#8C1D2E] group-hover:text-[#8C1D2E] transition-colors flex items-center justify-center shadow-xs shrink-0">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
             )}
-            <span className="font-serif-text text-[13px] tracking-[0.14em] uppercase text-[#313134] group-hover:text-[#820011] transition-colors font-medium">
+
+            <span className="font-serif-title text-[16px] font-medium text-[#313134] group-hover:text-[#8C1D2E] transition-colors mt-0.5">
               {userName ? userName : "My Account"}
+            </span>
+
+            <span className="font-serif-text text-[11.5px] tracking-[0.14em] uppercase text-[#8A8477] group-hover:text-[#8C1D2E] transition-colors">
+              My Account →
             </span>
           </Link>
         </div>
