@@ -33,16 +33,21 @@
 
 @media (max-width: 1200px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 1.25rem;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 480px) {
   .grid {
-    grid-template-columns: 1fr;
-    max-width: 320px;
-    margin: 0 auto;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.25rem 0.6rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
   }
 }
 
