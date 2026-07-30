@@ -1428,19 +1428,16 @@
 }
 
 .profileDivider {
-  width: 50px;
-  height: 1px;
-  background-color: rgba(130, 120, 100, 0.18);
-  margin: 0.75rem auto;
+  display: none;
 }
 
 .profileDescription {
   font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: #555558;
-  line-height: 1.55;
-  margin: 0 auto;
-  max-width: 560px;
+  line-height: 1.6;
+  margin: 0.65rem auto 1rem auto;
+  max-width: 580px;
   font-style: italic;
 }
 

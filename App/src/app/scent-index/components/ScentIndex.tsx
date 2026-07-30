@@ -387,9 +387,7 @@ export default function ScentIndex() {
                   <div className={styles.profileSection}>
                     <div className={styles.profileIcon}>✨ Your Fragrance Profile</div>
                     <h2 className={styles.profileHeading}>{profile.name}</h2>
-                    <div className={styles.profileDivider} />
                     <p className={styles.profileDescription}>{profile.description}</p>
-                    <div className={styles.profileDivider} />
                     <div className={styles.profileTags}>
                       {profile.tags.map((tag) => (
                         <span key={tag} className={styles.profileTag}>
