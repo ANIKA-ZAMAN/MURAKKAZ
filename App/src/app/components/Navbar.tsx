@@ -459,19 +459,13 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ animationDelay: `${idx * 35}ms` }}
-                  className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1.5 group ${
+                  className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1 group ${
                     isActive
                       ? "text-[#820011] font-bold"
                       : "text-[#313134] hover:text-[#820011] active:opacity-75 font-medium"
                   }`}
                 >
                   <span className={isActive ? "text-[#820011]" : ""}>{link.label}</span>
-                  {/* Thin 2px underline growing from left to right over 250ms */}
-                  <span
-                    className={`absolute bottom-0 left-0 h-[2px] bg-[#820011] transition-transform duration-[250ms] ease-out origin-left ${
-                      isActive ? "w-full scale-x-100" : "w-full scale-x-0 group-hover:scale-x-100"
-                    }`}
-                  />
                 </Link>
               );
             })}
