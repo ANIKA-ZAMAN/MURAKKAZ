@@ -23,7 +23,8 @@
   padding: 0 40px 0 20px;
   border-radius: 50px;
   border: 1.5px solid #313134; /* Black frame */
-  background-color: #ffffff;
+  background-color: transparent;
+  background: transparent;
   color: var(--foreground);
   font-size: 0.85rem;
   font-family: var(--font-serif-text), Georgia, serif;
