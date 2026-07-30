@@ -476,8 +476,8 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* Footer Account Section inside Mobile Drawer */}
-        <div className="w-full mb-6 mt-6 flex flex-col items-center justify-center">
+        {/* Footer Account Section inside Mobile Drawer (Moved ~45px higher up) */}
+        <div className="w-full mb-16 sm:mb-20 mt-6 flex flex-col items-center justify-center">
           {/* Account Link */}
           <Link
             href="/account"
