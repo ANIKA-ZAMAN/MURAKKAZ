@@ -226,11 +226,12 @@ export default function Navbar() {
           {/* Desktop Nav Links (>= 1024px) */}
           <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
                 <li key={link.label}>
                   <Link
                     href={link.href}
+                    style={isActive ? { color: "#820011" } : undefined}
                     className={`font-serif-text text-[13.5px] tracking-[0.14em] uppercase transition-colors duration-200 py-1 ${
                       isActive
                         ? "text-[#820011] font-bold"
