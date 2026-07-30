@@ -446,8 +446,8 @@ export default function Navbar() {
             </form>
           </div>
 
-          {/* Navigation Links with generous luxury spacing for mobile & tablet */}
-          <nav className="flex flex-col gap-6 sm:gap-8 mt-11 sm:mt-12 w-full">
+          {/* Navigation Links with prominent font size & generous luxury spacing for mobile & tablet */}
+          <nav className="flex flex-col gap-7 sm:gap-9 mt-12 sm:mt-16 w-full items-start">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.href;
               return (
@@ -456,7 +456,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ animationDelay: `${idx * 35}ms` }}
-                  className={`stagger-item-enter relative self-start font-serif-text text-[15px] sm:text-[16px] tracking-[0.18em] uppercase transition-colors duration-200 text-left py-1.5 group ${
+                  className={`stagger-item-enter relative self-start font-serif-text text-[18px] sm:text-[20px] font-medium tracking-[0.16em] uppercase transition-colors duration-200 text-left py-1 group ${
                     isActive
                       ? "text-[#8C1D2E] font-semibold"
                       : "text-[#313134] hover:text-[#8C1D2E] active:opacity-75"
@@ -465,7 +465,7 @@ export default function Navbar() {
                   <span>{link.label}</span>
                   {/* Thin 1px underline growing from left to right over 250ms */}
                   <span
-                    className={`absolute bottom-0 left-0 h-[1px] bg-[#8C1D2E] transition-transform duration-[250ms] ease-out origin-left ${
+                    className={`absolute bottom-0 left-0 h-[1.5px] bg-[#8C1D2E] transition-transform duration-[250ms] ease-out origin-left ${
                       isActive ? "w-full scale-x-100" : "w-full scale-x-0 group-hover:scale-x-100"
                     }`}
                   />
