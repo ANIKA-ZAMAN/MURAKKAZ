@@ -393,19 +393,19 @@ export default function Navbar() {
         }}
       >
         <div className="flex flex-col w-full">
-          {/* Header Row: Centered Murakkaz Logo + Top-Right Close (×) Button */}
-          <div className="relative w-full flex items-center justify-center min-h-[44px]">
+          {/* Header Row: Perfectly Centered Murakkaz Logo + Top-Right Close (×) Button */}
+          <div className="relative w-full flex items-center justify-center min-h-[48px] pt-1 pb-1">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="hover:opacity-85 transition-opacity flex items-center justify-center"
+              className="hover:opacity-85 transition-opacity flex items-center justify-center mx-auto"
             >
               <Image
                 src="/images/logo-murakkaz.svg"
                 alt="Murakkaz Logo"
-                width={125}
-                height={42}
-                className="h-8.5 w-auto object-contain"
+                width={130}
+                height={44}
+                className="h-9 w-auto object-contain mx-auto"
               />
             </Link>
 
@@ -421,8 +421,8 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Search Bar matching user screenshot: Placeholder "Search your perfume" on left, Search Icon on right, cream BG, dark border */}
-          <div className="mt-7 w-full">
+          {/* Search Bar with generous top margin under logo */}
+          <div className="mt-10 sm:mt-12 w-full">
             <form onSubmit={handleSearchSubmit} className="relative w-full h-[50px] flex items-center">
               <input
                 type="text"
@@ -449,8 +449,8 @@ export default function Navbar() {
             </form>
           </div>
 
-          {/* Navigation Links with prominent font size, extra luxury spacing & active Murakkaz Red highlighting */}
-          <nav className="flex flex-col gap-8 sm:gap-10 mt-14 sm:mt-18 w-full items-start">
+          {/* Navigation Links with generous space under search bar before OUR STORY */}
+          <nav className="flex flex-col gap-8 sm:gap-10 mt-10 sm:mt-12 w-full items-start">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
