@@ -24,7 +24,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full min-h-[calc(100vh-96px)] bg-[#CBB9A1] flex flex-col justify-between overflow-x-hidden" suppressHydrationWarning>
+    <div className="w-full min-h-[calc(100vh-96px)] bg-[#CBB9A1] flex flex-col justify-between" suppressHydrationWarning>
       <Hero />
       <ScrollReveal variant="fade-up"><FeaturedCollections /></ScrollReveal>
       <ScrollReveal variant="scale-fade"><FindYourFragrance /></ScrollReveal>
