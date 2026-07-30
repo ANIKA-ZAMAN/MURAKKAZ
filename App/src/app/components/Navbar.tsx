@@ -475,35 +475,36 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Account Profile Section: Placed more down */}
-          <div className="w-full mt-24 sm:mt-28 pb-10 flex flex-col items-center justify-center">
-            {/* Account Link */}
-            <Link
-              href="/account"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex flex-col items-center justify-center gap-1.5 group transition-opacity active:opacity-75"
-            >
-              {userPhoto ? (
-                <div className="w-13 h-13 rounded-full overflow-hidden border-2 border-[#D4C0A7] shadow-xs flex items-center justify-center bg-white shrink-0 group-hover:border-[#8C1D2E] transition-colors">
-                  <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
-                </div>
-              ) : (
-                <div className="w-13 h-13 rounded-full bg-white border border-[#D4C0A7] text-[#313134] group-hover:border-[#8C1D2E] group-hover:text-[#8C1D2E] transition-colors flex items-center justify-center shadow-xs shrink-0">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-              )}
+        </div>
 
-              <span className="font-serif-title text-[16px] font-medium text-[#313134] group-hover:text-[#8C1D2E] transition-colors mt-0.5">
-                {userName ? userName : "My Account"}
-              </span>
+        {/* Footer Account Profile Section anchored comfortably towards the bottom */}
+        <div className="w-full mt-auto mb-10 sm:mb-12 pt-6 flex flex-col items-center justify-center">
+          {/* Account Link */}
+          <Link
+            href="/account"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="flex flex-col items-center justify-center gap-1.5 group transition-opacity active:opacity-75"
+          >
+            {userPhoto ? (
+              <div className="w-13 h-13 rounded-full overflow-hidden border-2 border-[#D4C0A7] shadow-xs flex items-center justify-center bg-white shrink-0 group-hover:border-[#8C1D2E] transition-colors">
+                <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
+              </div>
+            ) : (
+              <div className="w-13 h-13 rounded-full bg-white border border-[#D4C0A7] text-[#313134] group-hover:border-[#8C1D2E] group-hover:text-[#8C1D2E] transition-colors flex items-center justify-center shadow-xs shrink-0">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+            )}
 
-              <span className="font-serif-text text-[11.5px] tracking-[0.14em] uppercase text-[#8A8477] group-hover:text-[#8C1D2E] transition-colors">
-                My Account →
-              </span>
-            </Link>
-          </div>
+            <span className="font-serif-title text-[16px] font-medium text-[#313134] group-hover:text-[#8C1D2E] transition-colors mt-0.5">
+              {userName ? userName : "My Account"}
+            </span>
+
+            <span className="font-serif-text text-[11.5px] tracking-[0.14em] uppercase text-[#8A8477] group-hover:text-[#8C1D2E] transition-colors">
+              My Account →
+            </span>
+          </Link>
         </div>
       </aside>
     </>
