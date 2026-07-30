@@ -16,7 +16,18 @@
 
 /* ── Soft Golden Ambient Glow ── */
 .ambientGlow {
-  display: none;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 850px;
+  height: 350px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.16) 0%, rgba(197, 168, 128, 0.08) 50%, transparent 75%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ── Card Wrapper — provides float animation ── */

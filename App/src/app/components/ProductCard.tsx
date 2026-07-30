@@ -135,7 +135,18 @@ export default function ProductCard({
     router.push(`/product/${id}`);
   };
 
-  const displayPrice = price ? (price.includes("tk") ? price : `${price}tk`) : "1,630tk";
+  // Ensure single price format (strip any range hyphen/dash)
+  const rawPrice = price || "1,630";
+  const singlePrice = rawPrice.includes("–") 
+    ? rawPrice.split("–")[1]?.trim() || rawPrice.split("–")[0]?.trim()
+    : rawPrice.includes("-") && !rawPrice.startsWith("-")
+    ? rawPrice.split("-")[1]?.trim() || rawPrice.split("-")[0]?.trim()
+    : rawPrice;
+
+  const displayPrice = singlePrice.includes("tk") 
+    ? singlePrice 
+    : `${singlePrice.replace(/[^0-9,]/g, "") ? singlePrice : "1,630"}tk`;
+
   const displayOriginalPrice = originalPrice ? (originalPrice.includes("tk") ? originalPrice : `${originalPrice}tk`) : "";
 
   return (
