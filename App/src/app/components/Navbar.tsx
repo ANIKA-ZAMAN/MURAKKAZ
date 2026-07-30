@@ -475,8 +475,8 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Account Profile Section: Placed a little more down with balanced top margin */}
-          <div className="w-full mt-14 sm:mt-16 pb-12 flex flex-col items-center justify-center">
+          {/* Account Profile Section: Placed more down */}
+          <div className="w-full mt-24 sm:mt-28 pb-10 flex flex-col items-center justify-center">
             {/* Account Link */}
             <Link
               href="/account"
