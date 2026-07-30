@@ -476,7 +476,7 @@ export default function Navbar() {
           </nav>
 
           {/* Account Profile Section */}
-          <div className="w-full mt-8 sm:mt-10 pb-10 flex flex-col items-center justify-center">
+          <div className="w-full mt-12 sm:mt-14 pb-10 flex flex-col items-center justify-center">
             {/* Account Link */}
             <Link
               href="/account"
