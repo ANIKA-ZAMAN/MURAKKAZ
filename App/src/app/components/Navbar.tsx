@@ -190,9 +190,9 @@ export default function Navbar() {
           className={`pointer-events-auto relative w-full max-w-[1360px] h-16 select-none flex items-center justify-between rounded-[20px] transition-all duration-300 ${
             isHome
               ? isScrolled
-                ? "bg-[#FAF6F0]/90 backdrop-blur-md shadow-[0_6px_24px_rgba(0,0,0,0.06)] border border-[rgba(120,105,85,0.18)]"
+                ? "bg-[#F5F1E8]/90 backdrop-blur-md shadow-[0_6px_24px_rgba(0,0,0,0.04)] border border-[rgba(120,105,85,0.15)]"
                 : "bg-transparent border-none shadow-none"
-              : "bg-[#FAF6F0] border border-[rgba(120,105,85,0.18)] shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
+              : "bg-[#F5F1E8] border border-[rgba(120,105,85,0.15)] shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
           }`}
           suppressHydrationWarning
         >

@@ -16,11 +16,7 @@
 }
 
 .vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, transparent 70%, rgba(0, 0, 0, 0.015) 100%);
-  pointer-events: none;
-  z-index: 1;
+  display: none;
 }
 
 /* ───── Ambient Dust Particles ───── */
