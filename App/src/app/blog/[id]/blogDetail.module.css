@@ -29,17 +29,25 @@
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.825rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  color: #767677;
+  letter-spacing: 0.06em;
+  color: #313134;
+  background-color: transparent;
+  border: 1.2px solid #313134;
+  border-radius: 50px;
+  padding: 0.45rem 1.25rem;
   text-decoration: none;
   text-transform: uppercase;
-  transition: color 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .backBtn:hover {
-  color: #820011;
+  background-color: #313134;
+  color: #F5F1E8;
+  border-color: #313134;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
 }
 
 .backArrow {
