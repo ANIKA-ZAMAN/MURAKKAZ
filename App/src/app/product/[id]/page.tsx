@@ -14,6 +14,7 @@ import styles from "./page.module.css";
 const productsDetailMap: Record<string, {
   name: string;
   inspiredBy: string;
+  badge?: string;
   description: string;
   image: string;
   family: string;
@@ -28,6 +29,7 @@ const productsDetailMap: Record<string, {
   "jade-serenity": {
     name: "Jade Serenity",
     inspiredBy: "Inspired by Creed Original Vetiver",
+    badge: "Recommended by Founder",
     description: "Jade Serenity is a masterclass in clean, sophisticated freshness engineered explicitly to conquer hot and humid weather. Opening with a crisp, rejuvenating burst of green tea and sharp citrus, it effortlessly settles into a calming, earthy base of rich vetiver and smooth cedarwood. This isn't just a fragrance—it's an invisible suit of armor that keeps you feeling fresh, composed, and undeniably premium from morning meetings to late-night lounge sessions.",
     image: "/images/products/jade_serenity.png",
     family: "Citrus",
@@ -74,6 +76,7 @@ const productsDetailMap: Record<string, {
   "coral-sea": {
     name: "Coral Sea",
     inspiredBy: "Inspired by Jo Malone Wood Sage & Sea Salt",
+    badge: "Best Seller",
     description: "Coral Sea transports you to windswept coastal shores. A mineral, fresh scent blending sea salt spray, earthy wood sage, and a light grapefruit undertone. Perfect for daily wear, it feels airy, natural, and refreshingly clean, evoking the spirit of freedom and raw nature.",
     image: "/images/products/coral_sea.png",
     family: "Fresh",
@@ -112,6 +115,7 @@ const productsDetailMap: Record<string, {
   "murakkaz-noir": {
     name: "Murakkaz Noir",
     inspiredBy: "Inspired by Dior Sauvage Elixir",
+    badge: "Top Pick",
     description: "Murakkaz Noir is an intense, concentrated fragrance for the bold and sophisticated. Opening with sweet cardamoms, hot cinnamon, and fiery spices, it transitions smoothly into a calming lavender heart and a deep base of dark cedar, patchouli, and licorice. A true masterpiece of projection and longevity.",
     image: "/images/products/magnetism.png",
     family: "Woody",
@@ -153,6 +157,7 @@ const productsDetailMap: Record<string, {
   "hellenist": {
     name: "Hellenist",
     inspiredBy: "Inspired by Baccarat Rouge 540",
+    badge: "Exclusive",
     description: "Hellenist is an exquisite, glowing amber floral fragrance that lays on the skin like a warm, sugary breeze. Precious saffron and sweet jasmine notes fuse with rich, warm ambergris and freshly cut cedarwood to create a poetic, highly addictive fragrance signature.",
     image: "/images/products/hellenist.png",
     family: "Oriental",
@@ -596,9 +601,11 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
               <div>
                 <h1 className={styles.title}>{details.name}</h1>
                 <p className={styles.subtitle}>{details.inspiredBy}</p>
-                <div className={styles.badgeRow}>
-                  <span className={styles.badge}>Recommended by Founder</span>
-                </div>
+                {details.badge && (
+                  <div className={styles.badgeRow}>
+                    <span className={styles.badge}>{details.badge}</span>
+                  </div>
+                )}
               </div>
               <div className={styles.price}>{selectedSizeOpt.price.toLocaleString()}tk</div>
             </div>

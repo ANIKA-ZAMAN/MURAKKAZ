@@ -17,6 +17,7 @@ export interface Product {
   occasion: string;
   meter: string;
   notes: string[];
+  badge?: string;
 }
 
 // Rich Mock Data Catalog with 84 perfumes for 7 full pages
@@ -35,6 +36,7 @@ const mockProducts: Array<{
   occasion: string;
   meter: string;
   notes: string[];
+  badge?: string;
 }> = [
   {
     name: "Jade Serenity",
@@ -51,6 +53,7 @@ const mockProducts: Array<{
     occasion: "Casual",
     meter: "Moderate",
     notes: ["Bergamot", "Lemon", "Amber", "Vetiver"],
+    badge: "Recommended by Founder",
   },
   {
     name: "Coral Sea",
@@ -67,6 +70,7 @@ const mockProducts: Array<{
     occasion: "Formal",
     meter: "Long Lasting",
     notes: ["Sea Salt", "Sage", "Bergamot", "Grapefruit"],
+    badge: "Best Seller",
   },
   {
     name: "Murakkaz Noir",
@@ -83,6 +87,7 @@ const mockProducts: Array<{
     occasion: "Night Out",
     meter: "Moderate",
     notes: ["Lavender", "Sandalwood", "Amber", "Vanilla", "Leather"],
+    badge: "Top Pick",
   },
   {
     name: "Hellenist",
@@ -99,6 +104,7 @@ const mockProducts: Array<{
     occasion: "Date Night",
     meter: "Beast Mode",
     notes: ["Saffron", "Jasmine", "Amberwood", "Cedarwood", "Rose"],
+    badge: "Exclusive",
   },
   {
     name: "Orvi Soq",
