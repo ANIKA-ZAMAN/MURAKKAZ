@@ -8,7 +8,7 @@ interface QuizCardProps {
   selectedAnswers: string | string[];
   onSelect: (option: string) => void;
   isTop: boolean;
-  depth: number; // always 0 — kept for interface compatibility
+  depth: number; // 0 = top, 1 = first underneath, etc.
   isLeaving: boolean;
   onNext: () => void;
   onBack: () => void;
@@ -16,11 +16,34 @@ interface QuizCardProps {
   showBackButton: boolean;
 }
 
+// Organic offsets and rotations for realistic stationery fanned stack
+const stackProps = [
+  { x: 0, y: 0, rot: 0 },
+  { x: 5, y: 6, rot: 1.4 },
+  { x: -6, y: 13, rot: -2.0 },
+  { x: 4, y: 20, rot: 0.8 },
+  { x: -4, y: 27, rot: -1.5 },
+  { x: 6, y: 34, rot: 2.2 },
+  { x: -5, y: 41, rot: -2.8 }
+];
+
+// Dynamically calculates realistic soft shadows per stack layer
+const getShadowForDepth = (d: number) => {
+  if (d === 0) {
+    return "0 25px 50px rgba(47, 9, 9, 0.05), 0 8px 18px rgba(47, 9, 9, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.8)";
+  }
+  const yOffset = d * 5 + 4;
+  const blur = d * 8 + 12;
+  const opacity = Math.max(0.01, 0.04 - d * 0.005);
+  return `0 ${yOffset}px ${blur}px rgba(47, 9, 9, ${opacity}), 0 1px 3px rgba(47, 9, 9, 0.01)`;
+};
+
 export default function QuizCard({
   question,
   selectedAnswers,
   onSelect,
   isTop,
+  depth,
   isLeaving,
   onNext,
   onBack,
@@ -32,21 +55,53 @@ export default function QuizCard({
     return selectedAnswers === option;
   };
 
-  const isMulti = question.type === "multi";
+  // Construct stack styling properties
+  let cardStyle: React.CSSProperties = {};
 
-  // The leaving card animates out absolutely over the incoming card
-  const cardStyle: React.CSSProperties = isLeaving
-    ? { zIndex: 20, pointerEvents: "none" }
-    : {};
+  if (isLeaving) {
+    cardStyle = {
+      zIndex: 20,
+      pointerEvents: "none",
+    };
+  } else if (depth === 0) {
+    cardStyle = {
+      transform: "translate(0, 0) rotate(0deg)",
+      boxShadow: getShadowForDepth(0),
+      filter: "brightness(1)",
+      opacity: 1,
+      zIndex: 10,
+      pointerEvents: "auto",
+    };
+  } else {
+    // Background stack cards fanning out organically
+    const index = Math.min(depth, stackProps.length - 1);
+    const props = stackProps[index];
+    const brightness = Math.max(0.88, 1 - depth * 0.02);
+
+    cardStyle = {
+      transform: `translate(${props.x}px, ${props.y}px) rotate(${props.rot}deg)`,
+      boxShadow: getShadowForDepth(depth),
+      filter: `brightness(${brightness})`,
+      opacity: 1,
+      zIndex: 10 - depth,
+      pointerEvents: "none",
+    };
+  }
+
+  const isMulti = question.type === "multi";
 
   return (
     <div
-      className={`${styles.paperCard} ${isLeaving ? styles.leavingCard : ""}`}
+      className={`${styles.paperCard} ${isTop ? styles.topCard : ""} ${isLeaving ? styles.leavingCard : ""}`}
       style={cardStyle}
     >
       <div
         className={`${styles.cardInnerContent} ${isTop && !isLeaving ? styles.cardContentEnter : ""}`}
-        style={{ pointerEvents: isTop ? "auto" : "none" }}
+        style={{
+          opacity: (isTop || isLeaving || depth <= 1) ? 1 : 0,
+          transition: "opacity 0.3s ease",
+          pointerEvents: isTop ? "auto" : "none"
+        }}
       >
         {/* Header */}
         <div className={styles.cardHeader}>
@@ -67,7 +122,7 @@ export default function QuizCard({
               <button
                 key={option}
                 type="button"
-                className={`${styles.optionBtn} ${checked ? styles.optionChecked : ""}`}
+                className={`${styles.optionBtn} ${checked ? styles.optionChecked : ""} ${(isMulti || question.options.length > 5) ? styles.gridBtn : ""}`}
                 onClick={() => isTop && onSelect(option)}
                 disabled={!isTop}
               >

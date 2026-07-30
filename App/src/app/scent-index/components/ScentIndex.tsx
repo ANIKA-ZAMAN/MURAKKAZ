@@ -288,16 +288,15 @@ export default function ScentIndex() {
               ))}
             </div>
 
-            {/* Single active card — NO stacked paper beneath */}
+            {/* Card stack — depth cards behind active card (stacked paper effect) */}
             <div className={styles.cardStack}>
               {quizQuestions.map((q, idx) => {
                 const isLeaving = transitioningStep === idx;
                 const isTop = idx === currentStep;
+                const depth = idx - currentStep;
 
-                // Only render the current card and the one leaving
+                // Skip already-answered cards (unless leaving)
                 if (idx < currentStep && !isLeaving) return null;
-                // Don't render future cards at all — no stacked paper effect
-                if (idx > currentStep) return null;
 
                 return (
                   <QuizCard
@@ -306,7 +305,7 @@ export default function ScentIndex() {
                     selectedAnswers={answers[q.id] || (q.type === "multi" ? [] : "")}
                     onSelect={(opt) => handleSelect(q.id, opt)}
                     isTop={isTop}
-                    depth={0}
+                    depth={depth}
                     isLeaving={isLeaving}
                     onNext={handleNext}
                     onBack={handleBack}

@@ -11,9 +11,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* generous top padding so navbar doesn't cover content */
-  padding: clamp(4.5rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 3rem);
-  overflow-x: hidden;
+  justify-content: flex-start;
+  padding: 4.25rem 1.5rem 2.5rem 1.5rem;
+  overflow: hidden;
 }
 
 .vignette {
@@ -22,11 +22,11 @@
 
 /* ───── Ambient Dust Particles ───── */
 .particlesContainer {
-  position: fixed;
+  position: absolute;
   inset: 0;
   overflow: hidden;
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
 }
 
 .particle {
@@ -44,44 +44,45 @@
   100% { transform: translateY(-10vh) translateX(80px) scale(1.3); opacity: 0; }
 }
 
-/* ───── Main Content Wrapper ───── */
+/* ───── Main Content Structure ───── */
 .mainContent {
   position: relative;
   z-index: 3;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  max-width: 860px;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
   align-items: center;
-  justify-content: center;
-  /* card is vertically centred within remaining viewport */
-  min-height: calc(100vh - clamp(4.5rem, 8vw, 6rem) - clamp(2rem, 5vw, 3rem));
+  margin-top: -1rem;
+  transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mainContentResults {
-  justify-content: flex-start;
-  min-height: auto;
+  max-width: 1200px;
 }
 
 /* ═══════════════════════════════════════════════════
    INTRO LAYER  — stacked-paper doors + wax seal
    ═══════════════════════════════════════════════════ */
 .introContainer {
+  grid-column: 1;
+  grid-row: 1;
   position: relative;
-  width: min(92vw, 640px);
-  /* tall enough for all content on small screens */
-  height: clamp(480px, 70vh, 580px);
-  z-index: 10;
+  width: 100%;
+  max-width: 720px;
+  height: 543px; /* 43px markers spacer + 500px cards */
+  margin-bottom: 1.5rem;
+  z-index: 30;
   perspective: 1200px;
-  border-radius: 12px;
-  overflow: hidden; /* clip the doors inside the rounded card */
 }
 
 /* Base door panel */
 .introDoor {
   position: absolute;
-  top: 0;
+  top: 43px;
   width: 50%;
-  height: 100%;
+  height: 500px;
   background-color: #f7f3eb;
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
@@ -97,18 +98,22 @@
 .introDoorLeft {
   left: 0;
   border-right: none;
-  border-radius: 12px 0 0 12px;
+  border-radius: 10px 0 0 10px;
   transform-origin: left center;
 }
 
 .introDoorRight {
   right: 0;
   border-left: none;
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 10px 10px 0;
   transform-origin: right center;
 }
 
 /* Doors slide open */
+.introLeaving {
+  z-index: 20;
+}
+
 .introLeaving .introDoorLeft {
   transform: translateX(-105%);
   opacity: 0;
@@ -124,13 +129,16 @@
 /* Overlay content sits on top of doors */
 .introContent {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: 43px;
+  width: 100%;
+  height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: clamp(1.5rem, 5vw, 2.75rem) clamp(1.25rem, 6vw, 3.5rem);
+  padding: 2.2rem 3.5rem;
   z-index: 2;
   transition: opacity 0.3s ease;
 }
@@ -141,20 +149,23 @@
 }
 
 .introTextGroup {
+  position: absolute;
+  top: 2.2rem;
+  left: 3.5rem;
+  right: 3.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.65rem;
-  margin-bottom: auto;
 }
 
 .introHeader {
+  margin-bottom: 0.85rem;
   width: 100%;
 }
 
 .introLabel {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+  font-size: 0.7rem;
   letter-spacing: 0.15em;
   color: #c9a96e;
   font-weight: 600;
@@ -165,7 +176,7 @@
 
 .introHeading {
   font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: clamp(1.4rem, 4vw, 2.1rem);
+  font-size: 2.1rem;
   font-weight: 400;
   color: #313134;
   margin: 0;
@@ -174,29 +185,30 @@
 
 .introBody {
   font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: clamp(0.8rem, 2vw, 0.925rem);
+  font-size: 0.925rem;
   color: #555558;
   line-height: 1.6;
   margin: 0;
-  max-width: 480px;
+  max-width: 520px;
 }
 
 /* Wax Seal Interaction Area */
 .sealInteractionArea {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  margin-top: clamp(1rem, 4vw, 2rem);
-  margin-bottom: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 96px;
+  height: 48px;
   z-index: 5;
 }
 
 .waxSealWrapper {
-  position: relative;
-  width: 96px;
-  height: 48px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -255,6 +267,10 @@
 @keyframes fall4 { 0% { transform: translate(0,0) scale(1) rotate(0deg); opacity:1; } 100% { transform: translate(16px,40px) scale(0.6) rotate(-90deg); opacity:0; } }
 
 .sealPrompt {
+  position: absolute;
+  top: 58px;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.725rem;
   letter-spacing: 0.1em;
@@ -265,7 +281,6 @@
   pointer-events: none;
   font-weight: 500;
   transition: color 0.3s ease;
-  margin-top: 0.6rem;
 }
 
 .waxSealWrapper:hover + .sealPrompt {
@@ -273,12 +288,16 @@
 }
 
 .introFooter {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-geist-sans), sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
   color: #767677;
+  width: max-content;
   text-align: center;
-  margin-top: clamp(1rem, 3vw, 1.75rem);
 }
 
 /* Broken seal halves on doors */
@@ -316,24 +335,28 @@
 }
 
 /* ═══════════════════════════════════════════════════
-   QUIZ LAYER  — single centred card, no stacked paper
+   QUIZ LAYER — card stack
    ═══════════════════════════════════════════════════ */
 .quizContainer {
+  grid-column: 1;
+  grid-row: 1;
   position: relative;
   width: 100%;
+  max-width: 720px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 3;
+  transition: opacity 0.5s ease;
+  z-index: 1;
 }
 
-/* Entry animation: quiz fades up when intro leaves */
+/* Entry animation */
 .quizContainerEnter .progressMarkers {
-  animation: markerFadeIn 0.5s cubic-bezier(0.25, 1, 0.3, 1) both;
+  animation: markerFadeIn 0.85s cubic-bezier(0.25, 1, 0.3, 1) both;
 }
 
 .quizContainerEnter .cardStack {
-  animation: cardFadeInRise 0.5s cubic-bezier(0.25, 1, 0.3, 1) both;
+  animation: cardFadeInRise 0.85s cubic-bezier(0.25, 1, 0.3, 1) both;
 }
 
 @keyframes markerFadeIn {
@@ -342,8 +365,8 @@
 }
 
 @keyframes cardFadeInRise {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ───── Progress Markers ───── */
@@ -356,7 +379,7 @@
 }
 
 .marker {
-  width: clamp(24px, 5vw, 36px);
+  width: 36px;
   height: 3px;
   background-color: #E6DFD5;
   border-radius: 1.5px;
@@ -372,52 +395,47 @@
   background-color: rgba(168, 132, 75, 0.5);
 }
 
-/* ───── Card Stack (single card only) ───── */
+/* ───── Card Stack Container ───── */
 .cardStack {
   position: relative;
-  width: min(92vw, 640px);
-  /* Height adapts to content but is capped so card never overflows */
-  max-height: calc(90vh - 6rem);
-  margin-bottom: 1rem;
+  width: 100%;
+  height: 500px;
+  margin-bottom: 1.5rem;
 }
 
 /* ───── Handcrafted Paper Card ───── */
 .paperCard {
-  position: relative;
+  position: absolute;
   width: 100%;
+  height: 100%;
   background-color: #f7f3eb;
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.015 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
   border: 1px solid #DDD4C8;
   border-radius: 10px;
-  padding: clamp(1.25rem, 4vw, 2.25rem) clamp(1.25rem, 5vw, 2.75rem);
+  padding: 2.25rem 2.75rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  box-shadow: 0 4px 24px rgba(75, 64, 54, 0.06), 0 12px 48px rgba(75, 64, 54, 0.04);
-  /* transition for the leave animation */
   transition:
     transform 0.75s cubic-bezier(0.25, 1, 0.5, 1),
     filter    0.75s cubic-bezier(0.25, 1, 0.5, 1),
     box-shadow 0.75s cubic-bezier(0.25, 1, 0.5, 1),
     opacity   0.7s ease;
-  /* When the card is the only one, it's never absolute — flows in document */
+  transform-origin: bottom left;
+  box-shadow: 0 4px 20px rgba(75, 64, 54, 0.04), 0 10px 40px rgba(75, 64, 54, 0.02);
 }
 
-/* Leaving card animates out absolutely so it doesn't push layout */
 .leavingCard {
-  position: absolute;
-  top: 0;
-  left: 0;
   animation: physicalRemove 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   z-index: 20 !important;
   pointer-events: none;
 }
 
 @keyframes physicalRemove {
-  0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity:1; }
-  20%  { transform: translate(12px,-20px) rotate(4deg) scale(1.03); opacity:1; }
-  100% { transform: translate(-120%,80%) rotate(-18deg) scale(0.98); opacity:0; }
+  0%   { transform: translate(0,0) rotate(0deg) scale(1); box-shadow: 0 25px 50px rgba(47,9,9,0.05), 0 8px 18px rgba(47,9,9,0.02); opacity:1; }
+  20%  { transform: translate(12px,-20px) rotate(4deg) scale(1.03); box-shadow: 0 40px 80px rgba(47,9,9,0.1), 0 15px 30px rgba(47,9,9,0.04); opacity:1; }
+  100% { transform: translate(-120%,80%) rotate(-18deg) scale(0.98); box-shadow: 0 4px 10px rgba(47,9,9,0.01); opacity:0; }
 }
 
 .cardInnerContent {
@@ -425,7 +443,6 @@
   flex-direction: column;
   height: 100%;
   width: 100%;
-  gap: clamp(0.75rem, 2vw, 1.1rem);
 }
 
 .cardContentEnter {
@@ -439,28 +456,24 @@
 
 /* ───── Card Typography ───── */
 .cardHeader {
+  margin-bottom: 1.25rem;
   text-align: center;
-}
-
-/* Overridden in results — don't add margin-bottom here */
-.quizContainer .cardHeader {
-  margin-bottom: 0;
 }
 
 .cardQId {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(0.62rem, 1.5vw, 0.7rem);
+  font-size: 0.7rem;
   letter-spacing: 0.12em;
   color: #c9a96e;
   font-weight: 500;
   display: block;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
   text-align: center;
 }
 
 .cardQuestion {
   font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: clamp(1rem, 3vw, 1.55rem);
+  font-size: 1.55rem;
   font-weight: 600;
   color: #1e1e20;
   margin: 0;
@@ -471,32 +484,36 @@
 .cardSelectionHint {
   display: block;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  font-size: 0.85rem;
   color: #8e8e90;
   font-weight: 400;
   margin-top: 0.4rem;
   letter-spacing: 0.02em;
 }
 
+.cardCaption {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: #767677;
+  text-transform: uppercase;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+}
+
 /* ───── Option Buttons ───── */
 .optionsList {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.4rem, 1.5vw, 0.5rem);
+  gap: 0.5rem;
   width: 100%;
 }
 
 .multiGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(0.35rem, 1vw, 0.45rem) clamp(0.5rem, 2vw, 0.7rem);
+  gap: 0.45rem 0.7rem;
   width: 100%;
-}
-
-@media (max-width: 480px) {
-  .multiGrid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .optionBtn {
@@ -506,12 +523,12 @@
   background-color: rgba(255, 255, 255, 0.4);
   border: 1px solid #DDD4C8;
   border-radius: 5px;
-  padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(0.75rem, 2vw, 1.1rem);
+  padding: 0.7rem 1.1rem;
   text-align: left;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(0.775rem, 2vw, 0.825rem);
+  font-size: 0.825rem;
   color: #4B4036;
   width: 100%;
 }
@@ -599,12 +616,21 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: clamp(0.6rem, 2vw, 0.85rem);
+  padding-top: 0.65rem;
   width: 100%;
   border-top: 1px solid rgba(130, 120, 100, 0.08);
 }
 
 /* ───── Buttons ───── */
+.actionsRow {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 720px;
+  padding: 0 0.5rem;
+  z-index: 5;
+}
+
 .btn {
   height: 36px;
   border-radius: 18px;
@@ -658,11 +684,15 @@
    LOADING LAYER
    ═══════════════════════════════════════════════════ */
 .loadingContainer {
-  width: min(92vw, 680px);
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  max-width: 680px;
+  height: 430px;
   background-color: #faf7f2;
   border: 1px solid rgba(130, 120, 100, 0.15);
   border-radius: 12px;
-  padding: clamp(2rem, 6vw, 3rem);
+  padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -671,8 +701,6 @@
   box-shadow: 0 10px 40px rgba(47, 9, 9, 0.03);
   position: relative;
   overflow: hidden;
-  min-height: 320px;
-  animation: cardFadeInRise 0.4s cubic-bezier(0.25, 1, 0.5, 1) both;
 }
 
 .paperGrainTexture {
@@ -692,9 +720,7 @@
   margin-bottom: 2rem;
 }
 
-.spinnerCircle {
-  display: none;
-}
+.spinnerCircle { display: none; }
 
 @keyframes spin {
   0%   { transform: rotate(0deg); }
@@ -703,7 +729,7 @@
 
 .loadingText {
   font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  font-size: 1.6rem;
   font-weight: 400;
   color: #313134;
   margin: 0 0 0.75rem 0;
@@ -711,7 +737,7 @@
 
 .loadingSubtext {
   font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: clamp(0.85rem, 2vw, 0.9375rem);
+  font-size: 0.9375rem;
   color: #767677;
   max-width: 360px;
   line-height: 1.5;
@@ -722,13 +748,15 @@
    RESULTS LAYER
    ═══════════════════════════════════════════════════ */
 .resultsGridWrapper {
+  grid-column: 1;
+  grid-row: 1;
   width: 100%;
   max-width: 1200px;
+  margin: -3.25rem auto 0 auto;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding-bottom: 2rem;
-  animation: cardFadeInRise 0.4s cubic-bezier(0.25, 1, 0.5, 1) both;
 }
 
 .resultsGrid {
@@ -737,18 +765,6 @@
   justify-content: center;
   align-items: stretch;
   width: 100%;
-}
-
-@media (max-width: 900px) {
-  .resultsGrid {
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
-  .cardEntryWrapper {
-    width: 100%;
-    max-width: 480px;
-  }
 }
 
 .cardEntryWrapper {
@@ -780,7 +796,7 @@
 .resultsFirstCard {
   background-color: #f7f3eb !important;
   border: 1.5px solid rgba(197, 168, 128, 0.45) !important;
-  box-shadow: 0 15px 40px rgba(47, 9, 9, 0.04), 0 25px 80px rgba(47, 9, 9, 0.06), 0 0 35px rgba(197, 168, 128, 0.16), 0 0 50px rgba(130, 0, 17, 0.05) !important;
+  box-shadow: 0 15px 40px rgba(47,9,9,0.04), 0 25px 80px rgba(47,9,9,0.06), 0 0 35px rgba(197,168,128,0.16), 0 0 50px rgba(130,0,17,0.05) !important;
 }
 
 .resultsFirstCard:hover {
@@ -946,30 +962,13 @@
   transition: all 0.2s ease;
 }
 
-.quizBuyNowBtn {
-  border: 1.2px solid #820011;
-  color: #820011;
-}
-
-.quizBuyNowBtn:hover {
-  background-color: #820011;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.15);
-}
-
-.quizAddBagBtn {
-  border: 1.2px solid #313134;
-  color: #313134;
-}
-
-.quizAddBagBtn:hover {
-  background-color: #313134;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
-}
+.quizBuyNowBtn { border: 1.2px solid #820011; color: #820011; }
+.quizBuyNowBtn:hover { background-color: #820011; color: #ffffff; box-shadow: 0 4px 12px rgba(130,0,17,0.15); }
+.quizAddBagBtn { border: 1.2px solid #313134; color: #313134; }
+.quizAddBagBtn:hover { background-color: #313134; color: #ffffff; box-shadow: 0 4px 12px rgba(49,49,52,0.15); }
 
 /* ═══════════════════════════════════════════════════
-   PROFILE & RECOMMENDATIONS (results page)
+   PROFILE & RECOMMENDATIONS
    ═══════════════════════════════════════════════════ */
 .profileSection {
   text-align: center;
@@ -1029,10 +1028,7 @@
   transition: all 0.2s ease;
 }
 
-.profileTag:hover {
-  background-color: rgba(124, 104, 83, 0.1);
-  border-color: rgba(124, 104, 83, 0.28);
-}
+.profileTag:hover { background-color: rgba(124,104,83,0.1); border-color: rgba(124,104,83,0.28); }
 
 .recommendationHeader {
   text-align: center;
@@ -1070,13 +1066,13 @@
   font-weight: 500;
 }
 
-/* ───── Fade-up entry animations ───── */
+/* ───── Fade-up animations ───── */
 .fadeUpProfile,
 .fadeUpRecommendations,
 .fadeUpActions {
   opacity: 0;
   transform: translateY(8px);
-  animation: fadeUp 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation: fadeUp 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .fadeUpProfile         { animation-delay: 0.05s; }
@@ -1090,10 +1086,7 @@
 /* ═══════════════════════════════════════════════════
    TOAST
    ═══════════════════════════════════════════════════ */
-.toastWrapper {
-  position: relative;
-  z-index: 10000;
-}
+.toastWrapper { position: relative; z-index: 10000; }
 
 .toast {
   position: fixed;
@@ -1117,87 +1110,134 @@
   to   { transform: translateX(0);    opacity: 1; }
 }
 
-.toastText {
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.95rem;
-  color: #313134;
-  line-height: 1.4;
-}
-
-.toastActions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.toastLink {
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #820011;
-  text-decoration: underline;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
+.toastText { font-family: var(--font-serif-text), Georgia, serif; font-size: 0.95rem; color: #313134; line-height: 1.4; }
+.toastActions { display: flex; align-items: center; gap: 12px; }
+.toastLink { font-family: var(--font-serif-text), Georgia, serif; font-size: 0.85rem; font-weight: 600; color: #820011; text-decoration: underline; cursor: pointer; transition: opacity 0.2s ease; }
 .toastLink:hover { opacity: 0.8; }
-
-.toastClose {
-  font-family: Arial, sans-serif;
-  font-size: 0.85rem;
-  color: #767677;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: underline;
-}
-
+.toastClose { font-family: Arial, sans-serif; font-size: 0.85rem; color: #767677; background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; }
 .toastClose:hover { color: #313134; }
 
 /* ═══════════════════════════════════════════════════
-   TABLET — max-width 650px card
+   RESPONSIVE — TABLET (≤768px) — mobile-only changes
    ═══════════════════════════════════════════════════ */
-@media (max-width: 768px) {
-  .introContainer,
-  .cardStack {
-    width: min(92vw, 620px);
-  }
+@media (max-width: 900px) {
+  .resultsGrid { flex-direction: column; align-items: center; gap: 2rem; }
+  .cardEntryWrapper { width: 100%; max-width: 420px; }
+  .resultsNarrowCard { width: 100%; max-width: 100%; }
 }
 
-/* ═══════════════════════════════════════════════════
-   MOBILE — max-width 420px, max-height 90vh
-   ═══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .quizPage { padding-top: 5rem; }
+
+  .introContainer { height: 540px; }
+  .introDoor { height: 490px; }
+  .introContent { height: 490px; }
+  .cardStack { height: 500px; }
+  .paperCard { padding: 1.4rem 1.25rem; }
+  .cardQuestion { font-size: 1.2rem; }
+  .optionBtn { padding: 0.55rem 0.85rem; font-size: 0.8rem; }
+  .cardActionsRow { padding-top: 1rem; }
+  .multiGrid { grid-template-columns: 1fr; gap: 0.65rem; }
+
+  .introTextGroup { top: 1.5rem; left: 1.5rem; right: 1.5rem; }
+  .introContent { padding: 1.5rem 1.25rem; }
+  .introFooter { bottom: 1.5rem; }
+}
+
 @media (max-width: 480px) {
-  .quizPage {
-    padding-top: 5rem;
-  }
+  .quizPage { padding-top: 5rem; }
 
-  .introContainer,
-  .cardStack {
-    width: min(92vw, 420px);
-    max-height: 90vh;
-  }
-
-  .paperCard {
-    /* On mobile, allow internal scroll if content overflows */
-    max-height: 90vh;
+  /* Intro: compact but not fixed-height — scroll if needed */
+  .introContainer {
+    height: auto;
+    min-height: 480px;
+    max-height: 90svh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .cardStack {
-    max-height: calc(90vh - 4rem); /* account for progress markers */
+  .introDoor {
+    height: 100%;
+    min-height: 480px;
   }
-}
 
-/* ═══════════════════════════════════════════════════
-   DESKTOP — max-width 900px card
-   ═══════════════════════════════════════════════════ */
-@media (min-width: 1024px) {
-  .introContainer,
-  .cardStack {
-    width: min(92vw, 900px);
-    max-width: 900px;
+  .introContent {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 480px;
+    padding: 1.5rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
   }
+
+  .introTextGroup {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+
+  .introHeading { font-size: 1.55rem; }
+  .introBody { font-size: 0.85rem; }
+
+  .sealInteractionArea {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 auto;
+  }
+
+  .waxSealWrapper {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
+
+  .sealPrompt {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 0;
+  }
+
+  .introFooter {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Quiz card: auto height + internal scroll on tiny phones */
+  .cardStack {
+    height: auto;
+    min-height: 400px;
+    max-height: calc(90svh - 5rem);
+  }
+
+  .paperCard {
+    position: relative;
+    height: auto;
+    min-height: 400px;
+    max-height: calc(90svh - 5rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 1.15rem 0.85rem 0.85rem 0.85rem;
+  }
+
+  .cardHeader { margin-bottom: 0.85rem; }
+  .cardQuestion { font-size: 1.05rem; }
+  .optionBtn { padding: 0.5rem 0.7rem; gap: 7px; font-size: 0.775rem; }
+  .cardActionsRow { padding-top: 0.75rem; }
+  .marker { width: 28px; }
 }
