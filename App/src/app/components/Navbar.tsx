@@ -384,17 +384,16 @@ export default function Navbar() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={`fixed top-0 left-0 bottom-0 z-50 w-[90vw] sm:w-[380px] max-w-[90vw] h-full shadow-[0_10px_40px_rgba(0,0,0,0.12)] transition-all duration-380 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-y-auto lg:hidden pt-safe pb-safe bg-gradient-to-b from-[#FBF8F2] to-[#F5EEE2] text-[#313134]`}
+        className={`fixed top-0 left-0 bottom-0 z-50 w-[90vw] sm:w-[380px] max-w-[90vw] h-full shadow-[0_10px_40px_rgba(0,0,0,0.12)] transition-all duration-380 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-y-auto lg:hidden pt-8 sm:pt-10 px-6 pb-10 bg-gradient-to-b from-[#FBF8F2] to-[#F5EEE2] text-[#313134]`}
         style={{
           transform: isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
-          padding: "24px",
-          paddingBottom: "44px",
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.015 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E"), linear-gradient(to bottom, #FBF8F2, #F5EEE2)`,
         }}
       >
-        <div className="flex flex-col w-full">
+        {/* Drawer Content Parent Container: 20px flex gap between Logo Header, Search Bar, and Nav */}
+        <div className="flex flex-col w-full gap-5 sm:gap-6">
           {/* Header Row: Perfectly Centered Murakkaz Logo + Top-Right Close (×) Button */}
-          <div className="relative w-full flex items-center justify-center min-h-[48px] pt-1 pb-1">
+          <div className="relative w-full flex items-center justify-center min-h-[44px]">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -421,8 +420,8 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Search Bar with generous top margin under logo */}
-          <div className="mt-10 sm:mt-12 w-full">
+          {/* Search Bar: Sits naturally below logo with parent 20px flex gap */}
+          <div className="w-full">
             <form onSubmit={handleSearchSubmit} className="relative w-full h-[50px] flex items-center">
               <input
                 type="text"
@@ -449,8 +448,8 @@ export default function Navbar() {
             </form>
           </div>
 
-          {/* Navigation Links with generous space under search bar before OUR STORY */}
-          <nav className="flex flex-col gap-8 sm:gap-10 mt-10 sm:mt-12 w-full items-start">
+          {/* Navigation Links: Sits naturally below search bar with parent flex gap */}
+          <nav className="flex flex-col gap-6 sm:gap-8 pt-2 w-full items-start">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
