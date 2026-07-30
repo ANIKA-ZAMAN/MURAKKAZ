@@ -215,22 +215,6 @@ function CompareContent() {
 
   const tableRef = useRef<HTMLDivElement>(null);
 
-  // Sync initial URL param p1
-  useEffect(() => {
-    if (initialP1) {
-      const match = allAvailablePerfumes.find(
-        (p) =>
-          p.name.toLowerCase().includes(initialP1.toLowerCase()) ||
-          p.inspiredBy.toLowerCase().includes(initialP1.toLowerCase())
-      );
-      if (match) {
-        const nextSlots = [match, availablePerfumes[1] || null, availablePerfumes[2] || null];
-        setSelectedSlots(nextSlots);
-        triggerAnalysis(nextSlots);
-      }
-    }
-  }, [initialP1]);
-
   const triggerAnalysis = (slots: (CompareProduct | null)[]) => {
     setIsAnalyzing(true);
     setShowComparison(false);
@@ -251,7 +235,7 @@ function CompareContent() {
 
       params.forEach((param, idx) => {
         if (param) {
-          const match = availablePerfumes.find(
+          const match = allAvailablePerfumes.find(
             (p) =>
               p.image === param ||
               p.image.includes(param) ||
@@ -282,10 +266,11 @@ function CompareContent() {
     const addName = searchParams.get("name");
 
     if (addImage || addName || addId) {
-      const match = availablePerfumes.find(
+      const match = allAvailablePerfumes.find(
         (p) =>
           (addImage && p.image === addImage) ||
-          (addName && p.name.toLowerCase() === addName.toLowerCase())
+          (addName && p.name.toLowerCase() === addName.toLowerCase()) ||
+          (addId && p.name.toLowerCase().includes(addId.toLowerCase()))
       );
 
       if (match) {
