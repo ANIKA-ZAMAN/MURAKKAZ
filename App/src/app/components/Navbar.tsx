@@ -475,22 +475,8 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* Footer Account Section inside Mobile Drawer (Pushed 45px higher, monogram divider) */}
+        {/* Footer Account Section inside Mobile Drawer */}
         <div className="w-full mb-10 mt-8 flex flex-col items-center justify-center">
-          {/* Monogram Divider Line */}
-          <div className="relative w-full flex items-center justify-center mb-6">
-            <div className="w-full h-[1px] bg-[#E5DCD0]" />
-            <div className="absolute px-3.5 bg-[#FAF4EB] text-[#8C1D2E] flex items-center justify-center">
-              <Image
-                src="/images/logo-murakkaz.svg"
-                alt="Murakkaz Emblem"
-                width={22}
-                height={22}
-                className="h-4.5 w-auto object-contain opacity-85"
-              />
-            </div>
-          </div>
-
           {/* Account Link */}
           <Link
             href="/account"
