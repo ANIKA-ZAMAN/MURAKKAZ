@@ -171,7 +171,7 @@ export interface GalleryImage {
 
 export const galleryImages: GalleryImage[] = [
   {
-    src: "/images/events/gallery_1.jpg",
+    src: "/images/events/sadid.jpg",
     alt: "Live Olfactory Blending Station",
     title: "Live Olfactory Station",
     category: "Exhibition",
@@ -180,7 +180,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#ded6c9",
   },
   {
-    src: "/images/events/gallery_2.jpg",
+    src: "/images/events/eliyas.jpg",
     alt: "Luxury Pop-up Stall Banani",
     title: "Luxury Pop-up Stall",
     category: "Pop-up",
@@ -189,7 +189,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#d6cebf",
   },
   {
-    src: "/images/events/gallery_3.jpg",
+    src: "/images/signup_mock_perfume.png",
     alt: "Live Bottle-Painting Workshop",
     title: "Bottle-Painting Workshop",
     category: "Workshop",
@@ -198,7 +198,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#e2dcd2",
   },
   {
-    src: "/images/events/gallery_4.jpg",
+    src: "/images/products/amber_gold.png",
     alt: "Exclusive Scent Reveal Gala",
     title: "Exclusive Scent Reveal",
     category: "Launch",
@@ -207,7 +207,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#cfc6b5",
   },
   {
-    src: "/images/events/gallery_5.jpg",
+    src: "/images/events/sadid.jpg",
     alt: "Founder Meet & Greet Window",
     title: "Founder Meet & Greet",
     category: "Meetup",
@@ -216,7 +216,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#d9d0c2",
   },
   {
-    src: "/images/events/gallery_6.jpg",
+    src: "/images/events/eliyas.jpg",
     alt: "Autumn Perfumer Showcase",
     title: "Gala Night Showcase",
     category: "Gala",
@@ -225,7 +225,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#e5ded4",
   },
   {
-    src: "/images/events/gallery_7.jpg",
+    src: "/images/products/jade_serenity.png",
     alt: "Summer Scent Festival",
     title: "Summer Scent Fest",
     category: "Festival",
@@ -234,7 +234,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#dbd2c3",
   },
   {
-    src: "/images/events/gallery_8.jpg",
+    src: "/images/products/velvet_oud.png",
     alt: "VIP Fragrance Tasting Lounge",
     title: "VIP Fragrance Tasting",
     category: "VIP Lounge",
@@ -243,7 +243,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#d2c9b8",
   },
   {
-    src: "/images/events/gallery_9.jpg",
+    src: "/images/events/sadid.jpg",
     alt: "Artisan Olfactory Blending Masterclass",
     title: "Artisan Blending Lab",
     category: "Masterclass",
@@ -252,7 +252,7 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#ded7cb",
   },
   {
-    src: "/images/events/gallery_10.jpg",
+    src: "/images/products/rouge_540.png",
     alt: "Exclusive Oud & Perfume Launch",
     title: "Royal Oud Collection",
     category: "Exhibition",
