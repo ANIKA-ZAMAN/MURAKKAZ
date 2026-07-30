@@ -33,6 +33,13 @@
   line-height: 1.4;
 }
 
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
   .headerRow {
     flex-direction: column;
@@ -41,4 +48,12 @@
     margin-bottom: 1.5rem;
     margin-top: 0.5rem;
   }
+
+  .controlsGroup {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
 }
+

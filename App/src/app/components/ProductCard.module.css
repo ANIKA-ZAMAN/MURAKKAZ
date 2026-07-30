@@ -12,9 +12,8 @@
   overflow: hidden;
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 450ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 450ms cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Adaptive card content bg — default for lighter (#F5F1E8) pages */
-  --card-content-bg: rgba(255, 255, 255, 0.70);
-  --card-image-bg: #eae5dc;
+  --card-content-bg: transparent;
+  --card-image-bg: transparent;
 }
 
 :global(.reveal) .card {
@@ -39,10 +38,11 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   border-radius: 0;
   overflow: hidden;
-  background-color: var(--card-image-bg, #eae5dc);
+  background-color: transparent !important;
+  background: transparent !important;
   transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -53,22 +53,10 @@
   transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-:global(.reveal) .image {
-  opacity: 0;
-  transform: scale(0.96);
-  will-change: opacity, transform;
-}
-
-:global(.reveal.visible) .image {
-  opacity: 1;
-  transform: scale(1);
-}
-
 .card:hover .image {
   transform: scale(1.03);
 }
 
-/* ── Badge Tag ── */
 .badge {
   position: absolute;
   top: 10px;
@@ -86,34 +74,33 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* ── Content (muted lower card) ── */
+/* ── Content Layout ── */
 .content {
   display: flex;
   flex-direction: column;
-  padding: 0.75rem 0.85rem 0.9rem;
+  padding: 0.85rem 0.95rem 1rem;
   flex-grow: 1;
   background: var(--card-content-bg);
 }
 
-/* ── Name + Heart Row ── */
 .nameRow {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.2rem;
 }
 
 .name {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 0.98rem;
-  font-weight: 500;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: #2D251C;
   margin: 0;
   line-height: 1.25;
   flex: 1;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -123,43 +110,69 @@
   border: none;
   padding: 2px;
   cursor: pointer;
-  color: #767677;
+  color: #313134;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
   flex-shrink: 0;
+  margin-left: 0.4rem;
 }
 
 .wishlistBtn:hover {
   transform: scale(1.15);
-  color: #671D24;
 }
 
 .wishlistBtn.active {
-  color: #671D24;
+  color: #820011;
 }
 
 .heartIcon {
-  width: 17px;
-  height: 17px;
-  stroke-width: 1.6;
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.8;
+  transition: fill 0.2s ease, stroke 0.2s ease;
 }
 
-/* ── Brand + Rating Row ── */
-.brandRatingRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.brandRow {
   width: 100%;
   margin-bottom: 0.35rem;
 }
 
 .brandText {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 400;
   color: #766d62;
+}
+
+/* Scent Tags Row */
+.scentTagsRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.scentTag {
+  display: inline-block;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.68rem;
+  padding: 2px 8px;
+  background-color: #eeeae0;
+  color: #555558;
+  border-radius: 4px;
+  letter-spacing: 0.01em;
+}
+
+/* Rating & Price Row */
+.ratingPriceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  margin-bottom: 0.75rem;
 }
 
 .ratingGroup {
@@ -170,32 +183,43 @@
 
 .star {
   color: #f59e0b;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   line-height: 1;
 }
 
 .ratingText {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.74rem;
-  font-weight: 400;
+  font-size: 0.76rem;
   color: #766d62;
 }
 
-/* ── Description ── */
-.description {
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.73rem;
-  color: #5c5346;
-  margin: 0 0 0.6rem 0;
-  line-height: 1.45;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.reviewsCount {
+  display: inline;
 }
 
-/* ── Action Buttons ── */
+.priceGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.15;
+}
+
+.currentPrice {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.originalPrice {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.76rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+  margin-top: 1px;
+}
+
+/* Action Buttons */
 .actions {
   margin-top: auto;
   display: flex;
@@ -203,13 +227,14 @@
   width: 100%;
 }
 
-.compareBtn,
-.readMoreBtn {
+.buyNowBtn,
+.addBagBtn {
   flex: 1;
-  min-height: 44px;
-  border-radius: 22px;
+  height: 38px;
+  min-height: 38px;
+  border-radius: 20px;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -217,79 +242,203 @@
   align-items: center;
   justify-content: center;
   letter-spacing: 0.01em;
+  box-sizing: border-box;
 }
 
-.compareBtn {
+.buyNowBtn {
   background: transparent;
-  border: 1px solid #820011;
+  border: 1.5px solid #820011;
   color: #820011;
 }
 
-.compareBtn:hover {
+.buyNowBtn:hover {
   background-color: #820011;
-  border-color: #820011;
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(130, 0, 17, 0.18);
+  box-shadow: 0 4px 14px rgba(130, 0, 17, 0.25);
 }
 
-.compareBtn:active {
-  transform: scale(0.96);
-}
-
-.readMoreBtn {
+.addBagBtn {
   background: transparent;
-  border: 1px solid #313134;
+  border: 1.5px solid #313134;
   color: #313134;
 }
 
-.readMoreBtn:hover {
+.addBagBtn:hover {
   background-color: #313134;
-  border-color: #313134;
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(49, 49, 52, 0.18);
 }
 
-.readMoreBtn:active {
-  transform: scale(0.96);
+/* ───────────────────────────────────────────────────────────── */
+/* RESPONSIVE SPECIFICATIONS FOR MOBILE, TABLET, AND SURFACES   */
+/* ───────────────────────────────────────────────────────────── */
+
+/* 1. Mobile (< 768px): 2-column grid, compact 1:1 card layout, vertical stacked buttons */
+@media (max-width: 767px) {
+  .imageContainer {
+    aspect-ratio: 1 / 1 !important; /* Compact 1:1 image aspect ratio on mobile */
+  }
+
+  .content {
+    padding: 0.5rem 0.6rem 0.65rem;
+  }
+
+  .name {
+    font-size: 0.85rem;
+  }
+
+  .brandRow {
+    display: block;
+    font-size: 0.66rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .scentTagSecond {
+    display: none !important; /* Show ONLY 1 scent tag on mobile */
+  }
+
+  .scentTag {
+    font-size: 0.6rem;
+    padding: 1px 5px;
+  }
+
+  .ratingPriceRow {
+    margin-bottom: 0.45rem;
+  }
+
+  .currentPrice {
+    font-size: 0.95rem;
+  }
+
+  .reviewsCount {
+    display: none; /* Rating shows compact e.g. ★ 4.5 */
+  }
+
+  .originalPrice {
+    display: none; /* Compact price */
+  }
+
+  .actions {
+    flex-direction: column !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+
+  .buyNowBtn,
+  .addBagBtn {
+    width: 100% !important;
+    flex: none !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    font-size: 0.72rem !important;
+    border-radius: 15px !important;
+    padding: 0 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
 }
 
-/* ── Desktop Override (>= 1024px): Original Laptop Layout Preserved ── */
-@media (min-width: 1024px) {
+/* 2. Tablet (768px – 1023px): 3-column grid, vertical stacked buttons */
+@media (min-width: 768px) and (max-width: 1023px) {
   .imageContainer {
     aspect-ratio: 1 / 1;
   }
+
   .content {
-    padding: 1rem 1.1rem 1.25rem;
+    padding: 0.75rem 0.85rem 0.95rem;
   }
+
   .name {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
-  .description {
-    font-size: 0.75rem;
-    margin: 0 0 1.1rem 0;
-    line-height: 1.5;
-    -webkit-line-clamp: 3;
+
+  .brandRow {
+    display: block;
+    font-size: 0.72rem;
+    margin-bottom: 0.25rem;
   }
+
+  .scentTagSecond {
+    display: inline-block !important; /* 2 scent tags on tablet */
+  }
+
+  .scentTag {
+    font-size: 0.66rem;
+    padding: 2px 7px;
+  }
+
   .actions {
-    gap: 12px;
+    flex-direction: column !important;
+    gap: 6px !important;
+    width: 100% !important;
   }
-  .compareBtn,
-  .readMoreBtn {
-    height: 34px;
-    border-radius: 17px;
-    font-size: 0.74rem;
+
+  .buyNowBtn,
+  .addBagBtn {
+    width: 100% !important;
+    flex: none !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 0.74rem !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
 
-/* ── Toast ── */
+/* 3. Surface / Small Laptops (1024px – 1366px): 4-column layout, vertical stacked buttons */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .imageContainer {
+    aspect-ratio: 1 / 1;
+  }
+
+  .content {
+    padding: 0.8rem 0.9rem 1rem;
+  }
+
+  .name {
+    font-size: 0.98rem;
+  }
+
+  .brandRow {
+    font-size: 0.74rem;
+  }
+
+  .scentTag {
+    font-size: 0.68rem;
+    padding: 2px 7px;
+  }
+
+  .actions {
+    flex-direction: column !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .buyNowBtn,
+  .addBagBtn {
+    width: 100% !important;
+    flex: none !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    font-size: 0.76rem !important;
+    border-radius: 17px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
+/* 4. Screens wider than 1366px: Desktop rules untouched */
+
+/* Toast Styling */
 .toast {
   position: fixed;
   top: 100px;
   right: 24px;
   background-color: #F5F1E8;
-  /* background-image: url('/plaster-stone-texture.png'); */
-  /* background-repeat: repeat; */
-  /* background-size: 400px; */
   border: 1px solid #767677;
   border-radius: 8px;
   padding: 1.2rem 1.5rem;
@@ -358,3 +507,4 @@
 .toastWrapper {
   display: contents;
 }
+

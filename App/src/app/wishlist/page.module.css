@@ -86,8 +86,8 @@
 
 /* Card */
 .card {
-  background-color: #fdfcfb;
-  border: 1px solid #767677;
+  background-color: transparent;
+  border: none;
   border-radius: 10px;
   overflow: hidden;
   display: flex;

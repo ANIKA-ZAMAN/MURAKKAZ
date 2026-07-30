@@ -3,7 +3,8 @@
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import CollectionHeader from "../components/CollectionHeader";
-import FilterSidebar from "../components/FilterSidebar";
+import FilterButton from "../components/FilterButton";
+import FilterDrawer from "../components/FilterDrawer";
 import ProductGrid from "../components/ProductGrid";
 import RecommendationSlider from "../components/RecommendationSlider";
 import { productsCatalog } from "../data/products";
@@ -28,9 +29,10 @@ function ShopContent() {
     notes: initialNotes,
   });
 
-  const [maxPrice, setMaxPrice] = useState<number>(3000);
+  const [maxPrice, setMaxPrice] = useState<number>(2500);
   const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const handleCheckboxChange = (categoryId: string, option: string) => {
     setSelectedFilters((prev) => {
@@ -50,6 +52,19 @@ function ShopContent() {
   const handlePriceChange = (price: number) => {
     setMaxPrice(price);
     setCurrentPage(1); // Reset page to 1 on price filter change
+  };
+
+  const handleClearAll = () => {
+    setSelectedFilters({
+      family: [],
+      gender: [],
+      occasion: [],
+      meter: [],
+      notes: [],
+    });
+    setMaxPrice(2500);
+    setSearchQuery("");
+    setCurrentPage(1);
   };
 
   const handleSearch = (query: string) => {
@@ -105,6 +120,11 @@ function ShopContent() {
     return true;
   });
 
+  const activeFiltersCount = Object.values(selectedFilters).reduce(
+    (acc, list) => acc + (list ? list.length : 0),
+    0
+  );
+
   // Pagination slicing
   const itemsPerPage = 12;
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / itemsPerPage));
@@ -115,17 +135,17 @@ function ShopContent() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        {/* Header Row: Title & Search Bar */}
-        <CollectionHeader title="Shop" subtitle="Explore our collections" onSearch={handleSearch} />
+        {/* Header Row: Title, Search Bar & Murakkaz Red Filter Button */}
+        <CollectionHeader
+          title="Shop"
+          subtitle="Explore our collections"
+          onSearch={handleSearch}
+          onOpenFilter={() => setIsDrawerOpen(true)}
+          activeFiltersCount={activeFiltersCount}
+        />
 
-        {/* Content Layout: Sidebar + Product Grid */}
+        {/* Content Layout: Product Grid */}
         <div className={styles.contentLayout}>
-          <FilterSidebar
-            selectedFilters={selectedFilters}
-            onCheckboxChange={handleCheckboxChange}
-            maxPrice={maxPrice}
-            onPriceChange={handlePriceChange}
-          />
           <ProductGrid
             products={paginatedProducts}
             currentPage={currentPage}
@@ -133,6 +153,18 @@ function ShopContent() {
             onPageChange={handlePageChange}
           />
         </div>
+
+        {/* Slide-Over Right Drawer Half Page */}
+        <FilterDrawer
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          selectedFilters={selectedFilters}
+          onCheckboxChange={handleCheckboxChange}
+          maxPrice={maxPrice}
+          onPriceChange={handlePriceChange}
+          onClearAll={handleClearAll}
+          totalMatching={filteredProducts.length}
+        />
 
         {/* Explore Our Recommendation Section */}
         <RecommendationSlider />
@@ -157,3 +189,4 @@ function ShopContentWrapper() {
   const searchParams = useSearchParams();
   return <ShopContent key={searchParams.toString()} />;
 }
+

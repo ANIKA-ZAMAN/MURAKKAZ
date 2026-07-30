@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
+import FragranceNotes from "../../components/FragranceNotes";
 import { productsCatalog } from "../../data/products";
 import styles from "./page.module.css";
 
@@ -196,7 +197,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   const [countdown, setCountdown] = useState(9026); // 2 hours, 30 minutes, 26 seconds
   const [isMounted, setIsMounted] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [isDescOpen, setIsDescOpen] = useState(true);
+  const [isDescOpen, setIsDescOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("performance");
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -256,9 +257,12 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     setSelectedSizeOpt(sizeOptions[3]);
   }, [targetKey]);
 
-  // Dynamic countdown timer loop
+  // Dynamic countdown timer loop & screen size check for accordion default
   useEffect(() => {
     setIsMounted(true);
+    if (typeof window !== "undefined") {
+      setIsDescOpen(window.innerWidth >= 1024);
+    }
     const interval = setInterval(() => {
       setCountdown((prev) => (prev > 0 ? prev - 1 : 9026));
     }, 1000);
@@ -360,21 +364,44 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     );
   };
 
+  const [isHovered, setIsHovered] = useState(false);
+
   const scrollSlider = (direction: "left" | "right") => {
     if (sliderRef.current) {
-      const cardWidth = sliderRef.current.clientWidth;
-      sliderRef.current.scrollBy({
-        left: direction === "left" ? -cardWidth : cardWidth,
-        behavior: "smooth",
-      });
+      const container = sliderRef.current;
+      const firstChild = container.children[0] as HTMLElement;
+      const cardWidth = firstChild ? firstChild.offsetWidth + 24 : 280;
+
+      if (direction === "right") {
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 20) {
+          container.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          container.scrollBy({ left: cardWidth, behavior: "smooth" });
+        }
+      } else {
+        if (container.scrollLeft <= 10) {
+          container.scrollTo({ left: container.scrollWidth, behavior: "smooth" });
+        } else {
+          container.scrollBy({ left: -cardWidth, behavior: "smooth" });
+        }
+      }
     }
   };
 
-  // Up to date recommendations slider list
+  // Auto-scroll recommendations one by one every 3.5 seconds
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      scrollSlider("right");
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isHovered]);
+
+  // Expanded recommendations list (12 perfumes)
   const recommendations = [
     {
       name: "Jade Serenity",
-      description: "Inspired by Creed Original Vetiver",
+      inspiredBy: "Inspired by Creed Original Vetiver",
       rating: 4.9,
       reviews: 250,
       price: "2,800tk",
@@ -384,7 +411,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     },
     {
       name: "Coral Sea",
-      description: "Inspired by Jo Malone Wood Sage",
+      inspiredBy: "Inspired by Jo Malone Wood Sage & Sea Salt",
       rating: 4.8,
       reviews: 120,
       price: "2,800tk",
@@ -394,7 +421,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     },
     {
       name: "Murakkaz Noir",
-      description: "Inspired by Dior Sauvage Elixir",
+      inspiredBy: "Inspired by Dior Sauvage Elixir",
       rating: 4.7,
       reviews: 120,
       price: "2,800tk",
@@ -404,7 +431,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     },
     {
       name: "Hellenist",
-      description: "Inspired by Baccarat Rouge 540",
+      inspiredBy: "Inspired by Baccarat Rouge 540",
       rating: 4.9,
       reviews: 310,
       price: "2,800tk",
@@ -412,6 +439,86 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       image: "/images/products/hellenist.png",
       id: "hellenist"
     },
+    {
+      name: "Amber Gold",
+      inspiredBy: "Inspired by Tom Ford Tobacco Vanille",
+      rating: 4.8,
+      reviews: 195,
+      price: "2,500tk",
+      volume: "100ml",
+      image: "/images/products/amber_gold.png",
+      id: "amber-gold"
+    },
+    {
+      name: "Velvet Oud",
+      inspiredBy: "Inspired by Louis Vuitton Ombre Nomade",
+      rating: 4.9,
+      reviews: 280,
+      price: "2,800tk",
+      volume: "100ml",
+      image: "/images/products/velvet_oud.png",
+      id: "velvet-oud"
+    },
+    {
+      name: "Silver Mountain",
+      inspiredBy: "Inspired by Creed Silver Mountain Water",
+      rating: 4.6,
+      reviews: 140,
+      price: "2,200tk",
+      volume: "100ml",
+      image: "/images/products/silver_mountain.png",
+      id: "silver-mountain"
+    },
+    {
+      name: "Azure Breeze",
+      inspiredBy: "Inspired by Acqua Di Parma Fico di Amalfi",
+      rating: 4.7,
+      reviews: 165,
+      price: "1,950tk",
+      volume: "100ml",
+      image: "/images/products/jade_serenity.png",
+      id: "azure-breeze"
+    },
+    {
+      name: "Royal Amber",
+      inspiredBy: "Inspired by Xerjoff Erba Pura",
+      rating: 4.9,
+      reviews: 310,
+      price: "2,600tk",
+      volume: "100ml",
+      image: "/images/products/amber_gold.png",
+      id: "royal-amber"
+    },
+    {
+      name: "Cedar Musk",
+      inspiredBy: "Inspired by Le Labo Santal 33",
+      rating: 4.8,
+      reviews: 230,
+      price: "2,400tk",
+      volume: "100ml",
+      image: "/images/products/rouge_540.png",
+      id: "cedar-musk"
+    },
+    {
+      name: "Imperial Rose",
+      inspiredBy: "Inspired by Parfums de Marly Delina",
+      rating: 4.9,
+      reviews: 275,
+      price: "2,700tk",
+      volume: "100ml",
+      image: "/images/products/coral_sea.png",
+      id: "imperial-rose"
+    },
+    {
+      name: "Saffron Oud",
+      inspiredBy: "Inspired by MFK Oud Satin Mood",
+      rating: 4.8,
+      reviews: 185,
+      price: "2,800tk",
+      volume: "100ml",
+      image: "/images/products/velvet_oud.png",
+      id: "saffron-oud"
+    }
   ];
 
   return (
@@ -530,22 +637,43 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
               </div>
             </div>
 
-            {/* Quantity Selector */}
+            {/* Quantity Selector + Heart Icon */}
             <div className={styles.optionSection}>
               <span className={styles.optionLabel}>Select Quantity</span>
-              <div className={styles.quantityWrapper}>
+              <div className={styles.quantityHeartRow}>
+                <div className={styles.quantityWrapper}>
+                  <button
+                    onClick={() => handleQuantityChange("dec")}
+                    className={styles.quantityBtn}
+                  >
+                    —
+                  </button>
+                  <span className={styles.quantityVal}>{quantity}</span>
+                  <button
+                    onClick={() => handleQuantityChange("inc")}
+                    className={styles.quantityBtn}
+                  >
+                    +
+                  </button>
+                </div>
+
+                {/* Wishlist Heart Icon (Inline, right side of quantity box, NOT in a box) */}
                 <button
-                  onClick={() => handleQuantityChange("dec")}
-                  className={styles.quantityBtn}
+                  onClick={handleWishlistToggle}
+                  className={`${styles.heartInlineBtn} ${
+                    isWishlisted ? styles.heartInlineBtnActive : ""
+                  }`}
+                  aria-label="Add to wishlist"
                 >
-                  —
-                </button>
-                <span className={styles.quantityVal}>{quantity}</span>
-                <button
-                  onClick={() => handleQuantityChange("inc")}
-                  className={styles.quantityBtn}
-                >
-                  +
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill={isWishlisted ? "#820011" : "none"}
+                    stroke={isWishlisted ? "#820011" : "#313134"}
+                    strokeWidth="2"
+                    className={styles.heartInlineIcon}
+                  >
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
                 </button>
               </div>
             </div>
@@ -563,23 +691,6 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 className={styles.addToCartBtn}
               >
                 Add To Cart
-              </button>
-              <button
-                onClick={handleWishlistToggle}
-                className={`${styles.wishlistCircle} ${
-                  isWishlisted ? styles.wishlistCircleActive : ""
-                }`}
-                aria-label="Add to wishlist"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill={isWishlisted ? "currentColor" : "none"}
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className={styles.heartIcon}
-                >
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
               </button>
             </div>
 
@@ -607,80 +718,12 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           </div>
         </section>
 
-        {/* Dedicated Fragrance Notes Section */}
-        <section className={styles.notesSection}>
-          <h2 className={styles.notesSectionTitle}>Fragrance Notes</h2>
-          <div className={styles.notesContainer}>
-            {/* Top Notes */}
-            {details.topNotes.length > 0 && (
-              <div className={styles.notesGroup}>
-                <h3 className={styles.notesGroupTitle}>Top Notes</h3>
-                <div className={styles.notesGrid}>
-                  {details.topNotes.map((note) => (
-                    <div key={note.name} className={styles.noteItem}>
-                      <div className={styles.noteImageWrapper}>
-                        <Image
-                          src={`/images/notes/${note.image}`}
-                          alt={note.name}
-                          width={80}
-                          height={80}
-                          className={styles.noteImage}
-                        />
-                      </div>
-                      <span className={styles.noteName}>{note.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Middle Notes */}
-            {details.middleNotes.length > 0 && (
-              <div className={styles.notesGroup}>
-                <h3 className={styles.notesGroupTitle}>Middle Notes</h3>
-                <div className={styles.notesGrid}>
-                  {details.middleNotes.map((note) => (
-                    <div key={note.name} className={styles.noteItem}>
-                      <div className={styles.noteImageWrapper}>
-                        <Image
-                          src={`/images/notes/${note.image}`}
-                          alt={note.name}
-                          width={80}
-                          height={80}
-                          className={styles.noteImage}
-                        />
-                      </div>
-                      <span className={styles.noteName}>{note.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Base Notes */}
-            {details.baseNotes.length > 0 && (
-              <div className={styles.notesGroup}>
-                <h3 className={styles.notesGroupTitle}>Base Notes</h3>
-                <div className={styles.notesGrid}>
-                  {details.baseNotes.map((note) => (
-                    <div key={note.name} className={styles.noteItem}>
-                      <div className={styles.noteImageWrapper}>
-                        <Image
-                          src={`/images/notes/${note.image}`}
-                          alt={note.name}
-                          width={80}
-                          height={80}
-                          className={styles.noteImage}
-                        />
-                      </div>
-                      <span className={styles.noteName}>{note.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
+        {/* Reusable Component: Fragrance Notes Section */}
+        <FragranceNotes
+          topNotes={details.topNotes}
+          middleNotes={details.middleNotes}
+          baseNotes={details.baseNotes}
+        />
 
         {/* Tab section: Performance / Ratings & Reviews */}
         <section className={styles.tabsSection}>
@@ -770,7 +813,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                   </p>
                   <div className={styles.compareBtnContainer}>
                     <button
-                      onClick={() => triggerToast("Loading duplicate fragrance comparison overlay...")}
+                      onClick={() => router.push(`/compare?p1=${targetKey}`)}
                       className={styles.compareBtn}
                     >
                       Compare Now <span className={styles.btnArrow}>→</span>
@@ -840,7 +883,14 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             </button>
 
             {/* Slider items */}
-            <div className={styles.sliderGrid} ref={sliderRef}>
+            <div
+              className={styles.sliderGrid}
+              ref={sliderRef}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              onTouchStart={() => setIsHovered(true)}
+              onTouchEnd={() => setIsHovered(false)}
+            >
               {recommendations.map((item, idx) => (
                 <ProductCard
                   key={idx}
@@ -880,6 +930,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 />
               </svg>
             </button>
+          </div>
+
+          {/* Centered View All Button */}
+          <div className={styles.viewAllWrapper}>
+            <Link href="/shop" className={styles.viewAllBtn}>
+              View All
+            </Link>
           </div>
         </section>
       </div>

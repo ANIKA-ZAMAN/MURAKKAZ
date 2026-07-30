@@ -32,12 +32,15 @@ export default function ProductGrid({
               id={product.id}
               brand={product.brand}
               name={product.name}
+              inspiredBy={product.inspiredBy}
               description={product.description}
               rating={product.rating}
               reviews={product.reviews}
               price={product.price}
+              originalPrice={product.originalPrice}
               volume={product.volume}
               image={product.image}
+              notes={product.notes}
             />
           ))}
         </div>
@@ -53,3 +56,4 @@ export default function ProductGrid({
     </div>
   );
 }
+
