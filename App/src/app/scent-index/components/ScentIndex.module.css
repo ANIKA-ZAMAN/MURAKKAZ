@@ -105,8 +105,8 @@
   z-index: 1;
 }
 
-.introDoorLeft  { left: 0;  width: calc(50% + 1px); border-right: none; border-radius: 10px 0 0 10px; transform-origin: left center; }
-.introDoorRight { right: 0; border-left:  none; border-radius: 0 10px 10px 0; transform-origin: right center; }
+.introDoorLeft  { left: 0;  width: calc(50% + 2px); border-right: none; border-radius: 10px 0 0 10px; transform-origin: left center; z-index: 2; }
+.introDoorRight { right: 0; width: 50%; border-left:  none; border-radius: 0 10px 10px 0; transform-origin: right center; z-index: 1; }
 
 /* Doors animate open */
 .introLeaving { z-index: 20; }
