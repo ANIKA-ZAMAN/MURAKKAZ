@@ -57,7 +57,7 @@ export default function GlobalLayout({ children }: GlobalLayoutProps) {
 
       <main 
         style={{ paddingTop: isHome ? "0px" : `${paddingTop}px` }} 
-        className="flex-1 w-full transition-[padding-top] duration-200 ease-out" 
+        className="flex-1 w-full" 
         suppressHydrationWarning
       >
         {children}

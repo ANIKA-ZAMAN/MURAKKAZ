@@ -7,6 +7,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Disable JS scroll hijacking on mobile & tablet touch devices for native 120Hz/60Hz touch scrolling and instant page transitions
+    const isMobileOrTablet =
+      typeof window !== "undefined" &&
+      (window.innerWidth < 1024 || "ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+    if (isMobileOrTablet) {
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     const lenis = new Lenis({
