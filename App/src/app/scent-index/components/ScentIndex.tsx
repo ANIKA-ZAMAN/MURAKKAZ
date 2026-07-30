@@ -11,26 +11,16 @@ import {
 } from "../data/scentIndexData";
 import styles from "./ScentIndex.module.css";
 
-type Phase = "intro" | "consultation" | "loading" | "results";
-
 export default function ScentIndex() {
   const router = useRouter();
-  const [phase, setPhase] = useState<Phase>("intro");
-  // Controls which "layer" is currently visible: "intro" | "consultation" | null (both out)
-  const [visibleLayer, setVisibleLayer] = useState<"intro" | "quiz" | "loading" | "results">("intro");
+  const [phase, setPhase] = useState<"intro" | "consultation" | "loading" | "results">("intro");
+  const [isTransitioningIntro, setIsTransitioningIntro] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
   const [transitioningStep, setTransitioningStep] = useState<number | null>(null);
   const [recommendations, setRecommendations] = useState<QuizRecommendation[]>([]);
   const [particles, setParticles] = useState<Array<{ id: number; left: string; top: string; delay: string; size: string }>>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-
-  // Wax seal state
-  const [isSealPressed, setIsSealPressed] = useState(false);
-  const [isSealedCracked, setIsSealedCracked] = useState(false);
-  // intro-leaving: doors slide out. quiz-entering: quiz card fades up
-  const [introLeaving, setIntroLeaving] = useState(false);
-  const [quizEntering, setQuizEntering] = useState(false);
 
   // Restore quiz state from sessionStorage on mount
   useEffect(() => {
@@ -40,14 +30,7 @@ export default function ScentIndex() {
       const savedRecommendations = sessionStorage.getItem("scent-quiz-recommendations");
       const savedCurrentStep = sessionStorage.getItem("scent-quiz-current-step");
 
-      if (savedPhase) {
-        const p = savedPhase as Phase;
-        setPhase(p);
-        if (p === "consultation") setVisibleLayer("quiz");
-        else if (p === "loading") setVisibleLayer("loading");
-        else if (p === "results") setVisibleLayer("results");
-        else setVisibleLayer("intro");
-      }
+      if (savedPhase) setPhase(savedPhase as any);
       if (savedAnswers) setAnswers(JSON.parse(savedAnswers));
       if (savedRecommendations) setRecommendations(JSON.parse(savedRecommendations));
       if (savedCurrentStep) setCurrentStep(Number(savedCurrentStep));
@@ -56,7 +39,7 @@ export default function ScentIndex() {
     }
   }, []);
 
-  // Persist quiz state
+  // Save quiz state to sessionStorage when it changes
   useEffect(() => {
     try {
       if (phase === "intro") {
@@ -75,7 +58,7 @@ export default function ScentIndex() {
     }
   }, [phase, answers, recommendations, currentStep]);
 
-  // Generate ambient particles on mount
+  // Generate random particles positions on mount
   useEffect(() => {
     const isAmbientDisabled = localStorage.getItem("pref-ambient") === "false";
     if (isAmbientDisabled) { setParticles([]); return; }
@@ -89,34 +72,28 @@ export default function ScentIndex() {
     setParticles(pts);
   }, []);
 
+  const [isSealPressed, setIsSealPressed] = useState(false);
+  const [isSealedCracked, setIsSealedCracked] = useState(false);
+
   const handleSealClick = () => {
     if (isSealPressed || isSealedCracked) return;
+
     setIsSealPressed(true);
 
     setTimeout(() => {
       setIsSealPressed(false);
       setIsSealedCracked(true);
 
-      // After crack, start door-open animation
       setTimeout(() => {
-        setIntroLeaving(true);
+        setIsTransitioningIntro(true);
         if (typeof window !== "undefined") {
           const audio = new Audio("/audio/paper-sound.wav");
           audio.volume = 0.8;
-          audio.play().catch(() => {});
+          audio.play().catch((err) => console.log("Audio play failed:", err));
         }
-
-        // Once doors have slid away (~900ms), unmount intro and show quiz
         setTimeout(() => {
           setPhase("consultation");
-          setVisibleLayer("quiz");
-          setIntroLeaving(false);
-          setIsSealedCracked(false);
-          setIsSealPressed(false);
-
-          // Trigger quiz enter animation
-          setQuizEntering(true);
-          setTimeout(() => setQuizEntering(false), 600);
+          setIsTransitioningIntro(false);
         }, 900);
       }, 500);
     }, 200);
@@ -125,6 +102,7 @@ export default function ScentIndex() {
   const handleSelect = (questionId: number, option: string) => {
     const question = quizQuestions.find((q) => q.id === questionId);
     if (!question) return;
+
     if (question.type === "multi") {
       const current = (answers[questionId] as string[]) || [];
       const updated = current.includes(option)
@@ -149,14 +127,10 @@ export default function ScentIndex() {
       setTransitioningStep(currentStep);
       setTimeout(() => {
         setPhase("loading");
-        setVisibleLayer("loading");
         setTransitioningStep(null);
         const recs = getTop3Recommendations(answers);
         setRecommendations(recs);
-        setTimeout(() => {
-          setPhase("results");
-          setVisibleLayer("results");
-        }, 1500);
+        setTimeout(() => { setPhase("results"); }, 1500);
       }, 500);
     }
   };
@@ -170,7 +144,6 @@ export default function ScentIndex() {
     setCurrentStep(0);
     setRecommendations([]);
     setPhase("intro");
-    setVisibleLayer("intro");
   };
 
   useEffect(() => {
@@ -188,7 +161,7 @@ export default function ScentIndex() {
 
   return (
     <div className={styles.quizPage}>
-      {/* Ambient particles */}
+      {/* Background Ambient Particles */}
       <div className={styles.particlesContainer}>
         {particles.map((pt) => (
           <div
@@ -199,91 +172,87 @@ export default function ScentIndex() {
         ))}
       </div>
 
-      {/* ─── Stage: only ONE layer is mounted at a time ─── */}
-      <main className={`${styles.mainContent} ${visibleLayer === "results" ? styles.mainContentResults : ""}`}>
+      {/* Main Page Layout Wrapper */}
+      <main className={`${styles.mainContent} ${phase === "results" ? styles.mainContentResults : ""}`}>
 
-        {/* ── INTRO LAYER ── Only rendered when intro is active */}
-        {visibleLayer === "intro" && (
-          <div className={styles.introStack}>
-            {/* Decorative stacked paper cards behind the intro */}
-            <div className={`${styles.introShadowCard} ${styles.introShadowCard1}`} />
-            <div className={`${styles.introShadowCard} ${styles.introShadowCard2}`} />
-
-            <div
-              className={`${styles.introContainer} ${introLeaving ? styles.introLeaving : ""}`}
-              onClick={handleSealClick}
-              style={{ cursor: (!isSealPressed && !isSealedCracked) ? "pointer" : "default" }}
-            >
-              {/* The two split doors */}
-              <div className={`${styles.introDoor} ${styles.introDoorLeft}`}>
-                {isSealedCracked && (
-                  <div className={`${styles.waxSealHalf} ${styles.waxSealLeft}`}>
-                    <div className={styles.sealLogoWrapperHalfLeft}>
-                      <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Left" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
-                    </div>
+        {/* ── INTRO LAYER ── Doors + wax seal overlay */}
+        {(phase === "intro" || isTransitioningIntro) && (
+          <div
+            className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}
+            onClick={handleSealClick}
+            style={{ cursor: (!isSealPressed && !isSealedCracked) ? "pointer" : "default" }}
+          >
+            {/* Left door */}
+            <div className={`${styles.introDoor} ${styles.introDoorLeft}`}>
+              {isSealedCracked && (
+                <div className={`${styles.waxSealHalf} ${styles.waxSealLeft}`}>
+                  <div className={styles.sealLogoWrapperHalfLeft}>
+                    <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Left" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
                   </div>
-                )}
-              </div>
-              <div className={`${styles.introDoor} ${styles.introDoorRight}`}>
-                {isSealedCracked && (
-                  <div className={`${styles.waxSealHalf} ${styles.waxSealRight}`}>
-                    <div className={styles.sealLogoWrapperHalfRight}>
-                      <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Right" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Overlay text content */}
-              <div className={styles.introContent}>
-                <div className={styles.introTextGroup}>
-                  <div className={styles.introHeader}>
-                    <span className={styles.introLabel}>MURAKKAZ</span>
-                    <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
-                  </div>
-                  <p className={styles.introBody}>
-                    Every fragrance tells a different story. Answer seven carefully created questions and we&apos;ll recommend the fragrances that best match your personality, preferences, and lifestyle.
-                  </p>
                 </div>
+              )}
+            </div>
 
-                <div className={styles.sealInteractionArea} suppressHydrationWarning>
-                  {!introLeaving && (
-                    <div
-                      className={`${styles.waxSealWrapper} ${isSealPressed ? styles.sealPressed : ""} ${isSealedCracked ? styles.sealCracked : ""}`}
-                      onClick={handleSealClick}
-                      suppressHydrationWarning
-                    >
-                      <div className={styles.waxSealIntact}>
-                        <div className={styles.sealLogoWrapper}>
-                          <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo" width={88} height={38} priority className={styles.sealLogo} />
-                        </div>
+            {/* Right door */}
+            <div className={`${styles.introDoor} ${styles.introDoorRight}`}>
+              {isSealedCracked && (
+                <div className={`${styles.waxSealHalf} ${styles.waxSealRight}`}>
+                  <div className={styles.sealLogoWrapperHalfRight}>
+                    <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Right" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Content overlay */}
+            <div className={styles.introContent}>
+              <div className={styles.introTextGroup}>
+                <div className={styles.introHeader}>
+                  <span className={styles.introLabel}>MURAKKAZ</span>
+                  <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
+                </div>
+                <p className={styles.introBody}>
+                  Every fragrance tells a different story. Answer seven carefully created questions and we&apos;ll recommend the fragrances that best match your personality, preferences, and lifestyle.
+                </p>
+              </div>
+
+              <div className={styles.sealInteractionArea} suppressHydrationWarning>
+                {!isTransitioningIntro && (
+                  <div
+                    className={`${styles.waxSealWrapper} ${isSealPressed ? styles.sealPressed : ""} ${isSealedCracked ? styles.sealCracked : ""}`}
+                    onClick={handleSealClick}
+                    suppressHydrationWarning
+                  >
+                    <div className={styles.waxSealIntact}>
+                      <div className={styles.sealLogoWrapper}>
+                        <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo" width={88} height={38} priority className={styles.sealLogo} />
                       </div>
-                      {isSealedCracked && (
-                        <div className={styles.waxFragments}>
-                          <span className={`${styles.fragment} ${styles.frag1}`} />
-                          <span className={`${styles.fragment} ${styles.frag2}`} />
-                          <span className={`${styles.fragment} ${styles.frag3}`} />
-                          <span className={`${styles.fragment} ${styles.frag4}`} />
-                        </div>
-                      )}
                     </div>
-                  )}
-                  <span className={styles.sealPrompt}>
-                    {isSealedCracked ? "Opening..." : "Unseal Your Consultation"}
-                  </span>
-                </div>
+                    {isSealedCracked && (
+                      <div className={styles.waxFragments}>
+                        <span className={`${styles.fragment} ${styles.frag1}`} />
+                        <span className={`${styles.fragment} ${styles.frag2}`} />
+                        <span className={`${styles.fragment} ${styles.frag3}`} />
+                        <span className={`${styles.fragment} ${styles.frag4}`} />
+                      </div>
+                    )}
+                  </div>
+                )}
+                <span className={styles.sealPrompt}>
+                  {isSealedCracked ? "Opening..." : "Unseal Your Consultation"}
+                </span>
+              </div>
 
-                <div className={styles.introFooter}>
-                  7 Questions &bull; Takes Less Than 2 Minutes
-                </div>
+              <div className={styles.introFooter}>
+                7 Questions &bull; Takes Less Than 2 Minutes
               </div>
             </div>
           </div>
         )}
 
-        {/* ── QUIZ LAYER ── Shown only when consultation is active */}
-        {visibleLayer === "quiz" && (
-          <div className={`${styles.quizContainer} ${quizEntering ? styles.quizContainerEnter : ""}`}>
+        {/* ── QUIZ LAYER ── Always rendered behind intro (depth cards give the stacked paper look) */}
+        {(phase === "intro" || phase === "consultation" || isTransitioningIntro) && (
+          <div className={`${styles.quizContainer} ${phase === "intro" && !isTransitioningIntro ? styles.quizHidden : ""} ${isTransitioningIntro ? styles.quizContainerEnter : ""}`}>
             {/* Progress markers */}
             <div className={styles.progressMarkers}>
               {quizQuestions.map((_, idx) => (
@@ -294,14 +263,13 @@ export default function ScentIndex() {
               ))}
             </div>
 
-            {/* Card stack — depth cards behind active card (stacked paper effect) */}
+            {/* Card stack — depth cards visible behind intro on intro screen */}
             <div className={styles.cardStack}>
               {quizQuestions.map((q, idx) => {
                 const isLeaving = transitioningStep === idx;
                 const isTop = idx === currentStep;
                 const depth = idx - currentStep;
 
-                // Skip already-answered cards (unless leaving)
                 if (idx < currentStep && !isLeaving) return null;
 
                 return (
@@ -325,7 +293,7 @@ export default function ScentIndex() {
         )}
 
         {/* ── LOADING LAYER ── */}
-        {visibleLayer === "loading" && (
+        {phase === "loading" && (
           <div className={styles.loadingContainer}>
             <div className={styles.paperGrainTexture} />
             <div className={styles.loaderSpinner}>
@@ -339,7 +307,7 @@ export default function ScentIndex() {
         )}
 
         {/* ── RESULTS LAYER ── */}
-        {visibleLayer === "results" && recommendations.length > 0 && (
+        {phase === "results" && recommendations.length > 0 && (
           <div className={styles.resultsGridWrapper}>
             <div className={styles.fadeUpProfile}>
               {(() => {
@@ -457,11 +425,7 @@ export default function ScentIndex() {
   );
 }
 
-interface FragranceProfile {
-  name: string;
-  description: string;
-  tags: string[];
-}
+interface FragranceProfile { name: string; description: string; tags: string[]; }
 
 function getFragranceProfile(answers: Record<number, string | string[]>): FragranceProfile {
   const occasion = answers[2] as string | undefined;

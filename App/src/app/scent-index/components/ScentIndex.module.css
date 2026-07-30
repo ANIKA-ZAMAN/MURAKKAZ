@@ -2,7 +2,6 @@
    MURAKKAZ SCENT CONSULTATION QUIZ STYLES
    ═══════════════════════════════════════════════════ */
 
-/* ───── Page Shell ───── */
 .quizPage {
   position: relative;
   width: 100%;
@@ -12,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 4.25rem 1.5rem 3rem 1.5rem;
+  padding: 4.25rem 1.5rem 2.5rem 1.5rem;
   overflow: hidden;
 }
 
@@ -45,6 +44,9 @@
 }
 
 /* ───── Main Content Structure ───── */
+/* CSS Grid: both introContainer and quizContainer occupy the same cell.
+   The quiz depth cards (depth 1-6) show THROUGH BEHIND the intro doors.
+   This creates the stacked paper visual in the screenshot. */
 .mainContent {
   position: relative;
   z-index: 3;
@@ -63,65 +65,22 @@
 }
 
 /* ═══════════════════════════════════════════════════
-   INTRO STACK — decorative shadow cards behind the intro
+   INTRO LAYER — overlaps quiz container on same grid cell
+   z-index: 30 puts it in front; quiz depth cards peek out
    ═══════════════════════════════════════════════════ */
-
-/* The wrapper that holds the shadow cards + actual intro */
-.introStack {
+.introContainer {
   grid-column: 1;
   grid-row: 1;
   position: relative;
   width: 100%;
   max-width: 720px;
-  /* Tall enough to contain the intro + the shadow cards peeking out below */
-  height: 595px;
+  height: 543px; /* 43px markers + 500px card */
   margin-bottom: 1.5rem;
-  z-index: 10;
-}
-
-/* Shared base for decorative shadow paper cards */
-.introShadowCard {
-  position: absolute;
-  width: 100%;
-  /* Same height as the intro card area */
-  height: 500px;
-  top: 43px;
-  background-color: #f7f3eb;
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.015 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E");
-  border: 1px solid #DDD4C8;
-  border-radius: 10px;
-  pointer-events: none;
-}
-
-.introShadowCard1 {
-  transform: translate(5px, 7px) rotate(1.4deg);
-  filter: brightness(0.97);
-  box-shadow: 0 4px 18px rgba(75, 64, 54, 0.04);
-  z-index: 1;
-}
-
-.introShadowCard2 {
-  transform: translate(-6px, 14px) rotate(-2.0deg);
-  filter: brightness(0.94);
-  box-shadow: 0 4px 14px rgba(75, 64, 54, 0.03);
-  z-index: 0;
-}
-
-/* ═══════════════════════════════════════════════════
-   INTRO LAYER  — stacked-paper doors + wax seal
-   ═══════════════════════════════════════════════════ */
-.introContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 543px; /* 43px markers spacer + 500px card */
-  z-index: 2; /* sits above the two shadow cards */
+  z-index: 30; /* sits above the quiz container depth cards */
   perspective: 1200px;
 }
 
-/* Base door panel */
+/* Split door panels */
 .introDoor {
   position: absolute;
   top: 43px;
@@ -153,7 +112,10 @@
   transform-origin: right center;
 }
 
-/* Doors slide open */
+.introLeaving {
+  z-index: 20;
+}
+
 .introLeaving .introDoorLeft {
   transform: translateX(-105%);
   opacity: 0;
@@ -166,7 +128,7 @@
   box-shadow: none;
 }
 
-/* Overlay content sits on top of doors */
+/* Text content overlays the doors */
 .introContent {
   position: absolute;
   left: 0;
@@ -232,7 +194,7 @@
   max-width: 520px;
 }
 
-/* Wax Seal Interaction Area */
+/* Wax Seal */
 .sealInteractionArea {
   position: absolute;
   top: 50%;
@@ -245,44 +207,30 @@
 
 .waxSealWrapper {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   user-select: none;
 }
 
 .waxSealIntact {
-  width: 88px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  width: 88px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
   transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .sealLogoWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 88px;
-  height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  width: 88px; height: 38px;
 }
 
 .sealLogo { object-fit: contain; }
 
-.sealPressed .waxSealIntact {
-  transform: scale(0.94) translateY(0.5px);
-}
+.sealPressed .waxSealIntact { transform: scale(0.94) translateY(0.5px); }
 
 .waxFragments { position: absolute; inset: 0; pointer-events: none; }
-
 .fragment { position: absolute; background-color: #671d24; border-radius: 2px; opacity: 0; }
 
 .frag1 { width: 5px; height: 4px; left: 24px; top: 32px; animation: fall1 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
@@ -327,38 +275,30 @@
   text-align: center;
 }
 
-/* Broken seal halves on doors */
+/* Broken seal halves */
 .waxSealHalf {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 38px;
-  width: 44px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  z-index: 10;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  height: 38px; width: 44px; overflow: hidden;
+  display: flex; align-items: center; z-index: 10;
 }
 
 .waxSealLeft  { right: 0; justify-content: flex-start; }
 .waxSealRight { left: 0;  justify-content: flex-end; }
 
 .sealLogoWrapperHalfLeft {
-  position: absolute;
-  left: 0; top: 50%;
-  transform: translateY(-50%);
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
   width: 88px; height: 38px;
 }
 
 .sealLogoWrapperHalfRight {
-  position: absolute;
-  left: -44px; top: 50%;
-  transform: translateY(-50%);
+  position: absolute; left: -44px; top: 50%; transform: translateY(-50%);
   width: 88px; height: 38px;
 }
 
 /* ═══════════════════════════════════════════════════
-   QUIZ LAYER — stacked paper cards (same look as intro)
+   QUIZ LAYER — same grid cell as intro (row 1, col 1)
+   z-index: 1 means it sits behind the intro doors.
+   Depth cards (1-6) poke out and create the stack visual.
    ═══════════════════════════════════════════════════ */
 .quizContainer {
   grid-column: 1;
@@ -370,10 +310,31 @@
   flex-direction: column;
   align-items: center;
   transition: opacity 0.5s ease;
-  z-index: 1;
+  z-index: 1; /* behind introContainer */
 }
 
-/* Entry animation */
+/* On intro screen: hide progress markers + top card. Depth cards still show. */
+.quizHidden {
+  pointer-events: none !important;
+}
+
+.quizHidden .progressMarkers {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.quizHidden .cardStack > :first-child {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Progress markers transition */
+.progressMarkers {
+  opacity: 1;
+  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+/* Quiz entrance animation when intro leaves */
 .quizContainerEnter .progressMarkers {
   animation: markerFadeIn 0.85s cubic-bezier(0.25, 1, 0.3, 1) both;
 }
@@ -383,13 +344,13 @@
 }
 
 @keyframes markerFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 @keyframes cardFadeInRise {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* ───── Progress Markers ───── */
@@ -397,8 +358,6 @@
   display: flex;
   gap: 7px;
   margin-bottom: 1.25rem;
-  opacity: 1;
-  transition: opacity 0.7s cubic-bezier(0.25, 1, 0.3, 1);
 }
 
 .marker {
@@ -426,7 +385,7 @@
   margin-bottom: 1.5rem;
 }
 
-/* ───── Handcrafted Paper Card ───── */
+/* ───── Paper Card ───── */
 .paperCard {
   position: absolute;
   width: 100%;
@@ -449,7 +408,7 @@
   box-shadow: 0 4px 20px rgba(75, 64, 54, 0.04), 0 10px 40px rgba(75, 64, 54, 0.02);
 }
 
-.topCard { /* Dynamic shadows applied inline in QuizCard */ }
+.topCard { /* Dynamic shadows applied inline */ }
 
 .leavingCard {
   animation: physicalRemove 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
@@ -464,10 +423,8 @@
 }
 
 .cardInnerContent {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
+  display: flex; flex-direction: column;
+  height: 100%; width: 100%;
 }
 
 .cardContentEnter {
@@ -480,189 +437,138 @@
 }
 
 /* ───── Card Typography ───── */
-.cardHeader {
-  margin-bottom: 1.25rem;
-  text-align: center;
-}
+.cardHeader { margin-bottom: 1.25rem; text-align: center; }
 
 .cardQId {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  color: #c9a96e;
-  font-weight: 500;
-  display: block;
-  margin-bottom: 0.45rem;
-  text-align: center;
+  font-size: 0.7rem; letter-spacing: 0.12em; color: #c9a96e;
+  font-weight: 500; display: block; margin-bottom: 0.45rem; text-align: center;
 }
 
 .cardQuestion {
   font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: 1.55rem;
-  font-weight: 600;
-  color: #1e1e20;
-  margin: 0;
-  line-height: 1.3;
-  text-align: center;
+  font-size: 1.55rem; font-weight: 600; color: #1e1e20;
+  margin: 0; line-height: 1.3; text-align: center;
 }
 
 .cardSelectionHint {
   display: block;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.85rem;
-  color: #8e8e90;
-  font-weight: 400;
-  margin-top: 0.4rem;
-  letter-spacing: 0.02em;
+  font-size: 0.85rem; color: #8e8e90; font-weight: 400;
+  margin-top: 0.4rem; letter-spacing: 0.02em;
 }
 
-/* ───── Option Buttons ───── */
-.optionsList {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
+.cardCaption {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.75rem; letter-spacing: 0.08em; color: #767677;
+  text-transform: uppercase; margin-top: 0.35rem; margin-bottom: 0;
 }
 
-.multiGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.45rem 0.7rem;
-  width: 100%;
-}
+/* ───── Options ───── */
+.optionsList { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; }
+
+.multiGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem 0.7rem; width: 100%; }
 
 .optionBtn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: flex; align-items: center; gap: 10px;
   background-color: rgba(255, 255, 255, 0.4);
-  border: 1px solid #DDD4C8;
-  border-radius: 5px;
-  padding: 0.7rem 1.1rem;
-  text-align: left;
-  cursor: pointer;
+  border: 1px solid #DDD4C8; border-radius: 5px;
+  padding: 0.7rem 1.1rem; text-align: left; cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.825rem;
-  color: #4B4036;
-  width: 100%;
+  font-size: 0.825rem; color: #4B4036; width: 100%;
 }
 
 .optionBtn:hover:not(:disabled) {
-  border-color: #820011;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #1e1e20;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.04);
+  border-color: #820011; background-color: rgba(255,255,255,0.9);
+  color: #1e1e20; transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(130,0,17,0.04);
 }
 
 .optionChecked {
-  border-color: #820011 !important;
-  color: #820011 !important;
+  border-color: #820011 !important; color: #820011 !important;
   background-color: #f7f3eb !important;
-  box-shadow: 0 2px 8px rgba(130, 0, 17, 0.06);
-  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(130,0,17,0.06); transform: translateY(-1px);
 }
 
-/* ───── Radio & Checkbox Controls ───── */
 .radioCircle {
   width: 18px; height: 18px; border-radius: 50%;
-  border: 1px solid rgba(130, 120, 100, 0.35);
+  border: 1px solid rgba(130,120,100,0.35);
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
   background-color: #ffffff;
 }
 
-.optionBtn:hover:not(:disabled) .radioCircle { border-color: rgba(130, 120, 100, 0.6); }
+.optionBtn:hover:not(:disabled) .radioCircle { border-color: rgba(130,120,100,0.6); }
 .optionChecked .radioCircle { border-color: #820011; background-color: #f7f3eb; }
 
 .radioDot {
   width: 8px; height: 8px; border-radius: 50%;
-  background-color: #820011;
-  transform: scale(0);
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background-color: #820011; transform: scale(0);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
 }
 
 .optionChecked .radioDot { transform: scale(1); }
 
 .checkboxBox {
   width: 18px; height: 18px; border-radius: 4px;
-  border: 1px solid rgba(130, 120, 100, 0.35);
+  border: 1px solid rgba(130,120,100,0.35);
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0; transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
   background-color: #ffffff;
 }
 
-.optionBtn:hover:not(:disabled) .checkboxBox { border-color: rgba(130, 120, 100, 0.6); }
+.optionBtn:hover:not(:disabled) .checkboxBox { border-color: rgba(130,120,100,0.6); }
 .optionChecked .checkboxBox { border-color: #820011; background-color: #820011; }
 
 .checkmark {
   color: #ffffff; font-size: 0.8rem; line-height: 1;
   opacity: 0; transform: scale(0.6);
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: block;
+  transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1); display: block;
 }
 
 .optionChecked .checkmark { opacity: 1; transform: scale(1); }
 .optionLabel { font-weight: 400; line-height: 1.2; }
 
-/* ───── Card Actions Row ───── */
+/* ───── Card Actions ───── */
 .cardActionsRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  padding-top: 0.65rem;
-  width: 100%;
-  border-top: 1px solid rgba(130, 120, 100, 0.08);
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; padding-top: 0.65rem; width: 100%;
+  border-top: 1px solid rgba(130,120,100,0.08);
 }
 
-/* ───── Buttons ───── */
+.actionsRow {
+  display: flex; justify-content: space-between;
+  width: 100%; max-width: 720px; padding: 0 0.5rem; z-index: 5;
+}
+
 .btn {
   height: 36px; border-radius: 18px;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.75rem; font-weight: 500;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;
+  text-transform: uppercase; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
   transition: all 0.2s ease; min-width: 88px;
 }
 
-.btnBack {
-  background: transparent; border: 1px solid #767677; color: #555558;
-}
+.btnBack { background: transparent; border: 1px solid #767677; color: #555558; }
+.btnBack:hover:not(:disabled) { background-color: rgba(118,118,119,0.05); border-color: #313134; color: #313134; }
 
-.btnBack:hover:not(:disabled) {
-  background-color: rgba(118, 118, 119, 0.05); border-color: #313134; color: #313134;
-}
+.btnNext { background-color: #4B4036; border: 1px solid #4B4036; color: #f7f3eb; text-transform: none; }
+.btnNext:hover:not(:disabled) { background-color: #3b322a; border-color: #3b322a; box-shadow: 0 4px 12px rgba(75,64,54,0.15); }
 
-.btnNext {
-  background-color: #4B4036; border: 1px solid #4B4036; color: #f7f3eb; text-transform: none;
-}
-
-.btnNext:hover:not(:disabled) {
-  background-color: #3b322a; border-color: #3b322a;
-  box-shadow: 0 4px 12px rgba(75, 64, 54, 0.15);
-}
-
-.btn:disabled {
-  background-color: #E6DFD5 !important; border-color: #DDD4C8 !important;
-  color: #A8A297 !important; cursor: not-allowed; box-shadow: none !important;
-}
+.btn:disabled { background-color: #E6DFD5 !important; border-color: #DDD4C8 !important; color: #A8A297 !important; cursor: not-allowed; box-shadow: none !important; }
 
 /* ═══════════════════════════════════════════════════
-   LOADING LAYER
+   LOADING
    ═══════════════════════════════════════════════════ */
 .loadingContainer {
   grid-column: 1; grid-row: 1;
   width: 100%; max-width: 680px; height: 430px;
-  background-color: #faf7f2;
-  border: 1px solid rgba(130, 120, 100, 0.15);
+  background-color: #faf7f2; border: 1px solid rgba(130,120,100,0.15);
   border-radius: 12px; padding: 3rem;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center;
-  box-shadow: 0 10px 40px rgba(47, 9, 9, 0.03);
+  text-align: center; box-shadow: 0 10px 40px rgba(47,9,9,0.03);
   position: relative; overflow: hidden;
 }
 
@@ -674,9 +580,8 @@
 
 .loaderSpinner {
   width: 48px; height: 48px;
-  border: 1.5px solid rgba(201, 169, 110, 0.15);
-  border-top-color: #c9a96e; border-radius: 50%;
-  animation: spin 1.2s infinite linear; margin-bottom: 2rem;
+  border: 1.5px solid rgba(201,169,110,0.15); border-top-color: #c9a96e;
+  border-radius: 50%; animation: spin 1.2s infinite linear; margin-bottom: 2rem;
 }
 
 .spinnerCircle { display: none; }
@@ -694,7 +599,7 @@
 }
 
 /* ═══════════════════════════════════════════════════
-   RESULTS LAYER
+   RESULTS
    ═══════════════════════════════════════════════════ */
 .resultsGridWrapper {
   grid-column: 1; grid-row: 1;
@@ -703,26 +608,20 @@
   display: flex; flex-direction: column; gap: 0.5rem; padding-bottom: 2rem;
 }
 
-.resultsGrid {
-  display: flex; gap: 1.5rem; justify-content: center; align-items: stretch; width: 100%;
-}
+.resultsGrid { display: flex; gap: 1.5rem; justify-content: center; align-items: stretch; width: 100%; }
 
 .cardEntryWrapper { flex: 1; max-width: 380px; display: flex; }
 
 .resultsNarrowCard {
-  width: 100%;
-  background-color: #faf7f2;
+  width: 100%; background-color: #faf7f2;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.025 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)'/%3E%3C/svg%3E");
-  border: 1px solid rgba(130, 120, 100, 0.12); border-radius: 12px; padding: 1.75rem 1.5rem;
+  border: 1px solid rgba(130,120,100,0.12); border-radius: 12px; padding: 1.75rem 1.5rem;
   box-shadow: 0 10px 30px rgba(47,9,9,0.03), 0 20px 60px rgba(47,9,9,0.04);
   display: flex; flex-direction: column; align-items: center; text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.resultsNarrowCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 45px rgba(47,9,9,0.05), 0 30px 90px rgba(47,9,9,0.08);
-}
+.resultsNarrowCard:hover { transform: translateY(-4px); box-shadow: 0 15px 45px rgba(47,9,9,0.05), 0 30px 90px rgba(47,9,9,0.08); }
 
 .resultsFirstCard {
   background-color: #f7f3eb !important;
@@ -734,162 +633,63 @@
   box-shadow: 0 20px 50px rgba(47,9,9,0.06), 0 35px 100px rgba(47,9,9,0.08), 0 0 45px rgba(197,168,128,0.22), 0 0 60px rgba(130,0,17,0.1) !important;
 }
 
-.resultsNarrowCard .cardHeader {
-  width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem;
-}
+.resultsNarrowCard .cardHeader { width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
 
 .matchBadge {
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.7rem; letter-spacing: 0.05em; color: #820011; font-weight: 500;
-  border: 1px solid rgba(130,0,17,0.25); padding: 0.25rem 0.65rem; border-radius: 12px;
-  background-color: rgba(130,0,17,0.02); text-transform: uppercase;
+  font-family: var(--font-geist-sans), sans-serif; font-size: 0.7rem; letter-spacing: 0.05em;
+  color: #820011; font-weight: 500; border: 1px solid rgba(130,0,17,0.25);
+  padding: 0.25rem 0.65rem; border-radius: 12px; background-color: rgba(130,0,17,0.02); text-transform: uppercase;
 }
 
-.matchBadgeMuted {
-  color: #767677 !important; border-color: rgba(118,118,119,0.2) !important;
-  background-color: rgba(118,118,119,0.02) !important;
-}
+.matchBadgeMuted { color: #767677 !important; border-color: rgba(118,118,119,0.2) !important; background-color: rgba(118,118,119,0.02) !important; }
 
-.cardImgWrapper {
-  width: 100%; height: 220px; border-radius: 8px; overflow: hidden;
-  margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(0,0,0,0.04);
-}
-
+.cardImgWrapper { width: 100%; height: 220px; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; box-shadow: 0 4px 16px rgba(0,0,0,0.04); }
 .cardImg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
 .resultsNarrowCard:hover .cardImg { transform: scale(1.04); }
 
-.cardTitle {
-  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: 1.5rem; font-weight: 500; color: #313134;
-  margin: 0 0 0.25rem 0; letter-spacing: 0.02em; line-height: 1.2;
-}
+.cardTitle { font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif; font-size: 1.5rem; font-weight: 500; color: #313134; margin: 0 0 0.25rem 0; letter-spacing: 0.02em; line-height: 1.2; }
+.cardInspiration { font-family: var(--font-lora), var(--font-serif-text), Georgia, serif; font-size: 0.72rem; font-style: italic; color: #8c8c90; margin: -0.2rem 0 0.75rem 0; letter-spacing: 0.02em; line-height: 1.4; }
+.cardText { font-family: var(--font-lora), var(--font-serif-text), Georgia, serif; font-size: 0.85rem; color: #555558; line-height: 1.4; margin: 0 0 1rem 0; flex-grow: 1; }
 
-.cardInspiration {
-  font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.72rem; font-style: italic; color: #8c8c90;
-  margin: -0.2rem 0 0.75rem 0; letter-spacing: 0.02em; line-height: 1.4;
-}
+.scentProfileTags { display: flex; justify-content: center; gap: 8px; margin-bottom: 0.85rem; flex-wrap: wrap; width: 100%; }
+.scentTag { font-family: var(--font-geist-sans), sans-serif; font-size: 0.65rem; color: #7c6853; background-color: rgba(124,104,83,0.06); border: 1px solid rgba(124,104,83,0.18); padding: 0.2rem 0.65rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; transition: all 0.2s ease; }
+.resultsNarrowCard:hover .scentTag { background-color: rgba(124,104,83,0.1); border-color: rgba(124,104,83,0.28); }
 
-.cardText {
-  font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.85rem; color: #555558; line-height: 1.4; margin: 0 0 1rem 0; flex-grow: 1;
-}
+.performanceLine { font-family: var(--font-geist-sans), sans-serif; font-size: 0.65rem; color: #8c8c90; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; text-align: center; font-weight: 500; }
+.cardActions { width: 100%; margin-top: auto; display: flex; gap: 12px; justify-content: space-between; align-items: center; }
 
-.scentProfileTags {
-  display: flex; justify-content: center; gap: 8px; margin-bottom: 0.85rem; flex-wrap: wrap; width: 100%;
-}
+.resultsResetContainer { display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
 
-.scentTag {
-  font-family: var(--font-geist-sans), sans-serif; font-size: 0.65rem; color: #7c6853;
-  background-color: rgba(124,104,83,0.06); border: 1px solid rgba(124,104,83,0.18);
-  padding: 0.2rem 0.65rem; border-radius: 20px; letter-spacing: 0.05em;
-  text-transform: uppercase; font-weight: 500; transition: all 0.2s ease;
-}
+.btnRedOutline { background: transparent; border: 1px solid #820011; color: #820011; }
+.btnRedOutline:hover { background-color: rgba(130,0,17,0.05); border-color: #820011; box-shadow: 0 4px 12px rgba(130,0,17,0.15); }
 
-.resultsNarrowCard:hover .scentTag {
-  background-color: rgba(124,104,83,0.1); border-color: rgba(124,104,83,0.28);
-}
-
-.performanceLine {
-  font-family: var(--font-geist-sans), sans-serif; font-size: 0.65rem; color: #8c8c90;
-  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;
-  text-align: center; font-weight: 500;
-}
-
-.cardActions {
-  width: 100%; margin-top: auto; display: flex; gap: 12px;
-  justify-content: space-between; align-items: center;
-}
-
-.resultsResetContainer {
-  display: flex; justify-content: center; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap;
-}
-
-.btnRedOutline {
-  background: transparent; border: 1px solid #820011; color: #820011;
-}
-
-.btnRedOutline:hover {
-  background-color: rgba(130,0,17,0.05); border-color: #820011;
-  box-shadow: 0 4px 12px rgba(130,0,17,0.15);
-}
-
-.quizBuyNowBtn,
-.quizAddBagBtn {
-  flex: 1; height: 38px; border-radius: 19px; background: transparent;
-  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: 0.85rem; font-weight: 500; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
-}
-
+.quizBuyNowBtn, .quizAddBagBtn { flex: 1; height: 38px; border-radius: 19px; background: transparent; font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
 .quizBuyNowBtn { border: 1.2px solid #820011; color: #820011; }
 .quizBuyNowBtn:hover { background-color: #820011; color: #ffffff; box-shadow: 0 4px 12px rgba(130,0,17,0.15); }
 .quizAddBagBtn { border: 1.2px solid #313134; color: #313134; }
 .quizAddBagBtn:hover { background-color: #313134; color: #ffffff; box-shadow: 0 4px 12px rgba(49,49,52,0.15); }
 
-/* ═══════════════════════════════════════════════════
-   PROFILE & RECOMMENDATIONS
-   ═══════════════════════════════════════════════════ */
-.profileSection {
-  text-align: center; max-width: 700px; margin: 0 auto 0.25rem auto; padding-bottom: 0.25rem;
-}
-
-.profileHeading {
-  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: clamp(1.85rem, 3.2vw, 2.4rem); color: #313134; font-weight: 500;
-  margin: 0 0 0.5rem 0; letter-spacing: -0.01em;
-}
-
-.profileIcon {
-  font-family: var(--font-geist-sans), sans-serif; font-size: 0.78rem;
-  letter-spacing: 0.12em; color: #820011; font-weight: 600;
-  text-transform: uppercase; margin-bottom: 0.35rem;
-}
-
-.profileDescription {
-  font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.95rem; color: #555558; line-height: 1.6;
-  margin: 0.65rem auto 1rem auto; max-width: 580px; font-style: italic;
-}
-
+/* Profile */
+.profileSection { text-align: center; max-width: 700px; margin: 0 auto 0.25rem auto; padding-bottom: 0.25rem; }
+.profileHeading { font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif; font-size: clamp(1.85rem,3.2vw,2.4rem); color: #313134; font-weight: 500; margin: 0 0 0.5rem 0; letter-spacing: -0.01em; }
+.profileIcon { font-family: var(--font-geist-sans), sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; color: #820011; font-weight: 600; text-transform: uppercase; margin-bottom: 0.35rem; }
+.profileDivider { display: none; }
+.profileDescription { font-family: var(--font-lora), var(--font-serif-text), Georgia, serif; font-size: 0.95rem; color: #555558; line-height: 1.6; margin: 0.65rem auto 1rem auto; max-width: 580px; font-style: italic; }
 .profileTags { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 0.5rem; }
-
-.profileTag {
-  font-family: var(--font-geist-sans), sans-serif; font-size: 0.6rem; color: #7c6853;
-  background-color: rgba(124,104,83,0.06); border: 1px solid rgba(124,104,83,0.18);
-  padding: 0.15rem 0.6rem; border-radius: 20px; letter-spacing: 0.05em;
-  text-transform: uppercase; font-weight: 500; transition: all 0.2s ease;
-}
-
+.profileTag { font-family: var(--font-geist-sans), sans-serif; font-size: 0.6rem; color: #7c6853; background-color: rgba(124,104,83,0.06); border: 1px solid rgba(124,104,83,0.18); padding: 0.15rem 0.6rem; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; transition: all 0.2s ease; }
 .profileTag:hover { background-color: rgba(124,104,83,0.1); border-color: rgba(124,104,83,0.28); }
 
 .recommendationHeader { text-align: center; margin-bottom: 1.25rem; margin-top: 0.5rem; }
-
-.recommendationHeading {
-  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: 1.75rem; color: #313134; font-weight: 500; margin-bottom: 0.5rem;
-}
-
-.recommendationSubheading {
-  font-family: var(--font-lora), var(--font-serif-text), Georgia, serif;
-  font-size: 0.85rem; color: #767677; max-width: 520px; margin: 0 auto; line-height: 1.5;
-}
+.recommendationHeading { font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif; font-size: 1.75rem; color: #313134; font-weight: 500; margin-bottom: 0.5rem; }
+.recommendationSubheading { font-family: var(--font-lora), var(--font-serif-text), Georgia, serif; font-size: 0.85rem; color: #767677; max-width: 520px; margin: 0 auto; line-height: 1.5; }
 
 .stillExploringHeader { text-align: center; margin-top: 3.5rem; margin-bottom: 1.5rem; }
+.stillExploringHeading { font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif; font-size: 1.35rem; color: #313134; font-weight: 500; }
 
-.stillExploringHeading {
-  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: 1.35rem; color: #313134; font-weight: 500;
-}
-
-.fadeUpProfile, .fadeUpRecommendations, .fadeUpActions {
-  opacity: 0; transform: translateY(8px);
-  animation: fadeUp 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-.fadeUpProfile         { animation-delay: 0.05s; }
+.fadeUpProfile, .fadeUpRecommendations, .fadeUpActions { opacity: 0; transform: translateY(8px); animation: fadeUp 0.3s cubic-bezier(0.25,1,0.5,1) forwards; }
+.fadeUpProfile { animation-delay: 0.05s; }
 .fadeUpRecommendations { animation-delay: 0.2s; }
-.fadeUpActions         { animation-delay: 0.35s; }
+.fadeUpActions { animation-delay: 0.35s; }
 
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -897,20 +697,9 @@
    TOAST
    ═══════════════════════════════════════════════════ */
 .toastWrapper { position: relative; z-index: 10000; }
-
-.toast {
-  position: fixed; top: 100px; right: 24px; background-color: #F5F1E8;
-  border: 1px solid #767677; border-radius: 8px; padding: 1.2rem 1.5rem;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 0.8rem;
-  z-index: 10000; width: 320px; animation: toastSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes toastSlideIn {
-  from { transform: translateX(120%); opacity: 0; }
-  to   { transform: translateX(0); opacity: 1; }
-}
-
-.toastText { font-family: var(--font-serif-text), Georgia, serif; font-size: 0.95rem; color: #313134; line-height: 1.4; }
+.toast { position: fixed; top: 100px; right: 24px; background-color: #F5F1E8; border: 1px solid #767677; border-radius: 8px; padding: 1.2rem 1.5rem; box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: flex; flex-direction: column; gap: 0.8rem; z-index: 10000; width: 320px; animation: toastSlideIn 0.35s cubic-bezier(0.16,1,0.3,1); }
+@keyframes toastSlideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.toastText { font-family: var(--font-serif-text), Georgia, serif; font-size: 0.95rem; color: #313134; line-height: 1.4; text-align: left; }
 .toastActions { display: flex; align-items: center; gap: 12px; }
 .toastLink { font-family: var(--font-serif-text), Georgia, serif; font-size: 0.85rem; font-weight: 600; color: #820011; text-decoration: underline; cursor: pointer; transition: opacity 0.2s ease; }
 .toastLink:hover { opacity: 0.8; }
@@ -918,7 +707,7 @@
 .toastClose:hover { color: #313134; }
 
 /* ═══════════════════════════════════════════════════
-   RESPONSIVE — TABLET (≤900px)
+   RESPONSIVE — Tablet (≤900px)
    ═══════════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .resultsGrid { flex-direction: column; align-items: center; gap: 2rem; }
@@ -927,78 +716,53 @@
 }
 
 /* ═══════════════════════════════════════════════════
-   RESPONSIVE — MOBILE (≤768px)
-   Scale the whole stack proportionally so the paper
-   shadow cards are still visible on smaller screens
+   RESPONSIVE — Mobile (≤768px)
+   Scale everything proportionally. Keep the stack visible.
    ═══════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .quizPage { padding: 5rem 1rem 2rem 1rem; }
+  .quizPage { padding-top: 5rem; }
 
-  .mainContent { margin-top: 0; }
+  .introContainer { height: 540px; }
+  .introDoor { height: 490px; }
+  .introContent { height: 490px; }
 
-  /* Intro stack — slightly less tall to fit mobile viewport */
-  .introStack { height: 555px; }
-
-  .introContainer { height: 500px; }
-  .introDoor { height: 460px; }
-  .introContent { height: 460px; padding: 1.5rem 1.75rem; }
-  .introShadowCard { height: 460px; }
-
-  .introTextGroup { top: 1.5rem; left: 1.75rem; right: 1.75rem; }
-  .introHeading { font-size: 1.65rem; }
-  .introBody { font-size: 0.875rem; }
-  .introFooter { bottom: 1.5rem; }
-
-  /* Quiz card stack */
-  .cardStack { height: 470px; }
+  .cardStack { height: 500px; }
   .paperCard { padding: 1.4rem 1.25rem; }
   .cardQuestion { font-size: 1.2rem; }
   .optionBtn { padding: 0.55rem 0.85rem; font-size: 0.8rem; }
   .cardActionsRow { padding-top: 1rem; }
-  .marker { width: 30px; }
+  .multiGrid { grid-template-columns: 1fr; gap: 0.65rem; }
+
+  .introTextGroup { top: 1.5rem; left: 1.5rem; right: 1.5rem; }
+  .introContent { padding: 1.5rem 1.25rem; }
+  .introHeading { font-size: 1.6rem; }
+  .introFooter { bottom: 1.5rem; }
 }
 
 /* ═══════════════════════════════════════════════════
-   RESPONSIVE — SMALL MOBILE (≤480px)
-   Keep the stacked paper stack visible but compact
+   RESPONSIVE — Small Mobile (≤480px)
+   Narrower but stacked paper still visible on sides/bottom
    ═══════════════════════════════════════════════════ */
 @media (max-width: 480px) {
-  .quizPage { padding: 5rem 0.75rem 2rem 0.75rem; }
+  .quizPage { padding-top: 5rem; padding-left: 0.5rem; padding-right: 0.5rem; }
 
-  /* Intro: scale down to ~90vw, maintain stack depth */
-  .introStack {
-    width: 92vw;
-    height: 520px;
-  }
+  .mainContent { max-width: 100%; }
 
-  .introShadowCard { height: 430px; top: 40px; }
-  .introShadowCard1 { transform: translate(4px, 6px) rotate(1.2deg); }
-  .introShadowCard2 { transform: translate(-5px, 12px) rotate(-1.8deg); }
-
-  .introContainer { height: 475px; width: 92vw; }
-  .introDoor { height: 435px; top: 40px; }
-  .introContent {
-    top: 40px;
-    height: 435px;
-    padding: 1.25rem 1.25rem;
-  }
-
-  .introTextGroup { top: 1.25rem; left: 1.25rem; right: 1.25rem; }
+  .introContainer { height: 530px; max-width: 96vw; }
+  .introDoor { height: 480px; }
+  .introContent { height: 480px; padding: 1.25rem 1rem; }
+  .introTextGroup { top: 1.25rem; left: 1rem; right: 1rem; }
   .introHeading { font-size: 1.4rem; }
-  .introBody { font-size: 0.82rem; line-height: 1.5; }
+  .introBody { font-size: 0.82rem; }
   .introFooter { bottom: 1.25rem; }
 
-  /* Quiz card: 92vw wide, same fixed height, stack still visible */
-  .quizContainer { width: 92vw; }
-  .cardStack { width: 92vw; height: 500px; }
-  .paperCard { padding: 1.15rem 0.9rem 0.85rem 0.9rem; }
-
-  .cardHeader { margin-bottom: 0.75rem; }
+  /* Quiz stack */
+  .quizContainer { max-width: 96vw; }
+  .cardStack { height: 500px; }
+  .paperCard { padding: 1.15rem 0.85rem 0.85rem 0.85rem; }
+  .cardHeader { margin-bottom: 0.85rem; }
   .cardQuestion { font-size: 1.05rem; }
   .optionBtn { padding: 0.5rem 0.7rem; gap: 7px; font-size: 0.775rem; }
   .cardActionsRow { padding-top: 0.75rem; }
-  .marker { width: 24px; }
-
-  /* Single-column options on narrow screens */
-  .multiGrid { grid-template-columns: 1fr; gap: 0.5rem; }
+  .marker { width: 28px; }
 }
