@@ -421,28 +421,31 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Search Bar with 52px height & fixed vertical centering */}
+          {/* Search Bar matching user screenshot: Placeholder "Search your perfume" on left, Search Icon on right, cream BG, dark border */}
           <div className="mt-7 w-full">
-            <form onSubmit={handleSearchSubmit} className="relative w-full h-[52px] flex items-center">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none text-[#8A8477] z-10">
+            <form onSubmit={handleSearchSubmit} className="relative w-full h-[50px] flex items-center">
+              <input
+                type="text"
+                placeholder="Search your perfume"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-[50px] pl-6 pr-12 rounded-full bg-[#F3EFE6] border border-[#4A4A4C] text-[#313134] placeholder-[#8A8477] font-serif-text text-[15px] leading-[50px] focus:outline-none focus:border-[#820011] focus:bg-[#FAF6F0] transition-colors"
+              />
+              <button
+                type="submit"
+                className="absolute right-4.5 top-1/2 -translate-y-1/2 flex items-center justify-center text-[#313134] hover:text-[#820011] transition-colors p-1 cursor-pointer"
+                aria-label="Search"
+              >
                 <svg
-                  className="w-4.5 h-4.5"
+                  className="w-5 h-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  strokeWidth="1.8"
+                  strokeWidth="1.5"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                 </svg>
-              </div>
-
-              <input
-                type="text"
-                placeholder="Search fragrances, notes..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-[52px] pl-12 pr-4 rounded-full bg-white/80 border border-[#DDD3C4] text-[#313134] placeholder-[#8A8477] font-serif-text text-[14px] leading-[52px] focus:outline-none focus:border-[#D4C0A7] focus:bg-white focus:shadow-[0_4px_16px_rgba(140,29,46,0.06)] transition-all shadow-xs"
-              />
+              </button>
             </form>
           </div>
 
