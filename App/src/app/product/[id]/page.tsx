@@ -603,23 +603,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
               <div className={styles.price}>{selectedSizeOpt.price.toLocaleString()}tk</div>
             </div>
 
-            {/* Dynamic Countdown Delivery Pill */}
-            <div className={styles.discountPill}>
-              <svg
-                className={styles.clockIcon}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="16" x2="12" y2="12" />
-                <line x1="12" y1="8" x2="12.01" y2="8" />
-              </svg>
-              <span>
-                Order in <strong className={styles.timerText} suppressHydrationWarning>{isMounted ? formatCountdown(countdown) : "02.30.26"}</strong> to get next day delivery
-              </span>
-            </div>
+
 
             {/* Size Selector */}
             <div className={styles.optionSection}>
