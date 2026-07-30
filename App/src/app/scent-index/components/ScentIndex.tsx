@@ -204,72 +204,78 @@ export default function ScentIndex() {
 
         {/* ── INTRO LAYER ── Only rendered when intro is active */}
         {visibleLayer === "intro" && (
-          <div
-            className={`${styles.introContainer} ${introLeaving ? styles.introLeaving : ""}`}
-            onClick={handleSealClick}
-            style={{ cursor: (!isSealPressed && !isSealedCracked) ? "pointer" : "default" }}
-          >
-            {/* The two split doors */}
-            <div className={`${styles.introDoor} ${styles.introDoorLeft}`}>
-              {isSealedCracked && (
-                <div className={`${styles.waxSealHalf} ${styles.waxSealLeft}`}>
-                  <div className={styles.sealLogoWrapperHalfLeft}>
-                    <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Left" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className={`${styles.introDoor} ${styles.introDoorRight}`}>
-              {isSealedCracked && (
-                <div className={`${styles.waxSealHalf} ${styles.waxSealRight}`}>
-                  <div className={styles.sealLogoWrapperHalfRight}>
-                    <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Right" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
-                  </div>
-                </div>
-              )}
-            </div>
+          <div className={styles.introStack}>
+            {/* Decorative stacked paper cards behind the intro */}
+            <div className={`${styles.introShadowCard} ${styles.introShadowCard1}`} />
+            <div className={`${styles.introShadowCard} ${styles.introShadowCard2}`} />
 
-            {/* Overlay text content */}
-            <div className={styles.introContent}>
-              <div className={styles.introTextGroup}>
-                <div className={styles.introHeader}>
-                  <span className={styles.introLabel}>MURAKKAZ</span>
-                  <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
-                </div>
-                <p className={styles.introBody}>
-                  Every fragrance tells a different story. Answer seven carefully created questions and we&apos;ll recommend the fragrances that best match your personality, preferences, and lifestyle.
-                </p>
-              </div>
-
-              <div className={styles.sealInteractionArea} suppressHydrationWarning>
-                {!introLeaving && (
-                  <div
-                    className={`${styles.waxSealWrapper} ${isSealPressed ? styles.sealPressed : ""} ${isSealedCracked ? styles.sealCracked : ""}`}
-                    onClick={handleSealClick}
-                    suppressHydrationWarning
-                  >
-                    <div className={styles.waxSealIntact}>
-                      <div className={styles.sealLogoWrapper}>
-                        <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo" width={88} height={38} priority className={styles.sealLogo} />
-                      </div>
+            <div
+              className={`${styles.introContainer} ${introLeaving ? styles.introLeaving : ""}`}
+              onClick={handleSealClick}
+              style={{ cursor: (!isSealPressed && !isSealedCracked) ? "pointer" : "default" }}
+            >
+              {/* The two split doors */}
+              <div className={`${styles.introDoor} ${styles.introDoorLeft}`}>
+                {isSealedCracked && (
+                  <div className={`${styles.waxSealHalf} ${styles.waxSealLeft}`}>
+                    <div className={styles.sealLogoWrapperHalfLeft}>
+                      <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Left" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
                     </div>
-                    {isSealedCracked && (
-                      <div className={styles.waxFragments}>
-                        <span className={`${styles.fragment} ${styles.frag1}`} />
-                        <span className={`${styles.fragment} ${styles.frag2}`} />
-                        <span className={`${styles.fragment} ${styles.frag3}`} />
-                        <span className={`${styles.fragment} ${styles.frag4}`} />
-                      </div>
-                    )}
                   </div>
                 )}
-                <span className={styles.sealPrompt}>
-                  {isSealedCracked ? "Opening..." : "Unseal Your Consultation"}
-                </span>
+              </div>
+              <div className={`${styles.introDoor} ${styles.introDoorRight}`}>
+                {isSealedCracked && (
+                  <div className={`${styles.waxSealHalf} ${styles.waxSealRight}`}>
+                    <div className={styles.sealLogoWrapperHalfRight}>
+                      <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo Right" width={88} height={38} priority className={styles.sealLogo} suppressHydrationWarning />
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <div className={styles.introFooter}>
-                7 Questions &bull; Takes Less Than 2 Minutes
+              {/* Overlay text content */}
+              <div className={styles.introContent}>
+                <div className={styles.introTextGroup}>
+                  <div className={styles.introHeader}>
+                    <span className={styles.introLabel}>MURAKKAZ</span>
+                    <h1 className={styles.introHeading}>Discover Your Signature Fragrance</h1>
+                  </div>
+                  <p className={styles.introBody}>
+                    Every fragrance tells a different story. Answer seven carefully created questions and we&apos;ll recommend the fragrances that best match your personality, preferences, and lifestyle.
+                  </p>
+                </div>
+
+                <div className={styles.sealInteractionArea} suppressHydrationWarning>
+                  {!introLeaving && (
+                    <div
+                      className={`${styles.waxSealWrapper} ${isSealPressed ? styles.sealPressed : ""} ${isSealedCracked ? styles.sealCracked : ""}`}
+                      onClick={handleSealClick}
+                      suppressHydrationWarning
+                    >
+                      <div className={styles.waxSealIntact}>
+                        <div className={styles.sealLogoWrapper}>
+                          <Image src="/images/logo-murakkaz.svg" alt="Murakkaz Logo" width={88} height={38} priority className={styles.sealLogo} />
+                        </div>
+                      </div>
+                      {isSealedCracked && (
+                        <div className={styles.waxFragments}>
+                          <span className={`${styles.fragment} ${styles.frag1}`} />
+                          <span className={`${styles.fragment} ${styles.frag2}`} />
+                          <span className={`${styles.fragment} ${styles.frag3}`} />
+                          <span className={`${styles.fragment} ${styles.frag4}`} />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <span className={styles.sealPrompt}>
+                    {isSealedCracked ? "Opening..." : "Unseal Your Consultation"}
+                  </span>
+                </div>
+
+                <div className={styles.introFooter}>
+                  7 Questions &bull; Takes Less Than 2 Minutes
+                </div>
               </div>
             </div>
           </div>
