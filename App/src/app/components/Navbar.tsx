@@ -374,7 +374,7 @@ export default function Navbar() {
       {/* ── Left-Slide Full-Height Mobile Drawer Navigation (< 1024px) ── */}
       <div
         onClick={() => setIsMobileMenuOpen(false)}
-        className={`fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity duration-350 ease-out lg:hidden ${
           isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
@@ -384,60 +384,69 @@ export default function Navbar() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={`fixed top-0 left-0 bottom-0 z-50 w-[320px] sm:w-[360px] max-w-[88vw] h-full shadow-2xl transition-transform duration-300 ease-out flex flex-col justify-between overflow-y-auto lg:hidden pt-safe pb-safe ${
-          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } bg-[#FAF6F0] text-[#313134]`}
+        className={`fixed top-0 left-0 bottom-0 z-50 w-[320px] sm:w-[360px] max-w-[85vw] h-full shadow-2xl transition-transform duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-y-auto lg:hidden pt-safe pb-safe bg-[#F5F1E8] text-[#313134]`}
+        style={{
+          transform: isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
+          padding: "24px",
+        }}
       >
-        <div className="p-6 sm:p-8 flex flex-col gap-6">
-          {/* Header row inside Mobile Drawer */}
-          <div className="flex items-center justify-between pb-4 border-b border-[#E8DFC8]">
+        <div className="flex flex-col w-full">
+          {/* Header Row: Centered Murakkaz Logo + Top-Right Close (×) Button */}
+          <div className="relative w-full flex items-center justify-center min-h-[40px]">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity flex items-center justify-center"
             >
               <Image
                 src="/images/logo-murakkaz.svg"
                 alt="Murakkaz Logo"
                 width={120}
-                height={50}
+                height={40}
                 className="h-8 w-auto object-contain"
               />
             </Link>
+
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-9 h-9 rounded-full bg-white/80 border border-[#D5C9B3] text-[#313134] hover:bg-[#820011] hover:text-white transition-all flex items-center justify-center cursor-pointer"
+              className="absolute right-0 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/70 border border-[#D8D2C5] text-[#313134] hover:bg-[#820011] hover:text-white transition-all flex items-center justify-center cursor-pointer shadow-xs"
               aria-label="Close menu"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          {/* Search bar inside Mobile Drawer */}
-          <form onSubmit={handleSearchSubmit} className="relative w-full my-1">
-            <input
-              type="text"
-              placeholder="Search fragrances, notes..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-11 pl-10 pr-4 rounded-full bg-white/90 border border-[#D5C9B3] text-[#313134] placeholder-[#8A8477] font-serif-text text-[13px] focus:outline-none focus:border-[#820011] transition-colors"
-            />
-            <svg
-              className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A8477]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
-          </form>
+          {/* 24px Vertical Spacing before Search Bar */}
+          <div className="mt-6 w-full">
+            {/* Full-width premium search bar (48px height) with fixed search icon & centered placeholder */}
+            <form onSubmit={handleSearchSubmit} className="relative w-full h-[48px]">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none text-[#767677]">
+                <svg
+                  className="w-4.5 h-4.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </div>
 
-          {/* Nav links list inside Mobile Drawer */}
-          <nav className="flex flex-col gap-4 mt-2">
+              <input
+                type="text"
+                placeholder="Search fragrances, notes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-[48px] pl-11 pr-4 rounded-full bg-white/90 border border-[#D8D2C5] text-[#313134] placeholder-[#8A8477] font-serif-text text-[14px] leading-[48px] focus:outline-none focus:border-[#820011] focus:bg-white transition-colors shadow-xs"
+              />
+            </form>
+          </div>
+
+          {/* 32px Spacing before Navigation Links */}
+          <nav className="flex flex-col gap-5 sm:gap-6 mt-8 w-full">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.href;
               return (
@@ -445,11 +454,11 @@ export default function Navbar() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  style={{ animationDelay: `${idx * 45}ms` }}
-                  className={`stagger-item-enter font-serif-text text-[16px] tracking-[0.14em] uppercase transition-colors py-1.5 ${
+                  style={{ animationDelay: `${idx * 40}ms` }}
+                  className={`stagger-item-enter font-serif-text text-[15px] sm:text-[16px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1 ${
                     isActive
-                      ? "text-[#820011] font-semibold scale-105"
-                      : "text-[#313134] hover:text-[#820011]"
+                      ? "text-[#820011] font-semibold"
+                      : "text-[#313134] hover:text-[#820011] hover:translate-x-1"
                   }`}
                 >
                   {link.label}
@@ -459,14 +468,28 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* Footer info inside Mobile Drawer */}
-        <div className="p-6 sm:p-8 border-t border-[#E8DFC8] bg-white/40 flex flex-col gap-4">
-          <div className="flex items-center justify-between text-[#5C5346] text-[12px] font-serif-text">
-            <span>© Murakkaz Extraits</span>
-            <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#820011] underline">
-              Account
-            </Link>
-          </div>
+        {/* Footer Account Section inside Mobile Drawer (Pushed to bottom, subtle divider) */}
+        <div className="w-full pt-5 mt-6 border-t border-[#E2D9CC] flex flex-col items-center justify-center">
+          <Link
+            href="/account"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="flex flex-col items-center justify-center gap-2 group hover:opacity-85 transition-opacity"
+          >
+            {userPhoto ? (
+              <div className="w-11 h-11 rounded-full overflow-hidden border-2 border-[#820011] shadow-xs flex items-center justify-center bg-white shrink-0">
+                <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
+              </div>
+            ) : (
+              <div className="w-11 h-11 rounded-full bg-white border border-[#D8D2C5] text-[#313134] group-hover:border-[#820011] group-hover:text-[#820011] transition-colors flex items-center justify-center shadow-xs shrink-0">
+                <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+            )}
+            <span className="font-serif-text text-[13px] tracking-[0.14em] uppercase text-[#313134] group-hover:text-[#820011] transition-colors font-medium">
+              {userName ? userName : "My Account"}
+            </span>
+          </Link>
         </div>
       </aside>
     </>
