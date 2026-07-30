@@ -385,14 +385,16 @@ export default function Navbar() {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={`fixed top-0 left-0 bottom-0 z-50 w-[90vw] sm:w-[380px] max-w-[90vw] h-full shadow-[0_10px_40px_rgba(0,0,0,0.12)] transition-all duration-380 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-y-auto lg:hidden pt-8 sm:pt-10 px-6 pb-10 bg-gradient-to-b from-[#FBF8F2] to-[#F5EEE2] text-[#313134]`}
+        className={`fixed top-0 left-0 bottom-0 z-50 w-[90vw] sm:w-[380px] max-w-[90vw] h-full shadow-[0_10px_40px_rgba(0,0,0,0.12)] transition-all duration-380 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-y-auto lg:hidden pt-8 sm:pt-10 pb-10 bg-gradient-to-b from-[#FBF8F2] to-[#F5EEE2] text-[#313134]`}
         style={{
           transform: isMobileMenuOpen ? "translateX(0)" : "translateX(-100%)",
+          paddingLeft: "24px",
+          paddingRight: "24px",
           backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='paperNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.015 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23paperNoise)'/%3E%3C/svg%3E"), linear-gradient(to bottom, #FBF8F2, #F5EEE2)`,
         }}
       >
-        {/* Drawer Content Parent Container: 20px flex gap between Logo Header, Search Bar, and Nav */}
-        <div className="flex flex-col w-full gap-5 sm:gap-6">
+        {/* Drawer Content Parent Container: 20px - 24px flex gap */}
+        <div className="flex flex-col w-full gap-5.5 sm:gap-6">
           {/* Header Row: Perfectly Centered Murakkaz Logo + Top-Right Close (×) Button */}
           <div className="relative w-full flex items-center justify-center min-h-[44px]">
             <Link
@@ -421,7 +423,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Search Bar: Sits naturally below logo with parent 20px flex gap */}
+          {/* Search Bar: Sits naturally below logo with 16px right padding for search icon */}
           <div className="w-full">
             <form onSubmit={handleSearchSubmit} className="relative w-full h-[50px] flex items-center">
               <input
@@ -429,11 +431,11 @@ export default function Navbar() {
                 placeholder="Search your perfume"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-[50px] pl-10 pr-12 rounded-full bg-[#F3EFE6] border border-[#4A4A4C] text-[#313134] placeholder-[#8A8477] font-serif-text text-[15px] leading-[50px] focus:outline-none focus:border-[#820011] focus:bg-[#FAF6F0] transition-colors"
+                className="w-full h-[50px] pl-7 pr-12 rounded-full bg-[#F3EFE6] border border-[#4A4A4C] text-[#313134] placeholder-[#8A8477] font-serif-text text-[15px] leading-[50px] focus:outline-none focus:border-[#820011] focus:bg-[#FAF6F0] transition-colors"
               />
               <button
                 type="submit"
-                className="absolute right-4.5 top-1/2 -translate-y-1/2 flex items-center justify-center text-[#313134] hover:text-[#820011] transition-colors p-1 cursor-pointer"
+                className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-[#313134] hover:text-[#820011] transition-colors p-1 cursor-pointer"
                 aria-label="Search"
               >
                 <svg
@@ -449,8 +451,8 @@ export default function Navbar() {
             </form>
           </div>
 
-          {/* Navigation Links: Sits naturally below search bar with parent flex gap */}
-          <nav className="flex flex-col gap-6 sm:gap-8 pt-2 w-full items-start">
+          {/* Navigation Links: 24px vertical gaps between links */}
+          <nav className="flex flex-col gap-6 pt-1 w-full items-start">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
@@ -459,7 +461,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ animationDelay: `${idx * 35}ms` }}
-                  className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1 group ${
+                  className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-0.5 group ${
                     isActive
                       ? "text-[#820011] font-bold"
                       : "text-[#313134] hover:text-[#820011] active:opacity-75 font-medium"
@@ -473,7 +475,7 @@ export default function Navbar() {
         </div>
 
         {/* Footer Account Section inside Mobile Drawer */}
-        <div className="w-full mb-10 mt-8 flex flex-col items-center justify-center">
+        <div className="w-full mb-6 mt-6 flex flex-col items-center justify-center">
           {/* Account Link */}
           <Link
             href="/account"
