@@ -451,8 +451,8 @@ export default function Navbar() {
             </form>
           </div>
 
-          {/* Navigation Links: 24px vertical gaps between links */}
-          <nav className="flex flex-col gap-6 pt-1 w-full items-start">
+          {/* Navigation Links: Generous spacing between links */}
+          <nav className="flex flex-col gap-8 sm:gap-9 mt-6 sm:mt-8 w-full items-start">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
@@ -461,7 +461,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ animationDelay: `${idx * 35}ms` }}
-                  className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-0.5 group ${
+                  className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1 group ${
                     isActive
                       ? "text-[#820011] font-bold"
                       : "text-[#313134] hover:text-[#820011] active:opacity-75 font-medium"
