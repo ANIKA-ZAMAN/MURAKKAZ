@@ -656,3 +656,194 @@
   }
 }
 
+/* ── Tablet & Mobile Comparison Cards ── */
+.tabletCardsContainer,
+.mobileCardsContainer {
+  display: none;
+  width: 100%;
+}
+
+.compareCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background-color: rgba(245, 241, 232, 0.7);
+  border: 1.5px solid #d8d5cd;
+  border-radius: 20px;
+  padding: 22px;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.compareCardRecommended {
+  border-color: #820011;
+  box-shadow: 0 4px 20px rgba(130, 0, 17, 0.08);
+}
+
+.cardBadge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background-color: #820011;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(216, 213, 205, 0.6);
+  padding-bottom: 1rem;
+}
+
+.cardImage {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: #eae2d5;
+  padding: 6px;
+  flex-shrink: 0;
+}
+
+.cardTitleBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cardName {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #313134;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.cardBrand {
+  font-size: 0.8rem;
+  color: #7a7a7d;
+  font-weight: 400;
+}
+
+.cardPrice {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #820011;
+  margin-top: 0.1rem;
+}
+
+.cardRating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #313134;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cardRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border-bottom: 1px dashed rgba(216, 213, 205, 0.7);
+  padding-bottom: 0.6rem;
+}
+
+.cardRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cardLabel {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #820011;
+}
+
+.cardVal {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #313134;
+  font-weight: 400;
+}
+
+.cardAccordsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+/* Tablet (768px - 1023px): Horizontally Scrollable Cards */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .tableContainer {
+    display: none !important;
+  }
+
+  .tabletCardsContainer {
+    display: block !important;
+  }
+
+  .tabletCardsScroll {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0.5rem 0.25rem 1rem;
+    width: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .tabletCardsScroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .compareCard {
+    flex: 0 0 320px;
+    min-width: 320px;
+    max-width: 340px;
+  }
+}
+
+/* Mobile (< 768px): Vertical Stacked Cards, NO Horizontal Scroll */
+@media (max-width: 767px) {
+  .tableContainer {
+    display: none !important;
+  }
+
+  .tabletCardsContainer {
+    display: none !important;
+  }
+
+  .mobileCardsContainer {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .mobileCompareCard {
+    width: 100% !important;
+    flex: none !important;
+  }
+}
+

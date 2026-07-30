@@ -445,7 +445,6 @@ function CompareContent() {
             Reset
           </button>
         </div>
-
         {/* Analyzing Progress Banner */}
         {isAnalyzing && (
           <div className={styles.analyzingBanner}>
@@ -454,142 +453,288 @@ function CompareContent() {
           </div>
         )}
 
-        {/* Comparison Table */}
+        {/* Comparison Table & Responsive Views */}
         {showComparison && (
-          <div ref={tableRef} className={styles.tableContainer}>
-            <table className={styles.compareTable}>
-              <tbody>
-                {/* Row 1: Name (Sticky Header Row) */}
-                <tr className={styles.stickyHeaderRow}>
-                  <td className={styles.featureTitle}>Name</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.productNameCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {slot ? (
-                        <div className={styles.nameHeaderContainer}>
-                          {slot.isRecommended && (
-                            <span className={styles.recommendedBadge}>Recommended</span>
-                          )}
-                          <span className={styles.productNameText}>{slot.name}</span>
-                        </div>
-                      ) : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 2: Brand */}
-                <tr>
-                  <td className={styles.featureTitle}>Brand</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.brand : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 3: Inspired By */}
-                <tr>
-                  <td className={styles.featureTitle}>Inspired By</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.inspiredBy : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 4: Price */}
-                <tr>
-                  <td className={styles.featureTitle}>Price</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.price : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 5: Community Rating */}
-                <tr>
-                  <td className={styles.featureTitle}>Community Rating</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? (
-                        <div className={styles.ratingWrapper}>
-                          <span className={styles.starIcon}>★</span> {slot.rating}
-                        </div>
-                      ) : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 6: Scent Profile */}
-                <tr>
-                  <td className={styles.featureTitle}>Scent Profile</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.profileCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {slot ? slot.profile : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 7: Longevity (Lasting Power) */}
-                <tr>
-                  <td className={styles.featureTitle}>Longevity<br />(Lasting Power)</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.longevity : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 8: Projection (Scent Radius) */}
-                <tr>
-                  <td className={styles.featureTitle}>Projection<br />(Scent Radius)</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.projection : ""}
-                    </td>
-                  ))}
-                </tr>
+          <>
+            {/* Desktop Table View (> 1023px) */}
+            <div ref={tableRef} className={styles.tableContainer}>
+              <table className={styles.compareTable}>
+                <tbody>
+                  {/* Row 1: Name (Sticky Header Row) */}
+                  <tr className={styles.stickyHeaderRow}>
+                    <td className={styles.featureTitle}>Name</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.productNameCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                        {slot ? (
+                          <div className={styles.nameHeaderContainer}>
+                            {slot.isRecommended && (
+                              <span className={styles.recommendedBadge}>Recommended</span>
+                            )}
+                            <span className={styles.productNameText}>{slot.name}</span>
+                          </div>
+                        ) : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 2: Brand */}
+                  <tr>
+                    <td className={styles.featureTitle}>Brand</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.brand : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 3: Inspired By */}
+                  <tr>
+                    <td className={styles.featureTitle}>Inspired By</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.inspiredBy : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 4: Price */}
+                  <tr>
+                    <td className={styles.featureTitle}>Price</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.price : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 5: Community Rating */}
+                  <tr>
+                    <td className={styles.featureTitle}>Community Rating</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? (
+                          <div className={styles.ratingWrapper}>
+                            <span className={styles.starIcon}>★</span> {slot.rating}
+                          </div>
+                        ) : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 6: Scent Profile */}
+                  <tr>
+                    <td className={styles.featureTitle}>Scent Profile</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.profileCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                        {slot ? slot.profile : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 7: Longevity (Lasting Power) */}
+                  <tr>
+                    <td className={styles.featureTitle}>Longevity<br />(Lasting Power)</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.longevity : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 8: Projection (Scent Radius) */}
+                  <tr>
+                    <td className={styles.featureTitle}>Projection<br />(Scent Radius)</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.projection : ""}
+                      </td>
+                    ))}
+                  </tr>
 
-                {/* Row 10: Best For */}
-                <tr>
-                  <td className={styles.featureTitle}>Best For</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.bestForCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {slot ? slot.bestFor : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 11: Accord */}
-                <tr>
-                  <td className={styles.featureTitle}>Accord</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? (
+                  {/* Row 10: Best For */}
+                  <tr>
+                    <td className={styles.featureTitle}>Best For</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.bestForCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                        {slot ? slot.bestFor : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 11: Accord */}
+                  <tr>
+                    <td className={styles.featureTitle}>Accord</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? (
+                          <div className={styles.accordsList}>
+                            {slot.accords.map((accord) => (
+                              <div key={accord.name} className={styles.accordItem}>
+                                <span className={styles.accordName}>{accord.name}</span>
+                                <div className={styles.progressBarBg}>
+                                  <div 
+                                    className={styles.progressBarFill} 
+                                    style={{ "--progress-width": `${accord.value}%` } as React.CSSProperties}
+                                  />
+                                </div>
+                                <span className={styles.progressValue}>{accord.value}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 12: Fragrance Notes */}
+                  <tr>
+                    <td className={styles.featureTitle}>Fragrance Notes</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.notesCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Tablet Horizontally Scrollable Cards View (768px – 1023px) */}
+            <div className={styles.tabletCardsContainer}>
+              <div className={styles.tabletCardsScroll}>
+                {selectedSlots.filter(Boolean).map((slot, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`${styles.compareCard} ${slot?.isRecommended ? styles.compareCardRecommended : ""}`}
+                  >
+                    {slot?.isRecommended && <span className={styles.cardBadge}>Recommended</span>}
+                    <div className={styles.cardHeader}>
+                      <img src={slot!.image} alt={slot!.name} className={styles.cardImage} />
+                      <div className={styles.cardTitleBox}>
+                        <h3 className={styles.cardName}>{slot!.name}</h3>
+                        <span className={styles.cardBrand}>{slot!.brand}</span>
+                        <span className={styles.cardPrice}>{slot!.price}</span>
+                        <div className={styles.cardRating}>
+                          <span className={styles.starIcon}>★</span> {slot!.rating}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.cardBody}>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Inspired By</span>
+                        <span className={styles.cardVal}>{slot!.inspiredBy}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Scent Profile</span>
+                        <span className={styles.cardVal}>{slot!.profile}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Longevity</span>
+                        <span className={styles.cardVal}>{slot!.longevity}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Projection</span>
+                        <span className={styles.cardVal}>{slot!.projection}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Best For</span>
+                        <span className={styles.cardVal}>{slot!.bestFor}</span>
+                      </div>
+                      {slot!.accords && slot!.accords.length > 0 && (
+                        <div className={styles.cardAccordsBlock}>
+                          <span className={styles.cardLabel}>Accords</span>
+                          <div className={styles.accordsList}>
+                            {slot!.accords.map((accord) => (
+                              <div key={accord.name} className={styles.accordItem}>
+                                <span className={styles.accordName}>{accord.name}</span>
+                                <div className={styles.progressBarBg}>
+                                  <div 
+                                    className={styles.progressBarFill} 
+                                    style={{ "--progress-width": `${accord.value}%` } as React.CSSProperties}
+                                  />
+                                </div>
+                                <span className={styles.progressValue}>{accord.value}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Stacked Cards View (< 768px) */}
+            <div className={styles.mobileCardsContainer}>
+              {selectedSlots.filter(Boolean).map((slot, idx) => (
+                <div 
+                  key={idx} 
+                  className={`${styles.compareCard} ${styles.mobileCompareCard} ${slot?.isRecommended ? styles.compareCardRecommended : ""}`}
+                >
+                  {slot?.isRecommended && <span className={styles.cardBadge}>Recommended</span>}
+                  <div className={styles.cardHeader}>
+                    <img src={slot!.image} alt={slot!.name} className={styles.cardImage} />
+                    <div className={styles.cardTitleBox}>
+                      <h3 className={styles.cardName}>{slot!.name}</h3>
+                      <span className={styles.cardBrand}>{slot!.brand}</span>
+                      <span className={styles.cardPrice}>{slot!.price}</span>
+                      <div className={styles.cardRating}>
+                        <span className={styles.starIcon}>★</span> {slot!.rating}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.cardBody}>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Inspired By</span>
+                      <span className={styles.cardVal}>{slot!.inspiredBy}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Scent Profile</span>
+                      <span className={styles.cardVal}>{slot!.profile}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Longevity</span>
+                      <span className={styles.cardVal}>{slot!.longevity}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Projection</span>
+                      <span className={styles.cardVal}>{slot!.projection}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Best For</span>
+                      <span className={styles.cardVal}>{slot!.bestFor}</span>
+                    </div>
+                    {slot!.accords && slot!.accords.length > 0 && (
+                      <div className={styles.cardAccordsBlock}>
+                        <span className={styles.cardLabel}>Accords</span>
                         <div className={styles.accordsList}>
-                          {slot.accords.map((accord) => (
+                          {slot!.accords.map((accord) => (
                             <div key={accord.name} className={styles.accordItem}>
                               <span className={styles.accordName}>{accord.name}</span>
                               <div className={styles.progressBarBg}>
@@ -602,25 +747,13 @@ function CompareContent() {
                             </div>
                           ))}
                         </div>
-                      ) : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 12: Fragrance Notes */}
-                <tr>
-                  <td className={styles.featureTitle}>Fragrance Notes</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.notesCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {/* Left blank / empty matching the screenshot block */}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </main>
     </div>
