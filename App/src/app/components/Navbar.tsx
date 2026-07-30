@@ -231,10 +231,10 @@ export default function Navbar() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className={`relative font-serif-text text-[13px] font-medium tracking-[0.14em] uppercase transition-colors duration-300 py-1 after:block after:absolute after:bottom-[-2px] after:left-0 after:h-[1.5px] after:bg-[#820011] after:transition-all after:duration-300 ease-out ${
+                    className={`font-serif-text text-[13.5px] tracking-[0.14em] uppercase transition-colors duration-200 py-1 ${
                       isActive
-                        ? "text-[#820011] font-semibold after:w-full"
-                        : "text-[#313134] hover:text-[#820011] after:w-0 hover:after:w-full"
+                        ? "text-[#820011] font-bold"
+                        : "text-[#313134] hover:text-[#820011] font-medium"
                     }`}
                   >
                     {link.label}
