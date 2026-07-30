@@ -622,6 +622,7 @@
    TABLET  (≤ 900px)
    ═══════════════════════════════════════════════════ */
 @media (max-width: 900px) {
+  .resultsGridWrapper { margin-top: -3.5rem; }
   .resultsGrid { flex-direction: column; align-items: center; gap: 1.5rem; }
   .cardEntryWrapper { width: 100%; max-width: 500px; }
   .resultsNarrowCard { max-width: 100%; }
@@ -640,8 +641,9 @@
     --q-font: 1.25rem;
     --intro-font: 1.7rem;
     --marker-h: 38px;
-    padding: 5rem 1rem 2.5rem 1rem;
+    padding: 4.25rem 1rem 2.5rem 1rem;
   }
+  .resultsGridWrapper { margin-top: -4rem; }
   .mainContent { margin-top: 0; }
 
   .introTextGroup { gap: 0.5rem; }
@@ -668,8 +670,9 @@
     --q-font: 1.05rem;
     --intro-font: 1.45rem;
     --marker-h: 34px;
-    padding: 5rem 0.5rem 2rem 0.5rem;
+    padding: 4rem 0.5rem 2rem 0.5rem;
   }
+  .resultsGridWrapper { margin-top: -4.5rem; }
 
   .introContainer { max-width: 96vw; }
   .quizContainer  { max-width: 96vw; }
