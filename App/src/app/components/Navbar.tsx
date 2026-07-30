@@ -446,26 +446,26 @@ export default function Navbar() {
             </form>
           </div>
 
-          {/* Navigation Links with prominent font size & generous luxury spacing for mobile & tablet */}
-          <nav className="flex flex-col gap-7 sm:gap-9 mt-12 sm:mt-16 w-full items-start">
+          {/* Navigation Links with prominent font size, extra luxury spacing & active Murakkaz Red highlighting */}
+          <nav className="flex flex-col gap-8 sm:gap-10 mt-14 sm:mt-18 w-full items-start">
             {navLinks.map((link, idx) => {
-              const isActive = pathname === link.href;
+              const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
                 <Link
                   key={link.label}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   style={{ animationDelay: `${idx * 35}ms` }}
-                  className={`stagger-item-enter relative self-start font-serif-text text-[18px] sm:text-[20px] font-medium tracking-[0.16em] uppercase transition-colors duration-200 text-left py-1 group ${
+                  className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1.5 group ${
                     isActive
-                      ? "text-[#8C1D2E] font-semibold"
-                      : "text-[#313134] hover:text-[#8C1D2E] active:opacity-75"
+                      ? "text-[#820011] font-bold"
+                      : "text-[#313134] hover:text-[#820011] active:opacity-75 font-medium"
                   }`}
                 >
-                  <span>{link.label}</span>
-                  {/* Thin 1px underline growing from left to right over 250ms */}
+                  <span className={isActive ? "text-[#820011]" : ""}>{link.label}</span>
+                  {/* Thin 2px underline growing from left to right over 250ms */}
                   <span
-                    className={`absolute bottom-0 left-0 h-[1.5px] bg-[#8C1D2E] transition-transform duration-[250ms] ease-out origin-left ${
+                    className={`absolute bottom-0 left-0 h-[2px] bg-[#820011] transition-transform duration-[250ms] ease-out origin-left ${
                       isActive ? "w-full scale-x-100" : "w-full scale-x-0 group-hover:scale-x-100"
                     }`}
                   />
