@@ -3,14 +3,15 @@
   will-change: transform, opacity;
 }
 
-/* Default Fade Up — Slow, elegant 0.8s transition with 28px movement */
+/* Default Fade Up — Slow, elegant 0.85s transition with 36px movement */
 .fade-up {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(36px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.fade-up.visible {
+.fade-up.visible,
+:global(.revealContainer.visible) .fade-up {
   opacity: 1;
   transform: translateY(0);
 }
@@ -18,23 +19,25 @@
 /* Scale + Fade */
 .scale-fade {
   opacity: 0;
-  transform: scale(0.97) translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: scale(0.95) translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.scale-fade.visible {
+.scale-fade.visible,
+:global(.revealContainer.visible) .scale-fade {
   opacity: 1;
   transform: scale(1) translateY(0);
 }
 
-/* Horizontal Slide — Subtle 28px slide */
+/* Horizontal Slide */
 .slide-horizontal {
   opacity: 0;
-  transform: translateX(-28px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateX(-36px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.slide-horizontal.visible {
+.slide-horizontal.visible,
+:global(.revealContainer.visible) .slide-horizontal {
   opacity: 1;
   transform: translateX(0);
 }
@@ -42,11 +45,12 @@
 /* Spotlight Reveal */
 .spotlight-reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(32px);
   transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.spotlight-reveal.visible {
+.spotlight-reveal.visible,
+:global(.revealContainer.visible) .spotlight-reveal {
   opacity: 1;
   transform: translateY(0);
 }

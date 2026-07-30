@@ -56,13 +56,6 @@ export default function CompareBanner({
 
       {/* 3. Main Editorial Content Container */}
       <div className={styles.container}>
-        {/* Elegant Gold Flourish Divider */}
-        <div className={styles.flourishDivider}>
-          <span className={styles.flourishLine} />
-          <span className={styles.flourishDiamond}>◆</span>
-          <span className={styles.flourishLine} />
-        </div>
-
         {/* Cinematic Headline */}
         <h2 className={styles.heading}>
           {title}

@@ -13,11 +13,8 @@ interface ScrollRevealProps {
 }
 
 /**
- * ScrollReveal — reveals children with a smooth animation when scrolled into view.
- *
- * IMPORTANT: Content is always VISIBLE by default (SSR-safe).
- * The "hidden" state is only applied client-side after mount, so if JS fails
- * or IntersectionObserver doesn't fire, content remains visible.
+ * ScrollReveal — smooth, performance-optimized viewport entrance animations.
+ * Triggers once when the element scrolls into view with cubic-bezier(0.22, 1, 0.36, 1).
  */
 export default function ScrollReveal({
   children,
@@ -25,66 +22,43 @@ export default function ScrollReveal({
   variant = "fade-up",
   className = "",
 }: ScrollRevealProps) {
-  // Start as visible so content is never blank
-  const [phase, setPhase] = useState<"idle" | "hidden" | "visible">("idle");
+  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const currentRef = ref.current;
-    if (!currentRef) return;
+    const el = ref.current;
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setPhase("visible");
-          observer.unobserve(currentRef);
+          // Use double rAF to guarantee browser paint before adding visible class for 60fps smooth animation
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setIsVisible(true);
+            });
+          });
+          observer.unobserve(el);
         }
       },
       {
-        threshold: 0.25,
+        threshold: 0.12,
         rootMargin: "0px 0px -40px 0px",
       }
     );
 
-    const rect = currentRef.getBoundingClientRect();
-    
-    // If element is below the initial fold or near viewport bottom
-    if (rect.top > 100) {
-      setPhase("hidden");
-      observer.observe(currentRef);
-    } else {
-      // Element is at the top of the viewport on initial load
-      setPhase("visible");
-    }
+    observer.observe(el);
 
-    // Safety fallback: if still hidden after 2 seconds, force visible
-    const fallbackTimer = setTimeout(() => {
-      setPhase((prev) => (prev === "hidden" ? "visible" : prev));
-    }, 2000);
-
-    return () => {
-      observer.disconnect();
-      clearTimeout(fallbackTimer);
-    };
+    return () => observer.disconnect();
   }, []);
 
   const variantClass = variant !== "none" ? styles[variant] || styles["fade-up"] : "";
 
-  // "idle" = server render / before JS runs → fully visible, no animation classes
-  // "hidden" = JS confirmed element is below viewport → apply hidden animation state
-  // "visible" = element scrolled into view → apply visible animation state
-  const animClass =
-    phase === "idle"
-      ? "" // No animation classes — content is fully visible
-      : phase === "hidden"
-      ? `${variantClass}` // Hidden state (opacity: 0, transform offset)
-      : `${variantClass} ${styles.visible}`; // Visible state (opacity: 1, transform reset)
-
   return (
     <div
       ref={ref}
-      className={`reveal ${styles.revealContainer} ${animClass} ${
-        phase !== "hidden" ? "visible" : ""
+      className={`reveal ${styles.revealContainer} ${variantClass} ${
+        isVisible ? `${styles.visible} visible` : ""
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
       suppressHydrationWarning
