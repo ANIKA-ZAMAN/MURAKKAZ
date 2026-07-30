@@ -538,15 +538,20 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       <div className={styles.mainContainer}>
         {/* Breadcrumbs */}
         <div className={styles.breadcrumbs}>
-          {fromQuiz ? (
-            <Link href="/scent-index" className={styles.backLink}>
-              <span className={styles.arrowLeft}>←</span> Back
-            </Link>
-          ) : (
-            <Link href="/shop" className={styles.backLink}>
-              <span className={styles.arrowLeft}>←</span> Shop
-            </Link>
-          )}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              if (typeof window !== "undefined" && window.history.length > 1) {
+                router.back();
+              } else {
+                router.push("/shop");
+              }
+            }}
+            className={styles.backLink}
+            style={{ cursor: "pointer", fontFamily: "inherit" }}
+          >
+            <span className={styles.arrowLeft}>←</span> Back
+          </button>
         </div>
 
         {/* Product Details Section */}
