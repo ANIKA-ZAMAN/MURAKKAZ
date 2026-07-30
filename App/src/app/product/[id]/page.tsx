@@ -892,7 +892,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                   id={item.id}
                   brand="Murakkaz"
                   name={item.name}
-                  description={item.description}
+                  inspiredBy={item.inspiredBy}
                   rating={item.rating}
                   reviews={item.reviews}
                   price={item.price}

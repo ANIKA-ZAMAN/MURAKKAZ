@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════ */
 
 /* ── CSS Custom Properties for responsive card sizing ── */
-:root {
+.quizPage {
   --card-h: 500px;        /* desktop card height */
   --marker-h: 43px;       /* progress markers row height */
   --intro-h: calc(var(--marker-h) + var(--card-h)); /* 543px desktop */
@@ -11,10 +11,7 @@
   --card-pad-h: 2.75rem;
   --q-font: 1.55rem;
   --intro-font: 2.1rem;
-}
 
-/* ── Page shell ── */
-.quizPage {
   position: relative;
   width: 100%;
   min-height: 100svh;
@@ -636,16 +633,15 @@
    Stack is still visible — depth cards poke out below.
    ═══════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  :root {
+  .quizPage {
     --card-h: min(470px, calc(100svh - 13rem));
     --card-pad-v: 1.4rem;
     --card-pad-h: 1.5rem;
     --q-font: 1.25rem;
     --intro-font: 1.7rem;
     --marker-h: 38px;
+    padding: 5rem 1rem 2.5rem 1rem;
   }
-
-  .quizPage { padding: 5rem 1rem 2.5rem 1rem; }
   .mainContent { margin-top: 0; }
 
   .introTextGroup { gap: 0.5rem; }
@@ -665,16 +661,15 @@
    Stacked paper depth still visible on sides/bottom.
    ═══════════════════════════════════════════════════ */
 @media (max-width: 480px) {
-  :root {
+  .quizPage {
     --card-h: min(460px, calc(100svh - 12.5rem));
     --card-pad-v: 1.1rem;
     --card-pad-h: 1rem;
     --q-font: 1.05rem;
     --intro-font: 1.45rem;
     --marker-h: 34px;
+    padding: 5rem 0.5rem 2rem 0.5rem;
   }
-
-  .quizPage { padding: 5rem 0.5rem 2rem 0.5rem; }
 
   .introContainer { max-width: 96vw; }
   .quizContainer  { max-width: 96vw; }
@@ -694,16 +689,15 @@
    VERY SMALL PHONES  (≤ 360px)
    ═══════════════════════════════════════════════════ */
 @media (max-width: 360px) {
-  :root {
+  .quizPage {
     --card-h: min(430px, calc(100svh - 12rem));
     --card-pad-v: 0.9rem;
     --card-pad-h: 0.85rem;
     --q-font: 0.95rem;
     --intro-font: 1.3rem;
     --marker-h: 30px;
+    padding: 4.5rem 0.25rem 1.5rem 0.25rem;
   }
-
-  .quizPage { padding: 4.5rem 0.25rem 1.5rem 0.25rem; }
   .introContainer { max-width: 98vw; }
   .quizContainer  { max-width: 98vw; }
   .cardStack      { max-width: 98vw; }
