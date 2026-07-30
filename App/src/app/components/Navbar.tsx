@@ -429,7 +429,7 @@ export default function Navbar() {
                 placeholder="Search your perfume"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-[50px] pl-6 pr-12 rounded-full bg-[#F3EFE6] border border-[#4A4A4C] text-[#313134] placeholder-[#8A8477] font-serif-text text-[15px] leading-[50px] focus:outline-none focus:border-[#820011] focus:bg-[#FAF6F0] transition-colors"
+                className="w-full h-[50px] pl-10 pr-12 rounded-full bg-[#F3EFE6] border border-[#4A4A4C] text-[#313134] placeholder-[#8A8477] font-serif-text text-[15px] leading-[50px] focus:outline-none focus:border-[#820011] focus:bg-[#FAF6F0] transition-colors"
               />
               <button
                 type="submit"
