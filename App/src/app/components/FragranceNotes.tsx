@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import styles from "./FragranceNotes.module.css";
 
 export interface NoteItem {
@@ -48,85 +47,70 @@ export default function FragranceNotes({
 }: FragranceNotesProps) {
   const [isOpen, setIsOpen] = useState(false);
 
+  /* Compute stagger indices */
+  const groups = [
+    { key: "top", label: "TOP NOTES", notes: topNotes },
+    { key: "middle", label: "MIDDLE NOTES", notes: middleNotes },
+    { key: "base", label: "BASE NOTES", notes: baseNotes },
+  ].filter((g) => g.notes.length > 0);
+
+  let globalNoteIndex = 0;
+
   return (
     <section className={styles.notesSection}>
+      {/* ── Header Button ── */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className={`${styles.notesHeaderBox} ${isOpen ? styles.notesHeaderBoxOpen : ""}`}
         aria-expanded={isOpen}
       >
-        <span className={styles.notesHeaderTitle}>
-          {title || "SEE THE FRAGRANCE NOTES"}
+        <span className={styles.notesHeaderTitle}>{title}</span>
+        <span className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ""}`}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </span>
-        <span className={styles.toggleArrow}>{isOpen ? "▲" : "▼"}</span>
       </button>
 
-      {isOpen && (
-        <div className={styles.notesContainer}>
-          {/* TOP NOTES */}
-          {topNotes.length > 0 && (
-            <div className={styles.notesGroup}>
-              <h3 className={styles.notesGroupTitle}>TOP NOTES</h3>
-              <div className={styles.notesGrid}>
-                {topNotes.map((note) => (
-                  <div key={note.name} className={styles.noteItem}>
-                    <div className={styles.noteImageWrapper}>
-                      <img
-                        src={`/images/notes/${note.image}`}
-                        alt={note.name}
-                        className={styles.noteImage}
-                      />
-                    </div>
-                    <span className={styles.noteName}>{note.name}</span>
+      {/* ── Expandable Container (always in DOM, toggled via CSS) ── */}
+      <div className={`${styles.notesContainer} ${isOpen ? styles.notesContainerOpen : ""}`}>
+        <div className={styles.notesContainerInner}>
+          {groups.map((group, groupIdx) => {
+            const groupDelay = groupIdx * 80;
+            const itemsInGroup = group.notes.map((note) => {
+              const itemDelay = globalNoteIndex * 35;
+              globalNoteIndex++;
+              return (
+                <div
+                  key={note.name}
+                  className={`${styles.noteItem} ${isOpen ? styles.noteItemReveal : ""}`}
+                  style={{ "--item-delay": `${itemDelay}ms` } as React.CSSProperties}
+                >
+                  <div className={styles.noteImageWrapper}>
+                    <img
+                      src={`/images/notes/${note.image}`}
+                      alt={note.name}
+                      className={styles.noteImage}
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
+                  <span className={styles.noteName}>{note.name}</span>
+                </div>
+              );
+            });
 
-          {/* MIDDLE NOTES */}
-          {middleNotes.length > 0 && (
-            <div className={styles.notesGroup}>
-              <h3 className={styles.notesGroupTitle}>MIDDLE NOTES</h3>
-              <div className={styles.notesGrid}>
-                {middleNotes.map((note) => (
-                  <div key={note.name} className={styles.noteItem}>
-                    <div className={styles.noteImageWrapper}>
-                      <img
-                        src={`/images/notes/${note.image}`}
-                        alt={note.name}
-                        className={styles.noteImage}
-                      />
-                    </div>
-                    <span className={styles.noteName}>{note.name}</span>
-                  </div>
-                ))}
+            return (
+              <div
+                key={group.key}
+                className={`${styles.notesGroup} ${isOpen ? styles.notesGroupReveal : ""}`}
+                style={{ "--group-delay": `${groupDelay}ms` } as React.CSSProperties}
+              >
+                <h3 className={styles.notesGroupTitle}>{group.label}</h3>
+                <div className={styles.notesGrid}>{itemsInGroup}</div>
               </div>
-            </div>
-          )}
-
-          {/* BASE NOTES */}
-          {baseNotes.length > 0 && (
-            <div className={styles.notesGroup}>
-              <h3 className={styles.notesGroupTitle}>BASE NOTES</h3>
-              <div className={styles.notesGrid}>
-                {baseNotes.map((note) => (
-                  <div key={note.name} className={styles.noteItem}>
-                    <div className={styles.noteImageWrapper}>
-                      <img
-                        src={`/images/notes/${note.image}`}
-                        alt={note.name}
-                        className={styles.noteImage}
-                      />
-                    </div>
-                    <span className={styles.noteName}>{note.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            );
+          })}
         </div>
-      )}
+      </div>
     </section>
   );
 }

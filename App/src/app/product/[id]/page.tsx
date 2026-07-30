@@ -715,16 +715,15 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 </div>
               )}
             </div>
+
+            {/* Fragrance Notes – same column as description, right below */}
+            <FragranceNotes
+              topNotes={details.topNotes}
+              middleNotes={details.middleNotes}
+              baseNotes={details.baseNotes}
+            />
           </div>
         </section>
-
-        {/* Reusable Component: Fragrance Notes Section */}
-        <FragranceNotes
-          topNotes={details.topNotes}
-          middleNotes={details.middleNotes}
-          baseNotes={details.baseNotes}
-        />
-
         {/* Tab section: Performance / Ratings & Reviews */}
         <section className={styles.tabsSection}>
           <div className={styles.tabHeaders}>

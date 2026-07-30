@@ -776,14 +776,26 @@
   }
 
   .navBtn {
-    margin-top: 0 !important; /* Centered vertically with card on tablet/surface */
+    margin-top: 0 !important;
+  }
+
+  .sliderWrapper {
+    overflow: hidden !important;
+    position: relative;
   }
 
   .sliderGrid {
     gap: 0 !important;
-    overflow-x: hidden !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
     width: 100% !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .sliderGrid::-webkit-scrollbar {
+    display: none;
   }
 
   .sliderGrid > div {
@@ -794,7 +806,7 @@
     box-sizing: border-box;
     display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     scroll-snap-align: center !important;
     scroll-snap-stop: always !important;
   }
@@ -916,14 +928,26 @@
   }
 
   .navBtn {
-    margin-top: 0 !important; /* Centered vertically with card on mobile */
+    margin-top: 0 !important;
+  }
+
+  .sliderWrapper {
+    overflow: hidden !important;
+    position: relative;
   }
 
   .sliderGrid {
     gap: 0 !important;
-    overflow-x: hidden !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
     width: 100% !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .sliderGrid::-webkit-scrollbar {
+    display: none;
   }
 
   .sliderGrid > div {
@@ -934,7 +958,7 @@
     box-sizing: border-box;
     display: flex !important;
     justify-content: center !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     scroll-snap-align: center !important;
     scroll-snap-stop: always !important;
   }

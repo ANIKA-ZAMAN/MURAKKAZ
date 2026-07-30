@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./CollectionCard.module.css";
 
@@ -25,6 +26,7 @@ export default function CollectionCard({
   reviews,
   image,
 }: CollectionCardProps) {
+  const router = useRouter();
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   // Sync wishlist status from localStorage
@@ -66,13 +68,16 @@ export default function CollectionCard({
   };
 
   return (
-    <div className={styles.card}>
+    <div
+      className={styles.card}
+      onClick={() => router.push(`/product/${id}`)}
+    >
       <div className={styles.imageContainer}>
         <Image
           src={image}
           alt={name}
           fill
-          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 25vw"
           className={styles.image}
         />
       </div>
@@ -109,8 +114,24 @@ export default function CollectionCard({
         {description && <p className={styles.description}>{description}</p>}
 
         <div className={styles.actions}>
-          <button className={styles.compareBtn}>Compare</button>
-          <button className={styles.readMoreBtn}>Read More</button>
+          <button
+            className={styles.compareBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/compare?p1=${id}`);
+            }}
+          >
+            Compare
+          </button>
+          <button
+            className={styles.readMoreBtn}
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/product/${id}`);
+            }}
+          >
+            Read More
+          </button>
         </div>
       </div>
     </div>
