@@ -169,16 +169,6 @@ export default function FeaturedCollections() {
             Our <span style={{ color: "#8A6632", fontStyle: "normal" }}>Featured Collection</span>
           </h2>
           <p className={styles.sectionSubtitle}>Handpicked fragrances loved by our customers.</p>
-          <div
-            style={{
-              width: "3.5rem",
-              height: "2px",
-              backgroundColor: "#B8965C",
-              margin: "0.85rem auto 0",
-              borderRadius: "9999px",
-              opacity: 0.7,
-            }}
-          />
         </div>
 
         {/* Carousel Container */}
