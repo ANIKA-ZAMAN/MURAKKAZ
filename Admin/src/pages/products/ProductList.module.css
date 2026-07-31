@@ -1,0 +1,84 @@
+.container {
+  padding: 20px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.addButton {
+  background-color: #800000;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.filterBar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.input, .select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th, .table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.productCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.thumbnail {
+  width: 40px;
+  height: 40px;
+  background-color: #eee;
+  border-radius: 4px;
+}
+.name {
+  font-weight: bold;
+}
+.inspiredBy {
+  font-size: 0.85em;
+  color: #666;
+}
+.badge {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.8em;
+  margin-right: 5px;
+}
+.statusBadge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+.statusBadge.active {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+}
+.actionBtn {
+  margin-right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: none;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}

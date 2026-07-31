@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { getProductReviews, createReview, getHomepageReviews } from '../controllers/review.controller';
+import { authenticate } from '../middleware/auth';
+import { validate } from '../middleware/validate';
+import { createReviewSchema } from '../validators/review.validator';
+const router = Router();
+router.get('/homepage', getHomepageReviews);
+router.get('/product/:slug', getProductReviews);
+router.post('/product/:slug', authenticate, validate(createReviewSchema), createReview);
+export default router;

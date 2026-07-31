@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BlogPost } from "../../data/blogData";
 import styles from "../page.module.css";
 
@@ -9,24 +10,43 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps) {
+  const postSlug = post.slug || post.id;
+
   return (
     <article className={styles.card} aria-labelledby={`title-${post.id}`}>
-      <div className={styles.imageWrapper}>
-        <Image
-          src={post.image}
-          alt={post.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 350px"
-          className={styles.postImage}
-        />
-      </div>
+      <Link href={`/blog/${postSlug}`} className={styles.imageLink}>
+        <div className={styles.imageWrapper}>
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 350px"
+            className={styles.postImage}
+          />
+          {post.category && (
+            <span className={styles.categoryBadge}>{post.category}</span>
+          )}
+        </div>
+      </Link>
+
       <div className={styles.cardContent}>
-        <span className={styles.postDate}>{post.date}</span>
+        <div className={styles.metaRow}>
+          <span className={styles.postDate}>{post.date}</span>
+          {post.readTime && <span className={styles.readTime}>• {post.readTime}</span>}
+        </div>
+
         <div className={styles.titleRow}>
-          <h2 id={`title-${post.id}`} className={styles.postTitle}>{post.title}</h2>
+          <h2 id={`title-${post.id}`} className={styles.postTitle}>
+            <Link href={`/blog/${postSlug}`} className={styles.titleLink}>
+              {post.title}
+            </Link>
+          </h2>
           <button
             type="button"
-            onClick={() => onToggleLike(post.id)}
+            onClick={(e) => {
+              e.preventDefault();
+              onToggleLike(post.id);
+            }}
             className={`${styles.wishlistBtn} ${isLiked ? styles.wishlistBtnActive : ""}`}
             aria-label={isLiked ? "Remove from favorites" : "Add to favorites"}
           >
@@ -35,11 +55,13 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
             </svg>
           </button>
         </div>
+
         <p className={styles.postDesc}>{post.description}</p>
+
         <div className={styles.actionRow}>
-          <button type="button" className={styles.readMoreBtn} aria-label={`Read more about ${post.title}`}>
-            Read More
-          </button>
+          <Link href={`/blog/${postSlug}`} className={styles.readMoreBtn} aria-label={`Read article: ${post.title}`}>
+            Read Article →
+          </Link>
         </div>
       </div>
     </article>

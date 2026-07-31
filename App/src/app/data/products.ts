@@ -16,154 +16,49 @@ export interface Product {
   notes: string[];
 }
 
-// Mock data templates — replace with real API data later
-const mockProducts: Array<{
-  name: string;
-  brand: string;
-  description: string;
-  rating: number;
-  reviews: number;
-  priceVal: number;
-  image: string;
-  family: string;
-  gender: string;
-  occasion: string;
-  meter: string;
-  notes: string[];
-}> = [
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "Beautifully sofisticare and lasting perfume, crafted to be their creation inspired by the gone collection. Must have in your collection.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1720,
-    image: "/images/products/jade_serenity.png",
-    family: "Citrus",
-    gender: "Unisex",
-    occasion: "Casual",
-    meter: "Moderate",
-    notes: ["Bergamot", "Lemon", "Amber", "Vetiver"],
-  },
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "Beautifully sofisticare and lasting perfume crafted from the first inspiration to turn your emotions. Must have in your collection.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1420,
-    image: "/images/products/coral_sea.png",
-    family: "Fresh",
-    gender: "Men",
-    occasion: "Formal",
-    meter: "Long Lasting",
-    notes: ["Sea Salt", "Sage", "Bergamot", "Grapefruit"],
-  },
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "The perfect scent was large from the dior sofisticate crafted, the first dior creation inspired by original milestone. Daily use perfume.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1220,
-    image: "/images/products/magnetism.png",
-    family: "Woody",
-    gender: "Men",
-    occasion: "Night Out",
-    meter: "Moderate",
-    notes: ["Lavender", "Sandalwood", "Amber", "Vanilla", "Leather"],
-  },
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "Beautifully sofisticare and crafted perfume, crafted to be their creation inspired by the gone collection. Must have in your collection.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1320,
-    image: "/images/products/hellenist.png",
-    family: "Oriental",
-    gender: "Women",
-    occasion: "Date Night",
-    meter: "Beast Mode",
-    notes: ["Saffron", "Jasmine", "Amberwood", "Cedarwood", "Rose"],
-  },
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "Beautifully sofisticare and lasting perfume of its creation, must have in your gone collection. The perfect addition to dior tradition. Must for all.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1150,
-    image: "/images/products/jade_serenity.png",
-    family: "Citrus",
-    gender: "Men",
-    occasion: "Daily Wear",
-    meter: "Intimate",
-    notes: ["Bergamot", "Mandarin", "Vetiver", "Patchouli"],
-  },
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "Beautifully sofisticare and lasting perfume crafted from the first inspiration to turn your emotions. An era of perfection.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1650,
-    image: "/images/products/coral_sea.png",
-    family: "Oriental",
-    gender: "Women",
-    occasion: "Formal",
-    meter: "Beast Mode",
-    notes: ["Vanilla", "Orchid", "Amber", "Sandalwood"],
-  },
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "The perfect scent was large from sofisticate crafted perfume, the first dior creation inspired by the gone collection. Must try in out of time era.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1520,
-    image: "/images/products/magnetism.png",
-    family: "Citrus",
-    gender: "Unisex",
-    occasion: "Casual",
-    meter: "Moderate",
-    notes: ["Bergamot", "Neroli", "Amber", "Musk"],
-  },
-  {
-    name: "Orvi Soq",
-    brand: "Dior",
-    description: "Beautifully sofisticare and lasting perfume of its creation, must have in your collection. The sofisticated addition crafted in era of perfume.",
-    rating: 4.5,
-    reviews: 195,
-    priceVal: 1580,
-    image: "/images/products/hellenist.png",
-    family: "Fresh",
-    gender: "Men",
-    occasion: "Daily Wear",
-    meter: "Long Lasting",
-    notes: ["Mint", "Green Apple", "Lemon", "Rose", "Vanilla"],
-  },
-];
+// 100% Dynamic products array - empty by default until items are created via Backend API / Admin Dashboard
+export const luxuryProducts: Product[] = [];
 
-// Generate catalog by repeating mock data across pages
-export const productsCatalog: Product[] = Array.from({ length: 24 }, (_, i) => {
-  const template = mockProducts[i % mockProducts.length];
+export const productsCatalog: Product[] = luxuryProducts;
 
-  return {
-    id: (i + 1).toString(),
-    name: template.name,
-    brand: template.brand,
-    description: template.description,
-    rating: template.rating,
-    reviews: template.reviews,
-    price: `${template.priceVal.toLocaleString()}tk`,
-    priceVal: template.priceVal,
-    volume: "100ml",
-    image: template.image,
-    family: template.family,
-    gender: template.gender,
-    occasion: template.occasion,
-    meter: template.meter,
-    notes: template.notes || [],
-  };
-});
+// Live API fetch from Express Backend (http://localhost:5000/api/products)
+export async function fetchLiveProducts(): Promise<Product[]> {
+  try {
+    const res = await fetch('http://localhost:5000/api/products');
+    if (!res.ok) throw new Error('API offline');
+    const json = await res.json();
+    
+    // Safely extract raw list regardless of pagination wrapper format
+    let rawList: any[] = [];
+    if (json && Array.isArray(json.data)) {
+      rawList = json.data;
+    } else if (json && json.data && Array.isArray(json.data.data)) {
+      rawList = json.data.data;
+    } else if (Array.isArray(json)) {
+      rawList = json;
+    }
+
+    if (rawList.length > 0) {
+      return rawList.map((p: any) => ({
+        id: p.id || p.slug || `prod-${Math.random()}`,
+        name: p.name || 'Unnamed Fragrance',
+        brand: p.brand || 'Murakkaz',
+        description: p.description || '',
+        rating: p.rating || 5.0,
+        reviews: p.reviewCount || 0,
+        price: p.sizes?.[0] ? `${p.sizes[0].price.toLocaleString()}tk` : (p.priceVal ? `${p.priceVal.toLocaleString()}tk` : '2,800tk'),
+        priceVal: p.sizes?.[0]?.price || p.priceVal || 2800,
+        volume: p.sizes?.[0]?.size || '50ml',
+        image: p.image || '/images/products/jade_serenity.png',
+        family: p.family || 'WOODY',
+        gender: p.gender || 'UNISEX',
+        occasion: p.occasion || 'General',
+        meter: p.meter || 'Moderate',
+        notes: p.notes ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name) : []
+      }));
+    }
+  } catch (e) {
+    console.warn('Failed to fetch live products from API:', e);
+  }
+  return [];
+}

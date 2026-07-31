@@ -35,21 +35,8 @@ export default function ProductCard({
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const router = useRouter();
 
-  const { displayName, inspiredBy } = useMemo(() => {
-    if (image.includes("jade_serenity")) {
-      return { displayName: "Jade Serenity", inspiredBy: "Inspired by Dio Savotage" };
-    }
-    if (image.includes("coral_sea")) {
-      return { displayName: "Coral Sea", inspiredBy: "Inspired by Jo Malone Wood Sage & Sea Salt" };
-    }
-    if (image.includes("magnetism")) {
-      return { displayName: "Murakkaz Noir", inspiredBy: "Inspired by Dior Sauvage Elixir" };
-    }
-    if (image.includes("hellenist")) {
-      return { displayName: "Hellenist", inspiredBy: "Inspired by Baccarat Rouge 540" };
-    }
-    return { displayName: name, inspiredBy: `Inspired by ${brand}` };
-  }, [name, image, brand]);
+  const displayName = name;
+  const inspiredBy = description;
 
   // Auto-hide toast messages
   useEffect(() => {

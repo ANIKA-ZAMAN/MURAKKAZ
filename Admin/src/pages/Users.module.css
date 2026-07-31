@@ -1,0 +1,218 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: var(--text-primary, #F5F1E8);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
+}
+
+.headerText h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #F5F1E8;
+  margin-bottom: 0.25rem;
+}
+
+.headerText p {
+  font-size: 0.9rem;
+  color: #A0A0A5;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.statCard {
+  background: #18181A;
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.statIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: rgba(197, 168, 128, 0.08);
+  border: 1px solid rgba(197, 168, 128, 0.2);
+  color: #C5A880;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statInfo h4 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #A0A0A5;
+  margin-bottom: 0.25rem;
+}
+
+.statInfo p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #F5F1E8;
+}
+
+.controlsBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: #18181A;
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.searchGroup {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.65rem 1rem 0.65rem 2.5rem;
+  background: #222225;
+  border: 1px solid rgba(197, 168, 128, 0.2);
+  border-radius: 8px;
+  color: #F5F1E8;
+  font-size: 0.88rem;
+  outline: none;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #A0A0A5;
+  pointer-events: none;
+}
+
+.selectInput {
+  padding: 0.65rem 1rem;
+  background: #222225;
+  border: 1px solid rgba(197, 168, 128, 0.2);
+  border-radius: 8px;
+  color: #F5F1E8;
+  font-size: 0.88rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.tableCard {
+  background: #18181A;
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  padding: 1rem 1.5rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #C5A880;
+  background: rgba(34, 34, 37, 0.7);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
+}
+
+.table td {
+  padding: 1.25rem 1.5rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.08);
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background: rgba(197, 168, 128, 0.03);
+}
+
+.userCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #820011 0%, #313134 100%);
+  border: 1px solid rgba(197, 168, 128, 0.3);
+  color: #F5F1E8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.tierCollector {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  background: rgba(197, 168, 128, 0.12);
+  border: 1px solid rgba(197, 168, 128, 0.3);
+  color: #C5A880;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tierGold {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  color: #FBBF24;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.pointsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #34D399;
+}
+
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

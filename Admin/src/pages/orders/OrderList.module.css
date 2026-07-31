@@ -1,0 +1,10 @@
+.container { padding: 20px; }
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+.tab { background: none; border: none; font-size: 16px; cursor: pointer; padding: 5px 10px; }
+.activeTab { border-bottom: 2px solid #800000; font-weight: bold; color: #800000; }
+.searchBar { margin-bottom: 20px; }
+.input { padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+.badge { background: #fff3cd; color: #856404; padding: 4px 8px; border-radius: 12px; font-size: 0.85em; }
+.actionLink { color: #007bff; text-decoration: none; font-weight: bold; }

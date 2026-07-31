@@ -1,16 +1,18 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterSidebar from "../components/FilterSidebar";
 import ProductGrid from "../components/ProductGrid";
-import RecommendationSlider from "../components/RecommendationSlider";
-import { productsCatalog } from "../data/products";
+import { Product, fetchLiveProducts } from "../data/products";
 import styles from "./page.module.css";
 
 function ShopContent() {
   const searchParams = useSearchParams();
+
+  const [productsList, setProductsList] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   
   // Initialize state directly from URL query parameters
   const initialQ = searchParams.get("q") || "";
@@ -28,9 +30,17 @@ function ShopContent() {
     notes: initialNotes,
   });
 
-  const [maxPrice, setMaxPrice] = useState<number>(3000);
+  const [maxPrice, setMaxPrice] = useState<number>(10000);
   const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [currentPage, setCurrentPage] = useState<number>(1);
+
+  useEffect(() => {
+    fetchLiveProducts()
+      .then((data) => {
+        setProductsList(data || []);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const handleCheckboxChange = (categoryId: string, option: string) => {
     setSelectedFilters((prev) => {
@@ -44,28 +54,26 @@ function ShopContent() {
         [categoryId]: updated,
       };
     });
-    setCurrentPage(1); // Reset page to 1 on filter change
+    setCurrentPage(1);
   };
 
   const handlePriceChange = (price: number) => {
     setMaxPrice(price);
-    setCurrentPage(1); // Reset page to 1 on price filter change
+    setCurrentPage(1);
   };
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    setCurrentPage(1); // Reset page to 1 on search change
+    setCurrentPage(1);
   };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Smooth scroll back to top of main catalog section on page change
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Filter Catalog logic
-  const filteredProducts = productsCatalog.filter((product) => {
-    // 1. Search Query Match
+  const filteredProducts = productsList.filter((product) => {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       const matchName = product.name.toLowerCase().includes(q);
@@ -73,30 +81,24 @@ function ShopContent() {
       if (!matchName && !matchDesc) return false;
     }
 
-    // 2. Price Slider Match
     if (product.priceVal > maxPrice) return false;
 
-    // 3. Fragrance Family Match
     if (selectedFilters.family.length > 0) {
       if (!selectedFilters.family.includes(product.family)) return false;
     }
 
-    // 4. Gender Match
     if (selectedFilters.gender.length > 0) {
       if (!selectedFilters.gender.includes(product.gender)) return false;
     }
 
-    // 5. Occasion Match
     if (selectedFilters.occasion.length > 0) {
       if (!selectedFilters.occasion.includes(product.occasion)) return false;
     }
 
-    // 6. Performance Meter Match
     if (selectedFilters.meter.length > 0) {
       if (!selectedFilters.meter.includes(product.meter)) return false;
     }
 
-    // 7. Notes Match
     if (selectedFilters.notes && selectedFilters.notes.length > 0) {
       const productNotes = product.notes || [];
       if (!selectedFilters.notes.some((note) => productNotes.includes(note))) return false;
@@ -105,7 +107,6 @@ function ShopContent() {
     return true;
   });
 
-  // Pagination slicing
   const itemsPerPage = 12;
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -133,9 +134,6 @@ function ShopContent() {
             onPageChange={handlePageChange}
           />
         </div>
-
-        {/* Explore Our Recommendation Section */}
-        <RecommendationSlider />
       </main>
     </div>
   );

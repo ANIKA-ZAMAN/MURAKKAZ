@@ -1,13 +1,21 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import ProductCard from "./ProductCard";
-import { productsCatalog } from "../data/products";
+import { Product, luxuryProducts, fetchLiveProducts } from "../data/products";
 import styles from "./homepage.module.css";
 
 export default function BestSellersSection() {
-  // Get exactly 6 featured perfumes from the catalog
-  const bestSellers = productsCatalog.slice(0, 6);
+  const [bestSellers, setBestSellers] = useState<Product[]>(luxuryProducts.slice(0, 6));
+
+  useEffect(() => {
+    fetchLiveProducts().then((data) => {
+      if (data && data.length > 0) {
+        setBestSellers(data.slice(0, 6));
+      }
+    });
+  }, []);
 
   return (
     <section className={styles.section} suppressHydrationWarning>
@@ -42,7 +50,6 @@ export default function BestSellersSection() {
             style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
             suppressHydrationWarning
           >
-            {/* Shimmer light sweep on hover */}
             <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/55 to-transparent transition-all duration-1000 ease-in-out group-hover:left-[100%] pointer-events-none" />
             <span className="relative z-10 w-full flex items-center justify-center gap-2.5 pl-[0.2em]">
               <span>View All</span>

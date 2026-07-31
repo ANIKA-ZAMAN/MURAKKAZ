@@ -1,114 +1,21 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
+import { Product, fetchLiveProducts } from "../data/products";
 import styles from "./RecommendationSlider.module.css";
-
-interface Product {
-  id: string;
-  name: string;
-  brand: string;
-  description: string;
-  rating: number;
-  reviews: number;
-  price: string;
-  volume: string;
-  image: string;
-}
 
 export default function RecommendationSlider() {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const products: Product[] = [
-    {
-      id: "rec-1",
-      name: "Coral Sea",
-      brand: "Murakkaz",
-      description: "Inspired by Creed Aventus",
-      rating: 4.9,
-      reviews: 180,
-      price: "1,420tk",
-      volume: "100ml",
-      image: "/images/products/coral_sea.png",
-    },
-    {
-      id: "rec-2",
-      name: "Jade Serenity",
-      brand: "Murakkaz",
-      description: "Inspired by Dio Savotage",
-      rating: 4.8,
-      reviews: 250,
-      price: "1,720tk",
-      volume: "100ml",
-      image: "/images/products/jade_serenity.png",
-    },
-    {
-      id: "rec-3",
-      name: "Magnetism",
-      brand: "Murakkaz",
-      description: "Inspired by YSL Y EDP",
-      rating: 4.7,
-      reviews: 120,
-      price: "1,220tk",
-      volume: "100ml",
-      image: "/images/products/magnetism.png",
-    },
-    {
-      id: "rec-4",
-      name: "Hellenist",
-      brand: "Murakkaz",
-      description: "Inspired by Bleu De Chanel",
-      rating: 4.9,
-      reviews: 310,
-      price: "1,320tk",
-      volume: "100ml",
-      image: "/images/products/hellenist.png",
-    },
-    {
-      id: "rec-5",
-      name: "Amber Gold",
-      brand: "Murakkaz",
-      description: "Inspired by Xerjoff Erba Pura",
-      rating: 4.9,
-      reviews: 195,
-      price: "2,120tk",
-      volume: "100ml",
-      image: "/images/products/amber_gold.png",
-    },
-    {
-      id: "rec-6",
-      name: "Velvet Oud",
-      brand: "Murakkaz",
-      description: "Inspired by Tom Ford Oud Wood",
-      rating: 4.8,
-      reviews: 210,
-      price: "2,420tk",
-      volume: "100ml",
-      image: "/images/products/velvet_oud.png",
-    },
-    {
-      id: "rec-7",
-      name: "Rouge 540",
-      brand: "Murakkaz",
-      description: "Inspired by Baccarat Rouge 540",
-      rating: 4.9,
-      reviews: 420,
-      price: "2,820tk",
-      volume: "100ml",
-      image: "/images/products/rouge_540.png",
-    },
-    {
-      id: "rec-8",
-      name: "Silver Mountain",
-      brand: "Murakkaz",
-      description: "Inspired by Creed Silver Mountain",
-      rating: 4.7,
-      reviews: 135,
-      price: "1,820tk",
-      volume: "100ml",
-      image: "/images/products/silver_mountain.png",
-    },
-  ];
+  useEffect(() => {
+    fetchLiveProducts().then((data) => {
+      if (data) setProducts(data);
+    });
+  }, []);
+
+  if (products.length === 0) return null;
 
   const scroll = (direction: "left" | "right") => {
     if (sliderRef.current) {
@@ -122,7 +29,7 @@ export default function RecommendationSlider() {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>Explore Our Recommendation</h2>
+      <h2 className={styles.title}>Explore Our Recommendations</h2>
       <div className={styles.sliderContainer}>
         <button
           className={`${styles.navBtn} ${styles.leftBtn}`}

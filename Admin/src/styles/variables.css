@@ -1,0 +1,56 @@
+:root {
+  /* Colors */
+  --bg-primary: #111112;
+  --bg-surface: #1C1C1F;
+  --bg-surface-hover: #252528;
+  --bg-elevated: #2A2A2D;
+  --bg-input: #161618;
+  
+  --text-primary: #F5F1E8;
+  --text-secondary: #9A9A9C;
+  --text-muted: #6E6E70;
+  
+  --accent-gold: #C5A880;
+  --accent-gold-dark: #A38258;
+  --accent-gold-light: #E0C9A6;
+  --brand-maroon: #820011;
+  --brand-maroon-hover: #A00015;
+  
+  /* Status Colors */
+  --status-pending-bg: rgba(245, 158, 11, 0.12);
+  --status-pending-text: #FBBF24;
+  --status-processing-bg: rgba(59, 130, 246, 0.12);
+  --status-processing-text: #60A5FA;
+  --status-shipped-bg: rgba(139, 92, 246, 0.12);
+  --status-shipped-text: #A78BFA;
+  --status-delivered-bg: rgba(16, 185, 129, 0.12);
+  --status-delivered-text: #34D399;
+  --status-cancelled-bg: rgba(239, 68, 68, 0.12);
+  --status-cancelled-text: #F87171;
+  
+  /* Borders */
+  --border-subtle: rgba(197, 168, 128, 0.12);
+  --border-gold: rgba(197, 168, 128, 0.35);
+  --border-gold-strong: #C5A880;
+
+  /* Fonts */
+  --font-title: 'Playfair Display', Georgia, serif;
+  --font-body: 'Lora', Georgia, serif;
+  --font-sans: 'Geist', -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+
+  /* Shadows */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.35);
+  --shadow-glow-gold: 0 0 20px rgba(197, 168, 128, 0.15);
+  --shadow-glow-maroon: 0 6px 20px rgba(130, 0, 17, 0.4);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}

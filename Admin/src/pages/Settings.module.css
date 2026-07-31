@@ -1,0 +1,139 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--text-primary, #F5F1E8);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
+}
+
+.headerText h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #F5F1E8;
+  margin-bottom: 0.25rem;
+}
+
+.headerText p {
+  font-size: 0.9rem;
+  color: #A0A0A5;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  background: #18181A;
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+
+.tab {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.88rem;
+  color: #A0A0A5;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.tab:hover {
+  color: #F5F1E8;
+  background: rgba(197, 168, 128, 0.05);
+}
+
+.activeTab {
+  background: rgba(197, 168, 128, 0.12);
+  color: #C5A880;
+  border-color: rgba(197, 168, 128, 0.25);
+  font-weight: 500;
+}
+
+.card {
+  background: #18181A;
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.82rem;
+  color: #C5A880;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.input, .select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #222225;
+  border: 1px solid rgba(197, 168, 128, 0.2);
+  border-radius: 8px;
+  color: #F5F1E8;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.input:focus, .select:focus {
+  border-color: #C5A880;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(197, 168, 128, 0.1);
+}
+
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.75rem 1.75rem;
+  background: #820011;
+  color: #F5F1E8;
+  border: 1px solid #820011;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+.saveBtn:hover {
+  background: #60000d;
+  border-color: #60000d;
+}
+
+.toastMsg {
+  color: #34D399;
+  font-size: 0.88rem;
+  font-weight: 500;
+}

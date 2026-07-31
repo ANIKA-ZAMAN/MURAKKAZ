@@ -1,0 +1,325 @@
+.articlePage {
+  width: 100%;
+  padding: 4rem 1.5rem;
+  background-color: transparent;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.loadingContainer {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8c8c8f;
+  font-family: var(--font-serif-text), Georgia, serif;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.9rem;
+  color: #8c8c8f;
+  text-decoration: none;
+  margin-bottom: 2.5rem;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: var(--foreground);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
+}
+
+.categoryMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.categoryBadge {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  background-color: rgba(49, 49, 52, 0.08);
+  border: 1px solid rgba(49, 49, 52, 0.15);
+  border-radius: 50px;
+  color: var(--foreground);
+}
+
+.dotSeparator {
+  color: #8c8c8f;
+}
+
+.readTime {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.85rem;
+  color: #8c8c8f;
+}
+
+.articleTitle {
+  font-family: var(--font-serif-title);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--foreground);
+  letter-spacing: -0.015em;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #8c8c8f;
+  margin-bottom: 2rem;
+}
+
+.authorRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(49, 49, 52, 0.12);
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.authorAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #313134;
+  color: #F5F1E8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif-title);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.authorName {
+  display: block;
+  font-family: var(--font-serif-title);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.authorRole {
+  display: block;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.8rem;
+  color: #8c8c8f;
+}
+
+.dateMeta {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.85rem;
+  color: #8c8c8f;
+}
+
+.heroImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 3.5rem;
+  border: 1px solid rgba(49, 49, 52, 0.15);
+  background-color: rgba(49, 49, 52, 0.05);
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.articleBody {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: var(--foreground);
+  opacity: 0.92;
+  margin-bottom: 4rem;
+}
+
+.paragraph {
+  margin-bottom: 1.75rem;
+}
+
+.sectionHeading {
+  font-family: var(--font-serif-title);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--foreground);
+  margin: 2.5rem 0 1rem 0;
+  letter-spacing: -0.01em;
+}
+
+.pullQuote {
+  margin: 2.5rem 0;
+  padding: 1.75rem 2rem;
+  border-left: 3px solid #820011;
+  background-color: rgba(130, 0, 17, 0.04);
+  border-radius: 0 8px 8px 0;
+}
+
+.pullQuote p {
+  font-family: var(--font-serif-title);
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.articleFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(49, 49, 52, 0.12);
+  margin-bottom: 5rem;
+}
+
+.actionsBar {
+  display: flex;
+  gap: 1rem;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.7rem 1.5rem;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.85rem;
+  color: var(--foreground);
+  background-color: transparent;
+  border: 1px solid rgba(49, 49, 52, 0.2);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actionBtn:hover {
+  background-color: rgba(49, 49, 52, 0.05);
+  border-color: var(--foreground);
+}
+
+.likedAction {
+  background-color: #820011;
+  color: #F5F1E8;
+  border-color: #820011;
+}
+
+.likedAction:hover {
+  background-color: #60000d;
+}
+
+.actionIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.bioCard {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: rgba(49, 49, 52, 0.04);
+  border: 1px solid rgba(49, 49, 52, 0.1);
+}
+
+.bioAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #820011;
+  color: #F5F1E8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif-title);
+  font-size: 1.4rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.bioText h4 {
+  font-family: var(--font-serif-title);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin-bottom: 0.35rem;
+}
+
+.bioText p {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #8c8c8f;
+  margin: 0;
+}
+
+.relatedSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.relatedTitle {
+  font-family: var(--font-serif-title);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--foreground);
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .relatedGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .heroImageWrapper {
+    height: 320px;
+    margin-bottom: 2.5rem;
+  }
+
+  .authorRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}

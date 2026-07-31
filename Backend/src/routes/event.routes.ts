@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { listEvents, getEvent, setReminder } from '../controllers/event.controller';
+import { validate } from '../middleware/validate';
+import { setReminderSchema } from '../validators/event.validator';
+import { optionalAuth } from '../middleware/auth';
+const router = Router();
+router.get('/', listEvents);
+router.get('/:slug', getEvent);
+router.post('/:slug/remind', optionalAuth, validate(setReminderSchema), setReminder);
+export default router;
