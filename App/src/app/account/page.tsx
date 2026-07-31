@@ -24,7 +24,8 @@ const defaultUser: UserProfile = {
 
 export default function AccountPage() {
   const [user, setUser] = useState<UserProfile | null>(null);
-  const [activeTab, setActiveTab] = useState<"profile" | "orders" | "addresses" | "password">("profile");
+  const [activeTab, setActiveTab] = useState<"profile" | "orders" | "addresses" | "password">("orders");
+  const [orderCategoryTab, setOrderCategoryTab] = useState<"shipping" | "arrived" | "review" | "canceled">("shipping");
   const [activeSubTab, setActiveSubTab] = useState<"basic" | "advance">("basic");
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
 
@@ -719,9 +720,7 @@ export default function AccountPage() {
             {/* Header Row: Greeting (left) & Horizontal Navigation (right) */}
             <div className={styles.premiumHeaderRow}>
               <div className={styles.greetingSection}>
-                <span className={styles.greetingSub}>
-                  Hello<span className={styles.exclamationMark}>!</span>
-                </span>
+                <span className={styles.greetingSub}>Good Morning,</span>
                 <h2 className={styles.greetingName}>{user.name}</h2>
               </div>
 
@@ -996,59 +995,130 @@ export default function AccountPage() {
 
               {/* Orders View */}
               {activeTab === "orders" && (
-                <div className={styles.tabContentPanel}>
-                  <h2 className={styles.contentTitle}>Order History</h2>
-                  <div className={styles.ordersList}>
-                    {mockOrders.map((order) => (
-                      <div key={order.id} className={styles.orderCard}>
-                        <div className={styles.orderHeader}>
-                          <div className={styles.orderMeta}>
-                            <div className={styles.orderMetaGroup}>
-                              <span className={styles.orderMetaLabel}>Order ID</span>
-                              <span className={styles.orderMetaVal}>{order.id}</span>
+                <div className={styles.ordersLayoutGrid}>
+                  {/* Left Column: Filter Status Nav Pills */}
+                  <div className={styles.ordersSidebarNav}>
+                    <button
+                      type="button"
+                      className={`${styles.orderStatusTabBtn} ${orderCategoryTab === "shipping" ? styles.orderStatusTabActive : ""}`}
+                      onClick={() => setOrderCategoryTab("shipping")}
+                    >
+                      <span>On Shipping</span>
+                      <span className={styles.orderStatusCount}>
+                        {mockOrders.filter(o => o.category === "shipping").length}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`${styles.orderStatusTabBtn} ${orderCategoryTab === "arrived" ? styles.orderStatusTabActive : ""}`}
+                      onClick={() => setOrderCategoryTab("arrived")}
+                    >
+                      <span>Arrived</span>
+                      <span className={styles.orderStatusCount}>
+                        {mockOrders.filter(o => o.category === "arrived").length}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`${styles.orderStatusTabBtn} ${orderCategoryTab === "review" ? styles.orderStatusTabActive : ""}`}
+                      onClick={() => setOrderCategoryTab("review")}
+                    >
+                      <span>To Review</span>
+                      <span className={styles.orderStatusCount}>
+                        {mockOrders.filter(o => o.category === "review").length}
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={`${styles.orderStatusTabBtn} ${orderCategoryTab === "canceled" ? styles.orderStatusTabActive : ""}`}
+                      onClick={() => setOrderCategoryTab("canceled")}
+                    >
+                      <span>Canceled</span>
+                      <span className={styles.orderStatusCount}>
+                        {mockOrders.filter(o => o.category === "canceled").length}
+                      </span>
+                    </button>
+                  </div>
+
+                  {/* Right Column: Order Cards List */}
+                  <div className={styles.ordersListContainer}>
+                    {mockOrders
+                      .filter((order) => order.category === orderCategoryTab)
+                      .map((order) => (
+                        <div key={order.id} className={styles.mockOrderCard}>
+                          {/* Card Header Meta */}
+                          <div className={styles.mockOrderHeader}>
+                            <div className={styles.mockOrderLeftMeta}>
+                              <span className={styles.mockOrderLabel}>Order id</span>
+                              <div className={styles.mockOrderIdRow}>
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                                <span className={styles.mockOrderIdVal}>{order.id}</span>
+                              </div>
                             </div>
-                            <div className={styles.orderMetaGroup}>
-                              <span className={styles.orderMetaLabel}>Date Placed</span>
-                              <span className={styles.orderMetaVal}>{order.date}</span>
-                            </div>
-                            <div className={styles.orderMetaGroup}>
-                              <span className={styles.orderMetaLabel}>Total Paid</span>
-                              <span className={styles.orderMetaVal} style={{ fontWeight: 600 }}>{order.total}</span>
+
+                            <div className={styles.mockOrderRightMeta}>
+                              {order.estimatedArrival && (
+                                <span className={styles.mockEstimateBadge}>
+                                  Estimated arrival: {order.estimatedArrival}
+                                </span>
+                              )}
+                              <span className={`${styles.mockStatusBadge} ${styles['status_' + order.status.toLowerCase().replace(/\s+/g, '')]}`}>
+                                {order.status}
+                              </span>
+                              {order.addressLabel && (
+                                <span className={styles.mockAddressBadge}>
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <circle cx="12" cy="11" r="3" />
+                                  </svg>
+                                  {order.addressLabel}
+                                </span>
+                              )}
                             </div>
                           </div>
-                          <span className={`${styles.badge} ${styles[order.status.toLowerCase()]}`}>
-                            {order.status}
-                          </span>
-                        </div>
 
-                        <div className={styles.orderItems}>
-                          {order.items.map((item) => (
-                            <div key={item.id} className={styles.orderItem}>
-                              <div className={styles.itemImgWrapper}>
-                                <Image
-                                  src={item.image}
-                                  alt={item.name}
-                                  width={50}
-                                  height={50}
-                                  className={styles.itemImg}
-                                />
-                              </div>
-                              <div className={styles.itemDetails}>
-                                <p className={styles.itemName}>{item.name}</p>
-                                <p className={styles.itemMeta}>Quantity: {item.quantity} &bull; Price: {item.price}</p>
-                              </div>
-                            </div>
-                          ))}
+                          <div className={styles.mockOrderDivider} />
 
-                          {order.trackingNumber && (
-                            <div className={styles.trackingInfo}>
-                              Tracking Status: Shipped via Air Express. Track Number:{" "}
-                              <span className={styles.trackingNum}>{order.trackingNumber}</span>
-                            </div>
-                          )}
+                          {/* Order Items */}
+                          <div className={styles.mockOrderItems}>
+                            {order.items.map((item) => (
+                              <div key={item.id} className={styles.mockOrderItemRow}>
+                                <div className={styles.mockItemThumb}>
+                                  <Image
+                                    src={item.image}
+                                    alt={item.name}
+                                    width={76}
+                                    height={76}
+                                    className={styles.mockItemImg}
+                                  />
+                                </div>
+                                <div className={styles.mockItemCenter}>
+                                  <h4 className={styles.mockItemTitle}>{item.name}</h4>
+                                  {item.inspiredBy && <p className={styles.mockItemSub}>{item.inspiredBy}</p>}
+                                  {item.volume && <p className={styles.mockItemVol}>{item.volume}</p>}
+                                </div>
+                                <div className={styles.mockItemRight}>
+                                  <p className={styles.mockItemPrice}>Price: {item.price}</p>
+                                  <p className={styles.mockItemQty}>Quantity: {item.quantity}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className={styles.mockOrderDivider} />
+
+                          {/* Card Footer */}
+                          <div className={styles.mockOrderFooter}>
+                            <span className={styles.mockDeliveryCharge}>Delivery Charge: {order.deliveryCharge}</span>
+                            <span className={styles.mockOrderTotal}>Total: {order.total}</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               )}
