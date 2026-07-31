@@ -27,38 +27,35 @@ export default function StoreLocationSection({
 
   return (
     <section className={styles.storeSection}>
-      <h2 className={styles.sectionHeading}>Stall Location</h2>
+      <h2 className={styles.exactPageTitle}>Store Location</h2>
 
-      <div className={styles.storeControlsRow}>
-        {/* Zone dropdown */}
-        <div className={styles.zoneDropdownWrapper}>
+      {/* Control Bar: Zone Select & Search Input */}
+      <div className={styles.exactStoreControlsRow}>
+        <div className={styles.exactZoneDropdownWrapper}>
           <select
-            className={styles.zoneSelect}
+            className={styles.exactZoneSelect}
             value={selectedZone}
             onChange={(e) => setSelectedZone(e.target.value)}
           >
-            <option value="">All Zones</option>
-            <option value="dhaka">Dhaka</option>
+            <option value="">Zone</option>
+            <option value="banani">Dhaka, Banani</option>
+            <option value="dhanmondi">Dhaka, Dhanmondi</option>
             <option value="chattogram">Chattogram</option>
+            <option value="bashundhara">Dhaka, Bashundhara</option>
           </select>
-          <span className={styles.zoneCaret}>
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-              <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </span>
+          <span className={styles.exactZoneCaret}>⌄</span>
         </div>
 
-        {/* Search input with icon */}
-        <div className={styles.searchWrapper}>
-          <span className={styles.searchIcon}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className={styles.exactSearchWrapper}>
+          <span className={styles.exactSearchIcon}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <circle cx="11" cy="11" r="8" />
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </span>
           <input
             type="text"
-            className={styles.storeSearchInput}
+            className={styles.exactStoreSearchInput}
             placeholder="search your area"
             value={locationSearch}
             onChange={(e) => onSearchChange(e.target.value)}
@@ -66,14 +63,15 @@ export default function StoreLocationSection({
         </div>
       </div>
 
-      <div className={styles.storeGrid}>
+      {/* Store Location Cards Grid */}
+      <div className={styles.exactStoreGrid}>
         {filteredLocations.map((loc, idx) => (
-          <div key={idx} className={styles.storeCard}>
-            <div className={styles.storeCardNum}>{loc.id}</div>
-            <div className={styles.storeCardContent}>
-              <h4 className={styles.storeCardAddress}>{loc.address}</h4>
-              <p className={styles.storeCardZone}>Zone: {loc.zone}</p>
-              <p className={styles.storeCardContract}>Contract: {loc.contract}</p>
+          <div key={idx} className={styles.exactStoreCard}>
+            <span className={styles.exactStoreCardNum}>{loc.id}</span>
+            <div className={styles.exactStoreCardBody}>
+              <h4 className={styles.exactStoreAddress}>{loc.address}</h4>
+              <p className={styles.exactStoreZone}>Zone: {loc.zone}</p>
+              <p className={styles.exactStoreContract}>Contract: {loc.contract}</p>
             </div>
           </div>
         ))}
@@ -81,4 +79,3 @@ export default function StoreLocationSection({
     </section>
   );
 }
-

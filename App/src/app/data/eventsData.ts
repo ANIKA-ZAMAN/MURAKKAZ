@@ -96,35 +96,65 @@ export const previousEvents: PreviousEvent[] = [
 export const galleryImages: GalleryImage[] = [
   {
     src: "/images/events/sadid.jpg",
-    alt: "Live Olfactory Blending Station",
+    alt: "Live Olfactory Station",
     title: "Live Olfactory Station",
-    category: "Exhibition",
+    category: "EXHIBITION",
     date: "Jan 15, 2025",
     location: "Dhaka Club, Gulshan",
     accentColor: "#ded6c9",
   },
   {
     src: "/images/events/eliyas.jpg",
-    alt: "Luxury Pop-up Stall Banani",
+    alt: "Luxury Pop-up Stall",
     title: "Luxury Pop-up Stall",
-    category: "Pop-up",
+    category: "POP-UP",
     date: "Dec 20, 2024",
     location: "Banani 11, Dhaka",
     accentColor: "#d6cebf",
-  }
+  },
+  {
+    src: "/images/occasions/wedding.png",
+    alt: "Autumn Scent Soirée",
+    title: "Autumn Scent Soirée",
+    category: "GALA",
+    date: "Nov 12, 2024",
+    location: "Radisson Blu, Dhaka",
+    accentColor: "#ded6c9",
+  },
+  {
+    src: "/images/products/jade_serenity.png",
+    alt: "Private Masterclass",
+    title: "Private Masterclass",
+    category: "WORKSHOP",
+    date: "Oct 05, 2024",
+    location: "NSU Campus, Dhaka",
+    accentColor: "#d6cebf",
+  },
 ];
 
 export const storeLocations: StoreLocation[] = [
   {
-    id: "gulshan",
-    address: "Road 11, House 42, Block D, Banani, Dhaka",
-    zone: "Banani Boutique",
-    contract: "+880 1711-000000",
+    id: "01",
+    address: "House 45, Road 11, Block H, Banani, Dhaka - 1213",
+    zone: "Dhaka, Banani",
+    contract: "01735.....49",
   },
   {
-    id: "dhanmondi",
-    address: "Shimanto Square, Level 2, Dhanmondi, Dhaka",
-    zone: "Dhanmondi Gallery",
-    contract: "+880 1711-111111",
+    id: "02",
+    address: "Level 3, Shimanto Square, Dhanmondi, Dhaka - 1209",
+    zone: "Dhaka, Dhanmondi",
+    contract: "01745.....59",
+  },
+  {
+    id: "03",
+    address: "GEC Circle, Central Shopping Arcade, Level 1, Chattogram - 4000",
+    zone: "Chattogram, Nasirabad",
+    contract: "01765.....89",
+  },
+  {
+    id: "04",
+    address: "Jamuna Future Park, Level 1, Shop 04B, Bashundhara, Dhaka - 1229",
+    zone: "Dhaka, Bashundhara",
+    contract: "01785.....99",
   },
 ];
