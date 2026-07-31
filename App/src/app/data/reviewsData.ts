@@ -1,17 +1,15 @@
-export interface ReviewItem {
-  id: string;
+export interface Review {
+  id?: string;
   name: string;
   avatar?: string;
+  perfume: string;
+  inspired: string;
   stars: number;
   quote: string;
-  productName: string;
-  productSlug: string;
-  productImage: string;
   longevity: string;
   projection: string;
   compliments: string;
-  verifiedPurchase: boolean;
-  date: string;
 }
 
-export const customerReviews: ReviewItem[] = [];
+export const reviewsData: Review[] = [];
+export const customerReviews = reviewsData;

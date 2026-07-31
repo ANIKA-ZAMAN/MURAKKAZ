@@ -19,7 +19,9 @@ export default function CustomerReviews({
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
-  const total = items.length;
+
+  const reviewItems = items || [];
+  const total = reviewItems.length;
 
   // Continuous Auto-play interval (5.5s)
   useEffect(() => {
@@ -29,6 +31,8 @@ export default function CustomerReviews({
     }, 5500);
     return () => clearInterval(timer);
   }, [isPaused, total]);
+
+  if (total === 0) return null;
 
   const handlePrev = () => {
     if (total === 0) return;
@@ -141,7 +145,7 @@ export default function CustomerReviews({
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {items.map((rev, idx) => {
+          {reviewItems.map((rev, idx) => {
             let offset = idx - current;
             if (offset < -Math.floor(total / 2)) offset += total;
             if (offset > Math.floor(total / 2)) offset -= total;
