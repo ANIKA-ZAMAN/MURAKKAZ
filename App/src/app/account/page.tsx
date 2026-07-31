@@ -117,6 +117,18 @@ export default function AccountPage() {
     setUserPhone(currentUser.phone || "");
     setUserLocation(currentUser.primaryLocation || "");
 
+    // Load saved addresses from localStorage if available
+    const storedAddresses = localStorage.getItem("murakkaz-saved-addresses");
+    if (storedAddresses) {
+      try {
+        setSavedAddresses(JSON.parse(storedAddresses));
+      } catch (e) {
+        setSavedAddresses(mockSavedAddresses);
+      }
+    } else {
+      localStorage.setItem("murakkaz-saved-addresses", JSON.stringify(mockSavedAddresses));
+    }
+
     // Load preferences
     setSoundEnabled(localStorage.getItem("pref-sound") !== "false");
     setAmbientEnabled(localStorage.getItem("pref-ambient") !== "false");
@@ -124,6 +136,13 @@ export default function AccountPage() {
     setConsultationReminders(localStorage.getItem("pref-reminders") !== "false");
     setDarkMode(localStorage.getItem("pref-darkmode") === "true");
   }, []);
+
+  // Sync saved addresses with localStorage when state changes
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem("murakkaz-saved-addresses", JSON.stringify(savedAddresses));
+    }
+  }, [savedAddresses, isMounted]);
 
   // Synchronize document.body classes with preferences
   useEffect(() => {
