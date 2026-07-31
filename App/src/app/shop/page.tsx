@@ -32,7 +32,7 @@ function ShopContent() {
     notes: initialNotes,
   });
 
-  const [maxPrice, setMaxPrice] = useState<number>(3000);
+  const [maxPrice, setMaxPrice] = useState<number>(2500);
   const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -73,7 +73,7 @@ function ShopContent() {
       meter: [],
       notes: [],
     });
-    setMaxPrice(3000);
+    setMaxPrice(2500);
     setSearchQuery("");
     setCurrentPage(1);
   };
