@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ScentIndex from "./components/ScentIndex";
 
 export const metadata = {
@@ -7,5 +8,9 @@ export const metadata = {
 };
 
 export default function ScentIndexPage() {
-  return <ScentIndex />;
+  return (
+    <Suspense fallback={null}>
+      <ScentIndex />
+    </Suspense>
+  );
 }

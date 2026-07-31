@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import QuizCard from "./QuizCard";
 import {
   quizQuestions,
@@ -13,6 +13,7 @@ import styles from "./ScentIndex.module.css";
 
 export default function ScentIndex() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [phase, setPhase] = useState<"intro" | "consultation" | "loading" | "results">("intro");
   const [isTransitioningIntro, setIsTransitioningIntro] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -22,8 +23,13 @@ export default function ScentIndex() {
   const [particles, setParticles] = useState<Array<{ id: number; left: string; top: string; delay: string; size: string }>>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Restore quiz state from sessionStorage on mount
+  // Restore quiz state or check for ?state=loading parameter
   useEffect(() => {
+    const stateParam = searchParams?.get("state");
+    if (stateParam === "loading") {
+      setPhase("loading");
+      return;
+    }
     try {
       const savedPhase = sessionStorage.getItem("scent-quiz-phase");
       const savedAnswers = sessionStorage.getItem("scent-quiz-answers");
