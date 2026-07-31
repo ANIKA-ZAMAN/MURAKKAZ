@@ -36,23 +36,32 @@ export default function ScentIndex() {
       const savedRecommendations = sessionStorage.getItem("scent-quiz-recommendations");
       const savedCurrentStep = sessionStorage.getItem("scent-quiz-current-step");
 
-      if (savedPhase) setPhase(savedPhase as any);
+      // Never restore "loading" from sessionStorage on refresh
+      if (savedPhase && savedPhase !== "loading") {
+        setPhase(savedPhase as any);
+      } else if (savedPhase === "loading") {
+        sessionStorage.removeItem("scent-quiz-phase");
+        setPhase("intro");
+      }
+
       if (savedAnswers) setAnswers(JSON.parse(savedAnswers));
       if (savedRecommendations) setRecommendations(JSON.parse(savedRecommendations));
       if (savedCurrentStep) setCurrentStep(Number(savedCurrentStep));
     } catch (e) {
       console.error("Failed to restore quiz state", e);
     }
-  }, []);
+  }, [searchParams]);
 
-  // Save quiz state to sessionStorage when it changes
+  // Save quiz state to sessionStorage when it changes (excluding transient loading state)
   useEffect(() => {
     try {
-      if (phase === "intro") {
+      if (phase === "intro" || phase === "loading") {
         sessionStorage.removeItem("scent-quiz-phase");
-        sessionStorage.removeItem("scent-quiz-answers");
-        sessionStorage.removeItem("scent-quiz-recommendations");
-        sessionStorage.removeItem("scent-quiz-current-step");
+        if (phase === "intro") {
+          sessionStorage.removeItem("scent-quiz-answers");
+          sessionStorage.removeItem("scent-quiz-recommendations");
+          sessionStorage.removeItem("scent-quiz-current-step");
+        }
       } else {
         sessionStorage.setItem("scent-quiz-phase", phase);
         sessionStorage.setItem("scent-quiz-answers", JSON.stringify(answers));
