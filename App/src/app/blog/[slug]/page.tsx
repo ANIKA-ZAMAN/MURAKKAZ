@@ -37,7 +37,8 @@ export default function BlogDetailPage({ params }: PageProps) {
       setPost(found);
     } else {
       // Attempt API fetch
-      fetch(`http://localhost:5000/api/blog/${slug}`)
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      fetch(`${baseUrl}/api/blog/${slug}`)
         .then((res) => res.json())
         .then((data) => {
           if (data && data.data) {
@@ -58,7 +59,7 @@ export default function BlogDetailPage({ params }: PageProps) {
           }
         })
         .catch(() => {
-          setPost(blogPosts[0]);
+          if (blogPosts.length > 0) setPost(blogPosts[0]);
         });
     }
   }, [slug]);
@@ -90,6 +91,12 @@ export default function BlogDetailPage({ params }: PageProps) {
   };
 
   const relatedPosts = blogPosts.filter((p) => p.id !== post.id).slice(0, 3);
+
+  const contentParagraphs = Array.isArray(post.content)
+    ? post.content
+    : typeof post.content === "string"
+    ? post.content.split("\n\n")
+    : [];
 
   return (
     <div className={styles.articlePage}>
@@ -144,7 +151,7 @@ export default function BlogDetailPage({ params }: PageProps) {
 
         {/* Article Body */}
         <div className={styles.articleBody}>
-          {post.content.split("\n\n").map((paragraph, index) => {
+          {contentParagraphs.map((paragraph, index) => {
             const trimmed = paragraph.trim();
             if (!trimmed) return null;
 
