@@ -26,7 +26,7 @@ export default function UpcomingEventsSection() {
             >
               <div className={styles.eventImageWrap}>
                 <Image
-                  src={`/images/events/${event.image}`}
+                  src={event.image.startsWith("/") ? event.image : `/images/events/${event.image}`}
                   alt={event.title}
                   fill
                   sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"

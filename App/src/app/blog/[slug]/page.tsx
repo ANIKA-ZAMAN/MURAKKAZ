@@ -151,7 +151,7 @@ export default function BlogDetailPage({ params }: PageProps) {
 
         {/* Article Body */}
         <div className={styles.articleBody}>
-          {contentParagraphs.map((paragraph, index) => {
+          {(Array.isArray(post.content) ? post.content : post.content.split("\n\n")).map((paragraph, index) => {
             const trimmed = paragraph.trim();
             if (!trimmed) return null;
 
