@@ -855,9 +855,6 @@ export default function AccountPage() {
                           >
                             Update cover
                           </button>
-                          <span className={styles.uploadSubtext}>
-                            Supports JPG or PNG only. Maximum file size: 2MB.
-                          </span>
                         </div>
                       </div>
                     </div>
