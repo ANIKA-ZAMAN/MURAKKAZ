@@ -805,205 +805,124 @@ export default function AccountPage() {
               {activeTab === "profile" && (
                 <div className={styles.profileLayoutGrid}>
                   
-                  {/* Left Column: Sub-tabs */}
-                  <div className={styles.subTabsColumn}>
-                    <button 
-                      type="button"
-                      className={`${styles.subTabBtn} ${activeSubTab === "basic" ? styles.subTabBtnActive : ""}`}
-                      onClick={() => setActiveSubTab("basic")}
-                    >
-                      Basic
-                    </button>
-                    <button 
-                      type="button"
-                      className={`${styles.subTabBtn} ${activeSubTab === "advance" ? styles.subTabBtnActive : ""}`}
-                      onClick={() => setActiveSubTab("advance")}
-                    >
-                      Advance
-                    </button>
-                  </div>
-
                   {/* Middle Column: Boxes */}
                   <div className={styles.middleBoxesColumn}>
-                    {activeSubTab === "basic" ? (
-                      <>
-                        {/* Top Box: Avatar uploading */}
-                        <div className={styles.profileBox}>
-                          <div className={styles.avatarContainer}>
-                            <div className={styles.avatarPreviewWrapper}>
-                              {user.photo ? (
-                                <img src={user.photo} alt="Profile Photo" className={styles.avatarImage} />
-                              ) : (
-                                <div className={styles.avatarPlaceholder}>
-                                  <svg viewBox="0 0 24 24" width="48" height="48" fill="#a38258">
-                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                  </svg>
-                                </div>
-                              )}
+                    {/* Top Box: Avatar uploading */}
+                    <div className={styles.profileBox}>
+                      <div className={styles.avatarContainer}>
+                        <div className={styles.avatarPreviewWrapper}>
+                          {user.photo ? (
+                            <img src={user.photo} alt="Profile Photo" className={styles.avatarImage} />
+                          ) : (
+                            <div className={styles.avatarPlaceholder}>
+                              <svg viewBox="0 0 24 24" width="48" height="48" fill="#a38258">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                              </svg>
                             </div>
-                            <div className={styles.avatarUploadControls}>
-                              <input 
-                                type="file" 
-                                ref={fileInputRef} 
-                                onChange={handlePhotoUpload} 
-                                accept="image/*" 
-                                style={{ display: "none" }} 
-                              />
-                              <button 
-                                type="button" 
-                                className={styles.btnSecondary} 
-                                onClick={triggerFileInput}
-                              >
-                                Update cover
-                              </button>
-                              <span className={styles.uploadSubtext}>
-                                Supports JPG or PNG only. Maximum file size: 2MB.
-                              </span>
-                            </div>
-                          </div>
+                          )}
                         </div>
-
-                        {/* Bottom Box: Profile Details form fields */}
-                        <div className={styles.profileBox}>
-                          <form onSubmit={handleSaveProfile} className={styles.detailsForm}>
-                            
-                            <div className={styles.formRow}>
-                              <label className={styles.formLabel}>Name:</label>
-                              <div className={styles.nameInputs}>
-                                <input 
-                                  type="text" 
-                                  required 
-                                  className={styles.inputField} 
-                                  placeholder="First Name"
-                                  value={firstName} 
-                                  onChange={(e) => setFirstName(e.target.value)}
-                                />
-                                <input 
-                                  type="text" 
-                                  required 
-                                  className={styles.inputField} 
-                                  placeholder="Last Name"
-                                  value={lastName} 
-                                  onChange={(e) => setLastName(e.target.value)}
-                                />
-                              </div>
-                            </div>
-
-                            <div className={styles.formRow}>
-                              <label className={styles.formLabel}>Email:</label>
-                              <input 
-                                type="email" 
-                                required 
-                                className={styles.inputField} 
-                                placeholder="Email Address"
-                                value={userEmail} 
-                                onChange={(e) => setUserEmail(e.target.value)}
-                              />
-                            </div>
-
-                            <div className={styles.formRow}>
-                              <label className={styles.formLabel}>Phone:</label>
-                              <input 
-                                type="text" 
-                                className={styles.inputField} 
-                                placeholder="Phone Number"
-                                value={userPhone} 
-                                onChange={(e) => setUserPhone(e.target.value)}
-                              />
-                            </div>
-
-                            <div className={styles.formRow}>
-                              <label className={styles.formLabel}>Primary Location:</label>
-                              <input 
-                                type="text" 
-                                className={styles.inputField} 
-                                placeholder="Primary Location"
-                                value={userLocation} 
-                                onChange={(e) => setUserLocation(e.target.value)}
-                              />
-                            </div>
-
-                          </form>
-                        </div>
-                      </>
-                    ) : (
-                      /* Advance subtab: Keep existing settings/preferences */
-                      <div className={styles.profileBox}>
-                        <h3 className={styles.boxTitle}>Premium Preferences</h3>
-                        <div className={styles.togglesList}>
-                          
-                          <div className={styles.toggleRow}>
-                            <div className={styles.toggleMeta}>
-                              <span className={styles.toggleLabel}>Dark Aesthetics</span>
-                              <span className={styles.toggleDesc}>Enable modern charcoal-black backdrop aesthetic across pages.</span>
-                            </div>
-                            <label className={styles.switch}>
-                              <input 
-                                type="checkbox" 
-                                className={styles.switchInput}
-                                checked={darkMode}
-                                onChange={(e) => togglePreference("pref-darkmode", e.target.checked, setDarkMode)}
-                              />
-                              <span className={styles.switchSlider} />
-                            </label>
-                          </div>
-                          
-                          <div className={styles.toggleRow}>
-                            <div className={styles.toggleMeta}>
-                              <span className={styles.toggleLabel}>Ambient Particle Rendering</span>
-                              <span className={styles.toggleDesc}>Render floating ambient dust particles inside headers & scent selector.</span>
-                            </div>
-                            <label className={styles.switch}>
-                              <input 
-                                type="checkbox" 
-                                className={styles.switchInput}
-                                checked={ambientEnabled}
-                                onChange={(e) => togglePreference("pref-ambient", e.target.checked, setAmbientEnabled)}
-                              />
-                              <span className={styles.switchSlider} />
-                            </label>
-                          </div>
-
-                          <div className={styles.toggleRow}>
-                            <div className={styles.toggleMeta}>
-                              <span className={styles.toggleLabel}>Sound Effects</span>
-                              <span className={styles.toggleDesc}>Play micro-feedback audio sounds when interacting with buttons.</span>
-                            </div>
-                            <label className={styles.switch}>
-                              <input 
-                                type="checkbox" 
-                                className={styles.switchInput}
-                                checked={soundEnabled}
-                                onChange={(e) => togglePreference("pref-sound", e.target.checked, setSoundEnabled)}
-                              />
-                              <span className={styles.switchSlider} />
-                            </label>
-                          </div>
+                        <div className={styles.avatarUploadControls}>
+                          <input 
+                            type="file" 
+                            ref={fileInputRef} 
+                            onChange={handlePhotoUpload} 
+                            accept="image/*" 
+                            style={{ display: "none" }} 
+                          />
+                          <button 
+                            type="button" 
+                            className={styles.btnSecondary} 
+                            onClick={triggerFileInput}
+                          >
+                            Update cover
+                          </button>
+                          <span className={styles.uploadSubtext}>
+                            Supports JPG or PNG only. Maximum file size: 2MB.
+                          </span>
                         </div>
                       </div>
-                    )}
+                    </div>
+
+                    {/* Bottom Box: Profile Details form fields */}
+                    <div className={styles.profileBox}>
+                      <form onSubmit={handleSaveProfile} className={styles.detailsForm}>
+                        
+                        <div className={styles.formRow}>
+                          <label className={styles.formLabel}>Name:</label>
+                          <div className={styles.nameInputs}>
+                            <input 
+                              type="text" 
+                              required 
+                              className={styles.inputField} 
+                              placeholder="First Name"
+                              value={firstName} 
+                              onChange={(e) => setFirstName(e.target.value)}
+                            />
+                            <input 
+                              type="text" 
+                              required 
+                              className={styles.inputField} 
+                              placeholder="Last Name"
+                              value={lastName} 
+                              onChange={(e) => setLastName(e.target.value)}
+                            />
+                          </div>
+                        </div>
+
+                        <div className={styles.formRow}>
+                          <label className={styles.formLabel}>Email:</label>
+                          <input 
+                            type="email" 
+                            required 
+                            className={styles.inputField} 
+                            placeholder="Email Address"
+                            value={userEmail} 
+                            onChange={(e) => setUserEmail(e.target.value)}
+                          />
+                        </div>
+
+                        <div className={styles.formRow}>
+                          <label className={styles.formLabel}>Phone:</label>
+                          <input 
+                            type="text" 
+                            className={styles.inputField} 
+                            placeholder="Phone Number"
+                            value={userPhone} 
+                            onChange={(e) => setUserPhone(e.target.value)}
+                          />
+                        </div>
+
+                        <div className={styles.formRow}>
+                          <label className={styles.formLabel}>Primary Location:</label>
+                          <input 
+                            type="text" 
+                            className={styles.inputField} 
+                            placeholder="Primary Location"
+                            value={userLocation} 
+                            onChange={(e) => setUserLocation(e.target.value)}
+                          />
+                        </div>
+
+                      </form>
+                    </div>
                   </div>
 
                   {/* Right Column: Actions (Save/Reset) */}
                   <div className={styles.actionsColumn}>
-                    {activeSubTab === "basic" && (
-                      <>
-                        <button 
-                          type="button" 
-                          className={styles.btnPrimarySave} 
-                          onClick={handleSaveProfile}
-                        >
-                          Save
-                        </button>
-                        <button 
-                          type="button" 
-                          className={styles.btnResetProfile} 
-                          onClick={handleResetProfile}
-                        >
-                          Reset
-                        </button>
-                      </>
-                    )}
+                    <button 
+                      type="button" 
+                      className={styles.btnPrimarySave} 
+                      onClick={handleSaveProfile}
+                    >
+                      Save
+                    </button>
+                    <button 
+                      type="button" 
+                      className={styles.btnResetProfile} 
+                      onClick={handleResetProfile}
+                    >
+                      Reset
+                    </button>
                   </div>
 
                 </div>
