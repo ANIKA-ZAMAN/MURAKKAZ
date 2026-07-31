@@ -39,6 +39,9 @@ export default function AccountPage() {
   const [addPhone, setAddPhone] = useState("");
   const [addCity, setAddCity] = useState("");
   const [addDistrict, setAddDistrict] = useState("");
+
+  // Password View State
+  const [isPasswordSuccess, setIsPasswordSuccess] = useState(true);
   const [activeSubTab, setActiveSubTab] = useState<"basic" | "advance">("basic");
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
 
@@ -1347,58 +1350,75 @@ export default function AccountPage() {
 
               {/* Change Password View */}
               {activeTab === "password" && (
-                <div className={styles.tabContentPanel}>
-                  <h2 className={styles.contentTitle}>Change Password</h2>
-                  <form onSubmit={handlePasswordChange} className={styles.form} style={{ maxWidth: "500px", padding: "1rem 0" }}>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>Current Password</label>
-                      <input
-                        type="password"
-                        required
-                        className={styles.input}
-                        placeholder="Current Password"
-                        value={currentPassword}
-                        onChange={(e) => setCurrentPassword(e.target.value)}
-                      />
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>New Password</label>
-                      <input
-                        type="password"
-                        required
-                        className={styles.input}
-                        placeholder="New Password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                      />
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label className={styles.label}>Confirm New Password</label>
-                      <input
-                        type="password"
-                        required
-                        className={styles.input}
-                        placeholder="Confirm New Password"
-                        value={confirmNewPassword}
-                        onChange={(e) => setConfirmNewPassword(e.target.value)}
-                      />
-                    </div>
-                    <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>
-                      <button type="submit" className={styles.btnPrimarySave} style={{ maxWidth: "200px" }}>Save Password</button>
-                      <button 
-                        type="button" 
-                        className={styles.btnResetProfile} 
-                        style={{ maxWidth: "150px" }}
+                <div className={styles.passwordChangeContainer}>
+                  {isPasswordSuccess ? (
+                    /* Success View Matching Screenshot Exactly */
+                    <div className={styles.passwordSuccessCard}>
+                      <h1 className={styles.passwordSuccessTitle}>Your Password Has Changed</h1>
+                      <button
+                        type="button"
+                        className={styles.passwordLoginBtn}
                         onClick={() => {
-                          setCurrentPassword("");
-                          setNewPassword("");
-                          setConfirmNewPassword("");
+                          setIsPasswordSuccess(false);
                         }}
                       >
-                        Reset
+                        Login
                       </button>
                     </div>
-                  </form>
+                  ) : (
+                    /* Change Password Form Card */
+                    <div className={styles.mockAddressCard} style={{ maxWidth: "560px", margin: "0 auto", width: "100%" }}>
+                      <div className={styles.mockAddressHeader}>
+                        <h3 className={styles.mockAddressNickname}>Change Password</h3>
+                      </div>
+                      <div className={styles.mockOrderDivider} />
+                      <form onSubmit={(e) => {
+                        e.preventDefault();
+                        setIsPasswordSuccess(true);
+                      }} className={styles.mockAddFormBody}>
+                        <input
+                          type="password"
+                          placeholder="Current Password"
+                          required
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
+                          className={styles.mockFormInput}
+                        />
+                        <input
+                          type="password"
+                          placeholder="New Password"
+                          required
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          className={styles.mockFormInput}
+                        />
+                        <input
+                          type="password"
+                          placeholder="Confirm New Password"
+                          required
+                          value={confirmNewPassword}
+                          onChange={(e) => setConfirmNewPassword(e.target.value)}
+                          className={styles.mockFormInput}
+                        />
+                        <div className={styles.mockFormActionsRow}>
+                          <button
+                            type="button"
+                            className={styles.mockResetBtn}
+                            onClick={() => {
+                              setCurrentPassword("");
+                              setNewPassword("");
+                              setConfirmNewPassword("");
+                            }}
+                          >
+                            Reset
+                          </button>
+                          <button type="submit" className={styles.mockSaveBtn}>
+                            Save
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

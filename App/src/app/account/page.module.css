@@ -1741,6 +1741,58 @@
   .mockSaveBtn {
     width: 100%;
   }
+
+  .passwordSuccessTitle {
+    font-size: 2rem;
+  }
+}
+
+/* Password Change Page Layout */
+.passwordChangeContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 420px;
+  padding: 3rem 1rem;
+}
+
+.passwordSuccessCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.passwordSuccessTitle {
+  font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #313134;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.passwordLoginBtn {
+  padding: 0.85rem 3.5rem;
+  border-radius: 12px;
+  border: none;
+  background-color: #313134;
+  color: #F5F1E8;
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(49, 49, 52, 0.15);
+}
+
+.passwordLoginBtn:hover {
+  background-color: #111112;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(49, 49, 52, 0.25);
 }
 
 
