@@ -79,6 +79,18 @@ export const previousEvents: PreviousEvent[] = [
     image: "/images/events/eliyas.jpg",
     category: "Pop-up",
   },
+  {
+    title: "Autumn Scent Soirée",
+    date: "Nov 12, 2024",
+    image: "/images/occasions/wedding.png",
+    category: "Gala",
+  },
+  {
+    title: "Private Masterclass",
+    date: "Oct 05, 2024",
+    image: "/images/products/jade_serenity.png",
+    category: "Workshop",
+  },
 ];
 
 export const galleryImages: GalleryImage[] = [
