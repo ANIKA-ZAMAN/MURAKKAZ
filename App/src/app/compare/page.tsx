@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { productsCatalog } from "../data/products";
 import styles from "./page.module.css";
 
-interface CompareProduct {
+export interface CompareProduct {
   name: string;
   image: string;
   brand: string;
@@ -19,103 +19,261 @@ interface CompareProduct {
   bestFor: string;
   accords: { name: string; value: number }[];
   isRecommended?: boolean;
+  notes?: {
+    top: string[];
+    heart: string[];
+    base: string[];
+  };
 }
 
-const mockProducts: CompareProduct[] = productsCatalog.map((prod) => {
-  let name = prod.name;
-  let inspiredBy = `Inspired by ${prod.brand}`;
-  let profile = prod.description;
-  let longevity = prod.meter;
-  let projection = "Moderate";
-  let sweetness = "●●○○○";
-  let bestFor = prod.occasion;
-  let accords = [
-    { name: "Fresh", value: 80 },
-    { name: "Citrus", value: 70 },
-  ];
-
-  if (prod.image.includes("jade_serenity")) {
-    name = "Jade Serenity";
-    inspiredBy = "Creed Original Vetiver";
-    profile = "Clean, crisp green tea twist layered over the classic fresh metallic base.";
-    longevity = "Beast Mode (8+ Hours)";
-    projection = "Heavy (Cuts through humid air beautifully)";
-    sweetness = "●●○○○ (Subtle Crispness)";
-    bestFor = "Office, hot summer afternoons, and high-end formal setups.";
-    accords = [
-      { name: "Woody", value: 80 },
-      { name: "Vanilla", value: 65 },
-      { name: "Balsamic", value: 55 },
-      { name: "Warm Spicy", value: 50 },
-    ];
-  } else if (prod.image.includes("coral_sea")) {
-    name = "Mageration";
-    inspiredBy = "Dior Sauvage";
-    profile = "Raw, sharp, high-concentration classic amber-spicy formulation.";
-    longevity = "Strong (6-7 Hours)";
-    projection = "Moderate (Creates a close personal aura)";
-    sweetness = "●○○○○ (Very Dry / Spicy)";
-    bestFor = "Casual hangouts, post-gym refreshes, and daily signatures.";
-    accords = [
+const availablePerfumes: CompareProduct[] = [
+  {
+    name: "Dior Sauvage",
+    image: "/images/products/coral_sea.png",
+    brand: "Dior",
+    inspiredBy: "Dior Sauvage",
+    price: "৳450 – ৳6,800",
+    rating: "4.8 (240)",
+    profile: "Raw, sharp bergamot & Sichuan pepper opening with a powerful ambroxan trail.",
+    longevity: "Strong (7-8 Hours)",
+    projection: "Heavy (Room filling initially)",
+    sweetness: "●○○○○ (Fresh & Spicy)",
+    bestFor: "Casual hangouts, evening dates, and daily signatures.",
+    accords: [
+      { name: "Fresh Spicy", value: 90 },
+      { name: "Amber", value: 80 },
+      { name: "Citrus", value: 75 },
+    ],
+    notes: {
+      top: ["Calabrian Bergamot", "Pepper"],
+      heart: ["Sichuan Pepper", "Lavender", "Vetiver", "Patchouli"],
+      base: ["Ambroxan", "Cedarwood", "Labdanum"],
+    },
+  },
+  {
+    name: "Carolina Herrera Bad Boy",
+    image: "/images/products/magnetism.png",
+    brand: "Carolina Herrera",
+    inspiredBy: "Carolina Herrera Bad Boy",
+    price: "৳480 – ৳7,000",
+    rating: "4.7 (195)",
+    profile: "Bold white & black pepper blended with cedarwood, tonka bean, and cocoa notes.",
+    longevity: "Long Lasting (6-8 Hours)",
+    projection: "Moderate to Heavy",
+    sweetness: "●●●○○ (Warm & Spicy Sweet)",
+    bestFor: "Night outs, winter events, and party occasions.",
+    accords: [
+      { name: "Warm Spicy", value: 85 },
+      { name: "Cacao", value: 80 },
+      { name: "Woody", value: 70 },
+    ],
+    notes: {
+      top: ["Black Pepper", "White Pepper", "Italian Bergamot"],
+      heart: ["Cedarwood", "Sage"],
+      base: ["Tonka Bean", "Cocoa", "Amberwood"],
+    },
+  },
+  {
+    name: "YSL Y EDP",
+    image: "/images/products/jade_serenity.png",
+    brand: "Yves Saint Laurent",
+    inspiredBy: "YSL Y EDP",
+    price: "৳500 – ৳7,200",
+    rating: "4.9 (310)",
+    profile: "Aromatic crisp apple, sage, and ginger leading into a smooth vetiver & amberwood dry down.",
+    longevity: "Beast Mode (8+ Hours)",
+    projection: "Heavy (Fills personal aura)",
+    sweetness: "●●●○○ (Sweet & Aromatic)",
+    bestFor: "All-year versatile signature, clubbing, and formal meetings.",
+    accords: [
+      { name: "Aromatic", value: 90 },
+      { name: "Fruity", value: 82 },
       { name: "Woody", value: 75 },
-      { name: "Vanilla", value: 60 },
-      { name: "Balsamic", value: 55 },
-      { name: "Warm Spicy", value: 70 },
-    ];
-  } else if (prod.image.includes("magnetism")) {
-    name = "Magnetism";
-    inspiredBy = "YSL Y EDP";
-    profile = "Sweet, fresh, highly aromatic ginger-apple opening with a deep woody trails.";
-    longevity = "Long Lasting (7-8 Hours)";
-    projection = "Heavy (Fills the room initially)";
-    sweetness = "●●●○○ (Sweet & Fresh)";
-    bestFor = "Clubbing, date nights, and winter evening gatherings.";
-    accords = [
-      { name: "Woody", value: 70 },
-      { name: "Vanilla", value: 50 },
-      { name: "Balsamic", value: 45 },
-      { name: "Warm Spicy", value: 65 },
-    ];
-  } else if (prod.image.includes("hellenist")) {
-    name = "Hellenist";
-    inspiredBy = "Baccarat Rouge 540";
-    profile = "Stunningly sweet amber profile. Highly projecting and elegant, ideal for special occasions.";
-    longevity = "Long Lasting (7-8 Hours)";
-    projection = "Heavy";
-    sweetness = "●●●●○ (Sweet & Rich)";
-    bestFor = "Special occasions, cold nights, and luxury events.";
-    accords = [
-      { name: "Sweet", value: 90 },
-      { name: "Amber", value: 85 },
-      { name: "Woody", value: 70 },
-      { name: "Warm Spicy", value: 50 },
-    ];
-  }
+    ],
+    notes: {
+      top: ["Crisp Apple", "Ginger", "Bergamot"],
+      heart: ["Sage", "Juniper Berries", "Geranium"],
+      base: ["Amberwood", "Tonka Bean", "Vetiver"],
+    },
+  },
+  {
+    name: "Bleu de Chanel",
+    image: "/images/products/hellenist.png",
+    brand: "Chanel",
+    inspiredBy: "Bleu de Chanel",
+    price: "৳550 – ৳8,200",
+    rating: "4.9 (420)",
+    profile: "Timeless grapefruit, mint, and incense blended over deep cedar and sandalwood.",
+    longevity: "Long Lasting (7-8 Hours)",
+    projection: "Moderate (Sophisticated & Clean)",
+    sweetness: "●●○○○ (Crisp & Woody)",
+    bestFor: "Executive meetings, dates, and black-tie formal events.",
+    accords: [
+      { name: "Citrus", value: 88 },
+      { name: "Woody", value: 82 },
+      { name: "Smoky", value: 65 },
+    ],
+    notes: {
+      top: ["Grapefruit", "Lemon", "Mint", "Pink Pepper"],
+      heart: ["Ginger", "Nutmeg", "Jasmine"],
+      base: ["Incense", "Vetiver", "Cedarwood", "Sandalwood"],
+    },
+  },
+  {
+    name: "Afnan 9PM",
+    image: "/images/products/coral_sea.png",
+    brand: "Afnan",
+    inspiredBy: "Afnan 9PM",
+    price: "৳420 – ৳6,200",
+    rating: "4.8 (280)",
+    profile: "Irresistible apple, cinnamon, lavender, and rich vanilla trail.",
+    longevity: "Beast Mode (9+ Hours)",
+    projection: "Heavy",
+    sweetness: "●●●●○ (Sweet & Intoxicating)",
+    bestFor: "Evening parties, cool nights, and clubbing.",
+    accords: [
+      { name: "Vanilla", value: 90 },
+      { name: "Sweet", value: 85 },
+      { name: "Fruity", value: 75 },
+    ],
+    notes: {
+      top: ["Apple", "Cinnamon", "Wild Lavender", "Bergamot"],
+      heart: ["Orange Blossom", "Lily-of-the-Valley"],
+      base: ["Vanilla", "Tonka Bean", "Amber", "Patchouli"],
+    },
+  },
+  {
+    name: "JPG Ultra Male",
+    image: "/images/products/magnetism.png",
+    brand: "Jean Paul Gaultier",
+    inspiredBy: "JPG Ultra Male",
+    price: "৳580 – ৳8,500",
+    rating: "4.9 (350)",
+    profile: "Juicy black lavender, pear, mint, and spicy cinnamon vanilla blend.",
+    longevity: "Beast Mode (10+ Hours)",
+    projection: "Room Filling",
+    sweetness: "●●●●● (Ultra Sweet)",
+    bestFor: "Nightlife, cold winter nights, and statement entrances.",
+    accords: [
+      { name: "Sweet", value: 95 },
+      { name: "Fruity", value: 88 },
+      { name: "Vanilla", value: 85 },
+    ],
+    notes: {
+      top: ["Pear", "Lavender", "Mint", "Bergamot", "Lemon"],
+      heart: ["Cinnamon", "Clary Sage", "Caraway"],
+      base: ["Black Vanilla Husk", "Amber", "Patchouli", "Cedarwood"],
+    },
+  },
+  {
+    name: "Jade Serenity",
+    image: "/images/products/jade_serenity.png",
+    brand: "Creed",
+    inspiredBy: "Creed Original Vetiver",
+    price: "৳650 – ৳9,500",
+    rating: "4.7 (180)",
+    profile: "Clean, crisp green tea twist layered over fresh metallic vetiver base.",
+    longevity: "Beast Mode (8+ Hours)",
+    projection: "Heavy",
+    sweetness: "●●○○○ (Subtle Crispness)",
+    bestFor: "Office, hot summer afternoons, and high-end formal setups.",
+    accords: [
+      { name: "Woody", value: 80 },
+      { name: "Citrus", value: 75 },
+      { name: "Green", value: 70 },
+    ],
+    notes: {
+      top: ["Crisp Bergamot", "Mandarin", "Lemon Zest"],
+      heart: ["Green Tea", "Florentine Iris", "Wet Vetiver"],
+      base: ["Sandalwood", "White Musk", "Ambergris"],
+    },
+    isRecommended: true,
+  },
+  {
+    name: "Hellenist",
+    image: "/images/products/hellenist.png",
+    brand: "Maison Francis Kurkdjian",
+    inspiredBy: "Baccarat Rouge 540",
+    price: "৳750 – ৳11,000",
+    rating: "4.9 (510)",
+    profile: "Stunningly sweet jasmine, saffron, and ambergris crystal woods.",
+    longevity: "Beast Mode (12+ Hours)",
+    projection: "Enormous",
+    sweetness: "●●●●○ (Sweet & Rich)",
+    bestFor: "Special occasions, cold nights, and luxury gala events.",
+    accords: [
+      { name: "Amber", value: 95 },
+      { name: "Woody", value: 85 },
+      { name: "Warm Spicy", value: 75 },
+    ],
+    notes: {
+      top: ["Grandiflorum Jasmine", "Saffron"],
+      heart: ["Bitter Almond", "Cedarwood"],
+      base: ["Ambergris Accord", "Woody Musk"],
+    },
+  },
+];
 
-  return {
-    name: `${name} (Slot ${prod.id})`,
-    image: prod.image,
-    brand: prod.brand,
-    inspiredBy,
-    price: prod.price,
-    rating: `${prod.rating.toFixed(1)} (${prod.reviews})`,
-    profile,
-    longevity,
-    projection,
-    sweetness,
-    bestFor,
-    accords,
-    isRecommended: prod.id === "1",
-  };
-});
+const allAvailablePerfumes: CompareProduct[] = (() => {
+  const mapByName = new Map<string, CompareProduct>();
+  availablePerfumes.forEach((p) => mapByName.set(p.name.toLowerCase(), p));
+
+  productsCatalog.forEach((p) => {
+    if (!mapByName.has(p.name.toLowerCase())) {
+      const rawNotes = p.notes || [];
+      mapByName.set(p.name.toLowerCase(), {
+        name: p.name,
+        image: p.image || "/images/products/jade_serenity.png",
+        brand: p.brand || "Murakkaz",
+        inspiredBy: p.inspiredBy || p.name,
+        price: p.price || `৳${p.priceVal || 1500}`,
+        rating: `${p.rating || 4.5} (${p.reviews || 120})`,
+        profile: p.description || `${p.name} - ${p.family} fragrance with ${rawNotes.join(", ")}.`,
+        longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+        projection: "Moderate to Heavy",
+        sweetness: "●●●○○",
+        bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
+        accords: rawNotes.slice(0, 3).map((note, i) => ({
+          name: note,
+          value: 85 - i * 10,
+        })),
+        notes: {
+          top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
+          heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
+          base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+        },
+      });
+    }
+  });
+
+  return Array.from(mapByName.values());
+})();
 
 function CompareContent() {
-  const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([null, null, null]);
-  const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
-  const [showComparison, setShowComparison] = useState(false);
-  const [modalSearchQuery, setModalSearchQuery] = useState("");
-  const tableRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
+  const initialP1 = searchParams.get("p1");
+
+  const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([
+    null,
+    null,
+    null,
+  ]);
+
+  const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
+  const [modalSearchQuery, setModalSearchQuery] = useState("");
+  const [showComparison, setShowComparison] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const tableRef = useRef<HTMLDivElement>(null);
+
+  const triggerAnalysis = (slots: (CompareProduct | null)[]) => {
+    setIsAnalyzing(true);
+    setShowComparison(false);
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      setShowComparison(true);
+    }, 1200);
+  };
 
   useEffect(() => {
     const p1 = searchParams.get("p1");
@@ -128,11 +286,13 @@ function CompareContent() {
 
       params.forEach((param, idx) => {
         if (param) {
-          const match = mockProducts.find(
+          const match = allAvailablePerfumes.find(
             (p) =>
               p.image === param ||
               p.image.includes(param) ||
-              p.name.toLowerCase().includes(param.toLowerCase())
+              p.name.toLowerCase().includes(param.toLowerCase()) ||
+              p.inspiredBy.toLowerCase().includes(param.toLowerCase()) ||
+              p.brand.toLowerCase().includes(param.toLowerCase())
           );
           if (match) {
             newSlots[idx] = match;
@@ -141,9 +301,9 @@ function CompareContent() {
       });
 
       setSelectedSlots(newSlots);
-      setShowComparison(true);
+      triggerAnalysis(newSlots);
 
-      // Clean up the URL parameters so they don't linger in the address bar
+      // Clean up URL parameters
       if (typeof window !== "undefined") {
         const url = new URL(window.location.href);
         url.search = "";
@@ -157,10 +317,11 @@ function CompareContent() {
     const addName = searchParams.get("name");
 
     if (addImage || addName || addId) {
-      const match = mockProducts.find(
+      const match = allAvailablePerfumes.find(
         (p) =>
           (addImage && p.image === addImage) ||
-          (addName && p.name.toLowerCase() === addName.toLowerCase())
+          (addName && p.name.toLowerCase() === addName.toLowerCase()) ||
+          (addId && p.name.toLowerCase().includes(addId.toLowerCase()))
       );
 
       if (match) {
@@ -178,7 +339,6 @@ function CompareContent() {
           return nextSlots;
         });
 
-        // Clean up the URL parameters so they don't linger in the address bar
         if (typeof window !== "undefined") {
           const url = new URL(window.location.href);
           url.search = "";
@@ -189,12 +349,17 @@ function CompareContent() {
   }, [searchParams]);
 
   useEffect(() => {
-    if (showComparison) {
+    if (showComparison && tableRef.current) {
       setTimeout(() => {
         if (tableRef.current) {
-          tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+          const navbarOffset = 110;
+          const elementTop = tableRef.current.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementTop - navbarOffset,
+            behavior: "smooth",
+          });
         }
-      }, 80);
+      }, 100);
     }
   }, [showComparison]);
 
@@ -218,15 +383,16 @@ function CompareContent() {
   const handleReset = () => {
     setSelectedSlots([null, null, null]);
     setShowComparison(false);
+    setIsAnalyzing(false);
   };
 
   const handleCompare = () => {
     if (selectedSlots.some((slot) => slot !== null)) {
-      setShowComparison(true);
+      triggerAnalysis(selectedSlots);
     }
   };
 
-  const filteredModalProducts = mockProducts.filter((prod) => {
+  const filteredModalProducts = availablePerfumes.filter((prod) => {
     if (!modalSearchQuery) return true;
     const q = modalSearchQuery.toLowerCase();
     return (
@@ -362,149 +528,339 @@ function CompareContent() {
         {/* Action buttons */}
         <div className={styles.actionButtons}>
           <button className={styles.compareBtn} onClick={handleCompare}>
-            Compare
+            {isAnalyzing ? "Comparing..." : "Compare"}
           </button>
           <button className={styles.resetBtn} onClick={handleReset}>
             Reset
           </button>
         </div>
+        {/* Analyzing Progress Banner */}
+        {isAnalyzing && (
+          <div className={styles.analyzingBanner}>
+            <div className={styles.analyzingSpinner} />
+            <span>Analyzing olfactory profiles, longevity & scent notes...</span>
+          </div>
+        )}
 
-        {/* Comparison Table */}
+        {/* Comparison Table & Responsive Views */}
         {showComparison && (
-          <div ref={tableRef} className={styles.tableContainer}>
-            <table className={styles.compareTable}>
-              <tbody>
-                {/* Row 1: Name (Sticky Header Row) */}
-                <tr className={styles.stickyHeaderRow}>
-                  <td className={styles.featureTitle}>Name</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.productNameCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {slot ? (
-                        <div className={styles.nameHeaderContainer}>
-                          {slot.isRecommended && (
-                            <span className={styles.recommendedBadge}>Recommended</span>
-                          )}
-                          <span className={styles.productNameText}>{slot.name}</span>
-                        </div>
-                      ) : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 2: Brand */}
-                <tr>
-                  <td className={styles.featureTitle}>Brand</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.brand : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 3: Inspired By */}
-                <tr>
-                  <td className={styles.featureTitle}>Inspired By</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.inspiredBy : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 4: Price */}
-                <tr>
-                  <td className={styles.featureTitle}>Price</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.price : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 5: Community Rating */}
-                <tr>
-                  <td className={styles.featureTitle}>Community Rating</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? (
-                        <div className={styles.ratingWrapper}>
-                          <span className={styles.starIcon}>★</span> {slot.rating}
-                        </div>
-                      ) : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 6: Scent Profile */}
-                <tr>
-                  <td className={styles.featureTitle}>Scent Profile</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.profileCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {slot ? slot.profile : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 7: Longevity (Lasting Power) */}
-                <tr>
-                  <td className={styles.featureTitle}>Longevity<br />(Lasting Power)</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.longevity : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 8: Projection (Scent Radius) */}
-                <tr>
-                  <td className={styles.featureTitle}>Projection<br />(Scent Radius)</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? slot.projection : ""}
-                    </td>
-                  ))}
-                </tr>
+          <>
+            {/* Desktop Table View (> 1023px) */}
+            <div ref={tableRef} className={styles.tableContainer}>
+              <table className={styles.compareTable}>
+                <tbody>
+                  {/* Row 1: Name (Sticky Header Row) */}
+                  <tr className={styles.stickyHeaderRow}>
+                    <td className={styles.featureTitle}>Name</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.productNameCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                        {slot ? (
+                          <div className={styles.nameHeaderContainer}>
+                            {slot.isRecommended && (
+                              <span className={styles.recommendedBadge}>Recommended</span>
+                            )}
+                            <span className={styles.productNameText}>{slot.name}</span>
+                          </div>
+                        ) : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 2: Brand */}
+                  <tr>
+                    <td className={styles.featureTitle}>Brand</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.brand : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 3: Inspired By */}
+                  <tr>
+                    <td className={styles.featureTitle}>Inspired By</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.inspiredBy : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 4: Price */}
+                  <tr>
+                    <td className={styles.featureTitle}>Price</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.price : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 5: Community Rating */}
+                  <tr>
+                    <td className={styles.featureTitle}>Community Rating</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? (
+                          <div className={styles.ratingWrapper}>
+                            <span className={styles.starIcon}>★</span> {slot.rating}
+                          </div>
+                        ) : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 6: Scent Profile */}
+                  <tr>
+                    <td className={styles.featureTitle}>Scent Profile</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.profileCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                        {slot ? slot.profile : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 7: Longevity (Lasting Power) */}
+                  <tr>
+                    <td className={styles.featureTitle}>Longevity<br />(Lasting Power)</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.longevity : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 8: Projection (Scent Radius) */}
+                  <tr>
+                    <td className={styles.featureTitle}>Projection<br />(Scent Radius)</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? slot.projection : ""}
+                      </td>
+                    ))}
+                  </tr>
 
-                {/* Row 10: Best For */}
-                <tr>
-                  <td className={styles.featureTitle}>Best For</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.bestForCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {slot ? slot.bestFor : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 11: Accord */}
-                <tr>
-                  <td className={styles.featureTitle}>Accord</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={slot?.isRecommended ? styles.recommendedColumn : ""}
-                    >
-                      {slot ? (
+                  {/* Row 10: Best For */}
+                  <tr>
+                    <td className={styles.featureTitle}>Best For</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.bestForCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                        {slot ? slot.bestFor : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 11: Accord */}
+                  <tr>
+                    <td className={styles.featureTitle}>Accord</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={slot?.isRecommended ? styles.recommendedColumn : ""}
+                      >
+                        {slot ? (
+                          <div className={styles.accordsList}>
+                            {slot.accords.map((accord) => (
+                              <div key={accord.name} className={styles.accordItem}>
+                                <span className={styles.accordName}>{accord.name}</span>
+                                <div className={styles.progressBarBg}>
+                                  <div 
+                                    className={styles.progressBarFill} 
+                                    style={{ "--progress-width": `${accord.value}%` } as React.CSSProperties}
+                                  />
+                                </div>
+                                <span className={styles.progressValue}>{accord.value}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : ""}
+                      </td>
+                    ))}
+                  </tr>
+                  {/* Row 12: Fragrance Notes */}
+                  <tr>
+                    <td className={styles.featureTitle}>Fragrance Notes</td>
+                    {selectedSlots.map((slot, idx) => (
+                      <td 
+                        key={idx} 
+                        className={`${styles.notesCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
+                      >
+                        {slot ? (
+                          <div className={styles.notesListWrapper}>
+                            <ul className={styles.notesBulletList}>
+                              {slot.notes ? (
+                                <>
+                                  <li><strong className={styles.noteCategory}>Top:</strong> {slot.notes.top.join(", ")}</li>
+                                  <li><strong className={styles.noteCategory}>Heart:</strong> {slot.notes.heart.join(", ")}</li>
+                                  <li><strong className={styles.noteCategory}>Base:</strong> {slot.notes.base.join(", ")}</li>
+                                </>
+                              ) : (
+                                <>
+                                  <li><strong className={styles.noteCategory}>Top:</strong> Bergamot, Crisp Apple</li>
+                                  <li><strong className={styles.noteCategory}>Heart:</strong> Lavender, Warm Spices</li>
+                                  <li><strong className={styles.noteCategory}>Base:</strong> Cedarwood, Ambergris, Musk</li>
+                                </>
+                              )}
+                            </ul>
+                          </div>
+                        ) : ""}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Tablet Horizontally Scrollable Cards View (768px – 1023px) */}
+            <div className={styles.tabletCardsContainer}>
+              <div className={styles.tabletCardsScroll}>
+                {selectedSlots.filter(Boolean).map((slot, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`${styles.compareCard} ${slot?.isRecommended ? styles.compareCardRecommended : ""}`}
+                  >
+                    {slot?.isRecommended && <span className={styles.cardBadge}>Recommended</span>}
+                    <div className={styles.cardHeader}>
+                      <img src={slot!.image} alt={slot!.name} className={styles.cardImage} />
+                      <div className={styles.cardTitleBox}>
+                        <h3 className={styles.cardName}>{slot!.name}</h3>
+                        <span className={styles.cardBrand}>{slot!.brand}</span>
+                        <span className={styles.cardPrice}>{slot!.price}</span>
+                        <div className={styles.cardRating}>
+                          <span className={styles.starIcon}>★</span> {slot!.rating}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.cardBody}>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Inspired By</span>
+                        <span className={styles.cardVal}>{slot!.inspiredBy}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Scent Profile</span>
+                        <span className={styles.cardVal}>{slot!.profile}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Longevity</span>
+                        <span className={styles.cardVal}>{slot!.longevity}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Projection</span>
+                        <span className={styles.cardVal}>{slot!.projection}</span>
+                      </div>
+                      <div className={styles.cardRow}>
+                        <span className={styles.cardLabel}>Best For</span>
+                        <span className={styles.cardVal}>{slot!.bestFor}</span>
+                      </div>
+                      {slot!.accords && slot!.accords.length > 0 && (
+                        <div className={styles.cardAccordsBlock}>
+                          <span className={styles.cardLabel}>Accords</span>
+                          <div className={styles.accordsList}>
+                            {slot!.accords.map((accord) => (
+                              <div key={accord.name} className={styles.accordItem}>
+                                <span className={styles.accordName}>{accord.name}</span>
+                                <div className={styles.progressBarBg}>
+                                  <div 
+                                    className={styles.progressBarFill} 
+                                    style={{ "--progress-width": `${accord.value}%` } as React.CSSProperties}
+                                  />
+                                </div>
+                                <span className={styles.progressValue}>{accord.value}%</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <div className={styles.cardNotesBlock}>
+                        <span className={styles.cardLabel}>Fragrance Notes</span>
+                        <ul className={styles.notesBulletList}>
+                          {slot!.notes ? (
+                            <>
+                              <li><strong className={styles.noteCategory}>Top:</strong> {slot!.notes.top.join(", ")}</li>
+                              <li><strong className={styles.noteCategory}>Heart:</strong> {slot!.notes.heart.join(", ")}</li>
+                              <li><strong className={styles.noteCategory}>Base:</strong> {slot!.notes.base.join(", ")}</li>
+                            </>
+                          ) : (
+                            <>
+                              <li><strong className={styles.noteCategory}>Top:</strong> Bergamot, Crisp Apple</li>
+                              <li><strong className={styles.noteCategory}>Heart:</strong> Lavender, Warm Spices</li>
+                              <li><strong className={styles.noteCategory}>Base:</strong> Cedarwood, Ambergris</li>
+                            </>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Stacked Cards View (< 768px) */}
+            <div className={styles.mobileCardsContainer}>
+              {selectedSlots.filter(Boolean).map((slot, idx) => (
+                <div 
+                  key={idx} 
+                  className={`${styles.compareCard} ${styles.mobileCompareCard} ${slot?.isRecommended ? styles.compareCardRecommended : ""}`}
+                >
+                  {slot?.isRecommended && <span className={styles.cardBadge}>Recommended</span>}
+                  <div className={styles.cardHeader}>
+                    <img src={slot!.image} alt={slot!.name} className={styles.cardImage} />
+                    <div className={styles.cardTitleBox}>
+                      <h3 className={styles.cardName}>{slot!.name}</h3>
+                      <span className={styles.cardBrand}>{slot!.brand}</span>
+                      <span className={styles.cardPrice}>{slot!.price}</span>
+                      <div className={styles.cardRating}>
+                        <span className={styles.starIcon}>★</span> {slot!.rating}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.cardBody}>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Inspired By</span>
+                      <span className={styles.cardVal}>{slot!.inspiredBy}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Scent Profile</span>
+                      <span className={styles.cardVal}>{slot!.profile}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Longevity</span>
+                      <span className={styles.cardVal}>{slot!.longevity}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Projection</span>
+                      <span className={styles.cardVal}>{slot!.projection}</span>
+                    </div>
+                    <div className={styles.cardRow}>
+                      <span className={styles.cardLabel}>Best For</span>
+                      <span className={styles.cardVal}>{slot!.bestFor}</span>
+                    </div>
+                    {slot!.accords && slot!.accords.length > 0 && (
+                      <div className={styles.cardAccordsBlock}>
+                        <span className={styles.cardLabel}>Accords</span>
                         <div className={styles.accordsList}>
-                          {slot.accords.map((accord) => (
+                          {slot!.accords.map((accord) => (
                             <div key={accord.name} className={styles.accordItem}>
                               <span className={styles.accordName}>{accord.name}</span>
                               <div className={styles.progressBarBg}>
@@ -517,25 +873,31 @@ function CompareContent() {
                             </div>
                           ))}
                         </div>
-                      ) : ""}
-                    </td>
-                  ))}
-                </tr>
-                {/* Row 12: Fragrance Notes */}
-                <tr>
-                  <td className={styles.featureTitle}>Fragrance Notes</td>
-                  {selectedSlots.map((slot, idx) => (
-                    <td 
-                      key={idx} 
-                      className={`${styles.notesCell} ${slot?.isRecommended ? styles.recommendedColumn : ""}`}
-                    >
-                      {/* Left blank / empty matching the screenshot block */}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                      </div>
+                    )}
+                    <div className={styles.cardNotesBlock}>
+                      <span className={styles.cardLabel}>Fragrance Notes</span>
+                      <ul className={styles.notesBulletList}>
+                        {slot!.notes ? (
+                          <>
+                            <li><strong className={styles.noteCategory}>Top:</strong> {slot!.notes.top.join(", ")}</li>
+                            <li><strong className={styles.noteCategory}>Heart:</strong> {slot!.notes.heart.join(", ")}</li>
+                            <li><strong className={styles.noteCategory}>Base:</strong> {slot!.notes.base.join(", ")}</li>
+                          </>
+                        ) : (
+                          <>
+                            <li><strong className={styles.noteCategory}>Top:</strong> Bergamot, Crisp Apple</li>
+                            <li><strong className={styles.noteCategory}>Heart:</strong> Lavender, Warm Spices</li>
+                            <li><strong className={styles.noteCategory}>Base:</strong> Cedarwood, Ambergris</li>
+                          </>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </main>
     </div>

@@ -8,37 +8,37 @@ export interface OccasionItem {
 export const occasionsData: OccasionItem[] = [
   {
     id: "office",
-    name: "Office",
+    name: "Office & Executive",
     link: "/shop?occasion=Formal",
     image: "/images/occasions/office.png",
   },
   {
     id: "daily",
-    name: "Daily Wear",
+    name: "Daily Wear & Fresh",
     link: "/shop?occasion=Daily+Wear",
     image: "/images/occasions/daily.png",
   },
   {
     id: "date_night",
-    name: "Date Night",
+    name: "Date Night & Evening",
     link: "/shop?occasion=Date+Night",
     image: "/images/occasions/date_night.png",
   },
   {
     id: "wedding",
-    name: "Wedding",
+    name: "Wedding & Gala",
     link: "/shop?occasion=Formal",
     image: "/images/occasions/wedding.png",
   },
   {
     id: "summer",
-    name: "Summer",
+    name: "Summer Citrus & Aquatic",
     link: "/shop?family=Citrus,Fresh",
     image: "/images/occasions/summer.png",
   },
   {
     id: "winter",
-    name: "Winter",
+    name: "Winter Warmth & Rare Oud",
     link: "/shop?family=Woody,Oriental",
     image: "/images/occasions/winter.png",
   },

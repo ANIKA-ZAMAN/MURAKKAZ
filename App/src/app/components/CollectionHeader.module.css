@@ -16,7 +16,7 @@
 
 .title {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 2.5rem;
+  font-size: clamp(1.75rem, 5.5vw, 2.5rem);
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--foreground);
@@ -33,14 +33,27 @@
   line-height: 1.4;
 }
 
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
   .headerRow {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.5rem;
+    gap: 1.25rem;
     margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
   }
-  .title {
-    font-size: 2rem;
+
+  .controlsGroup {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
 }
+

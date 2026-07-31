@@ -19,6 +19,11 @@ export interface PreviousEvent {
 export interface GalleryImage {
   src: string;
   alt: string;
+  title?: string;
+  category?: string;
+  date?: string;
+  location?: string;
+  accentColor?: string;
 }
 
 export interface StoreLocation {
@@ -30,7 +35,28 @@ export interface StoreLocation {
 
 export const upcomingEvents: UpcomingEvent[] = [];
 export const previousEvents: PreviousEvent[] = [];
-export const galleryImages: GalleryImage[] = [];
+
+export const galleryImages: GalleryImage[] = [
+  {
+    src: "/images/events/sadid.jpg",
+    alt: "Live Olfactory Blending Station",
+    title: "Live Olfactory Station",
+    category: "Exhibition",
+    date: "Jan 15, 2025",
+    location: "Dhaka Club, Gulshan",
+    accentColor: "#ded6c9",
+  },
+  {
+    src: "/images/events/eliyas.jpg",
+    alt: "Luxury Pop-up Stall Banani",
+    title: "Luxury Pop-up Stall",
+    category: "Pop-up",
+    date: "Dec 20, 2024",
+    location: "Banani 11, Dhaka",
+    accentColor: "#d6cebf",
+  }
+];
+
 export const storeLocations: StoreLocation[] = [
   {
     id: "01",

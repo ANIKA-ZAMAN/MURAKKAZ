@@ -86,8 +86,8 @@
 
 /* Card */
 .card {
-  background-color: #fdfcfb;
-  border: 1px solid #767677;
+  background-color: transparent;
+  border: none;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
@@ -463,7 +463,12 @@
   color: #7a7a7d;
 }
 
-/* Responsive constraints */
+@media (max-width: 1279px) {
+  .gridContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 1024px) {
   .gridContainer {
     grid-template-columns: repeat(2, 1fr);

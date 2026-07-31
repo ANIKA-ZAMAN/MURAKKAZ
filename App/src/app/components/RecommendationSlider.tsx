@@ -29,7 +29,69 @@ export default function RecommendationSlider() {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>Explore Our Recommendations</h2>
+      <div className={styles.headerRow}>
+        <h2 className={styles.title}>Explore Our Recommendations</h2>
+        <div className={styles.headerNav}>
+          <button
+            className={styles.headerNavBtn}
+            onClick={() => scroll("left")}
+            aria-label="Scroll left"
+          >
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 40 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19.5495 26.2999L13.2511 20L19.5511 13.7M26.7495 20H13.2495H26.7495Z"
+                stroke="#820011"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle
+                cx="20"
+                cy="20"
+                r="19"
+                stroke="#820011"
+                strokeWidth="1.2"
+              />
+            </svg>
+          </button>
+          <button
+            className={styles.headerNavBtn}
+            onClick={() => scroll("right")}
+            aria-label="Scroll right"
+          >
+            <svg
+              width="36"
+              height="36"
+              viewBox="0 0 40 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ transform: "scaleX(-1)" }}
+            >
+              <path
+                d="M19.5495 26.2999L13.2511 20L19.5511 13.7M26.7495 20H13.2495H26.7495Z"
+                stroke="#820011"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle
+                cx="20"
+                cy="20"
+                r="19"
+                stroke="#820011"
+                strokeWidth="1.2"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
       <div className={styles.sliderContainer}>
         <button
           className={`${styles.navBtn} ${styles.leftBtn}`}

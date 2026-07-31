@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import styles from "./homepage.module.css";
 import PremiumStats from "./PremiumStats";
 import BrandTicker from "./BrandTicker";
 
@@ -33,7 +32,7 @@ const dustParticlesData = [
   { size: 1.9, left: 82, top: 46, delay: 1.9, duration: 10.0, opacity: 0.34 },
 ];
 
-/* Floating Golden Dust Particles Component */
+/* Floating Golden Dust Ambient Particles Component */
 function HeroDustParticles() {
   const [mounted, setMounted] = useState(false);
 
@@ -65,7 +64,7 @@ function HeroDustParticles() {
   );
 }
 
-
+/* Primary CTA Buttons Component - Unchanged styling & interactive animations */
 function HeroActions() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
@@ -79,27 +78,24 @@ function HeroActions() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4.5 -translate-y-14 sm:-translate-y-[64px] pointer-events-auto z-30" suppressHydrationWarning>
+    <div className="flex flex-col items-center justify-center gap-2.5 sm:gap-4 pointer-events-auto z-30 px-2 sm:px-3 w-full" suppressHydrationWarning>
       {/* Primary CTA + Search Bar Row */}
-      <div className="flex items-center justify-center gap-4">
-        {/* 1. Primary Luxury CTA Button with Sliding Arrow */}
+      <div className="flex items-center justify-center gap-2 sm:gap-4 max-w-full">
+        {/* 1. Primary Luxury CTA Button */}
         <Link
           href="/shop"
-          className="group relative inline-flex items-center justify-center min-w-[250px] sm:min-w-[270px] px-10 h-[56px] rounded-full border-1.5 border-[#313134] bg-transparent text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.2em] uppercase transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] hover:border-[#313134] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
-          style={{ 
-            fontFamily: "var(--font-lora), Georgia, serif",
-          }}
+          className="group relative inline-flex items-center justify-center min-w-[170px] sm:min-w-[230px] lg:min-w-[270px] px-5 sm:px-8 lg:px-10 h-[44px] sm:h-[50px] lg:h-[56px] rounded-full border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[11px] sm:text-[12.5px] lg:text-[13px] font-medium tracking-[0.14em] sm:tracking-[0.18em] lg:tracking-[0.2em] uppercase transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) hover:-translate-y-[4px] hover:scale-[1.025] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
+          style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
-          {/* Shimmer light sweep on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-1000 ease-in-out group-hover:left-[100%] pointer-events-none" />
-          <span className="relative z-10 w-full flex items-center justify-center gap-2.5 pl-[0.2em]">
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/75 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none" />
+          <span className="relative z-10 w-full flex items-center justify-center gap-2 pl-[0.1em]">
             <span>Shop Collection</span>
-            <span className="inline-block transition-transform duration-500 ease-out group-hover:translate-x-2 text-[#313134]">→</span>
+            <span className="inline-block transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:translate-x-2 text-[#B8965C]">→</span>
           </span>
         </Link>
 
-        {/* 2. Search Button */}
+        {/* 2. Search Expand Button */}
         <form
           onSubmit={handleSearchSubmit}
           onMouseEnter={() => setIsExpanded(true)}
@@ -109,16 +105,16 @@ function HeroActions() {
             }
           }}
           onClick={() => setIsExpanded(true)}
-          className={`group relative flex items-center h-[56px] rounded-full border-1.5 border-[#313134] bg-transparent text-[#313134] transition-all duration-500 ease-out overflow-hidden ${
+          className={`group relative flex items-center h-[44px] sm:h-[50px] lg:h-[56px] rounded-full border-2 border-[#B8965C] bg-transparent text-[#313134] transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) overflow-hidden ${
             isExpanded || searchQuery 
-              ? "w-64 px-5.5 bg-[#FAF7F0] shadow-[0_12px_28px_rgba(49,49,52,0.18)]" 
-              : "w-[56px] justify-center cursor-pointer hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] active:scale-[0.97] active:translate-y-0"
+              ? "w-48 sm:w-56 lg:w-64 px-4 sm:px-5.5 bg-gradient-to-r from-[#FDFBF7] via-[#F6EEDF] to-[#E9D9C3] shadow-[0_14px_32px_rgba(184,150,92,0.45)] border-[#A8864C]" 
+              : "w-[44px] sm:w-[50px] lg:w-[56px] justify-center cursor-pointer hover:-translate-y-[4px] hover:scale-[1.05] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0"
           }`}
           suppressHydrationWarning
         >
           <button
             type="submit"
-            className="flex items-center justify-center w-5 h-5 text-[#313134] group-hover:scale-115 transition-all duration-400 outline-none border-none bg-transparent cursor-pointer shrink-0"
+            className="flex items-center justify-center w-5 h-5 text-[#313134] group-hover:scale-120 hover:text-[#B8965C] transition-all duration-400 outline-none border-none bg-transparent cursor-pointer shrink-0"
             aria-label="Search Fragrances"
           >
             <svg
@@ -144,7 +140,7 @@ function HeroActions() {
             onBlur={() => {
               if (!searchQuery) setIsExpanded(false);
             }}
-            className={`ml-3 bg-transparent text-[#313134] font-serif-text text-[13.5px] font-medium outline-none border-none w-full placeholder:text-[#313134]/70 ${
+            className={`ml-2 sm:ml-3 bg-transparent text-[#313134] font-serif-text text-[12px] sm:text-[13.5px] font-medium outline-none border-none w-full placeholder:text-[#6e675d]/80 ${
               isExpanded || searchQuery ? "opacity-100 block" : "opacity-0 hidden"
             }`}
             style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
@@ -157,7 +153,7 @@ function HeroActions() {
                 e.stopPropagation();
                 setSearchQuery("");
               }}
-              className="text-[#313134] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-3.5 transition-colors"
+              className="text-[#6e675d] hover:text-[#B8965C] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-2 transition-colors"
               aria-label="Clear search"
             >
               ✕
@@ -166,32 +162,28 @@ function HeroActions() {
         </form>
       </div>
 
-      {/* Secondary Actions: Equalized Dimensions & Smooth Hover Lift */}
-      <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4" suppressHydrationWarning>
-        {/* Button 1: Find Your Fragrance */}
+      {/* Secondary Actions: Find Your Fragrance + Compare Perfumes */}
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 lg:gap-6 mt-1 sm:mt-2 lg:mt-4 max-w-full" suppressHydrationWarning>
         <Link
           href="/scent-index"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border-1.5 border-[#313134] bg-transparent text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[42px] sm:h-[48px] lg:h-[56px] min-w-[145px] sm:min-w-[220px] lg:min-w-[280px] px-3.5 sm:px-8 lg:px-12 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[10.5px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.06em] sm:tracking-[0.12em] uppercase transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) hover:-translate-y-[4px] hover:scale-[1.025] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
-          {/* Subtle light sweep shimmer on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
           <span className="relative z-10">Find Your Fragrance</span>
-          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#313134]">→</span>
+          <span className="relative z-10 inline-block transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:translate-x-2 text-[#B8965C]">→</span>
         </Link>
 
-        {/* Button 2: Compare Perfumes */}
         <Link
           href="/compare"
-          className="group relative inline-flex items-center justify-center gap-3 h-[56px] min-w-[260px] sm:min-w-[280px] px-10 sm:px-12 rounded-2xl border-1.5 border-[#313134] bg-transparent text-[#313134] font-serif-text text-[13px] font-medium tracking-[0.12em] uppercase transition-all duration-500 ease-out hover:-translate-y-[3px] hover:bg-[#FAF7F0] hover:shadow-[0_12px_28px_rgba(49,49,52,0.18)] active:scale-[0.97] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
+          className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[42px] sm:h-[48px] lg:h-[56px] min-w-[145px] sm:min-w-[220px] lg:min-w-[280px] px-3.5 sm:px-8 lg:px-12 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[10.5px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.06em] sm:tracking-[0.12em] uppercase transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) hover:-translate-y-[4px] hover:scale-[1.025] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
           style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
           suppressHydrationWarning
         >
-          {/* Subtle light sweep shimmer on hover */}
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-all duration-700 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
+          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
           <span className="relative z-10">Compare Perfumes</span>
-          <span className="relative z-10 inline-block transition-transform duration-400 ease-out group-hover:translate-x-1.5 text-[#313134]">→</span>
+          <span className="relative z-10 inline-block transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:translate-x-2 text-[#B8965C]">→</span>
         </Link>
       </div>
     </div>
@@ -199,25 +191,33 @@ function HeroActions() {
 }
 
 export default function Hero() {
-  const [lightStyle, setLightStyle] = useState<'sunbeams' | 'spotlight' | 'off'>('spotlight');
-  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const sectionRef = useRef<HTMLElement>(null);
+  const rafIdRef = useRef<number | null>(null);
 
+  /* Interactive 3D Parallax Mouse Tracking Animation */
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !sectionRef.current) return;
     const { clientX, clientY } = e;
-    const x = ((clientX / window.innerWidth) - 0.5) * 6; // 3px max shift
-    const y = ((clientY / window.innerHeight) - 0.5) * 6;
-    setParallax({ x, y });
+    const x = ((clientX / window.innerWidth) - 0.5) * 8; // 4px max shift
+    const y = ((clientY / window.innerHeight) - 0.5) * 8;
+    
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = requestAnimationFrame(() => {
+      if (sectionRef.current) {
+        sectionRef.current.style.setProperty('--parallax-x', `${x}px`);
+        sectionRef.current.style.setProperty('--parallax-y', `${y}px`);
+      }
+    });
   };
 
   return (
     <section 
+      ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-20 pb-0 select-none" 
+      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-2 sm:pt-4 pb-0 select-none" 
       suppressHydrationWarning
     >
-      
-      {/* Global CSS for GPU Animations */}
+      {/* Global CSS for Animations */}
       <style suppressHydrationWarning>{`
         @keyframes goldDustFloat {
           0% { transform: translateY(0px) translateX(0px); opacity: 0.15; }
@@ -231,42 +231,41 @@ export default function Hero() {
           100% { transform: translateX(220%) rotate(25deg); opacity: 0; }
         }
         @keyframes spotlightBreathe {
-          0%, 100% { opacity: 0.48; transform: scale(1); }
-          50% { opacity: 0.65; transform: scale(1.02); }
+          0%, 100% { opacity: 0.72; transform: scale(1); }
+          50% { opacity: 0.95; transform: scale(1.03); }
         }
         @keyframes bottlePerpetualFloat {
           0%, 100% { transform: translateY(2vh) rotate(0deg); }
           50% { transform: translateY(calc(2vh - 8px)) rotate(0.6deg); }
         }
+        @keyframes bottleShadowPulse {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.40; }
+          50% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.28; }
+        }
         @keyframes heroTextFadeIn {
           0% { opacity: 0; transform: translateY(16px); }
           100% { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes ctaPulseGlow {
-          0%, 100% { box-shadow: 0 8px 28px rgba(49, 49, 52, 0.08), 0 0 0 0 rgba(197, 168, 128, 0); }
-          50% { box-shadow: 0 12px 32px rgba(197, 168, 128, 0.28), 0 0 18px 2px rgba(197, 168, 128, 0.35); }
         }
         .hero-fade-enter {
           animation: heroTextFadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         @media (max-width: 768px) {
           .volumetric-ray {
-            --ray-angle: 13.8deg !important;
+            --ray-angle: 16.5deg !important;
           }
         }
         @media (min-width: 769px) {
           .volumetric-ray {
-            --ray-angle: 37.8deg !important;
+            --ray-angle: 42.5deg !important;
           }
         }
       `}</style>
 
-
-      {/* Animated Light Sweep Beam Across Background every 14 seconds */}
+      {/* Animated Light Sweep Beam Across Background from top right */}
       <div 
-        className="absolute top-0 left-0 w-[40vw] h-[150vh] pointer-events-none z-0"
+        className="absolute top-0 right-0 w-[45vw] h-[150vh] pointer-events-none z-0 opacity-60"
         style={{
-          background: "linear-gradient(90deg, transparent 0%, rgba(255, 245, 230, 0.22) 50%, transparent 100%)",
+          background: "linear-gradient(90deg, transparent 0%, rgba(255, 245, 230, 0.35) 50%, transparent 100%)",
           animation: "bgLightSweep 14s cubic-bezier(0.4, 0, 0.2, 1) infinite",
         }}
       />
@@ -274,82 +273,44 @@ export default function Hero() {
       {/* Floating Golden Dust Ambient Particles */}
       <HeroDustParticles />
 
-      {/* Background Volumetric Light Ray & Glow (Constrained to bottle height with breathing animation) */}
-      {lightStyle !== 'off' && (
-        <div className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
-          <div 
-            className="absolute inset-0 mix-blend-screen volumetric-ray"
-            style={{
-              animation: "spotlightBreathe 8s ease-in-out infinite alternate",
-              background: lightStyle === 'sunbeams'
-                ? `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.26) 2deg, rgba(255, 250, 235, 0) 4deg,
-                    rgba(255, 250, 235, 0) 10deg, rgba(255, 250, 235, 0.26) 12.5deg, rgba(255, 250, 235, 0.35) 14deg, rgba(255, 250, 235, 0.26) 15.5deg, rgba(255, 250, 235, 0) 18deg,
-                    rgba(255, 250, 235, 0) 342deg, rgba(255, 250, 235, 0.26) 344.5deg, rgba(255, 250, 235, 0.35) 346deg, rgba(255, 250, 235, 0.26) 347.5deg, rgba(255, 250, 235, 0) 350deg,
-                    rgba(255, 250, 235, 0) 356deg, rgba(255, 250, 235, 0.26) 358deg, rgba(255, 250, 235, 0.48) 360deg
-                  )`
-                : `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.52) 0deg, rgba(255, 250, 235, 0.28) 12deg, rgba(255, 250, 235, 0) 25deg,
-                    rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.28) 348deg, rgba(255, 250, 235, 0.52) 360deg
-                  )`,
-              WebkitMaskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.75) 35%, transparent 60%)",
-              maskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.75) 35%, transparent 60%)"
-            }}
-          />
-          {/* Soft ambient source glow */}
-          <div 
-            className="absolute top-[-5vh] left-[68%] -translate-x-1/2 w-[40%] aspect-square rounded-full opacity-60 mix-blend-screen"
-            style={{
-              background: "radial-gradient(circle at 50% 0%, rgba(255, 250, 235, 0.50) 0%, rgba(255, 250, 235, 0) 70%)",
-              filter: "blur(35px)",
-            }}
-          />
-        </div>
-      )}
-
-      {/* Foreground Volumetric Light Ray Overlay (Terminates at bottle base) */}
-      {lightStyle !== 'off' && (
+      {/* Volumetric Spotlight Rays & Warm Radiance */}
+      <div className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" style={{ zIndex: 0 }} suppressHydrationWarning>
         <div 
-          className="absolute inset-0 max-h-screen pointer-events-none overflow-hidden" 
-          style={{ 
-            zIndex: 15, 
-            transform: "translateZ(0)",
-            WebkitTransform: "translateZ(0)"
-          }} 
-          suppressHydrationWarning
-        >
-          <div 
-            className="absolute inset-0 mix-blend-screen volumetric-ray"
-            style={{
-              animation: "spotlightBreathe 8s ease-in-out infinite alternate",
-              background: lightStyle === 'sunbeams'
-                ? `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.44) 0deg, rgba(255, 250, 235, 0.24) 2deg, rgba(255, 250, 235, 0) 4deg,
-                    rgba(255, 250, 235, 0) 10deg, rgba(255, 250, 235, 0.24) 12.5deg, rgba(255, 250, 235, 0.32) 14deg, rgba(255, 250, 235, 0.24) 15.5deg, rgba(255, 250, 235, 0) 18deg,
-                    rgba(255, 250, 235, 0) 342deg, rgba(255, 250, 235, 0.24) 344.5deg, rgba(255, 250, 235, 0.32) 346deg, rgba(255, 250, 235, 0.24) 347.5deg, rgba(255, 250, 235, 0) 350deg,
-                    rgba(255, 250, 235, 0) 356deg, rgba(255, 250, 235, 0.24) 358deg, rgba(255, 250, 235, 0.44) 360deg
-                  )`
-                : `conic-gradient(from calc(180deg + var(--ray-angle, 37.8deg)) at 68% -5vh, 
-                    rgba(255, 250, 235, 0.48) 0deg, rgba(255, 250, 235, 0.25) 12deg, rgba(255, 250, 235, 0) 25deg,
-                    rgba(255, 250, 235, 0) 335deg, rgba(255, 250, 235, 0.25) 348deg, rgba(255, 250, 235, 0.48) 360deg
-                  )`,
-              WebkitMaskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)",
-              maskImage: "radial-gradient(ellipse 90% 62% at 68% -5vh, black 10%, rgba(0, 0, 0, 0.7) 35%, transparent 60%)"
-            }}
-          />
-        </div>
-      )}
-      
+          className="absolute inset-0 mix-blend-screen volumetric-ray"
+          style={{
+            animation: "spotlightBreathe 8s ease-in-out infinite alternate",
+            background: `conic-gradient(from calc(180deg + var(--ray-angle, 42.5deg)) at 68% -5vh, 
+                rgba(255, 248, 225, 0.78) 0deg, 
+                rgba(255, 240, 210, 0.50) 15deg, 
+                rgba(255, 235, 195, 0.25) 26deg, 
+                rgba(255, 250, 235, 0) 38deg,
+                rgba(255, 250, 235, 0) 322deg, 
+                rgba(255, 235, 195, 0.25) 334deg, 
+                rgba(255, 240, 210, 0.50) 345deg, 
+                rgba(255, 248, 225, 0.78) 360deg
+              )`,
+            WebkitMaskImage: "radial-gradient(ellipse 110% 85% at 68% -5vh, black 20%, rgba(0, 0, 0, 0.85) 55%, transparent 82%)",
+            maskImage: "radial-gradient(ellipse 110% 85% at 68% -5vh, black 20%, rgba(0, 0, 0, 0.85) 55%, transparent 82%)"
+          }}
+        />
+        {/* Warm Golden Source Spotlight Glow */}
+        <div 
+          className="absolute top-[-5vh] left-[68%] -translate-x-1/2 w-[45%] aspect-square rounded-full opacity-85 mix-blend-screen"
+          style={{
+            background: "radial-gradient(circle at 50% 0%, rgba(255, 248, 225, 0.82) 0%, rgba(248, 222, 172, 0.45) 40%, transparent 70%)",
+            filter: "blur(32px)",
+          }}
+        />
 
-
-      {/* Ambient Depth Shadow behind bottle separating it from MURAKKAZ typography */}
-      <div 
-        className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[520px] rounded-full pointer-events-none opacity-30 z-0"
-        style={{
-          background: "radial-gradient(ellipse at 50% 50%, rgba(30, 20, 15, 0.45) 0%, rgba(40, 25, 15, 0.15) 50%, transparent 80%)",
-          filter: "blur(42px)",
-        }}
-      />
+        {/* Secondary Centered Ambient Spotlight Highlight */}
+        <div 
+          className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[600px] sm:w-[850px] h-[550px] rounded-full opacity-45 mix-blend-screen pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse at 50% 30%, rgba(255, 248, 225, 0.55) 0%, rgba(248, 222, 172, 0.20) 50%, transparent 75%)",
+            filter: "blur(40px)",
+          }}
+        />
+      </div>
 
       {/* Warm Golden Halo Rim Highlight around the Bottle with Subtle Parallax */}
       <div 
@@ -357,35 +318,26 @@ export default function Hero() {
         style={{
           background: "radial-gradient(circle, rgba(248, 222, 172, 0.35) 0%, rgba(212, 175, 55, 0.14) 45%, transparent 75%)",
           filter: "blur(38px)",
-          transform: `translate(calc(-50% + ${parallax.x}px), calc(-50% + ${parallax.y}px))`,
+          transform: "translate(calc(-50% + var(--parallax-x, 0px)), calc(-50% + var(--parallax-y, 0px)))",
           transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
           animation: "spotlightBreathe 7s ease-in-out infinite alternate"
-        }}
-      />
-
-      {/* Grounding Contact Shadow positioned directly under bottle base */}
-      <div 
-        className="absolute top-[67%] sm:top-[68%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[36px] rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at 50% 50%, rgba(25, 15, 10, 0.35) 0%, rgba(30, 20, 15, 0.10) 50%, transparent 85%)",
-          filter: "blur(8px)",
-          zIndex: 5
         }}
       />
       
       {/* 1. Background Layers: Giant Watermark Engraved Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
-        <div className="absolute w-full text-center z-0 select-none opacity-100 -translate-y-[6vh] hero-fade-enter" suppressHydrationWarning>
-          <div className="inline-block text-center relative">
+        <div className="absolute w-full px-2 sm:px-4 text-center z-0 select-none opacity-100 -translate-y-[6vh] sm:-translate-y-[7vh] hero-fade-enter" suppressHydrationWarning>
+          <div className="inline-block text-center relative max-w-full overflow-hidden">
             <h1 
-              className="font-serif-title font-normal tracking-[0.04em] uppercase text-[12vw] leading-none select-none text-center" 
+              className="font-serif-title font-semibold tracking-[0.02em] uppercase text-center leading-none select-none max-w-full shrink-0" 
               suppressHydrationWarning
               style={{ 
                 fontFamily: "var(--font-playfair), Georgia, serif",
+                fontSize: "clamp(3.8rem, 16.8vw, 12rem)",
                 background: "linear-gradient(180deg, #D4B890 0%, #BA9C72 45%, #9E8158 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                filter: "drop-shadow(0px 1.5px 2px rgba(255, 252, 242, 0.55)) drop-shadow(0px -1px 2px rgba(40, 25, 12, 0.30))"
+                filter: "drop-shadow(0px 2px 3px rgba(255, 252, 242, 0.6)) drop-shadow(0px -1px 2px rgba(40, 25, 12, 0.35))"
               }}
             >
               MURAKKAZ
@@ -393,7 +345,7 @@ export default function Hero() {
 
             {/* Subtext: Refined luxury typography */}
             <p 
-              className="hidden md:block absolute left-[4.5%] top-[100%] mt-7 font-serif-text text-[#3a3530] text-[14px] md:text-[14.5px] max-w-[340px] leading-[1.9] tracking-[0.04em] text-left pointer-events-auto z-30 font-normal hero-fade-enter"
+              className="hidden sm:block absolute left-1/2 md:left-[4.5%] top-[100%] mt-3 sm:mt-5 md:mt-7 -translate-x-1/2 md:translate-x-0 font-serif-text text-[#3a3530] text-[13px] md:text-[14.5px] max-w-[320px] md:max-w-[340px] leading-[1.8] md:leading-[1.9] tracking-[0.04em] text-center md:text-left pointer-events-auto z-30 font-normal hero-fade-enter"
               style={{ fontFamily: "var(--font-lora), Georgia, serif", animationDelay: "200ms" }}
               suppressHydrationWarning
             >
@@ -403,13 +355,13 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 2. Middle Layer: Floating Transparent WebM Video with Perpetual Gentle Float */}
-      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-4 pb-0" suppressHydrationWarning>
+      {/* 2. Middle Layer: Floating Transparent WebM Video with Synchronized Base Shadow */}
+      <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-1 sm:pt-4 pb-0" suppressHydrationWarning>
         <div 
-          className="relative h-[58vh] sm:h-[70vh] md:h-[80vh] max-h-[calc(100vh-270px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh]"
+          className="relative h-[40vh] sm:h-[54vh] md:h-[68vh] lg:h-[78vh] max-h-[calc(100vh-230px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh] flex flex-col items-center justify-center"
           style={{
             animation: "bottlePerpetualFloat 7s ease-in-out infinite alternate",
-            transform: `translate(${parallax.x * 0.5}px, calc(2vh + ${parallax.y * 0.5}px))`,
+            transform: "translate(calc(var(--parallax-x, 0px) * 0.5), calc(2vh + var(--parallax-y, 0px) * 0.5))",
             willChange: "transform"
           }}
           suppressHydrationWarning
@@ -421,21 +373,46 @@ export default function Hero() {
             onEnded={(e) => {
               e.currentTarget.pause();
             }}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain relative z-10"
             suppressHydrationWarning
           >
             <source src="/videos/BottleAnimation.webm" type="video/webm" />
             Your browser does not support the video tag.
           </video>
+
+          {/* Real Ground Shadow Effect: Tight Contact Shadow + Soft Ambient Shadow under the bottle base */}
+          {/* 1. Soft Ambient Ground Shadow */}
+          <div 
+            className="absolute top-[82%] left-[48.5%] w-[64%] sm:w-[56%] h-[20px] sm:h-[26px] rounded-[50%] pointer-events-none z-0"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, rgba(20, 12, 7, 0.55) 0%, rgba(35, 20, 10, 0.22) 55%, transparent 88%)",
+              filter: "blur(9px)",
+              animation: "bottleShadowPulse 7s ease-in-out infinite alternate",
+            }}
+          />
+          {/* 2. Dark Sharp Contact Shadow right where bottle base ends */}
+          <div 
+            className="absolute top-[80.5%] left-[48.5%] w-[44%] sm:w-[38%] h-[12px] sm:h-[16px] rounded-[50%] pointer-events-none z-0"
+            style={{
+              background: "radial-gradient(ellipse at 50% 50%, rgba(10, 6, 3, 0.85) 0%, rgba(25, 14, 6, 0.40) 50%, transparent 85%)",
+              filter: "blur(4px)",
+              animation: "bottleShadowPulse 7s ease-in-out infinite alternate",
+            }}
+          />
         </div>
       </div>
 
-      {/* 3. Horizontal Statistics Cards (Pinned on the right side of Hero Section) */}
-      <PremiumStats />
+      {/* 3. Action Buttons & Statistics Panel */}
+      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-0 gap-2.5 sm:gap-4 hero-fade-enter" style={{ animationDelay: "350ms" }} suppressHydrationWarning>
+        {/* CTA Buttons in lower-center area */}
+        <div className="w-full mb-1 sm:mb-2 lg:mb-3 flex justify-center">
+          <HeroActions />
+        </div>
 
-      {/* 4. Foreground Layer: Centered Action Buttons & Brand Ticker */}
-      <div className="w-full z-30 mt-auto flex flex-col items-center justify-center pointer-events-auto pb-0 gap-0 hero-fade-enter" style={{ animationDelay: "350ms" }} suppressHydrationWarning>
-        <HeroActions />
+        {/* Premium Statistics Stack positioned on the bottom right as designed */}
+        <PremiumStats />
+
+        {/* Infinite Fragrance Brand Ticker running along the very bottom */}
         <div className="w-full mt-1 mb-0">
           <BrandTicker />
         </div>
@@ -443,5 +420,3 @@ export default function Hero() {
     </section>
   );
 }
-
-

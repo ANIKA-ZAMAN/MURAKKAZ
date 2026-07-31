@@ -53,6 +53,30 @@
   font-style: italic;
 }
 
+:global(.reveal) .sectionHeader {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .sectionHeader {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:global(.reveal) .carouselStage {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 150ms, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 150ms;
+  will-change: opacity, transform;
+}
+
+:global(.reveal.visible) .carouselStage {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ── Stacked 3D Carousel Stage ── */
 .carouselStage {
   position: relative;
@@ -92,9 +116,10 @@
   /* Smooth spring physics transition (800ms cubic-bezier) */
   transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1),
               opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+              filter 800ms cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 800ms cubic-bezier(0.22, 1, 0.36, 1),
               border-color 800ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
   user-select: none;
   display: flex;
   flex-direction: column;
@@ -324,21 +349,21 @@
 /* ── Responsive Mobile Geometry ── */
 @media (max-width: 768px) {
   .section {
-    padding: 5rem 1rem 5.5rem;
+    padding: 4.5rem 1rem 5rem;
   }
   
   .carouselStage {
-    height: 480px;
+    height: 460px;
   }
   
   .card {
-    max-width: 88vw;
-    padding: 1.75rem 1.5rem;
+    max-width: 90vw;
+    padding: 1.65rem 1.35rem;
     border-radius: 20px;
   }
   
   .quoteText {
-    font-size: 0.96rem;
+    font-size: 0.94rem;
     line-height: 1.6;
     -webkit-line-clamp: 5;
   }
@@ -351,5 +376,37 @@
   .navButton {
     width: 44px;
     height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carouselStage {
+    height: 430px;
+  }
+  
+  .card {
+    max-width: 95vw;
+    padding: 1.25rem 1.15rem;
+    border-radius: 18px;
+  }
+  
+  .perfumeName {
+    font-size: 1rem;
+  }
+  
+  .quoteText {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  .performanceRow {
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+  
+  .perfPill {
+    font-size: 0.68rem;
+    padding: 3px 8px;
   }
 }

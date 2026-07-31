@@ -106,17 +106,17 @@ export default function FilterSidebar({
                       <div className={styles.sliderWrapper}>
                         <input
                           type="range"
-                          min="1000"
-                          max="3000"
+                          min="300"
+                          max="2500"
                           step="50"
                           value={maxPrice}
                           onChange={(e) => onPriceChange(Number(e.target.value))}
                           className={styles.rangeInput}
                         />
                         <div className={styles.sliderValues}>
-                          <span className={styles.priceMin}>1,000tk</span>
+                          <span className={styles.priceMin}>300tk</span>
                           <span className={styles.priceCurrent}>{maxPrice.toLocaleString()}tk</span>
-                          <span className={styles.priceMax}>3,000tk</span>
+                          <span className={styles.priceMax}>2,500tk</span>
                         </div>
                       </div>
                     ) : (

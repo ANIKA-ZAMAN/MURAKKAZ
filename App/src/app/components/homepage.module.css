@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  padding: 5.5rem 1.5rem;
+  padding: 3.5rem 1.5rem;
   background-color: transparent;
   transition: background-color 0.3s ease, color 0.3s ease;
   position: relative;
@@ -14,7 +14,7 @@
 
 .sectionHeader {
   text-align: center;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -22,17 +22,17 @@
 
 .sectionTitle {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.5rem);
   color: #1f1c18;
   font-weight: 500;
   line-height: 1.2;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   letter-spacing: -0.015em;
 }
 
 .sectionSubtitle {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
   color: #3d372e;
   font-weight: 400;
   font-style: italic;
@@ -43,7 +43,7 @@
 .trustBar {
   background-color: transparent;
   border-top: none;
-  padding: 1.15rem 0;
+  padding: 1rem 0;
   width: 100%;
   z-index: 10;
   backdrop-filter: blur(10px);
@@ -54,7 +54,7 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
   padding: 0 1.5rem;
 }
 
@@ -111,7 +111,7 @@
 .collectionsGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.25rem;
   width: 100%;
 
   /* Homepage warm parchment card overrides */
@@ -158,7 +158,7 @@
 
 .collectionImageWrap {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 10;
   position: relative;
   border-radius: 0;
   overflow: hidden;
@@ -169,7 +169,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.25rem 1.25rem 1.5rem;
+  padding: 0.85rem 1rem 1rem;
   background: var(--card-content-bg, rgba(255, 255, 255, 0.70));
   width: 100%;
   flex-grow: 1;
@@ -199,34 +199,73 @@
 
 .collectionTitle {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--foreground);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 .collectionDesc {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #767677;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
   flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Desktop Override (>= 1024px): Original Laptop Layout Preserved ── */
+@media (min-width: 1024px) {
+  .section {
+    padding: 5.5rem 1.5rem;
+  }
+  .sectionHeader {
+    margin-bottom: 3.5rem;
+  }
+  .collectionsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .collectionImageWrap {
+    aspect-ratio: 1 / 1;
+  }
+  .collectionContent {
+    padding: 1.25rem 1.25rem 1.5rem;
+  }
+  .collectionTitle {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .collectionDesc {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    display: block;
+    -webkit-line-clamp: unset;
+  }
+  .collectionLink {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.7rem;
+  }
 }
 
 .collectionLink {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   background-color: #313134; /* Dark charcoal pill button */
   color: #F5F1E8;
-  padding: 0.6rem 1.5rem;
+  padding: 0.45rem 1.1rem;
   border-radius: 9999px; /* Pill shape */
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   margin-top: auto;
 }
@@ -444,12 +483,12 @@
 .occasionsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .occasionCard {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(130, 120, 100, 0.08);
@@ -511,7 +550,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 1.5rem;
+  padding: 0.85rem 1rem;
   z-index: 2;
   transition: background 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -522,7 +561,7 @@
 
 .occasionName {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   color: #ffffff;
   font-weight: 500;
   margin: 0;
@@ -762,7 +801,7 @@
 
 .eventImageWrap {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   position: relative;
   background-color: #f0ebe3;
   overflow: hidden;
@@ -780,7 +819,7 @@
 }
 
 .eventContent {
-  padding: 1.5rem;
+  padding: 0.85rem 1rem 1rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -791,38 +830,38 @@
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.75rem;
+  font-size: 0.73rem;
   font-weight: 600;
   text-transform: uppercase;
   color: #820011;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.35rem;
   letter-spacing: 0.05em;
 }
 
 .eventTitle {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 500;
   color: var(--foreground);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   line-height: 1.3;
 }
 
 .eventLoc {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #767677;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .eventDesc {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--foreground);
   opacity: 0.85;
-  line-height: 1.5;
+  line-height: 1.45;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-top: auto;
@@ -851,88 +890,117 @@
   color: #313134;
 }
 
-/* ── Responsive media queries ── */
-@media (max-width: 1024px) {
-  .collectionsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .bestSellersGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .occasionsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .notesGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .eventsGrid {
-    grid-template-columns: repeat(2, 1fr);
+/* ── Comprehensive Breakpoints & Height-based Responsive Media Queries ── */
+
+/* 1920px+ (Ultra Wide / Large Desktop) */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1440px;
   }
 }
 
-@media (max-width: 768px) {
+/* 1536px – 1919px (Desktop) */
+@media (min-width: 1536px) and (max-width: 1919px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* 1280px – 1535px (Laptop / Laptop L) */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .container {
+    max-width: 1180px;
+  }
+  .collectionsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* 1024px – 1279px (Tablet Landscape / Small Laptop) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .collectionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .bestSellersGrid,
+  .occasionsGrid,
+  .eventsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* 992px – 1023px (Tablet) */
+@media (max-width: 1023px) {
+  .collectionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .bestSellersGrid,
+  .occasionsGrid,
+  .eventsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .diffGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* 768px – 991px (Tablet Portrait) */
+@media (max-width: 991px) {
   .trustContainer {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 1.25rem;
   }
   .section {
-    padding: 4rem 1.25rem;
-  }
-  .sectionHeader {
-    margin-bottom: 2.5rem;
+    padding: clamp(3.25rem, 5vw, 4.5rem) 1.25rem;
   }
 }
 
-@media (max-width: 600px) {
-  .collectionsGrid {
-    grid-template-columns: 1fr;
+/* 576px – 767px (Large Mobile) */
+@media (max-width: 767px) {
+  .sectionHeader {
+    margin-bottom: 2.25rem;
   }
-  .bestSellersGrid {
+}
+
+/* 480px – 575px (Mobile) */
+@media (max-width: 575px) {
+  .collectionsGrid,
+  .bestSellersGrid,
+  .occasionsGrid,
+  .eventsGrid,
+  .diffGrid {
     grid-template-columns: 1fr;
-  }
-  .occasionsGrid {
-    grid-template-columns: 1fr;
-  }
-  .notesGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .eventsGrid {
-    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
   .trustContainer {
-    grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-}
-
-/* ── Typography & Label Refinements ── */
-.sectionLabel {
-  display: block;
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #c5a880; /* gold accent */
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-/* ── The Murakkaz Difference V2.0 ── */
-.diffGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-@media (max-width: 1024px) {
-  .diffGrid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
   }
 }
 
-@media (max-width: 600px) {
-  .diffGrid {
+/* < 390px (iPhone & Small Android 360px) */
+@media (max-width: 389px) {
+  .trustContainer {
     grid-template-columns: 1fr;
+  }
+  .section {
+    padding: 2.75rem 0.85rem;
+  }
+}
+
+/* Viewport Height Media Queries (600px - 750px short laptop & mobile screens) */
+@media (max-height: 720px) {
+  .section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+  .sectionHeader {
+    margin-bottom: 1.75rem;
   }
 }
 

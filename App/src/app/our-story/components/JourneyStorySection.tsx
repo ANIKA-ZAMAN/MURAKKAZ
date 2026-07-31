@@ -51,11 +51,13 @@ export default function JourneyStorySection() {
     if (!sectionRef.current) return;
 
     const totalSteps = journeySections.length;
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 900;
+    const scrollMultiplier = isMobile ? 50 : 100;
 
     const trigger = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: "top top",
-      end: `+=${totalSteps * 100}%`,
+      end: `+=${totalSteps * scrollMultiplier}%`,
       pin: true,
       pinSpacing: true,
       onUpdate: (self) => {
@@ -192,6 +194,12 @@ export default function JourneyStorySection() {
                           isActive ? styles.activeMilestoneCircle : ""
                         }`}
                       />
+                      {isActive && (
+                        <path
+                          d={`M ${initPos.x + 39} ${initPos.y - 11} L ${initPos.x + 58} ${initPos.y} L ${initPos.x + 39} ${initPos.y + 11} Z`}
+                          className={styles.pointyPointer}
+                        />
+                      )}
                       <text
                         x={initPos.x}
                         y={initPos.y + 1}

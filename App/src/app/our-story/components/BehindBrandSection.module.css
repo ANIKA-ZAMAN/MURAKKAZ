@@ -82,9 +82,33 @@
 }
 
 @media (max-width: 900px) {
+  .section {
+    padding: 2rem 1rem 2.5rem 1rem;
+  }
+  .heading {
+    margin-bottom: 1.35rem;
+  }
   .cardsGrid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 0.85rem;
+    margin-bottom: 1.75rem;
+  }
+  .card {
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+  }
+  .cardNumber {
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .cardTitle {
+    font-size: 1.15rem;
+    margin-bottom: 0.45rem;
+    line-height: 1.25;
+  }
+  .cardDesc {
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
   .cardFullWidth {
     grid-column: span 1;

@@ -191,6 +191,7 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
     e.preventDefault();
     if (!user) return;
     localStorage.setItem("murakkaz-user", JSON.stringify(user));
+    window.dispatchEvent(new Event("murakkaz-user-updated"));
     alert("Profile saved successfully.");
   };
 

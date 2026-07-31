@@ -51,9 +51,7 @@ export default function QuizCard({
   showBackButton,
 }: QuizCardProps) {
   const isSelected = (option: string): boolean => {
-    if (Array.isArray(selectedAnswers)) {
-      return selectedAnswers.includes(option);
-    }
+    if (Array.isArray(selectedAnswers)) return selectedAnswers.includes(option);
     return selectedAnswers === option;
   };
 
@@ -78,13 +76,13 @@ export default function QuizCard({
     // Background stack cards fanning out organically
     const index = Math.min(depth, stackProps.length - 1);
     const props = stackProps[index];
-    const brightness = Math.max(0.88, 1 - depth * 0.02); // Simulate ambient occlusion shadow
+    const brightness = Math.max(0.88, 1 - depth * 0.02);
 
     cardStyle = {
       transform: `translate(${props.x}px, ${props.y}px) rotate(${props.rot}deg)`,
       boxShadow: getShadowForDepth(depth),
       filter: `brightness(${brightness})`,
-      opacity: 1, // Keep cards opaque to look like real, thick paper sheets
+      opacity: 1,
       zIndex: 10 - depth,
       pointerEvents: "none",
     };
@@ -97,19 +95,15 @@ export default function QuizCard({
       className={`${styles.paperCard} ${isTop ? styles.topCard : ""} ${isLeaving ? styles.leavingCard : ""}`}
       style={cardStyle}
     >
-      {/* 
-        Wrap contents and hide when the card is underneath the stack.
-        This prevents option text overlapping at the bottom of the stack while 
-        animating smoothly when cards slide up.
-      */}
-      <div 
-        className={`${styles.cardInnerContent} ${isTop && !isLeaving ? styles.cardContentEnter : ''}`}
+      <div
+        className={`${styles.cardInnerContent} ${isTop && !isLeaving ? styles.cardContentEnter : ""}`}
         style={{
           opacity: (isTop || isLeaving || depth <= 1) ? 1 : 0,
           transition: "opacity 0.3s ease",
           pointerEvents: isTop ? "auto" : "none"
         }}
       >
+        {/* Header */}
         <div className={styles.cardHeader}>
           <span className={styles.cardQId}>Q.0{question.id}</span>
           <h2 className={styles.cardQuestion}>
@@ -120,6 +114,7 @@ export default function QuizCard({
           </h2>
         </div>
 
+        {/* Options */}
         <div className={(isMulti || question.options.length > 5) ? styles.multiGrid : styles.optionsList}>
           {question.options.map((option) => {
             const checked = isSelected(option);
@@ -146,7 +141,7 @@ export default function QuizCard({
           })}
         </div>
 
-        {/* Navigation Buttons inside the card */}
+        {/* Navigation */}
         <div className={styles.cardActionsRow}>
           {showBackButton ? (
             <button

@@ -1,0 +1,320 @@
+/* ── Backdrop Overlay ── */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 99998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.backdropOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ── Slide-Over Drawer Panel ── */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 90vw;
+  background-color: #F5F1E8;
+  z-index: 99999;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.16);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-serif-text), Georgia, serif;
+}
+
+.drawerOpen {
+  transform: translateX(0);
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(197, 162, 101, 0.25);
+  background-color: #eeeae0;
+}
+
+.headerTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerIcon {
+  stroke: #820011 !important;
+}
+
+.title {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #313134;
+  margin: 0;
+}
+
+.headerBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #820011;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #820011;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.clearBtn:hover {
+  opacity: 0.75;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: #313134;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.closeBtn:hover {
+  transform: scale(1.15);
+  color: #820011;
+}
+
+/* ── Body (Scrollable) ── */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.categoryBlock {
+  border-bottom: 1px solid rgba(118, 118, 119, 0.15);
+  padding-bottom: 1rem;
+}
+
+.categoryHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #313134;
+  font-family: var(--font-serif-title), Georgia, serif;
+}
+
+.categoryName {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2D251C;
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  color: #767677;
+  transition: transform 0.3s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.categoryContent {
+  padding-top: 0.5rem;
+}
+
+/* ── Slider ── */
+.sliderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.sliderHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.sliderLabel {
+  color: #766d62;
+}
+
+.sliderValue {
+  font-weight: 600;
+  color: #10b981;
+}
+
+.rangeInput {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  background: #eae5dc;
+  border-radius: 3px;
+  outline: none;
+}
+
+.rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #820011;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(130, 0, 17, 0.3);
+  transition: transform 0.15s ease;
+}
+
+.rangeInput::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.sliderLimits {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #766d62;
+}
+
+/* ── Checkboxes ── */
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem 1rem;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: #4b5563;
+}
+
+.checkboxInput {
+  width: 16px;
+  height: 16px;
+  accent-color: #820011;
+  cursor: pointer;
+}
+
+.optionText {
+  color: #313134;
+}
+
+/* ── Scent Notes Tag Pills ── */
+.tagsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tagPill {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background-color: #eeeae0;
+  border: 1px solid #c8c4bc;
+  color: #313134;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tagPill:hover {
+  border-color: #C5A265;
+  color: #820011;
+}
+
+.tagPillSelected {
+  background-color: #820011;
+  border-color: #820011;
+  color: #ffffff;
+}
+
+.tagPillSelected:hover {
+  background-color: #6a000e;
+  border-color: #6a000e;
+  color: #ffffff;
+}
+
+/* ── Footer ── */
+.footer {
+  padding: 1rem 1.5rem 1.25rem;
+  border-top: 1px solid rgba(197, 162, 101, 0.25);
+  background-color: #eeeae0;
+}
+
+.applyBtn {
+  width: 100%;
+  height: 46px;
+  border-radius: 50px;
+  background-color: #820011;
+  border: 1.5px solid #820011;
+  color: #ffffff;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.applyBtn:hover {
+  background-color: #6a000e;
+  border-color: #6a000e;
+  box-shadow: 0 4px 16px rgba(130, 0, 17, 0.25);
+}
+
+.applyBtn:active {
+  transform: scale(0.98);
+}

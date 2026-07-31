@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./ProductCard.module.css";
 
@@ -10,13 +9,17 @@ interface ProductCardProps {
   id: string;
   name: string;
   brand: string;
-  description: string;
+  description?: string;
   rating: number;
   reviews: number;
   price: string;
-  volume: string;
+  originalPrice?: string;
+  volume?: string;
   image: string;
   delay?: number;
+  badge?: string;
+  inspiredBy?: string;
+  notes?: string[];
 }
 
 export default function ProductCard({
@@ -27,16 +30,44 @@ export default function ProductCard({
   rating,
   reviews,
   price,
+  originalPrice,
   volume,
   image,
   delay = 0,
+  badge,
+  inspiredBy,
+  notes,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const router = useRouter();
 
-  const displayName = name;
-  const inspiredBy = description;
+  const { displayName, subTitleText } = useMemo(() => {
+    if (inspiredBy) {
+      return { displayName: name, subTitleText: inspiredBy };
+    }
+    if (description && description.includes("Inspired by")) {
+      return { displayName: name, subTitleText: description };
+    }
+    return { displayName: name, subTitleText: `Inspired by ${brand}` };
+  }, [name, brand, inspiredBy, description]);
+
+  // Check wishlist state on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("wishlist-items");
+      if (saved) {
+        try {
+          const list = JSON.parse(saved);
+          if (Array.isArray(list) && (list.includes(id) || list.includes(displayName))) {
+            setIsWishlisted(true);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }
+  }, [id, displayName]);
 
   // Auto-hide toast messages
   useEffect(() => {
@@ -48,70 +79,57 @@ export default function ProductCard({
     }
   }, [toastMessage]);
 
-  const handleAddToCart = () => {
-    const savedCart = localStorage.getItem("cart-items");
-    let cartItems = [];
-    if (savedCart) {
+  const handleToggleWishlist = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const nextState = !isWishlisted;
+    setIsWishlisted(nextState);
+
+    const saved = localStorage.getItem("wishlist-items");
+    let wishlist: string[] = [];
+    if (saved) {
       try {
-        cartItems = JSON.parse(savedCart);
-      } catch (e) {
-        console.error("Failed to parse cart items", e);
+        wishlist = JSON.parse(saved);
+        if (!Array.isArray(wishlist)) wishlist = [];
+      } catch (err) {
+        wishlist = [];
       }
     }
 
-    if (!Array.isArray(cartItems)) {
-      cartItems = [];
-    }
-
-    const existingIndex = cartItems.findIndex((item: any) => item.name === displayName && item.selectedSize === "12ml");
-    if (existingIndex > -1) {
-      cartItems[existingIndex].quantity += 1;
+    if (nextState) {
+      if (!wishlist.includes(id)) wishlist.push(id);
     } else {
-      const newItem = {
-        id: `cart-${id}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-        name: displayName,
-        image: image,
-        inspiredBy: inspiredBy,
-        selectedSize: "12ml",
-        quantity: 1,
-        prices: {
-          "12ml": 500,
-          "30ml": 900,
-          "55ml": 1500,
-          "100ml": 2800,
-        },
-        originalPrices: {
-          "12ml": 720,
-          "30ml": 1200,
-          "55ml": 2000,
-          "100ml": 3500,
-        },
-        selected: true,
-      };
-      cartItems.push(newItem);
+      wishlist = wishlist.filter((item) => item !== id);
     }
 
-    localStorage.setItem("cart-items", JSON.stringify(cartItems));
-    window.dispatchEvent(new Event("cart-updated"));
-    setToastMessage(`Added 1x ${displayName} (12ml) to your bag!`);
-  };
-
-  const handleBuyNow = () => {
-    handleAddToCart();
-    router.push("/cart");
+    localStorage.setItem("wishlist-items", JSON.stringify(wishlist));
+    window.dispatchEvent(new Event("wishlist-updated"));
   };
 
   const handleCardClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (
       target.closest(`.${styles.compareBtn}`) ||
-      target.closest(`.${styles.wishlistBtn}`) ||
-      target.closest(`.${styles.readMoreBtn}`)
+      target.closest(`.${styles.detailsBtn}`) ||
+      target.closest(`.${styles.wishlistBtn}`)
     ) {
       return;
     }
     router.push(`/product/${id}`);
   };
+
+  // Ensure single price format (strip any range hyphen/dash)
+  const rawPrice = price || "300tk";
+  const singlePrice = rawPrice.includes("–") 
+    ? rawPrice.split("–")[1]?.trim() || rawPrice.split("–")[0]?.trim()
+    : rawPrice.includes("-") && !rawPrice.startsWith("-")
+    ? rawPrice.split("-")[1]?.trim() || rawPrice.split("-")[0]?.trim()
+    : rawPrice;
+
+  const displayPrice = singlePrice.includes("tk") 
+    ? singlePrice 
+    : `${singlePrice.replace(/[^0-9,]/g, "") ? singlePrice : "300"}tk`;
+
+  const displayOriginalPrice = originalPrice ? (originalPrice.includes("tk") ? originalPrice : `${originalPrice}tk`) : "";
 
   return (
     <div
@@ -124,31 +142,28 @@ export default function ProductCard({
         <Image
           src={image}
           alt={displayName}
-          width={240}
-          height={240}
+          width={280}
+          height={280}
           className={styles.image}
         />
+        {badge && <span className={styles.badge}>{badge}</span>}
       </div>
 
       {/* Card Content */}
       <div className={styles.content}>
-        {/* Row 1: Name + Heart Row */}
+        {/* Row 1: Product Title + Wishlist Button */}
         <div className={styles.nameRow}>
-          <h3 className={styles.name}>
-            {displayName}
-          </h3>
+          <h3 className={styles.name}>{displayName}</h3>
           <button
             className={`${styles.wishlistBtn} ${isWishlisted ? styles.active : ""}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsWishlisted(!isWishlisted);
-            }}
+            onClick={handleToggleWishlist}
             aria-label="Add to wishlist"
           >
             <svg
               viewBox="0 0 24 24"
-              fill={isWishlisted ? "currentColor" : "none"}
-              stroke="currentColor"
+              fill={isWishlisted ? "#820011" : "none"}
+              stroke={isWishlisted ? "#820011" : "#313134"}
+              strokeWidth="2"
               className={styles.heartIcon}
             >
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -156,53 +171,87 @@ export default function ProductCard({
           </button>
         </div>
 
-        {/* Row 2: Brand + Rating Row */}
-        <div className={styles.brandRatingRow}>
-          <span className={styles.brandText}>Brand: {brand}</span>
+        {/* Row 2: Subtitle Text */}
+        <div className={styles.brandRow}>
+          <span className={styles.brandText}>{subTitleText}</span>
+        </div>
+
+        {/* Row 4: Rating (Left) & Pricing (Right) */}
+        <div className={styles.ratingPriceRow}>
           <div className={styles.ratingGroup}>
             <span className={styles.star}>★</span>
-            <span className={styles.ratingText}>{rating.toFixed(1)} ({reviews})</span>
+            <span className={styles.ratingText}>
+              {rating.toFixed(1)} <span className={styles.reviewsCount}>({reviews})</span>
+            </span>
+          </div>
+
+          <div className={styles.priceGroup}>
+            <span className={styles.currentPrice}>{displayPrice}</span>
+            {displayOriginalPrice && (
+              <span className={styles.originalPrice}>{displayOriginalPrice}</span>
+            )}
           </div>
         </div>
 
-        {/* Row 3: Description */}
-        <p className={styles.description}>
-          {description}
-        </p>
-
-        {/* Row 4: Action Buttons */}
+        {/* Row 5: Action Buttons */}
         <div className={styles.actions}>
-          <button 
-            className={styles.compareBtn} 
+          <button
+            className={styles.buyNowBtn}
             onClick={(e) => {
               e.stopPropagation();
-              router.push(`/compare?p1=${id}`);
+              router.push(`/cart?add=${id}`);
             }}
           >
-            Compare
+            Buy Now
           </button>
-          <button 
-            className={styles.readMoreBtn} 
+          <button
+            className={styles.addBagBtn}
             onClick={(e) => {
               e.stopPropagation();
-              router.push(`/product/${id}`);
+              try {
+                const saved = localStorage.getItem("cart-items");
+                let cart: any[] = saved ? JSON.parse(saved) : [];
+                const existing = cart.find((i) => i.id === id);
+                if (existing) {
+                  existing.quantity = (existing.quantity || 1) + 1;
+                } else {
+                  cart.push({ id, name: displayName, price: displayPrice, image, quantity: 1 });
+                }
+                localStorage.setItem("cart-items", JSON.stringify(cart));
+                window.dispatchEvent(new Event("cart-updated"));
+                setToastMessage(`Added ${displayName} to your bag!`);
+              } catch (err) {
+                console.error(err);
+              }
             }}
           >
-            Read more
+            Add to Bag
           </button>
         </div>
       </div>
 
-      {/* Toast Alert Box Wrapper (stable parent node prevents removeChild hydration/unmount crashes) */}
+      {/* Toast Alert Box Wrapper */}
       <div className={styles.toastWrapper}>
         {toastMessage && (
           <div className={styles.toast}>
             <div className={styles.toastText}>{toastMessage}</div>
             <div className={styles.toastActions}>
-              <span className={styles.toastLink} onClick={() => router.push("/cart")}>
+              <span
+                className={styles.toastLink}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push("/cart");
+                }}
+              >
                 View Bag
               </span>
-              <button className={styles.toastClose} onClick={() => setToastMessage(null)}>
+              <button
+                className={styles.toastClose}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setToastMessage(null);
+                }}
+              >
                 Dismiss
               </button>
             </div>

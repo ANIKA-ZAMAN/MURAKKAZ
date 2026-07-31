@@ -8,13 +8,21 @@ import styles from "./AwardsSection.module.css";
 export default function AwardsSection() {
   const { awards } = ourStoryData;
   const [activeTabIdx, setActiveTabIdx] = useState(0);
+  const [expandedCards, setExpandedCards] = useState<{ [key: string]: boolean }>({});
 
   const activeTab = awards.tabs[activeTabIdx] || awards.tabs[0];
+
+  const toggleExpand = (id: string) => {
+    setExpandedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   return (
     <section className={styles.wrapper} aria-labelledby="awards-section-title">
       <div className={styles.container}>
-        {/* Left Column: Heading + Interactive Tabs + Detail Box */}
+        {/* Desktop Left Column: Heading + Interactive Tabs + Detail Box */}
         <div className={styles.leftCol}>
           <h2 id="awards-section-title" className={styles.heading}>
             {awards.heading}
@@ -44,7 +52,40 @@ export default function AwardsSection() {
           </div>
         </div>
 
-        {/* Right Column: Media Showcase Frame */}
+        {/* Mobile & Tablet Stack: Heading + 3 Expandable Cards with See More */}
+        <div className={styles.mobileCol}>
+          <h2 className={styles.heading}>
+            {awards.heading}
+          </h2>
+
+          <div className={styles.mobileCardsStack}>
+            {awards.tabs.map((tab) => {
+              const isExpanded = !!expandedCards[tab.id];
+              return (
+                <div key={tab.id} className={styles.awardCardMobile}>
+                  <h3 className={styles.mobileCardTitle}>{tab.title}</h3>
+                  <p
+                    className={`${styles.mobileCardDesc} ${
+                      !isExpanded ? styles.clampedText : ""
+                    }`}
+                  >
+                    {tab.description}
+                  </p>
+                  <button
+                    type="button"
+                    className={styles.seeMoreBtn}
+                    onClick={() => toggleExpand(tab.id)}
+                    aria-expanded={isExpanded}
+                  >
+                    {isExpanded ? "See less ↑" : "See more ↓"}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right Column: Media Showcase Frame (Desktop) */}
         <div className={styles.rightCol}>
           <div className={styles.mediaFrame}>
             {activeTab.image && (

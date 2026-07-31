@@ -21,12 +21,12 @@ export default function CustomerReviews({
   const touchEndX = useRef<number | null>(null);
   const total = items.length;
 
-  // Continuous Auto-play interval (4s)
+  // Continuous Auto-play interval (5.5s)
   useEffect(() => {
     if (isPaused || total === 0) return;
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % total);
-    }, 4000);
+    }, 5500);
     return () => clearInterval(timer);
   }, [isPaused, total]);
 
@@ -72,20 +72,23 @@ export default function CustomerReviews({
       return {
         transform: "translateX(0%) scale(1) translateZ(0px)",
         opacity: 1,
+        filter: "blur(0px)",
         zIndex: 10,
         pointerEvents: "auto" as const,
       };
     } else if (offset === 1) {
       return {
-        transform: "translateX(58%) scale(0.88) translateZ(-40px)",
+        transform: "translateX(58%) scale(0.9) translateZ(-40px)",
         opacity: 0.55,
+        filter: "blur(2px)",
         zIndex: 5,
         pointerEvents: "auto" as const,
       };
     } else if (offset === -1) {
       return {
-        transform: "translateX(-58%) scale(0.88) translateZ(-40px)",
+        transform: "translateX(-58%) scale(0.9) translateZ(-40px)",
         opacity: 0.55,
+        filter: "blur(2px)",
         zIndex: 5,
         pointerEvents: "auto" as const,
       };

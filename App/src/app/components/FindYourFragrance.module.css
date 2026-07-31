@@ -16,7 +16,18 @@
 
 /* ── Soft Golden Ambient Glow ── */
 .ambientGlow {
-  display: none;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 850px;
+  height: 350px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.16) 0%, rgba(197, 168, 128, 0.08) 50%, transparent 75%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* ── Card Wrapper — provides float animation ── */
@@ -43,39 +54,40 @@
   flex-direction: column;
   align-items: center;
 
-  /* Warm ivory paper surface */
+  /* Warm muted parchment surface blending with the theme background */
   background: linear-gradient(
     168deg,
-    #fdfaf5 0%,
-    #f9f4ec 30%,
-    #f5efe4 65%,
-    #f2ead9 100%
+    rgba(244, 237, 226, 0.88) 0%,
+    rgba(236, 227, 213, 0.88) 45%,
+    rgba(226, 215, 199, 0.88) 100%
   );
-
-  /* Subtle paper texture overlay via noise */
-  background-image:
-    linear-gradient(168deg, #fdfaf5 0%, #f9f4ec 30%, #f5efe4 65%, #f2ead9 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   border-radius: 24px;
 
-  /* Subtle warm champagne border */
-  border: 1px solid rgba(185, 155, 108, 0.32);
+  /* Muted warm champagne gold border */
+  border: 1px solid rgba(165, 135, 92, 0.35);
 
-  /* Layered soft shadows for depth */
+  /* Layered soft subtle shadows */
   box-shadow:
-    0 2px 8px rgba(120, 95, 60, 0.04),
-    0 8px 24px rgba(120, 95, 60, 0.06),
-    0 20px 56px -8px rgba(80, 60, 30, 0.08);
+    0 4px 18px rgba(60, 45, 25, 0.05),
+    0 12px 36px -6px rgba(60, 45, 25, 0.08);
 
-  transition: box-shadow 0.5s ease, border-color 0.5s ease;
+  transition: box-shadow 0.5s ease, border-color 0.5s ease, background 0.5s ease;
 }
 
 .invitationCard:hover {
-  border-color: rgba(185, 155, 108, 0.45);
+  border-color: rgba(165, 135, 92, 0.55);
+  background: linear-gradient(
+    168deg,
+    rgba(247, 240, 230, 0.94) 0%,
+    rgba(239, 230, 217, 0.94) 45%,
+    rgba(229, 218, 203, 0.94) 100%
+  );
   box-shadow:
-    0 2px 8px rgba(120, 95, 60, 0.05),
-    0 12px 32px rgba(120, 95, 60, 0.08),
-    0 24px 64px -8px rgba(80, 60, 30, 0.10);
+    0 6px 24px rgba(60, 45, 25, 0.07),
+    0 16px 44px -6px rgba(60, 45, 25, 0.11);
 }
 
 /* ── Murakkaz Logo ── */
@@ -197,7 +209,7 @@
   padding: 0 2.5rem;
   border-radius: 25px;
   background: transparent;
-  border: 1.5px solid #313134;
+  border: 2px solid #B8965C;
   color: #313134;
   text-decoration: none;
   cursor: pointer;

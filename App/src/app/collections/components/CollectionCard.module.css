@@ -135,7 +135,6 @@
   min-height: 2.85rem;
 }
 
-/* ── Action Buttons ── */
 .actions {
   margin-top: auto;
   display: flex;
@@ -147,16 +146,17 @@
 .compareBtn,
 .readMoreBtn {
   flex: 1;
-  height: 30px;
-  border-radius: 15px;
+  min-height: 44px;
+  border-radius: 22px;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.6875rem;
+  font-size: 0.78rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .compareBtn {
@@ -181,4 +181,27 @@
   background-color: #313134;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
+}
+
+@media (max-width: 1200px) {
+  .actions {
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 100%;
+  }
+
+  .compareBtn,
+  .readMoreBtn {
+    width: 100% !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+    border-radius: 22px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    flex: none !important;
+  }
 }

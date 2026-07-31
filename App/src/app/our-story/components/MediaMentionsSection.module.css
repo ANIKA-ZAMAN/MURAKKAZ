@@ -5,11 +5,13 @@
   padding: 5rem 2rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
 }
 
 .headingGroup {
   margin-bottom: 2.5rem;
+  text-align: center;
 }
 
 .title {
@@ -28,7 +30,7 @@
   letter-spacing: 0.02em;
 }
 
-/* Luxury Compact Video Frame (Smaller & Aligned with page layout) */
+/* Luxury Compact Video Frame (Centered Exactly in the Middle of the Page) */
 .videoContainer {
   position: relative;
   width: 100%;
@@ -40,6 +42,7 @@
   overflow: hidden;
   background-color: #EAE5DB;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
 }
 
 .videoElement {
@@ -100,20 +103,34 @@
   border-left-color: #820011;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .section {
-    padding: 3.5rem 1.5rem;
+    padding: 2rem 1.25rem;
+  }
+  .headingGroup {
+    margin-bottom: 1.25rem;
   }
   .title {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
   .videoContainer {
     max-width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
+    max-height: 480px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 1.75rem 1rem;
+  }
+  .videoContainer {
+    aspect-ratio: 1 / 1;
+    max-height: 380px;
   }
   .playOverlay {
-    width: 58px;
-    height: 58px;
+    width: 60px;
+    height: 60px;
   }
   .playTriangle {
     border-top-width: 9px;

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { storeLocations } from "../../data/eventsData";
 import styles from "../page.module.css";
 
@@ -10,21 +13,31 @@ export default function StoreLocationSection({
   locationSearch,
   onSearchChange,
 }: StoreLocationSectionProps) {
-  const filteredLocations = storeLocations.filter(
-    (loc) =>
+  const [selectedZone, setSelectedZone] = useState("");
+
+  const filteredLocations = storeLocations.filter((loc) => {
+    const matchesZone =
+      !selectedZone || loc.zone.toLowerCase().includes(selectedZone.toLowerCase());
+    const matchesSearch =
+      !locationSearch ||
       loc.zone.toLowerCase().includes(locationSearch.toLowerCase()) ||
-      loc.address.toLowerCase().includes(locationSearch.toLowerCase())
-  );
+      loc.address.toLowerCase().includes(locationSearch.toLowerCase());
+    return matchesZone && matchesSearch;
+  });
 
   return (
     <section className={styles.storeSection}>
-      <h2 className={styles.sectionHeading}>Store Location</h2>
+      <h2 className={styles.sectionHeading}>Stall Location</h2>
 
       <div className={styles.storeControlsRow}>
         {/* Zone dropdown */}
         <div className={styles.zoneDropdownWrapper}>
-          <select className={styles.zoneSelect} defaultValue="">
-            <option value="">Zone</option>
+          <select
+            className={styles.zoneSelect}
+            value={selectedZone}
+            onChange={(e) => setSelectedZone(e.target.value)}
+          >
+            <option value="">All Zones</option>
             <option value="dhaka">Dhaka</option>
             <option value="chattogram">Chattogram</option>
           </select>
@@ -68,3 +81,4 @@ export default function StoreLocationSection({
     </section>
   );
 }
+

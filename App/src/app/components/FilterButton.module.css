@@ -1,0 +1,85 @@
+.filterBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 220px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 50px;
+  border: 1.5px solid #820011; /* Red frame */
+  background-color: transparent;
+  color: #313134; /* Black text */
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  font-family: var(--font-serif-text), Georgia, serif;
+  user-select: none;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.filterBtn:hover,
+.filterBtn:focus,
+.filterBtn:focus-visible,
+.filterBtn:active {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #313134 !important;
+  border-color: #820011 !important;
+  transform: translateY(-1px);
+}
+
+.filterBtn:active {
+  transform: scale(0.98);
+}
+
+.filterIcon {
+  width: 18px;
+  height: 18px;
+  stroke: #820011; /* Murakkaz Red icon */
+  flex-shrink: 0;
+  transition: stroke 0.2s ease;
+}
+
+.filterBtn:hover .filterIcon,
+.filterBtn:focus .filterIcon,
+.filterBtn:active .filterIcon {
+  stroke: #820011 !important;
+}
+
+.btnText {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #313134; /* Black text */
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #820011;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+@media (max-width: 768px) {
+  .filterBtn {
+    max-width: 100%;
+  }
+}
+
+
+
+

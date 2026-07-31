@@ -235,17 +235,20 @@
 .modalContent {
   background-color: var(--background);
   border: 1.5px solid #767677;
-  border-radius: 12px;
-  padding: 2.25rem;
-  width: 90%;
-  max-width: 440px;
+  border-radius: 16px;
+  padding: 1.75rem 1.25rem;
+  width: 92%;
+  max-width: 480px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .modalTitle {
   font-family: var(--font-playfair), var(--font-lora), serif;
   font-size: 1.35rem;
   font-weight: 500;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   color: var(--foreground);
 }
 
@@ -253,10 +256,12 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  max-height: 280px;
+  margin-bottom: 1.25rem;
+  max-height: 52vh;
+  min-height: 240px;
   overflow-y: auto;
-  padding-right: 4px;
+  padding-right: 6px;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom Scrollbar for modal list */
@@ -346,6 +351,7 @@
   border-radius: 8px;
   overflow: visible; /* Allows sticky table headers to render correctly */
   background-color: var(--background); /* Same background color as the page */
+  scroll-margin-top: 110px;
 }
 
 .compareTable {
@@ -537,8 +543,49 @@
 }
 
 .notesCell {
-  height: 140px;
+  padding: 0.85rem 1rem !important;
+  vertical-align: top;
+  text-align: left;
   background-color: rgba(245, 241, 232, 0.04);
+}
+
+.notesListWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  width: 100%;
+}
+
+.notesBulletList {
+  list-style-type: disc;
+  margin: 0;
+  padding-left: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.84rem;
+  color: #313134;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.notesBulletList li {
+  margin: 0;
+}
+
+.noteCategory {
+  font-weight: 600;
+  color: #820011;
+}
+
+.cardNotesBlock {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(216, 210, 197, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 /* Responsive queries */
@@ -554,29 +601,44 @@
 
 @media (max-width: 768px) {
   .main {
-    padding: 2rem 1rem 4rem;
+    padding: 1.5rem 1rem 3rem;
   }
 
   .title {
-    font-size: 2rem;
+    font-size: clamp(1.75rem, 5.5vw, 2.2rem);
   }
 
   .compareFrame {
-    padding: 1.5rem;
+    padding: 1.25rem 1rem;
   }
 
   .slotsContainer {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.25rem;
   }
 
   .emptySlot, .filledSlot {
     max-width: 100%;
   }
 
-  .compareTable {
-    display: block;
+  .actionButtons {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .compareBtn, .resetBtn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+  }
+
+  .tableContainer {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .compareTable {
+    min-width: 600px;
   }
 }
 
@@ -595,5 +657,239 @@
 
 .compareTable tr:last-child td:last-child {
   border-bottom-right-radius: 7px;
+}
+
+/* ── Analyzing Loading Indicator ── */
+.analyzingBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 1rem 2rem;
+  background: rgba(248, 242, 232, 0.95);
+  border: 1px solid rgba(185, 155, 108, 0.45);
+  border-radius: 12px;
+  color: #313134;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.92rem;
+  margin: 1.25rem auto 0;
+  max-width: 580px;
+  box-shadow: 0 4px 20px rgba(80, 60, 30, 0.08);
+  animation: fadeInPulse 1.2s ease-in-out infinite alternate;
+}
+
+.analyzingSpinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(184, 150, 92, 0.3);
+  border-top-color: #820011;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInPulse {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ── Tablet & Mobile Comparison Cards ── */
+.tabletCardsContainer,
+.mobileCardsContainer {
+  display: none;
+  width: 100%;
+}
+
+.compareCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background-color: rgba(245, 241, 232, 0.7);
+  border: 1.5px solid #d8d5cd;
+  border-radius: 20px;
+  padding: 22px;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+
+.compareCardRecommended {
+  border-color: #820011;
+  box-shadow: 0 4px 20px rgba(130, 0, 17, 0.08);
+}
+
+.cardBadge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background-color: #820011;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(216, 213, 205, 0.6);
+  padding-bottom: 1rem;
+}
+
+.cardImage {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: #eae2d5;
+  padding: 6px;
+  flex-shrink: 0;
+}
+
+.cardTitleBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cardName {
+  font-family: var(--font-playfair), var(--font-lora), serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #313134;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.cardBrand {
+  font-size: 0.8rem;
+  color: #7a7a7d;
+  font-weight: 400;
+}
+
+.cardPrice {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #820011;
+  margin-top: 0.1rem;
+}
+
+.cardRating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #313134;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.cardRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border-bottom: 1px dashed rgba(216, 213, 205, 0.7);
+  padding-bottom: 0.6rem;
+}
+
+.cardRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.cardLabel {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #820011;
+}
+
+.cardVal {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #313134;
+  font-weight: 400;
+}
+
+.cardAccordsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+/* Tablet (768px - 1023px): Horizontally Scrollable Cards */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .tableContainer {
+    display: none !important;
+  }
+
+  .tabletCardsContainer {
+    display: block !important;
+  }
+
+  .tabletCardsScroll {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0.5rem 0.25rem 1rem;
+    width: 100%;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .tabletCardsScroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .compareCard {
+    flex: 0 0 320px;
+    min-width: 320px;
+    max-width: 340px;
+  }
+}
+
+/* Mobile (< 768px): Vertical Stacked Cards, NO Horizontal Scroll */
+@media (max-width: 767px) {
+  .tableContainer {
+    display: none !important;
+  }
+
+  .tabletCardsContainer {
+    display: none !important;
+  }
+
+  .mobileCardsContainer {
+    display: flex !important;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .mobileCompareCard {
+    width: 100% !important;
+    flex: none !important;
+  }
 }
 

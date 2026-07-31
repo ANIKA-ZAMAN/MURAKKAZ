@@ -30,6 +30,7 @@ export const metadata: Metadata = {
   description: "Recreated UI from elements design references",
 };
 
+import GlobalLayout from "./components/GlobalLayout";
 import SmoothScrollProvider from "./components/SmoothScrollProvider";
 
 export default function RootLayout({
@@ -54,6 +55,20 @@ export default function RootLayout({
                 }
               } catch (e) {}
 
+              // Aggressively remove Next.js dev badge (N)
+              const nukeDevBadge = () => {
+                try {
+                  const portal = document.querySelector('nextjs-portal');
+                  if (portal) portal.remove();
+                  const devTools = document.querySelector('#nextjs-dev-tools');
+                  if (devTools) devTools.remove();
+                } catch (e) {}
+              };
+              if (typeof window !== 'undefined') {
+                window.addEventListener('DOMContentLoaded', nukeDevBadge);
+                setInterval(nukeDevBadge, 150);
+              }
+
               const ignoreAttrs = ['bis_skin_checked', 'cz-shortcut-listen', 'data-new-gr-c-s-check-loaded', 'data-gr-ext-installed'];
               const removeAttrs = (node) => {
                 if (node.nodeType === 1) {
@@ -75,6 +90,7 @@ export default function RootLayout({
               
               // Observe future changes (e.g. extension injections after load)
               const observer = new MutationObserver((mutations) => {
+                nukeDevBadge();
                 for (const mutation of mutations) {
                   if (mutation.type === 'attributes' && ignoreAttrs.includes(mutation.attributeName)) {
                     const target = mutation.target;
@@ -96,11 +112,9 @@ export default function RootLayout({
           `}
         </Script>
         <SmoothScrollProvider>
-          <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", width: "100%" }} suppressHydrationWarning>
-            <Navbar />
+          <GlobalLayout>
             {children}
-            <Footer />
-          </div>
+          </GlobalLayout>
         </SmoothScrollProvider>
       </body>
     </html>

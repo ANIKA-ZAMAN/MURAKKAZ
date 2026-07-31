@@ -12,6 +12,10 @@ interface ScrollRevealProps {
   className?: string;
 }
 
+/**
+ * ScrollReveal — smooth, performance-optimized viewport entrance animations.
+ * Triggers once when the element scrolls into view with cubic-bezier(0.22, 1, 0.36, 1).
+ */
 export default function ScrollReveal({
   children,
   delay = 0,
@@ -22,36 +26,30 @@ export default function ScrollReveal({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let observer: IntersectionObserver | null = null;
-    const currentRef = ref.current;
+    const el = ref.current;
+    if (!el) return;
 
-    const timer = setTimeout(() => {
-      observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            if (currentRef && observer) {
-              observer.unobserve(currentRef);
-            }
-          }
-        },
-        {
-          threshold: 0.08,
-          rootMargin: "0px 0px -60px 0px",
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Use double rAF to guarantee browser paint before adding visible class for 60fps smooth animation
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setIsVisible(true);
+            });
+          });
+          observer.unobserve(el);
         }
-      );
-
-      if (currentRef) {
-        observer.observe(currentRef);
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px",
       }
-    }, 50);
+    );
 
-    return () => {
-      clearTimeout(timer);
-      if (observer) {
-        observer.disconnect();
-      }
-    };
+    observer.observe(el);
+
+    return () => observer.disconnect();
   }, []);
 
   const variantClass = variant !== "none" ? styles[variant] || styles["fade-up"] : "";
@@ -60,7 +58,7 @@ export default function ScrollReveal({
     <div
       ref={ref}
       className={`reveal ${styles.revealContainer} ${variantClass} ${
-        isVisible ? `visible ${styles.visible}` : ""
+        isVisible ? `${styles.visible} visible` : ""
       } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
       suppressHydrationWarning
@@ -69,4 +67,3 @@ export default function ScrollReveal({
     </div>
   );
 }
-

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { BlogPost } from "../../data/blogData";
@@ -45,6 +47,7 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
             type="button"
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onToggleLike(post.id);
             }}
             className={`${styles.wishlistBtn} ${isLiked ? styles.wishlistBtnActive : ""}`}

@@ -38,12 +38,17 @@ export default function UpcomingEventsSection({
             : `/images/events/${event.image}`;
 
           return (
-            <div key={idx} className={styles.upcomingRow}>
+            <div
+              key={idx}
+              className={`${styles.upcomingRow} ${
+                idx % 2 === 1 ? styles.upcomingRowOdd : ""
+              }`}
+            >
               {/* Col 1: Gold Calendar Badge */}
               <div className={styles.dateBlock}>
                 <span className={styles.dateDay}>{event.day}</span>
                 <span className={styles.dateMonth}>{event.month}</span>
-                <div className={styles.upcomingTimeBadge}>{event.time.replace('\n', ' ')}</div>
+                <div className={styles.upcomingTimeBadge}>{event.time ? event.time.replace('\n', ' ') : ''}</div>
               </div>
 
               {/* Col 2: Event Details */}
@@ -88,6 +93,12 @@ export default function UpcomingEventsSection({
               {/* Col 4: Description */}
               <div className={styles.upcomingDescWrap}>
                 <p className={styles.upcomingDesc}>{event.description}</p>
+                <button
+                  className={styles.seeDetailsBtn}
+                  onClick={() => onSetReminder(event)}
+                >
+                  See details &gt;
+                </button>
               </div>
             </div>
           );

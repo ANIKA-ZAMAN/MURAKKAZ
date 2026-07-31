@@ -1,0 +1,266 @@
+/* ═══════════════════════════════════════════════════════
+   FragranceNotes – Luxury Animated Accordion
+   ═══════════════════════════════════════════════════════ */
+
+.notesSection {
+  width: 100%;
+  padding: 0.75rem 0 0;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  font-family: var(--font-serif-text), Georgia, serif;
+}
+
+/* ── Header Button ── */
+.notesHeaderBox {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.notesHeaderBox:hover {
+  border-color: #dcdcdc;
+  background-color: transparent;
+}
+
+.notesHeaderBoxOpen {
+  border-color: #820011;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.notesHeaderTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #313134;
+  letter-spacing: 0.02em;
+}
+
+/* ── Chevron ── */
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #820011;
+  will-change: transform;
+  transition: transform 200ms ease-in-out;
+  transform: rotate(0deg);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Expandable Container (always in DOM) ── */
+.notesContainer {
+  width: 100%;
+  border: 1px solid #820011;
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Collapsed state */
+  max-height: 0;
+  opacity: 0;
+  border-color: transparent;
+  pointer-events: none;
+
+  will-change: max-height, opacity;
+  transition:
+    max-height 450ms ease-in-out,
+    opacity 300ms ease-in-out,
+    border-color 0ms ease-in-out 450ms;
+}
+
+.notesContainerOpen {
+  max-height: 1400px;
+  opacity: 1;
+  border-color: #820011;
+  pointer-events: auto;
+  transition:
+    max-height 450ms ease-in-out,
+    opacity 300ms ease-in-out 100ms,
+    border-color 0ms ease-in-out 0ms;
+}
+
+.notesContainerInner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  align-items: center;
+  padding: 1.75rem 1.25rem;
+}
+
+/* ── Section Groups (Top / Middle / Base) ── */
+.notesGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  background: transparent;
+
+  /* Collapsed */
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+  transition:
+    opacity 280ms ease-in-out,
+    transform 280ms ease-in-out;
+}
+
+.notesGroupReveal {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 320ms ease-in-out calc(200ms + var(--group-delay, 0ms)),
+    transform 320ms ease-in-out calc(200ms + var(--group-delay, 0ms));
+}
+
+.notesGroupTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #313134;
+  margin: 0;
+  text-align: center;
+}
+
+.notesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.25rem 2rem;
+  width: 100%;
+  background: transparent;
+}
+
+/* ── Individual Note Items ── */
+.noteItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 70px;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  /* Collapsed */
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  will-change: opacity, transform;
+  transition:
+    opacity 220ms ease-in-out,
+    transform 220ms ease-in-out;
+}
+
+.noteItemReveal {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 300ms ease-in-out calc(250ms + var(--item-delay, 0ms)),
+    transform 300ms ease-in-out calc(250ms + var(--item-delay, 0ms));
+}
+
+/* ── Note Image Wrapper (hover target) ── */
+.noteImageWrapper {
+  width: 52px;
+  height: 52px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  will-change: transform;
+  transition: transform 220ms ease-in-out;
+}
+
+.noteItem:hover .noteImageWrapper {
+  transform: translateY(-3px) scale(1.03);
+}
+
+/* ── Note Image ── */
+.noteImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  will-change: filter;
+  transition: filter 220ms ease-in-out;
+}
+
+.noteItem:hover .noteImage {
+  filter: brightness(1.06);
+}
+
+/* ── Note Name ── */
+.noteName {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #4A4A4D;
+  text-align: center;
+  white-space: nowrap;
+  will-change: color;
+  transition: color 220ms ease-in-out;
+}
+
+.noteItem:hover .noteName {
+  color: #820011;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .notesSection {
+    padding: 0.5rem 0 0;
+  }
+
+  .notesContainerInner {
+    gap: 1.25rem;
+    padding: 1.25rem 0.75rem;
+  }
+
+  .notesGrid {
+    gap: 1rem 1.25rem;
+  }
+
+  .noteItem {
+    min-width: 60px;
+  }
+
+  .noteImageWrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .noteName {
+    font-size: 0.74rem;
+  }
+}
