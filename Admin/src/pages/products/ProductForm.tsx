@@ -238,7 +238,7 @@ const ProductForm: React.FC = () => {
       return;
     }
 
-    const calculatedPrice = sizes.length > 0 ? sizes[0].price : 2800;
+    setSaving(true);
     const finalImage = mainImageUrl.trim() || '/images/products/jade_serenity.png';
 
     const payload = {
@@ -252,7 +252,8 @@ const ProductForm: React.FC = () => {
       gender,
       occasion,
       meter,
-      priceVal: calculatedPrice,
+      // NOTE: priceVal intentionally omitted — not in Prisma Product model.
+      // Price is stored on ProductSize records, not on the Product itself.
       image: finalImage,
       isActive: true,
       sizes,
@@ -261,7 +262,8 @@ const ProductForm: React.FC = () => {
         ...middleNotes.map(n => ({ name: n, type: 'MIDDLE' })),
         ...baseNotes.map(n => ({ name: n, type: 'BASE' })),
       ],
-      accords,
+      // Strip frontend-only 'id' from accords — Prisma auto-generates IDs
+      accords: accords.map(({ name, percentage, color }) => ({ name, percentage, color })),
       bestFor: [
         ...Object.entries(bestForSeasons).map(([n, pct]) => ({ name: n, percentage: pct })),
         ...Object.entries(bestForTime).map(([n, pct]) => ({ name: n, percentage: pct })),
@@ -279,9 +281,9 @@ const ProductForm: React.FC = () => {
       }
       navigate('/products');
     } catch (err: any) {
-      console.warn('Backend save error, simulating local success', err);
-      showToast('success', 'Product saved (Demo Mode)!');
-      navigate('/products');
+      console.error('Product save failed:', err);
+      const errorMsg = err?.message || 'Failed to save product. Check backend connection.';
+      showToast('error', `Save failed: ${errorMsg}`);
     } finally {
       setSaving(false);
     }

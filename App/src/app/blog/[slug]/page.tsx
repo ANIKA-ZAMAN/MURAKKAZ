@@ -36,8 +36,8 @@ export default function BlogDetailPage({ params }: PageProps) {
     if (found) {
       setPost(found);
     } else {
-      // Attempt API fetch
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
       fetch(`${baseUrl}/api/blog/${slug}`)
         .then((res) => res.json())
         .then((data) => {

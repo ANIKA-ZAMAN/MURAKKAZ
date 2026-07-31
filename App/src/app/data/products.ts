@@ -1905,8 +1905,9 @@ export const productsCatalog: Product[] = luxuryProducts;
 // Live API fetch from Express Backend (http://localhost:5000/api/products or Vercel ENV)
 export async function fetchLiveProducts(): Promise<Product[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const res = await fetch(`${baseUrl}/api/products?limit=100`, { next: { revalidate: 60 } });
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+    const res = await fetch(`${baseUrl}/api/products?limit=100`, { cache: 'no-store' });
     if (!res.ok) throw new Error('API offline');
     const json = await res.json();
     
@@ -1921,7 +1922,7 @@ export async function fetchLiveProducts(): Promise<Product[]> {
 
     if (rawList.length > 0) {
       return rawList.map((p: any) => ({
-        id: p.id || p.slug || `prod-${Math.random()}`,
+        id: p.slug || p.id || `prod-${Math.random()}`,
         name: p.name || 'Unnamed Fragrance',
         brand: p.brand || 'Murakkaz',
         inspiredBy: p.inspiredBy || '',
@@ -1934,10 +1935,10 @@ export async function fetchLiveProducts(): Promise<Product[]> {
         originalPriceVal: p.sizes?.[0]?.originalPrice || undefined,
         volume: p.sizes?.[0]?.size || '6ml',
         image: p.image || '/images/products/jade_serenity.png',
-        family: p.family || 'WOODY',
-        gender: p.gender || 'UNISEX',
+        family: (p.family || 'WOODY').toUpperCase(),
+        gender: (p.gender || 'UNISEX').toUpperCase(),
         occasion: p.occasion || 'General',
-        meter: p.meter || 'Moderate',
+        meter: (p.meter || 'MODERATE').toUpperCase(),
         notes: p.notes ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name) : []
       }));
     }

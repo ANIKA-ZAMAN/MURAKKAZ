@@ -208,15 +208,15 @@ export default function FilterDrawer({
                         <input
                           type="range"
                           min="300"
-                          max="2500"
-                          step="50"
+                          max="10000"
+                          step="100"
                           value={maxPrice}
                           onChange={(e) => onPriceChange(Number(e.target.value))}
                           className={styles.rangeInput}
                         />
                         <div className={styles.sliderLimits}>
                           <span>300tk</span>
-                          <span>2,500tk</span>
+                          <span>10,000tk</span>
                         </div>
                       </div>
                     )}

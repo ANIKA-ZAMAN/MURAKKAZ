@@ -32,7 +32,7 @@ function ShopContent() {
     notes: initialNotes,
   });
 
-  const [maxPrice, setMaxPrice] = useState<number>(2500);
+  const [maxPrice, setMaxPrice] = useState<number>(10000);
   const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -73,7 +73,7 @@ function ShopContent() {
       meter: [],
       notes: [],
     });
-    setMaxPrice(2500);
+    setMaxPrice(10000);
     setSearchQuery("");
     setCurrentPage(1);
   };
@@ -93,31 +93,40 @@ function ShopContent() {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       const matchName = product.name.toLowerCase().includes(q);
-      const matchDesc = product.description.toLowerCase().includes(q);
-      if (!matchName && !matchDesc) return false;
+      const matchDesc = product.description ? product.description.toLowerCase().includes(q) : false;
+      const matchBrand = product.brand ? product.brand.toLowerCase().includes(q) : false;
+      if (!matchName && !matchDesc && !matchBrand) return false;
     }
 
     if (product.priceVal > maxPrice) return false;
 
-    if (selectedFilters.family.length > 0) {
-      if (!selectedFilters.family.includes(product.family)) return false;
+    if (selectedFilters.family && selectedFilters.family.length > 0) {
+      const selectedCaps = selectedFilters.family.map(f => f.toUpperCase().replace(/\s+/g, '_'));
+      const prodFamCaps = (product.family || '').toUpperCase().replace(/\s+/g, '_');
+      if (!selectedCaps.includes(prodFamCaps)) return false;
     }
 
-    if (selectedFilters.gender.length > 0) {
-      if (!selectedFilters.gender.includes(product.gender)) return false;
+    if (selectedFilters.gender && selectedFilters.gender.length > 0) {
+      const selectedCaps = selectedFilters.gender.map(g => g.toUpperCase().replace(/\s+/g, '_'));
+      const prodGenderCaps = (product.gender || '').toUpperCase().replace(/\s+/g, '_');
+      if (!selectedCaps.includes(prodGenderCaps)) return false;
     }
 
-    if (selectedFilters.occasion.length > 0) {
-      if (!selectedFilters.occasion.includes(product.occasion)) return false;
+    if (selectedFilters.occasion && selectedFilters.occasion.length > 0) {
+      const selectedLower = selectedFilters.occasion.map(o => o.toLowerCase());
+      const prodOccasionLower = (product.occasion || '').toLowerCase();
+      if (!selectedLower.some(o => prodOccasionLower.includes(o))) return false;
     }
 
-    if (selectedFilters.meter.length > 0) {
-      if (!selectedFilters.meter.includes(product.meter)) return false;
+    if (selectedFilters.meter && selectedFilters.meter.length > 0) {
+      const selectedCaps = selectedFilters.meter.map(m => m.toUpperCase().replace(/\s+/g, '_'));
+      const prodMeterCaps = (product.meter || '').toUpperCase().replace(/\s+/g, '_');
+      if (!selectedCaps.includes(prodMeterCaps)) return false;
     }
 
     if (selectedFilters.notes && selectedFilters.notes.length > 0) {
       const productNotes = product.notes || [];
-      if (!selectedFilters.notes.some((note) => productNotes.includes(note))) return false;
+      if (!selectedFilters.notes.some((note) => productNotes.some(pn => pn.toLowerCase().includes(note.toLowerCase())))) return false;
     }
 
     return true;

@@ -219,6 +219,43 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   ];
 
   const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[3]); // Default to 100ml
+  const [liveProduct, setLiveProduct] = useState<any>(null);
+
+  // Dynamic API fetch for custom products created via Admin
+  useEffect(() => {
+    if (!id) return;
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+    fetch(`${baseUrl}/api/products/${id}`, { cache: 'no-store' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && json.data) {
+          const p = json.data;
+          setLiveProduct({
+            name: p.name || 'Unnamed Fragrance',
+            inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : `Inspired by ${p.brand || 'Murakkaz'}`,
+            badge: p.isFeatured ? "Featured Atelier Creation" : undefined,
+            description: p.description || `${p.name} by ${p.brand || 'Murakkaz'}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
+            image: p.image || '/images/products/jade_serenity.png',
+            family: p.family || 'Woody',
+            galleryImages: p.galleryImages && p.galleryImages.length > 0 
+              ? p.galleryImages.map((g: any) => g.url) 
+              : [p.image || '/images/products/jade_serenity.png'],
+            topNotes: p.notes?.filter((n: any) => n.type === 'TOP').map((n: any) => ({ name: n.name, image: 'bergamot.png' })) || [],
+            middleNotes: p.notes?.filter((n: any) => n.type === 'MIDDLE').map((n: any) => ({ name: n.name, image: 'jasmine.png' })) || [],
+            baseNotes: p.notes?.filter((n: any) => n.type === 'BASE').map((n: any) => ({ name: n.name, image: 'amber.png' })) || [],
+            accords: p.accords && p.accords.length > 0 
+              ? p.accords.map((a: any) => ({ name: a.name, pct: a.percentage, color: a.color || '#C5A880', path: 'M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z' }))
+              : [{ name: "Woody", pct: 80, color: "#C5A880", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" }],
+            bestFor: p.bestFor && p.bestFor.length > 0
+              ? p.bestFor.map((b: any) => ({ name: b.name, pct: b.percentage }))
+              : [{ name: "Spring", pct: 70 }, { name: "Summer", pct: 40 }, { name: "Autumn", pct: 85 }, { name: "Winter", pct: 95 }],
+            ourTake: p.ourTake || p.description || 'An extraordinary fragrance formulation crafted by Murakkaz.'
+          });
+        }
+      })
+      .catch(() => {});
+  }, [id]);
 
   // Dynamic targeting logic based on URL route ID
   const targetKey = React.useMemo(() => {
@@ -253,7 +290,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     return "jade-serenity";
   }, [id]);
 
-  const details = productsDetailMap[targetKey] || productsDetailMap["jade-serenity"];
+  const details = liveProduct || productsDetailMap[targetKey] || productsDetailMap["jade-serenity"];
 
   // Reset indices on product change
   useEffect(() => {
@@ -574,7 +611,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
               />
             </div>
             <div className={styles.thumbnailRow}>
-              {details.galleryImages.map((img, idx) => (
+              {details.galleryImages.map((img: string, idx: number) => (
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
@@ -748,7 +785,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 {/* Card 1: Main Accords */}
                 <div className={styles.performanceCard}>
                   <h3 className={styles.cardTitle}>Main Accords</h3>
-                  {details.accords.map((accord) => (
+                  {details.accords.map((accord: any) => (
                     <div key={accord.name} className={styles.barGroup}>
                       <div className={styles.barLabelRow}>
                         <span className={styles.accordLabel}>
@@ -783,7 +820,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 {/* Card 2: Best For */}
                 <div className={styles.performanceCard}>
                   <h3 className={styles.cardTitle}>Best For</h3>
-                  {details.bestFor.map((bf) => (
+                  {details.bestFor.map((bf: any) => (
                     <div key={bf.name} className={styles.barGroup}>
                       <div className={styles.barLabelRow}>
                         <span>{bf.name}</span>

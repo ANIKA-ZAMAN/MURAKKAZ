@@ -33,7 +33,9 @@ export default function BlogPage() {
 
   // Fetch live blog posts from API if available
   useEffect(() => {
-    fetch("http://localhost:5000/api/blog")
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+    fetch(`${baseUrl}/api/blog`)
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error("API response not ok");

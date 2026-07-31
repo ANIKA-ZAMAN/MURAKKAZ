@@ -9,7 +9,7 @@ const router = Router();
 // Create product
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { sizes, notes, accords, bestFor, galleryImages, ...productData } = req.body;
+    const { sizes, notes, accords, bestFor, galleryImages, priceVal, ...productData } = req.body;
     
     const product = await safeDbCall(
       async () => {
@@ -40,8 +40,8 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
           occasion: productData.occasion || 'General',
           meter: productData.meter || 'Moderate',
           isActive: true,
-          priceVal: productData.priceVal || (sizes?.[0]?.price) || 2800,
-          sizes: sizes || [{ size: '50ml', price: productData.priceVal || 2800 }],
+          priceVal: priceVal || (sizes?.[0]?.price) || 2800,
+          sizes: sizes || [{ size: '50ml', price: priceVal || 2800 }],
           notes: notes || []
         };
         dbStore.products.unshift(newProduct);

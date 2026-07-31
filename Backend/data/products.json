@@ -1,5 +1,221 @@
 [
   {
+    "id": "prod-1785488757574",
+    "slug": "hh",
+    "name": "hh",
+    "brand": "Murakkaz",
+    "description": "",
+    "rating": 5,
+    "reviewCount": 0,
+    "image": "/images/products/jade_serenity.png",
+    "family": "WOODY",
+    "gender": "UNISEX",
+    "occasion": "Date Night",
+    "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 500,
+    "sizes": [
+      {
+        "size": "12ml",
+        "price": 500,
+        "originalPrice": 720,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1200,
+        "stock": 35
+      },
+      {
+        "size": "55ml",
+        "price": 1500,
+        "originalPrice": 2000,
+        "stock": 25
+      },
+      {
+        "size": "100ml",
+        "price": 2800,
+        "originalPrice": 3500,
+        "stock": 15
+      }
+    ],
+    "notes": [
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Oud",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      }
+    ]
+  },
+  {
+    "id": "prod-1785488701685",
+    "slug": "hhh",
+    "name": "hhh",
+    "brand": "Murakkaz",
+    "description": "",
+    "rating": 5,
+    "reviewCount": 0,
+    "image": "/images/products/jade_serenity.png",
+    "family": "WOODY",
+    "gender": "UNISEX",
+    "occasion": "Date Night",
+    "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 500,
+    "sizes": [
+      {
+        "size": "12ml",
+        "price": 500,
+        "originalPrice": 720,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1200,
+        "stock": 35
+      },
+      {
+        "size": "55ml",
+        "price": 1500,
+        "originalPrice": 2000,
+        "stock": 25
+      },
+      {
+        "size": "100ml",
+        "price": 2800,
+        "originalPrice": 3500,
+        "stock": 15
+      }
+    ],
+    "notes": [
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Oud",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      }
+    ]
+  },
+  {
+    "id": "prod-1785488408652",
+    "slug": "hh",
+    "name": "hh",
+    "brand": "Murakkaz",
+    "description": "",
+    "rating": 5,
+    "reviewCount": 0,
+    "image": "/images/products/jade_serenity.png",
+    "family": "WOODY",
+    "gender": "UNISEX",
+    "occasion": "Date Night",
+    "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 500,
+    "sizes": [
+      {
+        "size": "12ml",
+        "price": 500,
+        "originalPrice": 720,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1200,
+        "stock": 35
+      },
+      {
+        "size": "55ml",
+        "price": 1500,
+        "originalPrice": 2000,
+        "stock": 25
+      },
+      {
+        "size": "100ml",
+        "price": 2800,
+        "originalPrice": 3500,
+        "stock": 15
+      }
+    ],
+    "notes": [
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Oud",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      }
+    ]
+  },
+  {
     "id": "prod-1785488242853",
     "slug": "hhhh",
     "name": "hhhh",
@@ -2669,7 +2885,7 @@
     "description": "An intense marine signature pairing oceanic freshness with rich woods and earthy leather for maximum presence.",
     "rating": 5,
     "reviewCount": 53,
-    "image": "/images/products/acqua_di_gi_elixir.jpg",
+    "image": "/images/products/acqua_di_gio_elixir.jpg",
     "family": "AQUATIC",
     "gender": "MEN",
     "occasion": "Daily & Executive",
@@ -5692,7 +5908,7 @@
     "description": "An earthy, mineral-rich masterpiece contrasting sparkling grapefruit and citrus with warm flint, oakmoss, and noble woods.",
     "rating": 4.8,
     "reviewCount": 56,
-    "image": "/images/products/terre_d_herm_s_parfum.jpg",
+    "image": "/images/products/terre_d_hermes_parfum.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
@@ -5781,7 +5997,7 @@
     "description": "A divine, sparkling floral-fruity scent balancing sweet sorbet pear and blooming roses with salted vanilla.",
     "rating": 4.8999999999999995,
     "reviewCount": 59,
-    "image": "/images/products/olymp_a_blossom.jpg",
+    "image": "/images/products/olympea_blossom.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
@@ -5878,7 +6094,7 @@
     "description": "A golden citrus-marine fragrance evoking sun-drenched palace gardens overlooking the sea—refreshing and luxurious.",
     "rating": 5,
     "reviewCount": 62,
-    "image": "/images/products/mill_sime_imp_rial.jpg",
+    "image": "/images/products/millesime_imperial.jpg",
     "family": "AQUATIC",
     "gender": "UNISEX",
     "occasion": "Versatile",
@@ -5975,7 +6191,7 @@
     "description": "An opulent, passionate fragrance combining dark blackcurrant nectar and velvet rose with rich leather and bourbon vanilla.",
     "rating": 4.8,
     "reviewCount": 20,
-    "image": "/images/products/s_parfum.jpg",
+    "image": "/images/products/si_parfum.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",

@@ -1,19 +1,28 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterButton from "../components/FilterButton";
 import FilterDrawer from "../components/FilterDrawer";
 import Pagination from "../components/Pagination";
 import CollectionCard from "./components/CollectionCard";
-import { productsCatalog } from "../data/products";
+import { Product, productsCatalog, fetchLiveProducts } from "../data/products";
 import styles from "./page.module.css";
 
 
 function CollectionsContent() {
+  const [productsList, setProductsList] = useState<Product[]>(productsCatalog);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    fetchLiveProducts().then((data) => {
+      if (data && data.length > 0) {
+        setProductsList(data);
+      }
+    });
+  }, []);
 
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
     family: [],
@@ -22,7 +31,7 @@ function CollectionsContent() {
     meter: [],
     notes: [],
   });
-  const [maxPrice, setMaxPrice] = useState<number>(2500);
+  const [maxPrice, setMaxPrice] = useState<number>(10000);
 
   const handleCheckboxChange = (categoryId: string, option: string) => {
     setSelectedFilters((prev) => {
@@ -52,7 +61,7 @@ function CollectionsContent() {
       meter: [],
       notes: [],
     });
-    setMaxPrice(2500);
+    setMaxPrice(10000);
     setSearchQuery("");
     setCurrentPage(1);
   };
@@ -68,22 +77,43 @@ function CollectionsContent() {
   };
 
   // Filter products by search query, price, family, gender, occasion, meter, notes
-  const filteredProducts = productsCatalog.filter((product) => {
+  const filteredProducts = productsList.filter((product) => {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       const matchName = product.name.toLowerCase().includes(q);
-      const matchDesc = product.description.toLowerCase().includes(q);
-      const matchBrand = product.brand.toLowerCase().includes(q);
+      const matchDesc = product.description ? product.description.toLowerCase().includes(q) : false;
+      const matchBrand = product.brand ? product.brand.toLowerCase().includes(q) : false;
       if (!matchName && !matchDesc && !matchBrand) return false;
     }
     if (product.priceVal > maxPrice) return false;
-    if (selectedFilters.family.length > 0 && !selectedFilters.family.includes(product.family)) return false;
-    if (selectedFilters.gender.length > 0 && !selectedFilters.gender.includes(product.gender)) return false;
-    if (selectedFilters.occasion.length > 0 && !selectedFilters.occasion.includes(product.occasion)) return false;
-    if (selectedFilters.meter.length > 0 && !selectedFilters.meter.includes(product.meter)) return false;
+
+    if (selectedFilters.family && selectedFilters.family.length > 0) {
+      const selectedCaps = selectedFilters.family.map(f => f.toUpperCase().replace(/\s+/g, '_'));
+      const prodFamCaps = (product.family || '').toUpperCase().replace(/\s+/g, '_');
+      if (!selectedCaps.includes(prodFamCaps)) return false;
+    }
+
+    if (selectedFilters.gender && selectedFilters.gender.length > 0) {
+      const selectedCaps = selectedFilters.gender.map(g => g.toUpperCase().replace(/\s+/g, '_'));
+      const prodGenderCaps = (product.gender || '').toUpperCase().replace(/\s+/g, '_');
+      if (!selectedCaps.includes(prodGenderCaps)) return false;
+    }
+
+    if (selectedFilters.occasion && selectedFilters.occasion.length > 0) {
+      const selectedLower = selectedFilters.occasion.map(o => o.toLowerCase());
+      const prodOccasionLower = (product.occasion || '').toLowerCase();
+      if (!selectedLower.some(o => prodOccasionLower.includes(o))) return false;
+    }
+
+    if (selectedFilters.meter && selectedFilters.meter.length > 0) {
+      const selectedCaps = selectedFilters.meter.map(m => m.toUpperCase().replace(/\s+/g, '_'));
+      const prodMeterCaps = (product.meter || '').toUpperCase().replace(/\s+/g, '_');
+      if (!selectedCaps.includes(prodMeterCaps)) return false;
+    }
+
     if (selectedFilters.notes && selectedFilters.notes.length > 0) {
       const productNotes = product.notes || [];
-      if (!selectedFilters.notes.some((note) => productNotes.includes(note))) return false;
+      if (!selectedFilters.notes.some((note) => productNotes.some(pn => pn.toLowerCase().includes(note.toLowerCase())))) return false;
     }
     return true;
   });

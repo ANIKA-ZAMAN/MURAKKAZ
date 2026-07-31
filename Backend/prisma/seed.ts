@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { PrismaClient, NoteType, FragranceFamily, Gender, Meter, Role, Provider } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
@@ -56,8 +58,30 @@ async function main() {
     data: { slug: 'signature-collection', name: 'Signature Collection', isActive: true, sortOrder: 3 },
   });
 
-  // 4. Create Products
-  console.log('Creating Products...');
+  // 4. Create Products from data/products.json
+  console.log('Creating Products from data/products.json...');
+  const productsFilePath = path.join(__dirname, '../data/products.json');
+  let rawJsonProducts: any[] = [];
+  if (fs.existsSync(productsFilePath)) {
+    rawJsonProducts = JSON.parse(fs.readFileSync(productsFilePath, 'utf8'));
+  }
+
+  const familyMap: Record<string, FragranceFamily> = {
+    WOODY: FragranceFamily.WOODY, CITRUS: FragranceFamily.CITRUS, ORIENTAL: FragranceFamily.ORIENTAL, FRESH: FragranceFamily.FRESH,
+    FLORAL: FragranceFamily.FLORAL, AQUATIC: FragranceFamily.AQUATIC, GOURMAND: FragranceFamily.GOURMAND, SPICY: FragranceFamily.SPICY,
+    Woody: FragranceFamily.WOODY, Citrus: FragranceFamily.CITRUS, Oriental: FragranceFamily.ORIENTAL, Fresh: FragranceFamily.FRESH,
+    Floral: FragranceFamily.FLORAL, Aquatic: FragranceFamily.AQUATIC, Gourmand: FragranceFamily.GOURMAND, Spicy: FragranceFamily.SPICY
+  };
+
+  const genderMap: Record<string, Gender> = {
+    MEN: Gender.MEN, WOMEN: Gender.WOMEN, UNISEX: Gender.UNISEX,
+    Men: Gender.MEN, Women: Gender.WOMEN, Unisex: Gender.UNISEX
+  };
+
+  const meterMap: Record<string, Meter> = {
+    INTIMATE: Meter.INTIMATE, MODERATE: Meter.MODERATE, LONG_LASTING: Meter.LONG_LASTING, BEAST_MODE: Meter.BEAST_MODE,
+    Intimate: Meter.INTIMATE, Moderate: Meter.MODERATE, 'Long Lasting': Meter.LONG_LASTING, 'Beast Mode': Meter.BEAST_MODE
+  };
   
   const productTemplates = [
     {
@@ -304,61 +328,52 @@ async function main() {
 
   const dbProducts = [];
 
-  for (const template of productTemplates) {
-    const slug = template.name.toLowerCase().replace(/\s+/g, '-');
+  for (const item of rawJsonProducts) {
+    const slug = item.slug || item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const family = familyMap[item.family] || FragranceFamily.WOODY;
+    const gender = genderMap[item.gender] || Gender.UNISEX;
+    const meter = meterMap[item.meter] || Meter.MODERATE;
+    const image = item.image || '/images/products/jade_serenity.png';
+
+    const sizesToCreate = Array.isArray(item.sizes) && item.sizes.length > 0
+      ? item.sizes.map((s: any) => ({ size: s.size || '50ml', price: s.price || 2800, originalPrice: s.originalPrice || undefined, stock: s.stock || 50 }))
+      : [
+          { size: '12ml', price: 500, originalPrice: 720, stock: 50 },
+          { size: '30ml', price: 900, originalPrice: 1200, stock: 50 },
+          { size: '55ml', price: 1500, originalPrice: 2000, stock: 50 },
+          { size: '100ml', price: item.priceVal || 2800, originalPrice: item.originalPriceVal || 3500, stock: 50 }
+        ];
+
+    const notesToCreate = Array.isArray(item.notes) && item.notes.length > 0
+      ? item.notes.map((n: any) => typeof n === 'string' ? { name: n, type: NoteType.GENERAL } : { name: n.name, type: (n.type as NoteType) || NoteType.GENERAL })
+      : [];
+
+    const accordsToCreate = Array.isArray(item.accords) && item.accords.length > 0
+      ? item.accords.map((a: any) => ({ name: a.name, percentage: a.pct || a.percentage || 50, color: a.color || '#C5A880' }))
+      : [];
+
     const product = await prisma.product.create({
       data: {
         slug,
-        name: template.name,
-        brand: template.brand,
-        inspiredBy: template.inspiredBy,
-        description: template.description,
-        rating: template.rating,
-        reviewCount: template.reviewCount,
-        image: template.image,
-        family: template.family,
-        gender: template.gender,
-        occasion: template.occasion,
-        meter: template.meter,
-        ourTake: template.ourTake,
-        collectionId: template.collectionId,
-        isActive: true,
-        sizes: {
-          create: [
-            { size: "12ml", price: 500, originalPrice: 720, stock: 50 },
-            { size: "30ml", price: 900, originalPrice: 1200, stock: 50 },
-            { size: "55ml", price: 1500, originalPrice: 2000, stock: 50 },
-            { size: "100ml", price: 2800, originalPrice: 3500, stock: 50 }
-          ]
-        },
-        notes: {
-          create: [
-            ...template.notes.top.map(n => ({ name: n, type: NoteType.TOP, image: `${n.toLowerCase().replace(/\s+/g, '_')}.png` })),
-            ...template.notes.middle.map(n => ({ name: n, type: NoteType.MIDDLE, image: `${n.toLowerCase().replace(/\s+/g, '_')}.png` })),
-            ...template.notes.base.map(n => ({ name: n, type: NoteType.BASE, image: `${n.toLowerCase().replace(/\s+/g, '_')}.png` }))
-          ]
-        },
-        accords: {
-          create: template.accords.map(a => ({
-            name: a.name,
-            percentage: a.percentage,
-            color: a.color,
-            iconPath: a.iconPath
-          }))
-        },
-        bestFor: {
-          create: template.bestFor.map(bf => ({
-            name: bf.name,
-            percentage: bf.percentage
-          }))
-        },
-        galleryImages: {
-          create: [
-            { url: template.image, sortOrder: 1 },
-            { url: template.image, sortOrder: 2 },
-            { url: template.image, sortOrder: 3 }
-          ]
-        }
+        name: item.name,
+        brand: item.brand || 'Murakkaz',
+        inspiredBy: item.inspiredBy || '',
+        description: item.description || '',
+        image,
+        family,
+        gender,
+        occasion: item.occasion || 'General',
+        meter,
+        rating: item.rating || 5.0,
+        reviewCount: item.reviews || item.reviewCount || 0,
+        ourTake: item.ourTake || item.description || '',
+        isActive: item.isActive !== false,
+        isFeatured: !!item.isFeatured,
+        collectionId: bestSellers.id,
+        sizes: { create: sizesToCreate },
+        notes: { create: notesToCreate },
+        accords: { create: accordsToCreate },
+        galleryImages: { create: [{ url: image, sortOrder: 1 }] }
       }
     });
     dbProducts.push(product);
