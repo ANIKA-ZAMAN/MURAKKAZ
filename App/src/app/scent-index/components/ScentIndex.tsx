@@ -302,7 +302,6 @@ export default function ScentIndex() {
           <div className={styles.loadingContainer}>
             <div className={styles.paperGrainTexture} />
             <div className={styles.logoLoaderContainer}>
-              <div className={styles.logoWaveGlow} />
               <div className={styles.logoWrapperLoading}>
                 <Image
                   src="/images/logo-murakkaz.svg"
@@ -310,9 +309,8 @@ export default function ScentIndex() {
                   width={140}
                   height={50}
                   priority
-                  className={styles.loadingLogo}
+                  className={styles.animatedLogo}
                 />
-                <div className={styles.logoShimmerWave} />
               </div>
             </div>
             <h2 className={styles.loadingText}>Analyzing your profile...</h2>
