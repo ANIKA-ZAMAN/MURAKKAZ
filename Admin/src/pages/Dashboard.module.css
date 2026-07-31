@@ -190,3 +190,29 @@
   font-weight: 600;
   color: #C5A880;
 }
+
+.tableCard {
+  overflow-x: auto;
+}
+
+@media (max-width: 1024px) {
+  .dashboardContainer {
+    padding: 1rem;
+  }
+
+  .chartsSection,
+  .bottomSection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

@@ -13,7 +13,8 @@ import {
   Users,
   Settings,
   LogOut,
-  Diamond
+  Diamond,
+  X
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -30,18 +31,31 @@ const NAV_ITEMS = [
   { label: 'Settings', path: '/settings', icon: Settings },
 ];
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
       <div className={styles.brand}>
-        <Diamond className={styles.logoIcon} size={24} />
-        <span>MURAKKAZ</span>
+        <div className={styles.brandLeft}>
+          <Diamond className={styles.logoIcon} size={24} />
+          <span>MURAKKAZ</span>
+        </div>
+        {onClose && (
+          <button className={styles.mobileCloseBtn} onClick={onClose} aria-label="Close menu">
+            <X size={20} />
+          </button>
+        )}
       </div>
       <nav className={styles.nav}>
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={onClose}
             className={({ isActive }) =>
               `${styles.navItem} ${isActive ? styles.active : ''}`
             }

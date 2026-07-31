@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './TopBar.module.css';
-import { Search } from 'lucide-react';
+import { Search, Menu } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
 const getPageTitle = (pathname: string) => {
@@ -9,13 +9,25 @@ const getPageTitle = (pathname: string) => {
   return path.charAt(0).toUpperCase() + path.slice(1);
 };
 
-export const TopBar: React.FC = () => {
+interface TopBarProps {
+  onToggleSidebar?: () => void;
+}
+
+export const TopBar: React.FC<TopBarProps> = ({ onToggleSidebar }) => {
   const location = useLocation();
   const title = getPageTitle(location.pathname);
 
   return (
     <header className={styles.topbar}>
-      <h1 className={styles.title}>{title}</h1>
+      <div className={styles.headerLeft}>
+        {onToggleSidebar && (
+          <button className={styles.hamburgerBtn} onClick={onToggleSidebar} aria-label="Toggle navigation">
+            <Menu size={22} />
+          </button>
+        )}
+        <h1 className={styles.title}>{title}</h1>
+      </div>
+
       <div className={styles.actions}>
         <div className={styles.search}>
           <Search className={styles.searchIcon} size={16} />

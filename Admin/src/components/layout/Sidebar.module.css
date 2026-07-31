@@ -9,14 +9,15 @@
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 20;
+  z-index: 50;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand {
-  padding: 24px;
+  padding: 20px 24px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
   font-size: 18px;
   font-family: var(--font-title, serif);
   font-weight: 600;
@@ -25,8 +26,29 @@
   border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.12));
 }
 
+.brandLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .logoIcon {
   color: var(--accent-gold, #C5A880);
+}
+
+.mobileCloseBtn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-secondary, #9A9A9C);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+.mobileCloseBtn:hover {
+  color: var(--text-primary, #F5F1E8);
 }
 
 .nav {
@@ -82,4 +104,21 @@
 
 .logoutBtn:hover {
   color: var(--brand-maroon, #820011);
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .mobileCloseBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

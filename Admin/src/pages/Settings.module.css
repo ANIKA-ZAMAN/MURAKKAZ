@@ -137,3 +137,18 @@
   font-size: 0.88rem;
   font-weight: 500;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .gridTwoCol {
+    grid-template-columns: 1fr;
+  }
+
+  .saveBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -3,6 +3,11 @@
   min-height: 100vh;
   background-color: var(--bg-primary, #111112);
   color: var(--text-primary, #F5F1E8);
+  position: relative;
+}
+
+.mobileBackdrop {
+  display: none;
 }
 
 .mainContent {
@@ -12,10 +17,31 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--bg-primary, #111112);
+  width: calc(100% - 260px);
 }
 
 .pageContainer {
   padding: 24px;
   flex: 1;
   overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .mainContent {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .pageContainer {
+    padding: 16px;
+  }
+
+  .mobileBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 40;
+  }
 }
