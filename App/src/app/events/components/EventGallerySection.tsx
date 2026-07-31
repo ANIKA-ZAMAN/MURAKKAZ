@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { galleryImages } from "../../data/eventsData";
 import styles from "../page.module.css";
@@ -15,6 +15,41 @@ export default function EventGallerySection() {
   const closeLightbox = () => {
     setLightboxIndex(null);
   };
+
+  const nextLightboxImage = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev !== null ? (prev < galleryImages.length - 1 ? prev + 1 : 0) : null
+    );
+  }, []);
+
+  const prevLightboxImage = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev !== null ? (prev > 0 ? prev - 1 : galleryImages.length - 1) : null
+    );
+  }, []);
+
+  // Keyboard navigation listener (ArrowRight, ArrowLeft, Escape)
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeLightbox();
+      } else if (e.key === "ArrowRight") {
+        nextLightboxImage();
+      } else if (e.key === "ArrowLeft") {
+        prevLightboxImage();
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxIndex, nextLightboxImage, prevLightboxImage]);
 
   return (
     <section className={styles.gallerySection}>
@@ -75,25 +110,67 @@ export default function EventGallerySection() {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal with Next / Prev Scroll Navigation */}
       {lightboxIndex !== null && (
         <div className={styles.lightboxOverlay} onClick={closeLightbox}>
           <div className={styles.lightboxModal} onClick={(e) => e.stopPropagation()}>
-            <button type="button" className={styles.lightboxCloseBtn} onClick={closeLightbox}>
+            {/* Close Button */}
+            <button
+              type="button"
+              className={styles.lightboxCloseBtn}
+              onClick={closeLightbox}
+              aria-label="Close Lightbox"
+            >
               ✕
             </button>
+
+            {/* Photo Slide Container */}
             <div className={styles.lightboxImageWrap}>
               <Image
                 src={galleryImages[lightboxIndex].src}
                 alt={galleryImages[lightboxIndex].alt}
                 fill
                 className={styles.lightboxImg}
+                priority
               />
+
+              {/* Previous Photo Scroll Button */}
+              <button
+                type="button"
+                className={`${styles.lightboxNavBtn} ${styles.lightboxNavPrev}`}
+                onClick={prevLightboxImage}
+                aria-label="Previous Photo"
+              >
+                ‹
+              </button>
+
+              {/* Next Photo Scroll Button */}
+              <button
+                type="button"
+                className={`${styles.lightboxNavBtn} ${styles.lightboxNavNext}`}
+                onClick={nextLightboxImage}
+                aria-label="Next Photo"
+              >
+                ›
+              </button>
+
+              {/* Slide Counter Indicator (e.g. 1 / 4) */}
+              <span className={styles.lightboxCounter}>
+                {lightboxIndex + 1} / {galleryImages.length}
+              </span>
             </div>
+
+            {/* Caption Info */}
             <div className={styles.lightboxCaption}>
-              <span className={styles.lightboxCategory}>{galleryImages[lightboxIndex].category}</span>
-              <h3>{galleryImages[lightboxIndex].title}</h3>
-              <p>{galleryImages[lightboxIndex].location} • {galleryImages[lightboxIndex].date}</p>
+              <span className={styles.lightboxCategory}>
+                {galleryImages[lightboxIndex].category}
+              </span>
+              <h3 className={styles.lightboxTitle}>
+                {galleryImages[lightboxIndex].title}
+              </h3>
+              <p className={styles.lightboxSub}>
+                {galleryImages[lightboxIndex].location} • {galleryImages[lightboxIndex].date}
+              </p>
             </div>
           </div>
         </div>
