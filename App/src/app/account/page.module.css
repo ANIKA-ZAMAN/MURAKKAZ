@@ -1492,5 +1492,256 @@
   color: #313134;
 }
 
+/* Saved Address Page Layout */
+.addressSectionRight {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.addressActionRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  width: 100%;
+}
+
+.mockAddBtn,
+.mockDeleteBtn,
+.mockBackBtn {
+  padding: 0.65rem 1.75rem;
+  border-radius: 12px;
+  border: 1.5px solid rgba(130, 120, 100, 0.4);
+  background-color: rgba(245, 241, 232, 0.5);
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.95rem;
+  color: #313134;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mockAddBtn:hover,
+.mockDeleteBtn:hover,
+.mockBackBtn:hover {
+  background-color: #313134;
+  color: #F5F1E8;
+  border-color: #313134;
+}
+
+.savedCardsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.mockAddressCard {
+  background-color: rgba(245, 241, 232, 0.45);
+  border: 1.5px solid rgba(197, 168, 128, 0.35);
+  border-radius: 18px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 6px 20px rgba(49, 49, 52, 0.02);
+}
+
+.mockAddressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.mockAddressNickname {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #313134;
+  margin: 0;
+}
+
+.mockAddressIndex {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #555558;
+}
+
+.mockAddressFieldsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+.mockFieldBox {
+  padding: 0.75rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(130, 120, 100, 0.25);
+  background-color: rgba(255, 255, 255, 0.65);
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 0.9rem;
+  color: #313134;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mockPaginationRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.mockPagNavBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(130, 120, 100, 0.35);
+  background: rgba(245, 241, 232, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: #313134;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mockPagNavBtn:hover {
+  background-color: #313134;
+  color: #F5F1E8;
+}
+
+.mockPagNumBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 0.95rem;
+  color: #767677;
+  cursor: pointer;
+}
+
+.mockPagActive {
+  background-color: #313134 !important;
+  color: #F5F1E8 !important;
+  font-weight: 600;
+}
+
+/* Add Address Form */
+.mockNicknameInput {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.25rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #313134;
+  width: 85%;
+}
+
+.mockNicknameInput::placeholder {
+  color: #767677;
+}
+
+.mockAddFormBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.mockFormInput,
+.mockFormSelect {
+  padding: 0.75rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(130, 120, 100, 0.3);
+  background-color: rgba(245, 241, 232, 0.6);
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 0.9rem;
+  color: #313134;
+  outline: none;
+  width: 100%;
+}
+
+.mockFormInput:focus,
+.mockFormSelect:focus {
+  border-color: #313134;
+  background-color: #ffffff;
+}
+
+.mockFormActionsRow {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.mockResetBtn {
+  padding: 0.75rem 2.5rem;
+  border-radius: 12px;
+  border: 1.5px solid rgba(130, 120, 100, 0.4);
+  background: rgba(245, 241, 232, 0.5);
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1rem;
+  color: #313134;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mockResetBtn:hover {
+  background-color: rgba(130, 120, 100, 0.15);
+}
+
+.mockSaveBtn {
+  padding: 0.75rem 2.75rem;
+  border-radius: 12px;
+  border: none;
+  background: #313134;
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1rem;
+  color: #F5F1E8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mockSaveBtn:hover {
+  background-color: #111112;
+}
+
+@media (max-width: 768px) {
+  .mockAddressFieldsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .addressActionRow {
+    justify-content: stretch;
+  }
+
+  .mockAddBtn,
+  .mockDeleteBtn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .mockFormActionsRow {
+    flex-direction: column;
+  }
+
+  .mockResetBtn,
+  .mockSaveBtn {
+    width: 100%;
+  }
+}
+
 
 

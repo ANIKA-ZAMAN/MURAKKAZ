@@ -6,6 +6,8 @@ import {
   mockUserProfile, 
   mockOrders, 
   mockAddresses, 
+  mockSavedAddresses,
+  SavedAddressItem,
   UserProfile, 
   Address 
 } from "./accountData";
@@ -26,6 +28,17 @@ export default function AccountPage() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [activeTab, setActiveTab] = useState<"profile" | "orders" | "addresses" | "password">("orders");
   const [orderCategoryTab, setOrderCategoryTab] = useState<"shipping" | "arrived" | "review" | "canceled">("shipping");
+
+  // Saved Address States
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddressItem[]>(mockSavedAddresses);
+  const [isAddingNewAddress, setIsAddingNewAddress] = useState(false);
+  const [addNickname, setAddNickname] = useState("");
+  const [addFirstName, setAddFirstName] = useState("");
+  const [addLastName, setAddLastName] = useState("");
+  const [addFullAddress, setAddFullAddress] = useState("");
+  const [addPhone, setAddPhone] = useState("");
+  const [addCity, setAddCity] = useState("");
+  const [addDistrict, setAddDistrict] = useState("");
   const [activeSubTab, setActiveSubTab] = useState<"basic" | "advance">("basic");
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
 
@@ -1123,162 +1136,212 @@ export default function AccountPage() {
                 </div>
               )}
 
-              {/* Addresses View */}
+              {/* Saved Address View */}
               {activeTab === "addresses" && (
-                <div className={styles.tabContentPanel}>
-                  <h2 className={styles.contentTitle}>Shipping & Billing Addresses</h2>
-                  <div className={styles.addressGrid}>
-                    
-                    <div className={styles.addressCard}>
-                      <div className={styles.addressHeader}>
-                        <span className={styles.addressType}>Shipping Address</span>
+                <div className={styles.ordersLayoutGrid}>
+                  {/* Left Column */}
+                  {!isAddingNewAddress ? (
+                    <div className={styles.ordersSidebarNav}>
+                      <div className={`${styles.orderStatusTabBtn} ${styles.orderStatusTabActive}`}>
+                        <span>Total Saved</span>
+                        <span className={styles.orderStatusCount}>{savedAddresses.length}</span>
                       </div>
-                      {!isEditingShipping ? (
-                        <>
-                          <p className={styles.addressName}>{shippingAddress.fullName}</p>
-                          <div className={styles.addressDetails}>
-                            {shippingAddress.company && <p>{shippingAddress.company}</p>}
-                            <p>{shippingAddress.street}</p>
-                            <p>{shippingAddress.city}, {shippingAddress.state} {shippingAddress.zipCode}</p>
-                            <p>{shippingAddress.country}</p>
-                            <p style={{ marginTop: "0.5rem" }}>Phone: {shippingAddress.phone}</p>
+                    </div>
+                  ) : (
+                    <div className={styles.ordersSidebarNav}>
+                      <button
+                        type="button"
+                        className={styles.mockBackBtn}
+                        onClick={() => setIsAddingNewAddress(false)}
+                      >
+                        ‹ Back
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Right Column */}
+                  {!isAddingNewAddress ? (
+                    <div className={styles.addressSectionRight}>
+                      {/* Action Header Buttons */}
+                      <div className={styles.addressActionRow}>
+                        <button
+                          type="button"
+                          className={styles.mockAddBtn}
+                          onClick={() => setIsAddingNewAddress(true)}
+                        >
+                          + Add
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.mockDeleteBtn}
+                          onClick={() => {
+                            if (savedAddresses.length > 0) {
+                              setSavedAddresses(savedAddresses.slice(0, -1));
+                            }
+                          }}
+                        >
+                          🗑 Delete
+                        </button>
+                      </div>
+
+                      {/* Saved Addresses Cards */}
+                      <div className={styles.savedCardsList}>
+                        {savedAddresses.map((addr) => (
+                          <div key={addr.id} className={styles.mockAddressCard}>
+                            <div className={styles.mockAddressHeader}>
+                              <h3 className={styles.mockAddressNickname}>{addr.nickname}</h3>
+                              <span className={styles.mockAddressIndex}>{addr.indexStr}</span>
+                            </div>
+
+                            <div className={styles.mockOrderDivider} />
+
+                            <div className={styles.mockAddressFieldsGrid}>
+                              {/* Row 1 */}
+                              <div className={styles.mockFieldBox}>{addr.firstName}</div>
+                              <div className={styles.mockFieldBox}>{addr.lastName}</div>
+                              <div className={styles.mockFieldBox}>{addr.fullAddress}</div>
+
+                              {/* Row 2 */}
+                              <div className={styles.mockFieldBox}>{addr.phone}</div>
+                              <div className={styles.mockFieldBox}>{addr.city}</div>
+                              <div className={styles.mockFieldBox}>{addr.district}</div>
+                            </div>
                           </div>
-                          <button 
-                            type="button" 
-                            className={styles.btnText}
-                            onClick={() => setIsEditingShipping(true)}
-                          >
-                            ✎ Edit Address
-                          </button>
-                        </>
-                      ) : (
-                        <form onSubmit={handleSaveShipping} className={styles.form}>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>Full Name</label>
+                        ))}
+                      </div>
+
+                      {/* Pagination Bar */}
+                      <div className={styles.mockPaginationRow}>
+                        <button type="button" className={styles.mockPagNavBtn}>‹</button>
+                        <button type="button" className={`${styles.mockPagNumBtn} ${styles.mockPagActive}`}>1</button>
+                        <button type="button" className={styles.mockPagNumBtn}>2</button>
+                        <button type="button" className={styles.mockPagNumBtn}>3</button>
+                        <button type="button" className={styles.mockPagNavBtn}>›</button>
+                      </div>
+                    </div>
+                  ) : (
+                    /* Add New Address Form View (Screenshot 2) */
+                    <div className={styles.addressSectionRight}>
+                      <div className={styles.mockAddressCard}>
+                        <div className={styles.mockAddressHeader}>
+                          <input
+                            type="text"
+                            placeholder="Set a nick name"
+                            value={addNickname}
+                            onChange={(e) => setAddNickname(e.target.value)}
+                            className={styles.mockNicknameInput}
+                          />
+                          <span className={styles.mockAddressIndex}>
+                            {savedAddresses.length + 1 < 10 ? `0${savedAddresses.length + 1}` : `${savedAddresses.length + 1}`}
+                          </span>
+                        </div>
+
+                        <div className={styles.mockOrderDivider} />
+
+                        <form onSubmit={(e) => {
+                          e.preventDefault();
+                          const nextNum = savedAddresses.length + 1;
+                          const newAddr: SavedAddressItem = {
+                            id: `addr-${Date.now()}`,
+                            indexStr: nextNum < 10 ? `0${nextNum}` : `${nextNum}`,
+                            nickname: addNickname || "My Address",
+                            firstName: addFirstName || "First name",
+                            lastName: addLastName || "Second name",
+                            fullAddress: addFullAddress || "Full address",
+                            phone: addPhone || "01700000***",
+                            city: addCity || "City",
+                            district: addDistrict || "District",
+                          };
+                          setSavedAddresses([...savedAddresses, newAddr]);
+                          setIsAddingNewAddress(false);
+                          setAddNickname("");
+                          setAddFirstName("");
+                          setAddLastName("");
+                          setAddFullAddress("");
+                          setAddPhone("");
+                          setAddCity("");
+                          setAddDistrict("");
+                        }} className={styles.mockAddFormBody}>
+                          <div className={styles.mockAddressFieldsGrid}>
+                            {/* Row 1 */}
                             <input
                               type="text"
-                              className={styles.input}
-                              value={shippingAddress.fullName}
-                              onChange={(e) => setShippingAddress({ ...shippingAddress, fullName: e.target.value })}
+                              placeholder="First name"
+                              value={addFirstName}
+                              onChange={(e) => setAddFirstName(e.target.value)}
+                              className={styles.mockFormInput}
                             />
-                          </div>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>Street Address</label>
                             <input
                               type="text"
-                              className={styles.input}
-                              value={shippingAddress.street}
-                              onChange={(e) => setShippingAddress({ ...shippingAddress, street: e.target.value })}
+                              placeholder="Second name"
+                              value={addLastName}
+                              onChange={(e) => setAddLastName(e.target.value)}
+                              className={styles.mockFormInput}
                             />
-                          </div>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>City</label>
                             <input
                               type="text"
-                              className={styles.input}
-                              value={shippingAddress.city}
-                              onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
+                              placeholder="Full address"
+                              value={addFullAddress}
+                              onChange={(e) => setAddFullAddress(e.target.value)}
+                              className={styles.mockFormInput}
                             />
-                          </div>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>Phone Number</label>
+
+                            {/* Row 2 */}
                             <input
                               type="text"
-                              className={styles.input}
-                              value={shippingAddress.phone}
-                              onChange={(e) => setShippingAddress({ ...shippingAddress, phone: e.target.value })}
+                              placeholder="Your number"
+                              value={addPhone}
+                              onChange={(e) => setAddPhone(e.target.value)}
+                              className={styles.mockFormInput}
                             />
-                          </div>
-                          <div style={{ display: "flex", gap: "1rem" }}>
-                            <button type="submit" className={styles.btnPrimary} style={{ flex: 1 }}>Save</button>
-                            <button 
-                              type="button" 
-                              className={styles.btnPrimary} 
-                              style={{ flex: 1, backgroundColor: "transparent", border: "1px solid #767677", color: "#555558" }}
-                              onClick={() => setIsEditingShipping(false)}
+                            <select
+                              value={addCity}
+                              onChange={(e) => setAddCity(e.target.value)}
+                              className={styles.mockFormSelect}
                             >
-                              Cancel
+                              <option value="">City</option>
+                              <option value="Savar">Savar</option>
+                              <option value="Dhaka">Dhaka</option>
+                              <option value="Gaibandha Sadar">Gaibandha Sadar</option>
+                              <option value="Mohammodpur">Mohammodpur</option>
+                            </select>
+                            <select
+                              value={addDistrict}
+                              onChange={(e) => setAddDistrict(e.target.value)}
+                              className={styles.mockFormSelect}
+                            >
+                              <option value="">District</option>
+                              <option value="Dhaka">Dhaka</option>
+                              <option value="Rongpur">Rongpur</option>
+                              <option value="Chittagong">Chittagong</option>
+                              <option value="Sylhet">Sylhet</option>
+                            </select>
+                          </div>
+
+                          <div className={styles.mockFormActionsRow}>
+                            <button
+                              type="button"
+                              className={styles.mockResetBtn}
+                              onClick={() => {
+                                setAddNickname("");
+                                setAddFirstName("");
+                                setAddLastName("");
+                                setAddFullAddress("");
+                                setAddPhone("");
+                                setAddCity("");
+                                setAddDistrict("");
+                              }}
+                            >
+                              Reset
+                            </button>
+                            <button type="submit" className={styles.mockSaveBtn}>
+                              Save
                             </button>
                           </div>
                         </form>
-                      )}
-                    </div>
-
-                    <div className={styles.addressCard}>
-                      <div className={styles.addressHeader}>
-                        <span className={styles.addressType}>Billing Address</span>
                       </div>
-                      {!isEditingBilling ? (
-                        <>
-                          <p className={styles.addressName}>{billingAddress.fullName}</p>
-                          <div className={styles.addressDetails}>
-                            <p>{billingAddress.street}</p>
-                            <p>{billingAddress.city}, {billingAddress.state} {billingAddress.zipCode}</p>
-                            <p>{billingAddress.country}</p>
-                            <p style={{ marginTop: "0.5rem" }}>Phone: {billingAddress.phone}</p>
-                          </div>
-                          <button 
-                            type="button" 
-                            className={styles.btnText}
-                            onClick={() => setIsEditingBilling(true)}
-                          >
-                            ✎ Edit Address
-                          </button>
-                        </>
-                      ) : (
-                        <form onSubmit={handleSaveBilling} className={styles.form}>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>Full Name</label>
-                            <input
-                              type="text"
-                              className={styles.input}
-                              value={billingAddress.fullName}
-                              onChange={(e) => setBillingAddress({ ...billingAddress, fullName: e.target.value })}
-                            />
-                          </div>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>Street Address</label>
-                            <input
-                              type="text"
-                              className={styles.input}
-                              value={billingAddress.street}
-                              onChange={(e) => setBillingAddress({ ...billingAddress, street: e.target.value })}
-                            />
-                          </div>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>City</label>
-                            <input
-                              type="text"
-                              className={styles.input}
-                              value={billingAddress.city}
-                              onChange={(e) => setBillingAddress({ ...billingAddress, city: e.target.value })}
-                            />
-                          </div>
-                          <div className={styles.formGroup}>
-                            <label className={styles.label}>Phone Number</label>
-                            <input
-                              type="text"
-                              className={styles.input}
-                              value={billingAddress.phone}
-                              onChange={(e) => setBillingAddress({ ...billingAddress, phone: e.target.value })}
-                            />
-                          </div>
-                          <div style={{ display: "flex", gap: "1rem" }}>
-                            <button type="submit" className={styles.btnPrimary} style={{ flex: 1 }}>Save</button>
-                            <button 
-                              type="button" 
-                              className={styles.btnPrimary} 
-                              style={{ flex: 1, backgroundColor: "transparent", border: "1px solid #767677", color: "#555558" }}
-                              onClick={() => setIsEditingBilling(false)}
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </form>
-                      )}
                     </div>
-
-                  </div>
+                  )}
                 </div>
               )}
 

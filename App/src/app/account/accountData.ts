@@ -20,6 +20,18 @@ export interface Order {
   items: OrderItem[];
 }
 
+export interface SavedAddressItem {
+  id: string;
+  indexStr: string;
+  nickname: string;
+  firstName: string;
+  lastName: string;
+  fullAddress: string;
+  phone: string;
+  city: string;
+  district: string;
+}
+
 export interface Address {
   fullName: string;
   company?: string;
@@ -52,6 +64,42 @@ export const mockUserProfile: UserProfile = {
   phone: "0178900****",
   primaryLocation: "Dhanmondi***",
 };
+
+export const mockSavedAddresses: SavedAddressItem[] = [
+  {
+    id: "addr-1",
+    indexStr: "01",
+    nickname: "My Address",
+    firstName: "Sadid",
+    lastName: "Bin Hasan",
+    fullAddress: "3/9, Sahibag, Savar, Dhaka",
+    phone: "01896557***",
+    city: "Savar",
+    district: "Dhaka",
+  },
+  {
+    id: "addr-2",
+    indexStr: "02",
+    nickname: "Abir's Address",
+    firstName: "Abir",
+    lastName: "Hossain",
+    fullAddress: "4/5, Gaibandha Sodor, Gaibandha, Rongpur",
+    phone: "01786548***",
+    city: "Gaibandha Sadar",
+    district: "Rongpur",
+  },
+  {
+    id: "addr-3",
+    indexStr: "03",
+    nickname: "Rizve",
+    firstName: "Rizve",
+    lastName: "Ahammed",
+    fullAddress: "Beside Jamjam Tower, Akser Nogor, Dhaka",
+    phone: "01976575***",
+    city: "Mohammodpur",
+    district: "Dhaka",
+  },
+];
 
 export const mockOrders: Order[] = [
   {
