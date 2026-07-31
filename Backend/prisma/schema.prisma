@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -293,8 +293,8 @@ model OrderItem {
   id           String  @id @default(cuid())
   orderId      String
   order        Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId    String
-  product      Product @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productId    String?
+  product      Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
   productName  String
   productImage String
   selectedSize String

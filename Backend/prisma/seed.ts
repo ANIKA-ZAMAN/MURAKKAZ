@@ -1,4 +1,4 @@
-import { PrismaClient, NoteType, FragranceFamily, Gender, Meter, Role, AuthProvider } from '@prisma/client';
+import { PrismaClient, NoteType, FragranceFamily, Gender, Meter, Role, Provider } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
@@ -40,8 +40,7 @@ async function main() {
       lastName: 'Admin',
       passwordHash: adminPasswordHash,
       role: Role.ADMIN,
-      provider: AuthProvider.EMAIL,
-      isVerified: true,
+      provider: Provider.EMAIL,
     },
   });
 

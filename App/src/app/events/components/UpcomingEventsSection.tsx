@@ -21,124 +21,99 @@ export default function UpcomingEventsSection({
 }: UpcomingEventsSectionProps) {
   return (
     <section className={styles.upcomingSection}>
-      <div className={styles.headerGroup}>
-        <span className={styles.headerEyebrow}>EXHIBITIONS & MEETUPS</span>
-        <h1 className={styles.sectionHeadingLarge}>
-          Upcoming Olfactory Masterclasses
-        </h1>
-        <p className={styles.sectionSubheading}>
-          Join us live across campuses and luxury venues for hands-on scent profiling, new formulation reveals, and private consultations.
-        </p>
-      </div>
+      {/* Title matching exact screenshot */}
+      <h1 className={styles.exactPageTitle}>Upcoming Events &amp; Meetups</h1>
 
-      <div className={styles.upcomingList}>
+      {/* Events Card List */}
+      <div className={styles.exactEventsList}>
         {paginatedEvents.map((event, idx) => {
           const imageSrc = event.image.startsWith("/")
             ? event.image
             : `/images/events/${event.image}`;
 
           return (
-            <div
-              key={idx}
-              className={`${styles.upcomingRow} ${
-                idx % 2 === 1 ? styles.upcomingRowOdd : ""
-              }`}
-            >
-              {/* Col 1: Gold Calendar Badge */}
-              <div className={styles.dateBlock}>
-                <span className={styles.dateDay}>{event.day}</span>
-                <span className={styles.dateMonth}>{event.month}</span>
-                <div className={styles.upcomingTimeBadge}>{event.time ? event.time.replace('\n', ' ') : ''}</div>
+            <div key={idx} className={styles.exactCardRow}>
+              {/* Col 1: Date & Time */}
+              <div className={styles.exactColDate}>
+                <div className={styles.exactDayNumber}>{event.day}</div>
+                <div className={styles.exactMonthName}>{event.month}</div>
+                <div className={styles.exactTimeText}>
+                  From 8.00<br />To 17.00
+                </div>
               </div>
 
-              {/* Col 2: Event Details */}
-              <div className={styles.upcomingInfo}>
-                <div className={styles.daysLeftPill}>{event.daysLeft}</div>
-                <h3 className={styles.upcomingTitle}>{event.title}</h3>
-                <p className={styles.upcomingLocation}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  {event.location}
-                </p>
-
+              {/* Col 2: Title, Location, Days Left Badge, Set Reminder Button */}
+              <div className={styles.exactColTitle}>
+                <h3 className={styles.exactCardTitle}>{event.title}</h3>
+                <div className={styles.exactCardLocation}>{event.location}</div>
+                <div className={styles.exactRedDaysLeft}>{event.daysLeft}</div>
                 <button
-                  className={styles.setReminderBtn}
+                  type="button"
+                  className={styles.exactSetReminderBtn}
                   onClick={() => onSetReminder(event)}
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                  </svg>
-                  Set Event Reminder
+                  Set Reminder
                 </button>
               </div>
 
-              {/* Col 3: Image Banner */}
-              <div className={styles.upcomingImageWrap}>
+              {/* Col 3: Description Paragraph */}
+              <div className={styles.exactColDesc}>
+                <p className={styles.exactDescText}>{event.description}</p>
+              </div>
+
+              {/* Col 4: Image Banner */}
+              <div className={styles.exactColImageWrap}>
                 <Image
                   src={imageSrc}
                   alt={event.title}
-                  width={340}
-                  height={220}
-                  className={styles.boxSvgImage}
-                  priority
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = "none";
-                  }}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 240px"
+                  className={styles.exactMockImage}
+                  priority={idx === 0}
                 />
-              </div>
-
-              {/* Col 4: Description */}
-              <div className={styles.upcomingDescWrap}>
-                <p className={styles.upcomingDesc}>{event.description}</p>
-                <button
-                  className={styles.seeDetailsBtn}
-                  onClick={() => onSetReminder(event)}
-                >
-                  See details &gt;
-                </button>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Pagination Bar */}
-      {totalPages > 1 && (
-        <div className={styles.pagination}>
-          <button
-            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-            className={styles.paginationArrow}
-            disabled={currentPage === 1}
-            style={{ opacity: currentPage === 1 ? 0.4 : 1, cursor: currentPage === 1 ? "not-allowed" : "pointer" }}
-          >
-            ← Previous
-          </button>
-          <div className={styles.pageNumbers}>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-              <button
-                key={pageNum}
-                onClick={() => onPageChange(pageNum)}
-                className={`${styles.paginationNum} ${
-                  currentPage === pageNum ? styles.paginationActive : ""
-                }`}
-              >
-                {pageNum}
-              </button>
-            ))}
-          </div>
-          <button
-            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-            className={styles.paginationArrow}
-            disabled={currentPage === totalPages}
-            style={{ opacity: currentPage === totalPages ? 0.4 : 1, cursor: currentPage === totalPages ? "not-allowed" : "pointer" }}
-          >
-            Next →
-          </button>
+      {/* Exact Pagination Bar matching screenshot */}
+      <div className={styles.exactPaginationContainer}>
+        <button
+          type="button"
+          onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+          className={styles.exactArrowBtn}
+          disabled={currentPage === 1}
+          aria-label="Previous Page"
+        >
+          ‹
+        </button>
+
+        <div className={styles.exactPageNumbersGroup}>
+          {[1, 2, 3].map((pageNum) => (
+            <button
+              key={pageNum}
+              type="button"
+              onClick={() => onPageChange(pageNum)}
+              className={`${styles.exactPageNumBtn} ${
+                currentPage === pageNum ? styles.exactPageNumActive : ""
+              }`}
+            >
+              {pageNum}
+            </button>
+          ))}
         </div>
-      )}
+
+        <button
+          type="button"
+          onClick={() => onPageChange(Math.min(3, currentPage + 1))}
+          className={styles.exactArrowBtn}
+          disabled={currentPage === Math.min(3, totalPages)}
+          aria-label="Next Page"
+        >
+          ›
+        </button>
+      </div>
     </section>
   );
 }

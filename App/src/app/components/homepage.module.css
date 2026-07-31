@@ -772,13 +772,21 @@
 }
 
 .eventCard {
-  background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
+  background: linear-gradient(
+    168deg,
+    rgba(244, 237, 226, 0.92) 0%,
+    rgba(236, 227, 213, 0.92) 50%,
+    rgba(226, 215, 199, 0.92) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(165, 135, 92, 0.32);
+  border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease;
+  box-shadow: 0 4px 18px rgba(60, 45, 25, 0.05);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease, background 0.4s ease;
 }
 
 :global(.reveal) .eventCard {
@@ -795,8 +803,33 @@
 
 .eventCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(80, 60, 30, 0.12);
-  border-color: var(--border-gold);
+  background: linear-gradient(
+    168deg,
+    rgba(247, 240, 230, 0.96) 0%,
+    rgba(239, 230, 217, 0.96) 50%,
+    rgba(229, 218, 203, 0.96) 100%
+  );
+  box-shadow: 0 12px 32px rgba(60, 45, 25, 0.1);
+  border-color: rgba(165, 135, 92, 0.55);
+}
+
+.eventGoldLabel {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(244, 237, 226, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(165, 135, 92, 0.35);
+  color: #820011;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .eventImageWrap {
