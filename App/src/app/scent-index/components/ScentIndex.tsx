@@ -295,8 +295,19 @@ export default function ScentIndex() {
         {phase === "loading" && (
           <div className={styles.loadingContainer}>
             <div className={styles.paperGrainTexture} />
-            <div className={styles.loaderSpinner}>
-              <div className={styles.spinnerCircle} />
+            <div className={styles.logoLoaderContainer}>
+              <div className={styles.logoWaveGlow} />
+              <div className={styles.logoWrapperLoading}>
+                <Image
+                  src="/images/logo-murakkaz.svg"
+                  alt="Murakkaz Logo Scent Analysis"
+                  width={140}
+                  height={50}
+                  priority
+                  className={styles.loadingLogo}
+                />
+                <div className={styles.logoShimmerWave} />
+              </div>
             </div>
             <h2 className={styles.loadingText}>Analyzing your profile...</h2>
             <p className={styles.loadingSubtext}>

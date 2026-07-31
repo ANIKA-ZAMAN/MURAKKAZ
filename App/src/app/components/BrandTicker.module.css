@@ -2,11 +2,11 @@
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  background-color: rgba(197, 168, 128, 0.04);
-  padding: 0.75rem 0;
+  background-color: rgba(197, 168, 128, 0.06);
+  padding: 0.85rem 0;
   margin: 0;
-  border-top: 1px solid rgba(160, 125, 80, 0.6);
-  border-bottom: 1px solid rgba(160, 125, 80, 0.6);
+  border-top: 1px solid rgba(160, 125, 80, 0.45);
+  border-bottom: 1px solid rgba(160, 125, 80, 0.45);
   position: relative;
   mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
@@ -26,25 +26,30 @@
 
 .tickerItem {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #313134;
-  opacity: 0.82;
+  color: #2D251C;
+  opacity: 0.92;
   display: inline-flex;
   align-items: center;
   gap: 3.5rem;
-  transition: opacity 350ms ease, color 350ms ease;
+  transition: opacity 350ms ease, color 350ms ease, transform 350ms ease;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.tickerItem:hover {
+.tickerItem:hover,
+.tickerItem:focus,
+.tickerItem:active {
   opacity: 1;
-  color: #C5A880;
+  color: #8A6632; /* Classy rich gold color from Featured Collection title */
+  font-weight: 600;
 }
 
 .tickerDot {
-  color: #c5a880;
+  color: #8A6632;
   font-size: 10px;
   opacity: 0.85;
 }
@@ -62,3 +67,6 @@
   color: #f5f1e8;
 }
 
+:global(body.dark-theme) .tickerItem:hover {
+  color: #c9a96e;
+}
