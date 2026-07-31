@@ -697,7 +697,7 @@ export const luxuryProducts: Product[] = [
     "priceVal": 300,
     "originalPriceVal": 400,
     "volume": "6ml",
-    "image": "/images/products/acqua_di_gi_elixir.jpg",
+    "image": "/images/products/acqua_di_gio_elixir.jpg",
     "family": "AQUATIC",
     "gender": "MEN",
     "occasion": "Daily & Executive",

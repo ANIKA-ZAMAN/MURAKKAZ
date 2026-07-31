@@ -58,6 +58,7 @@
   scroll-behavior: smooth;
   width: 100%;
   padding: 10px 0;
+  align-items: stretch;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -68,6 +69,12 @@
 
 .slide {
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.slide > * {
+  height: 100%;
 }
 
 .navBtn {
