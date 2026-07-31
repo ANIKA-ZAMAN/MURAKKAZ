@@ -516,22 +516,47 @@
   width: 140px;
   height: auto;
   object-fit: contain;
-  animation: logoFloatPulse 2.8s ease-in-out infinite alternate;
-  will-change: transform, opacity;
+  transform-origin: center center;
+  mask-image: linear-gradient(
+    115deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 1) 45%,
+    rgba(0, 0, 0, 1) 55%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  mask-size: 240% 100%;
+  -webkit-mask-image: linear-gradient(
+    115deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 1) 45%,
+    rgba(0, 0, 0, 1) 55%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  -webkit-mask-size: 240% 100%;
+  animation: logoSelfWave 3.4s ease-in-out infinite alternate, logoLiquidMask 2.6s ease-in-out infinite alternate;
+  will-change: transform, opacity, mask-position;
 }
 
-@keyframes logoFloatPulse {
+@keyframes logoSelfWave {
   0% {
-    transform: translateY(0px) scale(0.96);
-    opacity: 0.85;
+    transform: translateY(0px) rotate(-2.5deg) skewY(-1.8deg) scale(0.96);
   }
   50% {
-    transform: translateY(-8px) scale(1.05);
-    opacity: 1;
+    transform: translateY(-7px) rotate(2.5deg) skewY(1.8deg) scale(1.04);
   }
   100% {
-    transform: translateY(0px) scale(0.96);
-    opacity: 0.85;
+    transform: translateY(0px) rotate(-2.5deg) skewY(-1.8deg) scale(0.96);
+  }
+}
+
+@keyframes logoLiquidMask {
+  0% {
+    mask-position: 0% 0%;
+    -webkit-mask-position: 0% 0%;
+  }
+  100% {
+    mask-position: 100% 0%;
+    -webkit-mask-position: 100% 0%;
   }
 }
 
