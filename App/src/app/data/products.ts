@@ -23,6 +23,34 @@ export interface Product {
 // 63 Fragrances catalog bundled directly for seamless Vercel deployment & SSR
 export const luxuryProducts: Product[] = [
   {
+    "id": "prod-1785487727797",
+    "name": "anika",
+    "brand": "Murakkaz",
+    "inspiredBy": "",
+    "description": "",
+    "rating": 5,
+    "reviews": 0,
+    "price": "500tk",
+    "originalPrice": "720tk",
+    "priceVal": 500,
+    "originalPriceVal": 720,
+    "volume": "12ml",
+    "image": "/images/products/jade_serenity.png",
+    "family": "WOODY",
+    "gender": "UNISEX",
+    "occasion": "Date Night",
+    "meter": "BEAST_MODE",
+    "notes": [
+      "Bergamot",
+      "Lemon",
+      "Jasmine",
+      "Rose",
+      "Oud",
+      "Amber",
+      "Vetiver"
+    ]
+  },
+  {
     "id": "prod-irish-leather-01",
     "name": "Irish Leather",
     "brand": "Memo Paris",
@@ -314,36 +342,6 @@ export const luxuryProducts: Product[] = [
       "Ambroxan",
       "Guaiac Wood",
       "Olibanum"
-    ]
-  },
-  {
-    "id": "prod-ysl-y-11",
-    "name": "YSL Y",
-    "brand": "Yves Saint Laurent",
-    "inspiredBy": "",
-    "description": "A bold, iconic fresh aromatic fragrance with crisp apple, sage, and dark cedarwood.",
-    "rating": 4.9,
-    "reviews": 73,
-    "price": "300tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml",
-    "image": "/images/products/ysl_y.jpg",
-    "family": "FRESH",
-    "gender": "MEN",
-    "occasion": "Versatile & Office",
-    "meter": "LONG_LASTING",
-    "notes": [
-      "Apple",
-      "Ginger",
-      "Bergamot",
-      "Sage",
-      "Juniper Berries",
-      "Geranium",
-      "Amberwood",
-      "Tonka Bean",
-      "Cedar"
     ]
   },
   {
@@ -697,7 +695,7 @@ export const luxuryProducts: Product[] = [
     "priceVal": 300,
     "originalPriceVal": 400,
     "volume": "6ml",
-    "image": "/images/products/acqua_di_gio_elixir.jpg",
+    "image": "/images/products/acqua_di_gi_elixir.jpg",
     "family": "AQUATIC",
     "gender": "MEN",
     "occasion": "Daily & Executive",
@@ -1905,9 +1903,8 @@ export const productsCatalog: Product[] = luxuryProducts;
 // Live API fetch from Express Backend (http://localhost:5000/api/products or Vercel ENV)
 export async function fetchLiveProducts(): Promise<Product[]> {
   try {
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
-    const res = await fetch(`${baseUrl}/api/products?limit=100`, { cache: 'no-store' });
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const res = await fetch(`${baseUrl}/api/products?limit=100`, { next: { revalidate: 60 } });
     if (!res.ok) throw new Error('API offline');
     const json = await res.json();
     
@@ -1922,7 +1919,7 @@ export async function fetchLiveProducts(): Promise<Product[]> {
 
     if (rawList.length > 0) {
       return rawList.map((p: any) => ({
-        id: p.slug || p.id || `prod-${Math.random()}`,
+        id: p.id || p.slug || `prod-${Math.random()}`,
         name: p.name || 'Unnamed Fragrance',
         brand: p.brand || 'Murakkaz',
         inspiredBy: p.inspiredBy || '',
@@ -1935,10 +1932,10 @@ export async function fetchLiveProducts(): Promise<Product[]> {
         originalPriceVal: p.sizes?.[0]?.originalPrice || undefined,
         volume: p.sizes?.[0]?.size || '6ml',
         image: p.image || '/images/products/jade_serenity.png',
-        family: (p.family || 'WOODY').toUpperCase(),
-        gender: (p.gender || 'UNISEX').toUpperCase(),
+        family: p.family || 'WOODY',
+        gender: p.gender || 'UNISEX',
         occasion: p.occasion || 'General',
-        meter: (p.meter || 'MODERATE').toUpperCase(),
+        meter: p.meter || 'Moderate',
         notes: p.notes ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name) : []
       }));
     }
