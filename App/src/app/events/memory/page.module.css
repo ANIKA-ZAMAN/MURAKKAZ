@@ -98,9 +98,10 @@
   transform: translateY(-1px);
 }
 
-.searchIcon {
-  font-size: 0.88rem;
-  color: rgba(250, 247, 240, 0.75);
+.searchSvgIcon {
+  color: rgba(250, 247, 240, 0.85);
+  flex-shrink: 0;
+  display: block;
 }
 
 .searchInputField {

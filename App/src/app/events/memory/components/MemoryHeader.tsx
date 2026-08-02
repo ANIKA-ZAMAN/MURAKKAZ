@@ -46,7 +46,21 @@ export default function MemoryHeader({ searchQuery, onSearchChange }: MemoryHead
       {/* Pill Search Input Bar */}
       <div className={styles.searchPillWrapper}>
         <div className={styles.searchPillBox}>
-          <span className={styles.searchIcon}>🔍</span>
+          <svg
+            className={styles.searchSvgIcon}
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="7.5" />
+            <line x1="21" y1="21" x2="16.5" y2="16.5" />
+          </svg>
           <input
             type="text"
             className={styles.searchInputField}
