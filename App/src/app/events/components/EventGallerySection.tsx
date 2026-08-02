@@ -64,7 +64,7 @@ export default function EventGallerySection() {
             and exclusive product launches across Bangladesh and beyond.
           </p>
           <Link href="/events/memory" className={styles.redFrameDetailsBtn}>
-            Details &gt;
+            View More &gt;
           </Link>
         </div>
 
