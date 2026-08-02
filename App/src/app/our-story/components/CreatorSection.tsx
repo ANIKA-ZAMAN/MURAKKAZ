@@ -18,6 +18,16 @@ export default function CreatorSection() {
           <p className={styles.creatorParagraph}>
             {creator.paragraph}
           </p>
+          <button
+            type="button"
+            className={styles.scrollDownBtn}
+            onClick={() => {
+              document.getElementById("journey-heading")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            aria-label="Scroll down to next section"
+          >
+            {creator.buttonText} <span className={styles.arrowIcon}>˅</span>
+          </button>
         </div>
         <div className={styles.creatorImageCol}>
           <div className={styles.creatorImageFrame} aria-label={creator.imageAlt}>
@@ -30,16 +40,6 @@ export default function CreatorSection() {
               priority
             />
           </div>
-          <button
-            type="button"
-            className={styles.scrollDownBtn}
-            onClick={() => {
-              document.getElementById("journey-heading")?.scrollIntoView({ behavior: "smooth" });
-            }}
-            aria-label="Scroll down to next section"
-          >
-            {creator.buttonText} <span className={styles.arrowIcon}>˅</span>
-          </button>
         </div>
       </div>
     </section>

@@ -24,6 +24,8 @@ export const ourStoryData = {
       topNode: "01",
       middleNode: "02",
       bottomNode: "03",
+      year: "2003 – 2004",
+      title: "Mentorship & Botanical DNA",
       text: "Our journey began in late 2003 in Riyadh, Saudi Arabia, under the direct mentorship of Shaykh Abdur Rahman Al Humaid at Al Farooq. Spending over nine months learning the science of raw fragrance DNA, note profiling, and botanical harmony, the foundation of true perfume making was laid.",
     },
     {
@@ -31,6 +33,8 @@ export const ourStoryData = {
       topNode: "02",
       middleNode: "03",
       bottomNode: "04",
+      year: "2006",
+      title: "Catalonia & Fine Formulation",
       text: "After showcasing creations at the Riyadh Chamber of Commerce and International Fairs, this passion led to specialized training in Catalonia in 2006, refining the technical precision of fine fragrance formulation.",
     },
     {
@@ -38,6 +42,8 @@ export const ourStoryData = {
       topNode: "03",
       middleNode: "04",
       bottomNode: "05",
+      year: "2017",
+      title: "The Return to Bangladesh",
       text: "Returning to Bangladesh in 2017, it became clear that standard commercial mass-market fragrances were failing to survive the local humidity. Authentic, handcrafted perfumery was virtually non-existent.",
     },
     {
@@ -45,6 +51,8 @@ export const ourStoryData = {
       topNode: "04",
       middleNode: "05",
       bottomNode: null,
+      year: "PRESENT",
+      title: "Uncompromising Global Sourcing",
       text: "Driven by friends and close circles, small private displays at personal gatherings instantly resonated. But to maintain uncompromising luxury, a strict policy was set: every single raw material would be imported directly from international sources, refusing to dilute the art with compromised local ingredients.",
     },
   ],

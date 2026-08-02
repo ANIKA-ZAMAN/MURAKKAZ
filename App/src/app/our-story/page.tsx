@@ -8,15 +8,13 @@ import styles from "../page.module.css";
 export default function OurStoryPage() {
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
+      <main className={styles.storyMain}>
         <CreatorSection />
-      </main>
-      <JourneyStorySection />
-      <main className={styles.main}>
+        <JourneyStorySection />
         <MediaMentionsSection />
         <BehindBrandSection />
+        <AwardsSection />
       </main>
-      <AwardsSection />
     </div>
   );
 }

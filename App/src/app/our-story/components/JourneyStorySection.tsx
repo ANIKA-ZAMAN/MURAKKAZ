@@ -37,6 +37,7 @@ const getRailPos = (angleDeg: number) => {
 export default function JourneyStorySection() {
   const { journeySections } = ourStoryData;
   const sectionRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<ScrollTrigger | null>(null);
   const panelsRef = useRef<(HTMLDivElement | null)[]>([]);
   const beadRefs = useRef<(SVGGElement | null)[]>([]);
   const [activeIdx, setActiveIdx] = useState(0);
@@ -44,39 +45,58 @@ export default function JourneyStorySection() {
   const goToStep = (stepIndex: number) => {
     const clamped = Math.max(0, Math.min(journeySections.length - 1, stepIndex));
     setActiveIdx(clamped);
+    if (triggerRef.current) {
+      const st = triggerRef.current;
+      const targetScroll = st.start + (st.end - st.start) * (clamped / (journeySections.length - 1));
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    }
   };
 
-  // GSAP ScrollTrigger pinning & scroll-driven step progression
+  // GSAP ScrollTrigger pinning & magnetic snap scroll progression
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const totalSteps = journeySections.length;
-    const isMobile = typeof window !== "undefined" && window.innerWidth <= 900;
-    const scrollMultiplier = isMobile ? 50 : 100;
+    const ctx = gsap.context(() => {
+      const totalSteps = journeySections.length;
+      const isMobile = typeof window !== "undefined" && window.innerWidth <= 900;
+      const scrollMultiplier = isMobile ? 90 : 130;
 
-    const trigger = ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top top",
-      end: `+=${totalSteps * scrollMultiplier}%`,
-      pin: true,
-      pinSpacing: true,
-      onUpdate: (self) => {
-        const step = Math.min(
-          totalSteps - 1,
-          Math.floor(self.progress * totalSteps * 0.999)
-        );
-        setActiveIdx((prev) => (prev !== step ? step : prev));
-      },
-    });
+      const trigger = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        end: `+=${(totalSteps - 1) * scrollMultiplier}%`,
+        pin: true,
+        pinSpacing: true,
+        onUpdate: (self) => {
+          const p = self.progress;
+          let step = 0;
+          if (p < 0.18) {
+            step = 0;
+          } else if (p < 0.42) {
+            step = 1;
+          } else if (p < 0.66) {
+            step = 2;
+          } else if (p < 0.88) {
+            step = 3;
+          } else {
+            step = 4;
+          }
+          setActiveIdx((prev) => (prev !== step ? step : prev));
+        },
+      });
+
+      triggerRef.current = trigger;
+    }, sectionRef);
 
     return () => {
-      trigger.kill();
+      ctx.revert();
+      triggerRef.current = null;
     };
   }, [journeySections.length]);
 
-  // Sequential Clean Text Transition: Outgoing text clears out COMPLETELY first before incoming text appears
+  // Sequential Clean Text & Wheel Arc Magnetic Bead Animation
   useEffect(() => {
-    // 1. Animate all 5 beads smoothly along the 180° semi-circle arc
+    // 1. Animate all 5 beads smoothly along the 180° semi-circle arc with magnetic click feel
     MILESTONE_BEADS.forEach((bead, i) => {
       const el = beadRefs.current[i];
       if (!el) return;
@@ -108,7 +128,7 @@ export default function JourneyStorySection() {
         y: targetY,
         opacity: targetOpacity,
         filter: `blur(${targetBlur}px)`,
-        duration: 0.55,
+        duration: 0.4,
         ease: "power2.out",
         overwrite: true,
       });
@@ -121,27 +141,27 @@ export default function JourneyStorySection() {
       const isCurrent = i === activeIdx;
 
       if (isCurrent) {
-        // Incoming text: waits for outgoing text to clear out completely (0.2s), then smoothly fades & glides in
+        // Incoming text: waits for outgoing text to clear out completely (0.18s), then glides into place
         gsap.fromTo(
           panel,
-          { opacity: 0, y: 12 },
+          { opacity: 0, y: 14 },
           {
             opacity: 1,
             y: 0,
             pointerEvents: "auto",
-            duration: 0.35,
-            delay: 0.2, // Clean delay so previous text is 100% gone
+            duration: 0.38,
+            delay: 0.18,
             ease: "power2.out",
             overwrite: true,
           }
         );
       } else {
-        // Outgoing text: quickly & cleanly fades out with zero overlap
+        // Outgoing text: quickly fades out
         gsap.to(panel, {
           opacity: 0,
           y: -10,
           pointerEvents: "none",
-          duration: 0.18,
+          duration: 0.16,
           ease: "power2.in",
           overwrite: true,
         });
@@ -239,7 +259,7 @@ export default function JourneyStorySection() {
                   <p className={styles.storyText}>{sec.text}</p>
                 )}
 
-                {/* Step Indicator Dots */}
+                {/* Interactive Step Indicator Dots */}
                 <div className={styles.stepIndicatorRow}>
                   {journeySections.map((_, dotIdx) => (
                     <button
@@ -249,7 +269,7 @@ export default function JourneyStorySection() {
                         activeIdx === dotIdx ? styles.stepDotActive : ""
                       }`}
                       onClick={() => goToStep(dotIdx)}
-                      aria-label={`Go to story ${dotIdx + 1}`}
+                      aria-label={`Go to story step ${dotIdx + 1}`}
                     />
                   ))}
                 </div>
