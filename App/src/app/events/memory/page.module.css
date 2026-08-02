@@ -28,10 +28,10 @@
 }
 
 .backBtnCircle {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(49, 49, 52, 0.25);
+  border: 1px solid rgba(49, 49, 52, 0.35);
   background-color: transparent;
   color: #313134;
   cursor: pointer;
@@ -40,18 +40,20 @@
   justify-content: center;
   margin-bottom: 2.25rem;
   transition: all 0.25s ease;
+  padding: 0;
 }
 
 .backBtnCircle:hover {
   background-color: #313134;
   color: #FAF7F0;
   border-color: #313134;
-  transform: scale(1.05);
+  transform: scale(1.06);
 }
 
-.backArrowIcon {
-  font-size: 1.15rem;
-  line-height: 1;
+.backSvgIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
 
 .memoryMainTitle {

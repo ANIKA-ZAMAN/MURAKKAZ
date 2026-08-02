@@ -28,7 +28,21 @@ export default function MemoryHeader({ searchQuery, onSearchChange }: MemoryHead
         onClick={handleBack}
         aria-label="Go back to events"
       >
-        <span className={styles.backArrowIcon}>←</span>
+        <svg
+          className={styles.backSvgIcon}
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
       </button>
 
       {/* Main Page Title */}
