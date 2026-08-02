@@ -170,10 +170,7 @@
 }
 
 .dividerLine {
-  flex: 1;
-  height: 1px;
-  background-color: rgba(49, 49, 52, 0.2);
-  margin-left: 1.25rem;
+  display: none;
 }
 
 /* 3-Column Responsive Photo Grid */

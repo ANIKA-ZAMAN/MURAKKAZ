@@ -14,10 +14,9 @@ export default function MemorySection({ section, onPhotoClick }: MemorySectionPr
 
   return (
     <section className={styles.memorySectionGroup} aria-label={section.title}>
-      {/* Section Date/Title Header with Decorative Divider Line */}
+      {/* Section Date/Title Header */}
       <div className={styles.sectionHeaderRow}>
         <h2 className={styles.sectionTitle}>{section.title}</h2>
-        <div className={styles.dividerLine} aria-hidden="true" />
       </div>
 
       {/* 3-Column Responsive Grid */}
