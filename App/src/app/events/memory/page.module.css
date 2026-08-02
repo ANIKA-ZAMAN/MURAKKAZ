@@ -1,0 +1,599 @@
+/* ========================================== */
+/* Murakkaz's Memory Gallery Page Styles       */
+/* ========================================== */
+
+.memoryPageWrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background, #FAF7F0);
+  color: #313134;
+  padding-bottom: 6rem;
+}
+
+.memoryMainContainer {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header & Navigation */
+.memoryHeaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.backBtnCircle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(49, 49, 52, 0.25);
+  background-color: transparent;
+  color: #313134;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.25rem;
+  transition: all 0.25s ease;
+}
+
+.backBtnCircle:hover {
+  background-color: #313134;
+  color: #FAF7F0;
+  border-color: #313134;
+  transform: scale(1.05);
+}
+
+.backArrowIcon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.memoryMainTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  color: #2D2D30;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin-bottom: 1.25rem;
+}
+
+.memorySubtitleParagraph {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: #555558;
+  max-width: 720px;
+  margin-bottom: 2.25rem;
+  letter-spacing: -0.005em;
+}
+
+/* Search Pill Bar */
+.searchPillWrapper {
+  width: 100%;
+  margin-bottom: 3.5rem;
+}
+
+.searchPillBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: #2D2D30;
+  border-radius: 30px;
+  padding: 0.65rem 1.4rem;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.searchPillBox:focus-within {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+  transform: translateY(-1px);
+}
+
+.searchIcon {
+  font-size: 0.88rem;
+  color: rgba(250, 247, 240, 0.75);
+}
+
+.searchInputField {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #FAF7F0;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.searchInputField::placeholder {
+  color: rgba(250, 247, 240, 0.7);
+  font-size: 0.88rem;
+}
+
+.clearSearchBtn {
+  background: transparent;
+  border: none;
+  color: rgba(250, 247, 240, 0.7);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.clearSearchBtn:hover {
+  color: #FAF7F0;
+}
+
+/* Section Header Row with Decorative Divider */
+.memorySectionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.memorySectionGroup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionHeaderRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.75rem;
+  margin-top: 0.5rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #313134;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background-color: rgba(49, 49, 52, 0.2);
+  margin-left: 1.25rem;
+}
+
+/* 3-Column Responsive Photo Grid */
+.memoryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.35rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.memoryCard {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #E5E0D6;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.55 / 1;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.35s ease;
+  border: 1px solid rgba(49, 49, 52, 0.08);
+}
+
+.memoryCard:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 14px 32px rgba(49, 49, 52, 0.14);
+  border-color: rgba(49, 49, 52, 0.2);
+}
+
+.cardImageWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.cardImg {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.memoryCard:hover .cardImg {
+  transform: scale(1.06);
+}
+
+.cardCategoryBadge {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  background: rgba(49, 49, 52, 0.82);
+  color: #FAF7F0;
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(20, 20, 22, 0.85) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.15rem;
+  opacity: 0.92;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.memoryCard:hover .cardOverlay {
+  opacity: 1;
+  background: linear-gradient(180deg, transparent 25%, rgba(20, 20, 22, 0.92) 100%);
+}
+
+.cardTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: #FAF7F0;
+  margin-bottom: 0.2rem;
+  line-height: 1.25;
+}
+
+.cardMeta {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.82rem;
+  color: rgba(250, 247, 240, 0.8);
+  margin: 0;
+}
+
+/* Show More Pill Button */
+.showMoreContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.showMorePillBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(49, 49, 52, 0.3);
+  background-color: transparent;
+  border-radius: 30px;
+  padding: 0.75rem 2rem;
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.92rem;
+  color: #313134;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.showMorePillBtn:hover {
+  background-color: #313134;
+  color: #FAF7F0;
+  border-color: #313134;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(49, 49, 52, 0.12);
+}
+
+.chevronIcon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+/* Empty Search Results Box */
+.noResultsBox {
+  width: 100%;
+  padding: 4rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  background-color: rgba(49, 49, 52, 0.04);
+  border-radius: 12px;
+  border: 1px dashed rgba(49, 49, 52, 0.2);
+}
+
+.noResultsText {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 1.05rem;
+  color: #555558;
+  max-width: 500px;
+}
+
+.resetSearchBtn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 20px;
+  border: 1px solid #820011;
+  background-color: transparent;
+  color: #820011;
+  font-family: var(--font-serif-title);
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.resetSearchBtn:hover {
+  background-color: #820011;
+  color: #FAF7F0;
+}
+
+/* ========================================== */
+/* FULLSCREEN INTERACTIVE LIGHTBOX MODAL     */
+/* ========================================== */
+
+.lightboxBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(12, 12, 14, 0.9);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightboxModal {
+  width: 100%;
+  max-width: 980px;
+  background-color: #1A1A1C;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.lightboxHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.85rem;
+}
+
+.headerInfoGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.lightboxBadge {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.78rem;
+  color: #D6B36A;
+  background-color: rgba(214, 179, 106, 0.12);
+  border: 1px solid rgba(214, 179, 106, 0.3);
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.lightboxCounter {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.88rem;
+  color: rgba(250, 247, 240, 0.8);
+}
+
+.lightboxCloseBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FAF7F0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.lightboxCloseBtn:hover {
+  background-color: #820011;
+  border-color: #820011;
+  transform: scale(1.08);
+}
+
+.lightboxMainArea {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.lightboxImageWrap {
+  position: relative;
+  width: 100%;
+  max-width: 840px;
+  aspect-ratio: 16 / 10;
+  max-height: 520px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #0F0F10;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lightboxImg {
+  object-fit: contain;
+}
+
+.lightboxNavBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FAF7F0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.lightboxNavBtn:hover {
+  background-color: #D6B36A;
+  color: #1A1A1C;
+  border-color: #D6B36A;
+  transform: scale(1.08);
+}
+
+.lightboxCaptionRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.lightboxPhotoTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #FAF7F0;
+  margin: 0;
+}
+
+.lightboxPhotoMeta {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.88rem;
+  color: rgba(250, 247, 240, 0.7);
+  margin: 0;
+}
+
+.thumbnailStrip {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+  padding-top: 0.5rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.thumbBtn {
+  position: relative !important;
+  width: 68px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.25s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.thumbBtn:hover {
+  opacity: 0.85;
+  border-color: #D6B36A;
+}
+
+.activeThumbBtn {
+  opacity: 1 !important;
+  border-color: #D6B36A !important;
+  box-shadow: 0 0 10px rgba(214, 179, 106, 0.4);
+  transform: scale(1.05);
+}
+
+.thumbImg {
+  object-fit: cover;
+}
+
+/* ========================================== */
+/* RESPONSIVE DESIGN                         */
+/* ========================================== */
+
+@media (max-width: 900px) {
+  .memoryMainContainer {
+    padding: 2.5rem 1.25rem 4rem 1.25rem;
+  }
+
+  .memoryMainTitle {
+    font-size: 2.4rem;
+  }
+
+  .memorySubtitleParagraph {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .searchPillBox {
+    max-width: 100%;
+  }
+
+  .memoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 580px) {
+  .memoryGrid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .memoryCard {
+    aspect-ratio: 1.45 / 1;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+
+  .lightboxModal {
+    padding: 1rem;
+  }
+
+  .lightboxNavBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.3rem;
+  }
+
+  .thumbBtn {
+    width: 56px;
+    height: 40px;
+  }
+}

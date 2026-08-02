@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { galleryImages } from "../../data/eventsData";
 import styles from "../page.module.css";
 
@@ -62,13 +63,9 @@ export default function EventGallerySection() {
             Browse through our created gallery of fragrance showcases, meetups,
             and exclusive product launches across Bangladesh and beyond.
           </p>
-          <button
-            type="button"
-            className={styles.redFrameDetailsBtn}
-            onClick={() => openLightbox(0)}
-          >
+          <Link href="/events/memory" className={styles.redFrameDetailsBtn}>
             Details &gt;
-          </button>
+          </Link>
         </div>
 
         {/* Right Column: Staggered 2x2 Masonry Photo Grid */}
