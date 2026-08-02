@@ -73,12 +73,12 @@ export default function EventGallerySection() {
           {galleryImages.map((img, idx) => {
             const isWide = idx === 0 || idx === 3;
             return (
-              <div
+              <Link
                 key={idx}
+                href="/events/memory"
                 className={`${styles.masonryPhotoCard} ${
                   isWide ? styles.masonryCardWide : styles.masonryCardCompact
                 }`}
-                onClick={() => openLightbox(idx)}
               >
                 <div className={styles.photoWrap}>
                   <Image
@@ -101,7 +101,7 @@ export default function EventGallerySection() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
