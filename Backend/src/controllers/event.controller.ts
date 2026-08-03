@@ -32,3 +32,18 @@ export const setReminder = async (req: Request, res: Response, next: NextFunctio
     next(error);
   }
 };
+
+export const subscribeNewsletter = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, source } = req.body;
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      res.status(400).json({ error: 'Valid email is required' });
+      return;
+    }
+    const result = await eventService.subscribeNewsletter(email, source);
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+

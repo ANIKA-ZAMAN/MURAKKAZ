@@ -25,15 +25,13 @@
   gap: 1.5rem;
 }
 
-/* Header */
 .headerRow {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .title {
@@ -191,8 +189,7 @@
   grid-template-columns: 240px 1fr;
   gap: 3rem;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 /* Sidebar Navigation */
@@ -847,10 +844,17 @@
 
 .greetingSub {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 1.15rem;
+  font-size: 1.55rem;
+  font-weight: 500;
   color: #820011;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.blackExclamation {
+  color: #313134;
+  font-weight: 600;
+  margin-left: 1px;
 }
 
 .exclamationMark {

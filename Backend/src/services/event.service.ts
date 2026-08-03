@@ -106,3 +106,25 @@ export const setEventReminder = async (
     }
   );
 };
+
+export const subscribeNewsletter = async (email: string, source: string = 'upcoming_events') => {
+  return safeDbCall(
+    async () => {
+      const existing = await prisma.newsletterSubscriber.findUnique({ where: { email } });
+      if (existing) {
+        return { message: 'Already subscribed', subscriber: existing };
+      }
+      const subscriber = await prisma.newsletterSubscriber.create({
+        data: { email, source },
+      });
+      return { message: 'Subscription successful', subscriber };
+    },
+    () => {
+      return {
+        message: 'Subscription successful',
+        subscriber: { id: String(Date.now()), email, source, createdAt: new Date() }
+      };
+    }
+  );
+};
+

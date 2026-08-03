@@ -20,6 +20,7 @@ interface ProductCardProps {
   badge?: string;
   inspiredBy?: string;
   notes?: string[];
+  variant?: "default" | "featured";
 }
 
 export default function ProductCard({
@@ -37,6 +38,7 @@ export default function ProductCard({
   badge,
   inspiredBy,
   notes,
+  variant = "default",
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -55,16 +57,21 @@ export default function ProductCard({
   // Check wishlist state on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("wishlist-items");
-      if (saved) {
-        try {
-          const list = JSON.parse(saved);
-          if (Array.isArray(list) && (list.includes(id) || list.includes(displayName))) {
-            setIsWishlisted(true);
+      try {
+        const saved = localStorage.getItem("wishlist-items");
+        if (saved) {
+          const wishlist = JSON.parse(saved);
+          if (Array.isArray(wishlist)) {
+            const found = wishlist.some((item) =>
+              typeof item === "string"
+                ? item === id || item.toLowerCase() === displayName.toLowerCase()
+                : item.id === id || item.name?.toLowerCase() === displayName.toLowerCase()
+            );
+            setIsWishlisted(found);
           }
-        } catch (e) {
-          console.error(e);
         }
+      } catch (err) {
+        console.error(err);
       }
     }
   }, [id, displayName]);
@@ -85,7 +92,7 @@ export default function ProductCard({
     setIsWishlisted(nextState);
 
     const saved = localStorage.getItem("wishlist-items");
-    let wishlist: string[] = [];
+    let wishlist: any[] = [];
     if (saved) {
       try {
         wishlist = JSON.parse(saved);
@@ -96,9 +103,20 @@ export default function ProductCard({
     }
 
     if (nextState) {
-      if (!wishlist.includes(id)) wishlist.push(id);
+      const exists = wishlist.some((item) =>
+        typeof item === "string"
+          ? (item === id || item.toLowerCase() === displayName.toLowerCase())
+          : (item.id === id || item.name?.toLowerCase() === displayName.toLowerCase())
+      );
+      if (!exists) {
+        wishlist.push({ id, name: displayName, brand: subTitleText, image, rating, ratingCount: reviews });
+      }
     } else {
-      wishlist = wishlist.filter((item) => item !== id);
+      wishlist = wishlist.filter((item) =>
+        typeof item === "string"
+          ? (item !== id && item.toLowerCase() !== displayName.toLowerCase())
+          : (item.id !== id && item.name?.toLowerCase() !== displayName.toLowerCase())
+      );
     }
 
     localStorage.setItem("wishlist-items", JSON.stringify(wishlist));
@@ -117,23 +135,17 @@ export default function ProductCard({
     router.push(`/product/${id}`);
   };
 
-  // Ensure single price format (strip any range hyphen/dash)
-  const rawPrice = price || "300tk";
-  const singlePrice = rawPrice.includes("–") 
-    ? rawPrice.split("–")[1]?.trim() || rawPrice.split("–")[0]?.trim()
-    : rawPrice.includes("-") && !rawPrice.startsWith("-")
-    ? rawPrice.split("-")[1]?.trim() || rawPrice.split("-")[0]?.trim()
-    : rawPrice;
-
-  const displayPrice = singlePrice.includes("tk") 
-    ? singlePrice 
-    : `${singlePrice.replace(/[^0-9,]/g, "") ? singlePrice : "300"}tk`;
+  // Display price range format (e.g. "300 - 2500tk")
+  const rawPrice = price || "300 - 2500tk";
+  const displayPrice = (rawPrice.includes("-") || rawPrice.includes("–"))
+    ? rawPrice
+    : "300 - 2500tk";
 
   const displayOriginalPrice = originalPrice ? (originalPrice.includes("tk") ? originalPrice : `${originalPrice}tk`) : "";
 
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} ${variant === "featured" ? styles.featuredCard : ""}`}
       onClick={handleCardClick}
       style={{ cursor: "pointer", "--delay": `${delay}ms` } as React.CSSProperties}
     >
@@ -187,9 +199,6 @@ export default function ProductCard({
 
           <div className={styles.priceGroup}>
             <span className={styles.currentPrice}>{displayPrice}</span>
-            {displayOriginalPrice && (
-              <span className={styles.originalPrice}>{displayOriginalPrice}</span>
-            )}
           </div>
         </div>
 

@@ -5,53 +5,61 @@ import Link from "next/link";
 import ProductCard from "./ProductCard";
 import styles from "./homepage.module.css";
 
-/* ── Featured Collection Products Data (8 Curated Items with Badges) ── */
-const featuredProducts = [
+/* ── Curated Real Featured Collection Products (Matching Real Product Photos) ── */
+const defaultFeaturedProducts = [
   {
-    id: "fc-layton",
-    name: "Parfums De marly Layton",
-    brand: "PARFUMS DE MARLY",
-    description: "Layton offers a perfect blend of freshness, spice, and warmth—exuding modern sophistication with royal heritage.",
-    rating: 4.8,
-    reviews: 240,
-    price: "1,850tk",
-    volume: "100ml",
+    id: "fc-jade-serenity",
+    name: "Jade Serenity",
+    brand: "MURAKKAZ EXTRAITS",
+    inspiredBy: "Inspired by Creed Original Vetiver",
+    description: "Jade Serenity is a masterclass in clean, sophisticated freshness blending green tea, citrus, and rich vetiver.",
+    rating: 4.9,
+    reviews: 250,
+    price: "300 - 2500tk",
+    originalPrice: "720tk",
+    volume: "12ml",
     image: "/images/products/jade_serenity.png",
     badge: "BESTSELLER",
   },
   {
-    id: "fc-percival",
-    name: "Parfums De marly Percival",
-    brand: "PARFUMS DE MARLY",
-    description: "A fresh, sensual, and refined eau de parfum presenting subtle oceanic accords with lavender and mandarin.",
-    rating: 4.7,
+    id: "fc-coral-sea",
+    name: "Coral Sea Extrait",
+    brand: "MURAKKAZ EXTRAITS",
+    inspiredBy: "Inspired by Louis Vuitton Pacific Chill",
+    description: "Coral Sea transports you to windswept coastal shores with mineral fresh sea salt spray, wood sage, and grapefruit.",
+    rating: 4.8,
     reviews: 185,
-    price: "1,950tk",
-    volume: "100ml",
+    price: "300 - 2500tk",
+    originalPrice: "680tk",
+    volume: "12ml",
     image: "/images/products/coral_sea.png",
     badge: "EXCLUSIVE",
   },
   {
-    id: "fc-magnetism",
-    name: "Murakkaz Magnetism Extrait",
+    id: "fc-murakkaz-noir",
+    name: "Murakkaz Noir",
     brand: "MURAKKAZ EXTRAITS",
-    description: "Rich amber and rare dark woods fused with velvety vanilla for an intoxicating, long-lasting evening presence.",
+    inspiredBy: "Inspired by Dior Sauvage Elixir",
+    description: "Intense, concentrated fragrance opening with sweet cardamom, hot cinnamon, and dark cedar base notes.",
     rating: 4.9,
     reviews: 310,
-    price: "2,100tk",
-    volume: "100ml",
+    price: "300 - 2500tk",
+    originalPrice: "850tk",
+    volume: "12ml",
     image: "/images/products/magnetism.png",
     badge: "EXCLUSIVE",
   },
   {
     id: "fc-hellenist",
-    name: "Murakkaz Hellenist Imperial",
+    name: "Hellenist Imperial",
     brand: "MURAKKAZ EXTRAITS",
-    description: "Inspired by ancient Mediterranean gardens, featuring sun-drenched bergamot, fig leaf, and white cedarwood.",
-    rating: 4.6,
-    reviews: 165,
-    price: "1,750tk",
-    volume: "100ml",
+    inspiredBy: "Inspired by MFK Baccarat Rouge 540",
+    description: "Glowing amber floral fragrance with precious saffron, sweet jasmine, and freshly cut cedarwood.",
+    rating: 4.9,
+    reviews: 290,
+    price: "300 - 2500tk",
+    originalPrice: "750tk",
+    volume: "12ml",
     image: "/images/products/hellenist.png",
     badge: "BESTSELLER",
   },
@@ -59,23 +67,27 @@ const featuredProducts = [
     id: "fc-amber-gold",
     name: "Royal Amber Gold Extrait",
     brand: "MURAKKAZ EXTRAITS",
+    inspiredBy: "Inspired by Kilian Angels' Share",
     description: "Ultra-concentrated rare extraits de parfum blended with wild vintage Oudh and rare Damask rose.",
     rating: 4.9,
     reviews: 210,
-    price: "2,450tk",
-    volume: "100ml",
+    price: "300 - 2500tk",
+    originalPrice: "900tk",
+    volume: "12ml",
     image: "/images/products/amber_gold.png",
     badge: "EXCLUSIVE",
   },
   {
     id: "fc-silver-mountain",
     name: "Silver Mountain Accords",
-    brand: "MURAKKAZ ESSENTIALS",
-    description: "Harmonious scent compositions crafted without boundaries for every gender and occasion.",
-    rating: 4.5,
+    brand: "MURAKKAZ EXTRAITS",
+    inspiredBy: "Inspired by Creed Silver Mountain Water",
+    description: "Harmonious scent compositions with crisp green tea, blackcurrant, and majestic mountain air accords.",
+    rating: 4.8,
     reviews: 145,
-    price: "1,630tk",
-    volume: "100ml",
+    price: "300 - 2500tk",
+    originalPrice: "700tk",
+    volume: "12ml",
     image: "/images/products/silver_mountain.png",
     badge: "TOP PICK",
   },
@@ -83,32 +95,73 @@ const featuredProducts = [
     id: "fc-rouge-540",
     name: "Rouge Elixir & Amber",
     brand: "MURAKKAZ EXTRAITS",
-    description: "Deep, sensual amber and rich incense formulations engineered for memorable night occasions.",
+    inspiredBy: "Inspired by MFK Grand Soir & BR540",
+    description: "Deep, sensual amber and rich incense formulations engineered for memorable evening occasions.",
     rating: 4.8,
     reviews: 220,
-    price: "2,200tk",
-    volume: "100ml",
+    price: "300 - 2500tk",
+    originalPrice: "800tk",
+    volume: "12ml",
     image: "/images/products/rouge_540.png",
     badge: "LIMITED",
   },
   {
     id: "fc-velvet-oud",
-    name: "Velvet Oud Discovery Vault",
-    brand: "MURAKKAZ COLLECTION",
-    description: "Exquisitely packaged discovery collections and duo gift sets for perfume connoisseurs.",
-    rating: 4.7,
+    name: "Velvet Oud Imperial",
+    brand: "MURAKKAZ EXTRAITS",
+    inspiredBy: "Inspired by MFK Oud Satin Mood",
+    description: "Exquisitely packaged discovery collections and duo gift sets featuring Bulgarian rose and agarwood.",
+    rating: 4.8,
     reviews: 175,
-    price: "2,850tk",
-    volume: "100ml",
+    price: "300 - 2500tk",
+    originalPrice: "950tk",
+    volume: "12ml",
     image: "/images/products/velvet_oud.png",
     badge: "BESTSELLER",
   },
 ];
 
 export default function FeaturedCollections() {
+  const [featuredProducts, setFeaturedProducts] = useState(defaultFeaturedProducts);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(4);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Fetch live products from backend API if available
+  useEffect(() => {
+    let isMounted = true;
+    fetch("http://localhost:5000/api/products?limit=12")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network error");
+        return res.json();
+      })
+      .then((json) => {
+        if (isMounted && json.data && Array.isArray(json.data) && json.data.length > 0) {
+          const liveList = json.data.map((item: any, idx: number) => ({
+            id: item.id || `prod-${idx}`,
+            name: item.name,
+            brand: item.brand ? item.brand.toUpperCase() : "MURAKKAZ EXTRAITS",
+            inspiredBy: item.inspiredBy || (item.description && item.description.includes("Inspired by") ? item.description.split(".")[0] : ""),
+            description: item.description || item.ourTake || "",
+            rating: item.rating || 4.8,
+            reviews: item.reviewCount || 40 + idx * 5,
+            price: item.sizes && item.sizes.length > 1 ? `${item.sizes[0].price} - ${item.sizes[item.sizes.length - 1].price}tk` : "300 - 2500tk",
+            originalPrice: item.sizes && item.sizes[0]?.originalPrice ? `${item.sizes[0].originalPrice}tk` : undefined,
+            volume: item.sizes && item.sizes[0] ? item.sizes[0].size : "12ml",
+            image: item.image,
+            badge: item.isFeatured ? "EXCLUSIVE" : idx % 3 === 0 ? "BESTSELLER" : "TOP PICK",
+          }));
+          setFeaturedProducts(liveList);
+        }
+      })
+      .catch(() => {
+        // Keeps default matching curated collection products
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Duplicated dataset for smooth infinite looping
   const displayItems = [...featuredProducts, ...featuredProducts];
@@ -210,7 +263,7 @@ export default function FeaturedCollections() {
           </button>
 
           {/* Carousel Track Container (Fully Responsive & Perfectly Centered with Active Focus & Side Peeks) */}
-          <div className="overflow-hidden w-full">
+          <div className="overflow-hidden w-full py-6 -my-6 px-1 -mx-1">
             <div
               className={`flex items-stretch gap-4 sm:gap-5 xl:gap-6 ${
                 visibleCount === 1 ? "pl-[12%]" : visibleCount === 2 ? "pl-[16%]" : "pl-0"
@@ -232,22 +285,25 @@ export default function FeaturedCollections() {
                     key={`${product.id}-${idx}`}
                     className={`w-[76%] sm:w-[68%] xl:w-[calc((100%-4.5rem)/4)] xl:min-w-[calc((100%-4.5rem)/4)] max-w-[320px] sm:max-w-[360px] xl:max-w-none shrink-0 flex flex-col transition-all duration-500 ease-out ${
                       isActive
-                        ? "scale-100 opacity-100 z-10 shadow-lg xl:scale-100 xl:opacity-100"
-                        : "scale-[0.93] opacity-70 z-0 xl:scale-100 xl:opacity-100"
+                        ? "opacity-100 z-10"
+                        : "opacity-80 z-0"
                     }`}
                   >
                     <ProductCard
                       id={product.id}
                       name={product.name}
                       brand={product.brand}
+                      inspiredBy={product.inspiredBy}
                       description={product.description}
                       rating={product.rating}
                       reviews={product.reviews}
                       price={product.price}
+                      originalPrice={product.originalPrice}
                       volume={product.volume}
                       image={product.image}
                       badge={product.badge}
                       delay={0}
+                      variant="featured"
                     />
                   </div>
                 );
@@ -276,3 +332,4 @@ export default function FeaturedCollections() {
     </section>
   );
 }
+

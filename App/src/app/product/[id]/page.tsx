@@ -212,13 +212,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   // Size and pricing configuration
   const sizeOptions = [
+    { label: "6ml", price: 300 },
     { label: "12ml", price: 500 },
     { label: "30ml", price: 900 },
-    { label: "55ml", price: 1500 },
-    { label: "100ml", price: 2800 },
+    { label: "50ml", price: 2500 },
   ];
 
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[3]); // Default to 100ml
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[1]); // Default to 12ml
   const [liveProduct, setLiveProduct] = useState<any>(null);
 
   // Dynamic API fetch for custom products created via Admin
@@ -258,6 +258,19 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   }, [id]);
 
   // Dynamic targeting logic based on URL route ID
+  const catalogItem = React.useMemo(() => {
+    if (!id) return null;
+    const cleanId = id.toLowerCase().trim();
+    return productsCatalog.find(
+      (p) =>
+        p.id.toLowerCase() === cleanId ||
+        p.name.toLowerCase() === cleanId ||
+        p.name.toLowerCase().replace(/\s+/g, "-") === cleanId ||
+        cleanId.includes(p.id.toLowerCase()) ||
+        p.id.toLowerCase().includes(cleanId)
+    );
+  }, [id]);
+
   const targetKey = React.useMemo(() => {
     if (!id) return "jade-serenity";
     const idClean = id.toLowerCase();
@@ -275,28 +288,67 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     if (idClean === "4" || idClean === "hellenist" || idClean.includes("hellenist")) {
       return "hellenist";
     }
-    
-    // Fallback: search productsCatalog family
-    const catalogItem = productsCatalog.find((p) => p.id === id);
-    if (catalogItem) {
-      const fam = catalogItem.family.toLowerCase();
-      if (fam === "woody") return "murakkaz-noir";
-      if (fam === "citrus") return "jade-serenity";
-      if (fam === "fresh") return "coral-sea";
-      if (fam === "oriental") return "hellenist";
-    }
-    
-    // Default fallback
     return "jade-serenity";
   }, [id]);
 
-  const details = liveProduct || productsDetailMap[targetKey] || productsDetailMap["jade-serenity"];
+  const details = React.useMemo(() => {
+    if (liveProduct) return liveProduct;
+    if (productsDetailMap[id]) return productsDetailMap[id];
+    if (productsDetailMap[targetKey] && (id.includes("jade") || id.includes("coral") || id.includes("noir") || id.includes("hellenist"))) {
+      return productsDetailMap[targetKey];
+    }
+    
+    if (catalogItem) {
+      const topNotes = (catalogItem.notes && catalogItem.notes.length > 0)
+        ? catalogItem.notes.slice(0, 3).map((n) => ({ name: n, image: 'bergamot.png' }))
+        : [{ name: "Bergamot", image: 'bergamot.png' }, { name: "Citrus Accord", image: 'mandarin.png' }];
+
+      const middleNotes = (catalogItem.notes && catalogItem.notes.length > 3)
+        ? catalogItem.notes.slice(3, 6).map((n) => ({ name: n, image: 'jasmine.png' }))
+        : [{ name: "Jasmine", image: 'jasmine.png' }, { name: "Damask Rose", image: 'may_rose.png' }];
+
+      const baseNotes = (catalogItem.notes && catalogItem.notes.length > 6)
+        ? catalogItem.notes.slice(6).map((n) => ({ name: n, image: 'amber.png' }))
+        : [{ name: "Cedarwood", image: 'cedar.png' }, { name: "Amber", image: 'amber.png' }, { name: "Oud", image: 'vetiver.png' }];
+
+      return {
+        name: catalogItem.name,
+        inspiredBy: catalogItem.inspiredBy ? `Inspired by ${catalogItem.inspiredBy}` : `Inspired by ${catalogItem.brand}`,
+        badge: catalogItem.badge || "Best Seller",
+        description: catalogItem.description || `${catalogItem.name} by ${catalogItem.brand}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
+        image: catalogItem.image,
+        family: catalogItem.family || "Woody",
+        galleryImages: [
+          catalogItem.image,
+          "/images/products/jade_serenity.png",
+          "/images/products/amber_gold.png",
+        ],
+        topNotes,
+        middleNotes,
+        baseNotes,
+        accords: [
+          { name: catalogItem.family || "Woody", pct: 90, color: "#e2cc9e", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+          { name: "Aromatic", pct: 75, color: "#b9cad7", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+          { name: "Spicy", pct: 60, color: "#e89f65", path: "M4 18L18 4" }
+        ],
+        bestFor: [
+          { name: "Spring & Summer", pct: 80 },
+          { name: "Autumn & Winter", pct: 85 },
+          { name: "Daytime Wear", pct: 75 },
+          { name: "Nightly Occasions", pct: 90 }
+        ],
+        ourTake: catalogItem.description || `${catalogItem.name} is a captivating fragrance formulation.`
+      };
+    }
+    
+    return productsDetailMap[targetKey] || productsDetailMap["jade-serenity"];
+  }, [liveProduct, targetKey, id, catalogItem]);
 
   // Reset indices on product change
   useEffect(() => {
     setActiveImageIndex(0);
     setQuantity(1);
-    setSelectedSizeOpt(sizeOptions[3]);
+    setSelectedSizeOpt(sizeOptions[1]);
   }, [targetKey]);
 
   // Dynamic countdown timer loop & screen size check for accordion default
@@ -367,16 +419,10 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         selectedSize: selectedSizeOpt.label,
         quantity: quantity,
         prices: {
+          "6ml": 300,
           "12ml": 500,
           "30ml": 900,
-          "55ml": 1500,
-          "100ml": 2800,
-        },
-        originalPrices: {
-          "12ml": 720,
-          "30ml": 1200,
-          "55ml": 2000,
-          "100ml": 3500,
+          "50ml": 2500,
         },
         selected: true,
       };

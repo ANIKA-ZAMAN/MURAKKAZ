@@ -406,3 +406,11 @@ model SiteContent {
   value     Json
   updatedAt DateTime @updatedAt
 }
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String   @default("upcoming_events")
+  createdAt DateTime @default(now())
+}
+

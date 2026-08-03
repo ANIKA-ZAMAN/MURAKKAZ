@@ -1,3 +1,5 @@
+import { productsCatalog } from "./products";
+
 export interface PopularComparison {
   id: string;
   perfume1: string;
@@ -7,29 +9,35 @@ export interface PopularComparison {
 }
 
 /**
- * Central mock data array for Popular Comparisons displayed in CompareBanner.
- * Easily edit, add, or remove fragrance comparison pairs here.
+ * Real comparison pairs generated directly from productsCatalog.
  */
 export const popularComparisonsData: PopularComparison[] = [
   {
-    id: "sauvage-badboy",
-    perfume1: "Dior Sauvage",
-    perfume2: "Carolina Herrera Bad Boy",
-    p1Param: "Dior Sauvage",
-    p2Param: "Bad Boy",
+    id: "irish-baccarat",
+    perfume1: productsCatalog[1]?.name || "Irish Leather",
+    perfume2: productsCatalog[2]?.name || "Baccarat Rouge 540",
+    p1Param: productsCatalog[1]?.name || "Irish Leather",
+    p2Param: productsCatalog[2]?.name || "Baccarat Rouge 540",
   },
   {
-    id: "ysly-bdc",
-    perfume1: "YSL Y EDP",
-    perfume2: "Bleu de Chanel",
-    p1Param: "YSL Y EDP",
-    p2Param: "Bleu de Chanel",
+    id: "tobacco-fireplace",
+    perfume1: productsCatalog[3]?.name || "Tobacco Vanille",
+    perfume2: productsCatalog[4]?.name || "By the Fireplace",
+    p1Param: productsCatalog[3]?.name || "Tobacco Vanille",
+    p2Param: productsCatalog[4]?.name || "By the Fireplace",
   },
   {
-    id: "afnan-jpg",
-    perfume1: "Afnan 9PM",
-    perfume2: "JPG Ultra Male",
-    p1Param: "Afnan 9PM",
-    p2Param: "JPG Ultra Male",
+    id: "resala-sultani",
+    perfume1: productsCatalog[5]?.name || "Resala",
+    perfume2: productsCatalog[6]?.name || "Sultani",
+    p1Param: productsCatalog[5]?.name || "Resala",
+    p2Param: productsCatalog[6]?.name || "Sultani",
+  },
+  {
+    id: "guidance-rosewood",
+    perfume1: productsCatalog[7]?.name || "Guidance",
+    perfume2: productsCatalog[8]?.name || "Rosewood",
+    p1Param: productsCatalog[7]?.name || "Guidance",
+    p2Param: productsCatalog[8]?.name || "Rosewood",
   },
 ];
