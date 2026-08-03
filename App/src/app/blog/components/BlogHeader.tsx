@@ -8,7 +8,7 @@ interface BlogHeaderProps {
 export default function BlogHeader({ searchQuery, onSearchChange }: BlogHeaderProps) {
   return (
     <div className={styles.headerContainer}>
-      <h1 className={styles.pageTitle}>Vlog</h1>
+      <h1 className={styles.pageTitle}>Blog</h1>
 
       <div className={styles.searchWrapper}>
         <input
