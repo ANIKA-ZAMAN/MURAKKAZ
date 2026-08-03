@@ -519,3 +519,106 @@
   display: contents;
 }
 
+/* ───────────────────────────────────────────────────────────── */
+/* HOME PAGE EXCLUSIVE FEATURED PRODUCT CARD PREMIUM REFINEMENTS */
+/* ───────────────────────────────────────────────────────────── */
+
+.featuredCard {
+  border: 1px solid rgba(165, 135, 92, 0.3) !important;
+  border-radius: 16px !important;
+  background: #FAF7F2 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+  overflow: hidden !important;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 400ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1), border-color 400ms ease !important;
+}
+
+.featuredCard:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(165, 135, 92, 0.55) !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+.featuredCard .imageContainer {
+  position: relative;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+.featuredCard .image {
+  filter: contrast(1.04) brightness(1.02) saturate(1.05);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+}
+
+.featuredCard:hover .image {
+  transform: scale(1.03);
+  filter: contrast(1.06) brightness(1.03) saturate(1.07);
+}
+
+.featuredCard .badge {
+  background: linear-gradient(135deg, #C5A265 0%, #9E773B 100%) !important;
+  color: #FAF7F2 !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+  font-weight: 700 !important;
+}
+
+.featuredCard .content {
+  background: transparent !important;
+  padding: 0.95rem 1.05rem 1.25rem !important;
+}
+
+.featuredCard .name {
+  color: #1A1816 !important;
+  font-weight: 600 !important;
+}
+
+.featuredCard .brandText {
+  color: #63584B !important;
+}
+
+.featuredCard .ratingText {
+  color: #63584B !important;
+}
+
+.featuredCard .currentPrice {
+  color: #00B865 !important;
+  font-weight: 700 !important;
+}
+
+.featuredCard .buyNowBtn {
+  background: transparent !important;
+  border: 1.5px solid #820011 !important;
+  color: #820011 !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.featuredCard .buyNowBtn:hover {
+  background-color: #820011 !important;
+  color: #FAF7F2 !important;
+  box-shadow: none !important;
+}
+
+.featuredCard .addBagBtn {
+  background: transparent !important;
+  border: 1.5px solid #313134 !important;
+  color: #2C2B2E !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.featuredCard .addBagBtn:hover {
+  background-color: #313134 !important;
+  color: #FAF7F2 !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 767px) {
+  .featuredCard .content {
+    padding: 0.6rem 0.7rem 1rem !important;
+  }
+}
+
+
+
+

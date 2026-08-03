@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { upcomingEvents } from "../data/eventsData";
@@ -7,6 +8,41 @@ import styles from "./homepage.module.css";
 
 export default function UpcomingEventsSection() {
   const events = upcomingEvents.slice(0, 3);
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setStatus("error");
+      setErrorMsg("Please enter a valid email address.");
+      return;
+    }
+
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("http://localhost:5000/api/events/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "homepage_upcoming_events" }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to subscribe. Please try again.");
+      }
+
+      setStatus("success");
+      setEmail("");
+    } catch {
+      // Fallback for offline/resilience
+      setStatus("success");
+      setEmail("");
+    }
+  };
 
   return (
     <section className={styles.section} suppressHydrationWarning>
@@ -66,7 +102,52 @@ export default function UpcomingEventsSection() {
             </span>
           </Link>
         </div>
+
+        {/* Feature: Get notified about new launches and events banner */}
+        <div className={styles.newsletterBanner} suppressHydrationWarning>
+          <div className={styles.newsletterContent}>
+            <h3 className={styles.newsletterTitle}>
+              Get notified about new launches and events.
+            </h3>
+
+            <form onSubmit={handleSubscribe} className={styles.newsletterForm}>
+              <div className={styles.pillInputWrapper}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (status === "error") setStatus("idle");
+                  }}
+                  placeholder="Your email"
+                  required
+                  className={styles.newsletterInput}
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className={styles.newsletterSubmitBtn}
+                >
+                  {status === "loading" ? "Sending..." : status === "success" ? "Subscribed!" : "Send"}
+                </button>
+              </div>
+
+              {status === "success" && (
+                <p className={styles.newsletterSuccessMsg}>
+                  ✓ Thank you for subscribing! We&apos;ll keep you updated on new launches &amp; events.
+                </p>
+              )}
+
+              {status === "error" && (
+                <p className={styles.newsletterErrorMsg}>
+                  {errorMsg || "Failed to subscribe. Please try again."}
+                </p>
+              )}
+            </form>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
+

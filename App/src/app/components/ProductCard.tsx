@@ -20,6 +20,7 @@ interface ProductCardProps {
   badge?: string;
   inspiredBy?: string;
   notes?: string[];
+  variant?: "default" | "featured";
 }
 
 export default function ProductCard({
@@ -37,6 +38,7 @@ export default function ProductCard({
   badge,
   inspiredBy,
   notes,
+  variant = "default",
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -133,7 +135,7 @@ export default function ProductCard({
 
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} ${variant === "featured" ? styles.featuredCard : ""}`}
       onClick={handleCardClick}
       style={{ cursor: "pointer", "--delay": `${delay}ms` } as React.CSSProperties}
     >
