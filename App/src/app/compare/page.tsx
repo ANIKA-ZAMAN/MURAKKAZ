@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { productsCatalog } from "../data/products";
+import { productsCatalog, fetchLiveProducts } from "../data/products";
 import styles from "./page.module.css";
 
 export interface CompareProduct {
@@ -26,233 +26,45 @@ export interface CompareProduct {
   };
 }
 
-const availablePerfumes: CompareProduct[] = [
-  {
-    name: "Dior Sauvage",
-    image: "/images/products/coral_sea.png",
-    brand: "Dior",
-    inspiredBy: "Dior Sauvage",
-    price: "৳450 – ৳6,800",
-    rating: "4.8 (240)",
-    profile: "Raw, sharp bergamot & Sichuan pepper opening with a powerful ambroxan trail.",
-    longevity: "Strong (7-8 Hours)",
-    projection: "Heavy (Room filling initially)",
-    sweetness: "●○○○○ (Fresh & Spicy)",
-    bestFor: "Casual hangouts, evening dates, and daily signatures.",
-    accords: [
-      { name: "Fresh Spicy", value: 90 },
-      { name: "Amber", value: 80 },
-      { name: "Citrus", value: 75 },
-    ],
-    notes: {
-      top: ["Calabrian Bergamot", "Pepper"],
-      heart: ["Sichuan Pepper", "Lavender", "Vetiver", "Patchouli"],
-      base: ["Ambroxan", "Cedarwood", "Labdanum"],
-    },
-  },
-  {
-    name: "Carolina Herrera Bad Boy",
-    image: "/images/products/magnetism.png",
-    brand: "Carolina Herrera",
-    inspiredBy: "Carolina Herrera Bad Boy",
-    price: "৳480 – ৳7,000",
-    rating: "4.7 (195)",
-    profile: "Bold white & black pepper blended with cedarwood, tonka bean, and cocoa notes.",
-    longevity: "Long Lasting (6-8 Hours)",
-    projection: "Moderate to Heavy",
-    sweetness: "●●●○○ (Warm & Spicy Sweet)",
-    bestFor: "Night outs, winter events, and party occasions.",
-    accords: [
-      { name: "Warm Spicy", value: 85 },
-      { name: "Cacao", value: 80 },
-      { name: "Woody", value: 70 },
-    ],
-    notes: {
-      top: ["Black Pepper", "White Pepper", "Italian Bergamot"],
-      heart: ["Cedarwood", "Sage"],
-      base: ["Tonka Bean", "Cocoa", "Amberwood"],
-    },
-  },
-  {
-    name: "YSL Y EDP",
-    image: "/images/products/jade_serenity.png",
-    brand: "Yves Saint Laurent",
-    inspiredBy: "YSL Y EDP",
-    price: "৳500 – ৳7,200",
-    rating: "4.9 (310)",
-    profile: "Aromatic crisp apple, sage, and ginger leading into a smooth vetiver & amberwood dry down.",
-    longevity: "Beast Mode (8+ Hours)",
-    projection: "Heavy (Fills personal aura)",
-    sweetness: "●●●○○ (Sweet & Aromatic)",
-    bestFor: "All-year versatile signature, clubbing, and formal meetings.",
-    accords: [
-      { name: "Aromatic", value: 90 },
-      { name: "Fruity", value: 82 },
-      { name: "Woody", value: 75 },
-    ],
-    notes: {
-      top: ["Crisp Apple", "Ginger", "Bergamot"],
-      heart: ["Sage", "Juniper Berries", "Geranium"],
-      base: ["Amberwood", "Tonka Bean", "Vetiver"],
-    },
-  },
-  {
-    name: "Bleu de Chanel",
-    image: "/images/products/hellenist.png",
-    brand: "Chanel",
-    inspiredBy: "Bleu de Chanel",
-    price: "৳550 – ৳8,200",
-    rating: "4.9 (420)",
-    profile: "Timeless grapefruit, mint, and incense blended over deep cedar and sandalwood.",
-    longevity: "Long Lasting (7-8 Hours)",
-    projection: "Moderate (Sophisticated & Clean)",
-    sweetness: "●●○○○ (Crisp & Woody)",
-    bestFor: "Executive meetings, dates, and black-tie formal events.",
-    accords: [
-      { name: "Citrus", value: 88 },
-      { name: "Woody", value: 82 },
-      { name: "Smoky", value: 65 },
-    ],
-    notes: {
-      top: ["Grapefruit", "Lemon", "Mint", "Pink Pepper"],
-      heart: ["Ginger", "Nutmeg", "Jasmine"],
-      base: ["Incense", "Vetiver", "Cedarwood", "Sandalwood"],
-    },
-  },
-  {
-    name: "Afnan 9PM",
-    image: "/images/products/coral_sea.png",
-    brand: "Afnan",
-    inspiredBy: "Afnan 9PM",
-    price: "৳420 – ৳6,200",
-    rating: "4.8 (280)",
-    profile: "Irresistible apple, cinnamon, lavender, and rich vanilla trail.",
-    longevity: "Beast Mode (9+ Hours)",
-    projection: "Heavy",
-    sweetness: "●●●●○ (Sweet & Intoxicating)",
-    bestFor: "Evening parties, cool nights, and clubbing.",
-    accords: [
-      { name: "Vanilla", value: 90 },
-      { name: "Sweet", value: 85 },
-      { name: "Fruity", value: 75 },
-    ],
-    notes: {
-      top: ["Apple", "Cinnamon", "Wild Lavender", "Bergamot"],
-      heart: ["Orange Blossom", "Lily-of-the-Valley"],
-      base: ["Vanilla", "Tonka Bean", "Amber", "Patchouli"],
-    },
-  },
-  {
-    name: "JPG Ultra Male",
-    image: "/images/products/magnetism.png",
-    brand: "Jean Paul Gaultier",
-    inspiredBy: "JPG Ultra Male",
-    price: "৳580 – ৳8,500",
-    rating: "4.9 (350)",
-    profile: "Juicy black lavender, pear, mint, and spicy cinnamon vanilla blend.",
-    longevity: "Beast Mode (10+ Hours)",
-    projection: "Room Filling",
-    sweetness: "●●●●● (Ultra Sweet)",
-    bestFor: "Nightlife, cold winter nights, and statement entrances.",
-    accords: [
-      { name: "Sweet", value: 95 },
-      { name: "Fruity", value: 88 },
-      { name: "Vanilla", value: 85 },
-    ],
-    notes: {
-      top: ["Pear", "Lavender", "Mint", "Bergamot", "Lemon"],
-      heart: ["Cinnamon", "Clary Sage", "Caraway"],
-      base: ["Black Vanilla Husk", "Amber", "Patchouli", "Cedarwood"],
-    },
-  },
-  {
-    name: "Jade Serenity",
-    image: "/images/products/jade_serenity.png",
-    brand: "Creed",
-    inspiredBy: "Creed Original Vetiver",
-    price: "৳650 – ৳9,500",
-    rating: "4.7 (180)",
-    profile: "Clean, crisp green tea twist layered over fresh metallic vetiver base.",
-    longevity: "Beast Mode (8+ Hours)",
-    projection: "Heavy",
-    sweetness: "●●○○○ (Subtle Crispness)",
-    bestFor: "Office, hot summer afternoons, and high-end formal setups.",
-    accords: [
-      { name: "Woody", value: 80 },
-      { name: "Citrus", value: 75 },
-      { name: "Green", value: 70 },
-    ],
-    notes: {
-      top: ["Crisp Bergamot", "Mandarin", "Lemon Zest"],
-      heart: ["Green Tea", "Florentine Iris", "Wet Vetiver"],
-      base: ["Sandalwood", "White Musk", "Ambergris"],
-    },
-    isRecommended: true,
-  },
-  {
-    name: "Hellenist",
-    image: "/images/products/hellenist.png",
-    brand: "Maison Francis Kurkdjian",
-    inspiredBy: "Baccarat Rouge 540",
-    price: "৳750 – ৳11,000",
-    rating: "4.9 (510)",
-    profile: "Stunningly sweet jasmine, saffron, and ambergris crystal woods.",
-    longevity: "Beast Mode (12+ Hours)",
-    projection: "Enormous",
-    sweetness: "●●●●○ (Sweet & Rich)",
-    bestFor: "Special occasions, cold nights, and luxury gala events.",
-    accords: [
-      { name: "Amber", value: 95 },
-      { name: "Woody", value: 85 },
-      { name: "Warm Spicy", value: 75 },
-    ],
-    notes: {
-      top: ["Grandiflorum Jasmine", "Saffron"],
-      heart: ["Bitter Almond", "Cedarwood"],
-      base: ["Ambergris Accord", "Woody Musk"],
-    },
-  },
-];
-
-const allAvailablePerfumes: CompareProduct[] = (() => {
+const buildCompareList = (): CompareProduct[] => {
   const mapByName = new Map<string, CompareProduct>();
-  availablePerfumes.forEach((p) => mapByName.set(p.name.toLowerCase(), p));
 
   productsCatalog.forEach((p) => {
-    if (!mapByName.has(p.name.toLowerCase())) {
-      const rawNotes = p.notes || [];
-      mapByName.set(p.name.toLowerCase(), {
-        name: p.name,
-        image: p.image || "/images/products/jade_serenity.png",
-        brand: p.brand || "Murakkaz",
-        inspiredBy: p.inspiredBy || p.name,
-        price: p.price || `৳${p.priceVal || 1500}`,
-        rating: `${p.rating || 4.5} (${p.reviews || 120})`,
-        profile: p.description || `${p.name} - ${p.family} fragrance with ${rawNotes.join(", ")}.`,
-        longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
-        projection: "Moderate to Heavy",
-        sweetness: "●●●○○",
-        bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
-        accords: rawNotes.slice(0, 3).map((note, i) => ({
-          name: note,
-          value: 85 - i * 10,
-        })),
-        notes: {
-          top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
-          heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
-          base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
-        },
-      });
-    }
+    const rawNotes = p.notes || [];
+    mapByName.set(p.name.toLowerCase(), {
+      name: p.name,
+      image: p.image || "/images/products/jade_serenity.png",
+      brand: p.brand || "Murakkaz",
+      inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
+      price: "300 - 2500tk",
+      rating: `${p.rating || 4.8} (${p.reviews || 120})`,
+      profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
+      longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+      projection: "Moderate to Heavy",
+      sweetness: "●●●○○",
+      bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
+      accords: rawNotes.slice(0, 3).map((note, i) => ({
+        name: note,
+        value: 85 - i * 10,
+      })),
+      notes: {
+        top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
+        heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
+        base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+      },
+    });
   });
 
   return Array.from(mapByName.values());
-})();
+};
+
+const allAvailablePerfumes: CompareProduct[] = buildCompareList();
 
 function CompareContent() {
   const searchParams = useSearchParams();
   const initialP1 = searchParams.get("p1");
 
+  const [perfumeList, setPerfumeList] = useState<CompareProduct[]>(allAvailablePerfumes);
   const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([
     null,
     null,
@@ -265,6 +77,70 @@ function CompareContent() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const tableRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchLiveProducts().then((liveData) => {
+      if (liveData && liveData.length > 0) {
+        const mapByName = new Map<string, CompareProduct>();
+        
+        liveData.forEach((p) => {
+          const rawNotes = p.notes || [];
+          mapByName.set(p.name.toLowerCase(), {
+            name: p.name,
+            image: p.image || "/images/products/jade_serenity.png",
+            brand: p.brand || "Murakkaz",
+            inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
+            price: "300 - 2500tk",
+            rating: `${p.rating || 4.8} (${p.reviews || 120})`,
+            profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
+            longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+            projection: "Moderate to Heavy",
+            sweetness: "●●●○○",
+            bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
+            accords: rawNotes.slice(0, 3).map((note, i) => ({
+              name: note,
+              value: 85 - i * 10,
+            })),
+            notes: {
+              top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
+              heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
+              base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+            },
+          });
+        });
+
+        productsCatalog.forEach((p) => {
+          if (!mapByName.has(p.name.toLowerCase())) {
+            const rawNotes = p.notes || [];
+            mapByName.set(p.name.toLowerCase(), {
+              name: p.name,
+              image: p.image || "/images/products/jade_serenity.png",
+              brand: p.brand || "Murakkaz",
+              inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
+              price: "300 - 2500tk",
+              rating: `${p.rating || 4.8} (${p.reviews || 120})`,
+              profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
+              longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+              projection: "Moderate to Heavy",
+              sweetness: "●●●○○",
+              bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
+              accords: rawNotes.slice(0, 3).map((note, i) => ({
+                name: note,
+                value: 85 - i * 10,
+              })),
+              notes: {
+                top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
+                heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
+                base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+              },
+            });
+          }
+        });
+
+        setPerfumeList(Array.from(mapByName.values()));
+      }
+    });
+  }, []);
 
   const triggerAnalysis = (slots: (CompareProduct | null)[]) => {
     setIsAnalyzing(true);
@@ -286,7 +162,7 @@ function CompareContent() {
 
       params.forEach((param, idx) => {
         if (param) {
-          const match = allAvailablePerfumes.find(
+          const match = perfumeList.find(
             (p) =>
               p.image === param ||
               p.image.includes(param) ||
@@ -303,7 +179,6 @@ function CompareContent() {
       setSelectedSlots(newSlots);
       triggerAnalysis(newSlots);
 
-      // Clean up URL parameters
       if (typeof window !== "undefined") {
         const url = new URL(window.location.href);
         url.search = "";
@@ -317,7 +192,7 @@ function CompareContent() {
     const addName = searchParams.get("name");
 
     if (addImage || addName || addId) {
-      const match = allAvailablePerfumes.find(
+      const match = perfumeList.find(
         (p) =>
           (addImage && p.image === addImage) ||
           (addName && p.name.toLowerCase() === addName.toLowerCase()) ||
@@ -346,7 +221,7 @@ function CompareContent() {
         }
       }
     }
-  }, [searchParams]);
+  }, [searchParams, perfumeList]);
 
   useEffect(() => {
     if (showComparison && tableRef.current) {
@@ -392,7 +267,7 @@ function CompareContent() {
     }
   };
 
-  const filteredModalProducts = allAvailablePerfumes.filter((prod) => {
+  const filteredModalProducts = perfumeList.filter((prod) => {
     if (!modalSearchQuery) return true;
     const q = modalSearchQuery.toLowerCase();
     return (
