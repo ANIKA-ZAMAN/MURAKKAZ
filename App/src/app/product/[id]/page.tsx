@@ -212,13 +212,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   // Size and pricing configuration
   const sizeOptions = [
+    { label: "6ml", price: 300 },
     { label: "12ml", price: 500 },
     { label: "30ml", price: 900 },
-    { label: "55ml", price: 1500 },
-    { label: "100ml", price: 2800 },
+    { label: "50ml", price: 2500 },
   ];
 
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[3]); // Default to 100ml
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[1]); // Default to 12ml
   const [liveProduct, setLiveProduct] = useState<any>(null);
 
   // Dynamic API fetch for custom products created via Admin
@@ -348,7 +348,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   useEffect(() => {
     setActiveImageIndex(0);
     setQuantity(1);
-    setSelectedSizeOpt(sizeOptions[3]);
+    setSelectedSizeOpt(sizeOptions[1]);
   }, [targetKey]);
 
   // Dynamic countdown timer loop & screen size check for accordion default
@@ -419,16 +419,10 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         selectedSize: selectedSizeOpt.label,
         quantity: quantity,
         prices: {
+          "6ml": 300,
           "12ml": 500,
           "30ml": 900,
-          "55ml": 1500,
-          "100ml": 2800,
-        },
-        originalPrices: {
-          "12ml": 720,
-          "30ml": 1200,
-          "55ml": 2000,
-          "100ml": 3500,
+          "50ml": 2500,
         },
         selected: true,
       };

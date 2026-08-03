@@ -9,19 +9,19 @@ interface CartItem {
   name: string;
   image: string;
   inspiredBy: string;
-  selectedSize: "12ml" | "30ml" | "55ml" | "100ml";
+  selectedSize: "6ml" | "12ml" | "30ml" | "50ml";
   quantity: number;
   prices: {
+    "6ml": number;
     "12ml": number;
     "30ml": number;
-    "55ml": number;
-    "100ml": number;
+    "50ml": number;
   };
   originalPrices?: {
+    "6ml"?: number;
     "12ml"?: number;
     "30ml"?: number;
-    "55ml"?: number;
-    "100ml"?: number;
+    "50ml"?: number;
   };
   selected: boolean;
 }
@@ -31,20 +31,14 @@ const initialCartItems: CartItem[] = [
     id: "cart-1",
     name: "Jade Serenity",
     image: "/images/products/jade_serenity.png",
-    inspiredBy: "Inspired by Dio Savotage",
+    inspiredBy: "Inspired by Creed Original Vetiver",
     selectedSize: "12ml",
-    quantity: 5,
+    quantity: 1,
     prices: {
+      "6ml": 300,
       "12ml": 500,
       "30ml": 900,
-      "55ml": 1500,
-      "100ml": 2800,
-    },
-    originalPrices: {
-      "12ml": 720,
-      "30ml": 1200,
-      "55ml": 2000,
-      "100ml": 3500,
+      "50ml": 2500,
     },
     selected: true,
   },
@@ -52,20 +46,14 @@ const initialCartItems: CartItem[] = [
     id: "cart-2",
     name: "Hellenist",
     image: "/images/products/magnetism.png",
-    inspiredBy: "Inspired by Dio Savotage",
+    inspiredBy: "Inspired by Dior Sauvage Elixir",
     selectedSize: "12ml",
     quantity: 1,
     prices: {
+      "6ml": 300,
       "12ml": 500,
       "30ml": 900,
-      "55ml": 1500,
-      "100ml": 2800,
-    },
-    originalPrices: {
-      "12ml": 680,
-      "30ml": 1100,
-      "55ml": 1900,
-      "100ml": 3300,
+      "50ml": 2500,
     },
     selected: true,
   },
@@ -85,22 +73,16 @@ export default function CartPage() {
         if (Array.isArray(parsed) && parsed.length > 0) {
           // Normalize old cart item sizes/prices to avoid type issues
           const normalized = parsed.map((item: any) => {
-            const hasNewSizes = item.prices && "12ml" in item.prices;
+            const hasNewSizes = item.prices && "6ml" in item.prices;
             if (!hasNewSizes) {
               return {
                 ...item,
-                selectedSize: "12ml",
+                selectedSize: item.selectedSize || "12ml",
                 prices: {
+                  "6ml": 300,
                   "12ml": 500,
                   "30ml": 900,
-                  "55ml": 1500,
-                  "100ml": 2800,
-                },
-                originalPrices: {
-                  "12ml": 720,
-                  "30ml": 1200,
-                  "55ml": 2000,
-                  "100ml": 3500,
+                  "50ml": 2500,
                 }
               };
             }
@@ -143,7 +125,7 @@ export default function CartPage() {
   };
 
   // Change product size
-  const changeSize = (id: string, size: "12ml" | "30ml" | "55ml" | "100ml") => {
+  const changeSize = (id: string, size: "6ml" | "12ml" | "30ml" | "50ml") => {
     setCartItems(prev => {
       const targetItem = prev.find(item => item.id === id);
       if (!targetItem) return prev;
@@ -287,7 +269,7 @@ export default function CartPage() {
                         <div className={styles.sizeSelectionRow}>
                           <span className={styles.metaLabel}>Size:</span>
                           <div className={styles.sizeTags}>
-                            {(["12ml", "30ml", "55ml", "100ml"] as const).map((size) => (
+                            {(["6ml", "12ml", "30ml", "50ml"] as const).map((size) => (
                               <button
                                 key={size}
                                 className={`${styles.sizeTag} ${item.selectedSize === size ? styles.activeSize : ""}`}
