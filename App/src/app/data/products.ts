@@ -1878,7 +1878,7 @@ export async function fetchLiveProducts(): Promise<Product[]> {
       ? window.location.origin 
       : 'http://127.0.0.1:5000';
     
-    const res = await fetch(`${baseUrl}/api/products?limit=500`, { cache: 'no-store' });
+    const res = await fetch(`${baseUrl}/api/products?limit=1000`, { cache: 'no-store' });
     if (res.ok) {
       const json = await res.json();
       const items = json.data || json;

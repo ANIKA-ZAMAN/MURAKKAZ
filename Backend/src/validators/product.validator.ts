@@ -11,7 +11,7 @@ export const productQuerySchema = z.object({
     maxPrice: z.coerce.number().positive().optional(),
     sort: z.enum(['price_asc', 'price_desc', 'rating', 'newest']).optional(),
     page: z.coerce.number().int().positive().optional(),
-    limit: z.coerce.number().int().positive().max(100).optional(),
+    limit: z.coerce.number().int().positive().max(1000).optional(),
   }),
 });
 
