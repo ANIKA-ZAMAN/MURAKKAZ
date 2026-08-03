@@ -13,11 +13,11 @@ export default function BlogHeader({ searchQuery, onSearchChange }: BlogHeaderPr
       <div className={styles.searchWrapper}>
         <input
           type="text"
-          placeholder="Search your perfume"
+          placeholder="Search blog"
           className={styles.searchInput}
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          aria-label="Search your perfume"
+          aria-label="Search blog"
         />
         {searchQuery ? (
           <button
