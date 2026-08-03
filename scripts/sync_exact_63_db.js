@@ -7,7 +7,7 @@ const { PrismaClient } = require('../Backend/node_modules/@prisma/client');
 const prisma = new PrismaClient();
 
 const targetProductNames = [
-  "anika", "Irish Leather", "Baccarat Rouge 540", "Tobacco Vanille", "By the Fireplace",
+  "Irish Leather", "Baccarat Rouge 540", "Tobacco Vanille", "By the Fireplace",
   "Resala", "Sultani", "Guidance", "Rosewood", "Sakura Dior", "Imagination", "Ultra Male",
   "Bad Boy", "Emporio Armani Stronger With You Parfum", "Valentino Donna", "Sexy Secret",
   "Bombshell", "Mon Guerlain", "Spicebomb Extreme", "Y Eau de Parfum", "Ehsas", "Icon",
@@ -24,7 +24,7 @@ const targetProductNames = [
 ];
 
 async function syncDb() {
-  console.log("Cleaning Database to strictly 63 products...");
+  console.log("Cleaning Database to strictly 62 real PDF fragrances...");
 
   const allDbProducts = await prisma.product.findMany();
   let deletedCount = 0;
@@ -40,7 +40,7 @@ async function syncDb() {
   }
 
   const finalCount = await prisma.product.count();
-  console.log(`✅ Deleted ${deletedCount} extra products. Database now contains strictly ${finalCount} products.`);
+  console.log(`✅ Deleted ${deletedCount} extra products. Database now contains strictly ${finalCount} real fragrances.`);
   await prisma.$disconnect();
 }
 

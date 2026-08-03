@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Target 62 real fragrances from master PDF catalog (excluding test item "anika")
 const targetProductNames = [
-  "anika", "Irish Leather", "Baccarat Rouge 540", "Tobacco Vanille", "By the Fireplace",
+  "Irish Leather", "Baccarat Rouge 540", "Tobacco Vanille", "By the Fireplace",
   "Resala", "Sultani", "Guidance", "Rosewood", "Sakura Dior", "Imagination", "Ultra Male",
   "Bad Boy", "Emporio Armani Stronger With You Parfum", "Valentino Donna", "Sexy Secret",
   "Bombshell", "Mon Guerlain", "Spicebomb Extreme", "Y Eau de Parfum", "Ehsas", "Icon",
@@ -55,7 +56,7 @@ if (match) {
   badge?: string;
 }
 
-// Exactly 63 Fragrances from Master PDF Catalog
+// Exactly 62 Master PDF Catalog Fragrances
 export const luxuryProducts: Product[] = ${JSON.stringify(trimmedProducts, null, 2)};
 
 export const productsCatalog = luxuryProducts;
@@ -66,7 +67,7 @@ export async function fetchLiveProducts() {
 `;
 
   fs.writeFileSync(productsFilePath, newProductsCode, 'utf8');
-  console.log('✅ App/src/app/data/products.ts successfully updated with exports and 63 products!');
+  console.log('✅ App/src/app/data/products.ts successfully updated (anika test product removed)!');
 } else {
   console.error('❌ Could not parse luxuryProducts array');
 }

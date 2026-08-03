@@ -20,36 +20,8 @@ export interface Product {
   badge?: string;
 }
 
-// Exactly 63 Fragrances from Master PDF Catalog
+// Exactly 62 Master PDF Catalog Fragrances
 export const luxuryProducts: Product[] = [
-  {
-    "id": "prod-1785487727797",
-    "name": "anika",
-    "brand": "Murakkaz",
-    "inspiredBy": "",
-    "description": "",
-    "rating": 5,
-    "reviews": 0,
-    "price": "300 - 2500tk",
-    "originalPrice": "720tk",
-    "priceVal": 500,
-    "originalPriceVal": 720,
-    "volume": "6ml - 50ml",
-    "image": "/images/products/jade_serenity.png",
-    "family": "WOODY",
-    "gender": "UNISEX",
-    "occasion": "Date Night",
-    "meter": "BEAST_MODE",
-    "notes": [
-      "Bergamot",
-      "Lemon",
-      "Jasmine",
-      "Rose",
-      "Oud",
-      "Amber",
-      "Vetiver"
-    ]
-  },
   {
     "id": "prod-irish-leather-01",
     "name": "Irish Leather",
