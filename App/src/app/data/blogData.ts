@@ -28,7 +28,7 @@ export const blogPosts: BlogPost[] = [
       "To combat intense humidity, opt for Extraits de Parfum formulated with heavy essential oil ratios (25% to 35% concentration). High-concentration fresh fragrances built around Haitian vetiver, Calabrian bergamot, and crisp sea salt spray create an impenetrable bubble of clean aura.",
       "Top recommended summer extraits include Jade Serenity and Coral Sea Extrait, engineered specifically to stay vibrant and sharp through sweltering afternoons."
     ],
-    image: "/images/events/event1.jpg",
+    image: "/images/events/blog1.jpg",
     author: "Eliyash Hossain",
     category: "Fragrance Guide",
     readTime: "4 min read"
@@ -39,13 +39,13 @@ export const blogPosts: BlogPost[] = [
     date: "18th May, 2026",
     title: "How to Choose a Perfume & The Difference Between EDP and EDT",
     subtitle: "Demystifying essential oil concentrations, projection radius, and skin chemistry.",
-    description: "Choosing the right scent comes down to understanding concentration levels and matching them to your daily environment. Explore the key differences between Eau de Toilette, Eau de Parfum, and Extrait de Parfum.",
+    description: "Choosing the right scent comes down to understanding concentration levels and matching them to your daily environment.",
     content: [
       "Choosing the right scent comes down to understanding concentration levels and matching them to your daily environment.",
       "Eau de Toilette (EDT) typically contains 5% to 15% fragrance oil, making it light and airy for short daytime wear. Eau de Parfum (EDP) bumps concentration to 15-20%, giving 6-8 hours of noticeable sillage.",
       "For true beast-mode longevity (12+ to 16+ hours), Extrait de Parfum reigns supreme with 25-35% pure essential oil content. It lays closer to the skin initially, blooming with body heat to create an alluring, long-lasting aura."
     ],
-    image: "/images/events/event2.jpg",
+    image: "/images/events/blog2.jpg",
     author: "Eliyash Hossain",
     category: "Science of Scent",
     readTime: "5 min read"
@@ -56,13 +56,13 @@ export const blogPosts: BlogPost[] = [
     date: "15th May, 2026",
     title: "The Master Guide to Fragrance Layering",
     subtitle: "Craft a bespoke, unrepeatable olfactory signature that belongs entirely to you.",
-    description: "Fragrance layering is the ultimate insider technique to ensure you never smell like anyone else in the room. Learn how combining complementary base notes like Madagascar vanilla, cedarwood, and rich amber creates a captivating custom trail.",
+    description: "Fragrance layering is the ultimate insider trick to ensure you never smell like anyone else in the room. It involves combining two distinct perfumes to create a custom, signature scent trail.",
     content: [
       "Fragrance layering is the ultimate insider trick to ensure you never smell like anyone else in the room. It involves combining two distinct perfumes to create a custom, signature scent trail.",
       "Start by applying a heavier, base-rich perfume first (such as a warm woody amber or rich vanilla). Let it settle onto pulse points for 60 seconds. Then layer a lighter, top-note dominant scent (like crisp bergamot or sparkling jasmine) over the top.",
       "The contrast between deep resinous bases and bright fresh top notes produces a multi-dimensional fragrance signature that evolves uniquely on your skin."
     ],
-    image: "/images/events/event3.jpg",
+    image: "/images/events/blog3.jpg",
     author: "Eliyash Hossain",
     category: "Artisanal Craft",
     readTime: "6 min read"
@@ -79,7 +79,7 @@ export const blogPosts: BlogPost[] = [
       "The answer lies in molecular weight and evaporation rates. Volatile citrus molecules like limonene evaporate quickly, whereas heavy aromatic resins like agarwood, patchouli, and synthetic ambergris possess large molecular structures that anchor to skin and fabric for days.",
       "Furthermore, proper batch maceration—allowing blended fragrance oils to mature in dark, temperature-controlled glass vessels for several weeks—ensures seamless harmony and maximum sillage."
     ],
-    image: "/images/events/sadid.jpg",
+    image: "/images/events/blog1.jpg",
     author: "Eliyash Hossain",
     category: "Science of Scent",
     readTime: "5 min read"
@@ -113,7 +113,7 @@ export const blogPosts: BlogPost[] = [
       "Gourmand profiles featuring warm cinnamon, sweet tonka bean, aged cognac barrels, and velvety vanilla project an inviting, sensual warmth that draws people in.",
       "Fragrances like Murakkaz Noir and Baccarat Rouge 540 offer high-impact sillage tailored for black-tie galas, romantic dinners, and private celebrations."
     ],
-    image: "/images/events/event1.jpg",
+    image: "/images/events/blog2.jpg",
     author: "Eliyash Hossain",
     category: "Fragrance Guide",
     readTime: "4 min read"

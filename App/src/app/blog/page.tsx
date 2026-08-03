@@ -44,7 +44,7 @@ export default function BlogPage() {
             subtitle: item.description,
             description: item.description,
             content: item.content || item.description,
-            image: item.image || "/images/events/sadid.jpg",
+            image: item.image || "/images/events/blog1.jpg",
             author: item.author ? `${item.author.firstName} ${item.author.lastName}` : "Eliyash Hossain",
             category: item.category || "Olfactory Journal",
             readTime: "5 min read",
