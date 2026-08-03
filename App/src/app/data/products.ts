@@ -1872,6 +1872,60 @@ export const luxuryProducts: Product[] = [
 
 export const productsCatalog = luxuryProducts;
 
-export async function fetchLiveProducts() {
+export async function fetchLiveProducts(): Promise<Product[]> {
+  try {
+    const baseUrl = typeof window !== 'undefined' 
+      ? window.location.origin 
+      : 'http://127.0.0.1:5000';
+    
+    const res = await fetch(`${baseUrl}/api/products?limit=500`, { cache: 'no-store' });
+    if (res.ok) {
+      const json = await res.json();
+      const items = json.data || json;
+
+      if (Array.isArray(items) && items.length > 0) {
+        return items.map((p: any) => {
+          let priceStr = p.price || "300 - 2500tk";
+          let minPrice = 300;
+          if (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0) {
+            const prices = p.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n));
+            if (prices.length > 0) {
+              minPrice = Math.min(...prices);
+              const maxP = Math.max(...prices);
+              priceStr = minPrice === maxP ? `${minPrice}tk` : `${minPrice} - ${maxP}tk`;
+            }
+          }
+
+          const notesArr = Array.isArray(p.notes) 
+            ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name)
+            : [];
+
+          return {
+            id: p.id || p.slug || p.name.toLowerCase().replace(/\s+/g, '-'),
+            name: p.name,
+            brand: p.brand || "Murakkaz",
+            inspiredBy: p.inspiredBy || "",
+            description: p.description || "",
+            rating: p.rating || 5.0,
+            reviews: p.reviewCount || p.reviews || 0,
+            price: priceStr,
+            originalPrice: p.originalPrice || "400tk",
+            priceVal: minPrice,
+            originalPriceVal: Math.round(minPrice * 1.25),
+            volume: p.volume || "6ml - 50ml",
+            image: p.image || "/images/products/baccarat_rouge.jpg",
+            family: (p.family || "FLORAL").toUpperCase(),
+            gender: (p.gender || "UNISEX").toUpperCase(),
+            occasion: p.occasion || "Versatile",
+            meter: (p.meter || "BEAST_MODE").toUpperCase(),
+            notes: notesArr,
+            badge: p.isFeatured ? "FEATURED" : undefined,
+          };
+        });
+      }
+    }
+  } catch (err) {
+    console.warn("Could not fetch live API products, falling back to static catalog:", err);
+  }
   return luxuryProducts;
 }
