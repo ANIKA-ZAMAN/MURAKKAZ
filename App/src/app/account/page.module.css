@@ -847,7 +847,8 @@
 
 .greetingSub {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 1.15rem;
+  font-size: 1.55rem;
+  font-weight: 500;
   color: #820011;
   text-transform: uppercase;
   letter-spacing: 0.05em;
