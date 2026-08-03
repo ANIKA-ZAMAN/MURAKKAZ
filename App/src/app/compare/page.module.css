@@ -260,23 +260,26 @@
   max-height: 52vh;
   min-height: 240px;
   overflow-y: auto;
-  padding-right: 6px;
+  padding-right: 8px;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #820011 #eae2d5;
 }
 
 /* Custom Scrollbar for modal list */
 .modalList::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 .modalList::-webkit-scrollbar-track {
-  background: transparent;
+  background: #eae2d5;
+  border-radius: 4px;
 }
 .modalList::-webkit-scrollbar-thumb {
-  background: #d8d5cd;
-  border-radius: 3px;
+  background: #820011;
+  border-radius: 4px;
 }
 .modalList::-webkit-scrollbar-thumb:hover {
-  background: #767677;
+  background: #5a000c;
 }
 
 .modalSearchWrapper {
