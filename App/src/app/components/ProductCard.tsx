@@ -119,9 +119,11 @@ export default function ProductCard({
     router.push(`/product/${id}`);
   };
 
-  // Preserve full price range format (e.g. "300 - 2500tk")
+  // Display price range format (e.g. "300 - 2500tk")
   const rawPrice = price || "300 - 2500tk";
-  const displayPrice = rawPrice.includes("tk") ? rawPrice : `${rawPrice}tk`;
+  const displayPrice = (rawPrice.includes("-") || rawPrice.includes("–"))
+    ? rawPrice
+    : "300 - 2500tk";
 
   const displayOriginalPrice = originalPrice ? (originalPrice.includes("tk") ? originalPrice : `${originalPrice}tk`) : "";
 
