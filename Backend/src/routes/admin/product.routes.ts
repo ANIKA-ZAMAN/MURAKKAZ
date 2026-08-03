@@ -1,26 +1,80 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import prisma from '../../config/database';
 import { AppError } from '../../middleware/errorHandler';
-import { uploadProductImages } from '../../config/upload';
 import { safeDbCall, dbStore, saveProductsToDisk } from '../../services/resilientDb';
 
 const router = Router();
+
+function sanitizeSizes(sizes: any[]) {
+  if (!Array.isArray(sizes) || sizes.length === 0) return undefined;
+  return sizes.map((s: any) => ({
+    size: String(s.size || '50ml'),
+    price: Math.round(Number(s.price) || 0),
+    originalPrice: s.originalPrice ? Math.round(Number(s.originalPrice)) : undefined,
+    stock: Math.round(Number(s.stock) || 0),
+  }));
+}
+
+function sanitizeNotes(notes: any[]) {
+  if (!Array.isArray(notes) || notes.length === 0) return undefined;
+  return notes.map((n: any) => ({
+    name: String(n.name || n),
+    type: String(n.type || 'TOP').toUpperCase(),
+  }));
+}
+
+function sanitizeAccords(accords: any[]) {
+  if (!Array.isArray(accords) || accords.length === 0) return undefined;
+  return accords.map((a: any) => ({
+    name: String(a.name),
+    percentage: Math.round(Number(a.percentage || a.pct) || 0),
+    color: a.color ? String(a.color) : undefined,
+  }));
+}
+
+function sanitizeBestFor(bestFor: any[]) {
+  if (!Array.isArray(bestFor) || bestFor.length === 0) return undefined;
+  return bestFor.map((b: any) => ({
+    name: String(b.name),
+    percentage: Math.round(Number(b.percentage || b.pct) || 0),
+  }));
+}
+
+function sanitizeGallery(galleryImages: any[]) {
+  if (!Array.isArray(galleryImages) || galleryImages.length === 0) return undefined;
+  return galleryImages.map((g: any, idx: number) => ({
+    url: String(typeof g === 'string' ? g : g.url),
+    sortOrder: typeof g === 'object' && typeof g.sortOrder === 'number' ? g.sortOrder : idx,
+  }));
+}
 
 // Create product
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { sizes, notes, accords, bestFor, galleryImages, priceVal, ...productData } = req.body;
-    
+
+    const cleanSizes = sanitizeSizes(sizes);
+    const cleanNotes = sanitizeNotes(notes);
+    const cleanAccords = sanitizeAccords(accords);
+    const cleanBestFor = sanitizeBestFor(bestFor);
+    const cleanGallery = sanitizeGallery(galleryImages);
+
     const product = await safeDbCall(
       async () => {
         return await prisma.product.create({
           data: {
             ...productData,
-            sizes: sizes ? { create: sizes } : undefined,
-            notes: notes ? { create: notes } : undefined,
-            accords: accords ? { create: accords } : undefined,
-            bestFor: bestFor ? { create: bestFor } : undefined,
-            galleryImages: galleryImages ? { create: galleryImages } : undefined,
+            slug: productData.slug || productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+            image: productData.image || '/images/products/jade_serenity.png',
+            family: productData.family || 'WOODY',
+            gender: productData.gender || 'UNISEX',
+            occasion: productData.occasion || 'General',
+            meter: productData.meter || 'LONG_LASTING',
+            sizes: cleanSizes ? { create: cleanSizes } : undefined,
+            notes: cleanNotes ? { create: cleanNotes } : undefined,
+            accords: cleanAccords ? { create: cleanAccords } : undefined,
+            bestFor: cleanBestFor ? { create: cleanBestFor } : undefined,
+            galleryImages: cleanGallery ? { create: cleanGallery } : undefined,
           },
           include: { sizes: true, notes: true, accords: true, bestFor: true, galleryImages: true },
         });
@@ -28,21 +82,24 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
       () => {
         const newProduct = {
           id: `prod-${Date.now()}`,
-          slug: productData.slug || `product-${Date.now()}`,
+          slug: productData.slug || productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
           name: productData.name || 'New Fragrance',
           brand: productData.brand || 'Murakkaz',
           description: productData.description || '',
           rating: 5.0,
           reviewCount: 0,
           image: productData.image || '/images/products/jade_serenity.png',
-          family: productData.family || 'Oriental',
-          gender: productData.gender || 'Unisex',
+          family: productData.family || 'WOODY',
+          gender: productData.gender || 'UNISEX',
           occasion: productData.occasion || 'General',
-          meter: productData.meter || 'Moderate',
+          meter: productData.meter || 'LONG_LASTING',
           isActive: true,
-          priceVal: priceVal || (sizes?.[0]?.price) || 2800,
-          sizes: sizes || [{ size: '50ml', price: priceVal || 2800 }],
-          notes: notes || []
+          priceVal: priceVal || (cleanSizes?.[0]?.price) || 2800,
+          sizes: cleanSizes || [{ size: '50ml', price: 2800 }],
+          notes: cleanNotes || [],
+          accords: cleanAccords || [],
+          bestFor: cleanBestFor || [],
+          galleryImages: cleanGallery || [],
         };
         dbStore.products.unshift(newProduct);
         saveProductsToDisk(dbStore.products);
@@ -51,20 +108,23 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     );
 
     res.status(201).json({ status: 'success', data: product });
-  } catch (error) { next(error); }
+  } catch (error) {
+    console.error('Create product error:', error);
+    next(error);
+  }
 });
 
 // Update product
 router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = req.params.id as string;
-    const { sizes, notes, accords, bestFor, galleryImages, ...productData } = req.body;
-    
+    const { sizes, notes, accords, bestFor, galleryImages, priceVal, ...productData } = req.body;
+
     const product = await safeDbCall(
       async () => {
         const existing = await prisma.product.findUnique({ where: { id } });
         if (!existing) throw new AppError('Product not found', 404);
-        
+
         return await prisma.product.update({
           where: { id },
           data: productData,
@@ -83,7 +143,10 @@ router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
     );
 
     res.json({ status: 'success', data: product });
-  } catch (error) { next(error); }
+  } catch (error) {
+    console.error('Update product error:', error);
+    next(error);
+  }
 });
 
 // Delete product
@@ -101,7 +164,10 @@ router.delete('/:id', async (req: Request, res: Response, next: NextFunction) =>
     );
 
     res.json({ status: 'success', message: 'Product deactivated' });
-  } catch (error) { next(error); }
+  } catch (error) {
+    console.error('Delete product error:', error);
+    next(error);
+  }
 });
 
 export default router;
