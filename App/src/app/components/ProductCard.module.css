@@ -615,7 +615,19 @@
 
 @media (max-width: 767px) {
   .featuredCard .content {
-    padding: 0.6rem 0.7rem 1rem !important;
+    padding: 0.5rem 0.6rem 0.75rem !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .featuredCard .content {
+    padding: 0.75rem 0.85rem 0.95rem !important;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .featuredCard .content {
+    padding: 0.8rem 0.9rem 1rem !important;
   }
 }
 

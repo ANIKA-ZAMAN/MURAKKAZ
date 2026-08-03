@@ -1547,23 +1547,33 @@
   text-align: center;
 }
 
+@media (min-width: 641px) and (max-width: 1023px) {
+  .newsletterBanner {
+    padding: 2.75rem 2rem;
+    max-width: 580px;
+    margin-top: 3rem;
+  }
+}
+
 @media (max-width: 640px) {
   .newsletterBanner {
-    padding: 2.25rem 1.5rem;
+    padding: 2.25rem 1.25rem;
     border-radius: 18px;
     margin-top: 2.5rem;
     max-width: 100%;
+    width: 100%;
   }
   .newsletterTitle {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
   }
   .pillInputWrapper {
-    height: 50px;
+    height: 48px;
+    padding: 3px 4px 3px 1rem;
   }
   .newsletterSubmitBtn {
-    height: 40px;
-    padding: 0 1.35rem;
-    font-size: 0.8rem;
+    height: 38px;
+    padding: 0 1.2rem;
+    font-size: 0.78rem;
   }
 }
 
