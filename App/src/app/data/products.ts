@@ -1897,3 +1897,9 @@ export const luxuryProducts: Product[] = [
     ]
   }
 ];
+
+export const productsCatalog = luxuryProducts;
+
+export async function fetchLiveProducts() {
+  return luxuryProducts;
+}

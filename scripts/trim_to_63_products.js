@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// 1. Target exact 63 product names
 const targetProductNames = [
   "anika", "Irish Leather", "Baccarat Rouge 540", "Tobacco Vanille", "By the Fireplace",
   "Resala", "Sultani", "Guidance", "Rosewood", "Sakura Dior", "Imagination", "Ultra Male",
@@ -22,21 +21,18 @@ const targetProductNames = [
 const productsFilePath = path.join(__dirname, '../App/src/app/data/products.ts');
 let fileContent = fs.readFileSync(productsFilePath, 'utf8');
 
-// Parse the array in products.ts
 const match = fileContent.match(/export const luxuryProducts: Product\[\] = (\[[\s\S]*?\]);/);
 
 if (match) {
   const allProducts = JSON.parse(match[1]);
   console.log(`Original total products in products.ts: ${allProducts.length}`);
 
-  // Filter to keep ONLY the 63 matching names
   const trimmedProducts = allProducts.filter(p => 
     targetProductNames.some(name => name.toLowerCase() === p.name.toLowerCase())
   );
 
   console.log(`Trimmed products count: ${trimmedProducts.length}`);
 
-  // Re-write products.ts
   const newProductsCode = `export interface Product {
   id: string;
   name: string;
@@ -61,10 +57,16 @@ if (match) {
 
 // Exactly 63 Fragrances from Master PDF Catalog
 export const luxuryProducts: Product[] = ${JSON.stringify(trimmedProducts, null, 2)};
+
+export const productsCatalog = luxuryProducts;
+
+export async function fetchLiveProducts() {
+  return luxuryProducts;
+}
 `;
 
   fs.writeFileSync(productsFilePath, newProductsCode, 'utf8');
-  console.log('✅ App/src/app/data/products.ts successfully updated with exactly 63 products!');
+  console.log('✅ App/src/app/data/products.ts successfully updated with exports and 63 products!');
 } else {
   console.error('❌ Could not parse luxuryProducts array');
 }
