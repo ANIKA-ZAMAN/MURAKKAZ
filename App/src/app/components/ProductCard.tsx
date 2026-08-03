@@ -183,9 +183,6 @@ export default function ProductCard({
 
           <div className={styles.priceGroup}>
             <span className={styles.currentPrice}>{displayPrice}</span>
-            {displayOriginalPrice && (
-              <span className={styles.originalPrice}>{displayOriginalPrice}</span>
-            )}
           </div>
         </div>
 
