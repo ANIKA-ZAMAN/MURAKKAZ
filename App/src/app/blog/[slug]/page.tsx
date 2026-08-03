@@ -103,7 +103,7 @@ export default function BlogDetailPage({ params }: PageProps) {
       <article className={styles.container}>
         {/* Navigation Link */}
         <Link href="/blog" className={styles.backLink}>
-          ← Back to Olfactory Journal
+          ← Back to Blog
         </Link>
 
         {/* Hero Header */}
