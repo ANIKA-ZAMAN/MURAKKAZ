@@ -119,17 +119,9 @@ export default function ProductCard({
     router.push(`/product/${id}`);
   };
 
-  // Ensure single price format (strip any range hyphen/dash)
-  const rawPrice = price || "300tk";
-  const singlePrice = rawPrice.includes("–") 
-    ? rawPrice.split("–")[1]?.trim() || rawPrice.split("–")[0]?.trim()
-    : rawPrice.includes("-") && !rawPrice.startsWith("-")
-    ? rawPrice.split("-")[1]?.trim() || rawPrice.split("-")[0]?.trim()
-    : rawPrice;
-
-  const displayPrice = singlePrice.includes("tk") 
-    ? singlePrice 
-    : `${singlePrice.replace(/[^0-9,]/g, "") ? singlePrice : "300"}tk`;
+  // Preserve full price range format (e.g. "300 - 2500tk")
+  const rawPrice = price || "300 - 2500tk";
+  const displayPrice = rawPrice.includes("tk") ? rawPrice : `${rawPrice}tk`;
 
   const displayOriginalPrice = originalPrice ? (originalPrice.includes("tk") ? originalPrice : `${originalPrice}tk`) : "";
 
