@@ -485,129 +485,17 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  // Expanded recommendations list (12 perfumes)
-  const recommendations = [
-    {
-      name: "Jade Serenity",
-      inspiredBy: "Inspired by Creed Original Vetiver",
-      rating: 4.9,
-      reviews: 250,
-      price: "2,800tk",
-      volume: "100ml",
-      image: "/images/products/jade_serenity.png",
-      id: "jade-serenity"
-    },
-    {
-      name: "Coral Sea",
-      inspiredBy: "Inspired by Jo Malone Wood Sage & Sea Salt",
-      rating: 4.8,
-      reviews: 120,
-      price: "2,800tk",
-      volume: "100ml",
-      image: "/images/products/coral_sea.png",
-      id: "coral-sea"
-    },
-    {
-      name: "Murakkaz Noir",
-      inspiredBy: "Inspired by Dior Sauvage Elixir",
-      rating: 4.7,
-      reviews: 120,
-      price: "2,800tk",
-      volume: "100ml",
-      image: "/images/products/magnetism.png",
-      id: "murakkaz-noir"
-    },
-    {
-      name: "Hellenist",
-      inspiredBy: "Inspired by Baccarat Rouge 540",
-      rating: 4.9,
-      reviews: 310,
-      price: "2,800tk",
-      volume: "100ml",
-      image: "/images/products/hellenist.png",
-      id: "hellenist"
-    },
-    {
-      name: "Amber Gold",
-      inspiredBy: "Inspired by Tom Ford Tobacco Vanille",
-      rating: 4.8,
-      reviews: 195,
-      price: "2,500tk",
-      volume: "100ml",
-      image: "/images/products/amber_gold.png",
-      id: "amber-gold"
-    },
-    {
-      name: "Velvet Oud",
-      inspiredBy: "Inspired by Louis Vuitton Ombre Nomade",
-      rating: 4.9,
-      reviews: 280,
-      price: "2,800tk",
-      volume: "100ml",
-      image: "/images/products/velvet_oud.png",
-      id: "velvet-oud"
-    },
-    {
-      name: "Silver Mountain",
-      inspiredBy: "Inspired by Creed Silver Mountain Water",
-      rating: 4.6,
-      reviews: 140,
-      price: "2,200tk",
-      volume: "100ml",
-      image: "/images/products/silver_mountain.png",
-      id: "silver-mountain"
-    },
-    {
-      name: "Azure Breeze",
-      inspiredBy: "Inspired by Acqua Di Parma Fico di Amalfi",
-      rating: 4.7,
-      reviews: 165,
-      price: "1,950tk",
-      volume: "100ml",
-      image: "/images/products/jade_serenity.png",
-      id: "azure-breeze"
-    },
-    {
-      name: "Royal Amber",
-      inspiredBy: "Inspired by Xerjoff Erba Pura",
-      rating: 4.9,
-      reviews: 310,
-      price: "2,600tk",
-      volume: "100ml",
-      image: "/images/products/amber_gold.png",
-      id: "royal-amber"
-    },
-    {
-      name: "Cedar Musk",
-      inspiredBy: "Inspired by Le Labo Santal 33",
-      rating: 4.8,
-      reviews: 230,
-      price: "2,400tk",
-      volume: "100ml",
-      image: "/images/products/rouge_540.png",
-      id: "cedar-musk"
-    },
-    {
-      name: "Imperial Rose",
-      inspiredBy: "Inspired by Parfums de Marly Delina",
-      rating: 4.9,
-      reviews: 275,
-      price: "2,700tk",
-      volume: "100ml",
-      image: "/images/products/coral_sea.png",
-      id: "imperial-rose"
-    },
-    {
-      name: "Saffron Oud",
-      inspiredBy: "Inspired by MFK Oud Satin Mood",
-      rating: 4.8,
-      reviews: 185,
-      price: "2,800tk",
-      volume: "100ml",
-      image: "/images/products/velvet_oud.png",
-      id: "saffron-oud"
-    }
-  ];
+  // Dynamic recommendations list (pulling from 63 master PDF fragrances)
+  const recommendations = productsCatalog.slice(0, 8).map(p => ({
+    name: p.name,
+    inspiredBy: p.inspiredBy || `Inspired by ${p.brand}`,
+    rating: p.rating || 4.9,
+    reviews: p.reviews || 50,
+    price: p.price,
+    volume: p.volume || "12ml",
+    image: p.image,
+    id: p.id
+  }));
 
   return (
     <div className={styles.pageBackground}>

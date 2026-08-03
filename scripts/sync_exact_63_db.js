@@ -1,5 +1,8 @@
 const fs = require('fs');
 const path = require('path');
+
+process.env.DATABASE_URL = process.env.DATABASE_URL || 'file:../Backend/dev.db';
+
 const { PrismaClient } = require('../Backend/node_modules/@prisma/client');
 const prisma = new PrismaClient();
 
@@ -23,7 +26,6 @@ const targetProductNames = [
 async function syncDb() {
   console.log("Cleaning Database to strictly 63 products...");
 
-  // Delete products from database whose name is not in target 63 list
   const allDbProducts = await prisma.product.findMany();
   let deletedCount = 0;
 
