@@ -26,34 +26,43 @@ export interface CompareProduct {
   };
 }
 
+const EXCLUDED_NAMES = new Set([
+  "saffron leather",
+  "royal santal 33",
+  "amber elixir 10",
+  "velvet oud imperial"
+]);
+
 const buildCompareList = (): CompareProduct[] => {
   const mapByName = new Map<string, CompareProduct>();
 
-  productsCatalog.forEach((p) => {
-    const rawNotes = p.notes || [];
-    mapByName.set(p.name.toLowerCase(), {
-      name: p.name,
-      image: p.image || "/images/products/jade_serenity.png",
-      brand: p.brand || "Murakkaz",
-      inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
-      price: "300 - 2500tk",
-      rating: `${p.rating || 4.8} (${p.reviews || 120})`,
-      profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
-      longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
-      projection: "Moderate to Heavy",
-      sweetness: "●●●○○",
-      bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
-      accords: rawNotes.slice(0, 3).map((note, i) => ({
-        name: note,
-        value: 85 - i * 10,
-      })),
-      notes: {
-        top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
-        heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
-        base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
-      },
+  productsCatalog
+    .filter((p) => !EXCLUDED_NAMES.has(p.name.trim().toLowerCase()))
+    .forEach((p) => {
+      const rawNotes = p.notes || [];
+      mapByName.set(p.name.toLowerCase(), {
+        name: p.name,
+        image: p.image || "/images/products/jade_serenity.png",
+        brand: p.brand || "Murakkaz",
+        inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
+        price: "300 - 2500tk",
+        rating: `${p.rating || 4.8} (${p.reviews || 120})`,
+        profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
+        longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+        projection: "Moderate to Heavy",
+        sweetness: "●●●○○",
+        bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
+        accords: rawNotes.slice(0, 3).map((note, i) => ({
+          name: note,
+          value: 85 - i * 10,
+        })),
+        notes: {
+          top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
+          heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
+          base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+        },
+      });
     });
-  });
 
   return Array.from(mapByName.values());
 };
@@ -83,31 +92,33 @@ function CompareContent() {
       if (liveData && liveData.length > 0) {
         const mapByName = new Map<string, CompareProduct>();
         
-        liveData.forEach((p) => {
-          const rawNotes = p.notes || [];
-          mapByName.set(p.name.toLowerCase(), {
-            name: p.name,
-            image: p.image || "/images/products/jade_serenity.png",
-            brand: p.brand || "Murakkaz",
-            inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
-            price: "300 - 2500tk",
-            rating: `${p.rating || 4.8} (${p.reviews || 120})`,
-            profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
-            longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
-            projection: "Moderate to Heavy",
-            sweetness: "●●●○○",
-            bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
-            accords: rawNotes.slice(0, 3).map((note, i) => ({
-              name: note,
-              value: 85 - i * 10,
-            })),
-            notes: {
-              top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
-              heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
-              base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
-            },
+        liveData
+          .filter((p) => !EXCLUDED_NAMES.has(p.name.trim().toLowerCase()))
+          .forEach((p) => {
+            const rawNotes = p.notes || [];
+            mapByName.set(p.name.toLowerCase(), {
+              name: p.name,
+              image: p.image || "/images/products/jade_serenity.png",
+              brand: p.brand || "Murakkaz",
+              inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
+              price: "300 - 2500tk",
+              rating: `${p.rating || 4.8} (${p.reviews || 120})`,
+              profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
+              longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+              projection: "Moderate to Heavy",
+              sweetness: "●●●○○",
+              bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
+              accords: rawNotes.slice(0, 3).map((note, i) => ({
+                name: note,
+                value: 85 - i * 10,
+              })),
+              notes: {
+                top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
+                heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
+                base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+              },
+            });
           });
-        });
 
         productsCatalog.forEach((p) => {
           if (!mapByName.has(p.name.toLowerCase())) {

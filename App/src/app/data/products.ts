@@ -1917,27 +1917,36 @@ export async function fetchLiveProducts(): Promise<Product[]> {
       rawList = json;
     }
 
+    const EXCLUDED_NAMES = new Set([
+      "saffron leather",
+      "royal santal 33",
+      "amber elixir 10",
+      "velvet oud imperial"
+    ]);
+
     if (rawList.length > 0) {
-      return rawList.map((p: any) => ({
-        id: p.id || p.slug || `prod-${Math.random()}`,
-        name: p.name || 'Unnamed Fragrance',
-        brand: p.brand || 'Murakkaz',
-        inspiredBy: p.inspiredBy || '',
-        description: p.description || '',
-        rating: p.rating || 5.0,
-        reviews: p.reviewCount || 0,
-        price: "300 - 2500tk",
-        originalPrice: undefined,
-        priceVal: 300,
-        originalPriceVal: undefined,
-        volume: '6ml - 50ml',
-        image: p.image || '/images/products/jade_serenity.png',
-        family: p.family || 'WOODY',
-        gender: p.gender || 'UNISEX',
-        occasion: p.occasion || 'General',
-        meter: p.meter || 'Moderate',
-        notes: p.notes ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name) : []
-      }));
+      return rawList
+        .filter((p: any) => p.name && !EXCLUDED_NAMES.has(p.name.trim().toLowerCase()))
+        .map((p: any) => ({
+          id: p.id || p.slug || `prod-${Math.random()}`,
+          name: p.name || 'Unnamed Fragrance',
+          brand: p.brand || 'Murakkaz',
+          inspiredBy: p.inspiredBy || '',
+          description: p.description || '',
+          rating: p.rating || 5.0,
+          reviews: p.reviewCount || 0,
+          price: "300 - 2500tk",
+          originalPrice: undefined,
+          priceVal: 300,
+          originalPriceVal: undefined,
+          volume: '6ml - 50ml',
+          image: p.image || '/images/products/jade_serenity.png',
+          family: p.family || 'WOODY',
+          gender: p.gender || 'UNISEX',
+          occasion: p.occasion || 'General',
+          meter: p.meter || 'Moderate',
+          notes: p.notes ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name) : []
+        }));
     }
   } catch (e) {
     // Return bundled 63 perfumes fallback if API server is offline (e.g. Vercel)
