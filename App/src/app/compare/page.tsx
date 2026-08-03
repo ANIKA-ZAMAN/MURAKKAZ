@@ -392,7 +392,7 @@ function CompareContent() {
     }
   };
 
-  const filteredModalProducts = availablePerfumes.filter((prod) => {
+  const filteredModalProducts = allAvailablePerfumes.filter((prod) => {
     if (!modalSearchQuery) return true;
     const q = modalSearchQuery.toLowerCase();
     return (
