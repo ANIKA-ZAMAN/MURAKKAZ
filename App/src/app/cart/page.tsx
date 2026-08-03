@@ -26,12 +26,14 @@ interface CartItem {
   selected: boolean;
 }
 
+import { productsCatalog } from "../data/products";
+
 const initialCartItems: CartItem[] = [
   {
     id: "cart-1",
-    name: "Jade Serenity",
-    image: "/images/products/jade_serenity.png",
-    inspiredBy: "Inspired by Creed Original Vetiver",
+    name: productsCatalog[1]?.name || "Irish Leather",
+    image: productsCatalog[1]?.image || "/images/products/irish_leather.jpg",
+    inspiredBy: productsCatalog[1]?.inspiredBy ? `Inspired by ${productsCatalog[1].inspiredBy}` : `By ${productsCatalog[1]?.brand || "Murakkaz"}`,
     selectedSize: "12ml",
     quantity: 1,
     prices: {
@@ -44,9 +46,9 @@ const initialCartItems: CartItem[] = [
   },
   {
     id: "cart-2",
-    name: "Hellenist",
-    image: "/images/products/magnetism.png",
-    inspiredBy: "Inspired by Dior Sauvage Elixir",
+    name: productsCatalog[2]?.name || "Baccarat Rouge 540",
+    image: productsCatalog[2]?.image || "/images/products/baccarat_rouge_540.jpg",
+    inspiredBy: productsCatalog[2]?.inspiredBy ? `Inspired by ${productsCatalog[2].inspiredBy}` : `By ${productsCatalog[2]?.brand || "Murakkaz"}`,
     selectedSize: "12ml",
     quantity: 1,
     prices: {
