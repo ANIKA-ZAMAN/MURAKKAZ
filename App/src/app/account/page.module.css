@@ -853,6 +853,12 @@
   letter-spacing: 0.05em;
 }
 
+.blackExclamation {
+  color: #313134;
+  font-weight: 600;
+  margin-left: 1px;
+}
+
 .exclamationMark {
   color: #313134;
 }
