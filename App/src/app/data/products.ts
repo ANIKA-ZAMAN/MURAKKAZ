@@ -20,7 +20,7 @@ export interface Product {
   badge?: string;
 }
 
-// 63 Fragrances catalog bundled directly for seamless Vercel deployment & SSR
+// Exactly 63 Fragrances from Master PDF Catalog
 export const luxuryProducts: Product[] = [
   {
     "id": "prod-1785487727797",
@@ -1897,50 +1897,3 @@ export const luxuryProducts: Product[] = [
     ]
   }
 ];
-
-export const productsCatalog: Product[] = luxuryProducts;
-
-// Live API fetch from Express Backend (http://localhost:5000/api/products or Vercel ENV)
-export async function fetchLiveProducts(): Promise<Product[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const res = await fetch(`${baseUrl}/api/products?limit=100`, { next: { revalidate: 60 } });
-    if (!res.ok) throw new Error('API offline');
-    const json = await res.json();
-    
-    let rawList: any[] = [];
-    if (json && Array.isArray(json.data)) {
-      rawList = json.data;
-    } else if (json && json.data && Array.isArray(json.data.data)) {
-      rawList = json.data.data;
-    } else if (Array.isArray(json)) {
-      rawList = json;
-    }
-
-    if (rawList.length > 0) {
-      return rawList.map((p: any) => ({
-        id: p.id || p.slug || `prod-${Math.random()}`,
-        name: p.name || 'Unnamed Fragrance',
-        brand: p.brand || 'Murakkaz',
-        inspiredBy: p.inspiredBy || '',
-        description: p.description || '',
-        rating: p.rating || 5.0,
-        reviews: p.reviewCount || 0,
-        price: p.sizes?.[0] ? `${p.sizes[0].price.toLocaleString()}tk` : (p.priceVal ? `${p.priceVal.toLocaleString()}tk` : '300tk'),
-        originalPrice: p.sizes?.[0]?.originalPrice ? `${p.sizes[0].originalPrice.toLocaleString()}tk` : undefined,
-        priceVal: p.sizes?.[0]?.price || p.priceVal || 300,
-        originalPriceVal: p.sizes?.[0]?.originalPrice || undefined,
-        volume: p.sizes?.[0]?.size || '6ml',
-        image: p.image || '/images/products/jade_serenity.png',
-        family: p.family || 'WOODY',
-        gender: p.gender || 'UNISEX',
-        occasion: p.occasion || 'General',
-        meter: p.meter || 'Moderate',
-        notes: p.notes ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name) : []
-      }));
-    }
-  } catch (e) {
-    // Return bundled 63 perfumes fallback if API server is offline (e.g. Vercel)
-  }
-  return luxuryProducts;
-}
