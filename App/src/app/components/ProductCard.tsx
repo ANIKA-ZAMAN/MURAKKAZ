@@ -57,16 +57,21 @@ export default function ProductCard({
   // Check wishlist state on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("wishlist-items");
-      if (saved) {
-        try {
-          const list = JSON.parse(saved);
-          if (Array.isArray(list) && (list.includes(id) || list.includes(displayName))) {
-            setIsWishlisted(true);
+      try {
+        const saved = localStorage.getItem("wishlist-items");
+        if (saved) {
+          const wishlist = JSON.parse(saved);
+          if (Array.isArray(wishlist)) {
+            const found = wishlist.some((item) =>
+              typeof item === "string"
+                ? item === id || item.toLowerCase() === displayName.toLowerCase()
+                : item.id === id || item.name?.toLowerCase() === displayName.toLowerCase()
+            );
+            setIsWishlisted(found);
           }
-        } catch (e) {
-          console.error(e);
         }
+      } catch (err) {
+        console.error(err);
       }
     }
   }, [id, displayName]);
@@ -87,7 +92,7 @@ export default function ProductCard({
     setIsWishlisted(nextState);
 
     const saved = localStorage.getItem("wishlist-items");
-    let wishlist: string[] = [];
+    let wishlist: any[] = [];
     if (saved) {
       try {
         wishlist = JSON.parse(saved);
@@ -98,9 +103,20 @@ export default function ProductCard({
     }
 
     if (nextState) {
-      if (!wishlist.includes(id)) wishlist.push(id);
+      const exists = wishlist.some((item) =>
+        typeof item === "string"
+          ? (item === id || item.toLowerCase() === displayName.toLowerCase())
+          : (item.id === id || item.name?.toLowerCase() === displayName.toLowerCase())
+      );
+      if (!exists) {
+        wishlist.push({ id, name: displayName, brand: subTitleText, image, rating, ratingCount: reviews });
+      }
     } else {
-      wishlist = wishlist.filter((item) => item !== id);
+      wishlist = wishlist.filter((item) =>
+        typeof item === "string"
+          ? (item !== id && item.toLowerCase() !== displayName.toLowerCase())
+          : (item.id !== id && item.name?.toLowerCase() !== displayName.toLowerCase())
+      );
     }
 
     localStorage.setItem("wishlist-items", JSON.stringify(wishlist));

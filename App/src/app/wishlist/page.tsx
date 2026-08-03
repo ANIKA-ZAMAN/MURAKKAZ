@@ -34,28 +34,47 @@ export default function WishlistPage() {
         if (!Array.isArray(savedIds)) savedIds = [];
       }
 
-      // Map saved IDs/names to products in productsCatalog
+      // Map saved items (strings or objects) to products in productsCatalog
       const favList: WishlistProduct[] = [];
-      savedIds.forEach((idOrName) => {
+      savedIds.forEach((entry: any) => {
+        const idOrName = typeof entry === "string" ? entry : (entry?.id || entry?.name);
+        if (!idOrName) return;
+
         const match = productsCatalog.find(
           (p) =>
             p.id === idOrName ||
             p.name.toLowerCase() === idOrName.toLowerCase() ||
             p.id.toLowerCase() === idOrName.toLowerCase()
         );
-        if (match && !favList.some((f) => f.name === match.name)) {
-          favList.push({
-            id: match.id,
-            name: match.name,
-            image: match.image || "/images/products/jade_serenity.png",
-            inspiredBy: match.inspiredBy
-              ? `Inspired by ${match.inspiredBy}`
-              : (match.brand ? `By ${match.brand}` : match.name),
-            price: "300 - 2500tk",
-            rating: (match.rating || 4.8).toString(),
-            ratingCount: match.reviews || 180,
-            inWishlist: true,
-          });
+
+        if (match) {
+          if (!favList.some((f) => f.name === match.name)) {
+            favList.push({
+              id: match.id,
+              name: match.name,
+              image: match.image || "/images/products/jade_serenity.png",
+              inspiredBy: match.inspiredBy
+                ? `Inspired by ${match.inspiredBy}`
+                : (match.brand ? `By ${match.brand}` : match.name),
+              price: "300 - 2500tk",
+              rating: (match.rating || 4.8).toString(),
+              ratingCount: match.reviews || 180,
+              inWishlist: true,
+            });
+          }
+        } else if (typeof entry === "object" && entry.name) {
+          if (!favList.some((f) => f.name === entry.name)) {
+            favList.push({
+              id: entry.id || entry.name,
+              name: entry.name,
+              image: entry.image || "/images/products/jade_serenity.png",
+              inspiredBy: entry.brand ? `By ${entry.brand}` : entry.name,
+              price: "300 - 2500tk",
+              rating: (entry.rating || 4.8).toString(),
+              ratingCount: entry.ratingCount || 150,
+              inWishlist: true,
+            });
+          }
         }
       });
 
@@ -99,13 +118,31 @@ export default function WishlistPage() {
   const toggleFavorite = (id: string, isRelated = false) => {
     try {
       const saved = localStorage.getItem("wishlist-items");
-      let wishlist: string[] = saved ? JSON.parse(saved) : [];
+      let wishlist: any[] = saved ? JSON.parse(saved) : [];
       if (!Array.isArray(wishlist)) wishlist = [];
 
-      if (wishlist.includes(id)) {
-        wishlist = wishlist.filter((item) => item !== id);
+      const exists = wishlist.some((item) =>
+        typeof item === "string" ? item === id : (item.id === id || item.name === id)
+      );
+
+      if (exists) {
+        wishlist = wishlist.filter((item) =>
+          typeof item === "string" ? item !== id : (item.id !== id && item.name !== id)
+        );
       } else {
-        wishlist.push(id);
+        const match = productsCatalog.find((p) => p.id === id || p.name === id);
+        if (match) {
+          wishlist.push({
+            id: match.id,
+            name: match.name,
+            brand: match.brand,
+            image: match.image,
+            rating: match.rating,
+            ratingCount: match.reviews,
+          });
+        } else {
+          wishlist.push(id);
+        }
       }
 
       localStorage.setItem("wishlist-items", JSON.stringify(wishlist));
