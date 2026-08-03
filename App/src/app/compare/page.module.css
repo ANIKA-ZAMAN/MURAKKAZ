@@ -242,6 +242,7 @@
   max-height: 85vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .modalTitle {
@@ -260,7 +261,10 @@
   max-height: 52vh;
   min-height: 240px;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
   padding-right: 8px;
+  padding-bottom: 12px;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: #820011 #eae2d5;
