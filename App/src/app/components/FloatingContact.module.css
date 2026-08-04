@@ -1,0 +1,163 @@
+.fabContainer {
+  position: absolute;
+  left: 12.5%;
+  bottom: calc(10.2% - 3px);
+  z-index: 1000;
+  height: 56px;
+}
+
+@media (max-width: 1200px) {
+  .fabContainer {
+    left: 8%;
+    bottom: 9.5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .fabContainer {
+    left: 24px;
+    bottom: 24px;
+  }
+}
+
+.mainBtn {
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background-color: #EFEADF;
+  border: 2px solid #c5a880;
+  color: #c5a880;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(197, 168, 128, 0.4), 0 8px 24px rgba(80, 60, 30, 0.1);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+  padding: 0 14px;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.75), transparent);
+  transition: all 0.8s ease-in-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mainBtn:hover .shine {
+  left: 100%;
+}
+
+.btnContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.mainBtn:hover {
+  width: 215px; /* Expands to a clean pill shape */
+  transform: translateY(-4px) scale(1.025);
+  box-shadow: 0 14px 32px rgba(184, 150, 92, 0.45), 0 0 20px rgba(197, 168, 128, 0.35);
+  border-color: #A8864C;
+  background: linear-gradient(to right, #FDFBF7, #F6EEDF, #E9D9C3);
+  color: #a38258;
+}
+
+.mainBtnActive {
+  background-color: #EFEADF;
+  color: #a38258;
+  border-color: #a38258;
+  box-shadow: 0 0 20px rgba(163, 130, 88, 0.45), 0 8px 24px rgba(80, 60, 30, 0.12);
+  width: 56px !important; /* Stays circle when active/open */
+  transform: translateY(0) scale(1) !important;
+}
+
+.mainIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+.helpText {
+  opacity: 0;
+  margin-left: 0px;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, margin-left 0.3s ease;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #313134;
+  visibility: hidden;
+}
+
+.mainBtn:hover .helpText {
+  opacity: 1;
+  margin-left: 12px;
+  visibility: visible;
+}
+
+/* Vertical menu containing contact icons */
+.menu {
+  position: absolute;
+  bottom: 68px; /* 56px button height + 12px gap */
+  left: 50%;
+  transform: translateX(-50%) translateY(30px) scale(0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1;
+}
+
+.menuOpen {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.menuItem {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #EFEADF;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 2px solid #EFEADF; /* Muted ivory border */
+}
+
+.menuItem:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+}
+
+.messenger {
+  background-color: #0084FF;
+}
+
+.whatsapp {
+  background-color: #25D366;
+}
+
+.phone {
+  background-color: #1072BA;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}

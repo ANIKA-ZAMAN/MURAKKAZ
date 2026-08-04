@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import PremiumStats from "./PremiumStats";
 import BrandTicker from "./BrandTicker";
+import FloatingContact from "./FloatingContact";
 
 /* Deterministic Static Particles Array for SSR/CSR Hydration Consistency */
 const dustParticlesData = [
@@ -417,6 +418,9 @@ export default function Hero() {
           <BrandTicker />
         </div>
       </div>
+      
+      {/* Scroll-locked Contact Button (Stays absolute inside Hero) */}
+      <FloatingContact />
     </section>
   );
 }
