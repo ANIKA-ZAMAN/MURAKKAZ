@@ -526,7 +526,7 @@
 .featuredCard {
   border: 1px solid rgba(165, 135, 92, 0.15) !important;
   border-radius: 16px !important;
-  background: rgba(230, 220, 200, 0.35) !important;
+  background: transparent !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   box-shadow: 0 6px 20px rgba(80, 60, 30, 0.04) !important;
@@ -565,7 +565,7 @@
 }
 
 .featuredCard .content {
-  background: transparent !important;
+  background: #CBB9A1 !important;
   padding: 0.95rem 1.05rem 1.25rem !important;
 }
 
