@@ -1,21 +1,37 @@
 .fabContainer {
   position: absolute;
-  left: 12.5%;
-  bottom: calc(10.2% - 3px);
   z-index: 1000;
   height: 56px;
 }
 
+.alignLeft {
+  left: 12.5%;
+  bottom: calc(10.2% - 3px);
+}
+
+.alignRight {
+  right: 12.5%;
+  bottom: calc(10.2% - 3px);
+}
+
 @media (max-width: 1200px) {
-  .fabContainer {
+  .alignLeft {
     left: 8%;
+    bottom: 9.5%;
+  }
+  .alignRight {
+    right: 8%;
     bottom: 9.5%;
   }
 }
 
 @media (max-width: 768px) {
-  .fabContainer {
+  .alignLeft {
     left: 24px;
+    bottom: 24px;
+  }
+  .alignRight {
+    right: 24px;
     bottom: 24px;
   }
 }
@@ -160,4 +176,24 @@
 .icon {
   width: 20px;
   height: 20px;
+}
+
+.rowReverse {
+  flex-direction: row-reverse;
+}
+
+.rowReverse .helpText {
+  margin-left: 0;
+  margin-right: 0px;
+  transition: opacity 0.25s ease, margin-right 0.3s ease;
+}
+
+.mainBtn:hover .rowReverse .helpText {
+  margin-right: 12px;
+  margin-left: 0;
+}
+
+.rowReverse .mainIcon {
+  margin-left: 0;
+  margin-right: 2px;
 }

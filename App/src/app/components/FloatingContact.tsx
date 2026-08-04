@@ -3,7 +3,11 @@
 import { useState } from "react";
 import styles from "./FloatingContact.module.css";
 
-export default function FloatingContact() {
+interface FloatingContactProps {
+  align?: "left" | "right";
+}
+
+export default function FloatingContact({ align = "left" }: FloatingContactProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -11,7 +15,7 @@ export default function FloatingContact() {
   };
 
   return (
-    <div className={styles.fabContainer}>
+    <div className={`${styles.fabContainer} ${align === "right" ? styles.alignRight : styles.alignLeft}`}>
       {/* Vertical Slide-out Menu */}
       <div className={`${styles.menu} ${isOpen ? styles.menuOpen : ""}`}>
         {/* Messenger Link */}
@@ -73,7 +77,7 @@ export default function FloatingContact() {
         aria-expanded={isOpen}
       >
         <span className={styles.shine} />
-        <div className={styles.btnContent}>
+        <div className={`${styles.btnContent} ${align === "right" ? styles.rowReverse : ""}`}>
           {/* Toggle between Chat Bubble and Close Icon */}
           {isOpen ? (
             <svg

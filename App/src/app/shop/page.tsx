@@ -7,6 +7,7 @@ import FilterButton from "../components/FilterButton";
 import FilterDrawer from "../components/FilterDrawer";
 import ProductGrid from "../components/ProductGrid";
 import RecommendationSlider from "../components/RecommendationSlider";
+import FloatingContact from "../components/FloatingContact";
 import { Product, fetchLiveProducts } from "../data/products";
 import styles from "./page.module.css";
 
@@ -179,6 +180,9 @@ function ShopContent() {
 
         {/* Explore Our Recommendation Section */}
         <RecommendationSlider />
+
+        {/* Floating Contact Trigger Button (Right Aligned, Scroll-Locked) */}
+        <FloatingContact align="right" />
       </main>
     </div>
   );
