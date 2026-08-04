@@ -115,7 +115,7 @@
   width: 100%;
 
   /* Homepage warm parchment card overrides */
-  --card-content-bg: rgba(237, 232, 223, 0.55);
+  --card-content-bg: transparent;
   --card-image-bg: #ede8df;
 }
 
@@ -410,7 +410,7 @@
   margin-bottom: 4rem;
 
   /* Homepage warm parchment card overrides */
-  --card-content-bg: rgba(237, 232, 223, 0.55);
+  --card-content-bg: transparent;
   --card-image-bg: #ede8df;
 }
 
