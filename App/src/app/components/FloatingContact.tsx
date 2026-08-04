@@ -5,9 +5,10 @@ import styles from "./FloatingContact.module.css";
 
 interface FloatingContactProps {
   align?: "left" | "right";
+  positionType?: "absolute" | "fixed";
 }
 
-export default function FloatingContact({ align = "left" }: FloatingContactProps) {
+export default function FloatingContact({ align = "left", positionType = "absolute" }: FloatingContactProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -15,7 +16,10 @@ export default function FloatingContact({ align = "left" }: FloatingContactProps
   };
 
   return (
-    <div className={`${styles.fabContainer} ${align === "right" ? styles.alignRight : styles.alignLeft}`}>
+    <div 
+      className={`${styles.fabContainer} ${align === "right" ? styles.alignRight : styles.alignLeft} ${positionType === "fixed" ? styles.isFixed : ""}`}
+      style={{ position: positionType }}
+    >
       {/* Vertical Slide-out Menu */}
       <div className={`${styles.menu} ${isOpen ? styles.menuOpen : ""}`}>
         {/* Messenger Link */}

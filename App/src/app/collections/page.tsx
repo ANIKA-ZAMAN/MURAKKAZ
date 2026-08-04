@@ -187,8 +187,8 @@ function CollectionsContent() {
           </div>
         )}
 
-        {/* Floating Contact Trigger Button (Right Aligned, Scroll-Locked) */}
-        <FloatingContact align="right" />
+        {/* Floating Contact Trigger Button (Right Aligned, Viewport-Fixed) */}
+        <FloatingContact align="right" positionType="fixed" />
       </main>
     </div>
   );

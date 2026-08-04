@@ -14,6 +14,16 @@
   bottom: calc(10.2% - 3px);
 }
 
+.isFixed.alignLeft {
+  left: 40px !important;
+  bottom: 40px !important;
+}
+
+.isFixed.alignRight {
+  right: 40px !important;
+  bottom: 40px !important;
+}
+
 @media (max-width: 1200px) {
   .alignLeft {
     left: 8%;
@@ -33,6 +43,14 @@
   .alignRight {
     right: 24px;
     bottom: 24px;
+  }
+  .isFixed.alignLeft {
+    left: 24px !important;
+    bottom: 24px !important;
+  }
+  .isFixed.alignRight {
+    right: 24px !important;
+    bottom: 24px !important;
   }
 }
 
