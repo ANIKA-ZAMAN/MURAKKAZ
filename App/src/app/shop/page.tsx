@@ -182,7 +182,7 @@ function ShopContent() {
         <RecommendationSlider />
 
         {/* Floating Contact Trigger Button (Right Aligned, Viewport-Fixed) */}
-        <FloatingContact align="right" positionType="fixed" />
+        <FloatingContact align="right" positionType="fixed" disableHoverAnimation={true} />
       </main>
     </div>
   );

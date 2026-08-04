@@ -215,3 +215,17 @@
   margin-left: 0;
   margin-right: 2px;
 }
+
+/* Disable hover expansions and lifts */
+.noHoverAnim .mainBtn:hover {
+  width: 56px !important;
+  transform: none !important;
+  box-shadow: 0 0 16px rgba(197, 168, 128, 0.4), 0 8px 24px rgba(80, 60, 30, 0.1) !important;
+  background: #EFEADF !important;
+  border-color: #c5a880 !important;
+  color: #c5a880 !important;
+}
+
+.noHoverAnim .mainBtn:hover .mainIcon {
+  color: #c5a880 !important;
+}

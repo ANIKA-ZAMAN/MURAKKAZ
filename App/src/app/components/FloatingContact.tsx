@@ -6,9 +6,14 @@ import styles from "./FloatingContact.module.css";
 interface FloatingContactProps {
   align?: "left" | "right";
   positionType?: "absolute" | "fixed";
+  disableHoverAnimation?: boolean;
 }
 
-export default function FloatingContact({ align = "left", positionType = "absolute" }: FloatingContactProps) {
+export default function FloatingContact({
+  align = "left",
+  positionType = "absolute",
+  disableHoverAnimation = false,
+}: FloatingContactProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -17,7 +22,7 @@ export default function FloatingContact({ align = "left", positionType = "absolu
 
   return (
     <div 
-      className={`${styles.fabContainer} ${align === "right" ? styles.alignRight : styles.alignLeft} ${positionType === "fixed" ? styles.isFixed : ""}`}
+      className={`${styles.fabContainer} ${align === "right" ? styles.alignRight : styles.alignLeft} ${positionType === "fixed" ? styles.isFixed : ""} ${disableHoverAnimation ? styles.noHoverAnim : ""}`}
       style={{ position: positionType }}
     >
       {/* Vertical Slide-out Menu */}
@@ -80,7 +85,7 @@ export default function FloatingContact({ align = "left", positionType = "absolu
         aria-label="Open contact options"
         aria-expanded={isOpen}
       >
-        <span className={styles.shine} />
+        {!disableHoverAnimation && <span className={styles.shine} />}
         <div className={`${styles.btnContent} ${align === "right" ? styles.rowReverse : ""}`}>
           {/* Toggle between Chat Bubble and Close Icon */}
           {isOpen ? (
@@ -110,7 +115,7 @@ export default function FloatingContact({ align = "left", positionType = "absolu
             </svg>
           )}
 
-          {!isOpen && (
+          {!isOpen && !disableHoverAnimation && (
             <span className={styles.helpText}>Need any help?</span>
           )}
         </div>
