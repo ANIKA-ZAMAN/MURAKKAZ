@@ -73,8 +73,13 @@ export const getProducts = async (filters: ProductFilterParams) => {
 export const getProductBySlug = async (slug: string) => {
   return safeDbCall(
     async () => {
-      const product = await prisma.product.findUnique({
-        where: { slug },
+      let product = await prisma.product.findFirst({
+        where: {
+          OR: [
+            { slug: slug },
+            { id: slug }
+          ]
+        },
         include: {
           sizes: true,
           notes: { orderBy: { type: 'asc' } },

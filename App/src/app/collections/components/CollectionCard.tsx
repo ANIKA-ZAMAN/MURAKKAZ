@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { slugify } from "../../data/products";
 import styles from "./CollectionCard.module.css";
 
 interface CollectionCardProps {
   id: string;
+  slug?: string;
   name: string;
   brand: string;
   description?: string;
@@ -19,6 +21,7 @@ interface CollectionCardProps {
 
 export default function CollectionCard({
   id,
+  slug,
   name,
   brand,
   description = "",
@@ -28,6 +31,12 @@ export default function CollectionCard({
 }: CollectionCardProps) {
   const router = useRouter();
   const [isWishlisted, setIsWishlisted] = useState(false);
+
+  const targetSlug = useMemo(() => {
+    if (slug) return slug;
+    if (name) return slugify(name);
+    return id;
+  }, [slug, name, id]);
 
   // Sync wishlist status from localStorage
   useEffect(() => {
@@ -70,7 +79,7 @@ export default function CollectionCard({
   return (
     <div
       className={styles.card}
-      onClick={() => router.push(`/product/${id}`)}
+      onClick={() => router.push(`/product/${targetSlug}`)}
     >
       <div className={styles.imageContainer}>
         <Image
@@ -127,7 +136,7 @@ export default function CollectionCard({
             className={styles.readMoreBtn}
             onClick={(e) => {
               e.stopPropagation();
-              router.push(`/product/${id}`);
+              router.push(`/product/${targetSlug}`);
             }}
           >
             Read More

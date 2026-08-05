@@ -3,10 +3,12 @@
 import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { slugify } from "../data/products";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
   id: string;
+  slug?: string;
   name: string;
   brand: string;
   description?: string;
@@ -25,6 +27,7 @@ interface ProductCardProps {
 
 export default function ProductCard({
   id,
+  slug,
   name,
   brand,
   description,
@@ -43,6 +46,12 @@ export default function ProductCard({
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const router = useRouter();
+
+  const targetSlug = useMemo(() => {
+    if (slug) return slug;
+    if (name) return slugify(name);
+    return id;
+  }, [slug, name, id]);
 
   const { displayName, subTitleText } = useMemo(() => {
     if (inspiredBy) {
@@ -132,7 +141,7 @@ export default function ProductCard({
     ) {
       return;
     }
-    router.push(`/product/${id}`);
+    router.push(`/product/${targetSlug}`);
   };
 
   // Display price range format (e.g. "300 - 2500tk")

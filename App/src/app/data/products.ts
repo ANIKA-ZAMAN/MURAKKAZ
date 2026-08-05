@@ -1,5 +1,6 @@
 export interface Product {
   id: string;
+  slug?: string;
   name: string;
   brand: string;
   inspiredBy?: string;
@@ -18,6 +19,16 @@ export interface Product {
   meter: string;
   notes: string[];
   badge?: string;
+}
+
+export function slugify(text: string): string {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 // Exactly 62 Master PDF Catalog Fragrances
@@ -1900,8 +1911,10 @@ export async function fetchLiveProducts(): Promise<Product[]> {
             ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name)
             : [];
 
+          const itemSlug = p.slug || slugify(p.name);
           return {
-            id: p.id || p.slug || p.name.toLowerCase().replace(/\s+/g, '-'),
+            id: p.id || itemSlug,
+            slug: itemSlug,
             name: p.name,
             brand: p.brand || "Murakkaz",
             inspiredBy: p.inspiredBy || "",

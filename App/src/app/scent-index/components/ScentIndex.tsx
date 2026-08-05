@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import QuizCard from "./QuizCard";
+import { slugify } from "../../data/products";
 import {
   quizQuestions,
   getTop3Recommendations,
@@ -360,10 +361,11 @@ export default function ScentIndex() {
 
               <div className={styles.resultsGrid}>
                 {recommendations.map((rec, index) => {
+                  const recSlug = (rec.product as any).slug || slugify(rec.product.name) || rec.product.id;
                   const handleCardClick = (e: React.MouseEvent) => {
                     const target = e.target as HTMLElement;
                     if (target.closest("button")) return;
-                    router.push(`/product/${rec.product.id}?from=quiz`);
+                    router.push(`/product/${recSlug}?from=quiz`);
                   };
                   return (
                     <div key={rec.product.id} className={styles.cardEntryWrapper}>
@@ -390,7 +392,7 @@ export default function ScentIndex() {
                         </div>
                         <div className={styles.performanceLine}>{rec.performance}</div>
                         <div className={styles.cardActions}>
-                          <button type="button" className={styles.quizBuyNowBtn} onClick={() => router.push(`/product/${rec.product.id}?from=quiz`)}>View Details</button>
+                          <button type="button" className={styles.quizBuyNowBtn} onClick={() => router.push(`/product/${recSlug}?from=quiz`)}>View Details</button>
                           <button type="button" className={styles.quizAddBagBtn} onClick={() => router.push(`/compare?add=${rec.product.id}&image=${encodeURIComponent(rec.product.image)}&name=${encodeURIComponent(rec.product.name)}`)}>Compare</button>
                         </div>
                       </div>

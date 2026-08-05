@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import FragranceNotes from "../../components/FragranceNotes";
-import { productsCatalog } from "../../data/products";
+import { productsCatalog, slugify } from "../../data/products";
 import styles from "./page.module.css";
 
 // Dynamic database mapping for premium details page content
@@ -257,14 +257,16 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       .catch(() => {});
   }, [id]);
 
-  // Dynamic targeting logic based on URL route ID
+  // Dynamic targeting logic based on URL route ID or SLUG
   const catalogItem = React.useMemo(() => {
     if (!id) return null;
     const cleanId = id.toLowerCase().trim();
     return productsCatalog.find(
       (p) =>
+        (p.slug && p.slug.toLowerCase() === cleanId) ||
         p.id.toLowerCase() === cleanId ||
         p.name.toLowerCase() === cleanId ||
+        slugify(p.name) === cleanId ||
         p.name.toLowerCase().replace(/\s+/g, "-") === cleanId ||
         cleanId.includes(p.id.toLowerCase()) ||
         p.id.toLowerCase().includes(cleanId)
