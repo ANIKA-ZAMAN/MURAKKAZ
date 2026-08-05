@@ -31,6 +31,27 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+export function getNoteImage(name: string): string {
+  if (!name) return 'bergamot.png';
+  const clean = name.toLowerCase();
+  if (clean.includes('amber')) return 'amber.png';
+  if (clean.includes('bergamot') || clean.includes('citrus') || clean.includes('lemon') || clean.includes('grapefruit')) return 'bergamot.png';
+  if (clean.includes('cedar') || clean.includes('wood') || clean.includes('oak')) return 'cedar.png';
+  if (clean.includes('cinnamon') || clean.includes('spice') || clean.includes('pepper') || clean.includes('cardamom') || clean.includes('clove')) return 'cinnamon.png';
+  if (clean.includes('tuberose')) return 'indian_tuberose.png';
+  if (clean.includes('jasmine')) return 'jasmine.png';
+  if (clean.includes('mandarin') || clean.includes('orange') || clean.includes('tangerine')) return 'mandarin.png';
+  if (clean.includes('rose')) return 'may_rose.png';
+  if (clean.includes('narcissus') || clean.includes('lily') || clean.includes('peony') || clean.includes('orchid') || clean.includes('floral')) return 'narcissus.png';
+  if (clean.includes('neroli') || clean.includes('blossom')) return 'neroli.png';
+  if (clean.includes('osmanthus') || clean.includes('fruity')) return 'osmanthus.png';
+  if (clean.includes('patchouli') || clean.includes('incense') || clean.includes('tobacco') || clean.includes('oud') || clean.includes('leather')) return 'patchouli.png';
+  if (clean.includes('peach') || clean.includes('apple') || clean.includes('cherry') || clean.includes('berry') || clean.includes('pear') || clean.includes('plum')) return 'peach.png';
+  if (clean.includes('sandalwood') || clean.includes('vanilla') || clean.includes('tonka') || clean.includes('musk') || clean.includes('sugar') || clean.includes('praline')) return 'sandalwood.png';
+  if (clean.includes('vetiver') || clean.includes('green') || clean.includes('mint') || clean.includes('sage') || clean.includes('tea') || clean.includes('grass')) return 'vetiver.png';
+  return 'bergamot.png';
+}
+
 // Exactly 62 Master PDF Catalog Fragrances
 export const luxuryProducts: Product[] = [
   {

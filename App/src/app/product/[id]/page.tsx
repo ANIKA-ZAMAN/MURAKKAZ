@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import FragranceNotes from "../../components/FragranceNotes";
-import { productsCatalog, slugify } from "../../data/products";
+import { productsCatalog, slugify, getNoteImage } from "../../data/products";
 import styles from "./page.module.css";
 
 // Dynamic database mapping for premium details page content
@@ -241,9 +241,36 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             galleryImages: p.galleryImages && p.galleryImages.length > 0 
               ? p.galleryImages.map((g: any) => g.url) 
               : [p.image || '/images/products/jade_serenity.png'],
-            topNotes: p.notes?.filter((n: any) => n.type === 'TOP').map((n: any) => ({ name: n.name, image: 'bergamot.png' })) || [],
-            middleNotes: p.notes?.filter((n: any) => n.type === 'MIDDLE').map((n: any) => ({ name: n.name, image: 'jasmine.png' })) || [],
-            baseNotes: p.notes?.filter((n: any) => n.type === 'BASE').map((n: any) => ({ name: n.name, image: 'amber.png' })) || [],
+            topNotes: (() => {
+              const top = p.notes?.filter((n: any) => n.type === 'TOP').map((n: any) => ({ name: typeof n === 'string' ? n : n.name, image: getNoteImage(typeof n === 'string' ? n : n.name) })) || [];
+              if (top.length > 0) return top;
+              if (Array.isArray(p.notes) && p.notes.length > 0) {
+                const names = p.notes.map((n: any) => typeof n === 'string' ? n : n.name);
+                const oneThird = Math.max(1, Math.floor(names.length / 3));
+                return names.slice(0, oneThird).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+              }
+              return [{ name: "Bergamot", image: "bergamot.png" }];
+            })(),
+            middleNotes: (() => {
+              const mid = p.notes?.filter((n: any) => n.type === 'MIDDLE').map((n: any) => ({ name: typeof n === 'string' ? n : n.name, image: getNoteImage(typeof n === 'string' ? n : n.name) })) || [];
+              if (mid.length > 0) return mid;
+              if (Array.isArray(p.notes) && p.notes.length > 0) {
+                const names = p.notes.map((n: any) => typeof n === 'string' ? n : n.name);
+                const oneThird = Math.max(1, Math.floor(names.length / 3));
+                return names.slice(oneThird, oneThird * 2).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+              }
+              return [{ name: "Jasmine", image: "jasmine.png" }];
+            })(),
+            baseNotes: (() => {
+              const base = p.notes?.filter((n: any) => n.type === 'BASE').map((n: any) => ({ name: typeof n === 'string' ? n : n.name, image: getNoteImage(typeof n === 'string' ? n : n.name) })) || [];
+              if (base.length > 0) return base;
+              if (Array.isArray(p.notes) && p.notes.length > 0) {
+                const names = p.notes.map((n: any) => typeof n === 'string' ? n : n.name);
+                const oneThird = Math.max(1, Math.floor(names.length / 3));
+                return names.slice(oneThird * 2).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+              }
+              return [{ name: "Amber", image: "amber.png" }];
+            })(),
             accords: p.accords && p.accords.length > 0 
               ? p.accords.map((a: any) => ({ name: a.name, pct: a.percentage, color: a.color || '#C5A880', path: 'M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z' }))
               : [{ name: "Woody", pct: 80, color: "#C5A880", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" }],
@@ -301,17 +328,12 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     }
     
     if (catalogItem) {
-      const topNotes = (catalogItem.notes && catalogItem.notes.length > 0)
-        ? catalogItem.notes.slice(0, 3).map((n) => ({ name: n, image: 'bergamot.png' }))
-        : [{ name: "Bergamot", image: 'bergamot.png' }, { name: "Citrus Accord", image: 'mandarin.png' }];
+      const allNotes = catalogItem.notes && catalogItem.notes.length > 0 ? catalogItem.notes : ["Bergamot", "Jasmine", "Amber"];
+      const oneThird = Math.max(1, Math.floor(allNotes.length / 3));
 
-      const middleNotes = (catalogItem.notes && catalogItem.notes.length > 3)
-        ? catalogItem.notes.slice(3, 6).map((n) => ({ name: n, image: 'jasmine.png' }))
-        : [{ name: "Jasmine", image: 'jasmine.png' }, { name: "Damask Rose", image: 'may_rose.png' }];
-
-      const baseNotes = (catalogItem.notes && catalogItem.notes.length > 6)
-        ? catalogItem.notes.slice(6).map((n) => ({ name: n, image: 'amber.png' }))
-        : [{ name: "Cedarwood", image: 'cedar.png' }, { name: "Amber", image: 'amber.png' }, { name: "Oud", image: 'vetiver.png' }];
+      const topNotes = allNotes.slice(0, oneThird).map((n) => ({ name: n, image: getNoteImage(n) }));
+      const middleNotes = allNotes.slice(oneThird, oneThird * 2).map((n) => ({ name: n, image: getNoteImage(n) }));
+      const baseNotes = allNotes.slice(oneThird * 2).map((n) => ({ name: n, image: getNoteImage(n) }));
 
       return {
         name: catalogItem.name,
