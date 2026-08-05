@@ -40,10 +40,11 @@ const OCCASIONS = ['Everyday', 'Office', 'Date Night', 'Party', 'Formal Event', 
 const METERS = ['INTIMATE', 'MODERATE', 'LONG_LASTING', 'BEAST_MODE'];
 
 const DEFAULT_SIZES: SizeRow[] = [
-  { size: '12ml', price: 500, originalPrice: 720, stock: 50 },
+  { size: '3ml', price: 180, originalPrice: 250, stock: 50 },
+  { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+  { size: '12ml', price: 500, originalPrice: 700, stock: 50 },
   { size: '30ml', price: 900, originalPrice: 1200, stock: 35 },
-  { size: '55ml', price: 1500, originalPrice: 2000, stock: 25 },
-  { size: '100ml', price: 2800, originalPrice: 3500, stock: 15 },
+  { size: '50ml', price: 2500, originalPrice: 3200, stock: 25 },
 ];
 
 const DEFAULT_ACCORDS: AccordItem[] = [

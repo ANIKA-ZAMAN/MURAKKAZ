@@ -211,15 +211,27 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   const sliderRef = useRef<HTMLDivElement>(null);
 
   // Size and pricing configuration
-  const sizeOptions = [
+  const defaultSizeOptions = [
+    { label: "3ml", price: 180 },
     { label: "6ml", price: 300 },
     { label: "12ml", price: 500 },
     { label: "30ml", price: 900 },
     { label: "50ml", price: 2500 },
   ];
 
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[1]); // Default to 12ml
   const [liveProduct, setLiveProduct] = useState<any>(null);
+
+  const sizeOptions = React.useMemo(() => {
+    if (liveProduct && liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
+      return liveProduct.sizes.map((s: any) => ({
+        label: s.size || `${s.volume}ml`,
+        price: Number(s.price)
+      }));
+    }
+    return defaultSizeOptions;
+  }, [liveProduct]);
+
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState(defaultSizeOptions[2]); // Default to 12ml
 
   // Dynamic API fetch for custom products created via Admin
   useEffect(() => {
