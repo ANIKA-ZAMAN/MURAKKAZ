@@ -693,6 +693,20 @@ const ProductForm: React.FC = () => {
                     className={styles.tagInput}
                   />
                 </div>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
+                  {['Bergamot', 'Peach', 'Neroli', 'Mandarin', 'Osmanthus', 'Pink Pepper', 'Cardamom', 'Lemon'].map(sugg => (
+                    !topNotes.includes(sugg) && (
+                      <button
+                        key={sugg}
+                        type="button"
+                        onClick={() => handleAddTag(sugg, setTopInput, topNotes, setTopNotes)}
+                        style={{ background: '#1c1c24', border: '1px solid #2d2d3d', color: '#a0a0b0', borderRadius: '12px', padding: '2px 8px', fontSize: '11px', cursor: 'pointer' }}
+                      >
+                        + {sugg}
+                      </button>
+                    )
+                  ))}
+                </div>
               </div>
 
               {/* Middle Notes */}
@@ -721,6 +735,20 @@ const ProductForm: React.FC = () => {
                     className={styles.tagInput}
                   />
                 </div>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
+                  {['Jasmine', 'Tuberose', 'Damask Rose', 'May Rose', 'Saffron', 'Lavender', 'Orange Blossom', 'Iris'].map(sugg => (
+                    !middleNotes.includes(sugg) && (
+                      <button
+                        key={sugg}
+                        type="button"
+                        onClick={() => handleAddTag(sugg, setMiddleInput, middleNotes, setMiddleNotes)}
+                        style={{ background: '#1c1c24', border: '1px solid #2d2d3d', color: '#a0a0b0', borderRadius: '12px', padding: '2px 8px', fontSize: '11px', cursor: 'pointer' }}
+                      >
+                        + {sugg}
+                      </button>
+                    )
+                  ))}
+                </div>
               </div>
 
               {/* Base Notes */}
@@ -748,6 +776,20 @@ const ProductForm: React.FC = () => {
                     }}
                     className={styles.tagInput}
                   />
+                </div>
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '6px' }}>
+                  {['Oud', 'Amber', 'Cedarwood', 'Vanilla', 'Sandalwood', 'Patchouli', 'Vetiver', 'Musk', 'Tonka Bean'].map(sugg => (
+                    !baseNotes.includes(sugg) && (
+                      <button
+                        key={sugg}
+                        type="button"
+                        onClick={() => handleAddTag(sugg, setBaseInput, baseNotes, setBaseNotes)}
+                        style={{ background: '#1c1c24', border: '1px solid #2d2d3d', color: '#a0a0b0', borderRadius: '12px', padding: '2px 8px', fontSize: '11px', cursor: 'pointer' }}
+                      >
+                        + {sugg}
+                      </button>
+                    )
+                  ))}
                 </div>
               </div>
 
