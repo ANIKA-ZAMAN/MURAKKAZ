@@ -623,7 +623,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             <div className={styles.optionSection}>
               <span className={styles.optionLabel}>Select Size</span>
               <div className={styles.sizeRow}>
-                {sizeOptions.map((opt) => (
+                {sizeOptions.map((opt: { label: string; price: number }) => (
                   <button
                     key={opt.label}
                     onClick={() => {
