@@ -2,10 +2,14 @@
 
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { productsCatalog, fetchLiveProducts } from "../data/products";
+import { useState, useRef, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { productsCatalog, fetchLiveProducts, slugify } from "../data/products";
 import styles from "./page.module.css";
 
 export interface CompareProduct {
+  id?: string;
+  slug?: string;
   name: string;
   image: string;
   brand: string;
@@ -40,15 +44,18 @@ const buildCompareList = (): CompareProduct[] => {
     .filter((p) => !EXCLUDED_NAMES.has(p.name.trim().toLowerCase()))
     .forEach((p) => {
       const rawNotes = p.notes || [];
+      const oneThird = Math.max(1, Math.floor(rawNotes.length / 3));
       mapByName.set(p.name.toLowerCase(), {
+        id: p.id,
+        slug: p.slug || slugify(p.name),
         name: p.name,
         image: p.image || "/images/products/jade_serenity.png",
         brand: p.brand || "Murakkaz",
         inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
-        price: "300 - 2500tk",
+        price: p.price || "180 - 2500tk",
         rating: `${p.rating || 4.8} (${p.reviews || 120})`,
         profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
-        longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+        longevity: p.meter ? `${p.meter.replace("_", " ")} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
         projection: "Moderate to Heavy",
         sweetness: "●●●○○",
         bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
@@ -57,9 +64,9 @@ const buildCompareList = (): CompareProduct[] => {
           value: 85 - i * 10,
         })),
         notes: {
-          top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
-          heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
-          base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+          top: rawNotes.slice(0, oneThird).length ? rawNotes.slice(0, oneThird) : ["Bergamot", "Citrus"],
+          heart: rawNotes.slice(oneThird, oneThird * 2).length ? rawNotes.slice(oneThird, oneThird * 2) : ["Warm Spices", "Floral Accord"],
+          base: rawNotes.slice(oneThird * 2).length ? rawNotes.slice(oneThird * 2) : ["Cedarwood", "Ambergris", "Musk"],
         },
       });
     });
@@ -71,18 +78,17 @@ const allAvailablePerfumes: CompareProduct[] = buildCompareList();
 
 function CompareContent() {
   const searchParams = useSearchParams();
-  const initialP1 = searchParams.get("p1");
 
   const [perfumeList, setPerfumeList] = useState<CompareProduct[]>(allAvailablePerfumes);
   const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([
-    null,
-    null,
+    allAvailablePerfumes[0] || null,
+    allAvailablePerfumes[1] || null,
     null,
   ]);
 
   const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
   const [modalSearchQuery, setModalSearchQuery] = useState("");
-  const [showComparison, setShowComparison] = useState(false);
+  const [showComparison, setShowComparison] = useState(true);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const tableRef = useRef<HTMLDivElement>(null);
@@ -96,15 +102,18 @@ function CompareContent() {
           .filter((p) => !EXCLUDED_NAMES.has(p.name.trim().toLowerCase()))
           .forEach((p) => {
             const rawNotes = p.notes || [];
+            const oneThird = Math.max(1, Math.floor(rawNotes.length / 3));
             mapByName.set(p.name.toLowerCase(), {
+              id: p.id,
+              slug: p.slug || slugify(p.name),
               name: p.name,
               image: p.image || "/images/products/jade_serenity.png",
               brand: p.brand || "Murakkaz",
               inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
-              price: "300 - 2500tk",
+              price: p.price || "180 - 2500tk",
               rating: `${p.rating || 4.8} (${p.reviews || 120})`,
               profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
-              longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+              longevity: p.meter ? `${p.meter.replace("_", " ")} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
               projection: "Moderate to Heavy",
               sweetness: "●●●○○",
               bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
@@ -113,9 +122,9 @@ function CompareContent() {
                 value: 85 - i * 10,
               })),
               notes: {
-                top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
-                heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
-                base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+                top: rawNotes.slice(0, oneThird).length ? rawNotes.slice(0, oneThird) : ["Bergamot", "Citrus"],
+                heart: rawNotes.slice(oneThird, oneThird * 2).length ? rawNotes.slice(oneThird, oneThird * 2) : ["Warm Spices", "Floral Accord"],
+                base: rawNotes.slice(oneThird * 2).length ? rawNotes.slice(oneThird * 2) : ["Cedarwood", "Ambergris", "Musk"],
               },
             });
           });
@@ -123,15 +132,18 @@ function CompareContent() {
         productsCatalog.forEach((p) => {
           if (!mapByName.has(p.name.toLowerCase())) {
             const rawNotes = p.notes || [];
+            const oneThird = Math.max(1, Math.floor(rawNotes.length / 3));
             mapByName.set(p.name.toLowerCase(), {
+              id: p.id,
+              slug: p.slug || slugify(p.name),
               name: p.name,
               image: p.image || "/images/products/jade_serenity.png",
               brand: p.brand || "Murakkaz",
               inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : p.name,
-              price: "300 - 2500tk",
+              price: p.price || "180 - 2500tk",
               rating: `${p.rating || 4.8} (${p.reviews || 120})`,
               profile: p.description || `${p.name} - ${p.family} fragrance featuring ${rawNotes.slice(0, 3).join(", ")}.`,
-              longevity: p.meter ? `${p.meter} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
+              longevity: p.meter ? `${p.meter.replace("_", " ")} (6-8 Hours)` : "Long Lasting (6-8 Hours)",
               projection: "Moderate to Heavy",
               sweetness: "●●●○○",
               bestFor: p.occasion ? `${p.occasion} wear & special events.` : "Daily wear and special events.",
@@ -140,9 +152,9 @@ function CompareContent() {
                 value: 85 - i * 10,
               })),
               notes: {
-                top: rawNotes.slice(0, 2).length ? rawNotes.slice(0, 2) : ["Bergamot", "Citrus"],
-                heart: rawNotes.slice(2, 4).length ? rawNotes.slice(2, 4) : ["Warm Spices", "Floral Accord"],
-                base: rawNotes.slice(4, 6).length ? rawNotes.slice(4, 6) : ["Cedarwood", "Ambergris", "Musk"],
+                top: rawNotes.slice(0, oneThird).length ? rawNotes.slice(0, oneThird) : ["Bergamot", "Citrus"],
+                heart: rawNotes.slice(oneThird, oneThird * 2).length ? rawNotes.slice(oneThird, oneThird * 2) : ["Warm Spices", "Floral Accord"],
+                base: rawNotes.slice(oneThird * 2).length ? rawNotes.slice(oneThird * 2) : ["Cedarwood", "Ambergris", "Musk"],
               },
             });
           }
@@ -173,13 +185,16 @@ function CompareContent() {
 
       params.forEach((param, idx) => {
         if (param) {
+          const cleanParam = param.toLowerCase().trim();
           const match = perfumeList.find(
             (p) =>
+              (p.id && p.id.toLowerCase() === cleanParam) ||
+              (p.slug && p.slug.toLowerCase() === cleanParam) ||
+              (p.name && slugify(p.name) === cleanParam) ||
               p.image === param ||
               p.image.includes(param) ||
-              p.name.toLowerCase().includes(param.toLowerCase()) ||
-              p.inspiredBy.toLowerCase().includes(param.toLowerCase()) ||
-              p.brand.toLowerCase().includes(param.toLowerCase())
+              p.name.toLowerCase().includes(cleanParam) ||
+              p.inspiredBy.toLowerCase().includes(cleanParam)
           );
           if (match) {
             newSlots[idx] = match;
@@ -203,11 +218,15 @@ function CompareContent() {
     const addName = searchParams.get("name");
 
     if (addImage || addName || addId) {
+      const cleanAddId = addId ? addId.toLowerCase().trim() : "";
       const match = perfumeList.find(
         (p) =>
           (addImage && p.image === addImage) ||
           (addName && p.name.toLowerCase() === addName.toLowerCase()) ||
-          (addId && p.name.toLowerCase().includes(addId.toLowerCase()))
+          (cleanAddId && p.id && p.id.toLowerCase() === cleanAddId) ||
+          (cleanAddId && p.slug && p.slug.toLowerCase() === cleanAddId) ||
+          (cleanAddId && p.name && slugify(p.name) === cleanAddId) ||
+          (cleanAddId && p.name.toLowerCase().includes(cleanAddId))
       );
 
       if (match) {
@@ -224,6 +243,7 @@ function CompareContent() {
           }
           return nextSlots;
         });
+        setShowComparison(true);
 
         if (typeof window !== "undefined") {
           const url = new URL(window.location.href);
@@ -231,7 +251,6 @@ function CompareContent() {
           window.history.replaceState({}, "", url.toString());
         }
       }
-    }
   }, [searchParams, perfumeList]);
 
   useEffect(() => {
