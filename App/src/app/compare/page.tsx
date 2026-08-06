@@ -2,8 +2,6 @@
 
 import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { useState, useRef, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import { productsCatalog, fetchLiveProducts, slugify } from "../data/products";
 import styles from "./page.module.css";
 
