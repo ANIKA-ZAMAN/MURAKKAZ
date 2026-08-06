@@ -251,6 +251,7 @@ function CompareContent() {
           window.history.replaceState({}, "", url.toString());
         }
       }
+    }
   }, [searchParams, perfumeList]);
 
   useEffect(() => {
