@@ -55,8 +55,12 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
     const json = await res.json();
     const data = json.data || json;
 
-    if (!Array.isArray(data) || data.length === 0) {
-      return { upcoming: upcomingEvents, previous: previousEvents };
+    if (!Array.isArray(data)) {
+      return { upcoming: [], previous: [] };
+    }
+
+    if (data.length === 0) {
+      return { upcoming: [], previous: [] };
     }
 
     const fetchedUpcoming: UpcomingEvent[] = [];
