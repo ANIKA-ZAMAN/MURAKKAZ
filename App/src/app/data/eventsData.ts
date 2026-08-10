@@ -42,9 +42,9 @@ const getApiBaseUrl = (): string => {
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return "http://localhost:5000/api";
     }
-    return `${window.location.origin}/api`;
+    return "https://api.murakkaz.com/api";
   }
-  return "http://localhost:5000/api";
+  return "https://api.murakkaz.com/api";
 };
 
 export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: UpcomingEvent[]; previous: PreviousEvent[] }> => {
