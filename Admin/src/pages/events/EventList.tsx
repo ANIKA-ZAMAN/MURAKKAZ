@@ -91,12 +91,12 @@ const INITIAL_EVENTS: EventItem[] = [
 ];
 
 const EventList: React.FC = () => {
-  const [events, setEvents] = useState<EventItem[]>(INITIAL_EVENTS);
+  const [events, setEvents] = useState<EventItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedStatus, setSelectedStatus] = useState('All');
 
-  // Fetch events from backend API if available
+  // Fetch events from backend API
   useEffect(() => {
     fetch('/api/events')
       .then((res) => {
@@ -104,8 +104,9 @@ const EventList: React.FC = () => {
         throw new Error('API not available');
       })
       .then((data) => {
-        if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
-          const mapped: EventItem[] = data.data.map((item: any) => ({
+        const raw = data.data || data;
+        if (Array.isArray(raw)) {
+          const mapped: EventItem[] = raw.map((item: any) => ({
             id: item.id || item.slug,
             slug: item.slug || item.id,
             title: item.title,
@@ -123,7 +124,7 @@ const EventList: React.FC = () => {
         }
       })
       .catch(() => {
-        setEvents(INITIAL_EVENTS);
+        setEvents([]);
       });
   }, []);
 

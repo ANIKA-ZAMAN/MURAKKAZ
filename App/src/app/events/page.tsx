@@ -17,8 +17,8 @@ export default function EventsPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Live Backend Data States
-  const [liveUpcoming, setLiveUpcoming] = useState<UpcomingEvent[]>(upcomingEvents);
-  const [livePrevious, setLivePrevious] = useState<PreviousEvent[]>(previousEvents);
+  const [liveUpcoming, setLiveUpcoming] = useState<UpcomingEvent[]>([]);
+  const [livePrevious, setLivePrevious] = useState<PreviousEvent[]>([]);
 
   // States for Event Reminder Modal
   const [selectedEvent, setSelectedEvent] = useState<UpcomingEvent | null>(null);
@@ -28,12 +28,8 @@ export default function EventsPage() {
 
   useEffect(() => {
     fetchLiveEvents().then((result) => {
-      if (result.upcoming && result.upcoming.length > 0) {
-        setLiveUpcoming(result.upcoming);
-      }
-      if (result.previous && result.previous.length > 0) {
-        setLivePrevious(result.previous);
-      }
+      setLiveUpcoming(result.upcoming || []);
+      setLivePrevious(result.previous || []);
     });
   }, []);
 
