@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import QuizCard from "./QuizCard";
-import { slugify } from "../../data/products";
+import { slugify, fetchLiveProducts, Product } from "../../data/products";
 import {
   quizQuestions,
   getTop3Recommendations,
@@ -53,7 +53,7 @@ export default function ScentIndex() {
     }
   }, [searchParams]);
 
-  // Save quiz state to sessionStorage when it changes (excluding transient loading state)
+  // Save quiz state to sessionStorage when it changes
   useEffect(() => {
     try {
       if (phase === "intro" || phase === "loading") {
@@ -74,10 +74,13 @@ export default function ScentIndex() {
     }
   }, [phase, answers, recommendations, currentStep]);
 
-  // Generate random particles positions on mount
+  // Generate ambient floating particles
   useEffect(() => {
     const isAmbientDisabled = localStorage.getItem("pref-ambient") === "false";
-    if (isAmbientDisabled) { setParticles([]); return; }
+    if (isAmbientDisabled) {
+      setParticles([]);
+      return;
+    }
     const pts = Array.from({ length: 15 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
@@ -99,19 +102,12 @@ export default function ScentIndex() {
     setTimeout(() => {
       setIsSealPressed(false);
       setIsSealedCracked(true);
+      setIsTransitioningIntro(true);
 
       setTimeout(() => {
-        setIsTransitioningIntro(true);
-        if (typeof window !== "undefined") {
-          const audio = new Audio("/audio/paper-sound.wav");
-          audio.volume = 0.8;
-          audio.play().catch((err) => console.log("Audio play failed:", err));
-        }
-        setTimeout(() => {
-          setPhase("consultation");
-          setIsTransitioningIntro(false);
-        }, 900);
-      }, 500);
+        setPhase("consultation");
+        setIsTransitioningIntro(false);
+      }, 700);
     }, 200);
   };
 
@@ -130,7 +126,7 @@ export default function ScentIndex() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     const currentQ = quizQuestions[currentStep];
     const currentAns = answers[currentQ.id];
     if (!currentAns || (Array.isArray(currentAns) && currentAns.length === 0)) return;
@@ -141,12 +137,18 @@ export default function ScentIndex() {
       setTimeout(() => setTransitioningStep(null), 600);
     } else {
       setTransitioningStep(currentStep);
-      setTimeout(() => {
+      setTimeout(async () => {
         setPhase("loading");
         setTransitioningStep(null);
-        const recs = getTop3Recommendations(answers);
+
+        // Fetch live catalog to compute recommendations
+        const liveCatalog = await fetchLiveProducts();
+        const recs = getTop3Recommendations(answers, liveCatalog);
         setRecommendations(recs);
-        setTimeout(() => { setPhase("results"); }, 1500);
+
+        setTimeout(() => {
+          setPhase("results");
+        }, 1400);
       }, 500);
     }
   };
@@ -160,6 +162,37 @@ export default function ScentIndex() {
     setCurrentStep(0);
     setRecommendations([]);
     setPhase("intro");
+  };
+
+  const handleAddToCart = (product: Product) => {
+    try {
+      const savedCart = localStorage.getItem("cart-items");
+      let cart = savedCart ? JSON.parse(savedCart) : [];
+      const existingIndex = cart.findIndex((item: any) => item.name === product.name && item.volume === "12ml");
+
+      if (existingIndex > -1) {
+        cart[existingIndex].quantity += 1;
+      } else {
+        cart.push({
+          id: `quiz-item-${Date.now()}-${product.id}`,
+          productId: product.id,
+          name: product.name,
+          brand: product.brand || "Murakkaz",
+          price: product.priceVal || 300,
+          originalPrice: product.originalPriceVal || 400,
+          volume: "12ml",
+          image: product.image,
+          quantity: 1,
+          selected: true,
+        });
+      }
+
+      localStorage.setItem("cart-items", JSON.stringify(cart));
+      window.dispatchEvent(new Event("cart-updated"));
+      setToastMessage(`Added ${product.name} (12ml) to your shopping bag!`);
+    } catch (e) {
+      console.error("Error adding to cart:", e);
+    }
   };
 
   useEffect(() => {
@@ -195,8 +228,7 @@ export default function ScentIndex() {
         {(phase === "intro" || isTransitioningIntro) && (
           <div
             className={`${styles.introContainer} ${isTransitioningIntro ? styles.introLeaving : ""}`}
-            onClick={handleSealClick}
-            style={{ cursor: (!isSealPressed && !isSealedCracked) ? "pointer" : "default" }}
+            suppressHydrationWarning
           >
             {/* Left door */}
             <div className={`${styles.introDoor} ${styles.introDoorLeft}`}>
@@ -265,7 +297,7 @@ export default function ScentIndex() {
           </div>
         )}
 
-        {/* ── QUIZ LAYER ── Always rendered behind intro (depth cards give the stacked paper look) */}
+        {/* ── QUIZ LAYER ── */}
         {(phase === "intro" || phase === "consultation" || isTransitioningIntro) && (
           <div className={`${styles.quizContainer} ${phase === "intro" && !isTransitioningIntro ? styles.quizHidden : ""} ${isTransitioningIntro ? styles.quizContainerEnter : ""}`}>
             {/* Progress markers */}
@@ -278,7 +310,7 @@ export default function ScentIndex() {
               ))}
             </div>
 
-            {/* Card stack — depth cards visible behind intro on intro screen */}
+            {/* Card stack */}
             <div className={styles.cardStack}>
               {quizQuestions.map((q, idx) => {
                 const isLeaving = transitioningStep === idx;
@@ -367,6 +399,7 @@ export default function ScentIndex() {
                     if (target.closest("button")) return;
                     router.push(`/product/${recSlug}?from=quiz`);
                   };
+
                   return (
                     <div key={rec.product.id} className={styles.cardEntryWrapper}>
                       <div
@@ -376,24 +409,62 @@ export default function ScentIndex() {
                       >
                         <div className={styles.cardHeader}>
                           <span className={`${styles.matchBadge} ${index > 0 ? styles.matchBadgeMuted : ""}`}>
-                            {index === 0 ? "Best Match" : index === 1 ? "Second pick" : "Alternative Choice"}
+                            {rec.matchScore}% Match &bull; {index === 0 ? "Best Match" : index === 1 ? "Second Pick" : "Alternative Pick"}
                           </span>
                         </div>
+
                         <div className={styles.cardImgWrapper}>
                           <Image src={rec.product.image} alt={rec.product.name} width={280} height={200} className={styles.cardImg} priority={index === 0} />
                         </div>
+
                         <h3 className={styles.cardTitle}>{rec.product.name}</h3>
                         <p className={styles.cardInspiration}>{rec.inspiration}</p>
                         <p className={styles.cardText}>{rec.reason}</p>
+
+                        {/* Display Key Notes */}
+                        {rec.keyNotes && rec.keyNotes.length > 0 && (
+                          <div className={styles.keyNotesContainer}>
+                            <span className={styles.keyNotesLabel}>Key Notes:</span>
+                            <span className={styles.keyNotesText}>{rec.keyNotes.join(", ")}</span>
+                          </div>
+                        )}
+
                         <div className={styles.scentProfileTags}>
                           {rec.profileTags?.map((tag) => (
                             <span key={tag} className={styles.scentTag}>{tag}</span>
                           ))}
                         </div>
+
                         <div className={styles.performanceLine}>{rec.performance}</div>
+
                         <div className={styles.cardActions}>
-                          <button type="button" className={styles.quizBuyNowBtn} onClick={() => router.push(`/product/${recSlug}?from=quiz`)}>View Details</button>
-                          <button type="button" className={styles.quizAddBagBtn} onClick={() => router.push(`/compare?add=${rec.product.id}&image=${encodeURIComponent(rec.product.image)}&name=${encodeURIComponent(rec.product.name)}`)}>Compare</button>
+                          <button
+                            type="button"
+                            className={styles.quizBuyNowBtn}
+                            onClick={() => router.push(`/product/${recSlug}?from=quiz`)}
+                          >
+                            View Details
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.quizAddToCartBtn}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAddToCart(rec.product);
+                            }}
+                          >
+                            Add 12ml Bag
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.quizAddBagBtn}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              router.push(`/compare?add=${rec.product.id}&image=${encodeURIComponent(rec.product.image)}&name=${encodeURIComponent(rec.product.name)}`);
+                            }}
+                          >
+                            Compare
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -475,5 +546,5 @@ function getFragranceProfile(answers: Record<number, string | string[]>): Fragra
   if (personality === "Minimal") {
     return { name: "Modern & Minimal", description: "You appreciate clean, subtle skin scents that whisper rather than shout. This minimal profile matches your modern, streamlined aesthetic, focusing on pure, high-quality ingredients that complement your natural presence.", tags: ["Minimal", "Modern", "Fresh", "Elegant"] };
   }
-  return { name: "Classic & Timeless", description: "You appreciate balanced, traditional fragrance structures that never go out of style. Combining elements of citrus freshness with woody refinement, this classic profile matches your appreciation for quality and heritage.", tags: ["Classic", "Elegant", "Sophisticated", "Sophisticated"] };
+  return { name: "Classic & Timeless", description: "You appreciate balanced, traditional fragrance structures that never go out of style. Combining elements of citrus freshness with woody refinement, this classic profile matches your appreciation for quality and heritage.", tags: ["Classic", "Elegant", "Sophisticated"] };
 }

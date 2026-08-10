@@ -632,16 +632,36 @@
 .btnRedOutline { background: transparent; border: 1px solid #820011; color: #820011; }
 .btnRedOutline:hover { background-color: rgba(130,0,17,0.05); border-color: #820011; box-shadow: 0 4px 12px rgba(130,0,17,0.15); }
 
-.quizBuyNowBtn, .quizAddBagBtn {
+.quizBuyNowBtn, .quizAddToCartBtn, .quizAddBagBtn {
   flex: 1; height: 38px; border-radius: 19px; background: transparent;
   font-family: var(--font-playfair), var(--font-serif-title), Georgia, serif;
-  font-size: clamp(0.75rem, 2.5vw, 0.85rem); font-weight: 500; cursor: pointer;
+  font-size: clamp(0.68rem, 2.2vw, 0.78rem); font-weight: 500; cursor: pointer;
   display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+  padding: 0 4px; text-align: center;
 }
 .quizBuyNowBtn { border: 1.2px solid #820011; color: #820011; }
 .quizBuyNowBtn:hover { background-color: #820011; color: #ffffff; box-shadow: 0 4px 12px rgba(130,0,17,0.15); }
+.quizAddToCartBtn { border: 1.2px solid #7c6853; color: #7c6853; background-color: rgba(124,104,83,0.06); }
+.quizAddToCartBtn:hover { background-color: #7c6853; color: #ffffff; box-shadow: 0 4px 12px rgba(124,104,83,0.2); }
 .quizAddBagBtn { border: 1.2px solid #313134; color: #313134; }
 .quizAddBagBtn:hover { background-color: #313134; color: #ffffff; box-shadow: 0 4px 12px rgba(49,49,52,0.15); }
+
+.noteThumbWrapper {
+  width: 22px; height: 22px; border-radius: 50%; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  background-color: rgba(130,120,100,0.12); flex-shrink: 0;
+}
+.noteThumbImg {
+  width: 16px; height: 16px; object-fit: contain;
+}
+
+.keyNotesContainer {
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; margin-bottom: 0.6rem; font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.7rem; text-align: center; flex-wrap: wrap;
+}
+.keyNotesLabel { color: #820011; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.keyNotesText { color: #4B4036; font-weight: 500; }
 
 /* ── Profile section ── */
 .profileSection { text-align: center; max-width: 700px; margin: 0 auto 0.25rem auto; padding-bottom: 0.25rem; }

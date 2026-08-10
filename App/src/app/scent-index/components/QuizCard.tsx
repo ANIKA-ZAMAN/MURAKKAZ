@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { ConsultationQuestion } from "../data/scentIndexData";
+import { getNoteImage } from "../../data/products";
 import styles from "./ScentIndex.module.css";
 
 interface QuizCardProps {
@@ -24,7 +26,7 @@ const stackProps = [
   { x: 4, y: 20, rot: 0.8 },
   { x: -4, y: 27, rot: -1.5 },
   { x: 6, y: 34, rot: 2.2 },
-  { x: -5, y: 41, rot: -2.8 }
+  { x: -5, y: 41, rot: -2.8 },
 ];
 
 // Dynamically calculates realistic soft shadows per stack layer
@@ -73,7 +75,6 @@ export default function QuizCard({
       pointerEvents: "auto",
     };
   } else {
-    // Background stack cards fanning out organically
     const index = Math.min(depth, stackProps.length - 1);
     const props = stackProps[index];
     const brightness = Math.max(0.88, 1 - depth * 0.02);
@@ -89,6 +90,7 @@ export default function QuizCard({
   }
 
   const isMulti = question.type === "multi";
+  const isNotesQuestion = question.id === 3;
 
   return (
     <div
@@ -98,14 +100,14 @@ export default function QuizCard({
       <div
         className={`${styles.cardInnerContent} ${isTop && !isLeaving ? styles.cardContentEnter : ""}`}
         style={{
-          opacity: (isTop || isLeaving || depth <= 1) ? 1 : 0,
+          opacity: isTop || isLeaving || depth <= 1 ? 1 : 0,
           transition: "opacity 0.3s ease",
-          pointerEvents: isTop ? "auto" : "none"
+          pointerEvents: isTop ? "auto" : "none",
         }}
       >
         {/* Header */}
         <div className={styles.cardHeader}>
-          <span className={styles.cardQId}>Q.0{question.id}</span>
+          <span className={styles.cardQId}>Q.0{question.id} &bull; Step {question.id} of 7</span>
           <h2 className={styles.cardQuestion}>
             {question.question}
             <span className={styles.cardSelectionHint}>
@@ -115,14 +117,16 @@ export default function QuizCard({
         </div>
 
         {/* Options */}
-        <div className={(isMulti || question.options.length > 5) ? styles.multiGrid : styles.optionsList}>
+        <div className={isMulti || question.options.length > 5 ? styles.multiGrid : styles.optionsList}>
           {question.options.map((option) => {
             const checked = isSelected(option);
+            const noteImageFilename = isNotesQuestion ? getNoteImage(option) : null;
+
             return (
               <button
                 key={option}
                 type="button"
-                className={`${styles.optionBtn} ${checked ? styles.optionChecked : ""} ${(isMulti || question.options.length > 5) ? styles.gridBtn : ""}`}
+                className={`${styles.optionBtn} ${checked ? styles.optionChecked : ""} ${isMulti || question.options.length > 5 ? styles.gridBtn : ""}`}
                 onClick={() => isTop && onSelect(option)}
                 disabled={!isTop}
               >
@@ -135,6 +139,19 @@ export default function QuizCard({
                     <div className={styles.radioDot} />
                   </div>
                 )}
+
+                {isNotesQuestion && noteImageFilename && (
+                  <div className={styles.noteThumbWrapper}>
+                    <Image
+                      src={`/images/notes/${noteImageFilename}`}
+                      alt={option}
+                      width={22}
+                      height={22}
+                      className={styles.noteThumbImg}
+                    />
+                  </div>
+                )}
+
                 <span className={styles.optionLabel}>{option}</span>
               </button>
             );
