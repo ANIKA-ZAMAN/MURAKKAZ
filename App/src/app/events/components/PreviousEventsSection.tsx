@@ -1,14 +1,20 @@
 import Image from "next/image";
-import { previousEvents } from "../../data/eventsData";
+import { previousEvents, PreviousEvent } from "../../data/eventsData";
 import styles from "../page.module.css";
 
-export default function PreviousEventsSection() {
+interface PreviousEventsSectionProps {
+  events?: PreviousEvent[];
+}
+
+export default function PreviousEventsSection({ events }: PreviousEventsSectionProps) {
+  const displayEvents = events && events.length > 0 ? events : previousEvents;
+
   return (
     <section className={styles.previousSection}>
       <h2 className={styles.sectionHeading}>Previous Events</h2>
 
       <div className={styles.previousGrid}>
-        {previousEvents.map((event, idx) => (
+        {displayEvents.map((event, idx) => (
           <div key={idx} className={styles.previousCard}>
             <div className={styles.previousImageWrap}>
               <Image

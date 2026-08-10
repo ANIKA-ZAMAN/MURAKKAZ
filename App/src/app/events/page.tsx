@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { upcomingEvents, UpcomingEvent } from "../data/eventsData";
+import { upcomingEvents, previousEvents, UpcomingEvent, PreviousEvent, fetchLiveEvents } from "../data/eventsData";
 import UpcomingEventsSection from "./components/UpcomingEventsSection";
 import PreviousEventsSection from "./components/PreviousEventsSection";
 import EventGallerySection from "./components/EventGallerySection";
@@ -16,11 +16,26 @@ export default function EventsPage() {
   const [locationSearch, setLocationSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Live Backend Data States
+  const [liveUpcoming, setLiveUpcoming] = useState<UpcomingEvent[]>(upcomingEvents);
+  const [livePrevious, setLivePrevious] = useState<PreviousEvent[]>(previousEvents);
+
   // States for Event Reminder Modal
   const [selectedEvent, setSelectedEvent] = useState<UpcomingEvent | null>(null);
   const [reminderName, setReminderName] = useState("");
   const [reminderEmail, setReminderEmail] = useState("");
   const [reminderSubmitted, setReminderSubmitted] = useState(false);
+
+  useEffect(() => {
+    fetchLiveEvents().then((result) => {
+      if (result.upcoming && result.upcoming.length > 0) {
+        setLiveUpcoming(result.upcoming);
+      }
+      if (result.previous && result.previous.length > 0) {
+        setLivePrevious(result.previous);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined" && selectedEvent) {
@@ -37,9 +52,25 @@ export default function EventsPage() {
     }
   }, [selectedEvent]);
 
-  const handleSetReminderSubmit = (e: React.FormEvent) => {
+  const handleSetReminderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!reminderName || !reminderEmail || !selectedEvent) return;
+
+    // Send reminder subscription to backend API
+    const targetSlug = selectedEvent.slug || selectedEvent.id || "general";
+    const apiBase = typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+      ? "http://localhost:5000/api"
+      : `${window.location.origin}/api`;
+
+    try {
+      await fetch(`${apiBase}/events/${targetSlug}/reminder`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: reminderName, email: reminderEmail }),
+      });
+    } catch (err) {
+      console.warn("Backend API reminder save fallback to local storage:", err);
+    }
 
     const newReminder = {
       eventName: selectedEvent.title,
@@ -62,28 +93,12 @@ export default function EventsPage() {
     reminders.push(newReminder);
     localStorage.setItem("murakkaz-event-reminders", JSON.stringify(reminders));
 
-    const subject = encodeURIComponent(`Reminder Subscription: ${selectedEvent.title}`);
-    const body = encodeURIComponent(
-      `Hello Murakkaz Team,\n\n` +
-      `I would like to set an email reminder for the following event:\n` +
-      `- Event: ${selectedEvent.title}\n` +
-      `- Date: ${selectedEvent.day} ${selectedEvent.month}\n` +
-      `- Location: ${selectedEvent.location}\n\n` +
-      `My Details:\n` +
-      `- Name: ${reminderName}\n` +
-      `- Email: ${reminderEmail}\n\n` +
-      `Please notify me when this event is starting.\n\n` +
-      `Thank you!\n` +
-      `${reminderName}`
-    );
-    
-    window.open(`mailto:sadid@murakkaz.com?subject=${subject}&body=${body}`, "_self");
     setReminderSubmitted(true);
   };
 
   const itemsPerPage = 3;
-  const totalPages = Math.ceil(upcomingEvents.length / itemsPerPage);
-  const paginatedEvents = upcomingEvents.slice(
+  const totalPages = Math.ceil(liveUpcoming.length / itemsPerPage);
+  const paginatedEvents = liveUpcoming.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -102,7 +117,7 @@ export default function EventsPage() {
           }}
         />
 
-        <PreviousEventsSection />
+        <PreviousEventsSection events={livePrevious} />
 
         <EventGallerySection />
 

@@ -1,4 +1,6 @@
 export interface UpcomingEvent {
+  id?: string;
+  slug?: string;
   day: string;
   month: string;
   title: string;
@@ -10,6 +12,8 @@ export interface UpcomingEvent {
 }
 
 export interface PreviousEvent {
+  id?: string;
+  slug?: string;
   title: string;
   date: string;
   image: string;
@@ -32,6 +36,77 @@ export interface StoreLocation {
   zone: string;
   contract: string;
 }
+
+const getApiBaseUrl = (): string => {
+  if (typeof window !== "undefined") {
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      return "http://localhost:5000/api";
+    }
+    return `${window.location.origin}/api`;
+  }
+  return "http://localhost:5000/api";
+};
+
+export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: UpcomingEvent[]; previous: PreviousEvent[] }> => {
+  try {
+    const query = upcoming !== undefined ? `?upcoming=${upcoming}` : "";
+    const res = await fetch(`${getApiBaseUrl()}/events${query}`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to fetch events from backend");
+    const json = await res.json();
+    const data = json.data || json;
+
+    if (!Array.isArray(data) || data.length === 0) {
+      return { upcoming: upcomingEvents, previous: previousEvents };
+    }
+
+    const fetchedUpcoming: UpcomingEvent[] = [];
+    const fetchedPrevious: PreviousEvent[] = [];
+
+    data.forEach((evt: any) => {
+      const evtDate = evt.eventDate ? new Date(evt.eventDate) : new Date();
+      const diffMs = evtDate.getTime() - Date.now();
+      const calcDaysLeft = diffMs > 0 ? Math.ceil(diffMs / (1000 * 60 * 60 * 24)) : 0;
+      const daysLeftStr = evt.daysLeft !== null && evt.daysLeft !== undefined
+        ? `${evt.daysLeft} days left`
+        : `${calcDaysLeft} days left`;
+
+      const monthName = evt.month || evtDate.toLocaleString("en-US", { month: "short" });
+      const dayNum = evt.day || String(evtDate.getDate()).padStart(2, "0");
+
+      if (evt.isUpcoming ?? true) {
+        fetchedUpcoming.push({
+          id: evt.id,
+          slug: evt.slug || evt.id,
+          day: dayNum,
+          month: monthName,
+          title: evt.title,
+          location: evt.location || "Dhaka Flagship Store",
+          daysLeft: daysLeftStr,
+          time: evt.time || "From 10.00 to 20.00",
+          description: evt.description || "Exclusive Murakkaz fragrance event.",
+          image: evt.image || "/images/events/sadid.jpg",
+        });
+      } else {
+        fetchedPrevious.push({
+          id: evt.id,
+          slug: evt.slug || evt.id,
+          title: evt.title,
+          date: `${monthName} ${dayNum}, ${evtDate.getFullYear()}`,
+          image: evt.image || "/images/events/sadid.jpg",
+          category: evt.category || "Exhibition",
+        });
+      }
+    });
+
+    return {
+      upcoming: fetchedUpcoming.length > 0 ? fetchedUpcoming : upcomingEvents,
+      previous: fetchedPrevious.length > 0 ? fetchedPrevious : previousEvents,
+    };
+  } catch (err) {
+    console.error("Error fetching live events:", err);
+    return { upcoming: upcomingEvents, previous: previousEvents };
+  }
+};
 
 export const upcomingEvents: UpcomingEvent[] = [
   {
