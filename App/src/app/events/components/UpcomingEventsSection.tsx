@@ -26,55 +26,62 @@ export default function UpcomingEventsSection({
 
       {/* Events Card List */}
       <div className={styles.exactEventsList}>
-        {paginatedEvents.map((event, idx) => {
-          const imageSrc = event.image.startsWith("/")
-            ? event.image
-            : `/images/events/${event.image}`;
+        {paginatedEvents.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3.5rem 1rem', color: '#8C857B' }}>
+            <p style={{ fontSize: '1.2rem', fontFamily: 'serif', marginBottom: '0.5rem', color: '#2B2621' }}>No upcoming events scheduled right now.</p>
+            <p style={{ fontSize: '0.9rem', color: '#666' }}>Check back soon for new campus pop-ups, olfactory workshops & exclusive exhibitions!</p>
+          </div>
+        ) : (
+          paginatedEvents.map((event, idx) => {
+            const imageSrc = event.image.startsWith("/")
+              ? event.image
+              : `/images/events/${event.image}`;
 
-          return (
-            <div key={idx} className={styles.exactCardRow}>
-              {/* Col 1: Date & Time */}
-              <div className={styles.exactColDate}>
-                <div className={styles.exactDayNumber}>{event.day}</div>
-                <div className={styles.exactMonthName}>{event.month}</div>
-                <div className={styles.exactTimeText}>
-                  From 8.00<br />To 17.00
+            return (
+              <div key={idx} className={styles.exactCardRow}>
+                {/* Col 1: Date & Time */}
+                <div className={styles.exactColDate}>
+                  <div className={styles.exactDayNumber}>{event.day}</div>
+                  <div className={styles.exactMonthName}>{event.month}</div>
+                  <div className={styles.exactTimeText}>
+                    From 8.00<br />To 17.00
+                  </div>
+                </div>
+
+                {/* Col 2: Title, Location, Days Left Badge, Set Reminder Button */}
+                <div className={styles.exactColTitle}>
+                  <h3 className={styles.exactCardTitle}>{event.title}</h3>
+                  <div className={styles.exactCardLocation}>{event.location}</div>
+                  <div className={styles.exactRedDaysLeft}>{event.daysLeft}</div>
+                  <button
+                    type="button"
+                    className={styles.exactSetReminderBtn}
+                    onClick={() => onSetReminder(event)}
+                  >
+                    Set Reminder
+                  </button>
+                </div>
+
+                {/* Col 3: Description Paragraph */}
+                <div className={styles.exactColDesc}>
+                  <p className={styles.exactDescText}>{event.description}</p>
+                </div>
+
+                {/* Col 4: Image Banner */}
+                <div className={styles.exactColImageWrap}>
+                  <Image
+                    src={imageSrc}
+                    alt={event.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 240px"
+                    className={styles.exactMockImage}
+                    priority={idx === 0}
+                  />
                 </div>
               </div>
-
-              {/* Col 2: Title, Location, Days Left Badge, Set Reminder Button */}
-              <div className={styles.exactColTitle}>
-                <h3 className={styles.exactCardTitle}>{event.title}</h3>
-                <div className={styles.exactCardLocation}>{event.location}</div>
-                <div className={styles.exactRedDaysLeft}>{event.daysLeft}</div>
-                <button
-                  type="button"
-                  className={styles.exactSetReminderBtn}
-                  onClick={() => onSetReminder(event)}
-                >
-                  Set Reminder
-                </button>
-              </div>
-
-              {/* Col 3: Description Paragraph */}
-              <div className={styles.exactColDesc}>
-                <p className={styles.exactDescText}>{event.description}</p>
-              </div>
-
-              {/* Col 4: Image Banner */}
-              <div className={styles.exactColImageWrap}>
-                <Image
-                  src={imageSrc}
-                  alt={event.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 240px"
-                  className={styles.exactMockImage}
-                  priority={idx === 0}
-                />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
 
       {/* Exact Pagination Bar matching screenshot */}
