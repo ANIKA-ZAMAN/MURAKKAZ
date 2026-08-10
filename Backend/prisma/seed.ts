@@ -574,15 +574,8 @@ async function main() {
     await prisma.blogPost.create({ data: { ...post, authorId: adminUser.id } });
   }
 
-  // 8. Create Events
-  console.log('Creating Events...');
-  await prisma.event.createMany({
-    data: [
-      { slug: "scent-journey-masterclass", title: "Scent Journey Masterclass", description: "Join us for an exclusive workshop on finding your perfect signature scent.", image: "/images/events/event1.jpg", day: "15", month: "June", time: "4:00 PM - 7:00 PM", location: "Banani, Dhaka", eventDate: new Date("2026-06-15T16:00:00Z"), isUpcoming: true },
-      { slug: "summer-collection-launch", title: "Summer Collection Launch", description: "Be the first to experience our new lightweight, long-lasting summer extraits.", image: "/images/events/event2.jpg", day: "22", month: "July", time: "5:00 PM - 9:00 PM", location: "Dhanmondi, Dhaka", eventDate: new Date("2026-07-22T17:00:00Z"), isUpcoming: true },
-      { slug: "bespoke-perfumery-workshop", title: "Bespoke Perfumery Workshop", description: "Learn the art of blending top, middle, and base notes from our master perfumer.", image: "/images/events/event3.jpg", day: "10", month: "August", time: "3:00 PM - 6:00 PM", location: "Gulshan, Dhaka", eventDate: new Date("2026-08-10T15:00:00Z"), isUpcoming: true }
-    ]
-  });
+  // 8. Create Events (Start empty for live admin events)
+  console.log('Skipping demo events creation...');
 
   // 9. Create Store Locations
   console.log('Creating Store Locations...');
