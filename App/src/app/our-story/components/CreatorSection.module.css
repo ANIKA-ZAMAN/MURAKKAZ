@@ -98,8 +98,8 @@
 .creatorImageFrame {
   position: relative;
   width: 100%;
-  max-width: 460px;
-  aspect-ratio: 750 / 1000;
+  max-width: 440px;
+  aspect-ratio: 619 / 1024;
   border: 6px solid #2D3036;
   border-radius: 18px;
   overflow: hidden;
@@ -115,7 +115,7 @@
 
 .creatorImage {
   object-fit: cover;
-  object-position: center 65%;
+  object-position: center;
   filter: grayscale(100%) contrast(108%);
   transition: filter 0.3s ease;
 }
