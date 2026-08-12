@@ -3,6 +3,7 @@
   background-color: #222224; /* Dark charcoal background matching screenshot */
   color: #F5F1E8;
   padding: 3.5rem 0;
+  overflow: hidden;
 }
 
 .container {
@@ -12,12 +13,19 @@
   padding: 0 2rem;
   display: flex;
   gap: 3rem;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .leftCol {
   flex: 1;
   max-width: 580px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stickyLeftInner {
+  position: sticky;
+  top: 110px;
   display: flex;
   flex-direction: column;
 }
@@ -35,37 +43,40 @@
 /* Interactive Award Tabs Grid */
 .tabsGrid {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
 }
 
 .tabBtn {
   flex: 1;
-  min-width: 160px;
-  padding: 1.15rem 1.25rem;
+  min-width: 150px;
+  padding: 1.1rem 1.15rem;
   background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 400;
   color: #EFEADF;
   text-align: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1.35;
 }
 
 .tabBtn:hover {
   background-color: rgba(255, 255, 255, 0.1);
   border-color: #D6B36A;
+  transform: translateY(-2px);
 }
 
 .activeTabBtn {
   background-color: rgba(255, 255, 255, 0.12) !important;
   border-color: #D6B36A !important;
   color: #FAF7F0 !important;
-  box-shadow: 0 4px 14px rgba(214, 179, 106, 0.2);
+  box-shadow: 0 4px 14px rgba(214, 179, 106, 0.25);
+  transform: translateY(-2px);
 }
 
 /* Detail Description Box */
@@ -73,7 +84,8 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 2.25rem;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .detailText {
@@ -82,28 +94,31 @@
   line-height: 1.8;
   color: #E0DACD;
   opacity: 0.92;
+  margin: 0;
 }
 
 /* Right Column: Media Showcase Grid */
 .rightCol {
   flex: 1;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .photoGrid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
   max-width: 580px;
 }
 
 .photoRow {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
-  aspect-ratio: 2.6 / 1;
+  aspect-ratio: 2.5 / 1;
 }
 
 .photoItem {
@@ -111,15 +126,20 @@
   height: 100%;
   border-radius: 12px;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-  transition: transform 0.4s ease, border-color 0.4s ease;
+  background-color: rgba(15, 15, 17, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.4s ease;
+  user-select: none;
 }
 
 .photoItem:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: #D6B36A;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 20px rgba(214, 179, 106, 0.2);
 }
 
 .row1Left {
@@ -138,44 +158,110 @@
   flex: 4;
 }
 
+.rowFull {
+  flex: 1;
+  width: 100%;
+}
+
 .gridImage {
   object-fit: cover;
-  opacity: 0.9;
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.92;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
 }
 
 .photoItem:hover .gridImage {
-  transform: scale(1.04);
+  transform: scale(1.06);
+  opacity: 1;
+}
+
+.photoItemOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.05) 40%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.badgeTag {
+  align-self: flex-start;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #D6B36A;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(214, 179, 106, 0.3);
 }
 
 .photoItemLabel {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 8px 12px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 70%, transparent 100%);
   color: #FAF7F0;
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.05em;
-  z-index: 2;
+  letter-spacing: 0.03em;
+  line-height: 1.25;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
+/* View More Button Container */
+.viewMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.viewMoreBtn {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: #D6B36A;
+  border: 1px solid #D6B36A;
+  padding: 0.65rem 2.2rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.viewMoreBtn:hover {
+  background-color: #D6B36A;
+  color: #222224;
+  box-shadow: 0 4px 18px rgba(214, 179, 106, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Mobile Column */
 .mobileCol {
   display: none;
 }
 
-@media (max-width: 900px) {
+/* Responsive Breakpoints */
+@media (max-width: 960px) {
   .wrapper {
-    padding: 2rem 0;
+    padding: 2.5rem 0;
   }
 
   .container {
     flex-direction: column;
-    gap: 1.25rem;
-    padding: 0 1rem;
+    gap: 2rem;
+    padding: 0 1.25rem;
   }
 
   .leftCol {
@@ -189,38 +275,38 @@
   }
 
   .heading {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
     text-align: left;
   }
 
   .mobileCardsStack {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1rem;
     width: 100%;
   }
 
   .awardCardMobile {
-    background-color: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 10px;
-    padding: 1.35rem 1.5rem;
-    transition: all 0.35s ease;
+    padding: 1.25rem 1.4rem;
+    transition: all 0.3s ease;
   }
 
   .mobileCardTitle {
     font-family: var(--font-serif-title), Georgia, serif;
-    font-size: 1.12rem;
+    font-size: 1.1rem;
     font-weight: 500;
     color: #FAF7F0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     line-height: 1.3;
   }
 
   .mobileCardDesc {
     font-family: var(--font-serif-text), Georgia, serif;
-    font-size: 0.92rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.65;
     color: #E0DACD;
     opacity: 0.92;
     margin: 0;
@@ -238,16 +324,15 @@
     background: transparent;
     border: none;
     padding: 0;
-    margin-top: 0.6rem;
+    margin-top: 0.5rem;
     font-family: var(--font-serif-text), Georgia, serif;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 500;
     color: #D6B36A;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    transition: color 0.2s ease, opacity 0.2s ease;
   }
 
   .seeMoreBtn:hover {
@@ -259,46 +344,49 @@
     width: 100%;
     max-width: 100%;
   }
+
+  .photoGrid {
+    max-width: 100%;
+  }
+
+  .photoRow {
+    aspect-ratio: 2.2 / 1;
+  }
 }
 
-.viewMoreContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-  width: 100%;
+@media (max-width: 580px) {
+  .photoRow {
+    aspect-ratio: 1.8 / 1;
+    gap: 10px;
+  }
+
+  .photoItemOverlay {
+    padding: 8px 9px;
+  }
+
+  .badgeTag {
+    font-size: 0.58rem;
+    padding: 1px 5px;
+  }
+
+  .photoItemLabel {
+    font-size: 0.7rem;
+  }
 }
 
-.viewMoreBtn {
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background-color: transparent;
-  color: #D6B36A;
-  border: 1px solid #D6B36A;
-  padding: 0.65rem 2rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.viewMoreBtn:hover {
-  background-color: #D6B36A;
-  color: #222224;
-  box-shadow: 0 4px 14px rgba(214, 179, 106, 0.3);
-}
-
+/* Lightbox Modal */
 .lightbox {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(10, 10, 12, 0.94);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 99999;
   cursor: zoom-out;
-  animation: fadeIn 0.25s ease;
+  animation: fadeIn 0.25s ease-out;
+  padding: 1.5rem;
 }
 
 @keyframes fadeIn {
@@ -308,49 +396,159 @@
 
 .closeBtn {
   position: absolute;
-  top: 24px;
-  right: 32px;
-  background: transparent;
-  border: none;
+  top: 20px;
+  right: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: #FAF7F0;
-  font-size: 3rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: all 0.25s ease;
   line-height: 1;
+  z-index: 10;
 }
 
 .closeBtn:hover {
-  color: #D6B36A;
+  background: #D6B36A;
+  color: #111;
+  border-color: #D6B36A;
+  transform: scale(1.08);
 }
 
 .lightboxContent {
   position: relative;
   max-width: 90vw;
-  max-height: 80vh;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: default;
 }
 
+.lightboxImageWrap {
+  position: relative;
+  max-width: 90vw;
+  max-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .lightboxImg {
   max-width: 100%;
-  max-height: 75vh;
+  max-height: 68vh;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 1px solid rgba(214, 179, 106, 0.3);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
   animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.95); opacity: 0; }
+  from { transform: scale(0.92); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-.lightboxCaption {
-  margin-top: 1rem;
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 1rem;
+.lightboxNavBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #FAF7F0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 5;
+  user-select: none;
+  line-height: 1;
+  padding-bottom: 4px;
+}
+
+.lightboxNavBtn:hover {
+  background: #D6B36A;
+  color: #111;
+  border-color: #D6B36A;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.lightboxNavPrev {
+  left: -24px;
+}
+
+.lightboxNavNext {
+  right: -24px;
+}
+
+@media (max-width: 640px) {
+  .lightboxNavPrev {
+    left: 8px;
+  }
+  .lightboxNavNext {
+    right: 8px;
+  }
+}
+
+.lightboxCounter {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.82rem;
+  color: #D6B36A;
+  letter-spacing: 0.1em;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 3px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(214, 179, 106, 0.3);
+}
+
+.lightboxMeta {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  gap: 0.3rem;
+}
+
+.lightboxBadge {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #D6B36A;
+  background: rgba(214, 179, 106, 0.12);
+  border: 1px solid rgba(214, 179, 106, 0.3);
+  padding: 2px 10px;
+  border-radius: 9999px;
+}
+
+.lightboxTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #FAF7F0;
+  margin: 0;
+}
+
+.lightboxEvent {
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.9rem;
+  color: #CFC9BD;
+  margin: 0;
 }

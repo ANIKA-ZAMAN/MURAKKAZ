@@ -90,25 +90,25 @@ export const ourStoryData = {
     heading: "Award Winning Collections",
     tabs: [
       {
-        id: "sme",
-        title: "Midas SME & Rajshahi Award",
+        id: "midas-sme",
+        title: "Midas Center & SME Awards",
         description:
-          "A foundational milestone in our brand's journey came through the recognition by Midas SME and the prestigious Rajshahi SME Fair award. This honor acknowledged our unique craftsmanship, innovative micro-enterprise model, and uncompromised dedication to bringing authentic, raw-material-driven perfumery to the local landscape. It served as a powerful institutional validation of our core philosophy: that true luxury relies on meticulous formulation and raw-material purity rather than mass commercial scaling.",
-        image: "/images/events/eliyas.jpg",
+          "A foundational milestone in our brand's journey celebrated at the Midas Center in Dhanmondi during Sheet Utshob 1431 and the Buy Sell Eid Mela. These prestigious recognitions validated our unique craftsmanship, innovative artisanal model, and uncompromised dedication to bringing authentic, raw-material-driven luxury perfumery to Bangladesh.",
+        image: "/images/awards/midas-sheet-utshob-1431.jpg",
       },
       {
-        id: "brac",
+        id: "brac-univ",
         title: "BRAC University Accolades",
         description:
-          "Recognized for artisanal excellence and entrepreneurial innovation during the BRAC University National Youth Entrepreneurship Showcase, establishing Murakkaz as a pioneering fragrance house.",
-        image: "/images/events/eliyas.jpg",
+          "Celebrated across multiple landmark events by BRAC University, including the Entrepreneurship Development Forum (EDF) at Entrepreneurs Fest 4.0 and Eid Bazaar, as well as the BRAC University Marketing Association (BUMA) at Nobanno Utshob and Mithai Utshob. These honors establish Murakkaz as a pioneering artisanal fragrance house.",
+        image: "/images/awards/brac-edf-token.jpg",
       },
       {
-        id: "nsu",
-        title: "North South University Honor",
+        id: "nsu-ninetyeight",
+        title: "North South University & Ninety Eight",
         description:
-          "Awarded by North South University's School of Business & Economics for excellence in local manufacturing, brand authenticity, and luxury fragrance formulation.",
-        image: "/images/events/eliyas.jpg",
+          "Honored with the official Token of Appreciation at EPITOME 3.0 by the North South University (NSU) HR Club & School of Business and Economics, alongside the handcrafted carved wooden tribute and Cricket Championship shield from Ninety Eight Rendezvous honoring our authentic formulation standards.",
+        image: "/images/awards/nsu-epitome-award.png",
       },
     ],
   },

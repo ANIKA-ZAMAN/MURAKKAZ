@@ -157,6 +157,7 @@
   background-color: #f0ebe3;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  aspect-ratio: 16 / 11;
 }
 
 .masonryPhotoCard:hover {
@@ -166,25 +167,27 @@
 
 .masonryCardWide {
   grid-column: span 1;
-  aspect-ratio: 16 / 10;
 }
 
 .masonryCardCompact {
   grid-column: span 1;
-  aspect-ratio: 16 / 10;
 }
 
 /* Desktop Styles */
 @media (min-width: 1024px) {
   .galleryGrid {
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
   }
-  .masonryCardWide {
-    grid-column: span 7;
+}
+
+@media (max-width: 640px) {
+  .galleryGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
-  .masonryCardCompact {
-    grid-column: span 5;
+  .masonryPhotoCard {
+    aspect-ratio: 16 / 12;
   }
 }
 
@@ -196,6 +199,7 @@
 
 .masonryImg {
   object-fit: cover;
+  object-position: center 25%;
   transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -286,13 +290,15 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
+  max-height: 70vh;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .lightboxImg {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .lightboxNavBtn {
