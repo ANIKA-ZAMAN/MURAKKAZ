@@ -19,6 +19,10 @@ export default function UpcomingEventsSection({
   onPageChange,
   onSetReminder,
 }: UpcomingEventsSectionProps) {
+  if (!paginatedEvents || paginatedEvents.length === 0) {
+    return null;
+  }
+
   return (
     <section className={styles.upcomingSection}>
       {/* Title matching exact screenshot */}
