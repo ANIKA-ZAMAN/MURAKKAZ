@@ -60,8 +60,31 @@ export const ourStoryData = {
   mediaMentions: {
     heading: "Trust Signals & Media Mentions",
     subheading: "Recognized Taste & Community Authority",
-    videoUrl: "", // Place video URL here when ready (HTML5 video / MP4 / embed)
-    posterImage: "/images/events/eliyas.jpg",
+    videos: [
+      {
+        id: "v1",
+        title: "Artisanal Fragrance Distillation",
+        location: "Midas Center, Dhanmondi",
+        poster: "/images/events/event_gallery_1.jpg",
+        videoUrl: "",
+      },
+      {
+        id: "v2",
+        title: "Master Scent Consultation",
+        location: "NSU Campus, Dhaka",
+        poster: "/images/events/event_gallery_2.jpg",
+        videoUrl: "",
+      },
+      {
+        id: "v3",
+        title: "Botanical Formulation & Notes",
+        location: "BRAC University, Dhaka",
+        poster: "/images/events/event_gallery_3.jpg",
+        videoUrl: "",
+      },
+    ],
+    videoUrl: "", // Legacy single video fallback
+    posterImage: "/images/events/event_gallery_1.jpg",
   },
 
   behindBrand: {

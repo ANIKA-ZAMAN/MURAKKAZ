@@ -30,19 +30,37 @@
   letter-spacing: 0.02em;
 }
 
-/* Luxury Compact Video Frame (Centered Exactly in the Middle of the Page) */
+/* 3 Video Cards Grid Aligned Properly */
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.videoCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.videoCard:hover {
+  transform: translateY(-4px);
+}
+
 .videoContainer {
   position: relative;
   width: 100%;
-  max-width: 780px;
-  aspect-ratio: 16 / 9;
-  max-height: 440px;
-  border: 4px solid #313134;
+  aspect-ratio: 4 / 3;
+  border: 3px solid #313134;
   border-radius: 12px;
   overflow: hidden;
   background-color: #EAE5DB;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  margin: 0 auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .videoElement {
@@ -60,7 +78,12 @@
 
 .posterImage {
   object-fit: cover;
-  opacity: 0.85;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.posterWrapper:hover .posterImage {
+  opacity: 1;
 }
 
 /* Centered Luxury Play Icon Overlay */
@@ -69,21 +92,21 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 72px;
-  height: 72px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  background-color: rgba(245, 241, 232, 0.85);
+  background-color: rgba(245, 241, 232, 0.88);
   border: 2px solid rgba(49, 49, 52, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(8px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.playOverlay:hover {
+.posterWrapper:hover .playOverlay {
   transform: translate(-50%, -50%) scale(1.08);
   background-color: #FAF7F0;
   border-color: #820011;
@@ -92,31 +115,50 @@
 .playTriangle {
   width: 0;
   height: 0;
-  border-top: 11px solid transparent;
-  border-bottom: 11px solid transparent;
-  border-left: 18px solid #313134;
-  margin-left: 4px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 15px solid #313134;
+  margin-left: 3px;
   transition: border-left-color 0.3s ease;
 }
 
-.playOverlay:hover .playTriangle {
+.posterWrapper:hover .playTriangle {
   border-left-color: #820011;
 }
 
-@media (max-width: 1023px) {
+.cardMeta {
+  margin-top: 0.85rem;
+  text-align: center;
+}
+
+.cardTitle {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #2D2D30;
+  margin-bottom: 0.25rem;
+}
+
+.cardLocation {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.82rem;
+  color: #767677;
+}
+
+@media (max-width: 900px) {
+  .videoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
   .section {
-    padding: 2rem 1.25rem;
+    padding: 2rem 1rem;
   }
-  .headingGroup {
-    margin-bottom: 1.25rem;
-  }
-  .title {
-    font-size: 1.85rem;
-  }
-  .videoContainer {
-    max-width: 100%;
-    aspect-ratio: 4 / 3;
-    max-height: 480px;
+  .videoGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
