@@ -1,9 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ourStoryData } from "../../data/ourStoryData";
 import styles from "../../page.module.css";
 
 export default function EventGallerySection() {
   const { gallery } = ourStoryData;
+
+  const images = [
+    { src: "/images/events/event_gallery_1.jpg", alt: "Live Olfactory Station", class: styles.itemShort },
+    { src: "/images/events/event_gallery_2.jpg", alt: "Luxury Pop-up Stall", class: styles.itemTall },
+    { src: "/images/events/event_gallery_3.jpg", alt: "Autumn Scent Soirée", class: styles.itemTall },
+    { src: "/images/events/event_gallery_4.jpg", alt: "Private Masterclass", class: styles.itemShort },
+  ];
 
   return (
     <section className={styles.gallerySection} aria-labelledby="gallery-heading">
@@ -24,18 +32,42 @@ export default function EventGallerySection() {
           <div className={styles.galleryGrid}>
             <div className={styles.galleryColumn}>
               <div className={`${styles.galleryGridItem} ${styles.itemShort}`} aria-label="Event gallery photo 1">
-                <div className={styles.darkMockPhoto} />
+                <Image
+                  src={images[0].src}
+                  alt={images[0].alt}
+                  fill
+                  sizes="300px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
               <div className={`${styles.galleryGridItem} ${styles.itemTall}`} aria-label="Event gallery photo 2">
-                <div className={styles.darkMockPhoto} />
+                <Image
+                  src={images[1].src}
+                  alt={images[1].alt}
+                  fill
+                  sizes="300px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </div>
             <div className={styles.galleryColumn}>
               <div className={`${styles.galleryGridItem} ${styles.itemTall}`} aria-label="Event gallery photo 3">
-                <div className={styles.darkMockPhoto} />
+                <Image
+                  src={images[2].src}
+                  alt={images[2].alt}
+                  fill
+                  sizes="300px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
               <div className={`${styles.galleryGridItem} ${styles.itemShort}`} aria-label="Event gallery photo 4">
-                <div className={styles.darkMockPhoto} />
+                <Image
+                  src={images[3].src}
+                  alt={images[3].alt}
+                  fill
+                  sizes="300px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </div>
           </div>

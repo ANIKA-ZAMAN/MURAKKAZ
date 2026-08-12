@@ -151,17 +151,17 @@ export const previousEvents: PreviousEvent[] = [];
 
 export const galleryImages: GalleryImage[] = [
   {
-    src: "/images/events/sadid.jpg",
-    alt: "Live Olfactory Station",
+    src: "/images/events/event_gallery_1.jpg",
+    alt: "Buy Sell Eid Mela - Midas Center",
     title: "Live Olfactory Station",
     category: "EXHIBITION",
     date: "Jan 15, 2025",
-    location: "Dhaka Club, Gulshan",
+    location: "Midas Center, Dhanmondi",
     accentColor: "#ded6c9",
   },
   {
-    src: "/images/events/eliyas.jpg",
-    alt: "Luxury Pop-up Stall",
+    src: "/images/events/event_gallery_2.jpg",
+    alt: "University Campus Scent Showcase",
     title: "Luxury Pop-up Stall",
     category: "POP-UP",
     date: "Dec 20, 2024",
@@ -169,8 +169,8 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#d6cebf",
   },
   {
-    src: "/images/occasions/wedding.png",
-    alt: "Autumn Scent Soirée",
+    src: "/images/events/event_gallery_3.jpg",
+    alt: "Fragrance Atelier & Scent Tasting",
     title: "Autumn Scent Soirée",
     category: "GALA",
     date: "Nov 12, 2024",
@@ -178,8 +178,8 @@ export const galleryImages: GalleryImage[] = [
     accentColor: "#ded6c9",
   },
   {
-    src: "/images/products/jade_serenity.png",
-    alt: "Private Masterclass",
+    src: "/images/events/event_gallery_4.jpg",
+    alt: "Private Masterclass & Note Profiling",
     title: "Private Masterclass",
     category: "WORKSHOP",
     date: "Oct 05, 2024",
