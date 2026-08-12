@@ -3,38 +3,38 @@
   min-height: 100vh;
   background-color: var(--background, #FAF7F0);
   color: #313134;
-  padding-bottom: 6rem;
+  padding-bottom: 5rem;
 }
 
 .memoryMainContainer {
   width: 100%;
   max-width: 1140px;
   margin: 0 auto;
-  padding: 3.5rem 1.5rem 5rem 1.5rem;
+  padding: 1.75rem 1.5rem 4rem 1.5rem;
   display: flex;
   flex-direction: column;
 }
 
-.memoryHeaderContainer {
+.topNavRow {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+  width: 100%;
 }
 
 .backBtnCircle {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid rgba(49, 49, 52, 0.35);
+  border: 1px solid rgba(49, 49, 52, 0.3);
   background-color: transparent;
   color: #313134;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2.25rem;
-  transition: all 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   padding: 0;
 }
 
@@ -51,92 +51,69 @@
   display: block;
 }
 
+/* Centered Header */
+.memoryHeaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto 2.25rem auto;
+  max-width: 800px;
+}
+
 .memoryMainTitle {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
   font-weight: 400;
-  color: #2D2D30;
   letter-spacing: -0.015em;
   line-height: 1.15;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
+}
+
+.titleBlack {
+  color: #242427;
+  font-family: var(--font-serif-title), Georgia, serif;
+}
+
+.titleAmpersand {
+  color: #820011;
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-style: italic;
+  margin: 0 0.25rem;
+  opacity: 0.9;
+}
+
+.titleRed {
+  color: #820011;
+  font-family: var(--font-serif-title), Georgia, serif;
 }
 
 .memorySubtitleParagraph {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.98rem;
-  line-height: 1.75;
+  font-size: 0.96rem;
+  line-height: 1.7;
   color: #555558;
-  max-width: 720px;
-  margin-bottom: 2.25rem;
+  max-width: 680px;
+  margin: 0 auto;
   letter-spacing: -0.005em;
-}
-
-.searchPillWrapper {
-  width: 100%;
-  margin-bottom: 3.5rem;
-}
-
-.searchPillBox {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  background-color: transparent;
-  border: 1px solid rgba(49, 49, 52, 0.35);
-  border-radius: 30px;
-  padding: 0.65rem 1.4rem;
-  width: 100%;
-  max-width: 320px;
-  transition: all 0.25s ease;
-}
-
-.searchPillBox:focus-within {
-  border-color: #313134;
-  background-color: rgba(49, 49, 52, 0.03);
-}
-
-.searchSvgIcon {
-  color: #767677;
-}
-
-.searchInputField {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.9rem;
-  color: #313134;
-  width: 100%;
-}
-
-.clearSearchBtn {
-  background: transparent;
-  border: none;
-  color: #767677;
-  cursor: pointer;
-  font-size: 0.85rem;
-  padding: 0;
-}
-
-.clearSearchBtn:hover {
-  color: #313134;
 }
 
 /* Sections */
 .memorySectionsList {
   display: flex;
   flex-direction: column;
-  gap: 4.5rem;
+  gap: 3.5rem;
 }
 
 .sectionBlock {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.35rem;
 }
 
 .sectionHeaderTitle {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 1.55rem;
+  font-size: 1.45rem;
   font-weight: 500;
   color: #2D2D30;
   letter-spacing: -0.01em;
@@ -152,32 +129,24 @@
 .masonryPhotoCard {
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(130, 120, 100, 0.12);
+  border: 1px solid rgba(130, 120, 100, 0.14);
   cursor: pointer;
   background-color: #f0ebe3;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
   aspect-ratio: 16 / 11;
 }
 
 .masonryPhotoCard:hover {
-  transform: translateY(-4px) scale(1.005);
-  box-shadow: 0 12px 30px rgba(47, 9, 9, 0.06);
-}
-
-.masonryCardWide {
-  grid-column: span 1;
-}
-
-.masonryCardCompact {
-  grid-column: span 1;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(47, 9, 9, 0.08);
 }
 
 /* Desktop Styles */
 @media (min-width: 1024px) {
   .galleryGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: 1.75rem;
   }
 }
 
@@ -188,6 +157,9 @@
   }
   .masonryPhotoCard {
     aspect-ratio: 16 / 12;
+  }
+  .memoryHeaderContainer {
+    margin-bottom: 1.75rem;
   }
 }
 
@@ -237,7 +209,7 @@
 
 .photoCardTitle {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 1.2rem;
+  font-size: 1.18rem;
   color: #ffffff;
   font-weight: 500;
   margin-bottom: 0.25rem;
@@ -259,6 +231,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1.5rem;
 }
 
 .lightboxModal {
@@ -267,7 +240,7 @@
   max-width: 960px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .lightboxCloseBtn {
@@ -376,17 +349,4 @@
   font-size: 0.85rem;
   color: #E0DACD;
   opacity: 0.8;
-}
-
-.noResultsBox {
-  display: flex;
-  justify-content: center;
-  padding: 5rem 0;
-  text-align: center;
-}
-
-.noResultsText {
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 1.1rem;
-  color: #555558;
 }
