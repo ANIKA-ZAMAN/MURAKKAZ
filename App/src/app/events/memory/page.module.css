@@ -39,6 +39,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-start;
   margin-bottom: 2.25rem;
   transition: all 0.25s ease;
   padding: 0;
