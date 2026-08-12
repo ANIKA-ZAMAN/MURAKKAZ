@@ -92,7 +92,7 @@ export default function MurakkazMemoryPage() {
         </div>
 
         {/* Show More Pill Button */}
-        {!searchQuery && (
+        {!searchQuery && extraMemorySections.length > 0 && (
           <ShowMoreButton
             isExpanded={isExpanded}
             onClick={() => setIsExpanded((prev) => !prev)}
