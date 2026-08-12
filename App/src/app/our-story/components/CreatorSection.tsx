@@ -41,6 +41,7 @@ export default function CreatorSection() {
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 480px"
               className={styles.creatorImage}
               priority
+              unoptimized
             />
           </div>
         </div>
