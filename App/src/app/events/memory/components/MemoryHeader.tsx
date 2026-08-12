@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import styles from "../page.module.css";
 
 interface MemoryHeaderProps {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
+  searchQuery?: string;
+  onSearchChange?: (value: string) => void;
 }
 
-export default function MemoryHeader({ searchQuery, onSearchChange }: MemoryHeaderProps) {
+export default function MemoryHeader({ searchQuery = "", onSearchChange }: MemoryHeaderProps) {
   const router = useRouter();
 
   const handleBack = () => {
@@ -45,10 +45,13 @@ export default function MemoryHeader({ searchQuery, onSearchChange }: MemoryHead
         </svg>
       </button>
 
-      {/* Main Page Title */}
-      <h1 className={styles.memoryMainTitle}>Murakkaz’s Memory</h1>
+      {/* Main Page Title centered with signature Murakkaz Red & Deep Charcoal */}
+      <h1 className={styles.memoryMainTitle}>
+        <span className={styles.brandRed}>Murakkaz</span>
+        <span className={styles.brandDark}>’s Memory</span>
+      </h1>
 
-      {/* Subtitle Description Paragraph */}
+      {/* Subtitle Description Paragraph centered */}
       <p className={styles.memorySubtitleParagraph}>
         This gallery is a living archive of our journey across Bangladesh—from the energy
         of packed campus pop-ups to elite lifestyle exhibitions. Every frame captures a real
@@ -56,45 +59,6 @@ export default function MemoryHeader({ searchQuery, onSearchChange }: MemoryHead
         fragrances. Revisit our favorite chapters, find yourself in the crowd, and see the
         passion that drives our house forward.
       </p>
-
-      {/* Pill Search Input Bar */}
-      <div className={styles.searchPillWrapper}>
-        <div className={styles.searchPillBox}>
-          <svg
-            className={styles.searchSvgIcon}
-            width="17"
-            height="17"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="11" cy="11" r="7.5" />
-            <line x1="21" y1="21" x2="16.5" y2="16.5" />
-          </svg>
-          <input
-            type="text"
-            className={styles.searchInputField}
-            placeholder="Search the event or place"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            aria-label="Search the event or place"
-          />
-          {searchQuery && (
-            <button
-              type="button"
-              className={styles.clearSearchBtn}
-              onClick={() => onSearchChange("")}
-              aria-label="Clear search"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
     </header>
   );
 }
