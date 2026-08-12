@@ -70,7 +70,7 @@ export default function EventGallerySection() {
 
         {/* Right Column: Staggered 2x2 Masonry Photo Grid */}
         <div className={styles.galleryRightGrid}>
-          {galleryImages.map((img, idx) => {
+          {galleryImages.slice(0, 4).map((img, idx) => {
             const isWide = idx === 0 || idx === 3;
             return (
               <Link
