@@ -231,6 +231,33 @@ export const galleryImages: GalleryImage[] = [
     location: "Banani Boutique Showcase",
     accentColor: "#ded6c9",
   },
+  {
+    src: "/images/events/event_gallery_10.jpg",
+    alt: "Murakkaz Signature Wall Showcase",
+    title: "Official Brand Pavilion",
+    category: "POP-UP",
+    date: "Apr 18, 2024",
+    location: "BRACU Campus Plaza, Dhaka",
+    accentColor: "#d6cebf",
+  },
+  {
+    src: "/images/events/event_gallery_11.jpg",
+    alt: "Perfume Concentrates & Note Vault",
+    title: "Scent Vault & Raw Essence Audit",
+    category: "EXHIBITION",
+    date: "Mar 12, 2024",
+    location: "Murakkaz Perfumery Lab",
+    accentColor: "#ded6c9",
+  },
+  {
+    src: "/images/events/event_gallery_12.jpg",
+    alt: "Founder & Community Celebration",
+    title: "Fragrance Lovers Meetup",
+    category: "MEETUP",
+    date: "Feb 02, 2024",
+    location: "North South University Hall",
+    accentColor: "#d6cebf",
+  },
 ];
 
 export const storeLocations: StoreLocation[] = [
