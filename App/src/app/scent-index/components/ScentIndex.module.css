@@ -4,12 +4,12 @@
 
 /* ── CSS Custom Properties for responsive card sizing ── */
 .quizPage {
-  --card-h: 500px;        /* desktop card height */
+  --card-h: min(540px, calc(100svh - 9rem)); /* generous desktop card height */
   --marker-h: 43px;       /* progress markers row height */
-  --intro-h: calc(var(--marker-h) + var(--card-h)); /* 543px desktop */
-  --card-pad-v: 2.25rem;
-  --card-pad-h: 2.75rem;
-  --q-font: 1.55rem;
+  --intro-h: calc(var(--marker-h) + var(--card-h)); /* 583px desktop */
+  --card-pad-v: 1.5rem;   /* optimized vertical padding */
+  --card-pad-h: 2.25rem;
+  --q-font: 1.45rem;
   --intro-font: 2.1rem;
 
   position: relative;
@@ -390,8 +390,12 @@
 .multiGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(0.3rem, 1vw, 0.45rem) clamp(0.4rem, 1.5vw, 0.7rem);
-  width: 100%; flex: 1;
+  gap: clamp(0.25rem, 0.8vw, 0.4rem) clamp(0.4rem, 1.2vw, 0.65rem);
+  width: 100%;
+}
+
+.gridBtn {
+  padding: clamp(0.35rem, 1vw, 0.48rem) clamp(0.55rem, 1.5vw, 0.85rem) !important;
 }
 
 .optionBtn {
@@ -454,9 +458,11 @@
 .cardActionsRow {
   display: flex; justify-content: space-between; align-items: center;
   margin-top: auto;
-  padding-top: clamp(0.5rem, 1.5vw, 0.65rem);
+  padding-top: clamp(0.5rem, 1.2vw, 0.65rem);
+  padding-bottom: 0.15rem;
   width: 100%; flex-shrink: 0;
-  border-top: 1px solid rgba(130,120,100,0.08);
+  border-top: 1px solid rgba(130,120,100,0.12);
+  z-index: 5;
 }
 
 .btn {
