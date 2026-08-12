@@ -12,7 +12,7 @@ interface GlobalLayoutProps {
 export default function GlobalLayout({ children }: GlobalLayoutProps) {
   const pathname = usePathname();
   const headerRef = useRef<HTMLDivElement>(null);
-  const [paddingTop, setPaddingTop] = useState(116);
+  const [paddingTop, setPaddingTop] = useState(88);
 
   const isHome = pathname === "/";
 
@@ -21,7 +21,7 @@ export default function GlobalLayout({ children }: GlobalLayoutProps) {
       if (headerRef.current) {
         const headerEl = headerRef.current.querySelector("header") || headerRef.current;
         const rect = headerEl.getBoundingClientRect();
-        const gap = 36;
+        const gap = 12;
         const calculatedPadding = Math.round(rect.height + gap);
         if (calculatedPadding > 0) {
           setPaddingTop(calculatedPadding);
