@@ -145,6 +145,86 @@
   color: #767677;
 }
 
+.facebookBadge {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: rgba(24, 119, 242, 0.9);
+  color: #ffffff;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.3rem 0.65rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 3;
+}
+
+/* 3rd Empty Placeholder Card Styling */
+.placeholderCard {
+  opacity: 0.85;
+}
+
+.placeholderBox {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 2px dashed rgba(49, 49, 52, 0.35);
+  border-radius: 12px;
+  background-color: rgba(234, 229, 219, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.placeholderCard:hover .placeholderBox {
+  border-color: #820011;
+  background-color: rgba(250, 247, 240, 0.9);
+  transform: scale(1.01);
+}
+
+.placeholderPlusIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(49, 49, 52, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #555558;
+  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.placeholderCard:hover .placeholderPlusIcon {
+  border-color: #820011;
+  color: #820011;
+  border-style: solid;
+}
+
+.placeholderText {
+  font-family: var(--font-serif-title), Georgia, serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: #313134;
+  margin-bottom: 0.2rem;
+}
+
+.placeholderSubtext {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.78rem;
+  color: #767677;
+}
+
 @media (max-width: 900px) {
   .videoGrid {
     grid-template-columns: repeat(2, 1fr);

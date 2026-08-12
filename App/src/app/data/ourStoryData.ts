@@ -63,27 +63,30 @@ export const ourStoryData = {
     videos: [
       {
         id: "v1",
-        title: "Artisanal Fragrance Distillation",
+        title: "Live Olfactory Station Showcase",
         location: "Midas Center, Dhanmondi",
         poster: "/images/events/event_gallery_1.jpg",
-        videoUrl: "",
+        videoUrl: "https://www.facebook.com/share/v/1PY3vSxsrR/",
+        isPlaceholder: false,
       },
       {
         id: "v2",
-        title: "Master Scent Consultation",
-        location: "NSU Campus, Dhaka",
+        title: "Campus Perfume & Scent Discovery",
+        location: "NSU Campus, Banani",
         poster: "/images/events/event_gallery_2.jpg",
-        videoUrl: "",
+        videoUrl: "https://www.facebook.com/share/v/19Fy1ZWWG5/",
+        isPlaceholder: false,
       },
       {
         id: "v3",
-        title: "Botanical Formulation & Notes",
-        location: "BRAC University, Dhaka",
-        poster: "/images/events/event_gallery_3.jpg",
+        title: "Upcoming Feature",
+        location: "Slot available for future media",
+        poster: "",
         videoUrl: "",
+        isPlaceholder: true,
       },
     ],
-    videoUrl: "", // Legacy single video fallback
+    videoUrl: "https://www.facebook.com/share/v/1PY3vSxsrR/", // Legacy single video fallback
     posterImage: "/images/events/event_gallery_1.jpg",
   },
 
