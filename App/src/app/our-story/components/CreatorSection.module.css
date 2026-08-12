@@ -89,7 +89,7 @@
 }
 
 .creatorImageCol {
-  flex: 1.2;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,29 +98,23 @@
 .creatorImageFrame {
   position: relative;
   width: 100%;
-  max-width: 480px;
-  aspect-ratio: 1 / 1.22;
+  max-width: 420px;
+  aspect-ratio: 574 / 1024;
   border: 6px solid #2D3036;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.16);
   background-color: #1E2024;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .creatorImageFrame:hover {
-  transform: translateY(-4px) scale(1.01);
+  transform: translateY(-4px);
   box-shadow: 0 22px 50px rgba(0, 0, 0, 0.22);
 }
 
 .creatorImage {
-  object-fit: cover;
-  object-position: center 20%;
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.creatorImageFrame:hover .creatorImage {
-  transform: scale(1.03);
+  object-fit: contain;
 }
 
 /* Responsive Breakpoints */
@@ -130,8 +124,7 @@
   }
 
   .creatorImageFrame {
-    max-width: 420px;
-    aspect-ratio: 1 / 1.2;
+    max-width: 360px;
   }
 }
 
@@ -157,9 +150,8 @@
   }
 
   .creatorImageFrame {
-    max-width: 100%;
-    width: 100%;
-    aspect-ratio: 1 / 1.15;
+    max-width: 360px;
+    margin: 0 auto;
   }
 }
 
@@ -181,8 +173,8 @@
   }
 
   .creatorImageFrame {
-    border-width: 5px;
+    max-width: 310px;
+    border-width: 4px;
     border-radius: 14px;
-    aspect-ratio: 1 / 1.18;
   }
 }
