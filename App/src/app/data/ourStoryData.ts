@@ -63,18 +63,18 @@ export const ourStoryData = {
     videos: [
       {
         id: "v1",
-        title: "Live Olfactory Station Showcase",
-        location: "Midas Center, Dhanmondi",
-        poster: "/images/events/event_gallery_1.jpg",
+        title: "Olfactory Review & Fragrance Discussion",
+        location: "Murakkaz Lounge",
+        poster: "/images/events/video_thumbnail_1.png",
         videoUrl: "https://www.facebook.com/share/v/1PY3vSxsrR/",
         isPlaceholder: false,
       },
       {
         id: "v2",
-        title: "Campus Perfume & Scent Discovery",
-        location: "NSU Campus, Banani",
-        poster: "/images/events/event_gallery_2.jpg",
-        videoUrl: "https://www.facebook.com/share/v/19Fy1ZWWG5/",
+        title: "Channel i HD Feature & Founder Interview",
+        location: "Channel i HD Special Coverage",
+        poster: "/images/events/video_thumbnail_2.png",
+        videoUrl: "https://youtu.be/kDqvhSFQud0?si=616OL7LTVlGLshNh",
         isPlaceholder: false,
       },
       {
@@ -87,7 +87,7 @@ export const ourStoryData = {
       },
     ],
     videoUrl: "https://www.facebook.com/share/v/1PY3vSxsrR/", // Legacy single video fallback
-    posterImage: "/images/events/event_gallery_1.jpg",
+    posterImage: "/images/events/video_thumbnail_1.png",
   },
 
   behindBrand: {

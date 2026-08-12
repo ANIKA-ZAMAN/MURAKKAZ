@@ -164,6 +164,25 @@
   z-index: 3;
 }
 
+.youtubeBadge {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: rgba(224, 0, 0, 0.9);
+  color: #ffffff;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.3rem 0.65rem;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 3;
+}
+
 /* 3rd Empty Placeholder Card Styling */
 .placeholderCard {
   opacity: 0.85;
