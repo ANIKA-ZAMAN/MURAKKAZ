@@ -59,20 +59,20 @@ export const ourStoryData = {
 
   mediaMentions: {
     heading: "Trust Signals & Media Mentions",
-    subheading: "Recognized Taste & Community Authority",
+    subheading: "",
     videos: [
       {
         id: "v1",
-        title: "Olfactory Review & Fragrance Discussion",
-        location: "Murakkaz Lounge",
+        title: "meeting with salman bhai",
+        location: "",
         poster: "/images/events/video_thumbnail_1.png",
         videoUrl: "https://www.facebook.com/share/v/1PY3vSxsrR/",
         isPlaceholder: false,
       },
       {
         id: "v2",
-        title: "Channel i HD Feature & Founder Interview",
-        location: "Channel i HD Special Coverage",
+        title: "interview at channel i with Shykh Seraj",
+        location: "",
         poster: "/images/events/video_thumbnail_2.png",
         videoUrl: "https://youtu.be/kDqvhSFQud0?si=616OL7LTVlGLshNh",
         isPlaceholder: false,
@@ -80,7 +80,7 @@ export const ourStoryData = {
       {
         id: "v3",
         title: "Upcoming Feature",
-        location: "Slot available for future media",
+        location: "",
         poster: "",
         videoUrl: "",
         isPlaceholder: true,

@@ -60,7 +60,9 @@ export default function MediaMentionsSection({
         <h2 id="media-mentions-title" className={styles.title}>
           {mediaMentions.heading}
         </h2>
-        <p className={styles.subheading}>{mediaMentions.subheading}</p>
+        {mediaMentions.subheading && (
+          <p className={styles.subheading}>{mediaMentions.subheading}</p>
+        )}
       </div>
 
       {/* 3 Video Cards Grid Aligned Properly */}
@@ -83,7 +85,7 @@ export default function MediaMentionsSection({
                 </div>
                 <div className={styles.cardMeta}>
                   <h3 className={styles.cardTitle}>{item.title}</h3>
-                  <p className={styles.cardLocation}>{item.location || "Coming Soon"}</p>
+                  {item.location && <p className={styles.cardLocation}>{item.location}</p>}
                 </div>
               </div>
             );
