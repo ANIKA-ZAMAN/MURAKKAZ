@@ -89,7 +89,7 @@
 }
 
 .creatorImageCol {
-  flex: 0.9;
+  flex: 1.1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,10 +98,10 @@
 .creatorImageFrame {
   position: relative;
   width: 100%;
-  max-width: 275px;
-  aspect-ratio: 574 / 1024;
-  border: 5px solid #2D3036;
-  border-radius: 16px;
+  max-width: 460px;
+  aspect-ratio: 750 / 1000;
+  border: 6px solid #2D3036;
+  border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
   background-color: #1E2024;
@@ -114,7 +114,8 @@
 }
 
 .creatorImage {
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 20%;
   filter: grayscale(100%) contrast(108%);
   transition: filter 0.3s ease;
 }
@@ -126,7 +127,7 @@
   }
 
   .creatorImageFrame {
-    max-width: 250px;
+    max-width: 380px;
   }
 }
 
@@ -152,7 +153,7 @@
   }
 
   .creatorImageFrame {
-    max-width: 250px;
+    max-width: 380px;
     margin: 0 auto;
   }
 }
@@ -175,8 +176,8 @@
   }
 
   .creatorImageFrame {
-    max-width: 220px;
+    max-width: 320px;
     border-width: 4px;
-    border-radius: 12px;
+    border-radius: 14px;
   }
 }
