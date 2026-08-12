@@ -107,7 +107,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 1rem;
+  padding: 0.65rem 0.75rem;
 }
 
 .removeBtn {
@@ -126,6 +126,7 @@
   justify-content: center;
   border-radius: 50%;
   transition: background-color 0.2s ease;
+  z-index: 2;
 }
 
 .removeBtn:hover {
@@ -137,11 +138,16 @@
   align-items: center;
   justify-content: center;
   flex: 1;
+  width: calc(100% + 0.75rem);
+  margin-left: -0.375rem;
+  margin-right: -0.375rem;
 }
 
 .productImage {
   object-fit: contain;
-  max-height: 210px;
+  width: 100%;
+  max-height: 220px;
+  transform: scaleX(1.08);
 }
 
 .productLabel {

@@ -79,14 +79,14 @@ function CompareContent() {
 
   const [perfumeList, setPerfumeList] = useState<CompareProduct[]>(allAvailablePerfumes);
   const [selectedSlots, setSelectedSlots] = useState<(CompareProduct | null)[]>([
-    allAvailablePerfumes[0] || null,
-    allAvailablePerfumes[1] || null,
+    null,
+    null,
     null,
   ]);
 
   const [activeSelectIndex, setActiveSelectIndex] = useState<number | null>(null);
   const [modalSearchQuery, setModalSearchQuery] = useState("");
-  const [showComparison, setShowComparison] = useState(true);
+  const [showComparison, setShowComparison] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const tableRef = useRef<HTMLDivElement>(null);
@@ -253,17 +253,19 @@ function CompareContent() {
   }, [searchParams, perfumeList]);
 
   useEffect(() => {
-    if (showComparison && tableRef.current) {
-      setTimeout(() => {
-        if (tableRef.current) {
-          const navbarOffset = 110;
-          const elementTop = tableRef.current.getBoundingClientRect().top + window.scrollY;
+    if (showComparison) {
+      const timer = setTimeout(() => {
+        const el = tableRef.current;
+        if (el) {
+          const navbarOffset = 80;
+          const elementTop = el.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({
-            top: elementTop - navbarOffset,
+            top: Math.max(0, elementTop - navbarOffset),
             behavior: "smooth",
           });
         }
-      }, 100);
+      }, 150);
+      return () => clearTimeout(timer);
     }
   }, [showComparison]);
 
@@ -332,8 +334,6 @@ function CompareContent() {
                       <img
                         src={slot.image}
                         alt={slot.name}
-                        width={260}
-                        height={260}
                         className={styles.productImage}
                       />
                     </div>
