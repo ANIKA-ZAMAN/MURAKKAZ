@@ -112,7 +112,41 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
   }
 };
 
-export const upcomingEvents: UpcomingEvent[] = [];
+export const upcomingEvents: UpcomingEvent[] = [
+  {
+    id: "upcoming-1",
+    day: "28",
+    month: "Aug",
+    title: "Artisanal Perfumery Workshop",
+    location: "Banani Flagship Store, Dhaka",
+    daysLeft: "16 days left",
+    time: "From 15:00 to 19:00",
+    description: "An exclusive hands-on session exploring botanical notes, accord blending, and custom formulation.",
+    image: "/images/events/sadid.jpg",
+  },
+  {
+    id: "upcoming-2",
+    day: "12",
+    month: "Sep",
+    title: "Autumn Scent Showcase",
+    location: "Radisson Blu, Dhaka",
+    daysLeft: "31 days left",
+    time: "From 11:00 to 21:00",
+    description: "Discover our private autumn collection featuring warm amber, oud, and rare spices.",
+    image: "/images/events/eliyas.jpg",
+  },
+  {
+    id: "upcoming-3",
+    day: "05",
+    month: "Oct",
+    title: "Connoisseur Meetup & Scent Tasting",
+    location: "Dhanmondi Lounge, Dhaka",
+    daysLeft: "54 days left",
+    time: "From 16:00 to 20:00",
+    description: "A sensory gathering with our master perfumer exploring rare international raw materials.",
+    image: "/images/events/eliyash-founder.png",
+  },
+];
 export const previousEvents: PreviousEvent[] = [];
 
 export const galleryImages: GalleryImage[] = [

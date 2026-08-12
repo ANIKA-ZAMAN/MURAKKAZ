@@ -1,16 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { upcomingEvents } from "../data/eventsData";
+import { upcomingEvents, fetchLiveEvents, UpcomingEvent } from "../data/eventsData";
 import styles from "./homepage.module.css";
 
 export default function UpcomingEventsSection() {
-  const events = upcomingEvents.slice(0, 3);
+  const [events, setEvents] = useState<UpcomingEvent[]>(upcomingEvents.slice(0, 3));
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    fetchLiveEvents(true).then(({ upcoming }) => {
+      if (upcoming && upcoming.length > 0) {
+        setEvents(upcoming.slice(0, 3));
+      }
+    });
+  }, []);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();

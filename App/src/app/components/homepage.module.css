@@ -417,6 +417,7 @@
 .centerActions {
   display: flex;
   justify-content: center;
+  margin-bottom: 2.25rem;
 }
 
 /* ── Discovery Set ── */
@@ -768,7 +769,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2rem;
 }
 
 .eventCard {
@@ -1375,7 +1376,7 @@
 
 /* ── Newsletter Subscription Banner ── */
 .newsletterBanner {
-  margin-top: 3.5rem;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
