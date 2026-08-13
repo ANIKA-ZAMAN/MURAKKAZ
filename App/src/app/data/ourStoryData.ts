@@ -5,8 +5,8 @@ export const ourStoryData = {
     paragraph:
       "Murakkaz was never built to be a mass-market commercial brand. It is a lifelong devotion to authentic perfumery, international artistry, and a community of true fragrance connoisseurs.",
     buttonText: "Scroll Down",
-    image: "/images/events/eliyash-founder.png",
-    imageAlt: "Eliyash Hossain - The Creator of Murakkaz crafting artisanal fragrances",
+    image: "/images/events/event_gallery_4.jpg",
+    imageAlt: "Eliyash Hossain crafting artisanal fragrances with fragrance lovers at campus event",
   },
 
   journeySections: [

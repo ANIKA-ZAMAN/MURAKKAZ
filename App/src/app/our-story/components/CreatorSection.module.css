@@ -98,24 +98,24 @@
 .creatorImageFrame {
   position: relative;
   width: 100%;
-  max-width: 420px;
-  aspect-ratio: 619 / 930;
-  border: 6px solid #2D3036;
-  border-radius: 18px;
+  max-width: 520px;
+  aspect-ratio: 4 / 3;
+  border: 5px solid #2D3036;
+  border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
   background-color: #1E2024;
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .creatorImageFrame:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.24);
 }
 
 .creatorImage {
   object-fit: cover;
-  object-position: top center;
+  object-position: center;
   filter: grayscale(100%) contrast(108%);
   transition: filter 0.3s ease;
 }

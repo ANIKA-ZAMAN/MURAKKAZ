@@ -3,6 +3,7 @@ import JourneyStorySection from "./components/JourneyStorySection";
 import MediaMentionsSection from "./components/MediaMentionsSection";
 import BehindBrandSection from "./components/BehindBrandSection";
 import AwardsSection from "./components/AwardsSection";
+import EventGallerySection from "./components/EventGallerySection";
 import styles from "../page.module.css";
 
 export default function OurStoryPage() {
@@ -14,6 +15,7 @@ export default function OurStoryPage() {
         <MediaMentionsSection />
         <BehindBrandSection />
         <AwardsSection />
+        <EventGallerySection />
       </main>
     </div>
   );
