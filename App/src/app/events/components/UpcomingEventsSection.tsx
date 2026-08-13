@@ -43,20 +43,10 @@ export default function UpcomingEventsSection({
 
             return (
               <div key={idx} className={styles.exactCardRow}>
-                {/* Col 1: Date & Time */}
-                <div className={styles.exactColDate}>
-                  <div className={styles.exactDayNumber}>{event.day}</div>
-                  <div className={styles.exactMonthName}>{event.month}</div>
-                  <div className={styles.exactTimeText}>
-                    From 8.00<br />To 17.00
-                  </div>
-                </div>
-
-                {/* Col 2: Title, Location, Days Left Badge, Set Reminder Button */}
+                {/* Col 1: Title, Location, Set Reminder Button */}
                 <div className={styles.exactColTitle}>
                   <h3 className={styles.exactCardTitle}>{event.title}</h3>
                   <div className={styles.exactCardLocation}>{event.location}</div>
-                  <div className={styles.exactRedDaysLeft}>{event.daysLeft}</div>
                   <button
                     type="button"
                     className={styles.exactSetReminderBtn}

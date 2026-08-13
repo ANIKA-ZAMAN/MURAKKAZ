@@ -7,15 +7,19 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.75rem 1.25rem;
   width: 100%;
+}
+
+.grid > * {
+  min-width: 0;
 }
 
 /* Surface / Small Laptops (1024px – 1366px): 4-column layout with optimized spacing */
 @media (min-width: 1024px) and (max-width: 1366px) {
   .grid {
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     gap: 1.25rem 0.85rem !important;
   }
 }
@@ -23,7 +27,7 @@
 /* Tablet (768px – 1023px): 3-column grid */
 @media (min-width: 768px) and (max-width: 1023px) {
   .grid {
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     gap: 1.25rem 0.9rem !important;
   }
 }
@@ -31,7 +35,7 @@
 /* Mobile (< 768px): Premium 2-column grid with 16px gap */
 @media (max-width: 767px) {
   .grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 16px !important;
     width: 100%;
     box-sizing: border-box;
@@ -51,4 +55,3 @@
   border: 1px dashed rgba(118, 118, 119, 0.25);
   border-radius: 12px;
 }
-

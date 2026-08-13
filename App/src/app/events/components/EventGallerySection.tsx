@@ -95,10 +95,9 @@ export default function EventGallerySection() {
                   {/* Bottom Text Overlay */}
                   <div className={styles.photoOverlayGradient}>
                     <h4 className={styles.photoCardTitle}>{img.title}</h4>
-                    <p className={styles.photoCardMeta}>
-                      {img.location ? `${img.location} • ` : ""}
-                      {img.date}
-                    </p>
+                    {img.location && (
+                      <p className={styles.photoCardMeta}>{img.location}</p>
+                    )}
                   </div>
                 </div>
               </Link>
@@ -165,9 +164,11 @@ export default function EventGallerySection() {
               <h3 className={styles.lightboxTitle}>
                 {galleryImages[lightboxIndex].title}
               </h3>
-              <p className={styles.lightboxSub}>
-                {galleryImages[lightboxIndex].location} • {galleryImages[lightboxIndex].date}
-              </p>
+              {galleryImages[lightboxIndex].location && (
+                <p className={styles.lightboxSub}>
+                  {galleryImages[lightboxIndex].location}
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -15,43 +15,28 @@ export default function MediaMentionsSection({
   customPoster,
 }: MediaMentionsSectionProps) {
   const { mediaMentions } = ourStoryData;
-  const [activePlayingId, setActivePlayingId] = useState<string | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const videoList = mediaMentions.videos || [
-    {
-      id: "v1",
-      title: "Live Olfactory Station Showcase",
-      location: "Midas Center, Dhanmondi",
-      poster: customPoster || mediaMentions.posterImage || "/images/events/event_gallery_1.jpg",
-      videoUrl: customVideoUrl || mediaMentions.videoUrl || "https://www.facebook.com/share/v/1PY3vSxsrR/",
-      isPlaceholder: false,
-    },
-    {
-      id: "v2",
-      title: "Campus Perfume & Scent Discovery",
-      location: "NSU Campus, Banani",
-      poster: "/images/events/event_gallery_2.jpg",
-      videoUrl: "https://www.facebook.com/share/v/19Fy1ZWWG5/",
-      isPlaceholder: false,
-    },
-    {
-      id: "v3",
-      title: "Upcoming Feature",
-      location: "Slot available for future media",
-      poster: "",
-      videoUrl: "",
-      isPlaceholder: true,
-    },
-  ];
+  const rawVideoUrl = customVideoUrl || mediaMentions.videoUrl || "https://youtu.be/kDqvhSFQud0?si=616OL7LTVlGLshNh";
+  const posterSrc = customPoster || mediaMentions.posterImage || "/images/events/video_thumbnail_2.png";
+  const videoTitle = mediaMentions.videoTitle || "Interview at Channel i with Shykh Seraj";
+  const subheadingText = mediaMentions.subheading || videoTitle;
 
-  const handleCardClick = (item: typeof videoList[0]) => {
-    if (item.isPlaceholder || !item.videoUrl) return;
-
-    if (item.videoUrl.includes("facebook.com") || item.videoUrl.includes("youtube.com") || item.videoUrl.includes("youtu.be")) {
-      window.open(item.videoUrl, "_blank", "noopener,noreferrer");
-    } else {
-      setActivePlayingId(item.id);
+  // Determine if URL is YouTube
+  const isYouTube = rawVideoUrl.includes("youtube.com") || rawVideoUrl.includes("youtu.be");
+  let embedUrl = mediaMentions.embedUrl || "https://www.youtube.com/embed/kDqvhSFQud0?autoplay=1";
+  if (isYouTube) {
+    if (rawVideoUrl.includes("youtu.be/")) {
+      const id = rawVideoUrl.split("youtu.be/")[1]?.split("?")[0];
+      if (id) embedUrl = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+    } else if (rawVideoUrl.includes("watch?v=")) {
+      const id = rawVideoUrl.split("watch?v=")[1]?.split("&")[0];
+      if (id) embedUrl = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
     }
+  }
+
+  const handlePlay = () => {
+    setIsPlaying(true);
   };
 
   return (
@@ -60,81 +45,57 @@ export default function MediaMentionsSection({
         <h2 id="media-mentions-title" className={styles.title}>
           {mediaMentions.heading}
         </h2>
-        {mediaMentions.subheading && (
-          <p className={styles.subheading}>{mediaMentions.subheading}</p>
+        {subheadingText && (
+          <p className={styles.subheading}>{subheadingText}</p>
         )}
       </div>
 
-      {/* 3 Video Cards Grid Aligned Properly */}
-      <div className={styles.videoGrid}>
-        {videoList.map((item) => {
-          const isPlaying = activePlayingId === item.id;
-          const videoSrc = item.videoUrl;
-          const posterSrc = item.poster;
-          const isPlaceholder = item.isPlaceholder || (!videoSrc && !posterSrc);
-          const isFacebook = videoSrc && videoSrc.includes("facebook.com");
-          const isYouTube = videoSrc && (videoSrc.includes("youtube.com") || videoSrc.includes("youtu.be"));
-
-          if (isPlaceholder) {
-            return (
-              <div key={item.id} className={`${styles.videoCard} ${styles.placeholderCard}`}>
-                <div className={styles.placeholderBox}>
-                  <div className={styles.placeholderPlusIcon}>+</div>
-                  <p className={styles.placeholderText}>Upcoming Media Feature</p>
-                  <span className={styles.placeholderSubtext}>Slot reserved for future video</span>
-                </div>
-                <div className={styles.cardMeta}>
-                  <h3 className={styles.cardTitle}>{item.title}</h3>
-                  {item.location && <p className={styles.cardLocation}>{item.location}</p>}
-                </div>
-              </div>
-            );
-          }
-
-          return (
-            <div key={item.id} className={styles.videoCard}>
-              <div className={styles.videoContainer}>
-                {videoSrc && isPlaying && !isFacebook && !isYouTube ? (
-                  <video
-                    src={videoSrc}
-                    className={styles.videoElement}
-                    controls
-                    autoPlay
-                    poster={posterSrc}
-                  />
-                ) : (
-                  <div
-                    className={styles.posterWrapper}
-                    onClick={() => handleCardClick(item)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Watch ${item.title}`}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") handleCardClick(item);
-                    }}
-                  >
-                    {posterSrc && (
-                      <Image
-                        src={posterSrc}
-                        alt={item.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 380px"
-                        className={styles.posterImage}
-                      />
-                    )}
-                    <div className={styles.playOverlay} aria-label={`Play ${item.title}`}>
-                      <div className={styles.playTriangle} />
-                    </div>
-                  </div>
-                )}
-              </div>
-              <div className={styles.cardMeta}>
-                <h3 className={styles.cardTitle}>{item.title}</h3>
-                {item.location && <p className={styles.cardLocation}>{item.location}</p>}
-              </div>
+      {/* Single Big Video Container as it was before */}
+      <div className={styles.videoContainer}>
+        {isPlaying ? (
+          isYouTube ? (
+            <iframe
+              src={embedUrl}
+              title={videoTitle}
+              className={styles.videoElement}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              src={rawVideoUrl}
+              className={styles.videoElement}
+              controls
+              autoPlay
+              poster={posterSrc}
+            />
+          )
+        ) : (
+          <div
+            className={styles.posterWrapper}
+            onClick={handlePlay}
+            role="button"
+            tabIndex={0}
+            aria-label={`Play ${videoTitle}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") handlePlay();
+            }}
+          >
+            {posterSrc && (
+              <Image
+                src={posterSrc}
+                alt={videoTitle}
+                fill
+                priority
+                sizes="(max-width: 1200px) 100vw, 1200px"
+                className={styles.posterImage}
+              />
+            )}
+            <div className={styles.playOverlay} aria-label="Play video">
+              <div className={styles.playTriangle} />
             </div>
-          );
-        })}
+          </div>
+        )}
       </div>
     </section>
   );

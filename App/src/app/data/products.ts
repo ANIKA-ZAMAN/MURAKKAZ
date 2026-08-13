@@ -1904,19 +1904,34 @@ export const luxuryProducts: Product[] = [
 
 export const productsCatalog = luxuryProducts;
 
+let cachedProducts: Product[] | null = null;
+
 export async function fetchLiveProducts(): Promise<Product[]> {
+  if (cachedProducts && cachedProducts.length > 0) {
+    return cachedProducts;
+  }
+
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 600);
+
     const baseUrl = typeof window !== 'undefined' 
-      ? window.location.origin 
+      ? (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000' : window.location.origin)
       : 'http://127.0.0.1:5000';
     
-    const res = await fetch(`${baseUrl}/api/products?limit=1000`, { cache: 'no-store' });
-    if (res.ok) {
-      const json = await res.json();
-      const items = json.data || json;
+    const res = await fetch(`${baseUrl}/api/products?limit=1000`, { 
+      signal: controller.signal,
+      cache: 'force-cache'
+    }).catch(() => null);
+
+    clearTimeout(timeoutId);
+
+    if (res && res.ok) {
+      const json = await res.json().catch(() => null);
+      const items = json ? (json.data || json) : null;
 
       if (Array.isArray(items) && items.length > 0) {
-        return items.map((p: any) => {
+        cachedProducts = items.map((p: any) => {
           let priceStr = p.price || "300 - 2500tk";
           let minPrice = 300;
           if (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0) {
@@ -1956,10 +1971,13 @@ export async function fetchLiveProducts(): Promise<Product[]> {
             badge: p.isFeatured ? "FEATURED" : undefined,
           };
         });
+        return cachedProducts;
       }
     }
-  } catch (err) {
-    console.warn("Could not fetch live API products, falling back to static catalog:", err);
+  } catch {
+    // Silent fallback to local catalog for 0ms speed
   }
+
+  cachedProducts = luxuryProducts;
   return luxuryProducts;
 }

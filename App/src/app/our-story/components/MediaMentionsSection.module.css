@@ -2,7 +2,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 2rem 3.5rem 2rem;
+  padding: 2.5rem 2rem 3rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,13 +10,13 @@
 }
 
 .headingGroup {
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
 .title {
   font-family: var(--font-serif-title), Georgia, serif;
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
   font-weight: 400;
   color: #313134;
   letter-spacing: -0.01em;
@@ -25,47 +25,29 @@
 
 .subheading {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.95rem;
-  color: #767677;
+  font-size: 1rem;
+  color: #666668;
   letter-spacing: 0.02em;
 }
 
-/* 3 Video Cards Grid Aligned Properly */
-.videoGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.videoCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  transition: transform 0.3s ease;
-}
-
-.videoCard:hover {
-  transform: translateY(-4px);
-}
-
+/* Single Compact Video Container */
 .videoContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  border: 3px solid #313134;
-  border-radius: 12px;
+  max-width: 720px;
+  aspect-ratio: 16 / 9;
+  border: 2.5px solid #313134;
+  border-radius: 14px;
   overflow: hidden;
   background-color: #EAE5DB;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
 
 .videoElement {
   width: 100%;
   height: 100%;
+  border: none;
   object-fit: cover;
 }
 
@@ -78,12 +60,13 @@
 
 .posterImage {
   object-fit: cover;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
+  opacity: 0.94;
+  transition: opacity 0.3s ease, transform 0.4s ease;
 }
 
 .posterWrapper:hover .posterImage {
   opacity: 1;
+  transform: scale(1.015);
 }
 
 /* Centered Luxury Play Icon Overlay */
@@ -92,16 +75,16 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 58px;
-  height: 58px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  background-color: rgba(245, 241, 232, 0.88);
-  border: 2px solid rgba(49, 49, 52, 0.2);
+  background-color: rgba(245, 241, 232, 0.92);
+  border: 2px solid rgba(49, 49, 52, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(8px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.18);
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
@@ -115,9 +98,9 @@
 .playTriangle {
   width: 0;
   height: 0;
-  border-top: 9px solid transparent;
-  border-bottom: 9px solid transparent;
-  border-left: 15px solid #313134;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  border-left: 18px solid #313134;
   margin-left: 3px;
   transition: border-left-color 0.3s ease;
 }
@@ -126,156 +109,26 @@
   border-left-color: #820011;
 }
 
-.cardMeta {
-  margin-top: 0.85rem;
-  text-align: center;
-}
-
-.cardTitle {
-  font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: #2D2D30;
-  margin-bottom: 0.25rem;
-}
-
-.cardLocation {
-  font-family: var(--font-sans), sans-serif;
-  font-size: 0.82rem;
-  color: #767677;
-}
-
-.facebookBadge {
-  position: absolute;
-  bottom: 0.75rem;
-  left: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  background-color: rgba(24, 119, 242, 0.9);
-  color: #ffffff;
-  font-family: var(--font-sans), sans-serif;
-  font-size: 0.72rem;
-  font-weight: 500;
-  padding: 0.3rem 0.65rem;
-  border-radius: 20px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 3;
-}
-
-.youtubeBadge {
-  position: absolute;
-  bottom: 0.75rem;
-  left: 0.75rem;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  background-color: rgba(224, 0, 0, 0.9);
-  color: #ffffff;
-  font-family: var(--font-sans), sans-serif;
-  font-size: 0.72rem;
-  font-weight: 500;
-  padding: 0.3rem 0.65rem;
-  border-radius: 20px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 3;
-}
-
-/* 3rd Empty Placeholder Card Styling */
-.placeholderCard {
-  opacity: 0.85;
-}
-
-.placeholderBox {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border: 2px dashed rgba(49, 49, 52, 0.35);
-  border-radius: 12px;
-  background-color: rgba(234, 229, 219, 0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.placeholderCard:hover .placeholderBox {
-  border-color: #820011;
-  background-color: rgba(250, 247, 240, 0.9);
-  transform: scale(1.01);
-}
-
-.placeholderPlusIcon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(49, 49, 52, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #555558;
-  margin-bottom: 0.75rem;
-  transition: all 0.3s ease;
-}
-
-.placeholderCard:hover .placeholderPlusIcon {
-  border-color: #820011;
-  color: #820011;
-  border-style: solid;
-}
-
-.placeholderText {
-  font-family: var(--font-serif-title), Georgia, serif;
-  font-size: 0.98rem;
-  font-weight: 500;
-  color: #313134;
-  margin-bottom: 0.2rem;
-}
-
-.placeholderSubtext {
-  font-family: var(--font-sans), sans-serif;
-  font-size: 0.78rem;
-  color: #767677;
-}
-
-@media (max-width: 900px) {
-  .videoGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
-  }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .section {
     padding: 2rem 1rem;
   }
-  .videoGrid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .section {
-    padding: 1.75rem 1rem;
+  .headingGroup {
+    margin-bottom: 1.25rem;
   }
   .videoContainer {
-    aspect-ratio: 1 / 1;
-    max-height: 380px;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    border-width: 2px;
   }
   .playOverlay {
-    width: 60px;
-    height: 60px;
+    width: 58px;
+    height: 58px;
   }
   .playTriangle {
     border-top-width: 9px;
     border-bottom-width: 9px;
-    border-left-width: 14px;
+    border-left-width: 15px;
   }
 }

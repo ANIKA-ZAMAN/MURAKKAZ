@@ -117,9 +117,11 @@ export default function MemoryLightbox({
         {/* Bottom Caption Information */}
         <div className={styles.lightboxCaptionRow}>
           <h3 className={styles.lightboxPhotoTitle}>{currentPhoto.title}</h3>
-          <p className={styles.lightboxPhotoMeta}>
-            <span>{currentPhoto.location}</span> • <span>{currentPhoto.date}</span>
-          </p>
+          {currentPhoto.location && (
+            <p className={styles.lightboxPhotoMeta}>
+              <span>{currentPhoto.location}</span>
+            </p>
+          )}
         </div>
 
         {/* Bottom Thumbnail Navigation Strip */}

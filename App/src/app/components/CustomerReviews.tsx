@@ -13,24 +13,50 @@ interface CustomerReviewsProps {
 export default function CustomerReviews({
   items = defaultReviews,
   title = "Customer Reviews",
-  subtitle = "Words from our fragrance collectors",
+  subtitle = "Words from our valuable customers",
 }: CustomerReviewsProps) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [lightboxPhoto, setLightboxPhoto] = useState<{ src: string; title: string } | null>(null);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
   const reviewItems = items || [];
   const total = reviewItems.length;
 
-  // Continuous Auto-play interval (5.5s)
+  // Viewport Intersection Observer (pause animation when off-screen to save CPU/battery)
   useEffect(() => {
-    if (isPaused || total === 0) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // ESC Key Listener to close photo lightbox
+  useEffect(() => {
+    if (!lightboxPhoto) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxPhoto(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxPhoto]);
+
+  // Auto-play interval (5.5s) — runs ONLY when in viewport and not paused
+  useEffect(() => {
+    if (isPaused || !isInView || total === 0) return;
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % total);
     }, 5500);
     return () => clearInterval(timer);
-  }, [isPaused, total]);
+  }, [isPaused, isInView, total]);
 
   if (total === 0) return null;
 
@@ -124,7 +150,7 @@ export default function CustomerReviews({
   const formatNumber = (num: number) => (num < 9 ? `0${num + 1}` : `${num + 1}`);
 
   return (
-    <section className={styles.section} suppressHydrationWarning>
+    <section ref={sectionRef} className={styles.section} suppressHydrationWarning>
       {/* Ambient Spotlight & Vignette Glow */}
       <div className={styles.spotlightGlow} />
       <div className={styles.vignetteOverlay} />
@@ -178,26 +204,63 @@ export default function CustomerReviews({
                     </div>
                   </div>
 
-                  {/* Quote Body */}
-                  <blockquote className={styles.quoteText}>
-                    &ldquo;{rev.quote}&rdquo;
-                  </blockquote>
+                  {/* Quote Body with See More / See Less toggle */}
+                  {(() => {
+                    const cardKey = rev.id || String(idx);
+                    const isExpanded = expandedCardId === cardKey;
+                    const isLongQuote = rev.quote.length > 115;
+
+                    return (
+                      <div className={styles.quoteWrap}>
+                        <blockquote
+                          className={`${styles.quoteText} ${
+                            isExpanded ? styles.quoteExpanded : ""
+                          }`}
+                        >
+                          &ldquo;{rev.quote}&rdquo;
+                        </blockquote>
+                        {isLongQuote && (
+                          <button
+                            type="button"
+                            className={styles.seeMoreBtn}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setExpandedCardId(isExpanded ? null : cardKey);
+                            }}
+                          >
+                            {isExpanded ? "See less ▲" : "See more ▼"}
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {/* Review Photo Attachment Thumbnail */}
+                  {rev.photo && (
+                    <div
+                      className={styles.reviewPhotoWrap}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLightboxPhoto({
+                          src: rev.photo!,
+                          title: `${rev.name}'s Perfume Review Photo`,
+                        });
+                      }}
+                      role="button"
+                      tabIndex={0}
+                      aria-label="View full review photo"
+                    >
+                      <img
+                        src={rev.photo}
+                        alt={`${rev.name} perfume review`}
+                        className={styles.reviewPhotoImg}
+                      />
+                      <span className={styles.photoZoomBadge}>🔍 Click to enlarge</span>
+                    </div>
+                  )}
                 </div>
 
                 <div>
-                  {/* Performance Ratings Pills */}
-                  <div className={styles.performanceRow}>
-                    <span className={styles.perfPill}>
-                      <span className={styles.pillIcon}>⏳</span> {rev.longevity}
-                    </span>
-                    <span className={styles.perfPill}>
-                      <span className={styles.pillIcon}>✨</span> {rev.projection}
-                    </span>
-                    <span className={styles.perfPill}>
-                      <span className={styles.pillIcon}>💬</span> {rev.compliments}
-                    </span>
-                  </div>
-
                   {/* Author Details Footer */}
                   <div className={styles.authorFooter}>
                     <div className={styles.authorMeta}>
@@ -247,6 +310,24 @@ export default function CustomerReviews({
           </button>
         </div>
       </div>
+
+      {/* Full Photo Lightbox Overlay Modal */}
+      {lightboxPhoto && (
+        <div className={styles.lightboxOverlay} onClick={() => setLightboxPhoto(null)}>
+          <div className={styles.lightboxContent} onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className={styles.lightboxCloseBtn}
+              onClick={() => setLightboxPhoto(null)}
+              aria-label="Close photo"
+            >
+              ✕
+            </button>
+            <img src={lightboxPhoto.src} alt={lightboxPhoto.title} className={styles.fullPhotoImg} />
+            <p className={styles.lightboxCaption}>{lightboxPhoto.title}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

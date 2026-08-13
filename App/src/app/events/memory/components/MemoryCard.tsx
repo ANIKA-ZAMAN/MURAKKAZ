@@ -32,12 +32,14 @@ export default function MemoryCard({ photo, onClick }: MemoryCardProps) {
           <span className={styles.cardCategoryBadge}>{photo.category}</span>
         )}
 
-        {/* Dark Gradient Overlay with Title, Date & Location */}
+        {/* Dark Gradient Overlay with Title & Location */}
         <div className={styles.cardOverlay}>
           <h3 className={styles.cardTitle}>{photo.title}</h3>
-          <p className={styles.cardMeta}>
-            <span>{photo.location}</span> • <span>{photo.date}</span>
-          </p>
+          {photo.location && (
+            <p className={styles.cardMeta}>
+              <span>{photo.location}</span>
+            </p>
+          )}
         </div>
       </div>
     </div>

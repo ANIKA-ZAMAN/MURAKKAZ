@@ -431,8 +431,19 @@ nextjs-portal,
   pointer-events: none !important;
 }
 
+/* ── Mobile Butter-Smooth Scrolling & Performance Optimizations ── */
+html {
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
 /* ── Global Luxury Micro-Interactions (GPU-Accelerated) ── */
-/* 1. Buttons: 180ms transition, 2-3px lift, subtle shadow increase */
 button:not(:disabled),
 a.btn,
 .btn-primary,
@@ -441,32 +452,33 @@ a.btn,
               box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1),
               background-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
               border-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:hover:not(:disabled) {
   will-change: transform;
 }
 
-/* 2. Cards: 4-6px lift on hover with soft shadow */
 .card-hover,
 [data-card-hover] {
   transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
               box-shadow 450ms cubic-bezier(0.22, 1, 0.36, 1),
               border-color 450ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
 }
 
 .card-hover:hover,
 [data-card-hover]:hover {
   transform: translateY(-5px);
   box-shadow: 0 16px 36px -6px rgba(80, 60, 30, 0.12);
+  will-change: transform;
 }
 
-/* 3. Image Hover: Slight scale (1.03) on hover only */
 .img-hover-scale {
   transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
 }
 
 .img-hover-scale:hover {
   transform: scale(1.03);
+  will-change: transform;
 }
 
 /* ── Accessibility: Prefers Reduced Motion Override ── */

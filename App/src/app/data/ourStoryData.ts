@@ -59,35 +59,11 @@ export const ourStoryData = {
 
   mediaMentions: {
     heading: "Trust Signals & Media Mentions",
-    subheading: "",
-    videos: [
-      {
-        id: "v1",
-        title: "meeting with salman bhai",
-        location: "",
-        poster: "/images/events/video_thumbnail_1.png",
-        videoUrl: "https://www.facebook.com/share/v/1PY3vSxsrR/",
-        isPlaceholder: false,
-      },
-      {
-        id: "v2",
-        title: "interview at channel i with Shykh Seraj",
-        location: "",
-        poster: "/images/events/video_thumbnail_2.png",
-        videoUrl: "https://youtu.be/kDqvhSFQud0?si=616OL7LTVlGLshNh",
-        isPlaceholder: false,
-      },
-      {
-        id: "v3",
-        title: "Upcoming Feature",
-        location: "",
-        poster: "",
-        videoUrl: "",
-        isPlaceholder: true,
-      },
-    ],
-    videoUrl: "https://www.facebook.com/share/v/1PY3vSxsrR/", // Legacy single video fallback
-    posterImage: "/images/events/video_thumbnail_1.png",
+    subheading: "Interview at Channel i with Shykh Seraj",
+    videoTitle: "Interview at Channel i with Shykh Seraj",
+    videoUrl: "https://youtu.be/kDqvhSFQud0?si=616OL7LTVlGLshNh",
+    embedUrl: "https://www.youtube.com/embed/kDqvhSFQud0?autoplay=1",
+    posterImage: "/images/events/video_thumbnail_2.png",
   },
 
   behindBrand: {
