@@ -1904,6 +1904,24 @@ export const luxuryProducts: Product[] = [
 
 export const productsCatalog = luxuryProducts;
 
+export function getProductsApiBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  }
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host === "localhost" || host === "127.0.0.1") {
+      return "http://localhost:5000/api";
+    }
+    // If accessing via LAN IP (e.g. 192.168.x.x), connect to backend on port 5000 of same IP
+    if (/^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(host)) {
+      return `http://${host}:5000/api`;
+    }
+    return "https://api.murakkaz.com/api";
+  }
+  return "https://api.murakkaz.com/api";
+}
+
 let cachedProducts: Product[] | null = null;
 
 export async function fetchLiveProducts(): Promise<Product[]> {
@@ -1913,13 +1931,11 @@ export async function fetchLiveProducts(): Promise<Product[]> {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 600);
+    const timeoutId = setTimeout(() => controller.abort(), 2500);
 
-    const baseUrl = typeof window !== 'undefined' 
-      ? (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000' : window.location.origin)
-      : 'http://127.0.0.1:5000';
+    const apiUrl = `${getProductsApiBaseUrl()}/products?limit=1000`;
     
-    const res = await fetch(`${baseUrl}/api/products?limit=1000`, { 
+    const res = await fetch(apiUrl, { 
       signal: controller.signal,
       cache: 'force-cache'
     }).catch(() => null);

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { upcomingEvents, fetchLiveEvents, UpcomingEvent } from "../data/eventsData";
+import { upcomingEvents, fetchLiveEvents, getApiBaseUrl, UpcomingEvent } from "../data/eventsData";
 import styles from "./homepage.module.css";
 
 export default function UpcomingEventsSection() {
@@ -32,7 +32,7 @@ export default function UpcomingEventsSection() {
     setErrorMsg("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/events/subscribe", {
+      const res = await fetch(`${getApiBaseUrl()}/events/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, source: "homepage_upcoming_events" }),

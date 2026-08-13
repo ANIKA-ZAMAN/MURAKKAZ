@@ -5,7 +5,7 @@ import Link from "next/link";
 import ProductCard from "./ProductCard";
 import styles from "./homepage.module.css";
 
-import { luxuryProducts } from "../data/products";
+import { luxuryProducts, fetchLiveProducts } from "../data/products";
 
 /* ── Curated Real Featured Collection Products (From 63 Master PDF Catalog) ── */
 const defaultFeaturedProducts = luxuryProducts.slice(0, 8).map((p, idx) => ({
@@ -29,36 +29,28 @@ export default function FeaturedCollections() {
   const [visibleCount, setVisibleCount] = useState(4);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Fetch live products from backend API if available
+  // Fetch live products from backend API via unified fetchLiveProducts single source of truth
   useEffect(() => {
     let isMounted = true;
-    fetch("http://localhost:5000/api/products?limit=12")
-      .then((res) => {
-        if (!res.ok) throw new Error("Network error");
-        return res.json();
-      })
-      .then((json) => {
-        if (isMounted && json.data && Array.isArray(json.data) && json.data.length > 0) {
-          const liveList = json.data.map((item: any, idx: number) => ({
-            id: item.id || `prod-${idx}`,
-            name: item.name,
-            brand: item.brand ? item.brand.toUpperCase() : "MURAKKAZ EXTRAITS",
-            inspiredBy: item.inspiredBy || (item.description && item.description.includes("Inspired by") ? item.description.split(".")[0] : ""),
-            description: item.description || item.ourTake || "",
-            rating: item.rating || 4.8,
-            reviews: item.reviewCount || 40 + idx * 5,
-            price: item.sizes && item.sizes.length > 1 ? `${item.sizes[0].price} - ${item.sizes[item.sizes.length - 1].price}tk` : "300 - 2500tk",
-            originalPrice: item.sizes && item.sizes[0]?.originalPrice ? `${item.sizes[0].originalPrice}tk` : undefined,
-            volume: item.sizes && item.sizes[0] ? item.sizes[0].size : "12ml",
-            image: item.image,
-            badge: item.isFeatured ? "EXCLUSIVE" : idx % 3 === 0 ? "BESTSELLER" : "TOP PICK",
-          }));
-          setFeaturedProducts(liveList);
-        }
-      })
-      .catch(() => {
-        // Keeps default matching curated collection products
-      });
+    fetchLiveProducts().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        const liveList = data.slice(0, 12).map((item, idx) => ({
+          id: item.id || `prod-${idx}`,
+          name: item.name,
+          brand: item.brand || "MURAKKAZ",
+          inspiredBy: item.inspiredBy || "",
+          description: item.description || "",
+          rating: item.rating || 4.9,
+          reviews: item.reviews || 45,
+          price: item.price,
+          originalPrice: item.originalPrice || "650tk",
+          volume: item.volume || "12ml",
+          image: item.image,
+          badge: item.badge || (idx % 2 === 0 ? "BESTSELLER" : "EXCLUSIVE"),
+        }));
+        setFeaturedProducts(liveList);
+      }
+    });
 
     return () => {
       isMounted = false;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { upcomingEvents, previousEvents, UpcomingEvent, PreviousEvent, fetchLiveEvents } from "../data/eventsData";
+import { upcomingEvents, previousEvents, UpcomingEvent, PreviousEvent, fetchLiveEvents, getApiBaseUrl } from "../data/eventsData";
 import UpcomingEventsSection from "./components/UpcomingEventsSection";
 import EventGallerySection from "./components/EventGallerySection";
 import MeetGreetSection from "./components/MeetGreetSection";
@@ -38,14 +38,16 @@ export default function EventsPage() {
       if (savedUser) {
         try {
           const parsed = JSON.parse(savedUser);
-          if (parsed.name) setReminderName(parsed.name);
-          if (parsed.email) setReminderEmail(parsed.email);
+          if (parsed && typeof parsed === "object") {
+            if (parsed.name && !reminderName) setReminderName(parsed.name);
+            if (parsed.email && !reminderEmail) setReminderEmail(parsed.email);
+          }
         } catch (e) {
-          console.error("Failed to parse user session", e);
+          console.error("Error reading saved user", e);
         }
       }
     }
-  }, [selectedEvent]);
+  }, [selectedEvent, reminderName, reminderEmail]);
 
   const handleSetReminderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,9 +55,7 @@ export default function EventsPage() {
 
     // Send reminder subscription to backend API
     const targetSlug = selectedEvent.slug || selectedEvent.id || "general";
-    const apiBase = typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-      ? "http://localhost:5000/api"
-      : `${window.location.origin}/api`;
+    const apiBase = getApiBaseUrl();
 
     try {
       await fetch(`${apiBase}/events/${targetSlug}/reminder`, {

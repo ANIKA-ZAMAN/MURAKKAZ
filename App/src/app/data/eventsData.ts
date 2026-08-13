@@ -37,10 +37,17 @@ export interface StoreLocation {
   contract: string;
 }
 
-const getApiBaseUrl = (): string => {
+export const getApiBaseUrl = (): string => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  }
   if (typeof window !== "undefined") {
-    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+    const host = window.location.hostname;
+    if (host === "localhost" || host === "127.0.0.1") {
       return "http://localhost:5000/api";
+    }
+    if (/^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(host)) {
+      return `http://${host}:5000/api`;
     }
     return "https://api.murakkaz.com/api";
   }
