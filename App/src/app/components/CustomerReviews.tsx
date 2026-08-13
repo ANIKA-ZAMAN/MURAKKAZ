@@ -98,6 +98,8 @@ export default function CustomerReviews({
     if (offset < -Math.floor(total / 2)) offset += total;
     if (offset > Math.floor(total / 2)) offset -= total;
 
+    const isSmallScreen = typeof window !== "undefined" && window.innerWidth < 768;
+
     if (offset === 0) {
       return {
         transform: "translateX(0%) scale(1) translateZ(0px)",
@@ -108,17 +110,17 @@ export default function CustomerReviews({
       };
     } else if (offset === 1) {
       return {
-        transform: "translateX(58%) scale(0.9) translateZ(-40px)",
-        opacity: 0.55,
-        filter: "blur(2px)",
+        transform: isSmallScreen ? "translateX(105%) scale(0.88)" : "translateX(58%) scale(0.9) translateZ(-40px)",
+        opacity: isSmallScreen ? 0 : 0.55,
+        filter: isSmallScreen ? "blur(0px)" : "blur(2px)",
         zIndex: 5,
         pointerEvents: "auto" as const,
       };
     } else if (offset === -1) {
       return {
-        transform: "translateX(-58%) scale(0.9) translateZ(-40px)",
-        opacity: 0.55,
-        filter: "blur(2px)",
+        transform: isSmallScreen ? "translateX(-105%) scale(0.88)" : "translateX(-58%) scale(0.9) translateZ(-40px)",
+        opacity: isSmallScreen ? 0 : 0.55,
+        filter: isSmallScreen ? "blur(0px)" : "blur(2px)",
         zIndex: 5,
         pointerEvents: "auto" as const,
       };
