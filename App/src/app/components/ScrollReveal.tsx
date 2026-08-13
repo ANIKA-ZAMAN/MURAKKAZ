@@ -26,11 +26,8 @@ export default function ScrollReveal({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // On mobile & tablet touch devices (< 1025px), render content immediately to eliminate touch scroll latency
-    if (typeof window !== "undefined" && (window.innerWidth < 1025 || "ontouchstart" in window)) {
-      setIsVisible(true);
-      return;
-    }
+    // Guarantee visibility across all devices & live server deployments
+    setIsVisible(true);
 
     const el = ref.current;
     if (!el) return;
@@ -44,7 +41,7 @@ export default function ScrollReveal({
       },
       {
         threshold: 0.01,
-        rootMargin: "180px 0px 180px 0px",
+        rootMargin: "250px 0px 250px 0px",
       }
     );
 

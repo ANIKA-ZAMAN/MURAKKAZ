@@ -54,6 +54,28 @@ export const getApiBaseUrl = (): string => {
   return "https://api.murakkaz.com/api";
 };
 
+const validTrackedImages = [
+  "/images/events/event_gallery_5.jpg",
+  "/images/events/event_gallery_3.jpg",
+  "/images/events/event_gallery_6.jpg",
+  "/images/events/event_gallery_1.jpg",
+  "/images/events/event_gallery_2.jpg",
+  "/images/events/event_gallery_4.jpg",
+  "/images/events/happy_customer_nsu.jpg",
+  "/images/events/eliyas.jpg"
+];
+
+function getValidEventImage(rawImage: string | undefined, idx: number): string {
+  if (rawImage && 
+      !rawImage.includes("event1.jpg") && 
+      !rawImage.includes("event2.jpg") && 
+      !rawImage.includes("event3.jpg") &&
+      !rawImage.includes("undefined")) {
+    return rawImage.startsWith("/") ? rawImage : `/images/events/${rawImage}`;
+  }
+  return validTrackedImages[idx % validTrackedImages.length];
+}
+
 let cachedEventsData: { upcoming: UpcomingEvent[]; previous: PreviousEvent[] } | null = null;
 
 export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: UpcomingEvent[]; previous: PreviousEvent[] }> => {
@@ -80,7 +102,7 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
         const fetchedUpcoming: UpcomingEvent[] = [];
         const fetchedPrevious: PreviousEvent[] = [];
 
-        data.forEach((evt: any) => {
+        data.forEach((evt: any, idx: number) => {
           const evtDate = evt.eventDate ? new Date(evt.eventDate) : new Date();
           const diffMs = evtDate.getTime() - Date.now();
           const calcDaysLeft = diffMs > 0 ? Math.ceil(diffMs / (1000 * 60 * 60 * 24)) : 0;
@@ -90,6 +112,7 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
 
           const monthName = evt.month || evtDate.toLocaleString("en-US", { month: "short" });
           const dayNum = evt.day || String(evtDate.getDate()).padStart(2, "0");
+          const validatedImg = getValidEventImage(evt.image, idx);
 
           if (evt.isUpcoming ?? true) {
             fetchedUpcoming.push({
@@ -102,7 +125,7 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
               time: evt.time || "4:00 PM - 7:00 PM",
               location: evt.location || "Dhaka",
               daysLeft: daysLeftStr,
-              image: evt.image || "/images/events/event1.jpg",
+              image: validatedImg,
             });
           } else {
             fetchedPrevious.push({
@@ -110,7 +133,7 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
               slug: evt.slug || evt.id,
               title: evt.title,
               date: `${monthName} ${dayNum}, ${evtDate.getFullYear()}`,
-              image: evt.image || "/images/events/event1.jpg",
+              image: validatedImg,
               category: evt.category || "Exhibition",
             });
           }
