@@ -38,10 +38,9 @@ export default function StoreLocationSection({
             onChange={(e) => setSelectedZone(e.target.value)}
           >
             <option value="">Zone</option>
-            <option value="banani">Dhaka, Banani</option>
-            <option value="dhanmondi">Dhaka, Dhanmondi</option>
-            <option value="chattogram">Chattogram</option>
             <option value="bashundhara">Dhaka, Bashundhara</option>
+            <option value="badda">Dhaka, Merul Badda</option>
+            <option value="dhanmondi">Dhaka, Dhanmondi</option>
           </select>
           <span className={styles.exactZoneCaret}>⌄</span>
         </div>
@@ -71,7 +70,6 @@ export default function StoreLocationSection({
             <div className={styles.exactStoreCardBody}>
               <h4 className={styles.exactStoreAddress}>{loc.address}</h4>
               <p className={styles.exactStoreZone}>Zone: {loc.zone}</p>
-              <p className={styles.exactStoreContract}>Contract: {loc.contract}</p>
             </div>
           </div>
         ))}

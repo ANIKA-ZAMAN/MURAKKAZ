@@ -263,26 +263,20 @@ export const galleryImages: GalleryImage[] = [
 export const storeLocations: StoreLocation[] = [
   {
     id: "01",
-    address: "House 45, Road 11, Block H, Banani, Dhaka - 1213",
-    zone: "Dhaka, Banani",
+    address: "North South University, Plot 15, Block B, Kuril - NSU Road, Bashundhara Residential Area, Dhaka-1229, Bangladesh",
+    zone: "Dhaka, Bashundhara",
     contract: "01735.....49",
   },
   {
     id: "02",
-    address: "Level 3, Shimanto Square, Dhanmondi, Dhaka - 1209",
-    zone: "Dhaka, Dhanmondi",
+    address: "BRAC University, Kha 224 Pragati Sarani, Merul Badda, Dhaka 1212",
+    zone: "Dhaka, Merul Badda",
     contract: "01745.....59",
   },
   {
     id: "03",
-    address: "GEC Circle, Central Shopping Arcade, Level 1, Chattogram - 4000",
-    zone: "Chattogram, Nasirabad",
-    contract: "01765.....89",
-  },
-  {
-    id: "04",
-    address: "Jamuna Future Park, Level 1, Shop 04B, Bashundhara, Dhaka - 1229",
-    zone: "Dhaka, Bashundhara",
+    address: "The MIDAS Center, Plot No. 5, Road No. 16 (New), Road No. 27 (Old), Dhanmondi, Dhaka 1209, Bangladesh",
+    zone: "Dhaka, Dhanmondi",
     contract: "01785.....99",
   },
 ];

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { upcomingEvents, previousEvents, UpcomingEvent, PreviousEvent, fetchLiveEvents } from "../data/eventsData";
 import UpcomingEventsSection from "./components/UpcomingEventsSection";
-import PreviousEventsSection from "./components/PreviousEventsSection";
 import EventGallerySection from "./components/EventGallerySection";
 import MeetGreetSection from "./components/MeetGreetSection";
 import StoreLocationSection from "./components/StoreLocationSection";
@@ -113,7 +112,6 @@ export default function EventsPage() {
           }}
         />
 
-        <PreviousEventsSection events={livePrevious} />
 
         <EventGallerySection />
 
