@@ -57,17 +57,17 @@ export const getApiBaseUrl = (): string => {
 let cachedEventsData: { upcoming: UpcomingEvent[]; previous: PreviousEvent[] } | null = null;
 
 export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: UpcomingEvent[]; previous: PreviousEvent[] }> => {
-  if (cachedEventsData) {
+  if (cachedEventsData && cachedEventsData.upcoming.length > 0) {
     return cachedEventsData;
   }
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 500);
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
     const query = upcoming !== undefined ? `?upcoming=${upcoming}` : "";
     const res = await fetch(`${getApiBaseUrl()}/events${query}`, { 
       signal: controller.signal,
-      cache: "force-cache" 
+      cache: "no-store" 
     }).catch(() => null);
 
     clearTimeout(timeoutId);
@@ -98,11 +98,11 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
               day: dayNum,
               month: monthName,
               title: evt.title,
-              location: evt.location || "Dhaka Flagship Store",
+              description: evt.description,
+              time: evt.time || "4:00 PM - 7:00 PM",
+              location: evt.location || "Dhaka",
               daysLeft: daysLeftStr,
-              time: evt.time || "From 10.00 to 20.00",
-              description: evt.description || "Exclusive Murakkaz fragrance event.",
-              image: evt.image || "/images/events/event_gallery_1.jpg",
+              image: evt.image || "/images/events/event1.jpg",
             });
           } else {
             fetchedPrevious.push({
@@ -110,24 +110,27 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
               slug: evt.slug || evt.id,
               title: evt.title,
               date: `${monthName} ${dayNum}, ${evtDate.getFullYear()}`,
-              image: evt.image || "/images/events/event_gallery_1.jpg",
+              image: evt.image || "/images/events/event1.jpg",
               category: evt.category || "Exhibition",
             });
           }
         });
 
         cachedEventsData = {
-          upcoming: fetchedUpcoming,
-          previous: fetchedPrevious,
+          upcoming: fetchedUpcoming.length > 0 ? fetchedUpcoming : upcomingEvents,
+          previous: fetchedPrevious.length > 0 ? fetchedPrevious : previousEvents,
         };
         return cachedEventsData;
       }
     }
-  } catch {
-    // Silent fallback to local static data
+  } catch (err) {
+    console.warn("[Murakkaz] Events API fetch warning:", err);
   }
 
-  cachedEventsData = { upcoming: upcomingEvents, previous: previousEvents };
+  cachedEventsData = {
+    upcoming: upcomingEvents,
+    previous: previousEvents,
+  };
   return cachedEventsData;
 };
 

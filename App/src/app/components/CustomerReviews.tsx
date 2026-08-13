@@ -19,12 +19,12 @@ export default function CustomerReviews({
   const [isPaused, setIsPaused] = useState(false);
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
   const [lightboxPhoto, setLightboxPhoto] = useState<{ src: string; title: string } | null>(null);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
 
-  const reviewItems = items || [];
+  const reviewItems = items || defaultReviews;
   const total = reviewItems.length;
 
   // Viewport Intersection Observer (pause animation when off-screen to save CPU/battery)
@@ -33,7 +33,7 @@ export default function CustomerReviews({
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.1 }
+      { threshold: 0.01 }
     );
     observer.observe(el);
     return () => observer.disconnect();
