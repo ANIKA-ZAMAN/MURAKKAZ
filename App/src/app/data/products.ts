@@ -1904,21 +1904,31 @@ export const luxuryProducts: Product[] = [
 
 export const productsCatalog = luxuryProducts;
 
+/**
+ * Resolves the API base URL.
+ * Priority: NEXT_PUBLIC_API_URL env var > hostname-based detection.
+ * In production: https://api.murakkaz.com/api
+ * In local dev: http://localhost:5000/api
+ */
 export function getProductsApiBaseUrl(): string {
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
-  }
+  // If running in browser, use hostname to determine environment with 100% precision
   if (typeof window !== "undefined") {
     const host = window.location.hostname;
     if (host === "localhost" || host === "127.0.0.1") {
       return "http://localhost:5000/api";
     }
-    // If accessing via LAN IP (e.g. 192.168.x.x), connect to backend on port 5000 of same IP
     if (/^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(host)) {
       return `http://${host}:5000/api`;
     }
+    // Any live domain or physical phone visiting production -> ALWAYS production backend
     return "https://api.murakkaz.com/api";
   }
+  
+  // Server-side fallback: check env var if provided and not localhost, otherwise production backend
+  if (process.env.NEXT_PUBLIC_API_URL && !process.env.NEXT_PUBLIC_API_URL.includes("localhost")) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  }
+  
   return "https://api.murakkaz.com/api";
 }
 
@@ -1929,15 +1939,15 @@ export async function fetchLiveProducts(): Promise<Product[]> {
     return cachedProducts;
   }
 
+  const apiUrl = `${getProductsApiBaseUrl()}/products?limit=1000`;
+
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2500);
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-    const apiUrl = `${getProductsApiBaseUrl()}/products?limit=1000`;
-    
     const res = await fetch(apiUrl, { 
       signal: controller.signal,
-      cache: 'force-cache'
+      cache: 'no-store'
     }).catch(() => null);
 
     clearTimeout(timeoutId);
@@ -1987,13 +1997,18 @@ export async function fetchLiveProducts(): Promise<Product[]> {
             badge: p.isFeatured ? "FEATURED" : undefined,
           };
         });
+        console.log(`[Murakkaz] Loaded ${cachedProducts.length} products from API: ${apiUrl}`);
         return cachedProducts;
       }
     }
-  } catch {
-    // Silent fallback to local catalog for 0ms speed
+  } catch (err) {
+    console.warn(`[Murakkaz] API fetch failed (${apiUrl}):`, err);
   }
 
+  // API failed — return empty array instead of mock data.
+  // Components should handle empty state gracefully.
+  console.warn(`[Murakkaz] API unavailable. No products loaded. Falling back to static catalog.`);
   cachedProducts = luxuryProducts;
   return luxuryProducts;
 }
+
