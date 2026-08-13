@@ -26,24 +26,25 @@ export default function ScrollReveal({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // On mobile & tablet touch devices (< 1025px), render content immediately to eliminate touch scroll latency
+    if (typeof window !== "undefined" && (window.innerWidth < 1025 || "ontouchstart" in window)) {
+      setIsVisible(true);
+      return;
+    }
+
     const el = ref.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Use double rAF to guarantee browser paint before adding visible class for 60fps smooth animation
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              setIsVisible(true);
-            });
-          });
+          setIsVisible(true);
           observer.unobserve(el);
         }
       },
       {
         threshold: 0.01,
-        rootMargin: "120px 0px 120px 0px",
+        rootMargin: "180px 0px 180px 0px",
       }
     );
 

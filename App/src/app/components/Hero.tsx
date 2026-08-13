@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import PremiumStats from "./PremiumStats";
@@ -227,7 +226,7 @@ export default function Hero() {
     <section 
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-2 sm:pt-4 pb-0 select-none" 
+      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-transparent pt-2 sm:pt-4 pb-0" 
       suppressHydrationWarning
     >
       {/* Global CSS for Animations */}
@@ -379,16 +378,19 @@ export default function Hero() {
           }}
           suppressHydrationWarning
         >
-          {/* Clean Transparent Hero Bottle - Natively supported on 100% of mobile browsers, iPhones, and Safari */}
-          <Image
-            src="/images/hero-bottle-transparent.png"
-            alt="Murakkaz Luxury Perfume Bottle"
-            width={520}
-            height={720}
-            priority
-            decoding="async"
-            className="w-full h-full object-contain relative z-10 drop-shadow-[0_18px_36px_rgba(80,60,30,0.30)] select-none pointer-events-none"
-          />
+          <video
+            autoPlay
+            muted
+            playsInline
+            loop
+            className="w-full h-full object-contain relative z-10 mix-blend-screen bg-transparent"
+            style={{ mixBlendMode: "screen", backgroundColor: "transparent" }}
+            suppressHydrationWarning
+          >
+            <source src="/videos/BottleAnimation.webm" type="video/webm" />
+            <source src="/videos/bottleAnimation.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
 
           {/* Real Ground Shadow Effect: Tight Contact Shadow + Soft Ambient Shadow under the bottle base */}
           {/* 1. Soft Ambient Ground Shadow */}

@@ -434,7 +434,6 @@ nextjs-portal,
 /* ── Mobile Butter-Smooth Scrolling & Performance Optimizations ── */
 html {
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
   overflow-x: hidden;
 }
 
@@ -449,7 +448,6 @@ body {
 @media (max-width: 1024px) {
   html, body {
     -webkit-overflow-scrolling: touch !important;
-    touch-action: pan-y !important;
   }
 
   /* Eliminate GPU layer bottlenecks from backdrop-filter on mobile GPUs */

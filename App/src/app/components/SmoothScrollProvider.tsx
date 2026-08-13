@@ -10,9 +10,12 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     // Disable JS scroll hijacking on mobile & tablet touch devices for native 120Hz/60Hz touch scrolling and instant page transitions
     const isMobileOrTablet =
       typeof window !== "undefined" &&
-      (window.innerWidth < 1024 || "ontouchstart" in window || navigator.maxTouchPoints > 0);
+      (window.innerWidth <= 1024 || "ontouchstart" in window || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0));
 
     if (isMobileOrTablet) {
+      if (typeof document !== "undefined") {
+        document.documentElement.classList.remove("lenis", "lenis-smooth", "lenis-stopped");
+      }
       return;
     }
 
