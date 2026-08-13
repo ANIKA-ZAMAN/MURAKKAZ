@@ -18,6 +18,14 @@
   gap: 3.5rem;
   animation: marqueeMove 90s linear infinite;
   width: max-content;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .tickerContainer {
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
 }
 
 .tickerContainer:hover .tickerTrack {

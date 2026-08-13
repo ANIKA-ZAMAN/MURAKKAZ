@@ -119,11 +119,16 @@ export default function Navbar() {
     updateWishlistCount();
     updateUserPhoto();
 
+    let lastIsScrolled = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 15);
+      const scrolled = window.scrollY > 15;
+      if (scrolled !== lastIsScrolled) {
+        lastIsScrolled = scrolled;
+        setIsScrolled(scrolled);
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("cart-updated", updateCount);
     window.addEventListener("wishlist-updated", updateWishlistCount);
     window.addEventListener("murakkaz-user-updated", updateUserPhoto);

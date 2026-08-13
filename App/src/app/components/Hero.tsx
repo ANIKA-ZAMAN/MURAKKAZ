@@ -36,16 +36,21 @@ const dustParticlesData = [
 /* Floating Golden Dust Ambient Particles Component */
 function HeroDustParticles() {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 768);
+    }
   }, []);
 
   if (!mounted) return null;
+  const particles = isMobile ? dustParticlesData.slice(0, 6) : dustParticlesData;
 
   return (
     <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden" suppressHydrationWarning>
-      {dustParticlesData.map((p, idx) => (
+      {particles.map((p, idx) => (
         <span
           key={idx}
           className="absolute rounded-full"
@@ -55,7 +60,7 @@ function HeroDustParticles() {
             left: `${p.left}%`,
             top: `${p.top}%`,
             background: "radial-gradient(circle, #D4AF37 0%, #C5A880 70%, transparent 100%)",
-            boxShadow: "0 0 6px rgba(212, 175, 55, 0.6)",
+            boxShadow: isMobile ? "none" : "0 0 6px rgba(212, 175, 55, 0.6)",
             opacity: p.opacity,
             animation: `goldDustFloat ${p.duration}s cubic-bezier(0.4, 0, 0.2, 1) ${p.delay}s infinite alternate`,
           }}
@@ -195,11 +200,17 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const rafIdRef = useRef<number | null>(null);
 
-  /* Interactive 3D Parallax Mouse Tracking Animation */
+  useEffect(() => {
+    return () => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    };
+  }, []);
+
+  /* Interactive 3D Parallax Mouse Tracking Animation (Desktop Only) */
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (typeof window === "undefined" || !sectionRef.current) return;
+    if (typeof window === "undefined" || !sectionRef.current || window.innerWidth <= 1024) return;
     const { clientX, clientY } = e;
-    const x = ((clientX / window.innerWidth) - 0.5) * 8; // 4px max shift
+    const x = ((clientX / window.innerWidth) - 0.5) * 8;
     const y = ((clientY / window.innerHeight) - 0.5) * 8;
     
     if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);

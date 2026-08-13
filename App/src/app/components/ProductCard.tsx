@@ -165,6 +165,9 @@ export default function ProductCard({
           alt={displayName}
           width={280}
           height={280}
+          decoding="async"
+          loading="lazy"
+          sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 280px"
           className={styles.image}
         />
         {badge && <span className={styles.badge}>{badge}</span>}
