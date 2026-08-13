@@ -371,13 +371,13 @@ export default function Hero() {
             autoPlay
             muted
             playsInline
-            onEnded={(e) => {
-              e.currentTarget.pause();
-            }}
-            className="w-full h-full object-contain relative z-10"
+            loop
+            className="w-full h-full object-contain relative z-10 mix-blend-screen bg-transparent"
+            style={{ mixBlendMode: "screen", backgroundColor: "transparent" }}
             suppressHydrationWarning
           >
             <source src="/videos/BottleAnimation.webm" type="video/webm" />
+            <source src="/videos/bottleAnimation.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
 
