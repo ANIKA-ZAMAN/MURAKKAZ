@@ -40,7 +40,6 @@ const OCCASIONS = ['Everyday', 'Office', 'Date Night', 'Party', 'Formal Event', 
 const METERS = ['INTIMATE', 'MODERATE', 'LONG_LASTING', 'BEAST_MODE'];
 
 const DEFAULT_SIZES: SizeRow[] = [
-  { size: '3ml', price: 180, originalPrice: 250, stock: 50 },
   { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
   { size: '12ml', price: 500, originalPrice: 700, stock: 50 },
   { size: '30ml', price: 900, originalPrice: 1200, stock: 35 },

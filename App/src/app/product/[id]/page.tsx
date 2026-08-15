@@ -212,7 +212,6 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   // Size and pricing configuration
   const defaultSizeOptions = [
-    { label: "3ml", price: 180 },
     { label: "6ml", price: 300 },
     { label: "12ml", price: 500 },
     { label: "30ml", price: 900 },
@@ -231,7 +230,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     return defaultSizeOptions;
   }, [liveProduct]);
 
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState(defaultSizeOptions[2]); // Default to 12ml
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState(defaultSizeOptions[1]); // Default to 12ml
 
   // Dynamic API fetch for custom products created via Admin
   useEffect(() => {
