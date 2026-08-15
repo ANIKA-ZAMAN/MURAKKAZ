@@ -14,9 +14,7 @@ export default function UpcomingEventsSection() {
 
   useEffect(() => {
     fetchLiveEvents(true).then(({ upcoming }) => {
-      if (upcoming && upcoming.length > 0) {
-        setEvents(upcoming.slice(0, 3));
-      }
+      setEvents((upcoming || []).slice(0, 3));
     });
   }, []);
 
@@ -51,6 +49,10 @@ export default function UpcomingEventsSection() {
       setEmail("");
     }
   };
+
+  if (!events || events.length === 0) {
+    return null;
+  }
 
   return (
     <section className={styles.section} suppressHydrationWarning>

@@ -140,7 +140,7 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
         });
 
         cachedEventsData = {
-          upcoming: fetchedUpcoming.length > 0 ? fetchedUpcoming : upcomingEvents,
+          upcoming: fetchedUpcoming,
           previous: fetchedPrevious.length > 0 ? fetchedPrevious : previousEvents,
         };
         return cachedEventsData;
@@ -157,41 +157,7 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
   return cachedEventsData;
 };
 
-export const upcomingEvents: UpcomingEvent[] = [
-  {
-    id: "upcoming-1",
-    day: "",
-    month: "",
-    title: "NSU Campus Stall Showcase",
-    location: "North South University, Dhaka",
-    daysLeft: "",
-    time: "",
-    description: "An exclusive campus pop-up session showcasing Murakkaz artisanal extrait fragrances and live scent testing.",
-    image: "/images/events/event_gallery_5.jpg",
-  },
-  {
-    id: "upcoming-2",
-    day: "",
-    month: "",
-    title: "Dhanmondi Fair Showcase",
-    location: "Dhanmondi Fair, Dhaka",
-    daysLeft: "",
-    time: "",
-    description: "Discover our private collection featuring warm amber, oud, and rare spices at Dhanmondi Fair.",
-    image: "/images/events/event_gallery_3.jpg",
-  },
-  {
-    id: "upcoming-3",
-    day: "",
-    month: "",
-    title: "BRACU Customer Experience & Gifting",
-    location: "BRAC University, Dhaka",
-    daysLeft: "",
-    time: "",
-    description: "A sensory gathering featuring custom formulation, fragrance discovery, and exclusive gifting sets.",
-    image: "/images/events/event_gallery_6.jpg",
-  },
-];
+export const upcomingEvents: UpcomingEvent[] = [];
 export const previousEvents: PreviousEvent[] = [
   {
     id: "prev-1",
