@@ -19,10 +19,6 @@ export default function UpcomingEventsSection({
   onPageChange,
   onSetReminder,
 }: UpcomingEventsSectionProps) {
-  if (!paginatedEvents || paginatedEvents.length === 0) {
-    return null;
-  }
-
   return (
     <section className={styles.upcomingSection}>
       {/* Title matching exact screenshot */}
@@ -30,10 +26,10 @@ export default function UpcomingEventsSection({
 
       {/* Events Card List */}
       <div className={styles.exactEventsList}>
-        {paginatedEvents.length === 0 ? (
+        {(!paginatedEvents || paginatedEvents.length === 0) ? (
           <div style={{ textAlign: 'center', padding: '3.5rem 1rem', color: '#8C857B' }}>
-            <p style={{ fontSize: '1.2rem', fontFamily: 'serif', marginBottom: '0.5rem', color: '#2B2621' }}>No upcoming events scheduled right now.</p>
-            <p style={{ fontSize: '0.9rem', color: '#666' }}>Check back soon for new campus pop-ups, olfactory workshops & exclusive exhibitions!</p>
+            <p style={{ fontSize: '1.25rem', fontFamily: 'serif', marginBottom: '0.5rem', color: '#2B2621', fontWeight: 500 }}>No upcoming events for now.</p>
+            <p style={{ fontSize: '0.9rem', color: '#666' }}>Check back soon for new campus pop-ups, olfactory workshops &amp; exclusive exhibitions!</p>
           </div>
         ) : (
           paginatedEvents.map((event, idx) => {

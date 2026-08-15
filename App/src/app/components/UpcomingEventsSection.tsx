@@ -50,10 +50,6 @@ export default function UpcomingEventsSection() {
     }
   };
 
-  if (!events || events.length === 0) {
-    return null;
-  }
-
   return (
     <section className={styles.section} suppressHydrationWarning>
       <div className={styles.container}>
@@ -62,7 +58,14 @@ export default function UpcomingEventsSection() {
           <p className={styles.sectionSubtitle}>Join us in person to explore our collection</p>
         </div>
 
-        <div className={styles.eventsGrid}>
+        {(!events || events.length === 0) ? (
+          <div style={{ textAlign: 'center', padding: '3.5rem 1.5rem', background: 'rgba(255, 255, 255, 0.45)', borderRadius: '16px', border: '1px solid rgba(226, 204, 158, 0.3)', backdropFilter: 'blur(8px)', margin: '1.5rem 0' }}>
+            <p style={{ fontSize: '1.3rem', fontFamily: 'serif', marginBottom: '0.5rem', color: '#1a1612', fontWeight: 500 }}>No upcoming events for now.</p>
+            <p style={{ fontSize: '0.92rem', color: '#666', maxWidth: '480px', margin: '0 auto' }}>Check back soon for new campus pop-ups, olfactory workshops &amp; exclusive exhibitions!</p>
+          </div>
+        ) : (
+          <>
+          <div className={styles.eventsGrid}>
           {events.map((event, idx) => (
             <div 
               key={idx} 
@@ -110,6 +113,8 @@ export default function UpcomingEventsSection() {
             </span>
           </Link>
         </div>
+        </>
+        )}
 
         {/* Feature: Get notified about new launches and events banner */}
         <div className={styles.newsletterBanner} suppressHydrationWarning>
