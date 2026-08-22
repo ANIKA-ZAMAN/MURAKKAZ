@@ -76,7 +76,7 @@ function HeroActions() {
       {/* 1. Shop Button */}
       <Link
         href="/shop"
-        className="group relative inline-flex items-center justify-center gap-2 sm:gap-2.5 h-[38px] sm:h-[44px] lg:h-[48px] w-[155px] sm:w-[210px] lg:w-[240px] rounded-xl sm:rounded-2xl border border-black bg-transparent text-[#1c1b18] font-serif-text text-[11px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:border-black overflow-hidden select-none shrink-0 text-center"
+        className="group relative inline-flex items-center justify-center gap-2 sm:gap-2.5 h-[38px] sm:h-[44px] lg:h-[48px] w-[160px] sm:w-[220px] lg:w-[250px] rounded-xl sm:rounded-2xl border border-black bg-transparent text-[#1c1b18] font-serif-text text-[12px] sm:text-[13.5px] lg:text-[14.5px] font-medium tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:border-black overflow-hidden select-none shrink-0 text-center"
         style={{ fontFamily: "var(--font-ibm-plex-serif), Georgia, serif" }}
         suppressHydrationWarning
       >
@@ -88,7 +88,7 @@ function HeroActions() {
       {/* 2. Find Your Fragrance Button */}
       <Link
         href="/scent-index"
-        className="group relative inline-flex items-center justify-center gap-2 sm:gap-2.5 h-[38px] sm:h-[44px] lg:h-[48px] w-[155px] sm:w-[210px] lg:w-[240px] rounded-xl sm:rounded-2xl border border-black bg-transparent text-[#1c1b18] font-serif-text text-[10.5px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.06em] sm:tracking-[0.12em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:border-black overflow-hidden select-none shrink-0 text-center"
+        className="group relative inline-flex items-center justify-center gap-2 sm:gap-2.5 h-[38px] sm:h-[44px] lg:h-[48px] w-[160px] sm:w-[220px] lg:w-[250px] rounded-xl sm:rounded-2xl border border-black bg-transparent text-[#1c1b18] font-serif-text text-[11.5px] sm:text-[13px] lg:text-[14px] font-medium tracking-[0.06em] sm:tracking-[0.12em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:border-black overflow-hidden select-none shrink-0 text-center"
         style={{ fontFamily: "var(--font-ibm-plex-serif), Georgia, serif" }}
         suppressHydrationWarning
       >
