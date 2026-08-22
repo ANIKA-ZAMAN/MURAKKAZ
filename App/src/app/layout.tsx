@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, Lora } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Lora, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -25,6 +25,12 @@ const lora = Lora({
   subsets: ["latin"],
 });
 
+const ibmPlexSerif = IBM_Plex_Serif({
+  variable: "--font-ibm-plex-serif",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Murakkaz",
   description: "Recreated UI from elements design references",
@@ -39,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${lora.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${lora.variable} ${ibmPlexSerif.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <Script id="hydration-fix" strategy="beforeInteractive">
           {`

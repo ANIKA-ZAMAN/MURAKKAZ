@@ -4,6 +4,7 @@
 @theme {
   --font-serif-title: var(--font-playfair), Georgia, serif;
   --font-serif-text: var(--font-lora), Georgia, serif;
+  --font-ibm-plex-serif: var(--font-ibm-plex-serif), "IBM Plex Serif", Georgia, serif;
   --color-warm-ivory: #F5F1E8;
   --color-luxury-charcoal: #313134;
   --color-luxury-gold: #c5a880;
@@ -20,6 +21,17 @@
   --border-gold: rgba(197, 168, 128, 0.25);
   --font-serif-title: var(--font-playfair), Georgia, serif;
   --font-serif-text: var(--font-lora), Georgia, serif;
+  --font-ibm-plex-serif: var(--font-ibm-plex-serif), "IBM Plex Serif", Georgia, serif;
+}
+
+/* Global Button Typography - IBM Plex Serif */
+button,
+.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+[role="button"] {
+  font-family: var(--font-ibm-plex-serif), "IBM Plex Serif", Georgia, serif !important;
 }
 
 /* Safe Area Insets for Modern Mobile Views */
