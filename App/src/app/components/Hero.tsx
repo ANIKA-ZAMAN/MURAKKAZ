@@ -72,29 +72,29 @@ function HeroDustParticles() {
 /* Primary CTA Buttons Component */
 function HeroActions() {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 lg:gap-6 pointer-events-auto z-30 px-3 max-w-full" suppressHydrationWarning>
+    <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 lg:gap-5 pointer-events-auto z-30 px-3 max-w-full" suppressHydrationWarning>
       {/* 1. Shop Button */}
       <Link
         href="/shop"
-        className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[44px] sm:h-[50px] lg:h-[54px] min-w-[140px] sm:min-w-[185px] lg:min-w-[220px] px-5 sm:px-8 lg:px-10 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[11px] sm:text-[12.5px] lg:text-[13px] font-medium tracking-[0.14em] sm:tracking-[0.18em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_10px_28px_rgba(184,150,92,0.35)] hover:border-[#A8864C] overflow-hidden select-none shrink-0 text-center"
+        className="group relative inline-flex items-center justify-center gap-2 sm:gap-2.5 h-[38px] sm:h-[44px] lg:h-[48px] w-[155px] sm:w-[210px] lg:w-[240px] rounded-xl sm:rounded-2xl border-2 border-black bg-transparent text-[#1c1b18] font-serif-text text-[11px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:border-black overflow-hidden select-none shrink-0 text-center"
         style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
         suppressHydrationWarning
       >
         <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/75 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-xl sm:rounded-2xl" />
         <span className="relative z-10">Shop</span>
-        <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-[#B8965C]">→</span>
+        <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-black">→</span>
       </Link>
 
       {/* 2. Find Your Fragrance Button */}
       <Link
         href="/scent-index"
-        className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[44px] sm:h-[50px] lg:h-[54px] min-w-[175px] sm:min-w-[225px] lg:min-w-[265px] px-5 sm:px-8 lg:px-10 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[11px] sm:text-[12.5px] lg:text-[13px] font-medium tracking-[0.10em] sm:tracking-[0.14em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_10px_28px_rgba(184,150,92,0.35)] hover:border-[#A8864C] overflow-hidden select-none shrink-0 text-center"
+        className="group relative inline-flex items-center justify-center gap-2 sm:gap-2.5 h-[38px] sm:h-[44px] lg:h-[48px] w-[155px] sm:w-[210px] lg:w-[240px] rounded-xl sm:rounded-2xl border-2 border-black bg-transparent text-[#1c1b18] font-serif-text text-[10.5px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.06em] sm:tracking-[0.12em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:border-black overflow-hidden select-none shrink-0 text-center"
         style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
         suppressHydrationWarning
       >
         <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-xl sm:rounded-2xl" />
         <span className="relative z-10">Find Your Fragrance</span>
-        <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-[#B8965C]">→</span>
+        <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-black">→</span>
       </Link>
     </div>
   );
