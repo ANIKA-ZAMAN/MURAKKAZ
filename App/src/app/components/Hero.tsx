@@ -231,6 +231,37 @@ export default function Hero() {
     >
       {/* Global CSS for Animations */}
       <style suppressHydrationWarning>{`
+        :root {
+          --bottle-base-y: 6.5vh;
+        }
+        @media (min-width: 640px) {
+          :root {
+            --bottle-base-y: 3.5vh;
+          }
+        }
+        @media (min-width: 1024px) {
+          :root {
+            --bottle-base-y: 1.5vh;
+          }
+        }
+        .murakkaz-hero-title {
+          font-size: clamp(2.6rem, 13.5vw, 4.4rem);
+        }
+        @media (min-width: 640px) {
+          .murakkaz-hero-title {
+            font-size: clamp(4.0rem, 11.5vw, 6.2rem);
+          }
+        }
+        @media (min-width: 1024px) {
+          .murakkaz-hero-title {
+            font-size: clamp(5.2rem, 9.2vw, 7.6rem);
+          }
+        }
+        @media (min-width: 1536px) {
+          .murakkaz-hero-title {
+            font-size: clamp(7.0rem, 9.5vw, 8.8rem);
+          }
+        }
         @keyframes goldDustFloat {
           0% { transform: translateY(0px) translateX(0px); opacity: 0.15; }
           50% { transform: translateY(-16px) translateX(6px); opacity: 0.45; }
@@ -247,8 +278,8 @@ export default function Hero() {
           50% { opacity: 0.95; transform: scale(1.03); }
         }
         @keyframes bottlePerpetualFloat {
-          0%, 100% { transform: translateY(2vh) rotate(0deg); }
-          50% { transform: translateY(calc(2vh - 8px)) rotate(0.6deg); }
+          0%, 100% { transform: translateY(var(--bottle-base-y, 2vh)) rotate(0deg); }
+          50% { transform: translateY(calc(var(--bottle-base-y, 2vh) - 8px)) rotate(0.6deg); }
         }
         @keyframes bottleShadowPulse {
           0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.40; }
@@ -326,7 +357,7 @@ export default function Hero() {
 
       {/* Warm Golden Halo Rim Highlight around the Bottle with Subtle Parallax */}
       <div 
-        className="absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[540px] rounded-full pointer-events-none mix-blend-screen z-0"
+        className="absolute top-[50%] sm:top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[540px] rounded-full pointer-events-none mix-blend-screen z-0"
         style={{
           background: "radial-gradient(circle, rgba(248, 222, 172, 0.35) 0%, rgba(212, 175, 55, 0.14) 45%, transparent 75%)",
           filter: "blur(38px)",
@@ -338,14 +369,13 @@ export default function Hero() {
       
       {/* 1. Background Layers: Giant Watermark Engraved Typography */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden" suppressHydrationWarning>
-        <div className="absolute w-full px-2 sm:px-4 text-center z-0 select-none opacity-100 -translate-y-[6vh] sm:-translate-y-[7vh] hero-fade-enter" suppressHydrationWarning>
+        <div className="absolute w-full px-2 sm:px-4 text-center z-0 select-none opacity-100 -translate-y-[8vh] sm:-translate-y-[6vh] md:-translate-y-[7vh] hero-fade-enter" suppressHydrationWarning>
           <div className="inline-block text-center relative max-w-full overflow-hidden">
             <h1 
-              className="font-serif-title font-semibold tracking-[0.02em] uppercase text-center leading-none select-none max-w-full shrink-0" 
+              className="murakkaz-hero-title font-serif-title font-semibold tracking-[0.02em] uppercase text-center leading-none select-none max-w-full shrink-0" 
               suppressHydrationWarning
               style={{ 
                 fontFamily: "var(--font-playfair), Georgia, serif",
-                fontSize: "clamp(3.8rem, 16.8vw, 12rem)",
                 background: "linear-gradient(180deg, #D4B890 0%, #BA9C72 45%, #9E8158 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
@@ -361,7 +391,7 @@ export default function Hero() {
               style={{ fontFamily: "var(--font-lora), Georgia, serif", animationDelay: "200ms" }}
               suppressHydrationWarning
             >
-              Handpicked and crafted by Murkkaz, inspired by the world&apos;s most iconic fragrances.
+              Handpicked and crafted by Murakkaz, inspired by the world&apos;s most iconic fragrances.
             </p>
           </div>
         </div>
@@ -370,10 +400,10 @@ export default function Hero() {
       {/* 2. Middle Layer: Floating Transparent WebM Video with Synchronized Base Shadow */}
       <div className="flex-1 flex flex-col justify-center items-center z-10 w-full px-4 pt-1 sm:pt-4 pb-0" suppressHydrationWarning>
         <div 
-          className="relative h-[40vh] sm:h-[54vh] md:h-[68vh] lg:h-[78vh] max-h-[calc(100vh-230px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none translate-y-[2vh] flex flex-col items-center justify-center"
+          className="relative h-[44vh] sm:h-[56vh] md:h-[68vh] lg:h-[76vh] xl:h-[82vh] max-h-[calc(100vh-160px)] sm:max-h-[calc(100vh-190px)] lg:max-h-[calc(100vh-150px)] aspect-[9/16] transition-transform duration-500 hover:scale-[1.04] pointer-events-none flex flex-col items-center justify-center"
           style={{
             animation: "bottlePerpetualFloat 7s ease-in-out infinite alternate",
-            transform: "translate(calc(var(--parallax-x, 0px) * 0.5), calc(2vh + var(--parallax-y, 0px) * 0.5))",
+            transform: "translate(calc(var(--parallax-x, 0px) * 0.5), calc(var(--bottle-base-y, 2vh) + var(--parallax-y, 0px) * 0.5))",
             willChange: "transform"
           }}
           suppressHydrationWarning
