@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import PremiumStats from "./PremiumStats";
 import BrandTicker from "./BrandTicker";
 import FloatingContact from "./FloatingContact";
@@ -70,128 +69,33 @@ function HeroDustParticles() {
   );
 }
 
-/* Primary CTA Buttons Component - Unchanged styling & interactive animations */
+/* Primary CTA Buttons Component */
 function HeroActions() {
-  const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center gap-2.5 sm:gap-4 pointer-events-auto z-30 px-2 sm:px-3 w-full" suppressHydrationWarning>
-      {/* Primary CTA + Search Bar Row */}
-      <div className="flex items-center justify-center gap-2 sm:gap-4 max-w-full">
-        {/* 1. Primary Luxury CTA Button */}
-        <Link
-          href="/shop"
-          className="group relative inline-flex items-center justify-center min-w-[170px] sm:min-w-[230px] lg:min-w-[270px] px-5 sm:px-8 lg:px-10 h-[44px] sm:h-[50px] lg:h-[56px] rounded-full border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[11px] sm:text-[12.5px] lg:text-[13px] font-medium tracking-[0.14em] sm:tracking-[0.18em] lg:tracking-[0.2em] uppercase transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) hover:-translate-y-[4px] hover:scale-[1.025] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
-          style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
-          suppressHydrationWarning
-        >
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/75 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none" />
-          <span className="relative z-10 w-full flex items-center justify-center gap-2 pl-[0.1em]">
-            <span>Shop Collection</span>
-            <span className="inline-block transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:translate-x-2 text-[#B8965C]">→</span>
-          </span>
-        </Link>
+    <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 lg:gap-6 pointer-events-auto z-30 px-3 max-w-full" suppressHydrationWarning>
+      {/* 1. Shop Button */}
+      <Link
+        href="/shop"
+        className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[44px] sm:h-[50px] lg:h-[54px] min-w-[140px] sm:min-w-[185px] lg:min-w-[220px] px-5 sm:px-8 lg:px-10 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[11px] sm:text-[12.5px] lg:text-[13px] font-medium tracking-[0.14em] sm:tracking-[0.18em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_10px_28px_rgba(184,150,92,0.35)] hover:border-[#A8864C] overflow-hidden select-none shrink-0 text-center"
+        style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+        suppressHydrationWarning
+      >
+        <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/75 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-xl sm:rounded-2xl" />
+        <span className="relative z-10">Shop</span>
+        <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-[#B8965C]">→</span>
+      </Link>
 
-        {/* 2. Search Expand Button */}
-        <form
-          onSubmit={handleSearchSubmit}
-          onMouseEnter={() => setIsExpanded(true)}
-          onMouseLeave={() => {
-            if (!searchQuery && document.activeElement?.tagName !== "INPUT") {
-              setIsExpanded(false);
-            }
-          }}
-          onClick={() => setIsExpanded(true)}
-          className={`group relative flex items-center h-[44px] sm:h-[50px] lg:h-[56px] rounded-full border-2 border-[#B8965C] bg-transparent text-[#313134] transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) overflow-hidden ${
-            isExpanded || searchQuery 
-              ? "w-48 sm:w-56 lg:w-64 px-4 sm:px-5.5 bg-gradient-to-r from-[#FDFBF7] via-[#F6EEDF] to-[#E9D9C3] shadow-[0_14px_32px_rgba(184,150,92,0.45)] border-[#A8864C]" 
-              : "w-[44px] sm:w-[50px] lg:w-[56px] justify-center cursor-pointer hover:-translate-y-[4px] hover:scale-[1.05] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0"
-          }`}
-          suppressHydrationWarning
-        >
-          <button
-            type="submit"
-            className="flex items-center justify-center w-5 h-5 text-[#313134] group-hover:scale-120 hover:text-[#B8965C] transition-all duration-400 outline-none border-none bg-transparent cursor-pointer shrink-0"
-            aria-label="Search Fragrances"
-          >
-            <svg
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
-
-          <input
-            type="text"
-            placeholder="Search any perfume..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setIsExpanded(true)}
-            onBlur={() => {
-              if (!searchQuery) setIsExpanded(false);
-            }}
-            className={`ml-2 sm:ml-3 bg-transparent text-[#313134] font-serif-text text-[12px] sm:text-[13.5px] font-medium outline-none border-none w-full placeholder:text-[#6e675d]/80 ${
-              isExpanded || searchQuery ? "opacity-100 block" : "opacity-0 hidden"
-            }`}
-            style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
-          />
-
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSearchQuery("");
-              }}
-              className="text-[#6e675d] hover:text-[#B8965C] text-xs px-1.5 py-1 cursor-pointer shrink-0 ml-1 mr-2 transition-colors"
-              aria-label="Clear search"
-            >
-              ✕
-            </button>
-          )}
-        </form>
-      </div>
-
-      {/* Secondary Actions: Find Your Fragrance + Compare Perfumes */}
-      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 lg:gap-6 mt-1 sm:mt-2 lg:mt-4 max-w-full" suppressHydrationWarning>
-        <Link
-          href="/scent-index"
-          className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[42px] sm:h-[48px] lg:h-[56px] min-w-[145px] sm:min-w-[220px] lg:min-w-[280px] px-3.5 sm:px-8 lg:px-12 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[10.5px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.06em] sm:tracking-[0.12em] uppercase transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) hover:-translate-y-[4px] hover:scale-[1.025] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
-          style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
-          suppressHydrationWarning
-        >
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
-          <span className="relative z-10">Find Your Fragrance</span>
-          <span className="relative z-10 inline-block transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:translate-x-2 text-[#B8965C]">→</span>
-        </Link>
-
-        <Link
-          href="/compare"
-          className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[42px] sm:h-[48px] lg:h-[56px] min-w-[145px] sm:min-w-[220px] lg:min-w-[280px] px-3.5 sm:px-8 lg:px-12 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[10.5px] sm:text-[12px] lg:text-[13px] font-medium tracking-[0.06em] sm:tracking-[0.12em] uppercase transition-all duration-500 cubic-bezier(0.16, 1, 0.3, 1) hover:-translate-y-[4px] hover:scale-[1.025] hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_14px_32px_rgba(184,150,92,0.45),0_0_20px_rgba(197,168,128,0.35)] hover:border-[#A8864C] active:scale-[0.96] active:translate-y-0 overflow-hidden select-none shrink-0 text-center"
-          style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
-          suppressHydrationWarning
-        >
-          <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-2xl" />
-          <span className="relative z-10">Compare Perfumes</span>
-          <span className="relative z-10 inline-block transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) group-hover:translate-x-2 text-[#B8965C]">→</span>
-        </Link>
-      </div>
+      {/* 2. Find Your Fragrance Button */}
+      <Link
+        href="/scent-index"
+        className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 h-[44px] sm:h-[50px] lg:h-[54px] min-w-[175px] sm:min-w-[225px] lg:min-w-[265px] px-5 sm:px-8 lg:px-10 rounded-xl sm:rounded-2xl border-2 border-[#B8965C] bg-transparent text-[#313134] font-serif-text text-[11px] sm:text-[12.5px] lg:text-[13px] font-medium tracking-[0.10em] sm:tracking-[0.14em] uppercase transition-all duration-300 hover:bg-gradient-to-r hover:from-[#FDFBF7] hover:via-[#F6EEDF] hover:to-[#E9D9C3] hover:shadow-[0_10px_28px_rgba(184,150,92,0.35)] hover:border-[#A8864C] overflow-hidden select-none shrink-0 text-center"
+        style={{ fontFamily: "var(--font-lora), Georgia, serif" }}
+        suppressHydrationWarning
+      >
+        <span className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/70 to-transparent transition-all duration-800 ease-in-out group-hover:left-[100%] pointer-events-none rounded-xl sm:rounded-2xl" />
+        <span className="relative z-10">Find Your Fragrance</span>
+        <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-1.5 text-[#B8965C]">→</span>
+      </Link>
     </div>
   );
 }
