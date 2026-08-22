@@ -245,21 +245,21 @@ export default function Hero() {
           }
         }
         .murakkaz-hero-title {
-          font-size: clamp(2.6rem, 13.5vw, 4.4rem);
+          font-size: clamp(3.2rem, 15vw, 5.0rem);
         }
         @media (min-width: 640px) {
           .murakkaz-hero-title {
-            font-size: clamp(4.0rem, 11.5vw, 6.2rem);
+            font-size: clamp(4.8rem, 13.5vw, 7.5rem);
           }
         }
         @media (min-width: 1024px) {
           .murakkaz-hero-title {
-            font-size: clamp(5.2rem, 9.2vw, 7.6rem);
+            font-size: clamp(6.8rem, 12vw, 9.2rem);
           }
         }
         @media (min-width: 1536px) {
           .murakkaz-hero-title {
-            font-size: clamp(7.0rem, 9.5vw, 8.8rem);
+            font-size: clamp(8.5rem, 12.5vw, 10.5rem);
           }
         }
         @keyframes goldDustFloat {
