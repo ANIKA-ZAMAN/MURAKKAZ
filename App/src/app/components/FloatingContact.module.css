@@ -6,12 +6,12 @@
 
 .alignLeft {
   left: 32px;
-  bottom: 32px;
+  bottom: 64px;
 }
 
 .alignRight {
   right: 32px;
-  bottom: 32px;
+  bottom: 64px;
   display: flex;
   justify-content: flex-end;
 }
@@ -23,24 +23,24 @@
 
 .isFixed.alignLeft {
   left: 32px !important;
-  bottom: 32px !important;
+  bottom: 64px !important;
 }
 
 .isFixed.alignRight {
   right: 32px !important;
-  bottom: 32px !important;
+  bottom: 64px !important;
 }
 
 @media (max-width: 768px) {
   .alignLeft,
   .isFixed.alignLeft {
     left: 20px !important;
-    bottom: 20px !important;
+    bottom: 48px !important;
   }
   .alignRight,
   .isFixed.alignRight {
     right: 20px !important;
-    bottom: 20px !important;
+    bottom: 48px !important;
   }
 }
 
@@ -218,4 +218,49 @@
 
 .noHoverAnim .mainBtn:hover .mainIcon {
   color: #c5a880 !important;
+}
+
+/* Active Online Beacon Badge on Button Corner */
+.activeBadge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.activePing {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #22c55e;
+  opacity: 0.75;
+  animation: activePingPulse 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.activeDot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #16a34a;
+  border: 1.5px solid #EFEADF;
+  box-shadow: 0 0 6px rgba(22, 163, 74, 0.9);
+}
+
+@keyframes activePingPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  70%, 100% {
+    transform: scale(2.3);
+    opacity: 0;
+  }
 }

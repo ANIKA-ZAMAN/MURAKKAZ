@@ -85,6 +85,12 @@ export default function FloatingContact({
         aria-label="Open contact options"
         aria-expanded={isOpen}
       >
+        {/* Active Online Indicator on Corner */}
+        <div className={styles.activeBadge} title="Active Now">
+          <span className={styles.activePing} />
+          <span className={styles.activeDot} />
+        </div>
+
         {!disableHoverAnimation && <span className={styles.shine} />}
         <div className={`${styles.btnContent} ${align === "right" ? styles.rowReverse : ""}`}>
           {/* Toggle between Chat Bubble and Close Icon */}

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import PremiumStats from "./PremiumStats";
 import BrandTicker from "./BrandTicker";
 
 /* Deterministic Static Particles Array for SSR/CSR Hydration Consistency */
@@ -353,9 +352,6 @@ export default function Hero() {
         <div className="w-full mb-1 sm:mb-2 lg:mb-3 flex justify-center">
           <HeroActions />
         </div>
-
-        {/* Premium Statistics Stack positioned on the bottom right as designed */}
-        <PremiumStats />
 
         {/* Infinite Fragrance Brand Ticker running along the very bottom */}
         <div className="w-full mt-1 mb-0">
