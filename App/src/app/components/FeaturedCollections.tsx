@@ -117,7 +117,7 @@ export default function FeaturedCollections() {
       <div className={styles.container}>
         
         {/* Section Header - Left Aligned "Most Loved" with Libertinus Serif Display & Added Spacing */}
-        <div className="w-full mb-10 sm:mb-14 px-4 sm:px-10 xl:px-14" style={{ textAlign: "left" }}>
+        <div className="w-full px-4 sm:px-10 xl:px-14" style={{ textAlign: "left", marginBottom: "4rem" }}>
           <h2 
             className={styles.sectionTitle} 
             style={{ 
