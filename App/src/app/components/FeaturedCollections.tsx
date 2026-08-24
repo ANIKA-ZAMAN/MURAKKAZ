@@ -110,7 +110,7 @@ export default function FeaturedCollections() {
     <section 
       className={styles.section} 
       style={{
-        background: "linear-gradient(to bottom, #CBB9A1 0%, #D8CBB9 25%, #EAE0D3 60%, #F5F1E8 100%)",
+        background: "linear-gradient(to bottom, #CBB9A1 0%, #D4C5B3 10%, #E3D9CC 22%, #F5F1E8 33.3%, #F5F1E8 100%)",
       }}
       suppressHydrationWarning
     >
