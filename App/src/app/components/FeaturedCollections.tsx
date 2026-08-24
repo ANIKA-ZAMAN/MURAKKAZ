@@ -116,12 +116,11 @@ export default function FeaturedCollections() {
     >
       <div className={styles.container}>
         
-        {/* Section Header */}
-        <div className={styles.sectionHeader} style={{ marginBottom: "2.5rem" }}>
-          <h2 className={styles.sectionTitle}>
-            Our <span style={{ color: "#8A6632", fontStyle: "normal" }}>Featured Collection</span>
+        {/* Section Header - Right Aligned "Most Loved" */}
+        <div className="w-full mb-6 sm:mb-8 px-4 sm:px-10 xl:px-14" style={{ textAlign: "right" }}>
+          <h2 className={styles.sectionTitle} style={{ textAlign: "right", margin: "0" }}>
+            Most <span style={{ color: "#8A6632", fontStyle: "normal" }}>Loved</span>
           </h2>
-          <p className={styles.sectionSubtitle}>Handpicked fragrances loved by our customers.</p>
         </div>
 
         {/* Carousel Container */}
