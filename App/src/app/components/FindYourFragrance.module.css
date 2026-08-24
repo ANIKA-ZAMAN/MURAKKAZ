@@ -1,376 +1,184 @@
 /* ═══════════════════════════════════════════════════════
-   FindYourFragrance — Premium Invitation Card
+   FindYourFragrance — Penhaligon's-Inspired Editorial Split
    ═══════════════════════════════════════════════════════ */
 
-/* ── Section Wrapper ── */
-.invitationSection {
+.sectionContainer {
   width: 100%;
-  padding: 5rem 1.5rem;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 5.5rem 1.5rem;
   background: transparent;
 }
 
-/* ── Soft Golden Ambient Glow ── */
-.ambientGlow {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 850px;
-  height: 350px;
-  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.16) 0%, rgba(197, 168, 128, 0.08) 50%, transparent 75%);
-  filter: blur(40px);
-  pointer-events: none;
-  z-index: 1;
+.splitWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4rem;
 }
 
-/* ── Card Wrapper — provides float animation ── */
-.cardWrapper {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 780px;
-  animation: invitationFloat 6s ease-in-out infinite;
-}
-
-@keyframes invitationFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-
-/* ── Invitation Card (Wide Rectangular Landscape Layout) ── */
-.invitationCard {
-  position: relative;
-  width: 100%;
-  padding: 2.5rem 3.5rem;
-  text-align: center;
+/* ── Left Column: Text Content ── */
+.textContent {
   display: flex;
   flex-direction: column;
-  align-items: center;
-
-  /* Warm muted parchment surface blending with the theme background */
-  background: linear-gradient(
-    168deg,
-    rgba(244, 237, 226, 0.88) 0%,
-    rgba(236, 227, 213, 0.88) 45%,
-    rgba(226, 215, 199, 0.88) 100%
-  );
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  border-radius: 24px;
-
-  /* Muted warm champagne gold border */
-  border: 1px solid rgba(165, 135, 92, 0.35);
-
-  /* Layered soft subtle shadows */
-  box-shadow:
-    0 4px 18px rgba(60, 45, 25, 0.05),
-    0 12px 36px -6px rgba(60, 45, 25, 0.08);
-
-  transition: box-shadow 0.5s ease, border-color 0.5s ease, background 0.5s ease;
+  align-items: flex-start;
+  text-align: left;
+  padding-left: 1rem;
 }
 
-.invitationCard:hover {
-  border-color: rgba(165, 135, 92, 0.55);
-  background: linear-gradient(
-    168deg,
-    rgba(247, 240, 230, 0.94) 0%,
-    rgba(239, 230, 217, 0.94) 45%,
-    rgba(229, 218, 203, 0.94) 100%
-  );
-  box-shadow:
-    0 6px 24px rgba(60, 45, 25, 0.07),
-    0 16px 44px -6px rgba(60, 45, 25, 0.11);
-}
-
-/* ── Murakkaz Logo ── */
-.logoWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.invitationLogo {
-  width: 115px;
-  height: auto;
-  object-fit: contain;
-}
-
-/* ── Decorative Flourish Lines ── */
-.flourishLine, .bottomFlourish {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 1rem;
-}
-
-.bottomFlourish {
-  margin-bottom: 0;
-  margin-top: 0.25rem;
-}
-
-.flourishDash {
-  display: block;
-  width: 48px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(170, 140, 90, 0.35) 50%, transparent 100%);
-}
-
-.flourishDiamond {
-  font-size: 5px;
-  color: rgba(170, 140, 90, 0.40);
-  line-height: 1;
-}
-
-/* ── Section Label ── */
-.sectionLabel {
+.kicker {
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.24em;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #9a8562;
-  margin-bottom: 0.5rem;
+  color: #8A6632;
+  margin-bottom: 1.25rem;
 }
 
-/* ── Heading ── */
-.heading {
-  font-family: var(--font-serif-title), Georgia, serif;
-  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+.title {
+  font-family: var(--font-libertinus-display), "Libertinus Serif Display", "Libertinus Serif", Georgia, serif;
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
   font-weight: 500;
-  color: #2a2520;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-  margin: 0 0 0.75rem 0;
+  color: #1F1C18;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem 0;
 }
 
-/* ── Description ── */
 .description {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: #5a5147;
-  max-width: 620px;
-  margin: 0 0 1.25rem 0;
-  font-style: italic;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  line-height: 1.7;
+  color: #4A443C;
+  max-width: 480px;
+  margin: 0 0 1.5rem 0;
+  font-style: normal;
 }
 
-/* ── Metadata Row ── */
 .metaRow {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.metaItem {
+  gap: 0.65rem;
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  color: #7a6f60;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  color: #7A6F60;
+  margin-bottom: 2.25rem;
 }
 
-.metaIcon {
-  width: 14px;
-  height: 14px;
-  color: #9a8562;
-  flex-shrink: 0;
+.dot {
+  color: #C5A880;
 }
 
-.metaDot {
-  font-size: 0.75rem;
-  color: rgba(170, 140, 90, 0.45);
-  line-height: 1;
-}
-
-/* ── CTA Button ── */
-.ctaButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 50px;
-  padding: 0 2.5rem;
-  border-radius: 25px;
-  background: transparent;
-  border: 2px solid #B8965C;
-  color: #313134;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 0;
-}
-
-.ctaButton::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 245, 220, 0.08) 50%, transparent 100%);
-  transition: left 0.65s ease;
-}
-
-.ctaButton:hover::before {
-  left: 100%;
-}
-
-.ctaButton:hover {
-  background: linear-gradient(135deg, #4a443c 0%, #3a352e 100%);
-  transform: translateY(-3px) scale(1.015);
-  box-shadow: 0 12px 28px rgba(42, 37, 32, 0.25), 0 0 16px rgba(197, 168, 128, 0.2);
-}
-
-.ctaButton:active {
-  transform: translateY(0) scale(0.97);
-}
-
-.ctaText {
-  font-family: var(--font-serif-text), Georgia, serif;
+/* ── Underlined Editorial CTA Link ── */
+.editorialCta {
+  font-family: var(--font-ibm-plex-serif), Georgia, serif;
   font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: #1F1C18;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   position: relative;
-  z-index: 1;
+  padding-bottom: 0.4rem;
+  border-bottom: 1.5px solid #1F1C18;
+  transition: color 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
 }
 
-.ctaArrow {
+.editorialCta:hover {
+  color: #8A6632;
+  border-color: #8A6632;
+}
+
+.arrow {
+  display: inline-block;
   font-size: 1rem;
-  color: #c5a880;
-  transition: transform 0.35s ease;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.editorialCta:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* ── Right Column: Image ── */
+.imageColumn {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.imageFrame {
   position: relative;
-  z-index: 1;
+  width: 100%;
+  max-width: 620px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px -10px rgba(35, 25, 15, 0.12);
 }
 
-.ctaButton:hover .ctaArrow {
-  transform: translateX(3px);
+.editorialImage {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ══════════════════════════════════════
-   Responsive
-   ══════════════════════════════════════ */
+.imageFrame:hover .editorialImage {
+  transform: scale(1.025);
+}
 
-@media (max-width: 640px) {
-  .invitationSection {
-    padding: 3.5rem 1rem;
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .splitWrapper {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
-  .invitationCard {
-    padding: 2.5rem 1.75rem 2rem;
-    max-width: 100%;
-    border-radius: 20px;
-  }
-
-  .waxSeal {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 1.25rem;
-  }
-
-  .sealInner {
-    width: 36px;
-    height: 36px;
-  }
-
-  .sealLetter {
-    font-size: 17px;
-  }
-
-  .heading {
-    font-size: 1.35rem;
+  .textContent {
+    align-items: center;
+    text-align: center;
+    padding-left: 0;
   }
 
   .description {
-    font-size: 0.875rem;
+    max-width: 540px;
+  }
+
+  .imageColumn {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .sectionContainer {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .kicker {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+  }
+
+  .title {
+    font-size: 1.85rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
   }
 
   .metaRow {
-    gap: 6px;
+    font-size: 0.65rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-
-  .metaItem {
-    font-size: 0.62rem;
-  }
-
-  .ctaButton {
-    height: 44px;
-    padding: 0 1.5rem;
-  }
-
-  .ctaText {
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 380px) {
-  .invitationCard {
-    padding: 2rem 1.25rem 1.75rem;
-  }
-
-  .metaRow {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .metaDot {
-    display: none;
-  }
-}
-
-/* ── Split Reveal Animations ── */
-:global(.reveal) .slideLeft {
-  opacity: 0;
-  transform: translateX(-35px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-
-:global(.reveal.visible) .slideLeft {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-:global(.reveal) .slideRight {
-  opacity: 0;
-  transform: translateX(35px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-
-:global(.reveal.visible) .slideRight {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-:global(.reveal) .fadeInLast {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1) 200ms, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 200ms, box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-
-:global(.reveal.visible) .fadeInLast {
-  opacity: 1;
-  transform: translateY(0);
 }
 
