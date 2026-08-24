@@ -5,6 +5,7 @@
   --font-serif-title: var(--font-playfair), Georgia, serif;
   --font-serif-text: var(--font-lora), Georgia, serif;
   --font-ibm-plex-serif: var(--font-ibm-plex-serif), "IBM Plex Serif", Georgia, serif;
+  --font-libertinus-display: "Libertinus Serif Display", "Libertinus Serif", Georgia, serif;
   --color-warm-ivory: #F5F1E8;
   --color-luxury-charcoal: #313134;
   --color-luxury-gold: #c5a880;
@@ -22,6 +23,7 @@
   --font-serif-title: var(--font-playfair), Georgia, serif;
   --font-serif-text: var(--font-lora), Georgia, serif;
   --font-ibm-plex-serif: var(--font-ibm-plex-serif), "IBM Plex Serif", Georgia, serif;
+  --font-libertinus-display: "Libertinus Serif Display", "Libertinus Serif", Georgia, serif;
 }
 
 /* Global Button Typography - IBM Plex Serif */

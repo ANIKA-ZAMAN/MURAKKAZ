@@ -116,9 +116,18 @@ export default function FeaturedCollections() {
     >
       <div className={styles.container}>
         
-        {/* Section Header - Right Aligned "Most Loved" */}
-        <div className="w-full mb-6 sm:mb-8 px-4 sm:px-10 xl:px-14" style={{ textAlign: "right" }}>
-          <h2 className={styles.sectionTitle} style={{ textAlign: "right", margin: "0" }}>
+        {/* Section Header - Left Aligned "Most Loved" with Libertinus Serif Display & Added Spacing */}
+        <div className="w-full mb-10 sm:mb-14 px-4 sm:px-10 xl:px-14" style={{ textAlign: "left" }}>
+          <h2 
+            className={styles.sectionTitle} 
+            style={{ 
+              fontFamily: "var(--font-libertinus-display), 'Libertinus Serif Display', 'Libertinus Serif', Georgia, serif",
+              textAlign: "left", 
+              margin: "0",
+              fontSize: "clamp(2.0rem, 3.6vw, 2.8rem)",
+              letterSpacing: "-0.01em",
+            }}
+          >
             Most <span style={{ color: "#8A6632", fontStyle: "normal" }}>Loved</span>
           </h2>
         </div>
