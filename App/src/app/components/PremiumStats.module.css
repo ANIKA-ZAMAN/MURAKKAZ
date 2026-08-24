@@ -1,13 +1,14 @@
-/* Statistics Panel Wrapper - Positioned on the right side of the Hero Section */
+/* Statistics Panel Wrapper - Positioned on the left side of the Hero Section */
 .bookmarkWrapper {
   position: absolute;
-  right: 2.5rem;
+  left: 2.5rem;
+  right: auto;
   bottom: 4.25rem;
   z-index: 35;
   display: flex;
   flex-direction: column;
   gap: 0.28rem;
-  align-items: flex-end;
+  align-items: flex-start;
   pointer-events: auto;
 }
 
@@ -126,10 +127,11 @@
 @media (min-width: 1024px) {
   .bookmarkWrapper {
     position: absolute;
-    right: 2.5rem;
+    left: 2.5rem;
+    right: auto;
     bottom: 4.25rem;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
   }
 }
 

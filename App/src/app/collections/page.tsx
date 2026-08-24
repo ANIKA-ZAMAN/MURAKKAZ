@@ -6,7 +6,6 @@ import FilterButton from "../components/FilterButton";
 import FilterDrawer from "../components/FilterDrawer";
 import Pagination from "../components/Pagination";
 import CollectionCard from "./components/CollectionCard";
-import FloatingContact from "../components/FloatingContact";
 import { Product, productsCatalog, fetchLiveProducts } from "../data/products";
 import styles from "./page.module.css";
 
@@ -186,9 +185,6 @@ function CollectionsContent() {
             />
           </div>
         )}
-
-        {/* Floating Contact Trigger Button (Right Aligned, Viewport-Fixed) */}
-        <FloatingContact align="right" positionType="fixed" disableHoverAnimation={true} />
       </main>
     </div>
   );

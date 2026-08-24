@@ -5,52 +5,42 @@
 }
 
 .alignLeft {
-  left: 12.5%;
-  bottom: calc(10.2% - 3px);
+  left: 32px;
+  bottom: 32px;
 }
 
 .alignRight {
-  right: 12.5%;
-  bottom: calc(10.2% - 3px);
+  right: 32px;
+  bottom: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.isFixed {
+  position: fixed !important;
+  z-index: 9999 !important;
 }
 
 .isFixed.alignLeft {
-  left: 40px !important;
-  bottom: 40px !important;
+  left: 32px !important;
+  bottom: 32px !important;
 }
 
 .isFixed.alignRight {
-  right: 40px !important;
-  bottom: 40px !important;
-}
-
-@media (max-width: 1200px) {
-  .alignLeft {
-    left: 8%;
-    bottom: 9.5%;
-  }
-  .alignRight {
-    right: 8%;
-    bottom: 9.5%;
-  }
+  right: 32px !important;
+  bottom: 32px !important;
 }
 
 @media (max-width: 768px) {
-  .alignLeft {
-    left: 24px;
-    bottom: 24px;
-  }
-  .alignRight {
-    right: 24px;
-    bottom: 24px;
-  }
+  .alignLeft,
   .isFixed.alignLeft {
-    left: 24px !important;
-    bottom: 24px !important;
+    left: 20px !important;
+    bottom: 20px !important;
   }
+  .alignRight,
   .isFixed.alignRight {
-    right: 24px !important;
-    bottom: 24px !important;
+    right: 20px !important;
+    bottom: 20px !important;
   }
 }
 

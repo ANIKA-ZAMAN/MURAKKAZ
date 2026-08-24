@@ -10,8 +10,8 @@ interface FloatingContactProps {
 }
 
 export default function FloatingContact({
-  align = "left",
-  positionType = "absolute",
+  align = "right",
+  positionType = "fixed",
   disableHoverAnimation = false,
 }: FloatingContactProps) {
   const [isOpen, setIsOpen] = useState(false);

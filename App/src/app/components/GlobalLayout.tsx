@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import FloatingContact from "./FloatingContact";
 
 interface GlobalLayoutProps {
   children: React.ReactNode;
@@ -64,6 +65,9 @@ export default function GlobalLayout({ children }: GlobalLayoutProps) {
       </main>
 
       <Footer />
+
+      {/* Persistent Floating Contact Button Constant On Right Side */}
+      <FloatingContact align="right" positionType="fixed" />
     </div>
   );
 }
