@@ -28,9 +28,14 @@ export default function FindYourFragrance() {
             <span>Top 3 Matches</span>
           </div>
 
-          <Link href="/scent-index" className={styles.editorialCta} suppressHydrationWarning>
-            <span>BEGIN CONSULTATION</span>
-            <span className={styles.arrow}>→</span>
+          <Link 
+            href="/scent-index" 
+            className="group relative inline-flex items-center justify-center gap-2.5 h-[44px] sm:h-[48px] min-w-[210px] sm:min-w-[250px] px-8 sm:px-10 rounded-xl sm:rounded-2xl border border-[#313134] bg-transparent text-[#1c1b18] text-[13px] sm:text-[14.5px] font-medium tracking-[0.08em] sm:tracking-[0.12em] uppercase transition-all duration-300 hover:bg-black/5 select-none text-center" 
+            style={{ fontFamily: "var(--font-ibm-plex-serif), Georgia, serif" }}
+            suppressHydrationWarning
+          >
+            <span className="relative z-10">Begin Consultation</span>
+            <span className="relative z-10 inline-block transition-transform duration-300 group-hover:translate-x-1 text-[#1c1b18]">→</span>
           </Link>
         </div>
 
