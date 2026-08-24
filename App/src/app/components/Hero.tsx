@@ -128,7 +128,10 @@ export default function Hero() {
     <section 
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden bg-[#CBB9A1] pt-2 sm:pt-4 pb-0" 
+      className="relative w-full min-h-screen flex flex-col justify-between items-center overflow-hidden pt-2 sm:pt-4 pb-0" 
+      style={{
+        background: "linear-gradient(to bottom, #CBB9A1 0%, #CBB9A1 75%, #D7C9B9 85%, #E6DDD0 93%, #F5F1E8 100%)",
+      }}
       suppressHydrationWarning
     >
       {/* Global CSS for Animations */}
