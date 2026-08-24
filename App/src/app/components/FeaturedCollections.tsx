@@ -107,7 +107,13 @@ export default function FeaturedCollections() {
   }, [startAutoPlay, stopAutoPlay]);
 
   return (
-    <section className={styles.section} suppressHydrationWarning>
+    <section 
+      className={styles.section} 
+      style={{
+        background: "linear-gradient(to bottom, #CBB9A1 0%, #D8CBB9 25%, #EAE0D3 60%, #F5F1E8 100%)",
+      }}
+      suppressHydrationWarning
+    >
       <div className={styles.container}>
         
         {/* Section Header */}
