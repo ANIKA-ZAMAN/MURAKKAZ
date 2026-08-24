@@ -61,11 +61,11 @@ export const loginUser = async (data: any) => {
     user = await prisma.user.findUnique({ where: { phone } });
   }
 
-  if (!user) {
+  if (!user || !user.passwordHash) {
     throw new AppError('Invalid credentials', 401);
   }
 
-  const isMatch = await bcrypt.compare(password, user.passwordHash!);
+  const isMatch = await bcrypt.compare(password, user.passwordHash);
   if (!isMatch) {
     throw new AppError('Invalid credentials', 401);
   }
@@ -103,7 +103,10 @@ export const refreshAccessToken = async (token: string) => {
   await deleteRefreshToken(token);
 
   const user = await prisma.user.findUnique({ where: { id: refreshTokenRecord.userId } });
-  const accessToken = generateAccessToken(refreshTokenRecord.userId, user!.role);
+  if (!user) {
+    throw new AppError('User not found', 401);
+  }
+  const accessToken = generateAccessToken(refreshTokenRecord.userId, user.role);
   const newRefreshToken = await generateRefreshToken(refreshTokenRecord.userId);
 
   return {

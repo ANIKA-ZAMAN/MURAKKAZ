@@ -19,7 +19,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
         ] = await Promise.all([
           prisma.user.count(),
           prisma.order.count(),
-          prisma.order.findMany({ where: { status: 'DELIVERED' }, select: { grandTotal: true } }),
+          prisma.order.findMany({ where: { status: 'DELIVERED' }, select: { grandTotal: true, createdAt: true } }),
           prisma.product.count({ where: { isActive: true } }),
           prisma.order.findMany({
             take: 5,
@@ -52,14 +52,29 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
           product: topProductsDetails.find((p: any) => p.id === item.productId)
         }));
 
-        const revenueData = [
-          { name: 'Jan', revenue: 120000 },
-          { name: 'Feb', revenue: 150000 },
-          { name: 'Mar', revenue: 180000 },
-          { name: 'Apr', revenue: 240000 },
-          { name: 'May', revenue: 310000 },
-          { name: 'Jun', revenue: totalRevenue > 0 ? totalRevenue : 450000 }
-        ];
+        // Dynamic 6-month revenue calculation
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const now = new Date();
+        const revenueMap: Record<string, number> = {};
+
+        for (let i = 5; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+          const key = `${monthNames[d.getMonth()]} ${d.getFullYear() !== now.getFullYear() ? d.getFullYear() : ''}`.trim();
+          revenueMap[key] = 0;
+        }
+
+        for (const order of deliveredOrders) {
+          const d = new Date(order.createdAt);
+          const key = `${monthNames[d.getMonth()]} ${d.getFullYear() !== now.getFullYear() ? d.getFullYear() : ''}`.trim();
+          if (revenueMap[key] !== undefined) {
+            revenueMap[key] += Number(order.grandTotal) || 0;
+          }
+        }
+
+        const revenueData = Object.entries(revenueMap).map(([name, revenue]) => ({
+          name,
+          revenue
+        }));
 
         return {
           totalUsers,

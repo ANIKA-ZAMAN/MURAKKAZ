@@ -11,17 +11,13 @@ export const authenticate = async (
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      // In development, allow requests to proceed as admin demo if no header is supplied
-      if (process.env.NODE_ENV === 'development') {
-        req.user = { id: 'admin-demo-id', role: 'ADMIN' };
-        return next();
-      }
       return res.status(401).json({ status: 'fail', message: 'Not authenticated' });
     }
 
     const token = authHeader.split(' ')[1];
 
-    if (token === 'demo_token' || token === 'demo_admin_token' || token.includes('demo')) {
+    // Only in development environment allow test demo tokens
+    if (process.env.NODE_ENV === 'development' && (token === 'demo_token' || token === 'demo_admin_token' || token === 'demo-access-token')) {
       req.user = { id: 'admin-demo-id', role: 'ADMIN' };
       return next();
     }
@@ -38,22 +34,13 @@ export const authenticate = async (
         req.user = { id: user.id, role: user.role };
         return next();
       }
-    } catch (e) {
-      // If DB error or invalid JWT signature in dev mode, fallback to demo admin
-      if (process.env.NODE_ENV === 'development') {
-        req.user = { id: 'admin-demo-id', role: 'ADMIN' };
-        return next();
-      }
-    }
 
-    req.user = { id: 'admin-demo-id', role: 'ADMIN' };
-    next();
-  } catch (error) {
-    if (process.env.NODE_ENV === 'development') {
-      req.user = { id: 'admin-demo-id', role: 'ADMIN' };
-      return next();
+      return res.status(401).json({ status: 'fail', message: 'User no longer exists' });
+    } catch (jwtError) {
+      return res.status(401).json({ status: 'fail', message: 'Invalid or expired token' });
     }
-    return res.status(401).json({ status: 'fail', message: 'Invalid token' });
+  } catch (error) {
+    return res.status(401).json({ status: 'fail', message: 'Authentication failed' });
   }
 };
 
@@ -69,14 +56,13 @@ export const optionalAuth = async (
     }
 
     const token = authHeader.split(' ')[1];
-    if (token.includes('demo')) {
+    if (process.env.NODE_ENV === 'development' && (token === 'demo_token' || token === 'demo-access-token')) {
       req.user = { id: 'admin-demo-id', role: 'ADMIN' };
       return next();
     }
 
-    const decoded = jwt.verify(token, env.JWT_SECRET) as { userId: string; role: string };
-
     try {
+      const decoded = jwt.verify(token, env.JWT_SECRET) as { userId: string; role: string };
       const user = await prisma.user.findUnique({
         where: { id: decoded.userId },
         select: { id: true, role: true },
@@ -86,7 +72,7 @@ export const optionalAuth = async (
         req.user = { id: user.id, role: user.role };
       }
     } catch (e) {
-      req.user = { id: 'admin-demo-id', role: 'ADMIN' };
+      // Ignore invalid token for optional auth
     }
     next();
   } catch (error) {

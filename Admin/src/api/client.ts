@@ -88,7 +88,7 @@ async function customFetch(endpoint: string, options: RequestInit = {}): Promise
             const refreshResponse = await fetch(`${BASE_URL}/auth/refresh`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: refreshToken })
+                body: JSON.stringify({ refreshToken, token: refreshToken })
             });
 
             if (refreshResponse.ok) {

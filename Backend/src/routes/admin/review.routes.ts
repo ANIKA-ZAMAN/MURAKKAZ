@@ -56,7 +56,7 @@ router.put('/:id/approve', async (req: Request, res: Response, next: NextFunctio
     
     const reviewCount = allApproved.length;
     const averageRating = reviewCount > 0 
-      ? allApproved.reduce((acc: number, r: any) => acc + r.rating, 0) / reviewCount 
+      ? Math.round((allApproved.reduce((acc: number, r: any) => acc + (Number(r.stars) || 5), 0) / reviewCount) * 10) / 10
       : 0;
       
     await prisma.product.update({
@@ -83,7 +83,7 @@ router.delete('/:id', async (req: Request, res: Response, next: NextFunction) =>
     
     const reviewCount = allApproved.length;
     const averageRating = reviewCount > 0 
-      ? allApproved.reduce((acc: number, r: any) => acc + r.rating, 0) / reviewCount 
+      ? Math.round((allApproved.reduce((acc: number, r: any) => acc + (Number(r.stars) || 5), 0) / reviewCount) * 10) / 10
       : 0;
       
     await prisma.product.update({

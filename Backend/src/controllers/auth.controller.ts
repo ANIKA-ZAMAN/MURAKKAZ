@@ -21,7 +21,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
 export const refresh = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await authService.refreshAccessToken(req.body.refreshToken);
+    const token = req.body.refreshToken || req.body.token;
+    const result = await authService.refreshAccessToken(token);
     res.status(200).json({ status: 'success', data: result });
   } catch (error) {
     next(error);
@@ -30,8 +31,9 @@ export const refresh = async (req: Request, res: Response, next: NextFunction) =
 
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await authService.logoutUser(req.body.refreshToken);
-    res.status(200).json({ message: 'Logged out successfully' });
+    const token = req.body.refreshToken || req.body.token;
+    await authService.logoutUser(token);
+    res.status(200).json({ status: 'success', message: 'Logged out successfully' });
   } catch (error) {
     next(error);
   }

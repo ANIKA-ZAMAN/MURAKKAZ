@@ -25,9 +25,9 @@ export const getEvent = async (req: Request, res: Response, next: NextFunction) 
 
 export const setReminder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = (req as any).user?.userId;
+    const userId = req.user?.id || (req as any).user?.id || (req as any).user?.userId;
     const reminder = await eventService.setEventReminder(req.params.slug as string, req.body, userId);
-    res.status(201).json(reminder);
+    res.status(201).json({ status: 'success', data: reminder });
   } catch (error) {
     next(error);
   }

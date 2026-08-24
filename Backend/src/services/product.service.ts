@@ -36,14 +36,31 @@ export const getProducts = async (filters: ProductFilterParams) => {
       if (occasion) where.occasion = { contains: occasion, mode: 'insensitive' };
       if (meter) where.meter = { in: meter.split(',') };
 
+      if (maxPrice) {
+        where.sizes = {
+          some: {
+            price: { lte: Number(maxPrice) }
+          }
+        };
+      }
+
+      if (notes) {
+        const noteList = notes.split(',').map(n => n.trim());
+        where.notes = {
+          some: {
+            name: { in: noteList }
+          }
+        };
+      }
+
       let orderBy: any = { createdAt: 'desc' };
       if (sort === 'rating') orderBy = { rating: 'desc' };
       else if (sort === 'newest') orderBy = { createdAt: 'desc' };
 
       let products = await prisma.product.findMany({
         where,
-        skip,
-        take,
+        skip: sort === 'price_asc' || sort === 'price_desc' ? undefined : skip,
+        take: sort === 'price_asc' || sort === 'price_desc' ? undefined : take,
         orderBy,
         include: {
           sizes: { select: { size: true, price: true, originalPrice: true } },
@@ -53,6 +70,17 @@ export const getProducts = async (filters: ProductFilterParams) => {
       });
 
       const total = await prisma.product.count({ where });
+
+      // Handle price sorting in memory since sizes are in a related table
+      if (sort === 'price_asc' || sort === 'price_desc') {
+        products.sort((a, b) => {
+          const minA = a.sizes.length > 0 ? Math.min(...a.sizes.map(s => s.price)) : 0;
+          const minB = b.sizes.length > 0 ? Math.min(...b.sizes.map(s => s.price)) : 0;
+          return sort === 'price_asc' ? minA - minB : minB - minA;
+        });
+        products = products.slice(skip, skip + take);
+      }
+
       return createPaginatedResult(products, total, page || 1, limit || 12);
     },
     () => {
@@ -124,16 +152,63 @@ export const getRecommendations = async (params: any) => {
         where: { isActive: true },
         include: { sizes: true, notes: true },
       });
-      return products.slice(0, 3).map((p) => ({
-        matchScore: '96%',
-        reason: 'Recommended for your preferences.',
-        product: p,
-      }));
+
+      if (products.length === 0) return [];
+
+      const targetGender = params.gender?.toUpperCase();
+      const targetFamily = params.family?.toUpperCase();
+      const targetOccasion = params.occasion?.toLowerCase();
+      const targetIntensity = params.intensity?.toUpperCase();
+      const targetNotes = params.notes ? params.notes.toLowerCase().split(',').map((n: string) => n.trim()) : [];
+
+      const scored = products.map((p) => {
+        let score = 0;
+        const reasons: string[] = [];
+
+        if (targetGender && (p.gender === targetGender || p.gender === 'UNISEX')) {
+          score += 4;
+          reasons.push(`matches your preferred profile (${p.gender})`);
+        }
+        if (targetFamily && p.family === targetFamily) {
+          score += 3;
+          reasons.push(`${p.family.toLowerCase()} olfactive family`);
+        }
+        if (targetOccasion && p.occasion?.toLowerCase().includes(targetOccasion)) {
+          score += 3;
+          reasons.push(`ideal for ${targetOccasion}`);
+        }
+        if (targetIntensity && p.meter === targetIntensity) {
+          score += 2;
+          reasons.push(`${p.meter.toLowerCase()} projection`);
+        }
+        if (targetNotes.length > 0) {
+          const matchingNotes = p.notes.filter(n => targetNotes.some((tn: string) => n.name.toLowerCase().includes(tn)));
+          if (matchingNotes.length > 0) {
+            score += matchingNotes.length * 2;
+            reasons.push(`features ${matchingNotes.map(n => n.name).join(', ')}`);
+          }
+        }
+
+        const matchPct = Math.min(99, Math.max(82, 85 + score * 2));
+        const reasonText = reasons.length > 0 
+          ? `Curated because it ${reasons.join(', and ')}.`
+          : 'Refined choice matching your aesthetic preferences.';
+
+        return {
+          score,
+          matchScore: `${matchPct}%`,
+          reason: reasonText,
+          product: p,
+        };
+      });
+
+      scored.sort((a, b) => b.score - a.score);
+      return scored.slice(0, 3);
     },
     () => {
-      return dbStore.products.slice(0, 3).map((p) => ({
-        matchScore: '96%',
-        reason: 'Recommended based on your scent profile.',
+      return dbStore.products.slice(0, 3).map((p, idx) => ({
+        matchScore: `${96 - idx * 3}%`,
+        reason: 'Recommended based on your scent consultation profile.',
         product: p,
       }));
     }

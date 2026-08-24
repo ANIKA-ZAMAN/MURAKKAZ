@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
 import prisma from '../../config/database';
+import { NoteType } from '@prisma/client';
 import { AppError } from '../../middleware/errorHandler';
 import { safeDbCall, dbStore, saveProductsToDisk } from '../../services/resilientDb';
 
@@ -17,10 +18,14 @@ function sanitizeSizes(sizes: any[]) {
 
 function sanitizeNotes(notes: any[]) {
   if (!Array.isArray(notes) || notes.length === 0) return undefined;
-  return notes.map((n: any) => ({
-    name: String(n.name || n),
-    type: String(n.type || 'TOP').toUpperCase(),
-  }));
+  return notes.map((n: any) => {
+    const rawType = String(n.type || 'TOP').toUpperCase();
+    const type: NoteType = (['TOP', 'MIDDLE', 'BASE', 'GENERAL'].includes(rawType) ? rawType : 'TOP') as NoteType;
+    return {
+      name: String(n.name || n),
+      type,
+    };
+  });
 }
 
 function sanitizeAccords(accords: any[]) {
@@ -120,21 +125,72 @@ router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id as string;
     const { sizes, notes, accords, bestFor, galleryImages, priceVal, ...productData } = req.body;
 
+    const cleanSizes = sanitizeSizes(sizes);
+    const cleanNotes = sanitizeNotes(notes);
+    const cleanAccords = sanitizeAccords(accords);
+    const cleanBestFor = sanitizeBestFor(bestFor);
+    const cleanGallery = sanitizeGallery(galleryImages);
+
     const product = await safeDbCall(
       async () => {
         const existing = await prisma.product.findUnique({ where: { id } });
         if (!existing) throw new AppError('Product not found', 404);
 
-        return await prisma.product.update({
-          where: { id },
-          data: productData,
-          include: { sizes: true, notes: true, accords: true, bestFor: true, galleryImages: true },
+        return await prisma.$transaction(async (tx) => {
+          if (cleanSizes) {
+            await tx.productSize.deleteMany({ where: { productId: id } });
+            await tx.productSize.createMany({
+              data: cleanSizes.map(s => ({ ...s, productId: id }))
+            });
+          }
+
+          if (cleanNotes) {
+            await tx.productNote.deleteMany({ where: { productId: id } });
+            await tx.productNote.createMany({
+              data: cleanNotes.map(n => ({ ...n, productId: id }))
+            });
+          }
+
+          if (cleanAccords) {
+            await tx.productAccord.deleteMany({ where: { productId: id } });
+            await tx.productAccord.createMany({
+              data: cleanAccords.map(a => ({ ...a, productId: id }))
+            });
+          }
+
+          if (cleanBestFor) {
+            await tx.productBestFor.deleteMany({ where: { productId: id } });
+            await tx.productBestFor.createMany({
+              data: cleanBestFor.map(b => ({ ...b, productId: id }))
+            });
+          }
+
+          if (cleanGallery) {
+            await tx.productGalleryImage.deleteMany({ where: { productId: id } });
+            await tx.productGalleryImage.createMany({
+              data: cleanGallery.map(g => ({ ...g, productId: id }))
+            });
+          }
+
+          return await tx.product.update({
+            where: { id },
+            data: productData,
+            include: { sizes: true, notes: true, accords: true, bestFor: true, galleryImages: true },
+          });
         });
       },
       () => {
         const idx = dbStore.products.findIndex((p) => p.id === id);
         if (idx !== -1) {
-          dbStore.products[idx] = { ...dbStore.products[idx], ...productData };
+          dbStore.products[idx] = {
+            ...dbStore.products[idx],
+            ...productData,
+            ...(cleanSizes && { sizes: cleanSizes }),
+            ...(cleanNotes && { notes: cleanNotes }),
+            ...(cleanAccords && { accords: cleanAccords }),
+            ...(cleanBestFor && { bestFor: cleanBestFor }),
+            ...(cleanGallery && { galleryImages: cleanGallery }),
+          };
           saveProductsToDisk(dbStore.products);
           return dbStore.products[idx];
         }

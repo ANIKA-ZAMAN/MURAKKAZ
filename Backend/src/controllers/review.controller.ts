@@ -15,9 +15,9 @@ export const getProductReviews = async (req: Request, res: Response, next: NextF
 
 export const createReview = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = (req as any).user.userId;
+    const userId = req.user?.id || (req as any).user?.id || (req as any).user?.userId;
     const review = await reviewService.createReview(req.params.slug as string, userId, req.body);
-    res.status(201).json(review);
+    res.status(201).json({ status: 'success', data: review });
   } catch (error) {
     next(error);
   }
