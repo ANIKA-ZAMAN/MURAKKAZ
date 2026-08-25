@@ -9,10 +9,10 @@ const navLinks = [
   { label: "Our Story", href: "/our-story" },
   { label: "Shop", href: "/shop" },
   { label: "Event", href: "/events" },
-  { label: "Collections", href: "/collections" },
+  { label: "Library", href: "/collections" },
   { label: "Compare", href: "/compare" },
   { label: "Finder", href: "/scent-index" },
-  { label: "Blog", href: "/blog" },
+  { label: "Vlog", href: "/blog" },
 ];
 
 export default function Navbar() {
@@ -182,22 +182,16 @@ export default function Navbar() {
         }
       `}</style>
 
-      {/* ── Main Floating Navbar Header (Symmetric 32-48px outer margins) ── */}
+      {/* ── Main Floating Navbar Header ── */}
       <header
-        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-6 px-4 sm:px-8 lg:px-10 pb-2 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-4 sm:pt-5 lg:pt-6 px-3 sm:px-6 lg:px-8 pb-2 transition-all duration-300"
         suppressHydrationWarning
       >
         <nav
-          style={{
-            paddingLeft: "clamp(32px, 4vw, 56px)",
-            paddingRight: "clamp(32px, 4vw, 56px)",
-          }}
-          className={`pointer-events-auto relative w-full max-w-[1360px] h-16 select-none flex items-center justify-between rounded-[20px] transition-all duration-300 ${
-            isHome
-              ? isScrolled
-                ? "bg-[#F5F1E8]/90 backdrop-blur-md shadow-[0_6px_24px_rgba(0,0,0,0.04)] border border-[rgba(120,105,85,0.15)]"
-                : "bg-transparent border-none shadow-none"
-              : "bg-[#F5F1E8] border border-[rgba(120,105,85,0.15)] shadow-[0_4px_20px_rgba(0,0,0,0.03)]"
+          className={`pointer-events-auto relative w-full max-w-[1360px] h-[58px] sm:h-[62px] select-none flex items-center justify-between px-5 sm:px-7 lg:px-8 rounded-[18px] sm:rounded-[20px] transition-all duration-300 ${
+            isHome && !isScrolled
+              ? "bg-transparent border border-transparent shadow-none"
+              : "bg-[#F5F1E8] border border-[#6B6B6B]/40 shadow-[0_4px_24px_rgba(0,0,0,0.03)]"
           }`}
           suppressHydrationWarning
         >
@@ -205,31 +199,26 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 text-[#313134] hover:text-[#820011] rounded-full focus:outline-none cursor-pointer"
+            className="lg:hidden flex items-center justify-center w-9 h-9 text-[#313134] hover:text-[#820011] rounded-full focus:outline-none cursor-pointer"
             aria-label="Open Navigation Drawer"
           >
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
 
-          {/* Logo (Centered content container left edge) */}
+          {/* Brand Logo (Serif Text / SVG Logo) */}
           <Link
             href="/"
-            className="hover:opacity-85 transition-opacity duration-300 flex items-center shrink-0"
+            className="hover:opacity-85 transition-opacity duration-200 flex items-center shrink-0"
           >
-            <Image
-              src="/images/logo-murakkaz.svg"
-              alt="Murakkaz Logo"
-              width={125}
-              height={50}
-              priority
-              className="h-8 sm:h-9 w-auto object-contain"
-            />
+            <span className="font-serif text-[21px] sm:text-[22px] tracking-[0.02em] text-[#2B2B2E] font-normal">
+              Murakkaz
+            </span>
           </Link>
 
           {/* Desktop Nav Links (>= 1024px) */}
-          <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center">
+          <ul className="hidden lg:flex items-center gap-5 xl:gap-7 list-none m-0 p-0 flex-1 justify-center">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
@@ -237,10 +226,10 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     style={isActive ? { color: "#820011" } : undefined}
-                    className={`font-serif-text text-[13.5px] tracking-[0.14em] uppercase transition-colors duration-200 py-1 ${
+                    className={`font-serif-text text-[14px] xl:text-[14.5px] transition-colors duration-200 py-1 ${
                       isActive
-                        ? "text-[#820011] font-bold"
-                        : "text-[#313134] hover:text-[#820011] font-medium"
+                        ? "text-[#820011] font-semibold"
+                        : "text-[#3B3B3E] hover:text-[#820011] font-normal"
                     }`}
                   >
                     {link.label}
@@ -250,48 +239,71 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop Right Actions: Wishlist + Cart + Account Avatar (Moved inward for symmetric alignment) */}
-          <div className="hidden lg:flex items-center gap-5 sm:gap-6 shrink-0 mr-2 sm:mr-4 lg:mr-6">
+          {/* Desktop Right Actions: Embedded Searchbar + Wishlist + Cart + Account Avatar */}
+          <div className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
+            {/* Embedded Pill Search Bar */}
+            <form
+              onSubmit={handleSearchSubmit}
+              className="relative flex items-center bg-[#EBE5DB] hover:bg-[#E5DFD4] focus-within:bg-[#FAF6F0] focus-within:ring-1 focus-within:ring-[#820011]/30 rounded-full h-[34px] px-3 transition-all duration-200 w-[140px] xl:w-[170px]"
+            >
+              <button
+                type="submit"
+                className="text-[#6B655B] hover:text-[#820011] transition-colors p-0 mr-1.5 flex items-center justify-center cursor-pointer"
+                aria-label="Search"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </button>
+              <input
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-transparent text-[#313134] placeholder-[#7E786E] text-[13px] font-sans focus:outline-none leading-none"
+              />
+            </form>
+
             {/* Wishlist Link */}
             <Link
               href="/wishlist"
-              className="relative p-1.5 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
+              className="relative p-1 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
               aria-label="Wishlist"
               onMouseEnter={() => setHoveredIcon("wishlist")}
               onMouseLeave={() => setHoveredIcon(null)}
             >
               <svg
-                className="w-5.5 h-5.5 transition-colors duration-200 pointer-events-none"
+                className="w-5 h-5 transition-colors duration-200 pointer-events-none"
                 fill={isWishlistActive ? "#820011" : "none"}
                 viewBox="0 0 24 24"
                 stroke={isWishlistActive || hoveredIcon === "wishlist" ? "#820011" : "#313134"}
-                strokeWidth="1.8"
+                strokeWidth="1.7"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
               {wishlistCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#820011] text-white font-sans text-[8.5px] font-bold min-w-[15px] h-[15px] px-1 rounded-full flex items-center justify-center shadow-xs pointer-events-none z-10">
+                <span className="absolute -top-1.5 -right-1.5 bg-[#820011] text-white font-sans text-[8px] font-bold min-w-[14px] h-[14px] px-0.5 rounded-full flex items-center justify-center shadow-xs pointer-events-none z-10">
                   {wishlistCount}
                 </span>
               )}
             </Link>
 
-            {/* Cart Link (Rectangular Shopping Bag SVG sized to match heart icon & avatar 1:1) */}
+            {/* Cart Link (Shopping Bag) */}
             <Link
               href="/cart"
-              className="relative p-1.5 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
+              className="relative p-1 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
               aria-label="Cart"
               onMouseEnter={() => setHoveredIcon("cart")}
               onMouseLeave={() => setHoveredIcon(null)}
             >
               <svg
-                className="w-6 h-6 transition-colors duration-200 pointer-events-none"
+                className="w-5 h-5 transition-colors duration-200 pointer-events-none"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke={isCartActive || hoveredIcon === "cart" ? "#820011" : "#313134"}
-                strokeWidth="1.8"
+                strokeWidth="1.7"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -299,13 +311,13 @@ export default function Navbar() {
                 <path d="M8.5 9.5V5.5a3.5 3.5 0 017 0v4" />
               </svg>
               {cartCount > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 bg-[#820011] text-white font-sans text-[8.5px] font-bold min-w-[15px] h-[15px] px-1 rounded-full flex items-center justify-center shadow-xs pointer-events-none z-10">
+                <span className="absolute -top-1.5 -right-1.5 bg-[#820011] text-white font-sans text-[8px] font-bold min-w-[14px] h-[14px] px-0.5 rounded-full flex items-center justify-center shadow-xs pointer-events-none z-10">
                   {cartCount}
                 </span>
               )}
             </Link>
 
-            {/* Account Link (with avatar photo matching reference picture 1:1) */}
+            {/* Account Link */}
             <Link
               href="/account"
               className="relative text-[#313134] hover:text-[#820011] hover:scale-105 transition-all duration-200 flex items-center justify-center rounded-full"
@@ -314,7 +326,7 @@ export default function Navbar() {
               onMouseLeave={() => setHoveredIcon(null)}
             >
               {userPhoto ? (
-                <div className="w-8 h-8 rounded-full overflow-hidden border-1.5 border-white shadow-xs flex items-center justify-center bg-white shrink-0">
+                <div className="w-7 h-7 rounded-full overflow-hidden border border-[#D5CDBD] shadow-xs flex items-center justify-center bg-white shrink-0">
                   <img
                     src={userPhoto}
                     alt={userName || "Account Avatar"}
@@ -323,11 +335,11 @@ export default function Navbar() {
                 </div>
               ) : (
                 <svg
-                  className="w-5.5 h-5.5 transition-colors duration-200 pointer-events-none"
+                  className="w-5 h-5 transition-colors duration-200 pointer-events-none"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke={isAccountActive || hoveredIcon === "account" ? "#820011" : "#313134"}
-                  strokeWidth="1.8"
+                  strokeWidth="1.7"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
