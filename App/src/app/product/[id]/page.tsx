@@ -559,11 +559,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 router.push("/shop");
               }
             }}
-            className={styles.backLink}
-            style={{ cursor: "pointer", fontFamily: "inherit" }}
+            className={styles.breadcrumbLink}
+            style={{ cursor: "pointer", background: "none", border: "none", padding: 0 }}
           >
-            <span className={styles.arrowLeft}>←</span> Back
+            <span className={styles.arrowLeft}>←</span> Store
           </button>
+          <span className={styles.breadcrumbDivider}>/</span>
+          <span className={styles.currentBreadcrumb}>{details.name}</span>
         </div>
 
         {/* Product Details Section */}
@@ -572,33 +574,51 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           <div className={styles.imageColumn}>
             <div className={styles.mainImageWrapper}>
               <Image
-                src={details.galleryImages[activeImageIndex] || details.image}
+                src={
+                  (details.galleryImages && details.galleryImages[activeImageIndex]) 
+                    ? details.galleryImages[activeImageIndex] 
+                    : details.image
+                }
                 alt={`${details.name} Perfume Main`}
-                width={500}
-                height={500}
+                width={600}
+                height={600}
                 className={styles.mainImage}
                 priority
               />
             </div>
+
+            {/* 3 Mini Images Row */}
             <div className={styles.thumbnailRow}>
-              {details.galleryImages.map((img: string, idx: number) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveImageIndex(idx)}
-                  className={`${styles.thumbnail} ${
-                    activeImageIndex === idx ? styles.thumbnailActive : ""
-                  }`}
-                  aria-label={`View product image ${idx + 1}`}
-                >
-                  <Image
-                    src={img}
-                    alt={`Thumbnail view ${idx + 1}`}
-                    width={100}
-                    height={100}
-                    className={styles.thumbnailImg}
-                  />
-                </button>
-              ))}
+              {[0, 1, 2].map((idx) => {
+                const img = (details.galleryImages && details.galleryImages[idx]) 
+                  ? details.galleryImages[idx] 
+                  : (idx === 0 ? details.image : null);
+
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      if (img) setActiveImageIndex(idx);
+                    }}
+                    className={`${styles.thumbnail} ${
+                      activeImageIndex === idx ? styles.thumbnailActive : ""
+                    } ${!img ? styles.thumbnailPlaceholder : ""}`}
+                    aria-label={`View product image ${idx + 1}`}
+                  >
+                    {img ? (
+                      <Image
+                        src={img}
+                        alt={`${details.name} thumbnail ${idx + 1}`}
+                        width={180}
+                        height={180}
+                        className={styles.thumbnailImg}
+                      />
+                    ) : (
+                      <div className={styles.emptyThumbnailBox} />
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
