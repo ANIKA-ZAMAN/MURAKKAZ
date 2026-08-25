@@ -16,6 +16,7 @@ interface TrackedOrderItem {
 }
 
 interface TrackedOrder {
+  id?: string;
   orderNumber: string;
   status: "PENDING" | "CONFIRMED" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED";
   trackingNumber?: string;
@@ -33,15 +34,27 @@ interface TrackedOrder {
   items: TrackedOrderItem[];
 }
 
+interface ProfileUser {
+  name: string;
+  email: string;
+  memberTier?: string;
+  photo?: string;
+}
+
 function TrackOrderContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const [user, setUser] = useState<ProfileUser | null>(null);
+  const [profileOrders, setProfileOrders] = useState<TrackedOrder[]>([]);
+  const [loadingProfileOrders, setLoadingProfileOrders] = useState(false);
 
   const [orderNumberInput, setOrderNumberInput] = useState("");
   const [contactInput, setContactInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [trackedOrder, setTrackedOrder] = useState<TrackedOrder | null>(null);
+  const [showManualLookup, setShowManualLookup] = useState(false);
 
   const fetchOrderTracking = async (orderNum: string, contact?: string) => {
     if (!orderNum || !orderNum.trim()) return;
@@ -72,7 +85,48 @@ function TrackOrderContent() {
     }
   };
 
+  // Fetch logged in user's profile orders
+  const fetchProfileOrders = async () => {
+    const token = localStorage.getItem("murakkaz-token");
+    if (!token) return;
+
+    setLoadingProfileOrders(true);
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+
+    try {
+      const res = await fetch(`${baseUrl}/api/orders`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const json = await res.json();
+      if (res.ok && json.data) {
+        const list: TrackedOrder[] = Array.isArray(json.data) ? json.data : json.data.data || [];
+        setProfileOrders(list);
+
+        // If no explicit query param, automatically track their most recent order!
+        const initialOrderNum = searchParams.get("orderNumber");
+        if (!initialOrderNum && list.length > 0) {
+          const latest = list[0];
+          setOrderNumberInput(latest.orderNumber);
+          fetchOrderTracking(latest.orderNumber);
+        }
+      }
+    } catch (err) {
+      console.warn("Could not load profile orders:", err);
+    } finally {
+      setLoadingProfileOrders(false);
+    }
+  };
+
   useEffect(() => {
+    const savedUser = localStorage.getItem("murakkaz-user");
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+        fetchProfileOrders();
+      } catch {}
+    }
+
     const initialOrderNum = searchParams.get("orderNumber");
     const initialContact = searchParams.get("contact") || "";
 
@@ -91,9 +145,14 @@ function TrackOrderContent() {
     fetchOrderTracking(orderNumberInput, contactInput);
   };
 
+  const handleSelectProfileOrder = (order: TrackedOrder) => {
+    setOrderNumberInput(order.orderNumber);
+    router.push(`/track-order?orderNumber=${encodeURIComponent(order.orderNumber)}`);
+    fetchOrderTracking(order.orderNumber);
+  };
+
   // Helper to determine step states
   const getStepStatus = (stepIndex: number, status: string) => {
-    // Steps: 0: Placed, 1: Confirmed, 2: Lab / Packaging, 3: Out for Delivery, 4: Delivered
     const statusMap: Record<string, number> = {
       PENDING: 0,
       CONFIRMED: 1,
@@ -118,59 +177,128 @@ function TrackOrderContent() {
           <span className={styles.badge}>Live Delivery Tracking</span>
           <h1 className={styles.title}>Track Your Fragrance</h1>
           <p className={styles.subtitle}>
-            Enter your order reference number (e.g. <strong>MRK-123456</strong>) and phone number to monitor your package from our scent lab to your doorstep.
+            Monitor your bespoke extraits from our scent lab to your doorstep with real-time olfactory milestones.
           </p>
         </div>
 
-        {/* Search Bar Container */}
-        <div className={styles.searchCard}>
-          <form onSubmit={handleSubmit} className={styles.formGrid}>
-            <div className={styles.inputGroup}>
-              <label htmlFor="orderNumber" className={styles.inputLabel}>
-                Order ID *
-              </label>
-              <input
-                id="orderNumber"
-                type="text"
-                placeholder="e.g. MRK-849201"
-                value={orderNumberInput}
-                onChange={(e) => setOrderNumberInput(e.target.value)}
-                required
-                className={styles.textInput}
-              />
+        {/* INDIVIDUAL PROFILE-BASED ORDERS BAR (If User Logged In) */}
+        {user && profileOrders.length > 0 && (
+          <div className={styles.profileOrdersSection}>
+            <div className={styles.profileBanner}>
+              <div className={styles.profileUserTag}>
+                <div className={styles.userAvatarThumb}>
+                  {user.name ? user.name.charAt(0).toUpperCase() : "M"}
+                </div>
+                <div>
+                  <div className={styles.profileGreeting}>Welcome, {user.name}</div>
+                  <div className={styles.profileSub}>
+                    {profileOrders.length} {profileOrders.length === 1 ? "order" : "orders"} linked to your profile
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowManualLookup(!showManualLookup)}
+                className={styles.manualLookupToggle}
+              >
+                {showManualLookup ? "Hide Manual Lookup" : "Search Another Order ID →"}
+              </button>
             </div>
 
-            <div className={styles.inputGroup}>
-              <label htmlFor="contact" className={styles.inputLabel}>
-                Phone Number / Email (Optional)
-              </label>
-              <input
-                id="contact"
-                type="text"
-                placeholder="e.g. 017XXXXXXXX"
-                value={contactInput}
-                onChange={(e) => setContactInput(e.target.value)}
-                className={styles.textInput}
-              />
+            <div className={styles.profileOrdersGrid}>
+              {profileOrders.map((order) => {
+                const isSelected = trackedOrder?.orderNumber === order.orderNumber;
+                return (
+                  <button
+                    key={order.orderNumber || order.id}
+                    type="button"
+                    onClick={() => handleSelectProfileOrder(order)}
+                    className={`${styles.profileOrderCard} ${isSelected ? styles.profileOrderCardActive : ""}`}
+                  >
+                    <div className={styles.cardTopRow}>
+                      <span className={styles.orderNumText}>#{order.orderNumber}</span>
+                      <span className={`${styles.statusPill} ${order.status === "DELIVERED" ? styles.statusPillDelivered : order.status === "SHIPPED" ? styles.statusPillShipped : styles.statusPillProcessing}`} style={{ fontSize: "0.72rem", padding: "3px 10px" }}>
+                        {order.status}
+                      </span>
+                    </div>
+
+                    <div className={styles.orderDateText}>
+                      {new Date(order.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                    </div>
+
+                    <div className={styles.orderItemsSummary}>
+                      {order.items?.map((i) => i.productName).join(", ") || "Murakkaz Fragrances"}
+                    </div>
+
+                    <div className={styles.cardBottomRow}>
+                      <span style={{ fontSize: "0.75rem", color: "#888" }}>Total:</span>
+                      <span className={styles.orderTotalText}>{order.grandTotal?.toLocaleString()}tk</span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
+          </div>
+        )}
 
-            <button type="submit" disabled={loading} className={styles.trackBtn}>
-              {loading ? (
-                "Searching..."
-              ) : (
-                <>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                  </svg>
-                  Track Package
-                </>
-              )}
-            </button>
-          </form>
+        {/* Search Bar Container (Always available if guest, or toggled for logged-in user) */}
+        {(!user || profileOrders.length === 0 || showManualLookup) && (
+          <div className={styles.searchCard}>
+            <form onSubmit={handleSubmit} className={styles.formGrid}>
+              <div className={styles.inputGroup}>
+                <label htmlFor="orderNumber" className={styles.inputLabel}>
+                  Order ID *
+                </label>
+                <input
+                  id="orderNumber"
+                  type="text"
+                  placeholder="e.g. MRK-849201"
+                  value={orderNumberInput}
+                  onChange={(e) => setOrderNumberInput(e.target.value)}
+                  required
+                  className={styles.textInput}
+                />
+              </div>
 
-          {error && <div className={styles.errorBanner}>{error}</div>}
-        </div>
+              <div className={styles.inputGroup}>
+                <label htmlFor="contact" className={styles.inputLabel}>
+                  Phone Number / Email (Optional)
+                </label>
+                <input
+                  id="contact"
+                  type="text"
+                  placeholder="e.g. 017XXXXXXXX"
+                  value={contactInput}
+                  onChange={(e) => setContactInput(e.target.value)}
+                  className={styles.textInput}
+                />
+              </div>
+
+              <button type="submit" disabled={loading} className={styles.trackBtn}>
+                {loading ? (
+                  "Searching..."
+                ) : (
+                  <>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    Track Package
+                  </>
+                )}
+              </button>
+            </form>
+
+            {!user && (
+              <div style={{ marginTop: "1rem", fontSize: "0.85rem", color: "#666" }}>
+                Tip: <Link href="/account" style={{ color: "#820011", fontWeight: 600 }}>Sign in to your account</Link> to automatically view and track all your purchases without entering order IDs.
+              </div>
+            )}
+
+            {error && <div className={styles.errorBanner}>{error}</div>}
+          </div>
+        )}
 
         {/* Order Result Section */}
         {trackedOrder && (

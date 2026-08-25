@@ -494,3 +494,141 @@
   font-size: 0.85rem;
   color: #777;
 }
+
+/* Profile-Based Tracking Styles */
+.profileOrdersSection {
+  background: #ffffff;
+  border: 1px solid #eae5db;
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.profileBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0ebe2;
+}
+
+.profileUserTag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userAvatarThumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #820011;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.profileGreeting {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #18181b;
+}
+
+.profileSub {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.profileOrdersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.profileOrderCard {
+  background: #faf8f5;
+  border: 1.5px solid #eae5db;
+  border-radius: 12px;
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: left;
+}
+
+.profileOrderCard:hover {
+  border-color: #820011;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.06);
+}
+
+.profileOrderCardActive {
+  border-color: #820011 !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(130, 0, 17, 0.12) !important;
+}
+
+.cardTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orderNumText {
+  font-weight: 700;
+  color: #111;
+  font-size: 0.95rem;
+}
+
+.orderDateText {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.orderItemsSummary {
+  font-size: 0.85rem;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardBottomRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #e8e3d8;
+}
+
+.orderTotalText {
+  font-weight: 600;
+  color: #820011;
+  font-size: 0.9rem;
+}
+
+.manualLookupToggle {
+  background: transparent;
+  border: none;
+  color: #820011;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.manualLookupToggle:hover {
+  text-decoration: underline;
+}
+

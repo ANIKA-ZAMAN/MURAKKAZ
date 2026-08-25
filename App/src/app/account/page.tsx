@@ -46,6 +46,23 @@ export default function AccountPage() {
   // Live Orders
   const [orders, setOrders] = useState<LiveOrder[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
+  const [expandedTrackingId, setExpandedTrackingId] = useState<string | null>(null);
+
+  const getStepStatus = (stepIndex: number, status: string) => {
+    const statusMap: Record<string, number> = {
+      PENDING: 0,
+      CONFIRMED: 1,
+      PROCESSING: 2,
+      SHIPPED: 3,
+      DELIVERED: 4,
+      CANCELLED: -1,
+    };
+    const currentLevel = statusMap[status] ?? 0;
+    if (currentLevel === -1) return "cancelled";
+    if (currentLevel > stepIndex) return "completed";
+    if (currentLevel === stepIndex) return "current";
+    return "upcoming";
+  };
 
   // Saved Address States
   const [savedAddresses, setSavedAddresses] = useState<SavedAddressItem[]>(mockSavedAddresses);
@@ -956,12 +973,70 @@ export default function AccountPage() {
                               ))}
                             </div>
 
+                            {/* Inline Tracking Stepper (If Expanded) */}
+                            {expandedTrackingId === order.orderNumber && (
+                              <div style={{ padding: "1.25rem", background: "#fcfbf9", border: "1px solid #eae5db", borderRadius: "10px", margin: "0.75rem 0" }}>
+                                <div style={{ fontWeight: 600, fontSize: "0.9rem", color: "#18181b", marginBottom: "0.85rem", display: "flex", justifyContent: "space-between" }}>
+                                  <span>Live Milestone Timeline</span>
+                                  <span style={{ color: "#820011" }}>{order.location === "inside-dhaka" ? "Inside Dhaka (1-2 days)" : "Outside Dhaka (2-3 days)"}</span>
+                                </div>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.5rem", textAlign: "center" }}>
+                                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                    <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: getStepStatus(0, order.status) === "completed" ? "#820011" : "#e5e0d8", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, marginBottom: "4px" }}>
+                                      {getStepStatus(0, order.status) === "completed" ? "✓" : "1"}
+                                    </div>
+                                    <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "#333" }}>Placed</span>
+                                  </div>
+                                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                    <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: getStepStatus(1, order.status) === "completed" ? "#820011" : getStepStatus(1, order.status) === "current" ? "#820011" : "#e5e0d8", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, marginBottom: "4px" }}>
+                                      {getStepStatus(1, order.status) === "completed" ? "✓" : "2"}
+                                    </div>
+                                    <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "#333" }}>Confirmed</span>
+                                  </div>
+                                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                    <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: getStepStatus(2, order.status) === "completed" ? "#820011" : getStepStatus(2, order.status) === "current" ? "#820011" : "#e5e0d8", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, marginBottom: "4px" }}>
+                                      {getStepStatus(2, order.status) === "completed" ? "✓" : "3"}
+                                    </div>
+                                    <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "#333" }}>Scent Lab</span>
+                                  </div>
+                                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                    <div style={{ width: "28px", height: "28px", borderRadius: "50%", background: getStepStatus(3, order.status) === "completed" || order.status === "DELIVERED" ? "#820011" : "#e5e0d8", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", fontWeight: 700, marginBottom: "4px" }}>
+                                      {getStepStatus(3, order.status) === "completed" || order.status === "DELIVERED" ? "✓" : "4"}
+                                    </div>
+                                    <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "#333" }}>Delivery</span>
+                                  </div>
+                                </div>
+
+                                {order.trackingNumber && (
+                                  <div style={{ marginTop: "0.75rem", padding: "0.5rem 0.75rem", background: "#faf6f0", borderRadius: "6px", fontSize: "0.8rem", color: "#820011" }}>
+                                    <strong>Courier Tracking ID:</strong> <span style={{ fontFamily: "monospace", color: "#111" }}>{order.trackingNumber}</span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
                             <div className={styles.mockOrderDivider} />
 
                             <div className={styles.mockOrderFooter}>
                               <span className={styles.mockDeliveryCharge}>Delivery: {order.deliveryCharge}tk</span>
-                              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
                                 <span className={styles.mockOrderTotal}>Total: {order.grandTotal?.toLocaleString()}tk</span>
+                                <button
+                                  type="button"
+                                  onClick={() => setExpandedTrackingId(expandedTrackingId === order.orderNumber ? null : order.orderNumber)}
+                                  style={{
+                                    padding: "6px 12px",
+                                    background: expandedTrackingId === order.orderNumber ? "#18181b" : "#f4eee5",
+                                    color: expandedTrackingId === order.orderNumber ? "#fff" : "#18181b",
+                                    border: "1px solid #eae5db",
+                                    borderRadius: "6px",
+                                    fontSize: "0.8rem",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  {expandedTrackingId === order.orderNumber ? "Hide Tracker" : "Track Milestones"}
+                                </button>
                                 <Link
                                   href={`/track-order?orderNumber=${encodeURIComponent(order.orderNumber)}`}
                                   style={{
@@ -974,7 +1049,7 @@ export default function AccountPage() {
                                     textDecoration: "none",
                                   }}
                                 >
-                                  Track Package →
+                                  Live Portal →
                                 </Link>
                               </div>
                             </div>
