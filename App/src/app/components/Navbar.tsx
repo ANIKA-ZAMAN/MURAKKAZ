@@ -184,11 +184,15 @@ export default function Navbar() {
 
       {/* ── Main Floating Navbar Header ── */}
       <header
-        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-4 sm:pt-5 lg:pt-6 px-3 sm:px-6 lg:px-8 pb-2 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-4 sm:pt-5 lg:pt-6 px-4 sm:px-8 lg:px-10 pb-2 transition-all duration-300"
         suppressHydrationWarning
       >
         <nav
-          className={`pointer-events-auto relative w-full max-w-[1360px] h-[58px] sm:h-[62px] select-none flex items-center justify-between px-5 sm:px-7 lg:px-8 rounded-[18px] sm:rounded-[20px] transition-all duration-300 ${
+          style={{
+            paddingLeft: "clamp(32px, 3.2vw, 48px)",
+            paddingRight: "clamp(32px, 3.2vw, 48px)",
+          }}
+          className={`pointer-events-auto relative w-full max-w-[1360px] h-[58px] sm:h-[62px] select-none flex items-center justify-between rounded-[20px] transition-all duration-300 ${
             isHome && !isScrolled
               ? "bg-transparent border border-transparent shadow-none"
               : "bg-[#F5F1E8] border border-[#6B6B6B]/40 shadow-[0_4px_24px_rgba(0,0,0,0.03)]"
@@ -208,17 +212,19 @@ export default function Navbar() {
           </button>
 
           {/* Brand Logo (Serif Text / SVG Logo) */}
-          <Link
-            href="/"
-            className="hover:opacity-85 transition-opacity duration-200 flex items-center shrink-0"
-          >
-            <span className="font-serif text-[21px] sm:text-[22px] tracking-[0.02em] text-[#2B2B2E] font-normal">
-              Murakkaz
-            </span>
-          </Link>
+          <div className="flex items-center shrink-0">
+            <Link
+              href="/"
+              className="hover:opacity-85 transition-opacity duration-200 flex items-center"
+            >
+              <span className="font-serif text-[20px] sm:text-[21px] tracking-[0.01em] text-[#2B2B2E] font-normal select-none">
+                Murakkaz
+              </span>
+            </Link>
+          </div>
 
-          {/* Desktop Nav Links (>= 1024px) */}
-          <ul className="hidden lg:flex items-center gap-5 xl:gap-7 list-none m-0 p-0 flex-1 justify-center">
+          {/* Desktop Nav Links (>= 1024px) - Balanced Center Zone */}
+          <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center px-4 xl:px-8">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || (link.href !== "/" && (pathname?.startsWith(link.href) ?? false));
               return (
@@ -240,11 +246,11 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop Right Actions: Embedded Searchbar + Wishlist + Cart + Account Avatar */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-4.5 shrink-0">
             {/* Embedded Pill Search Bar */}
             <form
               onSubmit={handleSearchSubmit}
-              className="relative flex items-center bg-[#EBE5DB] hover:bg-[#E5DFD4] focus-within:bg-[#FAF6F0] focus-within:ring-1 focus-within:ring-[#820011]/30 rounded-full h-[34px] px-3 transition-all duration-200 w-[140px] xl:w-[170px]"
+              className="relative flex items-center bg-[#EBE5DB] hover:bg-[#E5DFD4] focus-within:bg-[#FAF6F0] focus-within:ring-1 focus-within:ring-[#820011]/30 rounded-full h-[34px] px-3 transition-all duration-200 w-[150px] xl:w-[175px]"
             >
               <button
                 type="submit"
