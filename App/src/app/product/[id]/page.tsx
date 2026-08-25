@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import FragranceNotes from "../../components/FragranceNotes";
-import { productsCatalog, slugify, getNoteImage } from "../../data/products";
+import { productsCatalog, slugify, getNoteImage, getProductsApiBaseUrl } from "../../data/products";
 import styles from "./page.module.css";
 
 // Dynamic database mapping for premium details page content
@@ -235,9 +235,8 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   // Dynamic API fetch for custom products created via Admin
   useEffect(() => {
     if (!id) return;
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
-    fetch(`${baseUrl}/api/products/${id}`, { cache: 'no-store' })
+    const apiBase = getProductsApiBaseUrl();
+    fetch(`${apiBase}/products/${id}`, { cache: 'no-store' })
       .then((res) => (res.ok ? res.json() : null))
       .then((json) => {
         if (json && json.data) {
