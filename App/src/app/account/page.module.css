@@ -1799,5 +1799,128 @@
   box-shadow: 0 8px 22px rgba(49, 49, 52, 0.25);
 }
 
+/* Scent Profile & Individual Profiling Styles */
+.scentProfileGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.scentProfileCard {
+  background-color: #faf7f2;
+  border: 1px solid rgba(130, 120, 100, 0.15);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(47, 9, 9, 0.02);
+}
+
+.scentSectionTitle {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #18181b;
+  margin: 0 0 0.5rem 0;
+}
+
+.scentSectionSub {
+  font-size: 0.875rem;
+  color: #71717a;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.4;
+}
+
+.chipsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chipBtn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #dcd7ce;
+  background: #ffffff;
+  color: #444;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chipBtn:hover {
+  border-color: #820011;
+  color: #820011;
+}
+
+.chipBtnActive {
+  background: #820011 !important;
+  color: #ffffff !important;
+  border-color: #820011 !important;
+  box-shadow: 0 2px 8px rgba(130, 0, 17, 0.2);
+}
+
+.scentPersonalityBox {
+  background: linear-gradient(135deg, rgba(130, 0, 17, 0.06) 0%, rgba(197, 168, 128, 0.12) 100%);
+  border: 1px solid rgba(130, 0, 17, 0.15);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.personalityIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #820011;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.personalityDetails h4 {
+  margin: 0 0 0.25rem 0;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 1.15rem;
+  color: #820011;
+}
+
+.personalityDetails p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+.authErrorAlert {
+  padding: 0.75rem 1rem;
+  background: #fff1f0;
+  border: 1px solid #ffccc7;
+  border-radius: 8px;
+  color: #cf1322;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.authSuccessAlert {
+  padding: 0.75rem 1rem;
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+  color: #389e0d;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+
 
 

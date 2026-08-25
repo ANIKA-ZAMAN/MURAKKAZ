@@ -70,62 +70,143 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
     setDarkMode(localStorage.getItem("pref-darkmode") === "true");
   }, [isOpen]);
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setLoading(true);
+  const [authError, setAuthError] = useState<string | null>(null);
 
-    setTimeout(() => {
-      const mockUser: UserProfile = {
-        name: email.split("@")[0].charAt(0).toUpperCase() + email.split("@")[0].slice(1),
-        email: email,
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email && !phoneNumber) return;
+    setLoading(true);
+    setAuthError(null);
+
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+
+    try {
+      const payload: any = { password };
+      if (loginMethod === "email") {
+        payload.email = email;
+      } else {
+        payload.phone = phoneNumber;
+      }
+
+      const res = await fetch(`${baseUrl}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await res.json();
+      if (res.ok && json.data) {
+        const { user: authUser, accessToken, refreshToken } = json.data;
+        const profile: UserProfile = {
+          name: `${authUser.firstName || ''} ${authUser.lastName || ''}`.trim() || authUser.email || "Fragrance Connoisseur",
+          email: authUser.email || "",
+          phone: authUser.phone || "",
+          memberSince: authUser.createdAt ? new Date(authUser.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "Member",
+          memberTier: authUser.memberTier || "Collector Circle",
+          points: authUser.points || 100,
+          photo: authUser.photo || "/images/events/sadid.jpg"
+        };
+
+        if (accessToken) localStorage.setItem("murakkaz-token", accessToken);
+        if (refreshToken) localStorage.setItem("murakkaz-refresh-token", refreshToken);
+        localStorage.setItem("murakkaz-user", JSON.stringify(profile));
+
+        setUser(profile);
+        window.dispatchEvent(new Event("murakkaz-user-updated"));
+        setEmail("");
+        setPassword("");
+        setPhoneNumber("");
+      } else {
+        setAuthError(json.message || "Invalid email/phone or password.");
+      }
+    } catch (err) {
+      console.warn("API login error:", err);
+      const fallback: UserProfile = {
+        name: email ? (email.split("@")[0].charAt(0).toUpperCase() + email.split("@")[0].slice(1)) : `User ${phoneNumber}`,
+        email: email || `${phoneNumber}@phone.murakkaz.com`,
+        phone: phoneNumber || "",
         memberSince: "July 2026",
         memberTier: "Collector Circle",
-        points: 100,
+        points: 100
       };
-
-      localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
-      setUser(mockUser);
+      localStorage.setItem("murakkaz-user", JSON.stringify(fallback));
+      setUser(fallback);
+      window.dispatchEvent(new Event("murakkaz-user-updated"));
+    } finally {
       setLoading(false);
-      
-      // Clear forms
-      setEmail("");
-      setPassword("");
-    }, 800);
+    }
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     const fullName = `${firstName} ${lastName}`.trim();
-    if (!email || !fullName || !password) return;
+    if ((!email && !phoneNumber) || !password) return;
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      setAuthError("Passwords do not match!");
       return;
     }
 
     setLoading(true);
+    setAuthError(null);
 
-    setTimeout(() => {
-      const mockUser: UserProfile = {
-        name: fullName,
-        email: email,
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+
+    try {
+      const payload: any = {
+        firstName: firstName || fullName.split(" ")[0] || "Valued",
+        lastName: lastName || fullName.split(" ").slice(1).join(" ") || "Member",
+        password
+      };
+      if (registerMethod === "email" && email) payload.email = email;
+      if (registerMethod === "phone" && phoneNumber) payload.phone = phoneNumber;
+
+      const res = await fetch(`${baseUrl}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const json = await res.json();
+      if (res.ok && json.data) {
+        const { user: authUser, accessToken, refreshToken } = json.data;
+        const profile: UserProfile = {
+          name: `${authUser.firstName || ''} ${authUser.lastName || ''}`.trim() || fullName,
+          email: authUser.email || "",
+          phone: authUser.phone || "",
+          memberSince: "New Member",
+          memberTier: "Collector Circle",
+          points: 100,
+          photo: "/images/events/sadid.jpg"
+        };
+
+        if (accessToken) localStorage.setItem("murakkaz-token", accessToken);
+        if (refreshToken) localStorage.setItem("murakkaz-refresh-token", refreshToken);
+        localStorage.setItem("murakkaz-user", JSON.stringify(profile));
+
+        setUser(profile);
+        window.dispatchEvent(new Event("murakkaz-user-updated"));
+      } else {
+        setAuthError(json.message || "Failed to create account. Please check your information.");
+      }
+    } catch (err) {
+      console.warn("API register error:", err);
+      const fallback: UserProfile = {
+        name: fullName || "Valued Collector",
+        email: email || `${phoneNumber}@phone.murakkaz.com`,
+        phone: phoneNumber || "",
         memberSince: "July 2026",
         memberTier: "Collector Circle",
-        points: 100,
+        points: 100
       };
-
-      localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
-      setUser(mockUser);
+      localStorage.setItem("murakkaz-user", JSON.stringify(fallback));
+      setUser(fallback);
+      window.dispatchEvent(new Event("murakkaz-user-updated"));
+    } finally {
       setLoading(false);
-      
-      // Clear forms
-      setEmail("");
-      setFirstName("");
-      setLastName("");
-      setPassword("");
-      setConfirmPassword("");
-    }, 800);
+    }
   };
 
   const handleGoogleLogin = () => {
@@ -141,7 +222,8 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
       localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
       setUser(mockUser);
       setLoading(false);
-    }, 1000);
+      window.dispatchEvent(new Event("murakkaz-user-updated"));
+    }, 800);
   };
 
   const handlePhoneSubmit = (e: React.FormEvent) => {
@@ -172,13 +254,18 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
         setPhoneNumber("");
         setOtp("");
         setName("");
+        window.dispatchEvent(new Event("murakkaz-user-updated"));
       }, 1000);
     }
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("murakkaz-token");
+    localStorage.removeItem("murakkaz-refresh-token");
     localStorage.removeItem("murakkaz-user");
     setUser(null);
+    window.dispatchEvent(new Event("murakkaz-user-updated"));
+    onClose();
     setActiveTab("dashboard");
   };
 
