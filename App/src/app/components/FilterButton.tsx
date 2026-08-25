@@ -5,11 +5,16 @@ import styles from "./FilterButton.module.css";
 interface FilterButtonProps {
   onClick: () => void;
   activeCount?: number;
+  isOpen?: boolean;
 }
 
-export default function FilterButton({ onClick, activeCount = 0 }: FilterButtonProps) {
+export default function FilterButton({ onClick, activeCount = 0, isOpen = false }: FilterButtonProps) {
   return (
-    <button className={styles.filterBtn} onClick={onClick} aria-label="Open filter menu">
+    <button
+      className={`${styles.filterBtn} ${isOpen ? styles.filterBtnOpen : ""}`}
+      onClick={onClick}
+      aria-label={isOpen ? "Hide filters" : "Show filters"}
+    >
       <svg
         className={styles.filterIcon}
         width="18"
@@ -31,7 +36,7 @@ export default function FilterButton({ onClick, activeCount = 0 }: FilterButtonP
         <line x1="9" y1="8" x2="15" y2="8" />
         <line x1="17" y1="16" x2="23" y2="16" />
       </svg>
-      <span className={styles.btnText}>FILTERS</span>
+      <span className={styles.btnText}>{isOpen ? "Hide filters" : "Show filters"}</span>
       {activeCount > 0 && <span className={styles.badge}>{activeCount}</span>}
     </button>
   );

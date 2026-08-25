@@ -3,18 +3,13 @@
 import { useState } from "react";
 import styles from "./FilterSidebar.module.css";
 
-interface FilterCategory {
-  id: string;
-  name: string;
-  options?: string[];
-  type?: "checkbox" | "slider";
-}
-
 interface FilterSidebarProps {
   selectedFilters: Record<string, string[]>;
   onCheckboxChange: (categoryId: string, option: string) => void;
   maxPrice: number;
   onPriceChange: (price: number) => void;
+  onClearAll: () => void;
+  totalMatching: number;
 }
 
 export default function FilterSidebar({
@@ -22,46 +17,17 @@ export default function FilterSidebar({
   onCheckboxChange,
   maxPrice,
   onPriceChange,
+  onClearAll,
+  totalMatching,
 }: FilterSidebarProps) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
-    family: false,
-    gender: false,
-    occasion: false,
-    meter: false,
-    price: false,
+    gender: true,
+    family: true,
+    meter: true,
+    occasion: true,
+    notes: false,
+    price: true,
   });
-
-  const categories: FilterCategory[] = [
-    {
-      id: "family",
-      name: "Fragrance Family",
-      options: ["Citrus", "Floral", "Woody", "Oriental", "Fresh"],
-      type: "checkbox",
-    },
-    {
-      id: "gender",
-      name: "Gender",
-      options: ["Unisex", "Men", "Women"],
-      type: "checkbox",
-    },
-    {
-      id: "occasion",
-      name: "Occasion",
-      options: ["Casual", "Formal", "Night Out", "Date Night", "Daily Wear"],
-      type: "checkbox",
-    },
-    {
-      id: "meter",
-      name: "Performance Meter",
-      options: ["Beast Mode", "Long Lasting", "Moderate", "Intimate"],
-      type: "checkbox",
-    },
-    {
-      id: "price",
-      name: "Price Slider",
-      type: "slider",
-    },
-  ];
 
   const toggleExpand = (id: string) => {
     setExpanded((prev) => ({
@@ -70,77 +36,133 @@ export default function FilterSidebar({
     }));
   };
 
+  const categories = [
+    {
+      id: "gender",
+      name: "Gender",
+      options: ["Unisex", "Men", "Women"],
+    },
+    {
+      id: "family",
+      name: "Fragrance Family",
+      options: ["Citrus", "Floral", "Woody", "Oriental", "Fresh", "Gourmand", "Chypre"],
+    },
+    {
+      id: "meter",
+      name: "Projection Meter",
+      options: ["Beast Mode", "Moderate", "Intimate"],
+    },
+    {
+      id: "occasion",
+      name: "Occasion",
+      options: ["Daily Wear", "Date Night", "Evening Gala", "Outdoor and Sport", "Office / Formal"],
+    },
+    {
+      id: "notes",
+      name: "Key Scent Notes",
+      options: [
+        "Bergamot", "Amber", "Vanilla", "Lavender", "Oud", "Saffron",
+        "Jasmine", "Rose", "Lemon", "Cedarwood", "Sage", "Sea Salt"
+      ],
+    },
+  ];
+
+  const activeFiltersCount = Object.values(selectedFilters).reduce(
+    (acc, list) => acc + (list ? list.length : 0),
+    0
+  ) + (maxPrice < 10000 ? 1 : 0);
+
   return (
-    <aside className={styles.sidebar}>
-      <h2 className={styles.title}>Filter</h2>
+    <aside className={styles.sidebarCard}>
+      {/* Top Header */}
+      <div className={styles.header}>
+        <div className={styles.titleGroup}>
+          <span className={styles.title}>Filters</span>
+          {activeFiltersCount > 0 && (
+            <span className={styles.activeBadge}>{activeFiltersCount}</span>
+          )}
+        </div>
+        {activeFiltersCount > 0 && (
+          <button onClick={onClearAll} className={styles.clearBtn}>
+            Clear all
+          </button>
+        )}
+      </div>
+
       <div className={styles.categoriesList}>
-        {categories.map((category) => {
-          const isExpanded = expanded[category.id];
+        {/* Price Slider */}
+        <div className={styles.section}>
+          <div className={styles.sectionHeader} onClick={() => toggleExpand("price")}>
+            <span className={styles.sectionTitle}>Price Range</span>
+            <span className={styles.chevron}>{expanded["price"] ? "−" : "+"}</span>
+          </div>
+          {expanded["price"] && (
+            <div className={styles.sectionBody}>
+              <div className={styles.priceDisplay}>
+                <span>৳300</span>
+                <span className={styles.currentPrice}>৳{maxPrice.toLocaleString()}</span>
+              </div>
+              <input
+                type="range"
+                min="300"
+                max="10000"
+                step="100"
+                value={maxPrice}
+                onChange={(e) => onPriceChange(Number(e.target.value))}
+                className={styles.rangeSlider}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Dynamic Category Accordions */}
+        {categories.map((cat) => {
+          const isExpanded = !!expanded[cat.id];
+          const selectedInCat = selectedFilters[cat.id] || [];
+
           return (
-            <div key={category.id} className={styles.categoryBlock}>
-              <button
-                className={styles.headerBtn}
-                onClick={() => toggleExpand(category.id)}
-                aria-expanded={isExpanded}
+            <div key={cat.id} className={styles.section}>
+              <div
+                className={styles.sectionHeader}
+                onClick={() => toggleExpand(cat.id)}
               >
-                <span className={styles.categoryName}>{category.name}</span>
-                <svg
-                  className={`${styles.arrowIcon} ${
-                    isExpanded ? styles.arrowExpanded : ""
-                  }`}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
+                <div className={styles.sectionTitleGroup}>
+                  <span className={styles.sectionTitle}>{cat.name}</span>
+                  {selectedInCat.length > 0 && (
+                    <span className={styles.catCountBadge}>{selectedInCat.length}</span>
+                  )}
+                </div>
+                <span className={styles.chevron}>{isExpanded ? "−" : "+"}</span>
+              </div>
 
               {isExpanded && (
-                <div className={`${styles.optionsContainer} ${styles.expanded}`}>
-                  <div className={styles.optionsContent}>
-                    {category.type === "slider" ? (
-                      <div className={styles.sliderWrapper}>
+                <div className={styles.optionsList}>
+                  {cat.options.map((opt) => {
+                    const isChecked = selectedInCat.includes(opt);
+                    return (
+                      <label key={opt} className={styles.optionItem}>
                         <input
-                          type="range"
-                          min="300"
-                          max="10000"
-                          step="100"
-                          value={maxPrice}
-                          onChange={(e) => onPriceChange(Number(e.target.value))}
-                          className={styles.rangeInput}
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={() => onCheckboxChange(cat.id, opt)}
+                          className={styles.checkbox}
                         />
-                        <div className={styles.sliderValues}>
-                          <span className={styles.priceMin}>300tk</span>
-                          <span className={styles.priceCurrent}>{maxPrice.toLocaleString()}tk</span>
-                          <span className={styles.priceMax}>10,000tk</span>
-                        </div>
-                      </div>
-                    ) : (
-                      category.options?.map((option) => {
-                        const isChecked = selectedFilters[category.id]?.includes(option);
-                        return (
-                          <label key={option} className={styles.optionLabel}>
-                            <input
-                              type="checkbox"
-                              className={styles.checkboxInput}
-                              checked={isChecked}
-                              onChange={() => onCheckboxChange(category.id, option)}
-                            />
-                            <span className={styles.optionText}>{option}</span>
-                          </label>
-                        );
-                      })
-                    )}
-                  </div>
+                        <span className={styles.optionLabel}>{opt}</span>
+                      </label>
+                    );
+                  })}
                 </div>
               )}
             </div>
           );
         })}
+      </div>
+
+      {/* Results Count Footer */}
+      <div className={styles.footer}>
+        <span className={styles.matchCount}>
+          {totalMatching} {totalMatching === 1 ? "perfume" : "perfumes"} found
+        </span>
       </div>
     </aside>
   );

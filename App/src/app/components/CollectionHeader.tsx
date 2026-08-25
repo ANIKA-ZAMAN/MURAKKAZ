@@ -9,6 +9,7 @@ interface CollectionHeaderProps {
   subtitle?: string;
   onSearch?: (query: string) => void;
   onOpenFilter?: () => void;
+  isFilterOpen?: boolean;
   activeFiltersCount?: number;
   sortBy?: string;
   onSortChange?: (sort: string) => void;
@@ -19,6 +20,7 @@ export default function CollectionHeader({
   subtitle = "Universe of perfume",
   onSearch,
   onOpenFilter,
+  isFilterOpen = false,
   activeFiltersCount = 0,
   sortBy = "newest",
   onSortChange,
@@ -35,7 +37,11 @@ export default function CollectionHeader({
       <div className={styles.toolbarRow}>
         <div className={styles.leftControls}>
           {onOpenFilter && (
-            <FilterButton onClick={onOpenFilter} activeCount={activeFiltersCount} />
+            <FilterButton
+              onClick={onOpenFilter}
+              activeCount={activeFiltersCount}
+              isOpen={isFilterOpen}
+            />
           )}
           {onSearch && (
             <div className={styles.searchWrapper}>

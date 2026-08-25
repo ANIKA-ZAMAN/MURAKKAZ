@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterButton from "../components/FilterButton";
+import FilterSidebar from "../components/FilterSidebar";
 import FilterDrawer from "../components/FilterDrawer";
 import Pagination from "../components/Pagination";
 import CollectionCard from "./components/CollectionCard";
@@ -14,7 +15,7 @@ function CollectionsContent() {
   const [productsList, setProductsList] = useState<Product[]>(productsCatalog);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(true);
 
   useEffect(() => {
     fetchLiveProducts().then((data) => {
@@ -159,61 +160,67 @@ function CollectionsContent() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        {/* Header with Search & Murakkaz Red Filter Button */}
+        {/* Header Row: Title, Filter & Search on Left, Sort by on Right */}
         <CollectionHeader
           title="Perfume Collection"
           subtitle="Universe of perfume"
           onSearch={handleSearch}
-          onOpenFilter={() => setIsDrawerOpen(true)}
+          onOpenFilter={() => setIsFilterOpen((prev) => !prev)}
+          isFilterOpen={isFilterOpen}
           activeFiltersCount={activeFiltersCount}
           sortBy={sortBy}
           onSortChange={handleSortChange}
         />
 
-        {/* Product Grid */}
-        {paginatedProducts.length > 0 ? (
-          <div className={styles.grid}>
-            {paginatedProducts.map((product) => (
-              <CollectionCard
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                brand={product.brand}
-                description={product.description}
-                rating={product.rating}
-                reviews={product.reviews}
-                image={product.image}
+        {/* Content Layout: In-Screen Left Filter Sidebar + Product Grid */}
+        <div className={styles.contentLayout}>
+          {isFilterOpen && (
+            <div className={styles.sidebarWrapper}>
+              <FilterSidebar
+                selectedFilters={selectedFilters}
+                onCheckboxChange={handleCheckboxChange}
+                maxPrice={maxPrice}
+                onPriceChange={handlePriceChange}
+                onClearAll={handleClearAll}
+                totalMatching={sortedProducts.length}
               />
-            ))}
-          </div>
-        ) : (
-          <div className={styles.noResults}>
-            <p>No perfumes found matching your search or filters.</p>
-          </div>
-        )}
+            </div>
+          )}
 
-        {/* Slide-Over Right Drawer Half Page */}
-        <FilterDrawer
-          isOpen={isDrawerOpen}
-          onClose={() => setIsDrawerOpen(false)}
-          selectedFilters={selectedFilters}
-          onCheckboxChange={handleCheckboxChange}
-          maxPrice={maxPrice}
-          onPriceChange={handlePriceChange}
-          onClearAll={handleClearAll}
-          totalMatching={filteredProducts.length}
-        />
+          <div className={styles.gridWrapper}>
+            {paginatedProducts.length > 0 ? (
+              <div className={isFilterOpen ? styles.grid : styles.gridFullWidth}>
+                {paginatedProducts.map((product) => (
+                  <CollectionCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    brand={product.brand}
+                    description={product.description}
+                    rating={product.rating}
+                    reviews={product.reviews}
+                    image={product.image}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className={styles.noResults}>
+                <p>No perfumes found matching your search or filters.</p>
+              </div>
+            )}
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className={styles.paginationWrapper}>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className={styles.paginationWrapper}>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </main>
     </div>
   );

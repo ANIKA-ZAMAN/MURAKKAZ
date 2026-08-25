@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterButton from "../components/FilterButton";
+import FilterSidebar from "../components/FilterSidebar";
 import FilterDrawer from "../components/FilterDrawer";
 import ProductGrid from "../components/ProductGrid";
 import RecommendationSlider from "../components/RecommendationSlider";
@@ -36,7 +37,7 @@ function ShopContent() {
   const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [sortBy, setSortBy] = useState<string>("newest");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(true);
 
   useEffect(() => {
     fetchLiveProducts()
@@ -178,33 +179,37 @@ function ShopContent() {
           title="Shop"
           subtitle="Explore our collections"
           onSearch={handleSearch}
-          onOpenFilter={() => setIsDrawerOpen(true)}
+          onOpenFilter={() => setIsFilterOpen((prev) => !prev)}
+          isFilterOpen={isFilterOpen}
           activeFiltersCount={activeFiltersCount}
           sortBy={sortBy}
           onSortChange={handleSortChange}
         />
 
-        {/* Content Layout: Product Grid */}
+        {/* Content Layout: In-Screen Left Filter Sidebar + Responsive Product Grid */}
         <div className={styles.contentLayout}>
-          <ProductGrid
-            products={paginatedProducts}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        </div>
+          {isFilterOpen && (
+            <div className={styles.sidebarWrapper}>
+              <FilterSidebar
+                selectedFilters={selectedFilters}
+                onCheckboxChange={handleCheckboxChange}
+                maxPrice={maxPrice}
+                onPriceChange={handlePriceChange}
+                onClearAll={handleClearAll}
+                totalMatching={sortedProducts.length}
+              />
+            </div>
+          )}
 
-        {/* Slide-Over Right Drawer Half Page */}
-        <FilterDrawer
-          isOpen={isDrawerOpen}
-          onClose={() => setIsDrawerOpen(false)}
-          selectedFilters={selectedFilters}
-          onCheckboxChange={handleCheckboxChange}
-          maxPrice={maxPrice}
-          onPriceChange={handlePriceChange}
-          onClearAll={handleClearAll}
-          totalMatching={filteredProducts.length}
-        />
+          <div className={styles.gridWrapper}>
+            <ProductGrid
+              products={paginatedProducts}
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>
 
         {/* Explore Our Recommendation Section */}
         <RecommendationSlider />
