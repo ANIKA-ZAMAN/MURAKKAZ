@@ -53,6 +53,31 @@ function sanitizeGallery(galleryImages: any[]) {
   }));
 }
 
+// List all products for admin
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const products = await safeDbCall(
+      async () => {
+        return await prisma.product.findMany({
+          orderBy: { createdAt: 'desc' },
+          include: {
+            sizes: true,
+            notes: true,
+            accords: true,
+            bestFor: true,
+            galleryImages: true,
+          },
+        });
+      },
+      () => dbStore.products
+    );
+
+    res.json({ status: 'success', data: products });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Create product
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {

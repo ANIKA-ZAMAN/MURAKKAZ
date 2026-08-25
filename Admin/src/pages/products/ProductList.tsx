@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
+import { Plus, Search, Sparkles } from 'lucide-react';
 import { apiClient } from '../../api/client';
 import { useToast } from '../../hooks/useToast';
 import styles from './ProductList.module.css';
@@ -10,6 +10,7 @@ interface ProductItem {
   slug: string;
   name: string;
   brand: string;
+  inspiredBy?: string;
   family: string;
   gender: string;
   description: string;
@@ -18,7 +19,7 @@ interface ProductItem {
   image: string;
   isActive: boolean;
   priceVal?: number;
-  sizes?: { size: string; price: number }[];
+  sizes?: { size: string; price: number; originalPrice?: number; stock?: number }[];
 }
 
 const ProductList: React.FC = () => {
@@ -30,14 +31,46 @@ const ProductList: React.FC = () => {
   const loadProducts = async () => {
     setLoading(true);
     try {
-      const res = await apiClient.get<{ data: any }>('/products');
-      if (res.data && Array.isArray(res.data.data)) {
-        setProducts(res.data.data);
-      } else if (Array.isArray(res.data)) {
-        setProducts(res.data);
+      // 1. Try dedicated admin endpoint first, then public endpoint with large limit
+      let res: any = await apiClient.get<any>('/admin/products');
+      let items: ProductItem[] = [];
+
+      if (res && res.data && Array.isArray(res.data)) {
+        items = res.data;
+      } else if (res && res.data && Array.isArray(res.data.data)) {
+        items = res.data.data;
+      } else if (res && Array.isArray(res)) {
+        items = res;
+      }
+
+      if (items.length === 0) {
+        const fallbackRes = await apiClient.get<any>('/products?limit=1000');
+        if (fallbackRes && fallbackRes.data && Array.isArray(fallbackRes.data)) {
+          items = fallbackRes.data;
+        } else if (fallbackRes && fallbackRes.data && Array.isArray(fallbackRes.data.data)) {
+          items = fallbackRes.data.data;
+        } else if (Array.isArray(fallbackRes)) {
+          items = fallbackRes;
+        }
+      }
+
+      if (items.length > 0) {
+        setProducts(items);
       }
     } catch (err) {
-      console.warn('Failed to load products from API', err);
+      console.warn('Failed to load products from /admin/products, trying /products:', err);
+      try {
+        const fallbackRes = await apiClient.get<any>('/products?limit=1000');
+        if (fallbackRes && fallbackRes.data && Array.isArray(fallbackRes.data)) {
+          setProducts(fallbackRes.data);
+        } else if (fallbackRes && fallbackRes.data && Array.isArray(fallbackRes.data.data)) {
+          setProducts(fallbackRes.data.data);
+        } else if (Array.isArray(fallbackRes)) {
+          setProducts(fallbackRes);
+        }
+      } catch (e) {
+        console.error('All product fetch attempts failed', e);
+      }
     } finally {
       setLoading(false);
     }
@@ -63,12 +96,16 @@ const ProductList: React.FC = () => {
   const filteredProducts = products.filter((p) => {
     if (filter.search) {
       const q = filter.search.toLowerCase();
-      if (!p.name.toLowerCase().includes(q) && !p.brand.toLowerCase().includes(q)) {
+      const nameMatch = (p.name || '').toLowerCase().includes(q);
+      const brandMatch = (p.brand || '').toLowerCase().includes(q);
+      const inspiredMatch = (p.inspiredBy || '').toLowerCase().includes(q);
+      const slugMatch = (p.slug || '').toLowerCase().includes(q);
+      if (!nameMatch && !brandMatch && !inspiredMatch && !slugMatch) {
         return false;
       }
     }
-    if (filter.family && p.family !== filter.family) return false;
-    if (filter.gender && p.gender !== filter.gender) return false;
+    if (filter.family && (p.family || '').toUpperCase() !== filter.family.toUpperCase()) return false;
+    if (filter.gender && (p.gender || '').toUpperCase() !== filter.gender.toUpperCase()) return false;
     if (filter.status === 'ACTIVE' && p.isActive === false) return false;
     if (filter.status === 'INACTIVE' && p.isActive !== false) return false;
     return true;
@@ -82,7 +119,7 @@ const ProductList: React.FC = () => {
             Product Catalog & Fragrance Inventory
           </h2>
           <p style={{ fontSize: '0.85rem', color: '#A0A0A5' }}>
-            Create and manage luxury fragrance entries live across storefront.
+            Showing {filteredProducts.length} of {products.length} luxury fragrance entries live across storefront.
           </p>
         </div>
         <div>
@@ -120,26 +157,29 @@ const ProductList: React.FC = () => {
           marginBottom: '1.5rem',
         }}
       >
-        <input
-          type="text"
-          placeholder="Search fragrance name or brand..."
-          name="catalog_search_input"
-          autoComplete="off"
-          autoCorrect="off"
-          spellCheck={false}
-          className={styles.input}
-          value={filter.search}
-          onChange={(e) => setFilter({ ...filter, search: e.target.value })}
-          style={{
-            flex: 1,
-            padding: '0.6rem 1rem',
-            background: '#222225',
-            border: '1px solid rgba(197,168,128,0.2)',
-            borderRadius: '6px',
-            color: '#F5F1E8',
-            outline: 'none',
-          }}
-        />
+        <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center' }}>
+          <Search size={18} style={{ position: 'absolute', left: '12px', color: '#A0A0A5' }} />
+          <input
+            type="text"
+            placeholder="Search fragrance name, brand, inspired-by, or slug..."
+            name="catalog_search_input"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
+            className={styles.input}
+            value={filter.search}
+            onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+            style={{
+              width: '100%',
+              padding: '0.6rem 1rem 0.6rem 2.4rem',
+              background: '#222225',
+              border: '1px solid rgba(197,168,128,0.2)',
+              borderRadius: '6px',
+              color: '#F5F1E8',
+              outline: 'none',
+            }}
+          />
+        </div>
         <select
           className={styles.select}
           value={filter.family}
@@ -190,7 +230,7 @@ const ProductList: React.FC = () => {
             <tr style={{ background: 'rgba(34,34,37,0.7)', color: '#C5A880', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '1px solid rgba(197,168,128,0.15)' }}>
               <th style={{ padding: '1rem 1.5rem' }}>Fragrance</th>
               <th style={{ padding: '1rem 1.5rem' }}>Brand & Family</th>
-              <th style={{ padding: '1rem 1.5rem' }}>Price</th>
+              <th style={{ padding: '1rem 1.5rem' }}>Sizes & Price</th>
               <th style={{ padding: '1rem 1.5rem' }}>Rating</th>
               <th style={{ padding: '1rem 1.5rem' }}>Status</th>
               <th style={{ padding: '1rem 1.5rem', textAlign: 'right' }}>Actions</th>
@@ -200,14 +240,24 @@ const ProductList: React.FC = () => {
             {loading ? (
               <tr>
                 <td colSpan={6} style={{ textAlign: 'center', padding: '3rem', color: '#A0A0A5' }}>
-                  Loading product catalog...
+                  Loading product catalog ({products.length} products)...
                 </td>
               </tr>
             ) : filteredProducts.length > 0 ? (
               filteredProducts.map((p) => {
-                const priceText = p.sizes && p.sizes.length > 0
-                  ? `৳${p.sizes[0].price.toLocaleString()}`
-                  : (p.priceVal ? `৳${p.priceVal.toLocaleString()}` : '৳2,800');
+                let priceText = '৳2,800';
+                if (p.sizes && p.sizes.length > 0) {
+                  const prices = p.sizes.map(s => s.price).filter(Boolean);
+                  if (prices.length > 1) {
+                    const min = Math.min(...prices);
+                    const max = Math.max(...prices);
+                    priceText = `৳${min.toLocaleString()} - ৳${max.toLocaleString()}`;
+                  } else if (prices.length === 1) {
+                    priceText = `৳${prices[0].toLocaleString()}`;
+                  }
+                } else if (p.priceVal) {
+                  priceText = `৳${p.priceVal.toLocaleString()}`;
+                }
 
                 return (
                   <tr key={p.id} style={{ borderBottom: '1px solid rgba(197,168,128,0.08)' }}>
@@ -216,13 +266,21 @@ const ProductList: React.FC = () => {
                         <img 
                           src={p.image || '/images/products/jade_serenity.png'} 
                           alt={p.name} 
-                          style={{ width: '42px', height: '42px', borderRadius: '8px', objectFit: 'cover', background: '#222225', border: '1px solid rgba(197,168,128,0.2)' }} 
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/images/products/jade_serenity.png';
+                          }}
+                          style={{ width: '44px', height: '44px', borderRadius: '8px', objectFit: 'cover', background: '#222225', border: '1px solid rgba(197,168,128,0.2)' }} 
                         />
                         <div>
-                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 500, color: '#F5F1E8', fontSize: '1rem' }}>
+                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600, color: '#F5F1E8', fontSize: '1.02rem' }}>
                             {p.name}
                           </div>
-                          <div style={{ fontSize: '0.8rem', color: '#A0A0A5' }}>
+                          {p.inspiredBy && (
+                            <div style={{ fontSize: '0.78rem', color: '#C5A880', fontStyle: 'italic', marginTop: '2px' }}>
+                              {p.inspiredBy}
+                            </div>
+                          )}
+                          <div style={{ fontSize: '0.78rem', color: '#7E7E85' }}>
                             Slug: {p.slug}
                           </div>
                         </div>
@@ -236,15 +294,22 @@ const ProductList: React.FC = () => {
                         {p.family || 'WOODY'}
                       </span>
                     </td>
-                    <td style={{ padding: '1.25rem 1.5rem', fontWeight: 600, color: '#F5F1E8' }}>
-                      {priceText}
+                    <td style={{ padding: '1.25rem 1.5rem' }}>
+                      <div style={{ fontWeight: 600, color: '#F5F1E8', fontSize: '0.95rem' }}>
+                        {priceText}
+                      </div>
+                      {p.sizes && p.sizes.length > 0 && (
+                        <div style={{ fontSize: '0.75rem', color: '#A0A0A5', marginTop: '3px' }}>
+                          {p.sizes.map(s => s.size).join(', ')}
+                        </div>
+                      )}
                     </td>
                     <td style={{ padding: '1.25rem 1.5rem', color: '#FBBF24' }}>
-                      ★ {p.rating || 5.0} ({p.reviewCount || 0})
+                      ★ {p.rating || 5.0} <span style={{ color: '#A0A0A5', fontSize: '0.8rem' }}>({p.reviewCount || 0})</span>
                     </td>
                     <td style={{ padding: '1.25rem 1.5rem' }}>
-                      <span style={{ padding: '3px 10px', borderRadius: '50px', background: 'rgba(52,211,153,0.12)', color: '#34D399', fontSize: '0.78rem', border: '1px solid rgba(52,211,153,0.25)' }}>
-                        Active Live
+                      <span style={{ padding: '3px 10px', borderRadius: '50px', background: p.isActive !== false ? 'rgba(52,211,153,0.12)' : 'rgba(239,68,68,0.12)', color: p.isActive !== false ? '#34D399' : '#EF4444', fontSize: '0.78rem', border: `1px solid ${p.isActive !== false ? 'rgba(52,211,153,0.25)' : 'rgba(239,68,68,0.25)'}` }}>
+                        {p.isActive !== false ? 'Active Live' : 'Inactive'}
                       </span>
                     </td>
                     <td style={{ padding: '1.25rem 1.5rem', textAlign: 'right' }}>
@@ -263,7 +328,7 @@ const ProductList: React.FC = () => {
             ) : (
               <tr>
                 <td colSpan={6} style={{ textAlign: 'center', padding: '3rem', color: '#A0A0A5' }}>
-                  No products in catalog. Click "+ Add Product" above to create your first fragrance!
+                  No products found matching filters. Click "+ Add Product" above to create your first fragrance!
                 </td>
               </tr>
             )}
