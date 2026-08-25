@@ -331,12 +331,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   }, [id]);
 
   const details = React.useMemo(() => {
-    if (liveProduct) return liveProduct;
-    if (productsDetailMap[id]) return productsDetailMap[id];
-    if (productsDetailMap[targetKey] && (id.includes("jade") || id.includes("coral") || id.includes("noir") || id.includes("hellenist"))) {
-      return productsDetailMap[targetKey];
-    }
-    
+    // 1. If catalog item exists in master luxury catalog (63 fragrances with curated notes & Set B studio renders):
     if (catalogItem) {
       const allNotes = catalogItem.notes && catalogItem.notes.length > 0 ? catalogItem.notes : ["Bergamot", "Jasmine", "Amber"];
       const oneThird = Math.max(1, Math.floor(allNotes.length / 3));
@@ -347,15 +342,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
       return {
         name: catalogItem.name,
-        inspiredBy: catalogItem.inspiredBy ? `Inspired by ${catalogItem.inspiredBy}` : `Inspired by ${catalogItem.brand}`,
+        inspiredBy: catalogItem.inspiredBy ? `Inspired by ${catalogItem.inspiredBy}` : (catalogItem.brand ? `Inspired by ${catalogItem.brand}` : ''),
         badge: catalogItem.badge || "Best Seller",
         description: catalogItem.description || `${catalogItem.name} by ${catalogItem.brand}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
         image: catalogItem.image,
         family: catalogItem.family || "Woody",
         galleryImages: [
-          catalogItem.image,
-          "/images/products/jade_serenity.png",
-          "/images/products/amber_gold.png",
+          catalogItem.image
         ],
         topNotes,
         middleNotes,
@@ -374,8 +367,17 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         ourTake: catalogItem.description || `${catalogItem.name} is a captivating fragrance formulation.`
       };
     }
+
+    // 2. If it's a dynamic product created via admin dashboard (liveProduct):
+    if (liveProduct) {
+      return liveProduct;
+    }
+
+    // 3. Fallback to signature products detail map
+    if (productsDetailMap[id]) return productsDetailMap[id];
+    if (productsDetailMap[targetKey]) return productsDetailMap[targetKey];
     
-    return productsDetailMap[targetKey] || productsDetailMap["jade-serenity"];
+    return productsDetailMap["jade-serenity"];
   }, [liveProduct, targetKey, id, catalogItem]);
 
   // Reset indices on product change
