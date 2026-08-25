@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { 
   mockUserProfile, 
   mockOrders, 
@@ -698,6 +699,21 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
                                 Track Num: <span className={styles.trackingNum}>{order.trackingNumber}</span>
                               </div>
                             )}
+
+                            <div style={{ marginTop: "0.75rem", display: "flex", justifyContent: "flex-end" }}>
+                              <Link
+                                href={`/track-order?orderNumber=${encodeURIComponent(order.id)}`}
+                                onClick={onClose}
+                                style={{
+                                  fontSize: "0.78rem",
+                                  color: "#820011",
+                                  fontWeight: 600,
+                                  textDecoration: "none",
+                                }}
+                              >
+                                Track Delivery →
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       ))}

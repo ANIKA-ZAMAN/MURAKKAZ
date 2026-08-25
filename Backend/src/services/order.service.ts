@@ -315,3 +315,65 @@ export const updateOrderStatus = async (orderId: string, data: { status: any, tr
     });
   });
 };
+
+export const trackOrderByNumber = async (orderNumber: string, phoneOrEmail?: string) => {
+  const cleanOrderNum = orderNumber.trim();
+  const order = await prisma.order.findFirst({
+    where: {
+      OR: [
+        { orderNumber: cleanOrderNum },
+        { orderNumber: cleanOrderNum.toUpperCase() },
+        { id: cleanOrderNum }
+      ]
+    },
+    include: {
+      items: true,
+      payment: {
+        select: {
+          method: true,
+          status: true,
+          amount: true
+        }
+      }
+    }
+  });
+
+  if (!order) {
+    throw new AppError('No order found with the provided order number', 404);
+  }
+
+  if (phoneOrEmail && phoneOrEmail.trim()) {
+    const cleanContact = phoneOrEmail.trim().toLowerCase();
+    const phoneMatch = order.phone.replace(/\D/g, '').includes(cleanContact.replace(/\D/g, ''));
+    const emailMatch = order.email.toLowerCase() === cleanContact;
+    if (!phoneMatch && !emailMatch) {
+      throw new AppError('The phone number or email does not match this order', 403);
+    }
+  }
+
+  return {
+    orderNumber: order.orderNumber,
+    status: order.status,
+    trackingNumber: order.trackingNumber,
+    createdAt: order.createdAt,
+    updatedAt: order.updatedAt,
+    fullName: order.fullName,
+    phone: order.phone,
+    address: order.address,
+    location: order.location,
+    subtotal: order.subtotal,
+    deliveryCharge: order.deliveryCharge,
+    grandTotal: order.grandTotal,
+    paymentMethod: order.payment?.method || 'COD',
+    paymentStatus: order.payment?.status || 'PENDING',
+    items: order.items.map(item => ({
+      id: item.id,
+      productName: item.productName,
+      productImage: item.productImage,
+      selectedSize: item.selectedSize,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+      totalPrice: item.totalPrice
+    }))
+  };
+};

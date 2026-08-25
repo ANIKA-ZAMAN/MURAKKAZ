@@ -57,4 +57,18 @@ export const cancelOrder = async (req: Request, res: Response, next: NextFunctio
   } catch (error) {
     next(error);
   }
-}
+};
+
+export const trackOrder = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const orderNumber = req.params.orderNumber as string;
+    const phoneOrEmail = (req.query.contact || req.query.phone || req.query.email) as string | undefined;
+    const order = await orderService.trackOrderByNumber(orderNumber, phoneOrEmail);
+    res.status(200).json({
+      status: 'success',
+      data: order
+    });
+  } catch (error) {
+    next(error);
+  }
+};

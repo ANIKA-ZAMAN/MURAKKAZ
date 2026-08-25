@@ -2,6 +2,7 @@
  
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { 
   mockUserProfile, 
   mockOrders, 
@@ -1066,7 +1067,23 @@ export default function AccountPage() {
                           {/* Card Footer */}
                           <div className={styles.mockOrderFooter}>
                             <span className={styles.mockDeliveryCharge}>Delivery Charge: {order.deliveryCharge}</span>
-                            <span className={styles.mockOrderTotal}>Total: {order.total}</span>
+                            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                              <span className={styles.mockOrderTotal}>Total: {order.total}</span>
+                              <Link
+                                href={`/track-order?orderNumber=${encodeURIComponent(order.id)}`}
+                                style={{
+                                  padding: "6px 14px",
+                                  background: "#820011",
+                                  color: "#fff",
+                                  borderRadius: "6px",
+                                  fontSize: "0.8rem",
+                                  fontWeight: 600,
+                                  textDecoration: "none",
+                                }}
+                              >
+                                Track Package →
+                              </Link>
+                            </div>
                           </div>
                         </div>
                       ))}

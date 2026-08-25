@@ -1,10 +1,13 @@
 import { Router } from 'express';
-import { createOrder, getUserOrders, getOrderById, cancelOrder } from '../controllers/order.controller';
+import { createOrder, getUserOrders, getOrderById, cancelOrder, trackOrder } from '../controllers/order.controller';
 import { authenticate, optionalAuth } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 import { createOrderSchema } from '../validators/order.validator';
 
 const router = Router();
+
+// Public Order tracking (accessible by order number & contact)
+router.get('/track/:orderNumber', trackOrder);
 
 // Order creation supports both guest and authenticated users
 router.post('/', optionalAuth, validate(createOrderSchema), createOrder);

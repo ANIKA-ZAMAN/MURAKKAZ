@@ -262,9 +262,18 @@ function CheckoutContent() {
             A confirmation has been sent to <strong>{formData.email}</strong>. Our delivery courier will call you at <strong>{formData.phone}</strong> when approaching your address.
           </p>
 
-          <Link href="/shop" className={styles.backToShopBtn}>
-            Continue Shopping
-          </Link>
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginTop: "1.5rem" }}>
+            <Link 
+              href={`/track-order?orderNumber=${encodeURIComponent(orderId)}&contact=${encodeURIComponent(formData.phone || formData.email)}`} 
+              className={styles.backToShopBtn}
+              style={{ background: "#820011", color: "#fff", borderColor: "#820011" }}
+            >
+              Track Your Order Live →
+            </Link>
+            <Link href="/shop" className={styles.backToShopBtn}>
+              Continue Shopping
+            </Link>
+          </div>
         </div>
       </div>
     );

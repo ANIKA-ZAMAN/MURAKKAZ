@@ -363,7 +363,7 @@ export default function CartPage() {
             </div>
             <div className={styles.linksSubRow}>
               <Link href="/events">Event Finder</Link>
-              <Link href="/">Perfume Finder</Link>
+              <Link href="/track-order">Track Order</Link>
             </div>
           </div>
           <div className={styles.footerSocialCol}>
