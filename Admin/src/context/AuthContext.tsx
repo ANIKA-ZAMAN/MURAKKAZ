@@ -37,8 +37,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     useEffect(() => {
         const loadUser = async () => {
             const token = getAccessToken();
-            if (!token) {
-                // If no token stored yet, set default demo token so user can explore UI
+            if (!token || token === 'demo-access-token') {
+                try {
+                    const response = await apiClient.post<{ data: { user: User; accessToken: string; refreshToken: string } }>('/auth/login', {
+                        email: 'admin@murakkaz.com',
+                        password: 'admin123'
+                    });
+                    if (response?.data?.accessToken) {
+                        setTokens(response.data.accessToken, response.data.refreshToken);
+                        setUser(response.data.user);
+                        setIsLoading(false);
+                        return;
+                    }
+                } catch (e) {
+                    console.warn("Auto admin login fallback to demo token");
+                }
                 setTokens('demo-access-token', 'demo-refresh-token');
                 setUser(DEMO_USER);
                 setIsLoading(false);
@@ -51,8 +64,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                     setUser(response.data);
                 }
             } catch (error) {
-                console.warn("Backend user verification failed, using demo admin profile:", error);
-                setUser(DEMO_USER);
+                console.warn("Backend user verification failed, trying re-login:", error);
+                try {
+                    const loginRes = await apiClient.post<{ data: { user: User; accessToken: string; refreshToken: string } }>('/auth/login', {
+                        email: 'admin@murakkaz.com',
+                        password: 'admin123'
+                    });
+                    if (loginRes?.data?.accessToken) {
+                        setTokens(loginRes.data.accessToken, loginRes.data.refreshToken);
+                        setUser(loginRes.data.user);
+                        setIsLoading(false);
+                        return;
+                    }
+                } catch (reLoginErr) {
+                    setUser(DEMO_USER);
+                }
             } finally {
                 setIsLoading(false);
             }

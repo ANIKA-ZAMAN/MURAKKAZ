@@ -984,6 +984,32 @@ const ProductForm: React.FC = () => {
               )}
             </div>
           )}
+
+          {/* Bottom Action Footer */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            gap: '12px',
+            marginTop: '24px',
+            paddingTop: '20px',
+            borderTop: '1px solid rgba(197, 168, 128, 0.15)'
+          }}>
+            <button
+              type="button"
+              onClick={() => navigate('/products')}
+              className={styles.cancelBtn}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={saving}
+              className={styles.saveBtn}
+            >
+              <Save size={16} /> {saving ? 'Saving Fragrance...' : 'Save Fragrance'}
+            </button>
+          </div>
         </div>
 
         {/* Right Column: Live Sticky Product Preview Sidebar */}
