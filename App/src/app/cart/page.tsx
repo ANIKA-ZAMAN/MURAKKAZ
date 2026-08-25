@@ -62,7 +62,7 @@ const initialCartItems: CartItem[] = [
 ];
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isMounted, setIsMounted] = useState(false);
 
   // Load from localStorage on mount
@@ -72,23 +72,27 @@ export default function CartPage() {
     if (savedCart) {
       try {
         const parsed = JSON.parse(savedCart);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          // Normalize old cart item sizes/prices to avoid type issues
+        if (Array.isArray(parsed)) {
+          // Normalize cart item sizes/prices to avoid type issues
           const normalized = parsed.map((item: any) => {
-            const hasNewSizes = item.prices && "6ml" in item.prices;
-            if (!hasNewSizes) {
-              return {
-                ...item,
-                selectedSize: item.selectedSize || "12ml",
-                prices: {
-                  "6ml": 300,
-                  "12ml": 500,
-                  "30ml": 900,
-                  "50ml": 2500,
-                }
-              };
-            }
-            return item;
+            const hasNewSizes = item.prices && typeof item.prices === "object" && "6ml" in item.prices;
+            return {
+              id: item.id || `cart-${Date.now()}-${Math.random()}`,
+              name: item.name || "Murakkaz Fragrance",
+              image: item.image || "/images/products/vanilla_28_v2.jpg",
+              inspiredBy: item.inspiredBy || `By Murakkaz`,
+              selectedSize: (item.selectedSize as "6ml" | "12ml" | "30ml" | "50ml") || "12ml",
+              quantity: Math.max(1, Number(item.quantity) || 1),
+              prices: hasNewSizes
+                ? item.prices
+                : {
+                    "6ml": 300,
+                    "12ml": 500,
+                    "30ml": 900,
+                    "50ml": 2500,
+                  },
+              selected: item.selected !== undefined ? item.selected : true,
+            };
           });
           setCartItems(normalized);
           return;
@@ -97,8 +101,7 @@ export default function CartPage() {
         console.error("Failed to parse cart items from storage", e);
       }
     }
-    // Fallback to initial items if localStorage is empty
-    localStorage.setItem("cart-items", JSON.stringify(initialCartItems));
+    setCartItems([]);
   }, []);
 
   // Save to localStorage when state updates

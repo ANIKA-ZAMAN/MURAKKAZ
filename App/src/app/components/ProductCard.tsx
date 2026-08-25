@@ -217,30 +217,95 @@ export default function ProductCard({
         {/* Row 5: Action Buttons */}
         <div className={styles.actions}>
           <button
+            type="button"
             className={styles.buyNowBtn}
             onClick={(e) => {
               e.stopPropagation();
-              router.push(`/cart?add=${id}`);
+              try {
+                const saved = localStorage.getItem("cart-items");
+                let cart: any[] = saved ? JSON.parse(saved) : [];
+                if (!Array.isArray(cart)) cart = [];
+
+                const existingIndex = cart.findIndex(
+                  (i: any) =>
+                    i.name &&
+                    i.name.toLowerCase() === displayName.toLowerCase() &&
+                    (i.selectedSize === "12ml" || !i.selectedSize)
+                );
+
+                if (existingIndex > -1) {
+                  cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+                  cart[existingIndex].selected = true;
+                } else {
+                  cart.push({
+                    id: `cart-${targetSlug}-${Date.now()}`,
+                    name: displayName,
+                    image: image,
+                    inspiredBy: subTitleText,
+                    selectedSize: "12ml",
+                    quantity: 1,
+                    prices: {
+                      "6ml": 300,
+                      "12ml": 500,
+                      "30ml": 900,
+                      "50ml": 2500,
+                    },
+                    selected: true,
+                  });
+                }
+
+                localStorage.setItem("cart-items", JSON.stringify(cart));
+                window.dispatchEvent(new Event("cart-updated"));
+                router.push("/cart");
+              } catch (err) {
+                console.error(err);
+                router.push("/cart");
+              }
             }}
           >
             Buy Now
           </button>
           <button
+            type="button"
             className={styles.addBagBtn}
             onClick={(e) => {
               e.stopPropagation();
               try {
                 const saved = localStorage.getItem("cart-items");
                 let cart: any[] = saved ? JSON.parse(saved) : [];
-                const existing = cart.find((i) => i.id === id);
-                if (existing) {
-                  existing.quantity = (existing.quantity || 1) + 1;
+                if (!Array.isArray(cart)) cart = [];
+
+                const existingIndex = cart.findIndex(
+                  (i: any) =>
+                    i.name &&
+                    i.name.toLowerCase() === displayName.toLowerCase() &&
+                    (i.selectedSize === "12ml" || !i.selectedSize)
+                );
+
+                if (existingIndex > -1) {
+                  cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+                  cart[existingIndex].selected = true;
                 } else {
-                  cart.push({ id, name: displayName, price: displayPrice, image, quantity: 1 });
+                  cart.push({
+                    id: `cart-${targetSlug}-${Date.now()}`,
+                    name: displayName,
+                    image: image,
+                    inspiredBy: subTitleText,
+                    selectedSize: "12ml",
+                    quantity: 1,
+                    prices: {
+                      "6ml": 300,
+                      "12ml": 500,
+                      "30ml": 900,
+                      "50ml": 2500,
+                    },
+                    selected: true,
+                  });
                 }
+
                 localStorage.setItem("cart-items", JSON.stringify(cart));
                 window.dispatchEvent(new Event("cart-updated"));
-                setToastMessage(`Added ${displayName} to your bag!`);
+                setToastMessage(`Added ${displayName} (12ml) to your bag!`);
               } catch (err) {
                 console.error(err);
               }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { productsCatalog } from "../data/products";
 
@@ -18,6 +19,7 @@ interface WishlistProduct {
 }
 
 export default function WishlistPage() {
+  const router = useRouter();
   const [favorites, setFavorites] = useState<WishlistProduct[]>([]);
   const [related, setRelated] = useState<WishlistProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -153,6 +155,52 @@ export default function WishlistPage() {
     }
   };
 
+  const handleAddToBag = (item: WishlistProduct) => {
+    try {
+      const saved = localStorage.getItem("cart-items");
+      let cart: any[] = saved ? JSON.parse(saved) : [];
+      if (!Array.isArray(cart)) cart = [];
+
+      const existingIndex = cart.findIndex(
+        (i: any) =>
+          i.name &&
+          i.name.toLowerCase() === item.name.toLowerCase() &&
+          (i.selectedSize === "12ml" || !i.selectedSize)
+      );
+
+      if (existingIndex > -1) {
+        cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+        cart[existingIndex].selected = true;
+      } else {
+        cart.push({
+          id: `cart-${item.id || Date.now()}`,
+          name: item.name,
+          image: item.image,
+          inspiredBy: item.inspiredBy,
+          selectedSize: "12ml",
+          quantity: 1,
+          prices: {
+            "6ml": 300,
+            "12ml": 500,
+            "30ml": 900,
+            "50ml": 2500,
+          },
+          selected: true,
+        });
+      }
+
+      localStorage.setItem("cart-items", JSON.stringify(cart));
+      window.dispatchEvent(new Event("cart-updated"));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleBuyNow = (item: WishlistProduct) => {
+    handleAddToBag(item);
+    router.push("/cart");
+  };
+
   const handleToggleFavoritesLimit = () => {
     if (favoritesLimit >= filteredFavorites.length) {
       setFavoritesLimit(8);
@@ -199,33 +247,47 @@ export default function WishlistPage() {
               </span>
               <input
                 type="text"
-                placeholder="Search"
-                className={styles.searchInput}
+                placeholder="Search favorite products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                className={styles.searchInput}
               />
+              {searchQuery && (
+                <button
+                  className={styles.clearSearchBtn}
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear Search"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              )}
             </div>
           )}
         </div>
 
-        {/* Favorite Grid or Empty State */}
-        {isLoaded && favorites.length === 0 ? (
-          <div className={styles.emptyStateContainer}>
-            <div className={styles.emptyIcon}>
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#820011" strokeWidth="1.8">
+        {/* Empty state or Product Grid */}
+        {isLoaded && filteredFavorites.length === 0 ? (
+          <div className={styles.emptyState}>
+            <div className={styles.emptyIconWrapper}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#313134" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
             </div>
-            <h2 className={styles.emptyTitle}>Your Wishlist is Empty</h2>
-            <p className={styles.emptyText}>
-              You haven&apos;t added any perfumes to your favorites yet. Browse our luxury fragrance catalog and tap the heart icon on any item to save it here!
+            <h3 className={styles.emptyTitle}>No Favorite Fragrances Found</h3>
+            <p className={styles.emptySubtitle}>
+              {searchQuery
+                ? "No products matched your search query in favorites."
+                : "Your favorites list is currently empty. Explore our master collection and click the heart icon to save fragrances here."}
             </p>
             <Link href="/shop" className={styles.exploreBtn}>
               Explore Collection
             </Link>
           </div>
         ) : (
-          <div className={styles.gridContainer}>
+          <div className={styles.grid}>
             {displayedFavorites.map((item) => (
               <div key={item.id} className={styles.card}>
                 <div className={styles.imageWrapper}>
@@ -256,8 +318,20 @@ export default function WishlistPage() {
                     </div>
                   </div>
                   <div className={styles.actionButtons}>
-                    <button className={styles.buyNowBtn}>Buy Now</button>
-                    <button className={styles.addBagBtn}>Add to Bag</button>
+                    <button
+                      type="button"
+                      className={styles.buyNowBtn}
+                      onClick={() => handleBuyNow(item)}
+                    >
+                      Buy Now
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.addBagBtn}
+                      onClick={() => handleAddToBag(item)}
+                    >
+                      Add to Bag
+                    </button>
                   </div>
                 </div>
               </div>
@@ -348,8 +422,20 @@ export default function WishlistPage() {
                             </div>
                           </div>
                           <div className={styles.actionButtons}>
-                            <button className={styles.buyNowBtn}>Buy Now</button>
-                            <button className={styles.addBagBtn}>Add to Bag</button>
+                            <button
+                              type="button"
+                              className={styles.buyNowBtn}
+                              onClick={() => handleBuyNow(item)}
+                            >
+                              Buy Now
+                            </button>
+                            <button
+                              type="button"
+                              className={styles.addBagBtn}
+                              onClick={() => handleAddToBag(item)}
+                            >
+                              Add to Bag
+                            </button>
                           </div>
                         </div>
                       </div>
