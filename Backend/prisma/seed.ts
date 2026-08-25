@@ -562,19 +562,10 @@ async function main() {
     ]
   });
 
-  // 7. Create Blog Posts
-  console.log('Creating Blog Posts...');
-  const blogPostsData = [
-    { slug: "art-of-slow-living", title: "The Art of Slow Living & Minimalist Design", description: "In a fast-paced world, designing spaces and routines around intentionality brings clarity. We explore how minimalist design and heritage elements combine to create serene, thoughtful environments.", image: "/images/events/sadid.jpg", isPublished: true, publishedAt: new Date("2026-05-18") },
-    { slug: "value-of-heritage-craftsmanship", title: "Creation & The Value of Heritage Craftsmanship", description: "Craftsmanship is the preservation of time and skill. By focusing on handmade details and local materials, we honor the legacy of creators who define premium design.", image: "/images/events/sadid.jpg", isPublished: true, publishedAt: new Date("2026-05-16") },
-    { slug: "aesthetic-harmony", title: "Aesthetic Harmony in Modern Living Spaces", description: "Aesthetically rich spaces require a careful balance of textures, lighting, and placement. Discover the key principles of creating layouts that inspire and soothe the mind.", image: "/images/events/sadid.jpg", isPublished: true, publishedAt: new Date("2026-05-15") }
-  ];
+  // 7. Create Blog Posts (Start clean for live admin creation)
+  console.log('Skipping demo blog posts creation...');
 
-  for (const post of blogPostsData) {
-    await prisma.blogPost.create({ data: { ...post, authorId: adminUser.id } });
-  }
-
-  // 8. Create Events (Start empty for live admin events)
+  // 8. Create Events (Start clean for live admin creation)
   console.log('Skipping demo events creation...');
 
   // 9. Create Store Locations
