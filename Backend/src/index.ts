@@ -28,8 +28,10 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Serve uploaded files
+// Serve uploaded files and storefront images
 app.use('/uploads', express.static(path.join(__dirname, '..', env.UPLOAD_DIR)));
+app.use('/images', express.static(path.join(__dirname, '../../App/public/images')));
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
 
 // Health check
 app.get('/api/health', (req, res) => {
