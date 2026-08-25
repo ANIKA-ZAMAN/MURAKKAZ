@@ -32,6 +32,7 @@ function CollectionsContent() {
     notes: [],
   });
   const [maxPrice, setMaxPrice] = useState<number>(10000);
+  const [sortBy, setSortBy] = useState<string>("newest");
 
   const handleCheckboxChange = (categoryId: string, option: string) => {
     setSelectedFilters((prev) => {
@@ -53,6 +54,11 @@ function CollectionsContent() {
     setCurrentPage(1);
   };
 
+  const handleSortChange = (newSort: string) => {
+    setSortBy(newSort);
+    setCurrentPage(1);
+  };
+
   const handleClearAll = () => {
     setSelectedFilters({
       family: [],
@@ -63,6 +69,7 @@ function CollectionsContent() {
     });
     setMaxPrice(10000);
     setSearchQuery("");
+    setSortBy("newest");
     setCurrentPage(1);
   };
 
@@ -118,16 +125,36 @@ function CollectionsContent() {
     return true;
   });
 
+  // Sort logic
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortBy === "price_asc") {
+      return (a.priceVal || 0) - (b.priceVal || 0);
+    }
+    if (sortBy === "price_desc") {
+      return (b.priceVal || 0) - (a.priceVal || 0);
+    }
+    if (sortBy === "rating") {
+      return (b.rating || 0) - (a.rating || 0);
+    }
+    if (sortBy === "name_asc") {
+      return a.name.localeCompare(b.name);
+    }
+    if (sortBy === "name_desc") {
+      return b.name.localeCompare(a.name);
+    }
+    return 0;
+  });
+
   const activeFiltersCount = Object.values(selectedFilters).reduce(
     (acc, list) => acc + (list ? list.length : 0),
     0
   );
 
   const itemsPerPage = 12;
-  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / itemsPerPage));
+  const totalPages = Math.max(1, Math.ceil(sortedProducts.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+  const paginatedProducts = sortedProducts.slice(startIndex, endIndex);
 
   return (
     <div className={styles.page}>
@@ -139,6 +166,8 @@ function CollectionsContent() {
           onSearch={handleSearch}
           onOpenFilter={() => setIsDrawerOpen(true)}
           activeFiltersCount={activeFiltersCount}
+          sortBy={sortBy}
+          onSortChange={handleSortChange}
         />
 
         {/* Product Grid */}

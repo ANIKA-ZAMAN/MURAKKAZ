@@ -18,20 +18,21 @@
   visibility: visible;
 }
 
-/* ── Slide-Over Drawer Panel ── */
+/* ── Slide-Over Drawer Panel (Left Slide-In) ── */
 .drawer {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
+  right: auto;
   bottom: 0;
   width: 440px;
   max-width: 90vw;
   background-color: #F5F1E8;
   z-index: 99999;
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.16);
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.16);
   display: flex;
   flex-direction: column;
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: var(--font-serif-text), Georgia, serif;
 }
