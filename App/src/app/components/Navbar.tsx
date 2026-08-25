@@ -184,7 +184,7 @@ export default function Navbar() {
 
       {/* ── Main Floating Navbar Header ── */}
       <header
-        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-6 sm:pt-8 lg:pt-10 px-4 sm:px-8 lg:px-10 pb-2 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 w-full z-50 pointer-events-none flex justify-center items-center pt-8 sm:pt-12 lg:pt-14 px-4 sm:px-8 lg:px-10 pb-2 transition-all duration-300"
         suppressHydrationWarning
       >
         <nav
