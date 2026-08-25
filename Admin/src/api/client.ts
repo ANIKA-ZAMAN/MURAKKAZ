@@ -155,4 +155,5 @@ export const apiClient = {
     }
 };
 
+export const api = apiClient;
 export { setTokens, clearTokens, getAccessToken, getRefreshToken };

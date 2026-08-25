@@ -5,7 +5,7 @@ import * as orderService from '../services/order.service';
 
 export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = req.user!.id;
+    const userId = req.user ? req.user.id : null;
     const order = await orderService.createOrder(userId, req.body);
     res.status(201).json({
       status: 'success',

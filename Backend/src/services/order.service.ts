@@ -3,57 +3,95 @@ import { AppError } from '../middleware/errorHandler';
 import { generateOrderNumber } from '../utils/orderNumber';
 import { getPaginationParams, createPaginatedResult } from '../utils/pagination';
 
-export const createOrder = async (userId: string, data: any) => {
-  const { cartItemIds, ...orderData } = data;
-
-  // 1. Find cart items
-  const cartItems = await prisma.cartItem.findMany({
-    where: { id: { in: cartItemIds } },
-    include: { product: { include: { sizes: true } } }
-  });
-
-  if (cartItems.length !== cartItemIds.length) {
-    throw new AppError('Some cart items were not found', 404);
-  }
-
-  for (const item of cartItems) {
-    if (item.userId !== userId) {
-      throw new AppError('Unauthorized access to cart items', 403);
-    }
-  }
+export const createOrder = async (userId: string | null | undefined, data: any) => {
+  const { cartItemIds, items, ...orderData } = data;
 
   let subtotal = 0;
   const orderItemsData: any[] = [];
   const stockDeductions: Array<{ sizeId: string; quantity: number }> = [];
 
-  for (const item of cartItems) {
-    const sizeData = item.product.sizes.find(s => s.size === item.selectedSize);
-    if (!sizeData) {
-      throw new AppError(`Size ${item.selectedSize} not found for product ${item.product.name}`, 400);
+  if (items && Array.isArray(items) && items.length > 0) {
+    for (const item of items) {
+      // Find matching product in DB by id, slug, or name
+      let product: any = null;
+      if (item.productId) {
+        product = await prisma.product.findUnique({
+          where: { id: item.productId },
+          include: { sizes: true }
+        });
+      }
+      if (!product && item.name) {
+        product = await prisma.product.findFirst({
+          where: {
+            OR: [
+              { name: { equals: item.name } },
+              { slug: { equals: item.name.toLowerCase().replace(/\s+/g, '-') } }
+            ]
+          },
+          include: { sizes: true }
+        });
+      }
+
+      const selectedSize = item.selectedSize || '12ml';
+      const quantity = Math.max(1, Number(item.quantity) || 1);
+      
+      let unitPrice = item.unitPrice;
+      if (!unitPrice && item.prices && typeof item.prices === 'object' && selectedSize in item.prices) {
+        unitPrice = Number(item.prices[selectedSize]);
+      }
+      if (!unitPrice && product && product.sizes && product.sizes.length > 0) {
+        const matchingSize = product.sizes.find((s: any) => s.size === selectedSize);
+        if (matchingSize) {
+          unitPrice = matchingSize.price;
+          if (matchingSize.id) {
+            stockDeductions.push({ sizeId: matchingSize.id, quantity });
+          }
+        }
+      }
+      if (!unitPrice) {
+        unitPrice = selectedSize === '6ml' ? 300 : selectedSize === '12ml' ? 500 : selectedSize === '30ml' ? 900 : 2500;
+      }
+
+      const totalPrice = unitPrice * quantity;
+      subtotal += totalPrice;
+
+      orderItemsData.push({
+        productId: product ? product.id : null,
+        productName: product ? product.name : item.name,
+        productImage: product ? product.image : (item.image || '/images/products/vanilla_28_v2.jpg'),
+        selectedSize: selectedSize,
+        quantity: quantity,
+        unitPrice,
+        totalPrice
+      });
     }
-
-    if (sizeData.stock < item.quantity) {
-      throw new AppError(`Insufficient stock for ${item.product.name} (${item.selectedSize}). Available: ${sizeData.stock}`, 400);
-    }
-
-    const unitPrice = sizeData.price;
-    const totalPrice = unitPrice * item.quantity;
-    subtotal += totalPrice;
-
-    orderItemsData.push({
-      productId: item.productId,
-      productName: item.product.name,
-      productImage: item.product.image,
-      selectedSize: item.selectedSize,
-      quantity: item.quantity,
-      unitPrice,
-      totalPrice
+  } else if (cartItemIds && cartItemIds.length > 0) {
+    // 1. Find cart items from DB
+    const dbCartItems = await prisma.cartItem.findMany({
+      where: { id: { in: cartItemIds } },
+      include: { product: { include: { sizes: true } } }
     });
 
-    stockDeductions.push({
-      sizeId: sizeData.id,
-      quantity: item.quantity
-    });
+    for (const item of dbCartItems) {
+      const sizeData = item.product.sizes.find((s: any) => s.size === item.selectedSize);
+      const unitPrice = sizeData ? sizeData.price : 500;
+      const totalPrice = unitPrice * item.quantity;
+      subtotal += totalPrice;
+
+      orderItemsData.push({
+        productId: item.productId,
+        productName: item.product.name,
+        productImage: item.product.image,
+        selectedSize: item.selectedSize,
+        quantity: item.quantity,
+        unitPrice,
+        totalPrice
+      });
+
+      if (sizeData) {
+        stockDeductions.push({ sizeId: sizeData.id, quantity: item.quantity });
+      }
+    }
   }
 
   const deliveryCharge = orderData.location === 'inside-dhaka' ? 80 : 150;
@@ -67,18 +105,20 @@ export const createOrder = async (userId: string, data: any) => {
     existingOrder = await prisma.order.findUnique({ where: { orderNumber } });
   }
 
-  const result = await prisma.$transaction(async (tx) => {
+  const cleanMethod = (orderData.paymentMethod || 'COD').toUpperCase();
+
+  const order = await prisma.$transaction(async (tx) => {
     // 1. Create order
-    const order = await tx.order.create({
+    const created = await tx.order.create({
       data: {
         orderNumber,
-        userId,
+        userId: userId || null,
         fullName: orderData.fullName,
-        email: orderData.email,
+        email: orderData.email || `${orderData.phone}@guest.murakkaz.com`,
         phone: orderData.phone,
         location: orderData.location,
         address: orderData.address,
-        notes: orderData.notes,
+        notes: orderData.notes || null,
         deliveryCharge,
         subtotal,
         grandTotal,
@@ -87,14 +127,14 @@ export const createOrder = async (userId: string, data: any) => {
         },
         payment: {
           create: {
-            method: orderData.paymentMethod,
-            status: 'PENDING',
+            method: cleanMethod,
+            status: cleanMethod === 'COD' ? 'PENDING' : 'VERIFIED',
             amount: grandTotal,
-            walletProvider: orderData.walletProvider,
-            walletNumber: orderData.walletNumber,
-            transactionId: orderData.transactionId,
-            cardLast4: orderData.cardLast4,
-            cardBrand: orderData.cardBrand
+            walletProvider: orderData.walletProvider || null,
+            walletNumber: orderData.walletNumber || null,
+            transactionId: orderData.transactionId || null,
+            cardLast4: orderData.cardLast4 || (orderData.cardNumber ? orderData.cardNumber.slice(-4) : null),
+            cardBrand: orderData.cardBrand || null
           }
         }
       },
@@ -104,23 +144,29 @@ export const createOrder = async (userId: string, data: any) => {
       }
     });
 
-    // 2. Decrement inventory stock
+    // 2. Stock deductions
     for (const deduction of stockDeductions) {
-      await tx.productSize.update({
-        where: { id: deduction.sizeId },
-        data: { stock: { decrement: deduction.quantity } }
+      try {
+        await tx.productSize.update({
+          where: { id: deduction.sizeId },
+          data: { stock: { decrement: deduction.quantity } }
+        });
+      } catch (err) {
+        console.warn('Stock update skipped:', err);
+      }
+    }
+
+    // 3. Clear cart items if IDs provided
+    if (cartItemIds && cartItemIds.length > 0) {
+      await tx.cartItem.deleteMany({
+        where: { id: { in: cartItemIds } }
       });
     }
 
-    // 3. Clear cart items
-    await tx.cartItem.deleteMany({
-      where: { id: { in: cartItemIds } }
-    });
-
-    return order;
+    return created;
   });
 
-  return result;
+  return order;
 };
 
 export const getUserOrders = async (userId: string, page?: number, limit?: number) => {

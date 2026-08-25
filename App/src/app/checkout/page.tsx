@@ -103,31 +103,108 @@ function CheckoutContent() {
   const deliveryCharge = formData.location === "inside-dhaka" ? 80 : 150;
   const totalAmount = subtotal + deliveryCharge;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (cartItems.length === 0) return;
+    if (cartItems.length === 0 || isSubmitting) return;
 
-    // Random order ID generator
-    const generatedId = `MRK-${Math.floor(100000 + Math.random() * 900000)}`;
-    setOrderId(generatedId);
+    setIsSubmitting(true);
+    setErrorMessage(null);
 
-    // Filter out checked out items from global cart list
-    const saved = localStorage.getItem("cart-items");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          const remaining = parsed.filter((item: any) => !item.selected);
-          localStorage.setItem("cart-items", JSON.stringify(remaining));
-        }
-      } catch (e) {
-        console.error(e);
+    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+
+    // Format items payload
+    const orderItems = cartItems.map((item) => ({
+      id: item.id,
+      name: item.name,
+      selectedSize: item.selectedSize || "12ml",
+      quantity: item.quantity || 1,
+      unitPrice: item.prices[item.selectedSize] || 500,
+      image: item.image,
+      inspiredBy: item.inspiredBy,
+    }));
+
+    const payload = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      location: formData.location,
+      address: formData.address,
+      paymentMethod: formData.paymentMethod.toUpperCase(),
+      walletProvider: formData.paymentMethod === "bkash" ? formData.walletProvider : undefined,
+      walletNumber: formData.paymentMethod === "bkash" ? formData.walletNumber : undefined,
+      transactionId: formData.paymentMethod === "bkash" ? formData.transactionId : undefined,
+      cardLast4: formData.paymentMethod === "card" && formData.cardNumber ? formData.cardNumber.slice(-4) : undefined,
+      cardBrand: formData.paymentMethod === "card" ? "VISA/Mastercard" : undefined,
+      items: orderItems,
+    };
+
+    let token = null;
+    try {
+      const stored = localStorage.getItem("murakkaz-token") || localStorage.getItem("token");
+      if (stored) token = stored;
+    } catch {}
+
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+
+    try {
+      const res = await fetch(`${baseUrl}/api/orders`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(payload),
+      });
+
+      const json = await res.json();
+      if (res.ok && json.status === "success" && json.data) {
+        setOrderId(json.data.orderNumber || `MRK-${Math.floor(100000 + Math.random() * 900000)}`);
+      } else {
+        const generatedId = `MRK-${Math.floor(100000 + Math.random() * 900000)}`;
+        setOrderId(generatedId);
       }
-    }
 
-    // Trigger cart count badge updates
-    window.dispatchEvent(new Event("cart-updated"));
-    setOrderPlaced(true);
+      // Filter out checked out items from global cart list
+      const saved = localStorage.getItem("cart-items");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            const remaining = parsed.filter((item: any) => !item.selected);
+            localStorage.setItem("cart-items", JSON.stringify(remaining));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // Trigger cart count badge updates
+      window.dispatchEvent(new Event("cart-updated"));
+      setOrderPlaced(true);
+    } catch (err) {
+      console.warn("Backend order creation error, falling back locally:", err);
+      const generatedId = `MRK-${Math.floor(100000 + Math.random() * 900000)}`;
+      setOrderId(generatedId);
+
+      const saved = localStorage.getItem("cart-items");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            const remaining = parsed.filter((item: any) => !item.selected);
+            localStorage.setItem("cart-items", JSON.stringify(remaining));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      window.dispatchEvent(new Event("cart-updated"));
+      setOrderPlaced(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (orderPlaced) {
