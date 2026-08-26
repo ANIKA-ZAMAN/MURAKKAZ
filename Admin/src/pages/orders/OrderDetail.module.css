@@ -64,8 +64,8 @@
 
 .select {
   padding: 8px 14px;
-  background: #222225;
-  border: 1px solid rgba(197, 168, 128, 0.2);
+  background: var(--bg-input, #161618);
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.2));
   border-radius: 6px;
   color: var(--text-primary, #F5F1E8);
   font-size: 13.5px;
@@ -215,8 +215,8 @@
 
 .input {
   padding: 8px 14px;
-  background: #222225;
-  border: 1px solid rgba(197, 168, 128, 0.2);
+  background: var(--bg-input, #161618);
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.2));
   border-radius: 6px;
   color: var(--text-primary, #F5F1E8);
   font-size: 13.5px;

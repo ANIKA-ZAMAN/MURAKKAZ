@@ -33,7 +33,7 @@
 .tabs {
   display: flex;
   gap: 0.5rem;
-  background: #18181A;
+  background: var(--bg-surface, #1C1C1F);
   border: 1px solid rgba(197, 168, 128, 0.15);
   border-radius: 12px;
   padding: 0.5rem;
@@ -64,7 +64,7 @@
 }
 
 .card {
-  background: #18181A;
+  background: var(--bg-surface, #1C1C1F);
   border: 1px solid rgba(197, 168, 128, 0.15);
   border-radius: 14px;
   padding: 2rem;
@@ -89,10 +89,10 @@
 .input, .select {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: #222225;
-  border: 1px solid rgba(197, 168, 128, 0.2);
+  background: var(--bg-input, #161618);
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.2));
   border-radius: 8px;
-  color: #F5F1E8;
+  color: var(--text-primary, #F5F1E8);
   font-size: 0.9rem;
   font-family: inherit;
   outline: none;

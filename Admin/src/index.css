@@ -2,10 +2,13 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
-  background-color: #121212;
-  color: #fff;
+  font-family: var(--font-sans, 'Geist', 'Inter', -apple-system, sans-serif);
+  background-color: var(--bg-primary, #111112);
+  color: var(--text-primary, #F5F1E8);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  min-height: 100vh;
 }
+
 *, *::before, *::after {
   box-sizing: inherit;
 }

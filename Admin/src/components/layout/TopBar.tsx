@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TopBar.module.css';
-import { Search, Menu } from 'lucide-react';
+import { Search, Menu, Sun, Moon } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
 const getPageTitle = (pathname: string) => {
@@ -16,6 +16,20 @@ interface TopBarProps {
 export const TopBar: React.FC<TopBarProps> = ({ onToggleSidebar }) => {
   const location = useLocation();
   const title = getPageTitle(location.pathname);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+
+  useEffect(() => {
+    const savedTheme = (localStorage.getItem('murakkaz_admin_theme') as 'light' | 'dark') || 'dark';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('murakkaz_admin_theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   return (
     <header className={styles.topbar}>
@@ -37,6 +51,18 @@ export const TopBar: React.FC<TopBarProps> = ({ onToggleSidebar }) => {
             className={styles.searchInput}
           />
         </div>
+
+        {/* Theme Toggle Button */}
+        <button 
+          onClick={toggleTheme}
+          className={styles.themeToggleBtn}
+          title={theme === 'dark' ? 'Switch to White Theme' : 'Switch to Dark Theme'}
+          aria-label="Toggle Theme"
+        >
+          {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+          <span className={styles.themeLabel}>{theme === 'dark' ? 'White' : 'Dark'}</span>
+        </button>
+
         <div className={styles.profile}>
           <div className={styles.avatar}>A</div>
           <div className={styles.userInfo}>

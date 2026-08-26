@@ -59,7 +59,7 @@
 }
 
 .statCard {
-  background: #18181A;
+  background: var(--bg-surface, #1C1C1F);
   border: 1px solid rgba(197, 168, 128, 0.15);
   border-radius: 12px;
   padding: 1.25rem 1.5rem;
@@ -96,7 +96,7 @@
 }
 
 .tableCard {
-  background: #18181A;
+  background: var(--bg-surface, #1C1C1F);
   border: 1px solid rgba(197, 168, 128, 0.15);
   border-radius: 12px;
   overflow: hidden;

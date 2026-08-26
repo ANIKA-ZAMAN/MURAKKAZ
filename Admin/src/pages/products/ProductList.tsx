@@ -172,10 +172,10 @@ const ProductList: React.FC = () => {
             style={{
               width: '100%',
               padding: '0.6rem 1rem 0.6rem 2.4rem',
-              background: '#222225',
-              border: '1px solid rgba(197,168,128,0.2)',
+              background: 'var(--bg-input, #161618)',
+              border: '1px solid var(--border-subtle, rgba(197,168,128,0.2))',
               borderRadius: '6px',
-              color: '#F5F1E8',
+              color: 'var(--text-primary, #F5F1E8)',
               outline: 'none',
             }}
           />
@@ -186,10 +186,10 @@ const ProductList: React.FC = () => {
           onChange={(e) => setFilter({ ...filter, family: e.target.value })}
           style={{
             padding: '0.6rem 1rem',
-            background: '#222225',
-            border: '1px solid rgba(197,168,128,0.2)',
+            background: 'var(--bg-input, #161618)',
+            border: '1px solid var(--border-subtle, rgba(197,168,128,0.2))',
             borderRadius: '6px',
-            color: '#F5F1E8',
+            color: 'var(--text-primary, #F5F1E8)',
             outline: 'none',
           }}
         >
@@ -209,10 +209,10 @@ const ProductList: React.FC = () => {
           onChange={(e) => setFilter({ ...filter, gender: e.target.value })}
           style={{
             padding: '0.6rem 1rem',
-            background: '#222225',
-            border: '1px solid rgba(197,168,128,0.2)',
+            background: 'var(--bg-input, #161618)',
+            border: '1px solid var(--border-subtle, rgba(197,168,128,0.2))',
             borderRadius: '6px',
-            color: '#F5F1E8',
+            color: 'var(--text-primary, #F5F1E8)',
             outline: 'none',
           }}
         >
@@ -224,10 +224,10 @@ const ProductList: React.FC = () => {
       </div>
 
       {/* Main Table */}
-      <div style={{ background: '#18181A', borderRadius: '12px', border: '1px solid rgba(197,168,128,0.15)', overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
+      <div style={{ background: 'var(--bg-surface, #1C1C1F)', borderRadius: '12px', border: '1px solid var(--border-subtle, rgba(197,168,128,0.15))', overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
         <table className={styles.table} style={{ width: '100%', minWidth: '700px', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
-            <tr style={{ background: 'rgba(34,34,37,0.7)', color: '#C5A880', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '1px solid rgba(197,168,128,0.15)' }}>
+            <tr style={{ background: 'var(--bg-surface-hover, rgba(34,34,37,0.7))', color: 'var(--accent-gold, #C5A880)', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '1px solid var(--border-subtle, rgba(197,168,128,0.15))' }}>
               <th style={{ padding: '1rem 1.5rem' }}>Fragrance</th>
               <th style={{ padding: '1rem 1.5rem' }}>Brand & Family</th>
               <th style={{ padding: '1rem 1.5rem' }}>Sizes & Price</th>

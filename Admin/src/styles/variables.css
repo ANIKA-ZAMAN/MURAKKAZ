@@ -1,5 +1,5 @@
-:root {
-  /* Colors */
+:root, [data-theme="dark"] {
+  /* Dark Luxury Theme */
   --bg-primary: #111112;
   --bg-surface: #1C1C1F;
   --bg-surface-hover: #252528;
@@ -17,19 +17,19 @@
   --brand-maroon-hover: #A00015;
   
   /* Status Colors */
-  --status-pending-bg: rgba(245, 158, 11, 0.12);
+  --status-pending-bg: rgba(245, 158, 11, 0.15);
   --status-pending-text: #FBBF24;
-  --status-processing-bg: rgba(59, 130, 246, 0.12);
+  --status-processing-bg: rgba(59, 130, 246, 0.15);
   --status-processing-text: #60A5FA;
-  --status-shipped-bg: rgba(139, 92, 246, 0.12);
+  --status-shipped-bg: rgba(139, 92, 246, 0.15);
   --status-shipped-text: #A78BFA;
-  --status-delivered-bg: rgba(16, 185, 129, 0.12);
+  --status-delivered-bg: rgba(16, 185, 129, 0.15);
   --status-delivered-text: #34D399;
-  --status-cancelled-bg: rgba(239, 68, 68, 0.12);
+  --status-cancelled-bg: rgba(239, 68, 68, 0.15);
   --status-cancelled-text: #F87171;
   
   /* Borders */
-  --border-subtle: rgba(197, 168, 128, 0.12);
+  --border-subtle: rgba(197, 168, 128, 0.15);
   --border-gold: rgba(197, 168, 128, 0.35);
   --border-gold-strong: #C5A880;
 
@@ -53,4 +53,45 @@
   /* Transitions */
   --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-smooth: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] {
+  /* Light Luxury / White Theme */
+  --bg-primary: #F7F7F8;
+  --bg-surface: #FFFFFF;
+  --bg-surface-hover: #F2F2F5;
+  --bg-elevated: #FFFFFF;
+  --bg-input: #FFFFFF;
+  
+  --text-primary: #121214;
+  --text-secondary: #585860;
+  --text-muted: #8E8E93;
+  
+  --accent-gold: #8E6B38;
+  --accent-gold-dark: #6E5024;
+  --accent-gold-light: #B89258;
+  --brand-maroon: #820011;
+  --brand-maroon-hover: #9E0015;
+  
+  /* Status Colors */
+  --status-pending-bg: rgba(217, 119, 6, 0.12);
+  --status-pending-text: #B45309;
+  --status-processing-bg: rgba(37, 99, 235, 0.12);
+  --status-processing-text: #1D4ED8;
+  --status-shipped-bg: rgba(124, 58, 237, 0.12);
+  --status-shipped-text: #6D28D9;
+  --status-delivered-bg: rgba(5, 150, 105, 0.12);
+  --status-delivered-text: #047857;
+  --status-cancelled-bg: rgba(220, 38, 38, 0.12);
+  --status-cancelled-text: #B91C1C;
+  
+  /* Borders */
+  --border-subtle: rgba(142, 107, 56, 0.2);
+  --border-gold: rgba(142, 107, 56, 0.4);
+  --border-gold-strong: #8E6B38;
+
+  /* Shadows */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.07);
+  --shadow-glow-gold: 0 0 20px rgba(142, 107, 56, 0.12);
+  --shadow-glow-maroon: 0 4px 16px rgba(130, 0, 17, 0.2);
 }
