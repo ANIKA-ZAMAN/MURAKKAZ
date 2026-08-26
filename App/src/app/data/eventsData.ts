@@ -132,7 +132,7 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
 
         return {
           upcoming: fetchedUpcoming,
-          previous: fetchedPrevious.length > 0 ? fetchedPrevious : previousEvents,
+          previous: fetchedPrevious,
         };
       }
     }
@@ -141,46 +141,13 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
   }
 
   return {
-    upcoming: upcomingEvents,
-    previous: previousEvents,
+    upcoming: [],
+    previous: [],
   };
 };
 
 export const upcomingEvents: UpcomingEvent[] = [];
-export const previousEvents: PreviousEvent[] = [
-  {
-    id: "prev-1",
-    slug: "eid-mela-midas",
-    title: "Buy Sell Eid Mela",
-    date: "Jan 15, 2025",
-    image: "/images/events/event_gallery_1.jpg",
-    category: "EXHIBITION",
-  },
-  {
-    id: "prev-2",
-    slug: "campus-scent-showcase",
-    title: "University Campus Showcase",
-    date: "Dec 20, 2024",
-    image: "/images/events/event_gallery_2.jpg",
-    category: "POP-UP",
-  },
-  {
-    id: "prev-3",
-    slug: "autumn-soiree",
-    title: "Autumn Scent Soirée",
-    date: "Nov 12, 2024",
-    image: "/images/events/event_gallery_3.jpg",
-    category: "GALA",
-  },
-  {
-    id: "prev-4",
-    slug: "private-masterclass",
-    title: "Private Masterclass",
-    date: "Oct 05, 2024",
-    image: "/images/events/event_gallery_4.jpg",
-    category: "WORKSHOP",
-  },
-];
+export const previousEvents: PreviousEvent[] = [];
 
 export const galleryImages: GalleryImage[] = [
   {
