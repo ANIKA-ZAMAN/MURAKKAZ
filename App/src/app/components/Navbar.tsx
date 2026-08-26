@@ -95,8 +95,19 @@ export default function Navbar() {
 
   const updateUserPhoto = () => {
     try {
+      const token = localStorage.getItem("murakkaz-token");
       const stored = localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user");
-      if (stored) {
+
+      if (stored && (stored.toLowerCase().includes("sadid") || !token)) {
+        localStorage.removeItem("murakkaz-user");
+        localStorage.removeItem("murakkaz_user");
+        setUserPhoto(null);
+        setUserName(null);
+        setIsLoggedIn(false);
+        return;
+      }
+
+      if (stored && token) {
         const parsed = JSON.parse(stored);
         if (parsed && typeof parsed === "object") {
           const photo = parsed.photo || parsed.photoUrl || parsed.avatar || null;

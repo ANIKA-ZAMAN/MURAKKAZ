@@ -53,13 +53,21 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
 
   // Load user session & preferences on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem("murakkaz-user");
-    if (savedUser) {
+    const token = localStorage.getItem("murakkaz-token");
+    const savedUser = localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user");
+
+    if (savedUser && (savedUser.toLowerCase().includes("sadid") || !token)) {
+      localStorage.removeItem("murakkaz-user");
+      localStorage.removeItem("murakkaz_user");
+      setUser(null);
+    } else if (savedUser && token) {
       try {
         setUser(JSON.parse(savedUser));
       } catch (e) {
-        console.error("Failed to parse user session", e);
+        setUser(null);
       }
+    } else {
+      setUser(null);
     }
 
     // Load preferences

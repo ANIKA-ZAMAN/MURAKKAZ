@@ -158,8 +158,17 @@ export default function AccountPage() {
   // Load session & user preferences on mount
   useEffect(() => {
     setIsMounted(true);
-    const savedUser = localStorage.getItem("murakkaz-user");
-    if (savedUser) {
+    const token = localStorage.getItem("murakkaz-token");
+    const savedUser = localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user");
+
+    if (savedUser && (savedUser.toLowerCase().includes("sadid") || !token)) {
+      localStorage.removeItem("murakkaz-user");
+      localStorage.removeItem("murakkaz_user");
+      localStorage.removeItem("murakkaz-saved-addresses");
+      setUser(null);
+      setSavedAddresses([]);
+      window.dispatchEvent(new Event("murakkaz-user-updated"));
+    } else if (savedUser && token) {
       try {
         const parsed = JSON.parse(savedUser);
         setUser(parsed);
@@ -173,6 +182,8 @@ export default function AccountPage() {
       } catch (e) {
         setUser(null);
       }
+    } else {
+      setUser(null);
     }
 
     // Load saved scent profile

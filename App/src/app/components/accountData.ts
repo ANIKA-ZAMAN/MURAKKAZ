@@ -1,6 +1,8 @@
 export interface OrderItem {
   id: string;
   name: string;
+  inspiredBy?: string;
+  volume?: string;
   image: string;
   price: string;
   quantity: number;
@@ -8,11 +10,27 @@ export interface OrderItem {
 
 export interface Order {
   id: string;
-  date: string;
-  status: "Processing" | "Shipped" | "Delivered" | "Cancelled";
-  items: OrderItem[];
+  date?: string;
+  status: "On Delivery" | "Confirmed" | "Arrived" | "To Review" | "Canceled";
+  estimatedArrival?: string;
+  addressLabel?: string;
+  deliveryCharge: string;
   total: string;
+  category: "shipping" | "arrived" | "review" | "canceled";
+  items: OrderItem[];
   trackingNumber?: string;
+}
+
+export interface SavedAddressItem {
+  id: string;
+  indexStr: string;
+  nickname: string;
+  firstName: string;
+  lastName: string;
+  fullAddress: string;
+  phone: string;
+  city: string;
+  district: string;
 }
 
 export interface Address {
@@ -37,88 +55,28 @@ export interface UserProfile {
   primaryLocation?: string;
 }
 
-export const mockUserProfile: UserProfile = {
-  name: "Sadid Chowdhury",
-  email: "sadid@murakkaz.com",
-  memberSince: "November 2025",
-  memberTier: "Gold Collection Circle",
-  points: 1250,
-};
-
-export const mockOrders: Order[] = [
-  {
-    id: "MR-7301",
-    date: "July 04, 2026",
-    status: "Shipped",
-    total: "3,350tk",
-    trackingNumber: "TRK-98319082",
-    items: [
-      {
-        id: "fav-1",
-        name: "Jade Serenity",
-        image: "/images/products/jade_serenity.png",
-        price: "1,720tk",
-        quantity: 1,
-      },
-      {
-        id: "fav-2",
-        name: "Orvi Soq",
-        image: "/images/products/coral_sea.png",
-        price: "1,630tk",
-        quantity: 1,
-      },
-    ],
-  },
-  {
-    id: "MR-6821",
-    date: "May 18, 2026",
-    status: "Delivered",
-    total: "2,200tk",
-    items: [
-      {
-        id: "fav-4",
-        name: "Hellenist",
-        image: "/images/products/hellenist.png",
-        price: "2,200tk",
-        quantity: 1,
-      },
-    ],
-  },
-  {
-    id: "MR-5591",
-    date: "Feb 10, 2026",
-    status: "Delivered",
-    total: "3,650tk",
-    items: [
-      {
-        id: "fav-3",
-        name: "Mageration",
-        image: "/images/products/magnetism.png",
-        price: "1,210tk",
-        quantity: 3,
-      },
-    ],
-  },
-];
+export const mockUserProfile: UserProfile | null = null;
+export const mockSavedAddresses: SavedAddressItem[] = [];
+export const mockOrders: Order[] = [];
 
 export const mockAddresses: { shipping: Address; billing: Address } = {
   shipping: {
-    fullName: "Sadid Chowdhury",
-    company: "Murakkaz Labs",
-    street: "12 Gulshan Avenue, Road 3",
-    city: "Dhaka",
-    state: "Dhaka Division",
-    zipCode: "1212",
+    fullName: "",
+    company: "",
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
     country: "Bangladesh",
-    phone: "+880 1712-345678",
+    phone: "",
   },
   billing: {
-    fullName: "Sadid Chowdhury",
-    street: "12 Gulshan Avenue, Road 3",
-    city: "Dhaka",
-    state: "Dhaka Division",
-    zipCode: "1212",
+    fullName: "",
+    street: "",
+    city: "",
+    state: "",
+    zipCode: "",
     country: "Bangladesh",
-    phone: "+880 1712-345678",
+    phone: "",
   },
 };
