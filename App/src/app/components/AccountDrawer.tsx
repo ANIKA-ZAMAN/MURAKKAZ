@@ -11,6 +11,7 @@ import {
   Address 
 } from "./accountData";
 import styles from "./AccountDrawer.module.css";
+import { getApiBaseUrl } from "@/lib/api";
 
 interface AccountDrawerProps {
   isOpen: boolean;
@@ -86,8 +87,7 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
     setLoading(true);
     setAuthError(null);
 
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+    const baseUrl = getApiBaseUrl();
 
     try {
       const payload: any = { password };
@@ -113,7 +113,7 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
           memberSince: authUser.createdAt ? new Date(authUser.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "Member",
           memberTier: authUser.memberTier || "Collector Circle",
           points: authUser.points || 100,
-          photo: authUser.photo || "/images/events/sadid.jpg"
+          photo: authUser.photo || undefined
         };
 
         if (accessToken) localStorage.setItem("murakkaz-token", accessToken);
@@ -130,17 +130,7 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
       }
     } catch (err) {
       console.warn("API login error:", err);
-      const fallback: UserProfile = {
-        name: email ? (email.split("@")[0].charAt(0).toUpperCase() + email.split("@")[0].slice(1)) : `User ${phoneNumber}`,
-        email: email || `${phoneNumber}@phone.murakkaz.com`,
-        phone: phoneNumber || "",
-        memberSince: "July 2026",
-        memberTier: "Collector Circle",
-        points: 100
-      };
-      localStorage.setItem("murakkaz-user", JSON.stringify(fallback));
-      setUser(fallback);
-      window.dispatchEvent(new Event("murakkaz-user-updated"));
+      setAuthError("Unable to connect to server. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -159,8 +149,7 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
     setLoading(true);
     setAuthError(null);
 
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+    const baseUrl = getApiBaseUrl();
 
     try {
       const payload: any = {
@@ -187,7 +176,7 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
           memberSince: "New Member",
           memberTier: "Collector Circle",
           points: 100,
-          photo: "/images/events/sadid.jpg"
+          photo: authUser.photo || undefined
         };
 
         if (accessToken) localStorage.setItem("murakkaz-token", accessToken);
@@ -201,17 +190,7 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
       }
     } catch (err) {
       console.warn("API register error:", err);
-      const fallback: UserProfile = {
-        name: fullName || "Valued Collector",
-        email: email || `${phoneNumber}@phone.murakkaz.com`,
-        phone: phoneNumber || "",
-        memberSince: "July 2026",
-        memberTier: "Collector Circle",
-        points: 100
-      };
-      localStorage.setItem("murakkaz-user", JSON.stringify(fallback));
-      setUser(fallback);
-      window.dispatchEvent(new Event("murakkaz-user-updated"));
+      setAuthError("Unable to connect to server. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -6,6 +6,7 @@ import BlogHeader from "./components/BlogHeader";
 import BlogCard from "./components/BlogCard";
 import BlogPagination from "./components/BlogPagination";
 import styles from "./page.module.css";
+import { getApiBaseUrl } from "@/lib/api";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>(fallbackPosts);
@@ -27,8 +28,7 @@ export default function BlogPage() {
 
   // Fetch live blog posts from API if available
   useEffect(() => {
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+    const baseUrl = getApiBaseUrl();
     fetch(`${baseUrl}/api/blog`)
       .then((res) => {
         if (res.ok) return res.json();

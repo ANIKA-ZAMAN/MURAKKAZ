@@ -6,6 +6,7 @@ import Link from "next/link";
 import { blogPosts, BlogPost } from "../../data/blogData";
 import BlogCard from "../components/BlogCard";
 import styles from "./article.module.css";
+import { getApiBaseUrl } from "@/lib/api";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,8 +37,7 @@ export default function BlogDetailPage({ params }: PageProps) {
     if (found) {
       setPost(found);
     } else {
-      const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-      const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+      const baseUrl = getApiBaseUrl();
       fetch(`${baseUrl}/api/blog/${slug}`)
         .then((res) => res.json())
         .then((data) => {

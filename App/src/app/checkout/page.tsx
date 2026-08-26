@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import { getApiBaseUrl } from "@/lib/api";
 
 interface CartItem {
   id: string;
@@ -113,8 +114,7 @@ function CheckoutContent() {
     setIsSubmitting(true);
     setErrorMessage(null);
 
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, '');
+    const baseUrl = getApiBaseUrl();
 
     // Format items payload
     const orderItems = cartItems.map((item) => ({

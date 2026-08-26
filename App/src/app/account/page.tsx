@@ -13,6 +13,7 @@ import {
   Address 
 } from "./accountData";
 import styles from "./page.module.css";
+import { getApiBaseUrl } from "@/lib/api";
 
 interface LiveOrderItem {
   id: string;
@@ -136,8 +137,7 @@ export default function AccountPage() {
     if (!token) return;
 
     setLoadingOrders(true);
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+    const baseUrl = getApiBaseUrl();
 
     try {
       const res = await fetch(`${baseUrl}/api/orders`, {
@@ -222,8 +222,7 @@ export default function AccountPage() {
     setLoading(true);
     setAuthError(null);
 
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+    const baseUrl = getApiBaseUrl();
 
     try {
       const payload: any = { password };
@@ -302,8 +301,7 @@ export default function AccountPage() {
     setLoading(true);
     setAuthError(null);
 
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+    const baseUrl = getApiBaseUrl();
 
     try {
       const payload: any = {
@@ -389,8 +387,7 @@ export default function AccountPage() {
     // Sync to backend if token exists
     const token = localStorage.getItem("murakkaz-token");
     if (token) {
-      const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-      const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+      const baseUrl = getApiBaseUrl();
       fetch(`${baseUrl}/api/users/me`, {
         method: "PUT",
         headers: {
@@ -418,8 +415,7 @@ export default function AccountPage() {
 
     const token = localStorage.getItem("murakkaz-token");
     if (token) {
-      const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-      const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+      const baseUrl = getApiBaseUrl();
       try {
         const res = await fetch(`${baseUrl}/api/auth/change-password`, {
           method: "PUT",

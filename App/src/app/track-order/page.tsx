@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { getApiBaseUrl } from "@/lib/api";
 
 interface TrackedOrderItem {
   id: string;
@@ -63,8 +64,7 @@ function TrackOrderContent() {
     setError(null);
 
     const cleanNum = orderNum.trim();
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+    const baseUrl = getApiBaseUrl();
 
     try {
       const query = contact && contact.trim() ? `?contact=${encodeURIComponent(contact.trim())}` : "";
@@ -91,8 +91,7 @@ function TrackOrderContent() {
     if (!token) return;
 
     setLoadingProfileOrders(true);
-    const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-    const baseUrl = rawBaseUrl.replace(/\/api\/?$/, "");
+    const baseUrl = getApiBaseUrl();
 
     try {
       const res = await fetch(`${baseUrl}/api/orders`, {
