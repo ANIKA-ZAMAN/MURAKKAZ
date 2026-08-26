@@ -56,42 +56,42 @@
 }
 
 [data-theme="light"] {
-  /* High-Contrast Crisp White Theme */
+  /* High-Contrast Crisp White Theme with Solid Blackish Typography */
   --bg-primary: #F4F5F7;
   --bg-surface: #FFFFFF;
   --bg-surface-hover: #F0F1F4;
   --bg-elevated: #FFFFFF;
   --bg-input: #FFFFFF;
   
-  --text-primary: #0F0F12;
-  --text-secondary: #3A3A42;
-  --text-muted: #5E5E68;
+  --text-primary: #111114; /* Deep Crisp Obsidian Black */
+  --text-secondary: #27272A; /* Dark Charcoal Blackish */
+  --text-muted: #52525B; /* Medium Dark Grey */
   
-  --accent-gold: #820011; /* Luxury deep royal burgundy for high-contrast crisp text & labels */
-  --accent-gold-dark: #61000D;
-  --accent-gold-light: #A00015;
+  --accent-gold: #18181B; /* Solid Bold Blackish for all titles & headers (No Golden) */
+  --accent-gold-dark: #09090B;
+  --accent-gold-light: #27272A;
   --brand-maroon: #820011;
   --brand-maroon-hover: #9E0015;
   
-  /* Status Colors (High contrast for white backgrounds) */
-  --status-pending-bg: rgba(217, 119, 6, 0.14);
+  /* Status Colors */
+  --status-pending-bg: #FEF3C7;
   --status-pending-text: #92400E;
-  --status-processing-bg: rgba(37, 99, 235, 0.14);
+  --status-processing-bg: #DBEAFE;
   --status-processing-text: #1E40AF;
-  --status-shipped-bg: rgba(124, 58, 237, 0.14);
+  --status-shipped-bg: #EDE9FE;
   --status-shipped-text: #5B21B6;
-  --status-delivered-bg: rgba(5, 150, 105, 0.14);
+  --status-delivered-bg: #D1FAE5;
   --status-delivered-text: #065F46;
-  --status-cancelled-bg: rgba(220, 38, 38, 0.14);
+  --status-cancelled-bg: #FEE2E2;
   --status-cancelled-text: #991B1B;
   
   /* Borders */
-  --border-subtle: #E2E4E9;
-  --border-gold: rgba(130, 0, 17, 0.3);
-  --border-gold-strong: #820011;
+  --border-subtle: #E4E4E7;
+  --border-gold: #D4D4D8;
+  --border-gold-strong: #18181B;
 
   /* Shadows */
-  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.06);
-  --shadow-glow-gold: 0 0 16px rgba(130, 0, 17, 0.08);
-  --shadow-glow-maroon: 0 4px 16px rgba(130, 0, 17, 0.18);
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.05);
+  --shadow-glow-gold: 0 0 12px rgba(0, 0, 0, 0.03);
+  --shadow-glow-maroon: 0 4px 14px rgba(130, 0, 17, 0.15);
 }
