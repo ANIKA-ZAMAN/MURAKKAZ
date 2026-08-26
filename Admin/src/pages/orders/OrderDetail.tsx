@@ -256,7 +256,7 @@ const OrderDetail = () => {
                   <td>{item.selectedSize}</td>
                   <td>{item.quantity}</td>
                   <td>{item.unitPrice?.toLocaleString()}tk</td>
-                  <td><strong style={{ color: '#C5A880' }}>{item.totalPrice?.toLocaleString()}tk</strong></td>
+                  <td><strong style={{ color: 'var(--brand-maroon, #820011)' }}>{item.totalPrice?.toLocaleString()}tk</strong></td>
                 </tr>
               ))}
             </tbody>
