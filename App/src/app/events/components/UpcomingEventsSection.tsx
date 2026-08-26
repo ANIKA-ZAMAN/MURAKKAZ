@@ -63,6 +63,7 @@ export default function UpcomingEventsSection({
                     src={imageSrc}
                     alt={event.title}
                     fill
+                    unoptimized
                     sizes="(max-width: 768px) 100vw, 240px"
                     className={styles.exactMockImage}
                     priority={idx === 0}

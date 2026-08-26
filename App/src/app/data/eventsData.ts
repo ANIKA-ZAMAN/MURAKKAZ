@@ -65,21 +65,18 @@ function getValidEventImage(rawImage: string | undefined, idx: number): string {
       !rawImage.includes("event2.jpg") && 
       !rawImage.includes("event3.jpg") &&
       !rawImage.includes("undefined")) {
-    return rawImage.startsWith("/") ? rawImage : `/images/events/${rawImage}`;
+    if (rawImage.startsWith("/") || rawImage.startsWith("http://") || rawImage.startsWith("https://")) {
+      return rawImage;
+    }
+    return `/images/events/${rawImage}`;
   }
   return validTrackedImages[idx % validTrackedImages.length];
 }
 
-let cachedEventsData: { upcoming: UpcomingEvent[]; previous: PreviousEvent[] } | null = null;
-
 export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: UpcomingEvent[]; previous: PreviousEvent[] }> => {
-  if (cachedEventsData && cachedEventsData.upcoming.length > 0) {
-    return cachedEventsData;
-  }
-
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    const timeoutId = setTimeout(() => controller.abort(), 6000);
     const query = upcoming !== undefined ? `?upcoming=${upcoming}` : "";
     const res = await fetch(`${getApiBaseUrl()}/events${query}`, { 
       signal: controller.signal,
@@ -133,22 +130,20 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
           }
         });
 
-        cachedEventsData = {
+        return {
           upcoming: fetchedUpcoming,
           previous: fetchedPrevious.length > 0 ? fetchedPrevious : previousEvents,
         };
-        return cachedEventsData;
       }
     }
   } catch (err) {
     console.warn("[Murakkaz] Events API fetch warning:", err);
   }
 
-  cachedEventsData = {
+  return {
     upcoming: upcomingEvents,
     previous: previousEvents,
   };
-  return cachedEventsData;
 };
 
 export const upcomingEvents: UpcomingEvent[] = [];

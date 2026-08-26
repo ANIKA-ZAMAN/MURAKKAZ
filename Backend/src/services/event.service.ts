@@ -4,7 +4,7 @@ import { safeDbCall, dbStore } from './resilientDb';
 
 export const getEvents = async (params: { upcoming?: boolean; page?: number; limit?: number }) => {
   const page = params.page || 1;
-  const limit = params.limit || 6;
+  const limit = params.limit || 50;
   const skip = (page - 1) * limit;
 
   return safeDbCall(
@@ -14,9 +14,9 @@ export const getEvents = async (params: { upcoming?: boolean; page?: number; lim
         where.isUpcoming = params.upcoming;
       }
 
-      const orderBy = params.upcoming
-        ? { eventDate: 'asc' as const }
-        : { eventDate: 'desc' as const };
+      const orderBy: any = params.upcoming !== undefined
+        ? (params.upcoming ? { eventDate: 'asc' as const } : { eventDate: 'desc' as const })
+        : [{ isUpcoming: 'desc' as const }, { eventDate: 'desc' as const }];
 
       const [events, total] = await Promise.all([
         prisma.event.findMany({
@@ -24,6 +24,9 @@ export const getEvents = async (params: { upcoming?: boolean; page?: number; lim
           orderBy,
           skip,
           take: limit,
+          include: {
+            _count: { select: { reminders: true } }
+          }
         }),
         prisma.event.count({ where }),
       ]);

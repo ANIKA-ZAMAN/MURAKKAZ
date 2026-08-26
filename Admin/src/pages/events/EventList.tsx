@@ -12,8 +12,11 @@ import {
   CheckCircle2, 
   Clock,
   Sparkles,
-  Users
+  Users,
+  Loader2
 } from 'lucide-react';
+import { apiClient } from '../../api/client';
+import { useToast } from '../../hooks/useToast';
 import styles from './Events.module.css';
 
 interface EventItem {
@@ -31,106 +34,67 @@ interface EventItem {
   image: string;
 }
 
-const INITIAL_EVENTS: EventItem[] = [
-  {
-    id: 'evt-1',
-    slug: 'summer-fragrance-masterclass',
-    title: 'Summer Perfumery & Olfactory Masterclass',
-    description: 'An exclusive hands-on session blending rare citrus accords with aged Indian Sandalwood.',
-    day: '15',
-    month: 'AUG',
-    time: '4:00 PM - 7:00 PM',
-    location: 'Dhaka Flagship Atelier, Gulshan 2',
-    category: 'Masterclass',
-    remindersCount: 45,
-    isUpcoming: true,
-    image: '/images/events/sadid.jpg'
-  },
-  {
-    id: 'evt-2',
-    slug: 'heritage-oud-exhibition-2026',
-    title: 'Heritage Oud & Resin Exhibition',
-    description: 'Exhibition of rare wild Cambodian & Assam agarwood specimens collected across 3 decades.',
-    day: '28',
-    month: 'SEP',
-    time: '2:00 PM - 8:00 PM',
-    location: 'Lakeside Pavilion, Banani',
-    category: 'Exhibition',
-    remindersCount: 68,
-    isUpcoming: true,
-    image: '/images/events/sadid.jpg'
-  },
-  {
-    id: 'evt-3',
-    slug: 'private-collector-gala-2026',
-    title: 'Private Collector Circle Gala',
-    description: 'Annual invitation-only dinner revealing our annual Extrait de Parfum private Reserve.',
-    day: '12',
-    month: 'MAY',
-    time: '7:30 PM - 11:00 PM',
-    location: 'Grand Ballroom, Westin Dhaka',
-    category: 'Private Gala',
-    remindersCount: 24,
-    isUpcoming: false,
-    image: '/images/events/sadid.jpg'
-  },
-  {
-    id: 'evt-4',
-    slug: 'artisanal-rose-distillation-showcase',
-    title: 'Artisanal Taif Rose Distillation Showcase',
-    description: 'Live demonstration of copper alembic hydro-distillation of fresh morning roses.',
-    day: '04',
-    month: 'APR',
-    time: '11:00 AM - 3:00 PM',
-    location: 'Chittagong Heritage Lounge',
-    category: 'Showcase',
-    remindersCount: 11,
-    isUpcoming: false,
-    image: '/images/events/sadid.jpg'
-  }
-];
-
 const EventList: React.FC = () => {
   const [events, setEvents] = useState<EventItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedStatus, setSelectedStatus] = useState('All');
+  const { showToast } = useToast();
 
-  // Fetch events from backend API
-  useEffect(() => {
-    fetch('/api/events')
-      .then((res) => {
-        if (res.ok) return res.json();
-        throw new Error('API not available');
-      })
-      .then((data) => {
-        const raw = data.data || data;
-        if (Array.isArray(raw)) {
-          const mapped: EventItem[] = raw.map((item: any) => ({
-            id: item.id || item.slug,
-            slug: item.slug || item.id,
-            title: item.title,
-            description: item.description || '',
-            day: item.day || '15',
-            month: item.month || 'AUG',
-            time: item.time || '5:00 PM',
-            location: item.location || 'Dhaka Flagship Store',
-            category: item.category || 'Exhibition',
-            remindersCount: item._count?.reminders || item.remindersCount || 0,
-            isUpcoming: item.isUpcoming ?? true,
-            image: item.image || '/images/events/sadid.jpg'
-          }));
-          setEvents(mapped);
-        }
-      })
-      .catch(() => {
+  const fetchEvents = async () => {
+    setLoading(true);
+    try {
+      // Try admin endpoint first, fallback to public
+      const res = await apiClient.get<{ data: any[] }>('/admin/events').catch(() => null);
+      let raw = res?.data || res;
+
+      if (!raw || !Array.isArray(raw)) {
+        const publicRes = await fetch('/api/events').then(r => r.json()).catch(() => null);
+        raw = publicRes?.data || publicRes;
+      }
+
+      if (Array.isArray(raw)) {
+        const mapped: EventItem[] = raw.map((item: any) => ({
+          id: item.id || item.slug,
+          slug: item.slug || item.id,
+          title: item.title,
+          description: item.description || '',
+          day: item.day || '15',
+          month: item.month || 'AUG',
+          time: item.time || '5:00 PM',
+          location: item.location || 'Dhaka Flagship Atelier',
+          category: item.category || 'Exhibition',
+          remindersCount: item._count?.reminders ?? item.remindersCount ?? 0,
+          isUpcoming: item.isUpcoming ?? true,
+          image: item.image || '/images/events/sadid.jpg'
+        }));
+        setEvents(mapped);
+      } else {
         setEvents([]);
-      });
+      }
+    } catch (err) {
+      console.error('Failed to load events:', err);
+      setEvents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
   }, []);
 
-  const handleDelete = (id: string) => {
-    if (window.confirm('Are you sure you want to delete this event?')) {
-      setEvents((prev) => prev.filter((e) => e.id !== id));
+  const handleDelete = async (id: string, title: string) => {
+    if (window.confirm(`Are you sure you want to delete the event "${title}"?`)) {
+      try {
+        await apiClient.delete(`/admin/events/${id}`);
+        setEvents((prev) => prev.filter((e) => e.id !== id && e.slug !== id));
+        showToast('success', 'Event deleted successfully');
+      } catch (err: any) {
+        console.error('Delete error:', err);
+        showToast('error', err.message || 'Failed to delete event');
+      }
     }
   };
 
@@ -158,18 +122,19 @@ const EventList: React.FC = () => {
       {/* Header */}
       <div className={styles.header}>
         <div className={styles.headerText}>
-          <h1>Exhibitions & Olfactory Masterclasses</h1>
-          <p>Manage upcoming luxury events, private scent workshops, and attendee reminder lists.</p>
+          <h1>Olfactory Events & Masterclasses</h1>
+          <p>Schedule, manage and track reservations for Murakkaz exhibitions.</p>
         </div>
+
         <Link to="/events/new" className={styles.createBtn}>
-          <Plus size={18} /> Add New Event
+          <Plus size={18} /> Create New Event
         </Link>
       </div>
 
-      {/* Stat Summary Cards */}
+      {/* Metrics Summary Grid */}
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
-          <div className={styles.statIcon}>
+          <div className={styles.statIcon} style={{ color: 'var(--brand-maroon, #820011)', background: 'rgba(130, 0, 17, 0.08)' }}>
             <Calendar size={22} />
           </div>
           <div className={styles.statInfo}>
@@ -179,8 +144,8 @@ const EventList: React.FC = () => {
         </div>
 
         <div className={styles.statCard}>
-          <div className={styles.statIcon} style={{ color: '#34D399', background: 'rgba(52, 211, 153, 0.08)' }}>
-            <CheckCircle2 size={22} />
+          <div className={styles.statIcon} style={{ color: '#059669', background: 'rgba(5, 150, 105, 0.08)' }}>
+            <Sparkles size={22} />
           </div>
           <div className={styles.statInfo}>
             <h4>Upcoming</h4>
@@ -189,17 +154,17 @@ const EventList: React.FC = () => {
         </div>
 
         <div className={styles.statCard}>
-          <div className={styles.statIcon} style={{ color: '#A0A0A5', background: 'rgba(160, 160, 165, 0.08)' }}>
+          <div className={styles.statIcon} style={{ color: '#D97706', background: 'rgba(217, 119, 6, 0.08)' }}>
             <Clock size={22} />
           </div>
           <div className={styles.statInfo}>
-            <h4>Past Exhibitions</h4>
+            <h4>Past / Archive</h4>
             <p>{pastCount}</p>
           </div>
         </div>
 
         <div className={styles.statCard}>
-          <div className={styles.statIcon} style={{ color: '#C5A880', background: 'rgba(197, 168, 128, 0.08)' }}>
+          <div className={styles.statIcon} style={{ color: 'var(--brand-maroon, #820011)', background: 'rgba(197, 168, 128, 0.08)' }}>
             <Bell size={22} />
           </div>
           <div className={styles.statInfo}>
@@ -233,6 +198,8 @@ const EventList: React.FC = () => {
             <option value="Exhibition">Exhibition</option>
             <option value="Private Gala">Private Gala</option>
             <option value="Showcase">Showcase</option>
+            <option value="Store Opening">Store Opening</option>
+            <option value="Scent Discovery">Scent Discovery</option>
           </select>
 
           <select
@@ -249,94 +216,103 @@ const EventList: React.FC = () => {
 
       {/* Main Events Table */}
       <div className={styles.tableCard}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Date & Event</th>
-              <th>Category</th>
-              <th>Time & Schedule</th>
-              <th>Reminder Subscriptions</th>
-              <th>Status</th>
-              <th style={{ textAlign: 'right' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredEvents.length > 0 ? (
-              filteredEvents.map((evt) => (
-                <tr key={evt.id}>
-                  <td>
-                    <div className={styles.eventCell}>
-                      <div className={styles.dateBadge}>
-                        <span className={styles.dateDay}>{evt.day}</span>
-                        <span className={styles.dateMonth}>{evt.month}</span>
-                      </div>
-                      <div>
-                        <div className={styles.eventTitle}>{evt.title}</div>
-                        <div className={styles.eventLocation}>
-                          <MapPin size={12} style={{ color: '#C5A880' }} /> {evt.location}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span className={styles.categoryBadge}>{evt.category}</span>
-                  </td>
-                  <td>{evt.time}</td>
-                  <td>
-                    <span className={styles.reminderBadge}>
-                      <Bell size={12} /> {evt.remindersCount} RSVPs
-                    </span>
-                  </td>
-                  <td>
-                    {evt.isUpcoming ? (
-                      <span className={styles.statusUpcoming}>
-                        <CheckCircle2 size={12} /> Upcoming
-                      </span>
-                    ) : (
-                      <span className={styles.statusPast}>
-                        <Clock size={12} /> Past
-                      </span>
-                    )}
-                  </td>
-                  <td>
-                    <div className={styles.actions} style={{ justifyContent: 'flex-end' }}>
-                      <a
-                        href="http://localhost:3000/events"
-                        target="_blank"
-                        rel="noreferrer"
-                        className={styles.actionBtn}
-                        title="View Live Events Page"
-                      >
-                        <Eye size={15} />
-                      </a>
-                      <Link
-                        to={`/events/edit/${evt.id}`}
-                        className={styles.actionBtn}
-                        title="Edit Event"
-                      >
-                        <Edit3 size={15} />
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(evt.id)}
-                        className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                        title="Delete Event"
-                      >
-                        <Trash2 size={15} />
-                      </button>
-                    </div>
+        <div style={{ width: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <table className={styles.table} style={{ width: '100%', minWidth: '700px' }}>
+            <thead>
+              <tr>
+                <th>Date & Event</th>
+                <th>Category</th>
+                <th>Time & Schedule</th>
+                <th>Reminder Subscriptions</th>
+                <th>Status</th>
+                <th style={{ textAlign: 'right' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan={6} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary, #9A9A9C)' }}>
+                    <Loader2 size={24} className="animate-spin" style={{ margin: '0 auto 8px', color: 'var(--brand-maroon, #820011)' }} />
+                    Loading events...
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} style={{ textAlign: 'center', padding: '3rem', color: '#A0A0A5' }}>
-                  No events found matching your criteria.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              ) : filteredEvents.length > 0 ? (
+                filteredEvents.map((evt) => (
+                  <tr key={evt.id}>
+                    <td>
+                      <div className={styles.eventCell}>
+                        <div className={styles.dateBadge}>
+                          <span className={styles.dateDay}>{evt.day}</span>
+                          <span className={styles.dateMonth}>{evt.month}</span>
+                        </div>
+                        <div>
+                          <div className={styles.eventTitle}>{evt.title}</div>
+                          <div className={styles.eventLocation}>
+                            <MapPin size={12} style={{ color: 'var(--brand-maroon, #820011)' }} /> {evt.location}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span className={styles.categoryBadge}>{evt.category}</span>
+                    </td>
+                    <td>{evt.time}</td>
+                    <td>
+                      <span className={styles.reminderBadge}>
+                        <Bell size={12} /> {evt.remindersCount} RSVPs
+                      </span>
+                    </td>
+                    <td>
+                      {evt.isUpcoming ? (
+                        <span className={styles.statusUpcoming}>
+                          <CheckCircle2 size={12} /> Upcoming
+                        </span>
+                      ) : (
+                        <span className={styles.statusPast}>
+                          <Clock size={12} /> Past
+                        </span>
+                      )}
+                    </td>
+                    <td>
+                      <div className={styles.actions} style={{ justifyContent: 'flex-end' }}>
+                        <a
+                          href="/events"
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.actionBtn}
+                          title="View Live Events Page"
+                        >
+                          <Eye size={15} />
+                        </a>
+                        <Link
+                          to={`/events/${evt.id}/edit`}
+                          className={styles.actionBtn}
+                          title="Edit Event"
+                        >
+                          <Edit3 size={15} />
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(evt.id, evt.title)}
+                          className={`${styles.actionBtn} ${styles.deleteBtn}`}
+                          title="Delete Event"
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-secondary, #9A9A9C)' }}>
+                    No events found. Click "+ Create New Event" above to schedule an exhibition!
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
