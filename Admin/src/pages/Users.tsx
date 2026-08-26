@@ -191,10 +191,10 @@ const Users: React.FC = () => {
                       <div className={styles.userCell}>
                         <div className={styles.avatar}>{(c.name || 'U').charAt(0)}</div>
                         <div>
-                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 500, color: '#F5F1E8' }}>
+                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 500, color: 'var(--text-primary, #F5F1E8)' }}>
                             {c.name}
                           </div>
-                          <div style={{ fontSize: '0.78rem', color: '#A0A0A5' }}>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary, #9A9A9C)' }}>
                             {c.role === 'ADMIN' ? 'Administrator' : `ID: #${c.id.slice(0, 8)}`}
                           </div>
                         </div>
@@ -202,8 +202,8 @@ const Users: React.FC = () => {
                     </td>
                     <td>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.85rem' }}>
-                        <span style={{ color: '#F5F1E8' }}>{c.email}</span>
-                        <span style={{ color: '#A0A0A5' }}>{c.phone}</span>
+                        <span style={{ color: 'var(--text-primary, #F5F1E8)' }}>{c.email}</span>
+                        <span style={{ color: 'var(--text-secondary, #9A9A9C)' }}>{c.phone}</span>
                       </div>
                     </td>
                     <td>
@@ -223,7 +223,7 @@ const Users: React.FC = () => {
                       </span>
                     </td>
                     <td>
-                      <span style={{ fontWeight: 500, color: '#F5F1E8' }}>{c.ordersCount || 0} Orders</span>
+                      <span style={{ fontWeight: 500, color: 'var(--text-primary, #F5F1E8)' }}>{c.ordersCount || 0} Orders</span>
                     </td>
                     <td>{c.joinedDate}</td>
                   </tr>

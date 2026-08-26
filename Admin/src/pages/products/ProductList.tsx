@@ -272,49 +272,49 @@ const ProductList: React.FC = () => {
                           style={{ width: '44px', height: '44px', borderRadius: '8px', objectFit: 'cover', background: '#222225', border: '1px solid rgba(197,168,128,0.2)' }} 
                         />
                         <div>
-                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600, color: '#F5F1E8', fontSize: '1.02rem' }}>
+                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600, color: 'var(--text-primary, #F5F1E8)', fontSize: '1.02rem' }}>
                             {p.name}
                           </div>
                           {p.inspiredBy && (
-                            <div style={{ fontSize: '0.78rem', color: '#C5A880', fontStyle: 'italic', marginTop: '2px' }}>
+                            <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary, #9A9A9C)', fontStyle: 'italic', marginTop: '2px' }}>
                               {p.inspiredBy}
                             </div>
                           )}
-                          <div style={{ fontSize: '0.78rem', color: '#7E7E85' }}>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted, #7E7E85)' }}>
                             Slug: {p.slug}
                           </div>
                         </div>
                       </div>
                     </td>
                     <td style={{ padding: '1.25rem 1.5rem' }}>
-                      <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'rgba(197,168,128,0.1)', color: '#C5A880', fontSize: '0.8rem', border: '1px solid rgba(197,168,128,0.2)', marginRight: '6px' }}>
+                      <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'rgba(197,168,128,0.1)', color: 'var(--text-primary, #F5F1E8)', fontSize: '0.8rem', border: '1px solid var(--border-subtle, rgba(197,168,128,0.2))', marginRight: '6px' }}>
                         {p.brand || 'Murakkaz'}
                       </span>
-                      <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'rgba(255,255,255,0.05)', color: '#A0A0A5', fontSize: '0.8rem' }}>
+                      <span style={{ padding: '3px 10px', borderRadius: '4px', background: 'var(--bg-surface-hover, rgba(255,255,255,0.05))', color: 'var(--text-secondary, #A0A0A5)', fontSize: '0.8rem' }}>
                         {p.family || 'WOODY'}
                       </span>
                     </td>
                     <td style={{ padding: '1.25rem 1.5rem' }}>
-                      <div style={{ fontWeight: 600, color: '#F5F1E8', fontSize: '0.95rem' }}>
+                      <div style={{ fontWeight: 600, color: 'var(--text-primary, #F5F1E8)', fontSize: '0.95rem' }}>
                         {priceText}
                       </div>
                       {p.sizes && p.sizes.length > 0 && (
-                        <div style={{ fontSize: '0.75rem', color: '#A0A0A5', marginTop: '3px' }}>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary, #A0A0A5)', marginTop: '3px' }}>
                           {p.sizes.map(s => s.size).join(', ')}
                         </div>
                       )}
                     </td>
-                    <td style={{ padding: '1.25rem 1.5rem', color: '#FBBF24' }}>
-                      ★ {p.rating || 5.0} <span style={{ color: '#A0A0A5', fontSize: '0.8rem' }}>({p.reviewCount || 0})</span>
+                    <td style={{ padding: '1.25rem 1.5rem', color: '#D97706' }}>
+                      ★ {p.rating || 5.0} <span style={{ color: 'var(--text-secondary, #A0A0A5)', fontSize: '0.8rem' }}>({p.reviewCount || 0})</span>
                     </td>
                     <td style={{ padding: '1.25rem 1.5rem' }}>
-                      <span style={{ padding: '3px 10px', borderRadius: '50px', background: p.isActive !== false ? 'rgba(52,211,153,0.12)' : 'rgba(239,68,68,0.12)', color: p.isActive !== false ? '#34D399' : '#EF4444', fontSize: '0.78rem', border: `1px solid ${p.isActive !== false ? 'rgba(52,211,153,0.25)' : 'rgba(239,68,68,0.25)'}` }}>
+                      <span style={{ padding: '3px 10px', borderRadius: '50px', background: p.isActive !== false ? 'rgba(52,211,153,0.12)' : 'rgba(239,68,68,0.12)', color: p.isActive !== false ? 'var(--status-delivered-text, #059669)' : '#EF4444', fontSize: '0.78rem', border: `1px solid ${p.isActive !== false ? 'rgba(52,211,153,0.25)' : 'rgba(239,68,68,0.25)'}` }}>
                         {p.isActive !== false ? 'Active Live' : 'Inactive'}
                       </span>
                     </td>
                     <td style={{ padding: '1.25rem 1.5rem', textAlign: 'right' }}>
                       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
-                        <Link to={`/products/${p.id}/edit`} style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(197,168,128,0.2)', color: '#F5F1E8', borderRadius: '6px', textDecoration: 'none', fontSize: '0.82rem' }}>
+                        <Link to={`/products/${p.id}/edit`} style={{ padding: '6px 12px', background: 'var(--bg-surface-hover, rgba(255,255,255,0.05))', border: '1px solid var(--border-subtle, rgba(197,168,128,0.2))', color: 'var(--text-primary, #F5F1E8)', borderRadius: '6px', textDecoration: 'none', fontSize: '0.82rem' }}>
                           Edit
                         </Link>
                         <button type="button" onClick={() => handleDelete(p.id)} style={{ padding: '6px 12px', background: 'rgba(229,72,72,0.12)', border: '1px solid rgba(229,72,72,0.3)', color: '#e54848', borderRadius: '6px', fontSize: '0.82rem', cursor: 'pointer' }}>

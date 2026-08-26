@@ -14,27 +14,27 @@
   align-items: flex-end;
   gap: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
+  border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
 }
 
 .headerText h1 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-title, 'Playfair Display', Georgia, serif);
   font-size: 2rem;
   font-weight: 500;
-  color: #F5F1E8;
+  color: var(--text-primary, #F5F1E8);
   margin-bottom: 0.25rem;
 }
 
 .headerText p {
   font-size: 0.9rem;
-  color: #A0A0A5;
+  color: var(--text-secondary, #9A9A9C);
 }
 
 .tabs {
   display: flex;
   gap: 0.5rem;
   background: var(--bg-surface, #1C1C1F);
-  border: 1px solid rgba(197, 168, 128, 0.15);
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
   border-radius: 12px;
   padding: 0.5rem;
   flex-wrap: wrap;
@@ -43,7 +43,7 @@
 .tab {
   padding: 0.65rem 1.25rem;
   font-size: 0.88rem;
-  color: #A0A0A5;
+  color: var(--text-secondary, #9A9A9C);
   background: transparent;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -53,20 +53,20 @@
 }
 
 .tab:hover {
-  color: #F5F1E8;
+  color: var(--text-primary, #F5F1E8);
   background: rgba(197, 168, 128, 0.05);
 }
 
 .activeTab {
   background: rgba(197, 168, 128, 0.12);
-  color: #C5A880;
+  color: var(--accent-gold, #C5A880);
   border-color: rgba(197, 168, 128, 0.25);
   font-weight: 500;
 }
 
 .contentCard {
   background: var(--bg-surface, #1C1C1F);
-  border: 1px solid rgba(197, 168, 128, 0.15);
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
   border-radius: 14px;
   padding: 2rem;
   display: flex;
@@ -87,7 +87,7 @@
 .cardEditor h4 {
   font-family: var(--font-title, 'Playfair Display', Georgia, serif);
   font-size: 1rem;
-  color: var(--accent-gold, #C5A880);
+  color: var(--text-primary, #F5F1E8);
 }
 
 .formGroup {
@@ -98,9 +98,10 @@
 
 .label {
   font-size: 0.82rem;
-  color: var(--accent-gold, #C5A880);
+  color: var(--text-secondary, #9A9A9C);
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  font-weight: 600;
 }
 
 .input, .textarea {
@@ -116,7 +117,7 @@
 }
 
 .input:focus, .textarea:focus {
-  border-color: #C5A880;
+  border-color: var(--accent-gold, #C5A880);
 }
 
 .saveBtn {
@@ -124,9 +125,9 @@
   align-items: center;
   gap: 8px;
   padding: 0.75rem 1.75rem;
-  background: #820011;
-  color: #F5F1E8;
-  border: 1px solid #820011;
+  background: var(--brand-maroon, #820011);
+  color: #FFFFFF;
+  border: 1px solid var(--brand-maroon, #820011);
   border-radius: 8px;
   font-weight: 500;
   font-size: 0.9rem;
@@ -136,12 +137,12 @@
 }
 
 .saveBtn:hover {
-  background: #60000d;
-  border-color: #60000d;
+  background: var(--brand-maroon-hover, #60000d);
+  border-color: var(--brand-maroon-hover, #60000d);
 }
 
 .toastMsg {
-  color: #34D399;
+  color: var(--status-delivered-text, #34D399);
   font-size: 0.88rem;
   font-weight: 500;
   margin-top: 0.5rem;
