@@ -126,8 +126,8 @@
 }
 
 .detailRow strong {
-  color: #9A9A9C;
-  font-weight: 500;
+  color: var(--text-primary, #F5F1E8);
+  font-weight: 600;
 }
 
 .itemsSection {

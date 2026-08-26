@@ -9,7 +9,7 @@
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-body);
+  font-family: var(--font-sans, 'Geist', -apple-system, sans-serif);
   font-size: 14px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -18,20 +18,20 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-title);
-  font-weight: 500;
+  font-family: var(--font-title, 'Playfair Display', Georgia, serif);
+  font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.015em;
 }
 
 a {
-  color: var(--accent-gold);
+  color: var(--text-primary);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--accent-gold-light);
+  color: var(--brand-maroon);
 }
 
 button {
@@ -55,8 +55,8 @@ input, select, textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 0 2px rgba(197, 168, 128, 0.2);
+  border-color: var(--brand-maroon);
+  box-shadow: 0 0 0 2px rgba(130, 0, 17, 0.15);
 }
 
 /* Custom Scrollbars */
@@ -68,9 +68,9 @@ input:focus, select:focus, textarea:focus {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(197, 168, 128, 0.2);
+  background: var(--border-subtle);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-gold);
+  background: var(--brand-maroon);
 }
