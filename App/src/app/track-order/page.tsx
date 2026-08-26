@@ -454,8 +454,24 @@ function TrackOrderContent() {
 
                   {trackedOrder.trackingNumber && (
                     <div className={styles.courierBox}>
-                      <div className={styles.courierHeading}>Courier Tracking ID:</div>
+                      <div className={styles.courierHeading}>Courier Consignment & Tracking:</div>
                       <div className={styles.courierCode}>{trackedOrder.trackingNumber}</div>
+                      {trackedOrder.trackingNumber.startsWith('STDF-') && (
+                        <a
+                          href={`https://steadfast.com.bd/t/${trackedOrder.trackingNumber}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: "inline-block",
+                            marginTop: "6px",
+                            fontSize: "0.82rem",
+                            color: "#1e40af",
+                            textDecoration: "underline"
+                          }}
+                        >
+                          Track live on Steadfast Courier ↗
+                        </a>
+                      )}
                     </div>
                   )}
                 </div>

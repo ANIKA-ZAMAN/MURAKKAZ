@@ -46,6 +46,7 @@ const OrderDetail = () => {
   const [status, setStatus] = useState('PENDING');
   const [trackingNumber, setTrackingNumber] = useState('');
   const [saving, setSaving] = useState(false);
+  const [dispatching, setDispatching] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
   const fetchOrder = async () => {
@@ -85,6 +86,27 @@ const OrderDetail = () => {
     }
   };
 
+  const handleDispatchCourier = async () => {
+    if (!id || dispatching) return;
+    setDispatching(true);
+    setMessage(null);
+    try {
+      const res = await api.post<{ status: string; data: any }>(`/admin/orders/${id}/dispatch-courier`);
+      if (res && res.data) {
+        const tracking = res.data.tracking_code;
+        setTrackingNumber(tracking);
+        setStatus('SHIPPED');
+        setMessage(`🚀 Order successfully dispatched via Steadfast Courier! Consignment ID: ${tracking}`);
+        fetchOrder();
+      }
+    } catch (err: any) {
+      console.error('Failed to dispatch courier:', err);
+      setMessage('Failed to dispatch order to courier.');
+    } finally {
+      setDispatching(false);
+    }
+  };
+
   if (loading) {
     return <div className={styles.container} style={{ padding: '3rem', textAlign: 'center', color: '#9A9A9C' }}>Loading order details...</div>;
   }
@@ -116,10 +138,36 @@ const OrderDetail = () => {
       </Link>
 
       <header className={styles.header}>
-        <h2 className={styles.orderTitle}>Order #{order.orderNumber}</h2>
-        <span className={styles.statusBadge} style={getStatusBadgeStyle(order.status)}>
-          {order.status}
-        </span>
+        <div>
+          <h2 className={styles.orderTitle}>Order #{order.orderNumber}</h2>
+          <div style={{ fontSize: '12.5px', color: '#9A9A9C', marginTop: '4px' }}>
+            Placed on {order.createdAt ? new Date(order.createdAt).toLocaleString('en-GB') : '—'}
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <span className={styles.statusBadge} style={getStatusBadgeStyle(order.status)}>
+            {order.status}
+          </span>
+          {order.status !== 'SHIPPED' && order.status !== 'DELIVERED' && order.status !== 'CANCELLED' && (
+            <button
+              onClick={handleDispatchCourier}
+              disabled={dispatching}
+              style={{
+                background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%)',
+                color: '#fff',
+                border: '1px solid rgba(147, 197, 253, 0.4)',
+                borderRadius: '6px',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                fontSize: '13px',
+                fontWeight: 600,
+                boxShadow: '0 4px 12px rgba(30, 58, 138, 0.4)'
+              }}
+            >
+              {dispatching ? 'Dispatching...' : '🚀 Dispatch to Steadfast'}
+            </button>
+          )}
+        </div>
       </header>
 
       {message && (
@@ -223,10 +271,10 @@ const OrderDetail = () => {
       </div>
       
       <div className={styles.trackingSection}>
-        <h3 className={styles.trackingTitle}>Courier Tracking ID</h3>
+        <h3 className={styles.trackingTitle}>Steadfast Courier Tracking</h3>
         <input 
           type="text" 
-          placeholder="e.g. STDF-892104-BD or REDX-7890" 
+          placeholder="e.g. STDF-892104-BD or Consignment ID" 
           value={trackingNumber} 
           onChange={(e) => setTrackingNumber(e.target.value)} 
           className={styles.input} 
@@ -238,6 +286,21 @@ const OrderDetail = () => {
         >
           Save Tracking Number
         </button>
+        {trackingNumber && (
+          <a
+            href={`https://steadfast.com.bd/t/${trackingNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontSize: '13px',
+              color: '#60A5FA',
+              textDecoration: 'underline',
+              padding: '6px 0'
+            }}
+          >
+            Track on Steadfast ↗
+          </a>
+        )}
       </div>
     </div>
   );

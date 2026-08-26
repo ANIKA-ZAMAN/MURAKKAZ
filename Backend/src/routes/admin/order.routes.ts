@@ -51,7 +51,7 @@ router.put('/:id/status', async (req: Request, res: Response, next: NextFunction
       where: { id },
       data: {
         status,
-        trackingNumber
+        ...(trackingNumber && { trackingNumber })
       },
       include: {
         user: true,
@@ -61,6 +61,38 @@ router.put('/:id/status', async (req: Request, res: Response, next: NextFunction
     });
     
     res.json({ status: 'success', data: order });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get single order for admin
+router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id as string;
+    const order = await prisma.order.findUnique({
+      where: { id },
+      include: {
+        user: true,
+        items: true,
+        payment: true,
+      }
+    });
+
+    if (!order) throw new AppError('Order not found', 404);
+    res.json({ status: 'success', data: order });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 1-Click Courier Dispatch to Steadfast
+router.post('/:id/dispatch-courier', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = req.params.id as string;
+    const { createSteadfastConsignment } = await import('../../services/courier.service');
+    const result = await createSteadfastConsignment(id);
+    res.json({ status: 'success', data: result });
   } catch (error) {
     next(error);
   }

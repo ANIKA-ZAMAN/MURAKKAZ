@@ -1,10 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
 import * as paymentService from '../services/payment.service';
+import * as bkashService from '../services/bkash.service';
 
 export const initiateBkash = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { orderId, amount } = req.body;
-    const result = await paymentService.initiateBkashPayment(orderId, amount);
+    const { orderId, callbackUrl } = req.body;
+    const result = await bkashService.createBkashPayment(orderId, callbackUrl);
+    res.status(200).json({ status: 'success', data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const executeBkash = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { paymentID } = req.body;
+    const result = await bkashService.executeBkashPayment(paymentID);
     res.status(200).json({ status: 'success', data: result });
   } catch (error) {
     next(error);
@@ -14,6 +25,10 @@ export const initiateBkash = async (req: Request, res: Response, next: NextFunct
 export const bkashCallback = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { paymentID, status } = req.body;
+    if (status === 'success' && paymentID) {
+      const result = await bkashService.executeBkashPayment(paymentID);
+      return res.status(200).json({ status: 'success', data: result });
+    }
     const result = await paymentService.handleBkashCallback(paymentID, status);
     res.status(200).json({ status: 'success', data: result });
   } catch (error) {

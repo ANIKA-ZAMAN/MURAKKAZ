@@ -427,7 +427,7 @@ function CheckoutContent() {
                     {formData.paymentMethod === "bkash" && (
                       <div className={styles.paymentMethodDetails} onClick={(e) => e.stopPropagation()}>
                         <div className={styles.paymentInstructions}>
-                          <p>1. Send the Grand Total to our personal mobile wallet: <strong>01712-345678</strong></p>
+                          <p>1. Send the Grand Total to our official bKash/Nagad wallet: <strong>01319022151</strong></p>
                           <p>2. Fill in the sender mobile number and the Transaction ID (TrxID) below.</p>
                         </div>
                         <div className={styles.formGroup} style={{ marginTop: "1rem" }}>
