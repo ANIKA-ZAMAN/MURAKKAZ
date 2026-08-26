@@ -106,3 +106,17 @@
   background-color: #a30015;
   box-shadow: 0 0 15px rgba(130, 0, 17, 0.6);
 }
+
+@media (max-width: 640px) {
+  .loginContainer {
+    padding: 16px;
+  }
+
+  .loginCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .brandTitle {
+    font-size: 1.6rem;
+  }
+}

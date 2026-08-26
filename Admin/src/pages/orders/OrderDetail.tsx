@@ -86,33 +86,44 @@ const OrderDetail = () => {
   };
 
   if (loading) {
-    return <div className={styles.container} style={{ padding: '3rem', textAlign: 'center' }}>Loading order details...</div>;
+    return <div className={styles.container} style={{ padding: '3rem', textAlign: 'center', color: '#9A9A9C' }}>Loading order details...</div>;
   }
 
   if (!order) {
     return (
       <div className={styles.container} style={{ padding: '3rem', textAlign: 'center' }}>
         <h3>Order not found</h3>
-        <Link to="/orders" className={styles.actionLink}>Back to Orders</Link>
+        <Link to="/orders" className={styles.backLink}>Back to Orders</Link>
       </div>
     );
   }
 
+  const getStatusBadgeStyle = (st: string) => {
+    switch (st.toUpperCase()) {
+      case 'PENDING': return { background: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', border: '1px solid rgba(245, 158, 11, 0.3)' };
+      case 'PROCESSING': return { background: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', border: '1px solid rgba(59, 130, 246, 0.3)' };
+      case 'SHIPPED': return { background: 'rgba(168, 85, 247, 0.15)', color: '#C084FC', border: '1px solid rgba(168, 85, 247, 0.3)' };
+      case 'DELIVERED': return { background: 'rgba(16, 185, 129, 0.15)', color: '#34D399', border: '1px solid rgba(16, 185, 129, 0.3)' };
+      case 'CANCELLED': return { background: 'rgba(239, 68, 68, 0.15)', color: '#F87171', border: '1px solid rgba(239, 68, 68, 0.3)' };
+      default: return { background: 'rgba(197, 168, 128, 0.15)', color: '#C5A880', border: '1px solid rgba(197, 168, 128, 0.3)' };
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <div style={{ marginBottom: '1rem' }}>
-        <Link to="/orders" style={{ color: '#820011', textDecoration: 'none', fontSize: '14px' }}>
-          ← Back to Orders List
-        </Link>
-      </div>
+      <Link to="/orders" className={styles.backLink}>
+        ← Back to Orders List
+      </Link>
 
       <header className={styles.header}>
-        <h2>Order #{order.orderNumber}</h2>
-        <span className={styles.statusBadge}>{order.status}</span>
+        <h2 className={styles.orderTitle}>Order #{order.orderNumber}</h2>
+        <span className={styles.statusBadge} style={getStatusBadgeStyle(order.status)}>
+          {order.status}
+        </span>
       </header>
 
       {message && (
-        <div style={{ padding: '10px 16px', background: '#e6f7ff', border: '1px solid #91d5ff', borderRadius: '6px', marginBottom: '1rem', color: '#0050b3' }}>
+        <div className={styles.alertBox}>
           {message}
         </div>
       )}
@@ -123,11 +134,11 @@ const OrderDetail = () => {
           value={status} 
           onChange={(e) => setStatus(e.target.value)}
         >
-          <option value="PENDING">PENDING</option>
-          <option value="CONFIRMED">CONFIRMED</option>
-          <option value="PROCESSING">PROCESSING</option>
-          <option value="SHIPPED">SHIPPED</option>
-          <option value="DELIVERED">DELIVERED</option>
+          <option value="PENDING">PENDING (Order Placed)</option>
+          <option value="CONFIRMED">CONFIRMED (Order Approved)</option>
+          <option value="PROCESSING">PROCESSING (Scent Lab Formulation)</option>
+          <option value="SHIPPED">SHIPPED (Out with Courier)</option>
+          <option value="DELIVERED">DELIVERED (Fulfilled)</option>
           <option value="CANCELLED">CANCELLED</option>
         </select>
         <button 
@@ -141,74 +152,81 @@ const OrderDetail = () => {
 
       <div className={styles.grid}>
         <div className={styles.card}>
-          <h3>Customer & Delivery Details</h3>
-          <p><strong>Name:</strong> {order.fullName}</p>
-          <p><strong>Email:</strong> {order.email}</p>
-          <p><strong>Phone:</strong> {order.phone}</p>
-          <p><strong>Area:</strong> {order.location === 'inside-dhaka' ? 'Inside Dhaka' : 'Outside Dhaka'}</p>
-          <p><strong>Full Address:</strong> {order.address}</p>
-          {order.notes && <p><strong>Delivery Notes:</strong> {order.notes}</p>}
+          <h3 className={styles.cardTitle}>Customer & Delivery</h3>
+          <p className={styles.detailRow}><strong>Name:</strong> {order.fullName}</p>
+          <p className={styles.detailRow}><strong>Email:</strong> {order.email}</p>
+          <p className={styles.detailRow}><strong>Phone:</strong> {order.phone}</p>
+          <p className={styles.detailRow}><strong>Area:</strong> {order.location === 'inside-dhaka' ? 'Inside Dhaka (80tk)' : 'Outside Dhaka (150tk)'}</p>
+          <p className={styles.detailRow}><strong>Full Address:</strong> {order.address}</p>
+          {order.notes && <p className={styles.detailRow}><strong>Delivery Notes:</strong> {order.notes}</p>}
         </div>
 
         <div className={styles.card}>
-          <h3>Payment Details</h3>
-          <p><strong>Method:</strong> {order.payment?.method || 'COD'}</p>
-          {order.payment?.walletNumber && <p><strong>Wallet Number:</strong> {order.payment.walletNumber}</p>}
-          {order.payment?.transactionId && <p><strong>Transaction ID:</strong> {order.payment.transactionId}</p>}
-          {order.payment?.cardLast4 && <p><strong>Card Last 4:</strong> •••• {order.payment.cardLast4}</p>}
-          <p><strong>Payment Status:</strong> <span className={styles.statusBadge}>{order.payment?.status || 'PENDING'}</span></p>
-          <p><strong>Amount:</strong> {order.grandTotal?.toLocaleString()}tk</p>
+          <h3 className={styles.cardTitle}>Payment Details</h3>
+          <p className={styles.detailRow}><strong>Method:</strong> {order.payment?.method || 'COD'}</p>
+          {order.payment?.walletNumber && <p className={styles.detailRow}><strong>Wallet Number:</strong> {order.payment.walletNumber}</p>}
+          {order.payment?.transactionId && <p className={styles.detailRow}><strong>Transaction ID:</strong> {order.payment.transactionId}</p>}
+          {order.payment?.cardLast4 && <p className={styles.detailRow}><strong>Card Last 4:</strong> •••• {order.payment.cardLast4}</p>}
+          <p className={styles.detailRow}>
+            <strong>Payment Status:</strong>{' '}
+            <span className={styles.statusBadge} style={getStatusBadgeStyle(order.payment?.status || 'PENDING')}>
+              {order.payment?.status || 'PENDING'}
+            </span>
+          </p>
+          <p className={styles.detailRow}><strong>Grand Total:</strong> {order.grandTotal?.toLocaleString()}tk</p>
         </div>
       </div>
 
       <div className={styles.itemsSection}>
-        <h3>Ordered Fragrances</h3>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Size</th>
-              <th>Qty</th>
-              <th>Unit Price</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {order.items.map((item) => (
-              <tr key={item.id}>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    {item.productImage && (
-                      <img 
-                        src={item.productImage} 
-                        alt={item.productName} 
-                        style={{ width: '36px', height: '36px', objectFit: 'cover', borderRadius: '4px' }} 
-                      />
-                    )}
-                    <strong>{item.productName}</strong>
-                  </div>
-                </td>
-                <td>{item.selectedSize}</td>
-                <td>{item.quantity}</td>
-                <td>{item.unitPrice?.toLocaleString()}tk</td>
-                <td><strong>{item.totalPrice?.toLocaleString()}tk</strong></td>
+        <h3 className={styles.cardTitle}>Ordered Fragrances</h3>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Size</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Total</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {order.items.map((item) => (
+                <tr key={item.id}>
+                  <td>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      {item.productImage && (
+                        <img 
+                          src={item.productImage} 
+                          alt={item.productName} 
+                          style={{ width: '38px', height: '38px', objectFit: 'cover', borderRadius: '4px', border: '1px solid rgba(197, 168, 128, 0.2)' }} 
+                        />
+                      )}
+                      <strong>{item.productName}</strong>
+                    </div>
+                  </td>
+                  <td>{item.selectedSize}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.unitPrice?.toLocaleString()}tk</td>
+                  <td><strong style={{ color: '#C5A880' }}>{item.totalPrice?.toLocaleString()}tk</strong></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div className={styles.summary}>
         <p>Subtotal: {order.subtotal?.toLocaleString()}tk</p>
         <p>Delivery Charge: {order.deliveryCharge}tk</p>
-        <h3>Grand Total: {order.grandTotal?.toLocaleString()}tk</h3>
+        <h3 className={styles.summaryTotal}>Grand Total: {order.grandTotal?.toLocaleString()}tk</h3>
       </div>
       
       <div className={styles.trackingSection}>
-        <h3>Tracking Information</h3>
+        <h3 className={styles.trackingTitle}>Courier Tracking ID</h3>
         <input 
           type="text" 
-          placeholder="e.g. STEADFAST-123456 or REDX-7890" 
+          placeholder="e.g. STDF-892104-BD or REDX-7890" 
           value={trackingNumber} 
           onChange={(e) => setTrackingNumber(e.target.value)} 
           className={styles.input} 
@@ -218,7 +236,7 @@ const OrderDetail = () => {
           onClick={handleUpdateStatus} 
           disabled={saving}
         >
-          Save Tracking
+          Save Tracking Number
         </button>
       </div>
     </div>

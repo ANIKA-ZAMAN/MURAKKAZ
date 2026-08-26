@@ -146,3 +146,36 @@
   font-weight: 500;
   margin-top: 0.5rem;
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px 10px;
+    gap: 1.25rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .tab {
+    white-space: nowrap;
+  }
+
+  .contentCard {
+    padding: 1.25rem 1rem;
+  }
+
+  .saveBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

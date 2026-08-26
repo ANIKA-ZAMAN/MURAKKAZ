@@ -478,3 +478,48 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 640px) {
+  .container {
+    padding: 12px 10px;
+    gap: 1.25rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .createBtn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .controlsBar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .formActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cancelBtn, .submitBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}

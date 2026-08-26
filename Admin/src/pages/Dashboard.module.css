@@ -1,161 +1,184 @@
 .dashboardContainer {
-  padding: 2rem;
-  background-color: #121212;
-  color: #fff;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
+  padding: 0;
+  color: var(--text-primary, #F5F1E8);
+  font-family: var(--font-sans, sans-serif);
+  width: 100%;
 }
 
 .header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .title {
-  font-size: 2rem;
-  color: #C5A880;
-  margin: 0 0 0.5rem 0;
+  font-size: 1.75rem;
+  font-family: var(--font-title, serif);
+  font-weight: 500;
+  color: var(--text-primary, #F5F1E8);
+  margin: 0 0 0.35rem 0;
 }
 
 .subtitle {
-  color: #aaa;
+  color: var(--text-secondary, #9A9A9C);
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
 }
 
 .statCard {
-  background-color: #1a1a1a;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #333;
+  background-color: var(--bg-surface, #1C1C1F);
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .statTitle {
-  color: #888;
-  font-size: 0.9rem;
+  color: var(--accent-gold, #C5A880);
+  font-size: 0.8rem;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
 }
 
 .statValue {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-family: var(--font-title, serif);
+  color: var(--text-primary, #F5F1E8);
+  margin-bottom: 0.35rem;
 }
 
 .statChange {
-  font-size: 0.85rem;
-  color: #888;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9A9A9C);
 }
 
 .positive {
-  color: #2ecc71;
+  color: #10B981;
 }
 
 .chartsSection {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
 }
 
 .chartCard {
-  background-color: #1a1a1a;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #333;
+  background-color: var(--bg-surface, #1C1C1F);
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .sectionTitle {
-  font-size: 1.2rem;
-  color: #fff;
-  margin: 0 0 1.5rem 0;
+  font-size: 1.05rem;
+  font-family: var(--font-title, serif);
+  font-weight: 500;
+  color: var(--text-primary, #F5F1E8);
+  margin: 0 0 1.25rem 0;
 }
 
 .chartWrapper {
   width: 100%;
+  overflow-x: auto;
 }
 
 .bottomSection {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .tableCard, .topProductsCard {
-  background-color: #1a1a1a;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #333;
+  background-color: var(--bg-surface, #1C1C1F);
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .viewAll {
-  color: #C5A880;
+  color: var(--accent-gold, #C5A880);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  transition: opacity 0.2s;
 }
 
 .viewAll:hover {
   text-decoration: underline;
+  opacity: 0.85;
 }
 
 .dataTable {
   width: 100%;
   border-collapse: collapse;
+  min-width: 500px;
 }
 
 .dataTable th {
   text-align: left;
-  padding: 1rem;
-  border-bottom: 1px solid #333;
-  color: #888;
-  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
+  color: var(--accent-gold, #C5A880);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .dataTable td {
-  padding: 1rem;
-  border-bottom: 1px solid #333;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.08);
+  font-size: 0.88rem;
+  color: var(--text-primary, #F5F1E8);
 }
 
 .statusBadge {
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
+  display: inline-block;
 }
 
 .pending {
-  background-color: rgba(243, 156, 18, 0.2);
-  color: #f39c12;
+  background-color: rgba(245, 158, 11, 0.15);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
 .processing {
-  background-color: rgba(52, 152, 219, 0.2);
-  color: #3498db;
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60A5FA;
+  border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .shipped {
-  background-color: rgba(155, 89, 182, 0.2);
-  color: #9b59b6;
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #C084FC;
+  border: 1px solid rgba(168, 85, 247, 0.3);
 }
 
 .delivered {
-  background-color: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .productList {
@@ -168,8 +191,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px solid #333;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.08);
 }
 
 .productItem:last-child {
@@ -177,29 +200,24 @@
 }
 
 .productName {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-primary, #F5F1E8);
+  margin-bottom: 0.2rem;
 }
 
 .productSales {
-  color: #888;
-  font-size: 0.85rem;
+  color: var(--text-secondary, #9A9A9C);
+  font-size: 0.8rem;
 }
 
 .productRevenue {
   font-weight: 600;
-  color: #C5A880;
-}
-
-.tableCard {
-  overflow-x: auto;
+  color: var(--accent-gold, #C5A880);
+  font-size: 0.9rem;
 }
 
 @media (max-width: 1024px) {
-  .dashboardContainer {
-    padding: 1rem;
-  }
-
   .chartsSection,
   .bottomSection {
     grid-template-columns: 1fr;
@@ -208,11 +226,29 @@
 
 @media (max-width: 640px) {
   .title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .statCard {
+    padding: 1rem;
+  }
+
+  .statValue {
+    font-size: 1.3rem;
+  }
+
+  .chartCard, .tableCard, .topProductsCard {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .statsGrid {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
 }

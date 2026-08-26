@@ -224,8 +224,8 @@ const ProductList: React.FC = () => {
       </div>
 
       {/* Main Table */}
-      <div style={{ background: '#18181A', borderRadius: '12px', border: '1px solid rgba(197,168,128,0.15)', overflow: 'hidden' }}>
-        <table className={styles.table} style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+      <div style={{ background: '#18181A', borderRadius: '12px', border: '1px solid rgba(197,168,128,0.15)', overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
+        <table className={styles.table} style={{ width: '100%', minWidth: '700px', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ background: 'rgba(34,34,37,0.7)', color: '#C5A880', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '1px solid rgba(197,168,128,0.15)' }}>
               <th style={{ padding: '1rem 1.5rem' }}>Fragrance</th>
