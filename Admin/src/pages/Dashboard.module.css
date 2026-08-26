@@ -40,27 +40,30 @@
 
 .statTitle {
   color: var(--accent-gold, #C5A880);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   margin-bottom: 0.4rem;
 }
 
 .statValue {
-  font-size: 1.6rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   font-family: var(--font-title, serif);
   color: var(--text-primary, #F5F1E8);
   margin-bottom: 0.35rem;
 }
 
 .statChange {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 500;
   color: var(--text-secondary, #9A9A9C);
 }
 
 .positive {
-  color: #10B981;
+  color: var(--status-delivered-text, #10B981);
+  font-weight: 600;
 }
 
 .chartsSection {
