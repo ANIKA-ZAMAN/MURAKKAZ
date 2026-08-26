@@ -11,6 +11,7 @@ import {
   Pie,
   Cell
 } from 'recharts';
+import { api } from '../api/client';
 import styles from './Dashboard.module.css';
 
 const COLORS = ['#f39c12', '#3498db', '#9b59b6', '#2ecc71'];
@@ -31,15 +32,10 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/admin/dashboard', {
-      headers: {
-        'Authorization': 'Bearer demo_admin_token'
-      }
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.data) {
-          setData(json.data);
+    api.get<{ data: DashboardData }>('/admin/dashboard')
+      .then((res) => {
+        if (res && res.data) {
+          setData(res.data);
         }
       })
       .catch((err) => console.error('Dashboard fetch error:', err))
