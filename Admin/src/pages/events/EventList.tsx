@@ -67,7 +67,7 @@ const EventList: React.FC = () => {
           category: item.category || 'Exhibition',
           remindersCount: item._count?.reminders ?? item.remindersCount ?? 0,
           isUpcoming: item.isUpcoming ?? true,
-          image: item.image || '/images/events/sadid.jpg'
+          image: item.image || ''
         }));
         setEvents(mapped);
       } else {

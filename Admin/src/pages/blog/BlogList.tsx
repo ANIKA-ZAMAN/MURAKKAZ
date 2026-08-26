@@ -47,10 +47,10 @@ const BlogList: React.FC = () => {
           title: item.title,
           description: item.description || item.subtitle || '',
           category: item.category || 'Olfactory Journal',
-          author: item.author ? (typeof item.author === 'string' ? item.author : `${item.author.firstName} ${item.author.lastName}`) : 'Sadid Admin',
+          author: item.author ? (typeof item.author === 'string' ? item.author : `${item.author.firstName} ${item.author.lastName}`) : 'Murakkaz Editorial',
           date: item.publishedAt ? new Date(item.publishedAt).toISOString().split('T')[0] : '2026-05-18',
           status: item.isPublished !== false ? 'Published' : 'Draft',
-          image: item.image || '/images/events/sadid.jpg'
+          image: item.image || ''
         }));
         setArticles(mapped);
       }

@@ -51,8 +51,8 @@ export default function BlogDetailPage({ params }: PageProps) {
               subtitle: item.description,
               description: item.description,
               content: item.content || item.description,
-              image: item.image || "/images/events/sadid.jpg",
-              author: item.author ? `${item.author.firstName} ${item.author.lastName}` : "Sadid Admin",
+              image: item.image || "/images/events/event_gallery_1.jpg",
+              author: item.author ? `${item.author.firstName} ${item.author.lastName}` : "Murakkaz Editorial",
               category: "Olfactory Journal",
               readTime: "5 min read",
             });

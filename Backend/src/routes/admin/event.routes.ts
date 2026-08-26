@@ -118,7 +118,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         title,
         slug: uniqueSlug,
         description,
-        image: image || '/images/events/sadid.jpg',
+        image: image || '/images/events/event_gallery_1.jpg',
         day: day ? String(day).padStart(2, '0') : String(parsedDate.getDate()).padStart(2, '0'),
         month: month ? String(month).toUpperCase() : parsedDate.toLocaleString('en-US', { month: 'short' }).toUpperCase(),
         time: time || '4:00 PM - 7:00 PM',

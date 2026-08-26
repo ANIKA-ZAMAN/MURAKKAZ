@@ -248,7 +248,7 @@ export default function AccountPage() {
           memberSince: authUser.createdAt ? new Date(authUser.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "Member",
           memberTier: authUser.memberTier || "Collector Circle",
           points: authUser.points || 100,
-          photo: authUser.photo || "/images/events/sadid.jpg",
+          photo: authUser.photo || "",
           primaryLocation: authUser.primaryLocation || "Dhaka",
         };
 
@@ -278,7 +278,7 @@ export default function AccountPage() {
         memberSince: "Member",
         memberTier: "Collector Circle",
         points: 100,
-        photo: "/images/events/sadid.jpg",
+        photo: "",
       };
       localStorage.setItem("murakkaz-user", JSON.stringify(fallback));
       setUser(fallback);
@@ -328,7 +328,7 @@ export default function AccountPage() {
           memberSince: "New Member",
           memberTier: "Collector Circle",
           points: 100,
-          photo: "/images/events/sadid.jpg",
+          photo: authUser.photo || "",
           primaryLocation: "Dhaka",
         };
 
@@ -351,7 +351,7 @@ export default function AccountPage() {
         memberSince: "Member",
         memberTier: "Collector Circle",
         points: 100,
-        photo: "/images/events/sadid.jpg",
+        photo: "",
       };
       localStorage.setItem("murakkaz-user", JSON.stringify(fallback));
       setUser(fallback);
