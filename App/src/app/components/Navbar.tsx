@@ -339,36 +339,41 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* Account Link */}
-            <Link
-              href="/account"
-              className="relative text-[#313134] hover:text-[#820011] hover:scale-105 transition-all duration-200 flex items-center justify-center rounded-full"
-              aria-label="Account"
-              onMouseEnter={() => setHoveredIcon("account")}
-              onMouseLeave={() => setHoveredIcon(null)}
-            >
-              {userPhoto ? (
-                <div className="w-7 h-7 rounded-full overflow-hidden border border-[#D5CDBD] shadow-xs flex items-center justify-center bg-white shrink-0">
-                  <img
-                    src={userPhoto}
-                    alt={userName || "Account Avatar"}
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                </div>
-              ) : (
-                <svg
-                  className="w-5 h-5 transition-colors duration-200 pointer-events-none"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke={isAccountActive || hoveredIcon === "account" ? "#820011" : "#313134"}
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            {/* Account / Sign In */}
+            {isLoggedIn ? (
+              <Link
+                href="/account"
+                className="relative text-[#313134] hover:text-[#820011] hover:scale-105 transition-all duration-200 flex items-center justify-center rounded-full"
+                aria-label="Account"
+                onMouseEnter={() => setHoveredIcon("account")}
+                onMouseLeave={() => setHoveredIcon(null)}
+              >
+                {userPhoto ? (
+                  <div className="w-7 h-7 rounded-full overflow-hidden border border-[#D5CDBD] shadow-xs flex items-center justify-center bg-white shrink-0">
+                    <img
+                      src={userPhoto}
+                      alt={userName || "Account Avatar"}
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-7 h-7 rounded-full border border-[#D5CDBD] bg-[#820011] text-white flex items-center justify-center text-[11px] font-semibold">
+                    {userName ? userName.charAt(0).toUpperCase() : "M"}
+                  </div>
+                )}
+              </Link>
+            ) : (
+              <Link
+                href="/account"
+                className="text-[13px] font-medium tracking-[0.03em] text-[#313134] hover:text-[#820011] transition-all duration-200 px-3 py-1.5 rounded-full border border-[#d8d5cd] hover:border-[#820011] hover:bg-[#820011]/5 flex items-center gap-1.5"
+                aria-label="Sign In"
+              >
+                <svg className="w-3.5 h-3.5 text-[#820011]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
                 </svg>
-              )}
-            </Link>
+                <span>Sign In</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Right Actions (< 1024px, Shifted left away from right edge) */}
@@ -396,17 +401,27 @@ export default function Navbar() {
               )}
             </Link>
 
-            <Link href="/account" className="p-0.5 text-[#313134]" aria-label="Account">
-              {userPhoto ? (
-                <div className="w-7.5 h-7.5 rounded-full overflow-hidden border-1.5 border-white shadow-xs flex items-center justify-center bg-white shrink-0">
-                  <img src={userPhoto} alt="Account" className="w-full h-full rounded-full object-cover" />
-                </div>
-              ) : (
-                <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              )}
-            </Link>
+            {isLoggedIn ? (
+              <Link href="/account" className="p-0.5 text-[#313134]" aria-label="Account">
+                {userPhoto ? (
+                  <div className="w-7.5 h-7.5 rounded-full overflow-hidden border-1.5 border-white shadow-xs flex items-center justify-center bg-white shrink-0">
+                    <img src={userPhoto} alt="Account" className="w-full h-full rounded-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-7.5 h-7.5 rounded-full border border-[#D5CDBD] bg-[#820011] text-white flex items-center justify-center text-[11px] font-semibold">
+                    {userName ? userName.charAt(0).toUpperCase() : "M"}
+                  </div>
+                )}
+              </Link>
+            ) : (
+              <Link
+                href="/account"
+                className="text-[12px] font-medium tracking-[0.02em] text-[#313134] hover:text-[#820011] transition-all px-2.5 py-1 rounded-full border border-[#d8d5cd]"
+                aria-label="Sign In"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
         </nav>
       </header>
@@ -516,32 +531,48 @@ export default function Navbar() {
 
           {/* Account Profile Section */}
           <div className="w-full mt-16 sm:mt-24 pb-12 flex flex-col items-center justify-center">
-            {/* Account Link */}
-            <Link
-              href="/account"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex flex-col items-center justify-center gap-1.5 group transition-opacity active:opacity-75"
-            >
-              {userPhoto ? (
-                <div className="w-13 h-13 rounded-full overflow-hidden border-2 border-[#D4C0A7] shadow-xs flex items-center justify-center bg-white shrink-0 group-hover:border-[#8C1D2E] transition-colors">
-                  <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
-                </div>
-              ) : (
-                <div className="w-13 h-13 rounded-full bg-white border border-[#D4C0A7] text-[#313134] group-hover:border-[#8C1D2E] group-hover:text-[#8C1D2E] transition-colors flex items-center justify-center shadow-xs shrink-0">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            {/* Account Link / Sign In */}
+            {isLoggedIn ? (
+              <Link
+                href="/account"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex flex-col items-center justify-center gap-1.5 group transition-opacity active:opacity-75"
+              >
+                {userPhoto ? (
+                  <div className="w-13 h-13 rounded-full overflow-hidden border-2 border-[#D4C0A7] shadow-xs flex items-center justify-center bg-white shrink-0 group-hover:border-[#8C1D2E] transition-colors">
+                    <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-13 h-13 rounded-full bg-[#820011] text-white flex items-center justify-center text-[18px] font-bold shadow-xs shrink-0">
+                    {userName ? userName.charAt(0).toUpperCase() : "M"}
+                  </div>
+                )}
+
+                <span className="font-serif-title text-[16px] font-medium text-[#313134] group-hover:text-[#8C1D2E] transition-colors mt-0.5">
+                  {userName ? userName : "My Account"}
+                </span>
+
+                <span className="font-serif-text text-[11.5px] tracking-[0.14em] uppercase text-[#8A8477] group-hover:text-[#8C1D2E] transition-colors">
+                  View Profile →
+                </span>
+              </Link>
+            ) : (
+              <Link
+                href="/account"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex flex-col items-center justify-center gap-2 group transition-opacity active:opacity-75"
+              >
+                <div className="px-6 py-2.5 rounded-full bg-[#820011] text-white font-medium text-[14px] shadow-sm flex items-center gap-2 hover:bg-[#66000d] transition-colors">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                   </svg>
+                  <span>Sign In / Register</span>
                 </div>
-              )}
-
-              <span className="font-serif-title text-[16px] font-medium text-[#313134] group-hover:text-[#8C1D2E] transition-colors mt-0.5">
-                {userName ? userName : "My Account"}
-              </span>
-
-              <span className="font-serif-text text-[11.5px] tracking-[0.14em] uppercase text-[#8A8477] group-hover:text-[#8C1D2E] transition-colors">
-                My Account →
-              </span>
-            </Link>
+                <span className="font-serif-text text-[12px] text-[#8A8477]">
+                  Join Murakkaz Fragrance Circle
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </aside>
