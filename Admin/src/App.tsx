@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { useAuth } from './hooks/useAuth';
 import { AdminLayout } from './components/layout/AdminLayout';
 
@@ -53,39 +54,41 @@ const ProtectedLayout: React.FC = () => {
 
 function App() {
   return (
-    <ToastProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login />} />
+    <ThemeProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login />} />
 
-            <Route path="/" element={<ProtectedLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="products" element={<ProductList />} />
-              <Route path="products/new" element={<ProductForm />} />
-              <Route path="products/:id/edit" element={<ProductForm />} />
-              <Route path="collections" element={<ProductList />} />
-              <Route path="orders" element={<OrderList />} />
-              <Route path="orders/:id" element={<OrderDetail />} />
-              <Route path="blog" element={<BlogList />} />
-              <Route path="blog/new" element={<BlogForm />} />
-              <Route path="blog/:id/edit" element={<BlogForm />} />
-              <Route path="events" element={<EventList />} />
-              <Route path="events/new" element={<EventForm />} />
-              <Route path="events/:id/edit" element={<EventForm />} />
-              <Route path="reviews" element={<Reviews />} />
-              <Route path="stores" element={<Stores />} />
-              <Route path="users" element={<Users />} />
-              <Route path="cms" element={<Content />} />
-              <Route path="content" element={<Content />} />
-              <Route path="settings" element={<Settings />} />
-            </Route>
+              <Route path="/" element={<ProtectedLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="products" element={<ProductList />} />
+                <Route path="products/new" element={<ProductForm />} />
+                <Route path="products/:id/edit" element={<ProductForm />} />
+                <Route path="collections" element={<ProductList />} />
+                <Route path="orders" element={<OrderList />} />
+                <Route path="orders/:id" element={<OrderDetail />} />
+                <Route path="blog" element={<BlogList />} />
+                <Route path="blog/new" element={<BlogForm />} />
+                <Route path="blog/:id/edit" element={<BlogForm />} />
+                <Route path="events" element={<EventList />} />
+                <Route path="events/new" element={<EventForm />} />
+                <Route path="events/:id/edit" element={<EventForm />} />
+                <Route path="reviews" element={<Reviews />} />
+                <Route path="stores" element={<Stores />} />
+                <Route path="users" element={<Users />} />
+                <Route path="cms" element={<Content />} />
+                <Route path="content" element={<Content />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
 
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
-    </ToastProvider>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 }
 

@@ -87,9 +87,62 @@
 }
 
 .footer {
-  padding: 14px 20px;
+  padding: 14px 18px;
   border-top: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.12));
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.themeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.themeSectionLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted, #6E6E70);
+  font-weight: 600;
+}
+
+.themeSectionButtons {
+  display: flex;
+  background-color: var(--bg-surface-hover, #252528);
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.2));
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.themeOptionBtn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #9A9A9C);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.themeOptionBtn:hover {
+  color: var(--text-primary, #F5F1E8);
+}
+
+.themeOptionBtnActive {
+  background-color: var(--brand-maroon, #820011);
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 6px rgba(130, 0, 17, 0.3);
 }
 
 .logoutBtn {
@@ -101,8 +154,8 @@
   border: none;
   color: var(--text-secondary, #9A9A9C);
   cursor: pointer;
-  padding: 8px 0;
-  font-size: 14px;
+  padding: 4px 0;
+  font-size: 13.5px;
   font-family: var(--font-sans, sans-serif);
   transition: color 0.2s;
 }

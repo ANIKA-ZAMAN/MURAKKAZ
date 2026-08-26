@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.css';
+import { useTheme } from '../../context/ThemeContext';
 import {
   LayoutDashboard,
   Package,
@@ -14,7 +15,9 @@ import {
   Settings,
   LogOut,
   Diamond,
-  X
+  X,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -37,6 +40,8 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => {
+  const { theme, setTheme } = useTheme();
+
   return (
     <aside className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
       <div className={styles.brand}>
@@ -50,6 +55,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
           </button>
         )}
       </div>
+
       <nav className={styles.nav}>
         {NAV_ITEMS.map((item) => (
           <NavLink
@@ -65,7 +71,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
           </NavLink>
         ))}
       </nav>
+
       <div className={styles.footer}>
+        <div className={styles.themeSection}>
+          <div className={styles.themeSectionLabel}>Theme Mode</div>
+          <div className={styles.themeSectionButtons}>
+            <button
+              type="button"
+              onClick={() => setTheme('light')}
+              className={`${styles.themeOptionBtn} ${theme === 'light' ? styles.themeOptionBtnActive : ''}`}
+            >
+              <Sun size={14} /> White
+            </button>
+            <button
+              type="button"
+              onClick={() => setTheme('dark')}
+              className={`${styles.themeOptionBtn} ${theme === 'dark' ? styles.themeOptionBtnActive : ''}`}
+            >
+              <Moon size={14} /> Dark
+            </button>
+          </div>
+        </div>
+
         <button className={styles.logoutBtn}>
           <LogOut size={18} />
           Logout

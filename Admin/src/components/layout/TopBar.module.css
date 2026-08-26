@@ -83,29 +83,40 @@
   color: var(--text-secondary, #9A9A9C);
 }
 
-.themeToggleBtn {
+/* Luxury Segmented Theme Pill Switcher */
+.themePill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+  padding: 3px;
   background-color: var(--bg-surface-hover, #252528);
-  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.2));
-  color: var(--accent-gold, #C5A880);
+  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.25));
+  border-radius: 30px;
+  gap: 2px;
+}
+
+.themePillBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
   border-radius: 20px;
-  cursor: pointer;
   font-size: 12px;
   font-weight: 600;
+  color: var(--text-secondary, #9A9A9C);
+  background: transparent;
+  border: none;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.themeToggleBtn:hover {
-  background-color: rgba(197, 168, 128, 0.15);
-  border-color: var(--accent-gold, #C5A880);
-  transform: translateY(-1px);
+.themePillBtn:hover {
+  color: var(--text-primary, #F5F1E8);
 }
 
-.themeLabel {
-  display: inline-block;
+.themePillActive {
+  background: var(--brand-maroon, #820011);
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(130, 0, 17, 0.35);
 }
 
 .profile {
@@ -168,25 +179,22 @@
 
 @media (max-width: 640px) {
   .topbar {
-    padding: 0 12px;
+    padding: 0 10px;
     height: 56px;
   }
 
   .title {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .userInfo {
     display: none;
   }
 
-  .themeLabel {
-    display: none;
-  }
-
-  .themeToggleBtn {
-    padding: 6px;
-    border-radius: 50%;
+  .themePillBtn {
+    padding: 4px 8px;
+    font-size: 11px;
+    gap: 4px;
   }
 
   .actions {

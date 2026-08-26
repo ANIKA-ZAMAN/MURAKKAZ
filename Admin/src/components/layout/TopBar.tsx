@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styles from './TopBar.module.css';
 import { Search, Menu, Sun, Moon } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { useTheme } from '../../context/ThemeContext';
 
 const getPageTitle = (pathname: string) => {
   const path = pathname.split('/')[1];
@@ -16,20 +17,7 @@ interface TopBarProps {
 export const TopBar: React.FC<TopBarProps> = ({ onToggleSidebar }) => {
   const location = useLocation();
   const title = getPageTitle(location.pathname);
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-
-  useEffect(() => {
-    const savedTheme = (localStorage.getItem('murakkaz_admin_theme') as 'light' | 'dark') || 'dark';
-    setTheme(savedTheme);
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('murakkaz_admin_theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-  };
+  const { theme, setTheme } = useTheme();
 
   return (
     <header className={styles.topbar}>
@@ -52,16 +40,27 @@ export const TopBar: React.FC<TopBarProps> = ({ onToggleSidebar }) => {
           />
         </div>
 
-        {/* Theme Toggle Button */}
-        <button 
-          onClick={toggleTheme}
-          className={styles.themeToggleBtn}
-          title={theme === 'dark' ? 'Switch to White Theme' : 'Switch to Dark Theme'}
-          aria-label="Toggle Theme"
-        >
-          {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
-          <span className={styles.themeLabel}>{theme === 'dark' ? 'White' : 'Dark'}</span>
-        </button>
+        {/* Segmented Luxury Theme Switcher */}
+        <div className={styles.themePill}>
+          <button
+            type="button"
+            onClick={() => setTheme('light')}
+            className={`${styles.themePillBtn} ${theme === 'light' ? styles.themePillActive : ''}`}
+            title="Switch to White / Light Theme"
+          >
+            <Sun size={14} />
+            <span>White</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setTheme('dark')}
+            className={`${styles.themePillBtn} ${theme === 'dark' ? styles.themePillActive : ''}`}
+            title="Switch to Dark Theme"
+          >
+            <Moon size={14} />
+            <span>Dark</span>
+          </button>
+        </div>
 
         <div className={styles.profile}>
           <div className={styles.avatar}>A</div>
