@@ -36,10 +36,10 @@ const BlogForm: React.FC = () => {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [category, setCategory] = useState('Olfactory Journal');
-  const [author, setAuthor] = useState('Sadid Admin');
+  const [author, setAuthor] = useState('Murakkaz Editorial');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('');
-  const [imageUrl, setImageUrl] = useState('/images/events/sadid.jpg');
+  const [imageUrl, setImageUrl] = useState('');
   const [isPublished, setIsPublished] = useState(true);
   const [readTime, setReadTime] = useState('5 min read');
   const [submitting, setSubmitting] = useState(false);
@@ -53,10 +53,10 @@ const BlogForm: React.FC = () => {
             setTitle(item.title || '');
             setSlug(item.slug || '');
             setCategory(item.category || 'Olfactory Journal');
-            setAuthor(item.author ? (typeof item.author === 'string' ? item.author : `${item.author.firstName} ${item.author.lastName}`) : 'Sadid Admin');
+            setAuthor(item.author ? (typeof item.author === 'string' ? item.author : `${item.author.firstName} ${item.author.lastName}`) : 'Murakkaz Editorial');
             setDescription(item.description || '');
             setContent(item.content || item.description || '');
-            setImageUrl(item.image || '/images/events/sadid.jpg');
+            setImageUrl(item.image || '');
             setIsPublished(item.isPublished !== false);
             setReadTime(item.readTime || '5 min read');
           }
@@ -251,7 +251,7 @@ const BlogForm: React.FC = () => {
                 autoComplete="off"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="https://images.unsplash.com/photo-... or /images/events/sadid.jpg"
+                placeholder="https://images.unsplash.com/photo-... or /uploads/blogs/..."
                 className={styles.input}
               />
             </div>

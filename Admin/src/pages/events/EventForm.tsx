@@ -25,7 +25,6 @@ const CATEGORIES = [
 ];
 
 const PRESET_BANNERS = [
-  { label: 'Exhibition Masterclass', url: '/images/events/sadid.jpg' },
   { label: 'Oud Distillation', url: '/images/events/event_gallery_1.jpg' },
   { label: 'Atelier Showcase', url: '/images/events/event_gallery_3.jpg' },
   { label: 'Collector Gala', url: '/images/events/event_gallery_5.jpg' },
@@ -47,7 +46,7 @@ const EventForm: React.FC = () => {
   const [dateInput, setDateInput] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [imageUrl, setImageUrl] = useState('/images/events/sadid.jpg');
+  const [imageUrl, setImageUrl] = useState('');
   const [isUpcoming, setIsUpcoming] = useState(true);
 
   const [loading, setLoading] = useState(isEdit);
@@ -70,7 +69,7 @@ const EventForm: React.FC = () => {
             setTime(evt.time || '4:00 PM - 7:00 PM');
             setLocation(evt.location || '');
             setDescription(evt.description || '');
-            setImageUrl(evt.image || '/images/events/sadid.jpg');
+            setImageUrl(evt.image || '');
             setIsUpcoming(evt.isUpcoming ?? true);
             if (evt.eventDate) {
               const d = new Date(evt.eventDate);
@@ -169,7 +168,7 @@ const EventForm: React.FC = () => {
         time,
         location: location.trim() || 'Dhaka Flagship Atelier',
         description: description.trim(),
-        image: imageUrl || '/images/events/sadid.jpg',
+        image: imageUrl.trim() || '/images/events/event_gallery_1.jpg',
         isUpcoming,
         eventDate: dateInput ? new Date(dateInput).toISOString() : new Date().toISOString()
       };
@@ -295,9 +294,7 @@ const EventForm: React.FC = () => {
                   src={imageUrl} 
                   alt="Cover preview" 
                   className={styles.previewImg} 
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/images/events/sadid.jpg';
-                  }}
+                  onError={() => setImageUrl('')}
                 />
                 <button
                   type="button"
@@ -355,7 +352,7 @@ const EventForm: React.FC = () => {
                 type="text"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                placeholder="/images/events/sadid.jpg or https://..."
+                placeholder="https://... or /uploads/events/..."
                 className={styles.input}
               />
             </div>
