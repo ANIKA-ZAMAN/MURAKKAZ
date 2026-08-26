@@ -269,8 +269,8 @@ model WishlistItem {
 model Order {
   id             String      @id @default(cuid())
   orderNumber    String      @unique
-  userId         String
-  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String?
+  user           User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
   status         OrderStatus @default(PENDING)
   fullName       String
   email          String
