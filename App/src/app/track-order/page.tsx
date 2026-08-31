@@ -121,11 +121,7 @@ function TrackOrderContent() {
     const token = localStorage.getItem("murakkaz-token");
     const savedUser = localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user");
 
-    if (savedUser && (savedUser.toLowerCase().includes("sadid") || !token)) {
-      localStorage.removeItem("murakkaz-user");
-      localStorage.removeItem("murakkaz_user");
-      setUser(null);
-    } else if (savedUser && token) {
+    if (savedUser && token) {
       try {
         setUser(JSON.parse(savedUser));
         fetchProfileOrders();

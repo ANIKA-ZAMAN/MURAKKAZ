@@ -98,21 +98,12 @@ export default function Navbar() {
       const token = localStorage.getItem("murakkaz-token");
       const stored = localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user");
 
-      if (stored && (stored.toLowerCase().includes("sadid") || !token)) {
-        localStorage.removeItem("murakkaz-user");
-        localStorage.removeItem("murakkaz_user");
-        setUserPhoto(null);
-        setUserName(null);
-        setIsLoggedIn(false);
-        return;
-      }
-
-      if (stored && token) {
+      if (token && stored) {
         const parsed = JSON.parse(stored);
         if (parsed && typeof parsed === "object") {
           const photo = parsed.photo || parsed.photoUrl || parsed.avatar || null;
           setUserPhoto(photo);
-          setUserName(parsed.name || null);
+          setUserName(parsed.name || parsed.firstName || "Member");
           setIsLoggedIn(true);
           return;
         }
