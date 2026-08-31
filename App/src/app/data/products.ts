@@ -184,7 +184,7 @@ export const luxuryProducts: Product[] = [
     "priceVal": 300,
     "originalPriceVal": 400,
     "volume": "6ml - 50ml",
-    "image": "/images/products/resala.jpg",
+    "image": "/images/products/resala_arabian_oud.jpg",
     "family": "ORIENTAL",
     "gender": "UNISEX",
     "occasion": "Royalty & Special Occasions",
@@ -1977,6 +1977,10 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             : [];
 
           const itemSlug = p.slug || slugify(p.name);
+          let itemImage = p.image || "/images/products/jade_serenity.png";
+          if (itemSlug === "resala" || (p.name && p.name.toLowerCase().includes("resala"))) {
+            itemImage = "/images/products/resala_arabian_oud.jpg";
+          }
           return {
             id: p.id || itemSlug,
             slug: itemSlug,
@@ -1991,7 +1995,7 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             priceVal: minPrice,
             originalPriceVal: Math.round(minPrice * 1.25),
             volume: p.volume || (p.sizes && p.sizes.length > 0 ? p.sizes.map((s: any) => s.size).join(', ') : "6ml - 50ml"),
-            image: p.image || "/images/products/jade_serenity.png",
+            image: itemImage,
             family: (p.family || "FLORAL").toUpperCase(),
             gender: (p.gender || "UNISEX").toUpperCase(),
             occasion: p.occasion || "Versatile",
