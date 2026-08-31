@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import BrandTicker from "./BrandTicker";
+import HeroBottleCanvas from "./HeroBottleCanvas";
 
 /* Deterministic Static Particles Array for SSR/CSR Hydration Consistency */
 const dustParticlesData = [
@@ -310,15 +311,7 @@ export default function Hero() {
           }}
           suppressHydrationWarning
         >
-          <picture className="w-full h-full flex items-center justify-center">
-            <source srcSet="/images/bottleAnimation.webp" type="image/webp" />
-            <img
-              src="/images/bottleAnimation.webp"
-              alt="Murakkaz Luxury Fragrance"
-              className="w-full h-full object-contain relative z-10 select-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.22)]"
-              suppressHydrationWarning
-            />
-          </picture>
+          <HeroBottleCanvas />
 
           {/* Real Ground Shadow Effect: Tight Contact Shadow + Soft Ambient Shadow under the bottle base */}
           {/* 1. Soft Ambient Ground Shadow */}
