@@ -11,6 +11,7 @@ datasource db {
 enum Role {
   CUSTOMER
   ADMIN
+  SUPER_ADMIN
 }
 
 enum Provider {
@@ -83,30 +84,63 @@ enum PaymentStatus {
 
 // Models
 model User {
-  id              String         @id @default(cuid())
-  email           String?        @unique
-  phone           String?        @unique
-  passwordHash    String?
-  firstName       String
-  lastName        String
-  photo           String?
-  memberTier      String         @default("Collector Circle")
-  points          Int            @default(0)
-  primaryLocation String?
-  role            Role           @default(CUSTOMER)
-  provider        Provider       @default(EMAIL)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id                  String          @id @default(cuid())
+  email               String?         @unique
+  phone               String?         @unique
+  passwordHash        String?
+  firstName           String
+  lastName            String
+  photo               String?
+  memberTier          String          @default("Collector Circle")
+  points              Int             @default(0)
+  primaryLocation     String?
+  role                Role            @default(CUSTOMER)
+  provider            Provider        @default(EMAIL)
+  
+  // Security & Account State
+  isVerified          Boolean         @default(false)
+  failedLoginAttempts Int             @default(0)
+  lockedUntil         DateTime?
+  lastLoginAt         DateTime?
+  
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 
-  addresses       Address[]
-  orders          Order[]
-  reviews         Review[]
-  wishlistItems   WishlistItem[]
-  cartItems       CartItem[]
-  eventReminders  EventReminder[]
-  preference      UserPreference?
-  refreshTokens   RefreshToken[]
-  blogPosts       BlogPost[]
+  addresses           Address[]
+  orders              Order[]
+  reviews             Review[]
+  wishlistItems       WishlistItem[]
+  cartItems           CartItem[]
+  eventReminders      EventReminder[]
+  preference          UserPreference?
+  refreshTokens       RefreshToken[]
+  blogPosts           BlogPost[]
+  otps                OtpCode[]
+  auditLogs           AuditLog[]
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phone     String
+  code      String
+  expiresAt DateTime
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([phone, code])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String
+  targetId  String?
+  ipAddress String?
+  details   String?
+  createdAt DateTime @default(now())
 }
 
 model RefreshToken {

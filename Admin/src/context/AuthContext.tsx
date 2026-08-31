@@ -8,6 +8,8 @@ export interface User {
     email: string;
     phone: string;
     role: string;
+    photo?: string;
+    lastLoginAt?: string;
 }
 
 interface AuthContextType {
@@ -18,67 +20,34 @@ interface AuthContextType {
     logout: () => void;
 }
 
-const DEMO_USER: User = {
-    id: 'admin-1',
-    firstName: 'Sadid',
-    lastName: 'Admin',
-    email: 'admin@murakkaz.com',
-    phone: '+8801712345678',
-    role: 'ADMIN',
-};
-
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    // Default to DEMO_USER so the dashboard renders immediately out-of-the-box
-    const [user, setUser] = useState<User | null>(DEMO_USER);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [user, setUser] = useState<User | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const loadUser = async () => {
             const token = getAccessToken();
-            if (!token || token === 'demo-access-token') {
-                try {
-                    const response = await apiClient.post<{ data: { user: User; accessToken: string; refreshToken: string } }>('/auth/login', {
-                        email: 'admin@murakkaz.com',
-                        password: 'admin123'
-                    });
-                    if (response?.data?.accessToken) {
-                        setTokens(response.data.accessToken, response.data.refreshToken);
-                        setUser(response.data.user);
-                        setIsLoading(false);
-                        return;
-                    }
-                } catch (e) {
-                    console.warn("Auto admin login fallback to demo token");
-                }
-                setTokens('demo-access-token', 'demo-refresh-token');
-                setUser(DEMO_USER);
+            if (!token) {
+                setUser(null);
                 setIsLoading(false);
                 return;
             }
 
             try {
-                const response = await apiClient.get<{ data: User }>('/users/me');
+                // Verify admin session via dedicated /admin/auth/me endpoint
+                const response = await apiClient.get<{ data: User }>('/admin/auth/me');
                 if (response?.data) {
                     setUser(response.data);
+                } else {
+                    clearTokens();
+                    setUser(null);
                 }
             } catch (error) {
-                console.warn("Backend user verification failed, trying re-login:", error);
-                try {
-                    const loginRes = await apiClient.post<{ data: { user: User; accessToken: string; refreshToken: string } }>('/auth/login', {
-                        email: 'admin@murakkaz.com',
-                        password: 'admin123'
-                    });
-                    if (loginRes?.data?.accessToken) {
-                        setTokens(loginRes.data.accessToken, loginRes.data.refreshToken);
-                        setUser(loginRes.data.user);
-                        setIsLoading(false);
-                        return;
-                    }
-                } catch (reLoginErr) {
-                    setUser(DEMO_USER);
-                }
+                console.warn("Admin session verification failed:", error);
+                clearTokens();
+                setUser(null);
             } finally {
                 setIsLoading(false);
             }
@@ -88,27 +57,36 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     const login = async (credentials: { email?: string; phone?: string; password: string }) => {
+        setIsLoading(true);
         try {
-            const response = await apiClient.post<{ data: { user: User; accessToken: string; refreshToken: string } }>('/auth/login', credentials);
+            // Dedicated Admin Auth endpoint verifying role: ADMIN or SUPER_ADMIN
+            const response = await apiClient.post<{ data: { user: User; accessToken: string; refreshToken: string } }>('/admin/auth/login', credentials);
             
-            setTokens(response.data.accessToken, response.data.refreshToken);
-            setUser(response.data.user);
-        } catch (error) {
-            console.warn("Login API failed, activating demo admin mode", error);
-            setTokens('demo-access-token', 'demo-refresh-token');
-            setUser(DEMO_USER);
+            if (response?.data?.accessToken) {
+                setTokens(response.data.accessToken, response.data.refreshToken);
+                setUser(response.data.user);
+            } else {
+                throw new Error('Authentication failed');
+            }
+        } catch (error: any) {
+            clearTokens();
+            setUser(null);
+            throw error;
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const logout = () => {
         clearTokens();
-        setUser(DEMO_USER); // Fallback to demo mode on logout so UI stays active
+        setUser(null);
+        window.location.href = '/login';
     };
 
     return (
         <AuthContext.Provider value={{
             user,
-            isAuthenticated: true, // Always true for seamless admin UI preview
+            isAuthenticated: Boolean(user),
             isLoading,
             login,
             logout

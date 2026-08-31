@@ -213,36 +213,72 @@ export default function AccountDrawer({ isOpen, onClose }: AccountDrawerProps) {
     }, 800);
   };
 
-  const handlePhoneSubmit = (e: React.FormEvent) => {
+  const handlePhoneSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phoneNumber) return;
+    setAuthError(null);
+
+    const baseUrl = getApiBaseUrl();
 
     if (!otpSent) {
       setLoading(true);
-      setTimeout(() => {
-        setOtpSent(true);
+      try {
+        const res = await fetch(`${baseUrl}/api/auth/otp/send`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone: phoneNumber }),
+        });
+        const json = await res.json();
+        if (res.ok) {
+          setOtpSent(true);
+        } else {
+          setAuthError(json.message || "Failed to send verification code. Please check the phone number.");
+        }
+      } catch (err) {
+        setAuthError("Network error. Please try again.");
+      } finally {
         setLoading(false);
-      }, 800);
+      }
     } else {
       if (!otp) return;
       setLoading(true);
-      setTimeout(() => {
-        const mockUser: UserProfile = {
-          name: authMode === "register" && name ? name : `User ${phoneNumber}`,
-          email: `${phoneNumber.replace(/[^0-9]/g, "")}@phone.murakkaz.com`,
-          memberSince: "July 2026",
-          memberTier: "Collector Circle",
-          points: 100,
-        };
-        localStorage.setItem("murakkaz-user", JSON.stringify(mockUser));
-        setUser(mockUser);
+      try {
+        const res = await fetch(`${baseUrl}/api/auth/otp/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone: phoneNumber, otp }),
+        });
+        const json = await res.json();
+        if (res.ok && json.data) {
+          const { user: authUser, accessToken, refreshToken } = json.data;
+          const profile: UserProfile = {
+            name: `${authUser.firstName || ''} ${authUser.lastName || ''}`.trim() || `Collector ${phoneNumber}`,
+            email: authUser.email || `${phoneNumber}@phone.murakkaz.com`,
+            phone: authUser.phone || phoneNumber,
+            memberSince: authUser.createdAt ? new Date(authUser.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "Member",
+            memberTier: authUser.memberTier || "Collector Circle",
+            points: authUser.points || 100,
+            photo: authUser.photo || undefined,
+            primaryLocation: authUser.primaryLocation || "Dhaka"
+          };
+
+          if (accessToken) localStorage.setItem("murakkaz-token", accessToken);
+          if (refreshToken) localStorage.setItem("murakkaz-refresh-token", refreshToken);
+          localStorage.setItem("murakkaz-user", JSON.stringify(profile));
+
+          setUser(profile);
+          setOtpSent(false);
+          setPhoneNumber("");
+          setOtp("");
+          window.dispatchEvent(new Event("murakkaz-user-updated"));
+        } else {
+          setAuthError(json.message || "Invalid or expired verification code.");
+        }
+      } catch (err) {
+        setAuthError("Network error. Please try again.");
+      } finally {
         setLoading(false);
-        setOtpSent(false);
-        setPhoneNumber("");
-        setOtp("");
-        setName("");
-        window.dispatchEvent(new Event("murakkaz-user-updated"));
-      }, 1000);
+      }
     }
   };
 

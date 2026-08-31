@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authenticate } from '../../middleware/auth';
 import { requireAdmin } from '../../middleware/admin';
+import adminAuthRoutes from './auth.routes';
 import productRoutes from './product.routes';
 import orderRoutes from './order.routes';
 import blogRoutes from './blog.routes';
@@ -13,7 +14,10 @@ import dashboardRoutes from './dashboard.routes';
 
 const router = Router();
 
-// All admin routes require authentication + admin role
+// Public Admin Auth Routes (e.g. POST /api/admin/auth/login)
+router.use('/auth', adminAuthRoutes);
+
+// Protected Admin Routes (require authentication + ADMIN or SUPER_ADMIN role)
 router.use(authenticate);
 router.use(requireAdmin);
 
