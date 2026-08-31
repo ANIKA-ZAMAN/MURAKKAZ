@@ -288,6 +288,75 @@ export default function AccountPage() {
     }
   };
 
+  const handlePhoneOtpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!phoneNumber) return;
+    setAuthError(null);
+    const baseUrl = getApiBaseUrl();
+
+    if (!otpSent) {
+      setLoading(true);
+      try {
+        const res = await fetch(`${baseUrl}/api/auth/otp/send`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone: phoneNumber }),
+        });
+        const json = await res.json();
+        if (res.ok) {
+          setOtpSent(true);
+        } else {
+          setAuthError(json.message || "Failed to send verification code. Please check your phone number.");
+        }
+      } catch (err) {
+        setAuthError("Network error. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      if (!otp) return;
+      setLoading(true);
+      try {
+        const res = await fetch(`${baseUrl}/api/auth/otp/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone: phoneNumber, otp }),
+        });
+        const json = await res.json();
+        if (res.ok && json.data) {
+          const { user: authUser, accessToken, refreshToken } = json.data;
+          const profile: UserProfile = {
+            name: `${authUser.firstName || ""} ${authUser.lastName || ""}`.trim() || `Collector ${phoneNumber}`,
+            email: authUser.email || `${phoneNumber}@phone.murakkaz.com`,
+            phone: authUser.phone || phoneNumber,
+            memberSince: authUser.createdAt ? new Date(authUser.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "Member",
+            memberTier: authUser.memberTier || "Collector Circle",
+            points: authUser.points || 100,
+            photo: authUser.photo || "",
+            primaryLocation: authUser.primaryLocation || "Dhaka",
+          };
+
+          if (accessToken) localStorage.setItem("murakkaz-token", accessToken);
+          if (refreshToken) localStorage.setItem("murakkaz-refresh-token", refreshToken);
+          localStorage.setItem("murakkaz-user", JSON.stringify(profile));
+
+          setUser(profile);
+          setOtpSent(false);
+          setPhoneNumber("");
+          setOtp("");
+          window.dispatchEvent(new Event("murakkaz-user-updated"));
+          fetchUserOrders();
+        } else {
+          setAuthError(json.message || "Invalid or expired verification code.");
+        }
+      } catch (err) {
+        setAuthError("Network error. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     const fullName = `${firstName} ${lastName}`.trim();
@@ -518,29 +587,120 @@ export default function AccountPage() {
                 {authError && <div className={styles.authErrorAlert}>{authError}</div>}
 
                 {authMode === "login" ? (
-                  <form onSubmit={handleLogin} className={styles.form}>
-                    <h2 className={styles.authFormTitle}>Welcome Back</h2>
-                    <input 
-                      type="text" 
-                      required 
-                      className={styles.input} 
-                      placeholder="Email or Phone Number"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <input 
-                      type="password" 
-                      required 
-                      className={styles.input}
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button type="submit" disabled={loading} className={styles.btnPrimary}>
-                      {loading ? "Signing In..." : "Sign In"}
-                    </button>
+                  <div>
+                    <div style={{ display: "flex", gap: "8px", marginBottom: "1.2rem" }}>
+                      <button
+                        type="button"
+                        style={{
+                          flex: 1,
+                          padding: "8px 12px",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          borderRadius: "4px",
+                          border: loginMethod === "email" ? "1px solid var(--gold)" : "1px solid rgba(255,255,255,0.1)",
+                          background: loginMethod === "email" ? "rgba(197, 168, 128, 0.15)" : "transparent",
+                          color: loginMethod === "email" ? "var(--gold)" : "var(--foreground)",
+                          cursor: "pointer",
+                          transition: "all 0.2s"
+                        }}
+                        onClick={() => { setLoginMethod("email"); setOtpSent(false); setAuthError(null); }}
+                      >
+                        Password Sign In
+                      </button>
+                      <button
+                        type="button"
+                        style={{
+                          flex: 1,
+                          padding: "8px 12px",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          borderRadius: "4px",
+                          border: loginMethod === "phone" ? "1px solid var(--gold)" : "1px solid rgba(255,255,255,0.1)",
+                          background: loginMethod === "phone" ? "rgba(197, 168, 128, 0.15)" : "transparent",
+                          color: loginMethod === "phone" ? "var(--gold)" : "var(--foreground)",
+                          cursor: "pointer",
+                          transition: "all 0.2s"
+                        }}
+                        onClick={() => { setLoginMethod("phone"); setOtpSent(false); setAuthError(null); }}
+                      >
+                        📱 Mobile OTP Sign In
+                      </button>
+                    </div>
 
-                    <p className={styles.authSwitchText}>
+                    {loginMethod === "email" ? (
+                      <form onSubmit={handleLogin} className={styles.form}>
+                        <h2 className={styles.authFormTitle}>Welcome Back</h2>
+                        <input 
+                          type="text" 
+                          required 
+                          className={styles.input} 
+                          placeholder="Email or Phone Number"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <input 
+                          type="password" 
+                          required 
+                          className={styles.input}
+                          placeholder="Password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <button type="submit" disabled={loading} className={styles.btnPrimary}>
+                          {loading ? "Signing In..." : "Sign In"}
+                        </button>
+                      </form>
+                    ) : (
+                      <form onSubmit={handlePhoneOtpSubmit} className={styles.form}>
+                        <h2 className={styles.authFormTitle}>Instant OTP Access</h2>
+                        <p style={{ fontSize: "13px", color: "var(--muted)", margin: "-6px 0 12px" }}>
+                          {!otpSent ? "We will send a 6-digit verification code to your phone" : `Enter the 6-digit code sent to ${phoneNumber}`}
+                        </p>
+                        <input 
+                          type="text" 
+                          required 
+                          disabled={otpSent}
+                          className={styles.input} 
+                          placeholder="Phone Number (e.g. 01712345678)"
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                        {otpSent && (
+                          <input 
+                            type="text" 
+                            required 
+                            maxLength={6}
+                            autoFocus
+                            className={styles.input}
+                            placeholder="6-Digit Verification Code"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                          />
+                        )}
+                        <button type="submit" disabled={loading} className={styles.btnPrimary}>
+                          {loading ? "Processing..." : (!otpSent ? "Send Verification Code" : "Verify & Sign In")}
+                        </button>
+                        {otpSent && (
+                          <button
+                            type="button"
+                            onClick={() => setOtpSent(false)}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              color: "var(--gold)",
+                              fontSize: "12px",
+                              cursor: "pointer",
+                              textAlign: "center",
+                              marginTop: "4px"
+                            }}
+                          >
+                            Change phone number
+                          </button>
+                        )}
+                      </form>
+                    )}
+
+                    <p className={styles.authSwitchText} style={{ marginTop: "1rem" }}>
                       Don't have an account?{" "}
                       <button 
                         type="button" 
@@ -550,7 +710,7 @@ export default function AccountPage() {
                         Create one now
                       </button>
                     </p>
-                  </form>
+                  </div>
                 ) : (
                   <form onSubmit={handleRegister} className={styles.form}>
                     <h2 className={styles.authFormTitle}>Join Murakkaz Circle</h2>
