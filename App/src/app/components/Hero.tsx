@@ -310,12 +310,15 @@ export default function Hero() {
           }}
           suppressHydrationWarning
         >
-          <img
-            src="/images/murakkaz-hero-bottle.png"
-            alt="Murakkaz Luxury Fragrance"
-            className="w-full h-full object-contain relative z-10 select-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.22)]"
-            suppressHydrationWarning
-          />
+          <picture className="w-full h-full flex items-center justify-center">
+            <source srcSet="/images/bottleAnimation.webp" type="image/webp" />
+            <img
+              src="/images/bottleAnimation.webp"
+              alt="Murakkaz Luxury Fragrance"
+              className="w-full h-full object-contain relative z-10 select-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.22)]"
+              suppressHydrationWarning
+            />
+          </picture>
 
           {/* Real Ground Shadow Effect: Tight Contact Shadow + Soft Ambient Shadow under the bottle base */}
           {/* 1. Soft Ambient Ground Shadow */}
