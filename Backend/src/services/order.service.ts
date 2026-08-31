@@ -4,6 +4,9 @@ import { generateOrderNumber } from '../utils/orderNumber';
 import { getPaginationParams, createPaginatedResult } from '../utils/pagination';
 
 export const createOrder = async (userId: string | null | undefined, data: any) => {
+  if (!userId) {
+    throw new AppError('Please sign in to place an order.', 401);
+  }
   const { cartItemIds, items, ...orderData } = data;
 
   let subtotal = 0;

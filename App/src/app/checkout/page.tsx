@@ -39,9 +39,31 @@ function CheckoutContent() {
 
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderId, setOrderId] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
-  // Load checked cart items from localStorage
+  // Load checked cart items and user session from localStorage
   useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("murakkaz-token") : null;
+    const userStr = typeof window !== "undefined" ? (localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user")) : null;
+
+    if (token && userStr) {
+      setIsLoggedIn(true);
+      try {
+        const parsed = JSON.parse(userStr);
+        if (parsed) {
+          setFormData((prev) => ({
+            ...prev,
+            fullName: parsed.name || prev.fullName,
+            email: parsed.email || prev.email,
+            phone: parsed.phone || prev.phone,
+            address: parsed.primaryLocation && parsed.primaryLocation !== "Dhaka" ? parsed.primaryLocation : prev.address,
+          }));
+        }
+      } catch {}
+    } else {
+      setIsLoggedIn(false);
+    }
+
     const saved = localStorage.getItem("cart-items");
     if (saved) {
       try {
@@ -206,6 +228,62 @@ function CheckoutContent() {
       setIsSubmitting(false);
     }
   };
+
+  if (isLoggedIn === false) {
+    return (
+      <div className={styles.page}>
+        <div style={{ maxWidth: "520px", margin: "5rem auto 7rem", padding: "3rem 2.5rem", background: "white", borderRadius: "20px", border: "1px solid #E5DFD4", textAlign: "center", boxShadow: "0 15px 35px rgba(0,0,0,0.06)" }}>
+          <div style={{ width: "68px", height: "68px", borderRadius: "50%", background: "#F7F2EB", color: "#820011", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", border: "1px solid #E0D6C8" }}>
+            <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <h2 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: "2rem", color: "#18181b", marginBottom: "0.75rem" }}>
+            Sign In Required
+          </h2>
+          <p style={{ color: "#666", fontSize: "0.95rem", lineHeight: "1.6", marginBottom: "2rem" }}>
+            Please sign in to your Murakkaz account to place your order and track live delivery.
+          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <button
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  sessionStorage.setItem("redirect_after_login", "/checkout");
+                }
+                router.push("/account?redirect=/checkout");
+              }}
+              style={{
+                width: "100%",
+                padding: "14px",
+                borderRadius: "12px",
+                background: "#820011",
+                color: "white",
+                fontWeight: 600,
+                fontSize: "15px",
+                border: "none",
+                cursor: "pointer",
+                transition: "background 0.2s",
+                boxShadow: "0 4px 14px rgba(130, 0, 17, 0.25)"
+              }}
+            >
+              Sign In / Create Account →
+            </button>
+            <Link
+              href="/cart"
+              style={{
+                color: "#777",
+                fontSize: "13.5px",
+                textDecoration: "none",
+                marginTop: "6px"
+              }}
+            >
+              ← Return to Bag
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (orderPlaced) {
     return (

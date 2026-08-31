@@ -9,8 +9,8 @@ const router = Router();
 // Public Order tracking (accessible by order number & contact)
 router.get('/track/:orderNumber', trackOrder);
 
-// Order creation supports both guest and authenticated users
-router.post('/', optionalAuth, validate(createOrderSchema), createOrder);
+// Order creation requires authenticated user
+router.post('/', authenticate, validate(createOrderSchema), createOrder);
 
 // Authenticated user order actions
 router.get('/', authenticate, getUserOrders);

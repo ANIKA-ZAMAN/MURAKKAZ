@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 interface CartItem {
@@ -178,7 +179,22 @@ export default function CartPage() {
   const selectedItemsCount = cartItems.filter(item => item.selected).length;
   const totalAmount = cartItems
     .filter(item => item.selected)
-    .reduce((sum, item) => sum + item.prices[item.selectedSize] * item.quantity, 0);
+    .reduce((sum, item) => sum + (item.prices[item.selectedSize] || 500) * item.quantity, 0);
+  const router = useRouter();
+
+  const handleProceedToPay = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (selectedItemsCount === 0) return;
+    const token = typeof window !== "undefined" ? localStorage.getItem("murakkaz-token") : null;
+    if (!token) {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("redirect_after_login", "/checkout");
+      }
+      router.push("/account?redirect=/checkout");
+    } else {
+      router.push("/checkout");
+    }
+  };
 
   if (!isMounted) {
     return (
@@ -329,11 +345,15 @@ export default function CartPage() {
                 <div className={styles.totalValue}>
                   {totalAmount.toLocaleString()}tk
                 </div>
-                <Link href="/checkout" style={{ width: '100%', display: 'block' }}>
-                  <button className={styles.processBtn}>
-                    Process To Pay
-                  </button>
-                </Link>
+                <button 
+                  type="button"
+                  className={styles.processBtn} 
+                  onClick={handleProceedToPay}
+                  disabled={selectedItemsCount === 0}
+                  style={{ opacity: selectedItemsCount === 0 ? 0.5 : 1, cursor: selectedItemsCount === 0 ? 'not-allowed' : 'pointer' }}
+                >
+                  Process To Pay
+                </button>
               </div>
             </div>
           </div>

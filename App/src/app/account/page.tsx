@@ -265,6 +265,17 @@ export default function AccountPage() {
   const [registerOtpSent, setRegisterOtpSent] = useState(false);
   const [loginOtpSent, setLoginOtpSent] = useState(false);
 
+  const handlePostLoginRedirect = () => {
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectUrl = urlParams.get("redirect") || sessionStorage.getItem("redirect_after_login");
+      if (redirectUrl) {
+        sessionStorage.removeItem("redirect_after_login");
+        window.location.href = redirectUrl;
+      }
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
@@ -308,6 +319,7 @@ export default function AccountPage() {
 
         window.dispatchEvent(new Event("murakkaz-user-updated"));
         fetchUserOrders();
+        handlePostLoginRedirect();
       } else {
         setAuthError(json.message || "Invalid email or password.");
       }
@@ -375,6 +387,7 @@ export default function AccountPage() {
           setOtp("");
           window.dispatchEvent(new Event("murakkaz-user-updated"));
           fetchUserOrders();
+          handlePostLoginRedirect();
         } else {
           setAuthError(json.message || "Invalid or expired verification code.");
         }
@@ -462,6 +475,7 @@ export default function AccountPage() {
           setOtp("");
           window.dispatchEvent(new Event("murakkaz-user-updated"));
           fetchUserOrders();
+          handlePostLoginRedirect();
         } else {
           setAuthError(json.message || "Invalid or expired verification code.");
         }
