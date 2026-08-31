@@ -162,10 +162,17 @@ export default function AccountPage() {
     const baseUrl = getApiBaseUrl();
 
     if (!token) {
+      localStorage.removeItem("murakkaz-token");
+      localStorage.removeItem("murakkaz-refresh-token");
       localStorage.removeItem("murakkaz-user");
       localStorage.removeItem("murakkaz_user");
       localStorage.removeItem("murakkaz-saved-addresses");
       setUser(null);
+      setFirstName("");
+      setLastName("");
+      setUserEmail("");
+      setUserPhone("");
+      setUserLocation("");
       setSavedAddresses([]);
     } else {
       // Validate token with live backend
@@ -209,7 +216,14 @@ export default function AccountPage() {
           localStorage.removeItem("murakkaz-refresh-token");
           localStorage.removeItem("murakkaz-user");
           localStorage.removeItem("murakkaz_user");
+          localStorage.removeItem("murakkaz-saved-addresses");
           setUser(null);
+          setFirstName("");
+          setLastName("");
+          setUserEmail("");
+          setUserPhone("");
+          setUserLocation("");
+          setSavedAddresses([]);
         });
     }
 
@@ -459,7 +473,19 @@ export default function AccountPage() {
     localStorage.removeItem("murakkaz-token");
     localStorage.removeItem("murakkaz-refresh-token");
     localStorage.removeItem("murakkaz-user");
+    localStorage.removeItem("murakkaz_user");
+    localStorage.removeItem("murakkaz-saved-addresses");
+    sessionStorage.clear();
+    
     setUser(null);
+    setFirstName("");
+    setLastName("");
+    setUserEmail("");
+    setUserPhone("");
+    setUserLocation("");
+    setOrders([]);
+    setSavedAddresses([]);
+    
     window.dispatchEvent(new Event("murakkaz-user-updated"));
   };
 
