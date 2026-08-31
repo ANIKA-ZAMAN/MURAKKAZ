@@ -257,11 +257,11 @@ export default function Navbar() {
             {/* Minimal Luxury Search Bar */}
             <form
               onSubmit={handleSearchSubmit}
-              className="relative flex items-center bg-[#ECE6DC]/80 hover:bg-[#E4DDCF] focus-within:bg-white border border-[#DDD6CA] focus-within:border-[#820011]/40 rounded-full h-[34px] px-3 transition-all duration-200 w-[150px] xl:w-[175px] shadow-2xs"
+              className="relative flex items-center bg-[#ECE6DC]/80 hover:bg-[#E4DDCF] focus-within:bg-white border border-[#DDD6CA] focus-within:border-[#820011]/40 rounded-full h-[36px] pl-4 pr-3.5 gap-2.5 transition-all duration-200 w-[160px] xl:w-[190px] shadow-2xs"
             >
               <button
                 type="submit"
-                className="text-[#7A746A] hover:text-[#820011] transition-colors p-0 mr-2 flex items-center justify-center cursor-pointer shrink-0"
+                className="text-[#7A746A] hover:text-[#820011] transition-colors p-0 flex items-center justify-center cursor-pointer shrink-0"
                 aria-label="Search"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
