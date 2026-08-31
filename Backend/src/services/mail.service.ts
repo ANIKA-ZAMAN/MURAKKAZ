@@ -83,7 +83,7 @@ export const sendOtpEmail = async (toEmail: string, code: string, type: 'REGISTE
     </html>
   `;
 
-  // Always log to console for instant visibility
+  // Always log to console for visibility
   console.log(`\n========================================`);
   console.log(`[EMAIL OTP DISPATCHED]`);
   console.log(`To: ${toEmail}`);
@@ -91,21 +91,51 @@ export const sendOtpEmail = async (toEmail: string, code: string, type: 'REGISTE
   console.log(`OTP Code: ${code} (Expires in 5 mins)`);
   console.log(`========================================\n`);
 
+  // 1. If Resend API Key is configured -> use Resend REST API (from info@murakkaz.com)
+  if (env.RESEND_API_KEY) {
+    try {
+      const resendRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: 'Murakkaz Fragrances <info@murakkaz.com>',
+          to: [toEmail],
+          subject,
+          html: htmlContent,
+        }),
+      });
+
+      const resendData: any = await resendRes.json();
+      if (resendRes.ok) {
+        console.log(`✅ Real email delivered via Resend from info@murakkaz.com to ${toEmail}`);
+        return { delivered: true, resendId: resendData.id };
+      } else {
+        console.warn(`⚠️ Resend API response error:`, resendData);
+      }
+    } catch (resendErr) {
+      console.error(`⚠️ Resend API network error:`, resendErr);
+    }
+  }
+
+  // 2. Fallback to SMTP (e.g. Gmail SMTP)
   if (transporter) {
     try {
       await transporter.sendMail({
-        from: `"Murakkaz Fragrances" <${env.SMTP_USER || 'support@murakkaz.com'}>`,
+        from: `"Murakkaz Fragrances" <${env.SMTP_USER || 'info@murakkaz.com'}>`,
         to: toEmail,
         subject,
         html: htmlContent,
       });
-      console.log(`✅ Real email delivered to ${toEmail}`);
+      console.log(`✅ Real email delivered via SMTP to ${toEmail}`);
       return { delivered: true };
     } catch (mailError) {
-      console.error(`⚠️ SMTP delivery failed, but OTP code is logged:`, mailError);
+      console.error(`⚠️ SMTP delivery failed:`, mailError);
       return { delivered: false, error: mailError };
     }
   }
 
-  return { delivered: false, note: 'SMTP credentials not configured in .env, logged to console' };
+  return { delivered: false, note: 'No active mail transport configured' };
 };

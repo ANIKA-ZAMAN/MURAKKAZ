@@ -15,6 +15,7 @@ const envSchema = z.object({
   SMTP_PORT: z.coerce.number().optional(),
   SMTP_USER: z.string().optional(),
   SMTP_PASS: z.string().optional(),
+  RESEND_API_KEY: z.string().optional(),
   BKASH_APP_KEY: z.string().optional(),
   BKASH_APP_SECRET: z.string().optional(),
   BKASH_USERNAME: z.string().optional(),
