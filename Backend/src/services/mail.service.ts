@@ -4,13 +4,23 @@ import { env } from '../config/env';
 // Configure nodemailer transporter
 const createTransporter = () => {
   if (env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASS) {
+    if (env.SMTP_HOST.includes('gmail')) {
+      return nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: env.SMTP_USER,
+          pass: env.SMTP_PASS.replace(/\s+/g, ''),
+        }
+      });
+    }
+
     return nodemailer.createTransport({
       host: env.SMTP_HOST,
       port: env.SMTP_PORT || 587,
       secure: env.SMTP_PORT === 465,
       auth: {
         user: env.SMTP_USER,
-        pass: env.SMTP_PASS,
+        pass: env.SMTP_PASS.replace(/\s+/g, ''),
       },
       tls: {
         rejectUnauthorized: false
