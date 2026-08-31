@@ -184,7 +184,7 @@ export const luxuryProducts: Product[] = [
     "priceVal": 300,
     "originalPriceVal": 400,
     "volume": "6ml - 50ml",
-    "image": "/images/products/resala_v2.jpg",
+    "image": "/images/products/resala.jpg",
     "family": "ORIENTAL",
     "gender": "UNISEX",
     "occasion": "Royalty & Special Occasions",
