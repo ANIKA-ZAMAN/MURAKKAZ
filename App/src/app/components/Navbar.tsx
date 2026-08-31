@@ -331,48 +331,51 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* Account / Sign In */}
+            {/* Account: Profile Picture/Initial when signed in, Login Icon when not signed in */}
             {isLoggedIn ? (
               <Link
                 href="/account"
-                className="relative text-[#313134] hover:text-[#820011] hover:scale-105 transition-all duration-200 flex items-center justify-center rounded-full"
+                className="relative text-[#313134] hover:text-[#820011] hover:scale-105 transition-all duration-200 flex items-center justify-center rounded-full shrink-0"
                 aria-label="My Account"
+                title={userName ? `Account (${userName})` : "My Account"}
                 onMouseEnter={() => setHoveredIcon("account")}
                 onMouseLeave={() => setHoveredIcon(null)}
               >
                 {userPhoto ? (
-                  <div className="w-7.5 h-7.5 rounded-full overflow-hidden border border-[#C5A880]/60 shadow-xs flex items-center justify-center bg-white shrink-0">
+                  <div className="w-8 h-8 rounded-full overflow-hidden border border-[#C5A880]/70 shadow-2xs flex items-center justify-center bg-white shrink-0">
                     <img
                       src={userPhoto}
-                      alt={userName || "Account Avatar"}
+                      alt={userName || "Profile"}
                       className="w-full h-full object-cover rounded-full"
                     />
                   </div>
                 ) : (
-                  <div className="w-7.5 h-7.5 rounded-full border border-[#C5A880]/50 bg-[#820011] text-white flex items-center justify-center text-[11px] font-medium shadow-xs">
-                    {userName ? userName.charAt(0).toUpperCase() : "M"}
+                  <div className="w-8 h-8 rounded-full border border-[#C5A880]/60 bg-[#820011] text-[#FBF8F2] flex items-center justify-center text-[12.5px] font-bold shadow-2xs shrink-0">
+                    {userName ? userName.trim().charAt(0).toUpperCase() : "M"}
                   </div>
                 )}
               </Link>
             ) : (
               <Link
                 href="/account"
-                className="relative p-1 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
-                aria-label="Sign In"
-                onMouseEnter={() => setHoveredIcon("account")}
+                className="relative p-1 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center shrink-0"
+                aria-label="Sign In / Login"
+                title="Sign In / Login"
+                onMouseEnter={() => setHoveredIcon("login")}
                 onMouseLeave={() => setHoveredIcon(null)}
               >
                 <svg
                   className="w-5 h-5 transition-colors duration-200 pointer-events-none"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke={hoveredIcon === "account" ? "#820011" : "#313134"}
-                  strokeWidth="1.7"
+                  stroke={hoveredIcon === "login" ? "#820011" : "#313134"}
+                  strokeWidth="1.75"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 >
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                  <polyline points="10 17 15 12 10 7" />
+                  <line x1="15" y1="12" x2="3" y2="12" />
                 </svg>
               </Link>
             )}
@@ -404,26 +407,28 @@ export default function Navbar() {
             </Link>
 
             {isLoggedIn ? (
-              <Link href="/account" className="p-0.5 text-[#313134]" aria-label="Account">
+              <Link href="/account" className="p-0.5 text-[#313134] flex items-center justify-center shrink-0" aria-label="My Account">
                 {userPhoto ? (
-                  <div className="w-7.5 h-7.5 rounded-full overflow-hidden border-1.5 border-white shadow-xs flex items-center justify-center bg-white shrink-0">
-                    <img src={userPhoto} alt="Account" className="w-full h-full rounded-full object-cover" />
+                  <div className="w-7.5 h-7.5 rounded-full overflow-hidden border border-[#C5A880]/70 shadow-2xs flex items-center justify-center bg-white shrink-0">
+                    <img src={userPhoto} alt="Profile" className="w-full h-full rounded-full object-cover" />
                   </div>
                 ) : (
-                  <div className="w-7.5 h-7.5 rounded-full border border-[#C5A880]/50 bg-[#820011] text-white flex items-center justify-center text-[11px] font-medium shadow-xs">
-                    {userName ? userName.charAt(0).toUpperCase() : "M"}
+                  <div className="w-7.5 h-7.5 rounded-full border border-[#C5A880]/60 bg-[#820011] text-[#FBF8F2] flex items-center justify-center text-[11.5px] font-bold shadow-2xs shrink-0">
+                    {userName ? userName.trim().charAt(0).toUpperCase() : "M"}
                   </div>
                 )}
               </Link>
             ) : (
               <Link
                 href="/account"
-                className="p-1 text-[#313134] hover:text-[#820011] transition-colors"
-                aria-label="Sign In"
+                className="p-1 text-[#313134] hover:text-[#820011] transition-colors flex items-center justify-center shrink-0"
+                aria-label="Sign In / Login"
+                title="Sign In / Login"
               >
                 <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                  <polyline points="10 17 15 12 10 7" />
+                  <line x1="15" y1="12" x2="3" y2="12" />
                 </svg>
               </Link>
             )}
