@@ -247,13 +247,19 @@ export default function AccountPage() {
       } catch {}
     }
 
-    // Load preferences
-    setSoundEnabled(localStorage.getItem("pref-sound") !== "false");
-    setAmbientEnabled(localStorage.getItem("pref-ambient") !== "false");
-    setNewsletterEnabled(localStorage.getItem("pref-newsletter") === "true");
-    setConsultationReminders(localStorage.getItem("pref-reminders") !== "false");
-    setDarkMode(localStorage.getItem("pref-darkmode") === "true");
   }, []);
+
+  // Synchronize profile form input fields immediately whenever user state changes
+  useEffect(() => {
+    if (user) {
+      const parts = (user.name || "").split(" ");
+      setFirstName(parts[0] || "");
+      setLastName(parts.slice(1).join(" ") || "");
+      setUserEmail(user.email || "");
+      setUserPhone(user.phone || "");
+      setUserLocation(user.primaryLocation || "Dhaka");
+    }
+  }, [user]);
 
   // Email OTP States
   const [registerOtpSent, setRegisterOtpSent] = useState(false);
