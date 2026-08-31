@@ -123,12 +123,16 @@ model OtpCode {
   id        String   @id @default(cuid())
   userId    String?
   user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  phone     String
+  email     String?
+  phone     String?
   code      String
+  type      String   @default("REGISTER")
+  metadata  String?
   expiresAt DateTime
   verified  Boolean  @default(false)
   createdAt DateTime @default(now())
 
+  @@index([email, code])
   @@index([phone, code])
 }
 

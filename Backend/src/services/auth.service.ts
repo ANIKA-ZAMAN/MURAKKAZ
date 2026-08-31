@@ -1,8 +1,8 @@
 import prisma from '../config/database';
 import bcrypt from 'bcryptjs';
-import crypto from 'crypto';
 import { generateAccessToken, generateRefreshToken, deleteRefreshToken, deleteAllRefreshTokens } from '../utils/jwt';
 import { AppError } from '../middleware/errorHandler';
+import { sendOtpEmail } from './mail.service';
 
 export const registerUser = async (data: any) => {
   const { firstName, lastName, email, phone, password } = data;
@@ -30,7 +30,7 @@ export const registerUser = async (data: any) => {
       passwordHash: hashedPassword,
       role: 'CUSTOMER',
       memberTier: 'Collector Circle',
-      points: 100, // Welcome bonus points for luxury collectors
+      points: 100, // Welcome bonus points
       isVerified: true,
       lastLoginAt: new Date(),
       preference: {
@@ -89,7 +89,7 @@ export const loginUser = async (data: any) => {
     const newFailedAttempts = (user.failedLoginAttempts || 0) + 1;
     let lockedUntil: Date | null = null;
     if (newFailedAttempts >= 5) {
-      lockedUntil = new Date(Date.now() + 15 * 60 * 1000); // Lock for 15 minutes
+      lockedUntil = new Date(Date.now() + 15 * 60 * 1000);
     }
 
     await prisma.user.update({
@@ -139,54 +139,76 @@ export const loginUser = async (data: any) => {
   };
 };
 
-export const sendPhoneOtp = async (phone: string) => {
-  const normalizedPhone = phone.trim();
-  
+/**
+ * EMAIL OTP SYSTEM
+ */
+export const sendEmailOtp = async (data: { email: string; type?: 'REGISTER' | 'LOGIN' | 'RESET'; firstName?: string; lastName?: string; password?: string; phone?: string }) => {
+  const normalizedEmail = data.email.toLowerCase().trim();
+  const type = data.type || 'REGISTER';
+
+  if (type === 'REGISTER') {
+    const existing = await prisma.user.findUnique({ where: { email: normalizedEmail } });
+    if (existing) {
+      throw new AppError('An account with this email already exists. Please sign in.', 409);
+    }
+  }
+
   // Generate secure 6-digit numeric OTP
   const code = Math.floor(100000 + Math.random() * 900000).toString();
   const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes expiry
 
-  // Invalidate any existing active OTP for this phone
+  // Delete previous unverified OTPs for this email
   await prisma.otpCode.deleteMany({
-    where: { phone: normalizedPhone }
+    where: { email: normalizedEmail }
   });
 
-  // Find existing user if any
-  const existingUser = await prisma.user.findUnique({ where: { phone: normalizedPhone } });
+  let hashedPassword = undefined;
+  if (data.password) {
+    hashedPassword = await bcrypt.hash(data.password, 12);
+  }
+
+  const metadata = JSON.stringify({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    phone: data.phone,
+    passwordHash: hashedPassword
+  });
 
   await prisma.otpCode.create({
     data: {
-      phone: normalizedPhone,
+      email: normalizedEmail,
       code,
-      expiresAt,
-      userId: existingUser?.id
+      type,
+      metadata,
+      expiresAt
     }
   });
 
-  // In production SMS gateway integration (e.g. Greenweb, SSL Wireless, Twilio)
-  console.log(`[SMS OTP Dispatched] Phone: ${normalizedPhone} | Code: ${code} (Expires in 5m)`);
+  // Dispatch Email
+  await sendOtpEmail(normalizedEmail, code, type);
 
   return {
-    message: 'Verification code sent to your phone number',
-    phone: normalizedPhone,
+    message: `Verification code sent to ${normalizedEmail}`,
+    email: normalizedEmail,
     expiresIn: 300
   };
 };
 
-export const verifyPhoneOtp = async (phone: string, code: string) => {
-  const normalizedPhone = phone.trim();
+export const verifyEmailOtpAndRegister = async (data: { email: string; otp: string; firstName?: string; lastName?: string; password?: string; phone?: string }) => {
+  const normalizedEmail = data.email.toLowerCase().trim();
+  const code = data.otp.trim();
 
   const otpRecord = await prisma.otpCode.findFirst({
     where: {
-      phone: normalizedPhone,
-      code: code.trim(),
+      email: normalizedEmail,
+      code,
       verified: false,
       expiresAt: { gt: new Date() }
     }
   });
 
   if (!otpRecord) {
-    throw new AppError('Invalid or expired verification code', 400);
+    throw new AppError('Invalid or expired verification code. Please request a new one.', 400);
   }
 
   // Mark OTP as verified
@@ -195,14 +217,28 @@ export const verifyPhoneOtp = async (phone: string, code: string) => {
     data: { verified: true }
   });
 
-  // Find or create customer
-  let user = await prisma.user.findUnique({ where: { phone: normalizedPhone } });
+  let parsedMeta: any = {};
+  if (otpRecord.metadata) {
+    try {
+      parsedMeta = JSON.parse(otpRecord.metadata);
+    } catch {}
+  }
+
+  const finalFirstName = data.firstName || parsedMeta.firstName || 'Valued';
+  const finalLastName = data.lastName || parsedMeta.lastName || 'Collector';
+  const finalPhone = data.phone || parsedMeta.phone || null;
+  const finalPasswordHash = parsedMeta.passwordHash || (data.password ? await bcrypt.hash(data.password, 12) : null);
+
+  // Check if user already exists
+  let user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
   if (!user) {
     user = await prisma.user.create({
       data: {
-        phone: normalizedPhone,
-        firstName: 'Valued',
-        lastName: 'Collector',
+        email: normalizedEmail,
+        firstName: finalFirstName.trim(),
+        lastName: finalLastName.trim(),
+        phone: finalPhone,
+        passwordHash: finalPasswordHash,
         role: 'CUSTOMER',
         memberTier: 'Collector Circle',
         points: 100,
@@ -214,9 +250,14 @@ export const verifyPhoneOtp = async (phone: string, code: string) => {
       }
     });
   } else {
-    await prisma.user.update({
+    user = await prisma.user.update({
       where: { id: user.id },
-      data: { isVerified: true, lastLoginAt: new Date() }
+      data: {
+        isVerified: true,
+        lastLoginAt: new Date(),
+        firstName: finalFirstName || user.firstName,
+        lastName: finalLastName || user.lastName
+      }
     });
   }
 
@@ -252,7 +293,6 @@ export const refreshAccessToken = async (token: string) => {
     throw new AppError('Invalid or expired refresh token', 401);
   }
 
-  // Rotate refresh token
   await deleteRefreshToken(token);
   const newRefreshToken = await generateRefreshToken(refreshTokenRecord.userId);
   const newAccessToken = generateAccessToken(refreshTokenRecord.userId, refreshTokenRecord.user.role);
@@ -292,7 +332,6 @@ export const changePassword = async (userId: string, data: any) => {
     data: { passwordHash: hashedPassword }
   });
 
-  // Revoke all other active refresh sessions on password change
   await deleteAllRefreshTokens(userId);
 
   return { message: 'Password updated successfully' };

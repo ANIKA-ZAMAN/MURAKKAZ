@@ -1,15 +1,20 @@
 import { Router } from 'express';
-import { register, login, refresh, logout, changePassword, sendOtp, verifyOtp } from '../controllers/auth.controller';
+import { register, login, refresh, logout, changePassword, sendEmailOtp, verifyEmailOtp } from '../controllers/auth.controller';
 import { validate } from '../middleware/validate';
 import { authenticate } from '../middleware/auth';
-import { registerSchema, loginSchema, refreshTokenSchema, changePasswordSchema, sendOtpSchema, verifyOtpSchema } from '../validators/auth.validator';
+import { registerSchema, loginSchema, refreshTokenSchema, changePasswordSchema } from '../validators/auth.validator';
 
 const router = Router();
 
+// Standard Password Login & Direct Register
 router.post('/register', validate(registerSchema), register);
 router.post('/login', validate(loginSchema), login);
-router.post('/otp/send', validate(sendOtpSchema), sendOtp);
-router.post('/otp/verify', validate(verifyOtpSchema), verifyOtp);
+
+// Email OTP Endpoints
+router.post('/email-otp/send', sendEmailOtp);
+router.post('/email-otp/verify', verifyEmailOtp);
+
+// Session & Password Management
 router.post('/refresh', validate(refreshTokenSchema), refresh);
 router.post('/logout', logout);
 router.put('/change-password', authenticate, validate(changePasswordSchema), changePassword);

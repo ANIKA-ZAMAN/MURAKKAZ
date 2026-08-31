@@ -19,20 +19,18 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-export const sendOtp = async (req: Request, res: Response, next: NextFunction) => {
+export const sendEmailOtp = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { phone } = req.body;
-    const result = await authService.sendPhoneOtp(phone);
+    const result = await authService.sendEmailOtp(req.body);
     res.status(200).json({ status: 'success', data: result });
   } catch (error) {
     next(error);
   }
 };
 
-export const verifyOtp = async (req: Request, res: Response, next: NextFunction) => {
+export const verifyEmailOtp = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { phone, otp } = req.body;
-    const result = await authService.verifyPhoneOtp(phone, otp);
+    const result = await authService.verifyEmailOtpAndRegister(req.body);
     res.status(200).json({ status: 'success', data: result });
   } catch (error) {
     next(error);
