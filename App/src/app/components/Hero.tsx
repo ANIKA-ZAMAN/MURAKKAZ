@@ -310,19 +310,12 @@ export default function Hero() {
           }}
           suppressHydrationWarning
         >
-          <video
-            autoPlay
-            muted
-            playsInline
-            loop
-            className="w-full h-full object-contain relative z-10 mix-blend-screen bg-transparent"
-            style={{ mixBlendMode: "screen", backgroundColor: "transparent" }}
+          <img
+            src="/images/murakkaz-hero-bottle.png"
+            alt="Murakkaz Luxury Fragrance"
+            className="w-full h-full object-contain relative z-10 select-none drop-shadow-[0_15px_30px_rgba(0,0,0,0.22)]"
             suppressHydrationWarning
-          >
-            <source src="/videos/BottleAnimation.webm" type="video/webm" />
-            <source src="/videos/bottleAnimation.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          />
 
           {/* Real Ground Shadow Effect: Tight Contact Shadow + Soft Ambient Shadow under the bottle base */}
           {/* 1. Soft Ambient Ground Shadow */}
