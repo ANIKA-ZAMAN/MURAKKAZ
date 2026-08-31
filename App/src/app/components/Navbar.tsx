@@ -252,16 +252,16 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop Right Actions: Embedded Searchbar + Wishlist + Cart + Account Avatar */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-4.5 shrink-0">
-            {/* Embedded Pill Search Bar */}
+          {/* Desktop Right Actions: Embedded Searchbar + Wishlist + Cart + Account */}
+          <div className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
+            {/* Minimal Luxury Search Bar */}
             <form
               onSubmit={handleSearchSubmit}
-              className="relative flex items-center bg-[#EBE5DB] hover:bg-[#E5DFD4] focus-within:bg-[#FAF6F0] focus-within:ring-1 focus-within:ring-[#820011]/30 rounded-full h-[34px] px-3 transition-all duration-200 w-[150px] xl:w-[175px]"
+              className="relative flex items-center bg-[#ECE6DC]/80 hover:bg-[#E4DDCF] focus-within:bg-white border border-[#DDD6CA] focus-within:border-[#820011]/40 rounded-full h-[34px] px-3 transition-all duration-200 w-[150px] xl:w-[175px] shadow-2xs"
             >
               <button
                 type="submit"
-                className="text-[#6B655B] hover:text-[#820011] transition-colors p-0 mr-1.5 flex items-center justify-center cursor-pointer"
+                className="text-[#7A746A] hover:text-[#820011] transition-colors p-0 mr-2 flex items-center justify-center cursor-pointer shrink-0"
                 aria-label="Search"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -270,10 +270,10 @@ export default function Navbar() {
               </button>
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-[#313134] placeholder-[#7E786E] text-[13px] font-sans focus:outline-none leading-none"
+                className="w-full bg-transparent text-[#313134] placeholder-[#8A847A] text-[13px] font-sans focus:outline-none leading-none tracking-normal"
               />
             </form>
 
@@ -335,12 +335,12 @@ export default function Navbar() {
               <Link
                 href="/account"
                 className="relative text-[#313134] hover:text-[#820011] hover:scale-105 transition-all duration-200 flex items-center justify-center rounded-full"
-                aria-label="Account"
+                aria-label="My Account"
                 onMouseEnter={() => setHoveredIcon("account")}
                 onMouseLeave={() => setHoveredIcon(null)}
               >
                 {userPhoto ? (
-                  <div className="w-7 h-7 rounded-full overflow-hidden border border-[#D5CDBD] shadow-xs flex items-center justify-center bg-white shrink-0">
+                  <div className="w-7.5 h-7.5 rounded-full overflow-hidden border border-[#C5A880]/60 shadow-xs flex items-center justify-center bg-white shrink-0">
                     <img
                       src={userPhoto}
                       alt={userName || "Account Avatar"}
@@ -348,7 +348,7 @@ export default function Navbar() {
                     />
                   </div>
                 ) : (
-                  <div className="w-7 h-7 rounded-full border border-[#D5CDBD] bg-[#820011] text-white flex items-center justify-center text-[11px] font-semibold">
+                  <div className="w-7.5 h-7.5 rounded-full border border-[#C5A880]/50 bg-[#820011] text-white flex items-center justify-center text-[11px] font-medium shadow-xs">
                     {userName ? userName.charAt(0).toUpperCase() : "M"}
                   </div>
                 )}
@@ -356,18 +356,28 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/account"
-                className="text-[13px] font-medium tracking-[0.03em] text-[#313134] hover:text-[#820011] transition-all duration-200 px-3 py-1.5 rounded-full border border-[#d8d5cd] hover:border-[#820011] hover:bg-[#820011]/5 flex items-center gap-1.5"
+                className="relative p-1 text-[#313134] hover:text-[#820011] hover:scale-110 transition-all duration-200 flex items-center justify-center"
                 aria-label="Sign In"
+                onMouseEnter={() => setHoveredIcon("account")}
+                onMouseLeave={() => setHoveredIcon(null)}
               >
-                <svg className="w-3.5 h-3.5 text-[#820011]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" />
+                <svg
+                  className="w-5 h-5 transition-colors duration-200 pointer-events-none"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke={hoveredIcon === "account" ? "#820011" : "#313134"}
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
                 </svg>
-                <span>Sign In</span>
               </Link>
             )}
           </div>
 
-          {/* Mobile Right Actions (< 1024px, Shifted left away from right edge) */}
+          {/* Mobile Right Actions (< 1024px) */}
           <div className="flex lg:hidden items-center gap-3.5 mr-2 sm:mr-4">
             <Link href="/wishlist" className="relative p-1 text-[#313134]" aria-label="Wishlist">
               <svg className="w-5.5 h-5.5" fill={isWishlistActive ? "#820011" : "none"} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -399,7 +409,7 @@ export default function Navbar() {
                     <img src={userPhoto} alt="Account" className="w-full h-full rounded-full object-cover" />
                   </div>
                 ) : (
-                  <div className="w-7.5 h-7.5 rounded-full border border-[#D5CDBD] bg-[#820011] text-white flex items-center justify-center text-[11px] font-semibold">
+                  <div className="w-7.5 h-7.5 rounded-full border border-[#C5A880]/50 bg-[#820011] text-white flex items-center justify-center text-[11px] font-medium shadow-xs">
                     {userName ? userName.charAt(0).toUpperCase() : "M"}
                   </div>
                 )}
@@ -407,10 +417,13 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/account"
-                className="text-[12px] font-medium tracking-[0.02em] text-[#313134] hover:text-[#820011] transition-all px-2.5 py-1 rounded-full border border-[#d8d5cd]"
+                className="p-1 text-[#313134] hover:text-[#820011] transition-colors"
                 aria-label="Sign In"
               >
-                Sign In
+                <svg className="w-5.5 h-5.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
               </Link>
             )}
           </div>
