@@ -155,35 +155,62 @@ export default function AccountPage() {
     }
   };
 
-  // Load session & user preferences on mount
+  // Load session & user preferences on mount with server-side validation
   useEffect(() => {
     setIsMounted(true);
     const token = localStorage.getItem("murakkaz-token");
-    const savedUser = localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user");
+    const baseUrl = getApiBaseUrl();
 
-    if (savedUser && (savedUser.toLowerCase().includes("sadid") || !token)) {
+    if (!token) {
       localStorage.removeItem("murakkaz-user");
       localStorage.removeItem("murakkaz_user");
       localStorage.removeItem("murakkaz-saved-addresses");
       setUser(null);
       setSavedAddresses([]);
-      window.dispatchEvent(new Event("murakkaz-user-updated"));
-    } else if (savedUser && token) {
-      try {
-        const parsed = JSON.parse(savedUser);
-        setUser(parsed);
-
-        const parts = (parsed.name || "").split(" ");
-        setFirstName(parts[0] || "");
-        setLastName(parts.slice(1).join(" ") || "");
-        setUserEmail(parsed.email || "");
-        setUserPhone(parsed.phone || "");
-        setUserLocation(parsed.primaryLocation || "");
-      } catch (e) {
-        setUser(null);
-      }
     } else {
-      setUser(null);
+      // Validate token with live backend
+      fetch(`${baseUrl}/api/users/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Invalid session");
+          return res.json();
+        })
+        .then((json) => {
+          if (json.data) {
+            const authUser = json.data;
+            const profile: UserProfile = {
+              name: `${authUser.firstName || ""} ${authUser.lastName || ""}`.trim() || authUser.email || authUser.phone || "Fragrance Connoisseur",
+              email: authUser.email || "",
+              phone: authUser.phone || "",
+              memberSince: authUser.createdAt ? new Date(authUser.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "Member",
+              memberTier: authUser.memberTier || "Collector Circle",
+              points: authUser.points || 100,
+              photo: authUser.photo || "",
+              primaryLocation: authUser.primaryLocation || "Dhaka",
+            };
+            setUser(profile);
+            localStorage.setItem("murakkaz-user", JSON.stringify(profile));
+
+            const parts = (profile.name || "").split(" ");
+            setFirstName(parts[0] || "");
+            setLastName(parts.slice(1).join(" ") || "");
+            setUserEmail(profile.email || "");
+            setUserPhone(profile.phone || "");
+            setUserLocation(profile.primaryLocation || "");
+            fetchUserOrders();
+          } else {
+            throw new Error("No user data");
+          }
+        })
+        .catch(() => {
+          // Token is expired or invalid -> clear and show login screen
+          localStorage.removeItem("murakkaz-token");
+          localStorage.removeItem("murakkaz-refresh-token");
+          localStorage.removeItem("murakkaz-user");
+          localStorage.removeItem("murakkaz_user");
+          setUser(null);
+        });
     }
 
     // Load saved scent profile
@@ -212,8 +239,6 @@ export default function AccountPage() {
     setNewsletterEnabled(localStorage.getItem("pref-newsletter") === "true");
     setConsultationReminders(localStorage.getItem("pref-reminders") !== "false");
     setDarkMode(localStorage.getItem("pref-darkmode") === "true");
-
-    fetchUserOrders();
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
