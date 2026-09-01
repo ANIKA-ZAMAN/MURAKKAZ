@@ -29,7 +29,7 @@ export default function FloatingContact({
       <div className={`${styles.menu} ${isOpen ? styles.menuOpen : ""}`}>
         {/* Messenger Link */}
         <a
-          href="https://www.facebook.com/profile.php?id=100063498011095"
+          href="https://www.facebook.com/messages/t/108212200714838"
           target="_blank"
           rel="noopener noreferrer"
           className={`${styles.menuItem} ${styles.messenger}`}
