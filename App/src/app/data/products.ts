@@ -1,2089 +1,6295 @@
+// Product interface and static/dynamic catalog data
+export interface ProductSize {
+  size: string;
+  price: number;
+  originalPrice?: number;
+  stock?: number;
+}
+
+export interface ProductAccord {
+  name: string;
+  percentage: number;
+  color: string;
+}
+
+export interface ProductNoteItem {
+  name: string;
+  type: 'TOP' | 'MIDDLE' | 'BASE';
+}
+
+export interface ProductReview {
+  id: string;
+  name: string;
+  avatar: string;
+  stars: number;
+  quote: string;
+  longevity: string;
+  projection: string;
+  compliments: string;
+  createdAt: string;
+}
+
 export interface Product {
   id: string;
-  slug?: string;
+  slug: string;
   name: string;
   brand: string;
-  category?: 'Exclusive' | 'Regular';
   inspiredBy?: string;
-  description: string;
-  rating: number;
-  reviews: number;
   price: string;
-  originalPrice?: string;
   priceVal: number;
+  originalPrice?: string;
   originalPriceVal?: number;
-  volume: string;
+  rating: number;
+  reviewCount: number;
   image: string;
   family: string;
   gender: string;
   occasion: string;
   meter: string;
+  category?: 'Exclusive' | 'Regular';
   notes: string[];
-  badge?: string;
+  description: string;
+  ourTake?: string;
+  sizes: ProductSize[];
+  accords?: ProductAccord[];
+  noteDetails?: ProductNoteItem[];
+  bestFor?: string[];
+  reviews?: ProductReview[];
 }
 
-export function slugify(text: string): string {
-  if (!text) return '';
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-export function getNoteImage(name: string): string {
-  if (!name) return 'bergamot.png';
-  const clean = name.toLowerCase();
-  if (clean.includes('amber')) return 'amber.png';
-  if (clean.includes('bergamot') || clean.includes('citrus') || clean.includes('lemon') || clean.includes('grapefruit')) return 'bergamot.png';
-  if (clean.includes('cedar') || clean.includes('wood') || clean.includes('oak')) return 'cedar.png';
-  if (clean.includes('cinnamon') || clean.includes('spice') || clean.includes('pepper') || clean.includes('cardamom') || clean.includes('clove')) return 'cinnamon.png';
-  if (clean.includes('tuberose')) return 'indian_tuberose.png';
-  if (clean.includes('jasmine')) return 'jasmine.png';
-  if (clean.includes('mandarin') || clean.includes('orange') || clean.includes('tangerine')) return 'mandarin.png';
-  if (clean.includes('rose')) return 'may_rose.png';
-  if (clean.includes('narcissus') || clean.includes('lily') || clean.includes('peony') || clean.includes('orchid') || clean.includes('floral')) return 'narcissus.png';
-  if (clean.includes('neroli') || clean.includes('blossom')) return 'neroli.png';
-  if (clean.includes('osmanthus') || clean.includes('fruity')) return 'osmanthus.png';
-  if (clean.includes('patchouli') || clean.includes('incense') || clean.includes('tobacco') || clean.includes('oud') || clean.includes('leather')) return 'patchouli.png';
-  if (clean.includes('peach') || clean.includes('apple') || clean.includes('cherry') || clean.includes('berry') || clean.includes('pear') || clean.includes('plum')) return 'peach.png';
-  if (clean.includes('sandalwood') || clean.includes('vanilla') || clean.includes('tonka') || clean.includes('musk') || clean.includes('sugar') || clean.includes('praline')) return 'sandalwood.png';
-  if (clean.includes('vetiver') || clean.includes('green') || clean.includes('mint') || clean.includes('sage') || clean.includes('tea') || clean.includes('grass')) return 'vetiver.png';
-  return 'bergamot.png';
-}
-
-// Exactly 62 Master PDF Catalog Fragrances
-export const luxuryProducts: Product[] = [
+export const staticProducts: Product[] = [
   {
     "id": "prod-irish-leather-01",
+    "slug": "irish-leather",
     "name": "Irish Leather",
     "brand": "Memo Paris",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "An invigorating green-leather creation capturing the crisp air of a windswept Irish morning—blending vibrant juniper berries and green maté with smooth, refined leather.",
     "rating": 4.9,
-    "reviews": 38,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 38,
     "image": "/images/products/irish_leather_v3.jpg",
     "family": "WOODY",
     "gender": "UNISEX",
     "occasion": "Outdoor & Evening",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Juniper Berries",
-      "Pink Pepper",
-      "Clary Sage",
-      "Green Maté Absolute",
-      "Iris Concrete",
-      "Flouve",
-      "Leather Accord",
-      "Birch",
-      "Amber",
-      "Tonka Bean"
-    ]
+      {
+        "name": "Juniper Berries",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Clary Sage",
+        "type": "TOP"
+      },
+      {
+        "name": "Green Maté Absolute",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Iris Concrete",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Flouve",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Leather Accord",
+        "type": "BASE"
+      },
+      {
+        "name": "Birch",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Leather",
+        "percentage": 85,
+        "color": "#795548"
+      },
+      {
+        "name": "Aromatic",
+        "percentage": 70,
+        "color": "#4CAF50"
+      },
+      {
+        "name": "Green",
+        "percentage": 65,
+        "color": "#2E7D32"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 60,
+        "color": "#8BC34A"
+      },
+      {
+        "name": "Woody",
+        "percentage": 55,
+        "color": "#A1887F"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-baccarat-rouge-540-02",
+    "slug": "baccarat-rouge-540",
     "name": "Baccarat Rouge 540",
     "brand": "Maison Francis Kurkdjian",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "A luminous and legendary fragrance that sits on the skin like an amber, floral, and woody breeze—ultra-sophisticated and iconic.",
     "rating": 5,
-    "reviews": 94,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 94,
     "image": "/images/products/baccarat_rouge_540_v2.jpg",
     "family": "ORIENTAL",
     "gender": "UNISEX",
     "occasion": "Luxury Gala & Formal",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Saffron",
-      "Jasmine",
-      "Amberwood",
-      "Ambergris",
-      "Fir Resin",
-      "Cedarwood"
-    ]
+      {
+        "name": "Saffron",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine",
+        "type": "TOP"
+      },
+      {
+        "name": "Amberwood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Ambergris",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Fir Resin",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedarwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Woody",
+        "percentage": 90,
+        "color": "#8D6E63"
+      },
+      {
+        "name": "Amber",
+        "percentage": 85,
+        "color": "#FF9800"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 75,
+        "color": "#E65100"
+      },
+      {
+        "name": "Metallic",
+        "percentage": 60,
+        "color": "#78909C"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 50,
+        "color": "#9E9D24"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-tobacco-vanille-03",
+    "slug": "tobacco-vanille",
     "name": "Tobacco Vanille",
     "brand": "Tom Ford",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "An opulent, warm, and artisanal scent reminiscent of an exclusive private club, overflowing with rich spices, tobacco leaf, and creamy vanilla.",
     "rating": 4.9,
-    "reviews": 67,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 67,
     "image": "/images/products/tobacco_vanille_v4.jpg",
     "family": "GOURMAND",
     "gender": "UNISEX",
     "occasion": "Winter & Evening",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Tobacco Leaf",
-      "Spicy Notes",
-      "Vanilla",
-      "Cacao",
-      "Tonka Bean",
-      "Tobacco Blossom",
-      "Dried Fruits",
-      "Woody Notes"
-    ]
+      {
+        "name": "Tobacco Leaf",
+        "type": "TOP"
+      },
+      {
+        "name": "Spicy Notes",
+        "type": "TOP"
+      },
+      {
+        "name": "Vanilla",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cacao",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tobacco Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Dried Fruits",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Notes",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 95,
+        "color": "#FFF8E1"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#F57C00"
+      },
+      {
+        "name": "Tobacco",
+        "percentage": 80,
+        "color": "#5D4037"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 75,
+        "color": "#D84315"
+      },
+      {
+        "name": "Woody",
+        "percentage": 60,
+        "color": "#6D4C41"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-by-the-fireplace-04",
+    "slug": "by-the-fireplace",
     "name": "By the Fireplace",
     "brand": "Maison Martin Margiela",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "A comforting, warm woody escape capturing the cozy ambiance of a crackling fire and roasted chestnuts on a cold winter night.",
     "rating": 4.8,
-    "reviews": 45,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 45,
     "image": "/images/products/by_the_fireplace_v2.jpg",
     "family": "WOODY",
     "gender": "UNISEX",
     "occasion": "Cozy Winter",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Cloves",
-      "Pink Pepper",
-      "Orange Blossom",
-      "Chestnut",
-      "Guaiac Wood",
-      "Juniper",
-      "Vanilla",
-      "Peru Balsam",
-      "Cashmeran"
-    ]
+      {
+        "name": "Cloves",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "TOP"
+      },
+      {
+        "name": "Chestnut",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Guaiac Wood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Juniper",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Peru Balsam",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Woody",
+        "percentage": 90,
+        "color": "#795548"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 80,
+        "color": "#FFE082"
+      },
+      {
+        "name": "Balsamic",
+        "percentage": 70,
+        "color": "#4E342E"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 65,
+        "color": "#BF360C"
+      },
+      {
+        "name": "Amber",
+        "percentage": 60,
+        "color": "#FFA000"
+      },
+      {
+        "name": "Nutty",
+        "percentage": 55,
+        "color": "#A1887F"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-resala-05",
+    "slug": "resala",
     "name": "Resala",
     "brand": "Arabian Oud",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "A decadent Oriental masterpiece built around spicy saffron, velvety rose, dark chocolate, and royal oud.",
     "rating": 5,
-    "reviews": 52,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 52,
     "image": "/images/products/resala_v3.jpg",
     "family": "ORIENTAL",
     "gender": "UNISEX",
     "occasion": "Royalty & Special Occasions",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Saffron",
-      "Dark Chocolate",
-      "Damask Rose",
-      "Precious Oud",
-      "Vanilla",
-      "Leather",
-      "Woody Accords"
-    ]
+      {
+        "name": "Saffron",
+        "type": "TOP"
+      },
+      {
+        "name": "Dark Chocolate",
+        "type": "TOP"
+      },
+      {
+        "name": "Damask Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Precious Oud",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Leather",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Accords",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Warm Spicy",
+        "percentage": 85,
+        "color": "#D84315"
+      },
+      {
+        "name": "Rose",
+        "percentage": 80,
+        "color": "#E91E63"
+      },
+      {
+        "name": "Woody",
+        "percentage": 75,
+        "color": "#6D4C41"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 70,
+        "color": "#FFECB3"
+      },
+      {
+        "name": "Dark Chocolate",
+        "percentage": 65,
+        "color": "#3E2723"
+      },
+      {
+        "name": "Oud",
+        "percentage": 60,
+        "color": "#4E342E"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-sultani-06",
+    "slug": "sultani",
     "name": "Sultani",
     "brand": "Arabian Oud",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "A regal oriental-woody fragrance blending vibrant Mediterranean citrus notes with rich spices, soft white musk, and noble woods.",
     "rating": 4.9,
-    "reviews": 41,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 41,
     "image": "/images/products/sultani_v8.jpg",
     "family": "ORIENTAL",
     "gender": "MEN",
     "occasion": "Executive & Formal",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Bergamot",
-      "Tangerine",
-      "Pink Pepper",
-      "Freesia",
-      "Damask Rose",
-      "Lily-of-the-Valley",
-      "White Musk",
-      "Sandalwood",
-      "Amber",
-      "Patchouli"
-    ]
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Tangerine",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Freesia",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Damask Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Lily-of-the-Valley",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "White Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Musky",
+        "percentage": 85,
+        "color": "#ECEFF1"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 80,
+        "color": "#FBC02D"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 75,
+        "color": "#E65100"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 65,
+        "color": "#CFD8DC"
+      },
+      {
+        "name": "Woody",
+        "percentage": 60,
+        "color": "#795548"
+      },
+      {
+        "name": "Amber",
+        "percentage": 55,
+        "color": "#FFB300"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-guidance-07",
+    "slug": "guidance",
     "name": "Guidance",
     "brand": "Amouage",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "An enchanting modern masterpiece reading like poetry—blending delicate pear and hazelnut with royal incense, saffron, and rich woods.",
     "rating": 5,
-    "reviews": 61,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 61,
     "image": "/images/products/guidance_v3.jpg",
     "family": "FLORAL",
     "gender": "UNISEX",
     "occasion": "Signature & High Art",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pear",
-      "Frankincense",
-      "Hazelnut",
-      "Osmanthus",
-      "Rose",
-      "Saffron",
-      "Jasmine Sambac",
-      "Sandalwood",
-      "Vanilla",
-      "Akigalawood",
-      "Ambergris"
-    ]
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Frankincense",
+        "type": "TOP"
+      },
+      {
+        "name": "Hazelnut",
+        "type": "TOP"
+      },
+      {
+        "name": "Osmanthus",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Saffron",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Akigalawood",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambergris",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Woody",
+        "percentage": 85,
+        "color": "#6D4C41"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FF8F00"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 75,
+        "color": "#DD2C00"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 70,
+        "color": "#C0CA33"
+      },
+      {
+        "name": "Nutty",
+        "percentage": 65,
+        "color": "#8D6E63"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 55,
+        "color": "#E0E0E0"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-rosewood-08",
+    "slug": "rosewood",
     "name": "Rosewood",
     "brand": "Arabian Oud",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "A warm, velvety composition harmonizing sweet rose petals and creamy Madagascar vanilla with elegant cedarwood and golden amber.",
     "rating": 4.8,
-    "reviews": 34,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 34,
     "image": "/images/products/rosewood_v5.jpg",
     "family": "WOODY",
     "gender": "UNISEX",
     "occasion": "Sensual Evening",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Gentle Rose",
-      "Madagascar Vanilla",
-      "Cedarwood",
-      "Rich Woods",
-      "White Musk",
-      "Golden Amber"
-    ]
+      {
+        "name": "Gentle Rose",
+        "type": "TOP"
+      },
+      {
+        "name": "Madagascar Vanilla",
+        "type": "TOP"
+      },
+      {
+        "name": "Cedarwood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rich Woods",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "White Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Golden Amber",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 90,
+        "color": "#FFECB3"
+      },
+      {
+        "name": "Rose",
+        "percentage": 85,
+        "color": "#F06292"
+      },
+      {
+        "name": "Woody",
+        "percentage": 75,
+        "color": "#795548"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 65,
+        "color": "#F5F5F5"
+      },
+      {
+        "name": "Amber",
+        "percentage": 60,
+        "color": "#FFA000"
+      },
+      {
+        "name": "Musky",
+        "percentage": 55,
+        "color": "#ECEFF1"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-sakura-dior-09",
+    "slug": "sakura-dior",
     "name": "Sakura Dior",
     "brand": "Dior",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "A delicate and poetic floral fragrance capturing the spring breeze of Japanese cherry blossom accented by soft rose and powdery mimosa.",
     "rating": 4.9,
-    "reviews": 48,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 48,
     "image": "/images/products/sakura_dior_v2.jpg",
     "family": "FLORAL",
     "gender": "UNISEX",
     "occasion": "Spring & Daytime",
     "meter": "MODERATE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Crisp Green Notes",
-      "Japanese Cherry Blossom",
-      "Rose",
-      "Jasmine",
-      "White Musk",
-      "Mimosa",
-      "Soft Violet"
-    ]
+      {
+        "name": "Crisp Green Notes",
+        "type": "TOP"
+      },
+      {
+        "name": "Japanese Cherry Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "White Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Mimosa",
+        "type": "BASE"
+      },
+      {
+        "name": "Soft Violet",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Floral",
+        "percentage": 95,
+        "color": "#F8BBD0"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 80,
+        "color": "#FAFAFA"
+      },
+      {
+        "name": "Fresh",
+        "percentage": 75,
+        "color": "#B2DFDB"
+      },
+      {
+        "name": "Green",
+        "percentage": 65,
+        "color": "#C8E6C9"
+      },
+      {
+        "name": "Rose",
+        "percentage": 60,
+        "color": "#EC407A"
+      },
+      {
+        "name": "Musky",
+        "percentage": 50,
+        "color": "#CFD8DC"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-imagination-10",
+    "slug": "imagination",
     "name": "Imagination",
     "brand": "Louis Vuitton",
-    "category": "Exclusive",
-    "inspiredBy": "",
     "description": "A luminous citrus and black tea creation elevated by fresh spicy ginger, Ceylon cinnamon, and rich ambroxan.",
     "rating": 5,
-    "reviews": 89,
-    "price": "300 - 2500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 89,
     "image": "/images/products/imagination_v3.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Summer Signature & Daily",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3100,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Citron",
-      "Calabrian Bergamot",
-      "Sicilian Orange",
-      "Tunisian Neroli",
-      "Nigerian Ginger",
-      "Ceylon Cinnamon",
-      "Chinese Black Tea",
-      "Ambroxan",
-      "Guaiac Wood",
-      "Olibanum"
-    ]
+      {
+        "name": "Citron",
+        "type": "TOP"
+      },
+      {
+        "name": "Calabrian Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Sicilian Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Tunisian Neroli",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Nigerian Ginger",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Ceylon Cinnamon",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Chinese Black Tea",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambroxan",
+        "type": "BASE"
+      },
+      {
+        "name": "Guaiac Wood",
+        "type": "BASE"
+      },
+      {
+        "name": "Olibanum",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Citrus",
+        "percentage": 95,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 85,
+        "color": "#AED581"
+      },
+      {
+        "name": "Fresh",
+        "percentage": 80,
+        "color": "#80DEEA"
+      },
+      {
+        "name": "Green",
+        "percentage": 70,
+        "color": "#81C784"
+      },
+      {
+        "name": "Amber",
+        "percentage": 60,
+        "color": "#FFB74D"
+      }
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-normal-1",
+    "slug": "ultra-male",
     "name": "Ultra Male",
     "brand": "Jean Paul Gaultier",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A bold, captivating scent featuring sweet juicy pear and warm cinnamon layered over rich vanilla and woods—intense, playful, and alluring.",
     "rating": 4.8,
-    "reviews": 20,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 20,
     "image": "/images/products/ultra_male_v2.jpg",
     "family": "GOURMAND",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pear",
-      "Lavender",
-      "Mint",
-      "Bergamot",
-      "Lemon",
-      "Cinnamon",
-      "Clary Sage",
-      "Caraway",
-      "Black Vanilla Husk",
-      "Amber",
-      "Patchouli",
-      "Cedar"
-    ]
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Lavender",
+        "type": "TOP"
+      },
+      {
+        "name": "Mint",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Cinnamon",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Clary Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Caraway",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Black Vanilla Husk",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 90,
+        "color": "#FFF8E1"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 80,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Aromatic",
+        "percentage": 75,
+        "color": "#A5D6A7"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 70,
+        "color": "#FFB74D"
+      },
+      {
+        "name": "Cinnamon",
+        "percentage": 65,
+        "color": "#D84315"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-2",
+    "slug": "bad-boy",
     "name": "Bad Boy",
     "brand": "Carolina Herrera",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A striking interplay between darkness and light, combining crisp pepper and bergamot with deep roasted cacao and warm tonka bean.",
     "rating": 4.8999999999999995,
-    "reviews": 23,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 23,
     "image": "/images/products/bad_boy_v2.jpg",
     "family": "SPICY",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Black Pepper",
-      "White Pepper",
-      "Italian Green Bergamot",
-      "Cedarwood",
-      "Sage",
-      "Tonka Bean",
-      "Cacao",
-      "Amberwood"
-    ]
+      {
+        "name": "Black Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "White Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Italian Green Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Cedarwood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Cacao",
+        "type": "BASE"
+      },
+      {
+        "name": "Amberwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Warm Spicy",
+        "percentage": 85,
+        "color": "#D84315"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 75,
+        "color": "#9CCC65"
+      },
+      {
+        "name": "Cacao",
+        "percentage": 70,
+        "color": "#4E342E"
+      },
+      {
+        "name": "Aromatic",
+        "percentage": 65,
+        "color": "#80CBC4"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-3",
+    "slug": "emporio-armani-stronger-with-you-parfum",
     "name": "Emporio Armani Stronger With You Parfum",
     "brand": "Giorgio Armani",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An opulent, sensual composition centered around sweet glazed chestnut and smooth bourbon vanilla, grounded by warm aromatic spices and soft leather.",
     "rating": 5,
-    "reviews": 26,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 26,
     "image": "/images/products/emporio_armani_stronger_with_you_parfum_v3.jpg",
     "family": "ORIENTAL",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pink Pepper",
-      "Cardamom",
-      "Violet Leaves",
-      "Lavender",
-      "Sage",
-      "Chestnut",
-      "Bourbon Vanilla",
-      "Cedar",
-      "Leather"
-    ]
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Cardamom",
+        "type": "TOP"
+      },
+      {
+        "name": "Violet Leaves",
+        "type": "TOP"
+      },
+      {
+        "name": "Lavender",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Chestnut",
+        "type": "BASE"
+      },
+      {
+        "name": "Bourbon Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Leather",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 90,
+        "color": "#FFE082"
+      },
+      {
+        "name": "Lavender",
+        "percentage": 80,
+        "color": "#CE93D8"
+      },
+      {
+        "name": "Soft Spicy",
+        "percentage": 75,
+        "color": "#FFAB91"
+      },
+      {
+        "name": "Nutty",
+        "percentage": 65,
+        "color": "#BCAAA4"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-4",
+    "slug": "valentino-donna",
     "name": "Valentino Donna",
     "brand": "Valentino",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A luminous, elegant fragrance pairing powdery iris and classic rose with a rich, smooth backdrop of soft leather and sweet vanilla.",
     "rating": 4.8,
-    "reviews": 29,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 29,
     "image": "/images/products/valentino_donna_v3.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Italian Bergamot",
-      "Iris",
-      "Bulgarian Rose",
-      "Leather",
-      "Vanilla",
-      "Patchouli"
-    ]
+      {
+        "name": "Italian Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Iris",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bulgarian Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Leather",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Iris",
+        "percentage": 90,
+        "color": "#E1BEE7"
+      },
+      {
+        "name": "Rose",
+        "percentage": 85,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Leather",
+        "percentage": 75,
+        "color": "#8D6E63"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 65,
+        "color": "#FFF59D"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-5",
+    "slug": "sexy-secret",
     "name": "Sexy Secret",
     "brand": "Jean Marc Paris",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A playful and seductive floral-fruity gourmand blending sweet berries and almond blossoms with creamy vanilla and smooth sandalwood.",
     "rating": 4.8999999999999995,
-    "reviews": 32,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 32,
     "image": "/images/products/sexy_secret_v3.jpg",
     "family": "GOURMAND",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pink Berries",
-      "Mandarin",
-      "Sparkling Plum",
-      "Pink Rose",
-      "Jasmine",
-      "Almond Blossom",
-      "Creamy Vanilla",
-      "Sandalwood",
-      "Amber"
-    ]
+      {
+        "name": "Pink Berries",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Sparkling Plum",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Almond Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Creamy Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Sweet",
+        "percentage": 90,
+        "color": "#FF80AB"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 85,
+        "color": "#FF4081"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 80,
+        "color": "#FFF176"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-6",
+    "slug": "bombshell",
     "name": "Bombshell",
     "brand": "Victoria's Secret",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "America’s signature scent—a sparkling cocktail of fresh-cut Shangri-La peonies, exotic passionfruit, and bright tropical berries.",
     "rating": 5,
-    "reviews": 35,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 35,
     "image": "/images/products/bombshell_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Passionfruit",
-      "Grapefruit",
-      "Pineapple",
-      "Strawberry",
-      "Big Strawberry",
-      "Peony",
-      "Vanilla Orchid",
-      "Red Berries",
-      "Jasmine",
-      "Lily-of-the-Valley",
-      "Musk",
-      "Woody Notes",
-      "Oakmoss"
-    ]
+      {
+        "name": "Passionfruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Pineapple",
+        "type": "TOP"
+      },
+      {
+        "name": "Strawberry",
+        "type": "TOP"
+      },
+      {
+        "name": "Big Strawberry",
+        "type": "TOP"
+      },
+      {
+        "name": "Peony",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla Orchid",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Red Berries",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Lily-of-the-Valley",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Notes",
+        "type": "BASE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 95,
+        "color": "#F06292"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#FF8A80"
+      },
+      {
+        "name": "Fresh",
+        "percentage": 80,
+        "color": "#80DEEA"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-7",
+    "slug": "mon-guerlain",
     "name": "Mon Guerlain",
     "brand": "Guerlain",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A tribute to modern femininity—combining fresh, clean Carla lavender with rich Tahitian vanilla and creamy sandalwood.",
     "rating": 4.8,
-    "reviews": 38,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 38,
     "image": "/images/products/mon_guerlain_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Carla Lavender",
-      "Bergamot",
-      "Jasmine Sambac",
-      "Iris",
-      "Rose",
-      "Tahitensis Vanilla",
-      "Coumarin",
-      "Australian Sandalwood",
-      "Benzoin",
-      "Patchouli"
-    ]
+      {
+        "name": "Carla Lavender",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Iris",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tahitensis Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Coumarin",
+        "type": "BASE"
+      },
+      {
+        "name": "Australian Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Benzoin",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 90,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Lavender",
+        "percentage": 85,
+        "color": "#D1C4E9"
+      },
+      {
+        "name": "Woody",
+        "percentage": 75,
+        "color": "#A1887F"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-8",
+    "slug": "spicebomb-extreme",
     "name": "Spicebomb Extreme",
     "brand": "Viktor&Rolf",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An explosive, warm explosion where fiery spices and rich tobacco leaf melt into a deep, comforting bourbon vanilla base.",
     "rating": 4.8999999999999995,
-    "reviews": 41,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 41,
     "image": "/images/products/spicebomb_extreme_v2.jpg",
     "family": "SPICY",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Black Pepper",
-      "Caraway",
-      "Cinnamon",
-      "Saffron",
-      "Tobacco",
-      "Bourbon Vanilla",
-      "Amber"
-    ]
+      {
+        "name": "Black Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Caraway",
+        "type": "TOP"
+      },
+      {
+        "name": "Cinnamon",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Saffron",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tobacco",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bourbon Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 90,
+        "color": "#FFE082"
+      },
+      {
+        "name": "Tobacco",
+        "percentage": 85,
+        "color": "#6D4C41"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 80,
+        "color": "#D84315"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-9",
+    "slug": "y-eau-de-parfum",
     "name": "Y Eau de Parfum",
     "brand": "Yves Saint Laurent",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A modern, ultra-fresh fragrance blending crisp apple and ginger with aromatic sage over a deep, sensual amberwood base.",
     "rating": 5,
-    "reviews": 44,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 44,
     "image": "/images/products/y_eau_de_parfum_v2.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Apple",
-      "Ginger",
-      "Bergamot",
-      "Sage",
-      "Juniper Berries",
-      "Geranium",
-      "Amberwood",
-      "Tonka Bean",
-      "Cedar",
-      "Vetiver",
-      "Olibanum"
-    ]
+      {
+        "name": "Apple",
+        "type": "TOP"
+      },
+      {
+        "name": "Ginger",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Juniper Berries",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Geranium",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Amberwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      },
+      {
+        "name": "Olibanum",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Aromatic",
+        "percentage": 90,
+        "color": "#80CBC4"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 85,
+        "color": "#AED581"
+      },
+      {
+        "name": "Woody",
+        "percentage": 75,
+        "color": "#8D6E63"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-10",
+    "slug": "ehsas",
     "name": "Ehsas",
     "brand": "Arabian Oud",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A captivating Oriental fragrance opening with bright citrus that gracefully unveils a delicate heart of rose, supported by rich amber.",
     "rating": 4.8,
-    "reviews": 47,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 47,
     "image": "/images/products/ehsas_v5.jpg",
     "family": "ORIENTAL",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Bergamot",
-      "Citrus Accord",
-      "Rose",
-      "Floral Notes",
-      "Oud",
-      "Amber",
-      "Powdery Notes",
-      "Cedarwood"
-    ]
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Citrus Accord",
+        "type": "TOP"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Floral Notes",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Oud",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Powdery Notes",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedarwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Woody",
+        "percentage": 85,
+        "color": "#795548"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FFB300"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 70,
+        "color": "#FFF176"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-11",
+    "slug": "icon",
     "name": "Icon",
     "brand": "Alfred Dunhill",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A refined executive fragrance opening with zesty neroli and bergamot, leading to a spicy-aromatic heart and leather finish.",
     "rating": 4.8999999999999995,
-    "reviews": 50,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 50,
     "image": "/images/products/icon_v2.jpg",
     "family": "WOODY",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Neroli",
-      "Bergamot",
-      "Black Pepper",
-      "Petitgrain",
-      "Black Pepper",
-      "Lavender",
-      "Cardamom",
-      "Juniper Berries",
-      "Sage",
-      "Vetiver",
-      "Oud",
-      "Leather",
-      "Oakmoss",
-      "Iris"
-    ]
+      {
+        "name": "Neroli",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Black Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Petitgrain",
+        "type": "TOP"
+      },
+      {
+        "name": "Black Pepper",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Lavender",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cardamom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Juniper Berries",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      },
+      {
+        "name": "Oud",
+        "type": "BASE"
+      },
+      {
+        "name": "Leather",
+        "type": "BASE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      },
+      {
+        "name": "Iris",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Aromatic",
+        "percentage": 90,
+        "color": "#80CBC4"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 80,
+        "color": "#C0CA33"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 75,
+        "color": "#FFEB3B"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-12",
+    "slug": "acqua-di-gi-elixir",
     "name": "Acqua di Giò Elixir",
     "brand": "Giorgio Armani",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An intense marine signature pairing oceanic freshness with rich woods and earthy leather for maximum presence.",
     "rating": 5,
-    "reviews": 53,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 53,
     "image": "/images/products/acqua_di_gio_elixir_v5.jpg",
     "family": "AQUATIC",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Bergamot",
-      "Marine Notes",
-      "Rosemary",
-      "Clary Sage",
-      "Geranium",
-      "Patchouli",
-      "Woody Notes",
-      "Leather Accord"
-    ]
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Marine Notes",
+        "type": "TOP"
+      },
+      {
+        "name": "Rosemary",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Clary Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Geranium",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Notes",
+        "type": "BASE"
+      },
+      {
+        "name": "Leather Accord",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Aquatic",
+        "percentage": 95,
+        "color": "#4FC3F7"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 85,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Ozonic",
+        "percentage": 80,
+        "color": "#E0F7FA"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-13",
+    "slug": "sauvage-eau-de-parfum",
     "name": "Sauvage Eau de Parfum",
     "brand": "Dior",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A sensual, mysterious fragrance contrasting raw bergamot freshness with warm Sichuan pepper, velvety lavender, and ambroxan.",
     "rating": 4.8,
-    "reviews": 56,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 56,
     "image": "/images/products/sauvage_eau_de_parfum_v2.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Calabrian Bergamot",
-      "Sichuan Pepper",
-      "Lavender",
-      "Star Anise",
-      "Nutmeg",
-      "Ambroxan",
-      "Vanilla"
-    ]
+      {
+        "name": "Calabrian Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Sichuan Pepper",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Lavender",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Star Anise",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Nutmeg",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Ambroxan",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fresh Spicy",
+        "percentage": 90,
+        "color": "#AED581"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 85,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FFB74D"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-14",
+    "slug": "eros-parfum",
     "name": "Eros Parfum",
     "brand": "Versace",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A heroic fragrance unleashing a burst of crisp green apple and mint wrapped in rich, creamy vanilla and vibrant woods.",
     "rating": 4.8999999999999995,
-    "reviews": 59,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 59,
     "image": "/images/products/si_parfum_v2.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Mint",
-      "Green Apple",
-      "Lemon",
-      "Tonka Bean",
-      "Ambroxan",
-      "Geranium",
-      "Madagascar Vanilla",
-      "Cedarwood",
-      "Vetiver",
-      "Oakmoss"
-    ]
+      {
+        "name": "Mint",
+        "type": "TOP"
+      },
+      {
+        "name": "Green Apple",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Ambroxan",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Geranium",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Madagascar Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedarwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Aromatic",
+        "percentage": 90,
+        "color": "#4DB6AC"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 85,
+        "color": "#9CCC65"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FFB74D"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-15",
+    "slug": "myslf-eau-de-parfum",
     "name": "MYSLF Eau de Parfum",
     "brand": "Yves Saint Laurent",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A modern statement of self-expression featuring a sparkling citrus opening, clean white floral heart, and warm patchouli base.",
     "rating": 5,
-    "reviews": 62,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 62,
     "image": "/images/products/myslf_eau_de_parfum_v2.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Calabrian Bergamot",
-      "Bergamot",
-      "Tunisian Orange Blossom",
-      "Ambrofix",
-      "Patchouli"
-    ]
+      {
+        "name": "Calabrian Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Tunisian Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Ambrofix",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Citrus",
+        "percentage": 90,
+        "color": "#FFEE58"
+      },
+      {
+        "name": "White Floral",
+        "percentage": 85,
+        "color": "#FAFAFA"
+      },
+      {
+        "name": "Patchouli",
+        "percentage": 75,
+        "color": "#6D4C41"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-16",
+    "slug": "le-beau",
     "name": "Le Beau",
     "brand": "Jean Paul Gaultier",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An ultra-refreshing tropical escape opening with crisp bergamot and lush coconut wood, rounded out by rich tonka bean.",
     "rating": 4.8,
-    "reviews": 20,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 20,
     "image": "/images/products/le_beau_v2.jpg",
     "family": "GOURMAND",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Bergamot",
-      "Coconut Wood",
-      "Tonka Bean"
-    ]
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Coconut Wood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Coconut",
+        "percentage": 95,
+        "color": "#FFF9C4"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 85,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#FFB74D"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-17",
+    "slug": "invictus-victory-elixir",
     "name": "Invictus Victory Elixir",
     "brand": "Rabanne",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A high-octane elixir blending aromatic lavender and fiery spices with deep, smoky incense and a powerful vanilla finish.",
     "rating": 4.8999999999999995,
-    "reviews": 23,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 23,
     "image": "/images/products/invictus_victory_elixir_v2.jpg",
     "family": "SPICY",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Cardamom",
-      "Black Pepper",
-      "Green Artemisia",
-      "Fresh Lavender",
-      "Incense",
-      "Rich Vanilla",
-      "Tonka Bean",
-      "Patchouli"
-    ]
+      {
+        "name": "Cardamom",
+        "type": "TOP"
+      },
+      {
+        "name": "Black Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Green Artemisia",
+        "type": "TOP"
+      },
+      {
+        "name": "Fresh Lavender",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Incense",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rich Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 90,
+        "color": "#FFE082"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 85,
+        "color": "#D84315"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FFA000"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-18",
+    "slug": "1-million-parfum",
     "name": "1 Million Parfum",
     "brand": "Rabanne",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A daring solar-leather creation that pairs creamy tuberose and tropical monoi oil with salty amber and smooth leather.",
     "rating": 5,
-    "reviews": 26,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 26,
     "image": "/images/products/1_million_parfum_v2.jpg",
     "family": "ORIENTAL",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Salty Tuberose",
-      "Pink Pepper",
-      "Monoi Oil",
-      "Leather",
-      "Solar Amber",
-      "Cashmeran",
-      "Labdanum"
-    ]
+      {
+        "name": "Salty Tuberose",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Monoi Oil",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Leather",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Solar Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      },
+      {
+        "name": "Labdanum",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 90,
+        "color": "#F5F5F5"
+      },
+      {
+        "name": "Tuberose",
+        "percentage": 85,
+        "color": "#EDE7F6"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FFB300"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-19",
+    "slug": "silver-mountain-water",
     "name": "Silver Mountain Water",
     "brand": "Creed",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "Inspired by the invigorating freshness of alpine air—combining sparkling citrus and crisp green tea with sweet blackcurrant.",
     "rating": 4.8,
-    "reviews": 29,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 29,
     "image": "/images/products/silver_mountain_water_v3.jpg",
     "family": "FRESH",
     "gender": "UNISEX",
     "occasion": "Versatile",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Bergamot",
-      "Mandarin Orange",
-      "Green Tea",
-      "Blackcurrant",
-      "Musk",
-      "Petitgrain",
-      "Sandalwood",
-      "Galbanum"
-    ]
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Green Tea",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Blackcurrant",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Petitgrain",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Galbanum",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Citrus",
+        "percentage": 90,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Green",
+        "percentage": 85,
+        "color": "#A5D6A7"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 80,
+        "color": "#F48FB1"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-20",
+    "slug": "strawberry-letter",
     "name": "Strawberry Letter",
     "brand": "Phlur",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A playful, nostalgic gourmand bursting with juicy strawberry nectar and red poppies, wrapped in warm sugared amber and tonka bean.",
     "rating": 4.8999999999999995,
-    "reviews": 32,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 32,
     "image": "/images/products/strawberry_letter_v5.jpg",
     "family": "GOURMAND",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Cassis",
-      "Strawberry",
-      "Plum Nectar",
-      "Red Poppy",
-      "Apple Blossom",
-      "Wild Lily",
-      "Tonka Bean",
-      "Sugared Amber",
-      "Earthy Woods"
-    ]
+      {
+        "name": "Cassis",
+        "type": "TOP"
+      },
+      {
+        "name": "Strawberry",
+        "type": "TOP"
+      },
+      {
+        "name": "Plum Nectar",
+        "type": "TOP"
+      },
+      {
+        "name": "Red Poppy",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Apple Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Wild Lily",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Sugared Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Earthy Woods",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 95,
+        "color": "#FF1744"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 90,
+        "color": "#FF4081"
+      },
+      {
+        "name": "Amber",
+        "percentage": 75,
+        "color": "#FFB300"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-21",
+    "slug": "scandal-pour-homme",
     "name": "Scandal Pour Homme",
     "brand": "Jean Paul Gaultier",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A knockout fragrance featuring a rich, addictive caramel core cut with fresh clary sage and mandarin, anchored by vetiver.",
     "rating": 5,
-    "reviews": 35,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 35,
     "image": "/images/products/scandal_pour_homme_v2.jpg",
     "family": "GOURMAND",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Clary Sage",
-      "Mandarin Orange",
-      "Caramel",
-      "Tonka Bean",
-      "Vetiver"
-    ]
+      {
+        "name": "Clary Sage",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Caramel",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Caramel",
+        "percentage": 95,
+        "color": "#FB8C00"
+      },
+      {
+        "name": "Aromatic",
+        "percentage": 85,
+        "color": "#80CBC4"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#FFE082"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-22",
+    "slug": "eau-de-lacoste-l-12-12-white",
     "name": "Eau de Lacoste L.12.12. White",
     "brand": "Lacoste Fragrances",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "The essence of a crisp white polo shirt—clean grapefruit and aromatic rosemary combined with creamy tuberose and suede.",
     "rating": 4.8,
-    "reviews": 38,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 38,
     "image": "/images/products/eau_de_lacoste_l_12_12_white_v2.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Grapefruit",
-      "Rosemary",
-      "Cardamom",
-      "Ylang-Ylang",
-      "Tuberose",
-      "Suede",
-      "Leather",
-      "Cedar",
-      "Vetiver"
-    ]
+      {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Rosemary",
+        "type": "TOP"
+      },
+      {
+        "name": "Cardamom",
+        "type": "TOP"
+      },
+      {
+        "name": "Ylang-Ylang",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tuberose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Suede",
+        "type": "BASE"
+      },
+      {
+        "name": "Leather",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Woody",
+        "percentage": 85,
+        "color": "#8D6E63"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 80,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Aromatic",
+        "percentage": 75,
+        "color": "#A5D6A7"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-23",
+    "slug": "absolu-aventus",
     "name": "Absolu Aventus",
     "brand": "Creed",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An exclusive, darker twist on the iconic Aventus profile—bursting with radiant citrus and warm spice over signature woods.",
     "rating": 4.8999999999999995,
-    "reviews": 41,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 41,
     "image": "/images/products/absolu_aventus_v2.jpg",
     "family": "WOODY",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Grapefruit",
-      "Bergamot",
-      "Blackcurrant",
-      "Ginger",
-      "Cinnamon",
-      "Citron",
-      "Cardamom",
-      "Pink Pepper",
-      "Patchouli",
-      "Vetiver"
-    ]
+      {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Blackcurrant",
+        "type": "TOP"
+      },
+      {
+        "name": "Ginger",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cinnamon",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Citron",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cardamom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Citrus",
+        "percentage": 90,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 85,
+        "color": "#E65100"
+      },
+      {
+        "name": "Woody",
+        "percentage": 80,
+        "color": "#6D4C41"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-24",
+    "slug": "aventus",
     "name": "Aventus",
     "brand": "Creed",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "The legendary benchmark fragrance featuring a vibrant opening of juicy pineapple and apple over smoky birch and oakmoss.",
     "rating": 5,
-    "reviews": 44,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 44,
     "image": "/images/products/aventus_v2.jpg",
     "family": "WOODY",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pineapple",
-      "Bergamot",
-      "Blackcurrant",
-      "Apple",
-      "Birch",
-      "Patchouli",
-      "Moroccan Jasmine",
-      "Rose",
-      "Musk",
-      "Oakmoss",
-      "Ambergris",
-      "Vanille"
-    ]
+      {
+        "name": "Pineapple",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Blackcurrant",
+        "type": "TOP"
+      },
+      {
+        "name": "Apple",
+        "type": "TOP"
+      },
+      {
+        "name": "Birch",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Moroccan Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambergris",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanille",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 90,
+        "color": "#FBC02D"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#FFE082"
+      },
+      {
+        "name": "Woody",
+        "percentage": 75,
+        "color": "#795548"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-25",
+    "slug": "angels-share",
     "name": "Angels' Share",
     "brand": "By Kilian",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A warm, boozy masterpiece opening with aged cognac and rich cinnamon, settling into a luscious base of praline and oak.",
     "rating": 4.8,
-    "reviews": 47,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 47,
     "image": "/images/products/angels_share_v2.jpg",
     "family": "GOURMAND",
     "gender": "UNISEX",
     "occasion": "Versatile",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Cognac",
-      "Cinnamon",
-      "Tonka Bean",
-      "Oak",
-      "Vanilla",
-      "Praline",
-      "Sandalwood"
-    ]
+      {
+        "name": "Cognac",
+        "type": "TOP"
+      },
+      {
+        "name": "Cinnamon",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Oak",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Praline",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Woody",
+        "percentage": 90,
+        "color": "#6D4C41"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 85,
+        "color": "#D84315"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#FFA000"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-26",
+    "slug": "chance-eau-tendre",
     "name": "Chance Eau Tendre",
     "brand": "Chanel",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A delicate, romantic fragrance blending crisp quince and grapefruit with a soft, radiant heart of jasmine and hyacinth.",
     "rating": 4.8999999999999995,
-    "reviews": 50,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 50,
     "image": "/images/products/chance_eau_tendre_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Quince",
-      "Grapefruit",
-      "Hyacinth",
-      "Jasmine",
-      "Musk",
-      "Iris",
-      "Virginia Cedar",
-      "Amber"
-    ]
+      {
+        "name": "Quince",
+        "type": "TOP"
+      },
+      {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Hyacinth",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Iris",
+        "type": "BASE"
+      },
+      {
+        "name": "Virginia Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Floral",
+        "percentage": 95,
+        "color": "#F8BBD0"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 85,
+        "color": "#FF8A80"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 75,
+        "color": "#FFF59D"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-27",
+    "slug": "miss-dior-blooming-bouquet",
     "name": "Miss Dior Blooming Bouquet",
     "brand": "Dior",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An enchanting floral bouquet capturing the freshness of newly bloomed peonies and roses, brightened by mandarin.",
     "rating": 5,
-    "reviews": 53,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 53,
     "image": "/images/products/miss_dior_blooming_bouquet_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Sicilian Mandarin",
-      "Pink Peony",
-      "Damask Rose",
-      "Apricot",
-      "Peach",
-      "White Musk"
-    ]
+      {
+        "name": "Sicilian Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Peony",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Damask Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Apricot",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Peach",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "White Musk",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Floral",
+        "percentage": 95,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Rose",
+        "percentage": 85,
+        "color": "#E91E63"
+      },
+      {
+        "name": "Fresh",
+        "percentage": 80,
+        "color": "#80DEEA"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-28",
+    "slug": "lady-korloff",
     "name": "Lady Korloff",
     "brand": "Korloff Paris",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An opulent, radiant white floral fragrance featuring luminous tuberose and orange blossom, grounded by warm sandalwood.",
     "rating": 4.8,
-    "reviews": 56,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 56,
     "image": "/images/products/lady_korloff_v3.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Orange",
-      "Mandarin Orange",
-      "Pear",
-      "Tuberose",
-      "Jasmine",
-      "African Orange Flower",
-      "Musk",
-      "Sandalwood",
-      "Virginia Cedar"
-    ]
+      {
+        "name": "Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Tuberose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "African Orange Flower",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Virginia Cedar",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 90,
+        "color": "#FAFAFA"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 80,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Tuberose",
+        "percentage": 75,
+        "color": "#EDE7F6"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-29",
+    "slug": "bright-peach",
     "name": "Bright Peach",
     "brand": "Maison Alhambra",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A juicy, intoxicating gourmand scent exploding with ripe nectarous peach and blood orange, enriched by honeyed cognac.",
     "rating": 4.8999999999999995,
-    "reviews": 59,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 59,
     "image": "/images/products/bright_peach_v2.jpg",
     "family": "GOURMAND",
     "gender": "UNISEX",
     "occasion": "Versatile",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Peach",
-      "Blood Orange",
-      "Cardamom",
-      "Rum",
-      "Cognac",
-      "Davana",
-      "Jasmine",
-      "Indonesian Patchouli Leaf",
-      "Vanilla",
-      "Sandalwood",
-      "Tonka Bean",
-      "Benzoin",
-      "Cashmeran",
-      "Vetiver",
-      "Labdanum"
-    ]
+      {
+        "name": "Peach",
+        "type": "TOP"
+      },
+      {
+        "name": "Blood Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Cardamom",
+        "type": "TOP"
+      },
+      {
+        "name": "Rum",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cognac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Davana",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Indonesian Patchouli Leaf",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Benzoin",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      },
+      {
+        "name": "Labdanum",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 95,
+        "color": "#FF8A65"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#FFB74D"
+      },
+      {
+        "name": "Honey",
+        "percentage": 80,
+        "color": "#FFD54F"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-30",
+    "slug": "libre",
     "name": "Libre",
     "brand": "Yves Saint Laurent",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A grand floral fragrance contrasting burning Moroccan orange blossom and bold French lavender with a sensual vanilla-musk base.",
     "rating": 5,
-    "reviews": 62,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 62,
     "image": "/images/products/libre_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Lavender",
-      "Mandarin Orange",
-      "Blackcurrant",
-      "Petitgrain",
-      "Lavender",
-      "Orange Blossom",
-      "Jasmine",
-      "Madagascar Vanilla",
-      "Musk",
-      "Cedar",
-      "Ambergris"
-    ]
+      {
+        "name": "Lavender",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Blackcurrant",
+        "type": "TOP"
+      },
+      {
+        "name": "Petitgrain",
+        "type": "TOP"
+      },
+      {
+        "name": "Lavender",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Madagascar Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambergris",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 90,
+        "color": "#F5F5F5"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 85,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Lavender",
+        "percentage": 80,
+        "color": "#CE93D8"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-31",
+    "slug": "j-adore-parfum-d-eau",
     "name": "J'adore Parfum d'Eau",
     "brand": "Dior",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An innovative water-based fragrance bursting with fresh white florals—luminous neroli, rich jasmine, and delicate magnolia.",
     "rating": 4.8,
-    "reviews": 20,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 20,
     "image": "/images/products/j_adore_parfum_d_eau_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Neroli",
-      "Green Notes",
-      "Jasmine Sambac",
-      "Chinese Magnolia",
-      "Neroli",
-      "Rose"
-    ]
+      {
+        "name": "Neroli",
+        "type": "TOP"
+      },
+      {
+        "name": "Green Notes",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Chinese Magnolia",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Neroli",
+        "type": "BASE"
+      },
+      {
+        "name": "Rose",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 95,
+        "color": "#FAFAFA"
+      },
+      {
+        "name": "Floral",
+        "percentage": 90,
+        "color": "#F8BBD0"
+      },
+      {
+        "name": "Green",
+        "percentage": 80,
+        "color": "#C8E6C9"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-32",
+    "slug": "flora-gorgeous-gardenia",
     "name": "Flora Gorgeous Gardenia",
     "brand": "Gucci",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A joyful floral potion built around white gardenia flower, blended with solar jasmine absolute and sweet pear blossom.",
     "rating": 4.8999999999999995,
-    "reviews": 23,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 23,
     "image": "/images/products/flora_gorgeous_gardenia_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pear Blossom",
-      "Red Berries",
-      "Italian Mandarin",
-      "Gardenia",
-      "Jasmine",
-      "Frangipani",
-      "Brown Sugar",
-      "Patchouli"
-    ]
+      {
+        "name": "Pear Blossom",
+        "type": "TOP"
+      },
+      {
+        "name": "Red Berries",
+        "type": "TOP"
+      },
+      {
+        "name": "Italian Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Gardenia",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Frangipani",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Brown Sugar",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 90,
+        "color": "#FFFFFF"
+      },
+      {
+        "name": "Floral",
+        "percentage": 85,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#FFE082"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-33",
+    "slug": "black-opium",
     "name": "Black Opium",
     "brand": "Yves Saint Laurent",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An addictive, highly energizing gourmand fragrance pairing rich black coffee and sweet vanilla with soft white florals.",
     "rating": 5,
-    "reviews": 26,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 26,
     "image": "/images/products/black_opium_v2.jpg",
     "family": "GOURMAND",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pear",
-      "Pink Pepper",
-      "Orange Blossom",
-      "Coffee",
-      "Jasmine",
-      "Bitter Almond",
-      "Licorice",
-      "Vanilla",
-      "Patchouli",
-      "Cedar",
-      "Cashmere Wood"
-    ]
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "TOP"
+      },
+      {
+        "name": "Coffee",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bitter Almond",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Licorice",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmere Wood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 95,
+        "color": "#FFF9C4"
+      },
+      {
+        "name": "Coffee",
+        "percentage": 90,
+        "color": "#3E2723"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#FFB74D"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-34",
+    "slug": "bleu-de-chanel",
     "name": "Bleu de Chanel",
     "brand": "Chanel",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "The benchmark of modern male elegance—combining crisp citrus with smoky incense and rich cedarwood for an unmistakable signature.",
     "rating": 4.8,
-    "reviews": 29,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 29,
     "image": "/images/products/bleu_de_chanel_v2.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Grapefruit",
-      "Lemon",
-      "Mint",
-      "Pink Pepper",
-      "Ginger",
-      "Nutmeg",
-      "Jasmine",
-      "Iso E Super",
-      "Incense",
-      "Vetiver",
-      "Cedar",
-      "Sandalwood",
-      "Patchouli",
-      "Labdanum"
-    ]
+      {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Mint",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Ginger",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Nutmeg",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Iso E Super",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Incense",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Labdanum",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Citrus",
+        "percentage": 90,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Woody",
+        "percentage": 85,
+        "color": "#795548"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 80,
+        "color": "#AED581"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-35",
+    "slug": "million-gold-for-her",
     "name": "Million Gold For Her",
     "brand": "Rabanne",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A dazzling, gilded floral fragrance blending radiant yellow ylang-ylang and intoxicating white florals with sweet vanilla.",
     "rating": 4.8999999999999995,
-    "reviews": 32,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 32,
     "image": "/images/products/million_gold_for_her_v5.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Rose",
-      "White Flowers",
-      "Mandarin",
-      "Ylang-Ylang",
-      "Jasmine",
-      "Solar Notes",
-      "Vanilla",
-      "Musk",
-      "Mineral Accord",
-      "Moss"
-    ]
+      {
+        "name": "Rose",
+        "type": "TOP"
+      },
+      {
+        "name": "White Flowers",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Ylang-Ylang",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Solar Notes",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Mineral Accord",
+        "type": "BASE"
+      },
+      {
+        "name": "Moss",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Sweet",
+        "percentage": 90,
+        "color": "#FFD54F"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 85,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Yellow Floral",
+        "percentage": 80,
+        "color": "#FFEE58"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-36",
+    "slug": "paradoxe",
     "name": "Paradoxe",
     "brand": "Prada",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An iconic signature reinventing floral freshness with a burst of zesty citrus, luminous neroli, and warm amber-vanilla infusion.",
     "rating": 5,
-    "reviews": 35,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 35,
     "image": "/images/products/paradoxe_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Pear",
-      "Tangerine",
-      "Bergamot",
-      "Orange Blossom",
-      "Neroli Essence",
-      "Neroli",
-      "Jasmine Sambac",
-      "Bourbon Vanilla",
-      "Amber",
-      "White Musk",
-      "Benzoin"
-    ]
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Tangerine",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Neroli Essence",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Neroli",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bourbon Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "White Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Benzoin",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 90,
+        "color": "#FAFAFA"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 85,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#FFB74D"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-37",
+    "slug": "girl-of-now",
     "name": "Girl of Now",
     "brand": "Elie Saab",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A luscious gourmand scent combining crunchy roasted pistachio and sweet pear with creamy almond milk and warm tonka.",
     "rating": 4.8,
-    "reviews": 38,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 38,
     "image": "/images/products/girl_of_now_v2.jpg",
     "family": "GOURMAND",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Roasted Pistachio",
-      "Pear",
-      "Mandarin Orange",
-      "Almond",
-      "Orange Blossom",
-      "Magnolia",
-      "Almond Milk",
-      "Tonka Bean",
-      "Patchouli",
-      "Cashmeran"
-    ]
+      {
+        "name": "Roasted Pistachio",
+        "type": "TOP"
+      },
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Almond",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Magnolia",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Almond Milk",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Almond",
+        "percentage": 90,
+        "color": "#D7CCC8"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#FFE082"
+      },
+      {
+        "name": "Nutty",
+        "percentage": 80,
+        "color": "#BCAAA4"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-38",
+    "slug": "narciso-rodriguez-for-her-eau-de-parfum",
     "name": "Narciso Rodriguez for Her Eau de Parfum",
     "brand": "Narciso Rodriguez",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An intimate, velvety signature featuring rose and juicy peach wrapped around a central core of sensual musk and patchouli.",
     "rating": 4.8999999999999995,
-    "reviews": 41,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 41,
     "image": "/images/products/narciso_rodriguez_for_her_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Rose",
-      "Peach",
-      "Musk",
-      "Amber",
-      "Patchouli",
-      "Sandalwood"
-    ]
+      {
+        "name": "Rose",
+        "type": "TOP"
+      },
+      {
+        "name": "Peach",
+        "type": "TOP"
+      },
+      {
+        "name": "Musk",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Amber",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Musky",
+        "percentage": 90,
+        "color": "#ECEFF1"
+      },
+      {
+        "name": "Rose",
+        "percentage": 85,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 80,
+        "color": "#F5F5F5"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-39",
+    "slug": "good-girl",
     "name": "Good Girl",
     "brand": "Carolina Herrera",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A bold fragrance contrasting bright white florals like tuberose and jasmine with dark notes of roasted tonka bean and cacao.",
     "rating": 5,
-    "reviews": 44,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 44,
     "image": "/images/products/good_girl_v2.jpg",
     "family": "GOURMAND",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Almond",
-      "Coffee",
-      "Bergamot",
-      "Lemon",
-      "Tuberose",
-      "Jasmine Sambac",
-      "Orange Blossom",
-      "Orris",
-      "Bulgarian Rose",
-      "Tonka Bean",
-      "Cacao",
-      "Vanilla",
-      "Praline",
-      "Sandalwood",
-      "Amber",
-      "Musk",
-      "Cashmere Wood",
-      "Cinnamon",
-      "Patchouli",
-      "Cedar"
-    ]
+      {
+        "name": "Almond",
+        "type": "TOP"
+      },
+      {
+        "name": "Coffee",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Tuberose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Orris",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bulgarian Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Cacao",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Praline",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmere Wood",
+        "type": "BASE"
+      },
+      {
+        "name": "Cinnamon",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Sweet",
+        "percentage": 90,
+        "color": "#FFB74D"
+      },
+      {
+        "name": "White Floral",
+        "percentage": 85,
+        "color": "#FAFAFA"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 80,
+        "color": "#D84315"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-40",
+    "slug": "burberry-her",
     "name": "Burberry Her",
     "brand": "Burberry",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A vibrant burst-of-berries scent capturing the spirit of London—sweet red berries softened by powdery violet and musk.",
     "rating": 4.8,
-    "reviews": 47,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 47,
     "image": "/images/products/burberry_her_v2.jpg",
     "family": "GOURMAND",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Strawberry",
-      "Raspberry",
-      "Blackberry",
-      "Sour Cherry",
-      "Blackcurrant",
-      "Violet",
-      "Jasmine",
-      "Musk",
-      "Vanilla",
-      "Cashmeran",
-      "Woody Notes",
-      "Amber"
-    ]
+      {
+        "name": "Strawberry",
+        "type": "TOP"
+      },
+      {
+        "name": "Raspberry",
+        "type": "TOP"
+      },
+      {
+        "name": "Blackberry",
+        "type": "TOP"
+      },
+      {
+        "name": "Sour Cherry",
+        "type": "TOP"
+      },
+      {
+        "name": "Blackcurrant",
+        "type": "TOP"
+      },
+      {
+        "name": "Violet",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Notes",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 95,
+        "color": "#E91E63"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Woody",
+        "percentage": 75,
+        "color": "#8D6E63"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-41",
+    "slug": "japanese-cherry-blossom",
     "name": "Japanese Cherry Blossom",
     "brand": "Bath & Body Works",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A graceful floral fragrance blending sweet cherry blossom, crisp Asian pear, and warm vanilla rice.",
     "rating": 4.8999999999999995,
-    "reviews": 50,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 50,
     "image": "/images/products/japanese_cherry_blossom_v5.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Asian Pear",
-      "Fuji Apple",
-      "Plum",
-      "Japanese Cherry Blossom",
-      "Kyoto Rose",
-      "Mimosa",
-      "Tuberose",
-      "Vanilla Rice",
-      "Imperial Amber",
-      "Silk Musk",
-      "Sandalwood"
-    ]
+      {
+        "name": "Asian Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Fuji Apple",
+        "type": "TOP"
+      },
+      {
+        "name": "Plum",
+        "type": "TOP"
+      },
+      {
+        "name": "Japanese Cherry Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Kyoto Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Mimosa",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tuberose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla Rice",
+        "type": "BASE"
+      },
+      {
+        "name": "Imperial Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Silk Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Floral",
+        "percentage": 90,
+        "color": "#F8BBD0"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 85,
+        "color": "#FF8A80"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 80,
+        "color": "#FAFAFA"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-42",
+    "slug": "dior-homme-parfum",
     "name": "Dior Homme Parfum",
     "brand": "Dior",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A sophisticated, dark, and regal fragrance built around powdery Tuscan iris and smooth leather.",
     "rating": 5,
-    "reviews": 53,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 53,
     "image": "/images/products/dior_homme_parfum_v5.jpg",
     "family": "WOODY",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Tuscan Iris",
-      "Italian Orange",
-      "Leather",
-      "Violet",
-      "Agarwood (Oud)",
-      "Cedar",
-      "Sandalwood"
-    ]
+      {
+        "name": "Tuscan Iris",
+        "type": "TOP"
+      },
+      {
+        "name": "Italian Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Leather",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Violet",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Agarwood (Oud)",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Amber",
+        "percentage": 90,
+        "color": "#FFA000"
+      },
+      {
+        "name": "Woody",
+        "percentage": 85,
+        "color": "#6D4C41"
+      },
+      {
+        "name": "Earthy",
+        "percentage": 80,
+        "color": "#5D4037"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-43",
+    "slug": "terre-d-herm-s-parfum",
     "name": "Terre d'Hermès Parfum",
     "brand": "Hermès",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An earthy, mineral-rich masterpiece contrasting sparkling grapefruit and citrus with warm flint, oakmoss, and noble woods.",
     "rating": 4.8,
-    "reviews": 56,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 56,
     "image": "/images/products/terre_d_hermes_parfum_v2.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Grapefruit",
-      "Orange",
-      "Flint",
-      "Mineral Notes",
-      "Woody Notes",
-      "Oakmoss",
-      "Benzoin"
-    ]
+      {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Orange",
+        "type": "TOP"
+      },
+      {
+        "name": "Flint",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Mineral Notes",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Woody Notes",
+        "type": "BASE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      },
+      {
+        "name": "Benzoin",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Citrus",
+        "percentage": 90,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Woody",
+        "percentage": 85,
+        "color": "#795548"
+      },
+      {
+        "name": "Mossy",
+        "percentage": 80,
+        "color": "#558B2F"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-44",
+    "slug": "olymp-a-blossom",
     "name": "Olympéa Blossom",
     "brand": "Rabanne",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A divine, sparkling floral-fruity scent balancing sweet sorbet pear and blooming roses with salted vanilla.",
     "rating": 4.8999999999999995,
-    "reviews": 59,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 59,
     "image": "/images/products/olympea_blossom_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Damask Rose",
-      "Pink Pepper",
-      "Pear",
-      "Black Sorbet",
-      "Blackcurrant",
-      "Vanilla",
-      "Salt",
-      "Cashmeran",
-      "Patchouli"
-    ]
+      {
+        "name": "Damask Rose",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Pear",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Black Sorbet",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Blackcurrant",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Salt",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 90,
+        "color": "#FF8A80"
+      },
+      {
+        "name": "Rose",
+        "percentage": 85,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#FFE082"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-45",
+    "slug": "mill-sime-imp-rial",
     "name": "Millésime Impérial",
     "brand": "Creed",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A golden citrus-marine fragrance evoking sun-drenched palace gardens overlooking the sea—refreshing and luxurious.",
     "rating": 5,
-    "reviews": 62,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 62,
     "image": "/images/products/millesime_imperial_v2.jpg",
     "family": "AQUATIC",
     "gender": "UNISEX",
     "occasion": "Versatile",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Fruity Notes",
-      "Sea Salt",
-      "Sicilian Lemon",
-      "Bergamot",
-      "Iris",
-      "Mandarin Orange",
-      "Sea Notes",
-      "Musk",
-      "Woody Notes"
-    ]
+      {
+        "name": "Fruity Notes",
+        "type": "TOP"
+      },
+      {
+        "name": "Sea Salt",
+        "type": "TOP"
+      },
+      {
+        "name": "Sicilian Lemon",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bergamot",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Iris",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Mandarin Orange",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Sea Notes",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Notes",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Marine",
+        "percentage": 95,
+        "color": "#4FC3F7"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 85,
+        "color": "#FFF176"
+      },
+      {
+        "name": "Salty",
+        "percentage": 80,
+        "color": "#E0F7FA"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-46",
+    "slug": "s-parfum",
     "name": "Sì Parfum",
     "brand": "Giorgio Armani",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An opulent, passionate fragrance combining dark blackcurrant nectar and velvet rose with rich leather and bourbon vanilla.",
     "rating": 4.8,
-    "reviews": 20,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 20,
     "image": "/images/products/si_parfum_v4.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Blackcurrant Nectar",
-      "Saffron",
-      "Damask Rose",
-      "Bourbon Vanilla",
-      "Leather Accord",
-      "Patchouli"
-    ]
+      {
+        "name": "Blackcurrant Nectar",
+        "type": "TOP"
+      },
+      {
+        "name": "Saffron",
+        "type": "TOP"
+      },
+      {
+        "name": "Damask Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bourbon Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Leather Accord",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 90,
+        "color": "#AD1457"
+      },
+      {
+        "name": "Leather",
+        "percentage": 80,
+        "color": "#6D4C41"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 75,
+        "color": "#FFE082"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-47",
+    "slug": "rose-noir",
     "name": "Rose Noir",
     "brand": "Byredo",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "An enigmatic, dark rose fragrance where traditional romantic rose is given an earthy, mossy depth with hints of crisp grapefruit.",
     "rating": 4.8999999999999995,
-    "reviews": 23,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 23,
     "image": "/images/products/rose_noir_v2.jpg",
     "family": "FLORAL",
     "gender": "UNISEX",
     "occasion": "Versatile",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Grapefruit",
-      "Freesia",
-      "Cardamom",
-      "Damask Rose",
-      "Violet",
-      "Jasmine",
-      "Oakmoss",
-      "Musk",
-      "Labdanum"
-    ]
+      {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Freesia",
+        "type": "TOP"
+      },
+      {
+        "name": "Cardamom",
+        "type": "TOP"
+      },
+      {
+        "name": "Damask Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Violet",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Labdanum",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Rose",
+        "percentage": 95,
+        "color": "#C2185B"
+      },
+      {
+        "name": "Mossy",
+        "percentage": 80,
+        "color": "#33691E"
+      },
+      {
+        "name": "Floral",
+        "percentage": 75,
+        "color": "#F48FB1"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-48",
+    "slug": "gucci-bloom",
     "name": "Gucci Bloom",
     "brand": "Gucci",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A lush, rich white floral garden in full bloom—celebrating natural tuberose and jasmine for a clean, authentic scent.",
     "rating": 5,
-    "reviews": 26,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 26,
     "image": "/images/products/gucci_bloom_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Jasmine",
-      "Green Accords",
-      "Tuberose",
-      "Natural Jasmine Sambac",
-      "Rangoon Creeper",
-      "Sandalwood"
-    ]
+      {
+        "name": "Jasmine",
+        "type": "TOP"
+      },
+      {
+        "name": "Green Accords",
+        "type": "TOP"
+      },
+      {
+        "name": "Tuberose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Natural Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rangoon Creeper",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 95,
+        "color": "#FFFFFF"
+      },
+      {
+        "name": "Tuberose",
+        "percentage": 85,
+        "color": "#EDE7F6"
+      },
+      {
+        "name": "Floral",
+        "percentage": 80,
+        "color": "#F8BBD0"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-49",
+    "slug": "explorer-platinum",
     "name": "Explorer Platinum",
     "brand": "Montblanc",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A crisp, metallic-woody fragrance inspired by mountain exploration—fresh violet leaves and herbal sage over clean cedarwood.",
     "rating": 4.8,
-    "reviews": 29,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 29,
     "image": "/images/products/explorer_platinum_v3.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Violet Leaves",
-      "Clary Sage",
-      "Cedarwood"
-    ]
+      {
+        "name": "Violet Leaves",
+        "type": "TOP"
+      },
+      {
+        "name": "Clary Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cedarwood",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Woody",
+        "percentage": 90,
+        "color": "#795548"
+      },
+      {
+        "name": "Aromatic",
+        "percentage": 85,
+        "color": "#80CBC4"
+      },
+      {
+        "name": "Ozonic",
+        "percentage": 80,
+        "color": "#B2EBF2"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-50",
+    "slug": "good-girl-blush",
     "name": "Good Girl Blush",
     "brand": "Carolina Herrera",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A charming explosion of romantic florals grounded by sweet vanilla and powdery bitter almond.",
     "rating": 4.8999999999999995,
-    "reviews": 32,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 32,
     "image": "/images/products/good_girl_blush_v3.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Italian Bergamot",
-      "Bitter Almond",
-      "Ylang-Ylang",
-      "Peony",
-      "Vanilla",
-      "Coumarin"
-    ]
+      {
+        "name": "Italian Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Bitter Almond",
+        "type": "TOP"
+      },
+      {
+        "name": "Ylang-Ylang",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Peony",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Coumarin",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Floral",
+        "percentage": 90,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 85,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Fresh",
+        "percentage": 80,
+        "color": "#E0F7FA"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-51",
+    "slug": "good-girl-gone-bad",
     "name": "Good Girl Gone Bad",
     "brand": "By Kilian",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A luscious floral whirlwind opening with sweet jasmine and osmanthus before surrendering to intense tuberose and warm cedarwood.",
     "rating": 5,
-    "reviews": 35,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 35,
     "image": "/images/products/good_girl_gone_bad_v2.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
     "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Jasmine",
-      "May Rose",
-      "Osmanthus",
-      "Indian Tuberose",
-      "Narcissus",
-      "Amber",
-      "Cedar"
-    ]
+      {
+        "name": "Jasmine",
+        "type": "TOP"
+      },
+      {
+        "name": "May Rose",
+        "type": "TOP"
+      },
+      {
+        "name": "Osmanthus",
+        "type": "TOP"
+      },
+      {
+        "name": "Indian Tuberose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Narcissus",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedar",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 95,
+        "color": "#FAFAFA"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 85,
+        "color": "#FF8A80"
+      },
+      {
+        "name": "Floral",
+        "percentage": 80,
+        "color": "#F8BBD0"
+      }
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-52",
+    "slug": "vanilla-28",
     "name": "Vanilla 28",
     "brand": "Kayali",
-    "category": "Regular",
-    "inspiredBy": "",
     "description": "A rich, warm gourmand masterpiece blending sweet brown sugar and tonka bean with velvety vanilla orchid and deep royal amber.",
     "rating": 4.8,
-    "reviews": 38,
-    "price": "300 - 1500tk",
-    "originalPrice": "400tk",
-    "priceVal": 300,
-    "originalPriceVal": 400,
-    "volume": "6ml - 50ml",
+    "reviewCount": 38,
     "image": "/images/products/vanilla_28_v2.jpg",
     "family": "GOURMAND",
     "gender": "UNISEX",
     "occasion": "Versatile",
     "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1850,
+        "stock": 25
+      }
+    ],
     "notes": [
-      "Vanilla Orchid",
-      "Jasmine",
-      "Tonka Bean",
-      "Brown Sugar",
-      "Amber",
-      "Musk",
-      "Patchouli",
-      "Royal Amber"
-    ]
+      {
+        "name": "Vanilla Orchid",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine",
+        "type": "TOP"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Brown Sugar",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      },
+      {
+        "name": "Royal Amber",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Vanilla",
+        "percentage": 95,
+        "color": "#FFF59D"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 90,
+        "color": "#FFD54F"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FFB300"
+      }
+    ],
+    "category": "Regular"
   }
 ];
 
-export const productsCatalog = luxuryProducts;
-
-/**
- * Resolves the API base URL.
- * Priority: NEXT_PUBLIC_API_URL env var > hostname-based detection.
- * In production: https://api.murakkaz.com/api
- * In local dev: http://localhost:5000/api
- */
-export function getProductsApiBaseUrl(): string {
-  // If running in browser, use hostname to determine environment with 100% precision
-  if (typeof window !== "undefined") {
-    const host = window.location.hostname;
-    if (host === "localhost" || host === "127.0.0.1") {
-      return "http://localhost:5000/api";
-    }
-    if (/^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(host)) {
-      return `http://${host}:5000/api`;
-    }
-    // Any live domain or direct IP -> use same-origin /api
-    return `${window.location.origin}/api`;
-  }
-  
-  // Server-side fallback: check env var if provided and not localhost, otherwise direct local backend
-  if (process.env.NEXT_PUBLIC_API_URL && !process.env.NEXT_PUBLIC_API_URL.includes("localhost")) {
-    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
-  }
-  
-  return "http://127.0.0.1:5000/api";
-}
-
-let cachedProducts: Product[] | null = null;
-let lastFetchTime = 0;
-const CACHE_TTL_MS = 5000; // 5-second lightweight cache for instant snappy navigation while staying fresh
-
-export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]> {
-  const now = Date.now();
-  if (!forceRefresh && cachedProducts && cachedProducts.length > 0 && (now - lastFetchTime < CACHE_TTL_MS)) {
-    return cachedProducts;
-  }
-
-  const apiUrl = `${getProductsApiBaseUrl()}/products?limit=1000`;
-
+export async function fetchLiveProducts(): Promise<Product[]> {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
-
-    const res = await fetch(apiUrl, { 
-      signal: controller.signal,
-      cache: 'no-store'
-    }).catch(() => null);
-
-    clearTimeout(timeoutId);
-
-    if (res && res.ok) {
-      const json = await res.json().catch(() => null);
-      const items = json ? (json.data || json) : null;
-
-      if (Array.isArray(items) && items.length > 0) {
-        cachedProducts = items.map((p: any, idx: number) => {
-          let priceStr = p.price || "300 - 1500tk";
-          let minPrice = 300;
-          let maxP = 1500;
-          if (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0) {
-            const prices = p.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n));
-            if (prices.length > 0) {
-              minPrice = Math.min(...prices);
-              maxP = Math.max(...prices);
-              priceStr = minPrice === maxP ? `${minPrice}tk` : `${minPrice} - ${maxP}tk`;
-            }
-          }
-
-          const notesArr = Array.isArray(p.notes) 
-            ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name)
-            : [];
-
-          const itemSlug = p.slug || slugify(p.name);
-          let itemImage = p.image || "/images/products/jade_serenity.png";
-          if (itemSlug === "resala" || (p.name && p.name.toLowerCase().includes("resala"))) {
-            itemImage = "/images/products/resala_arabian_oud.jpg";
-          }
-
-          const isExcl = p.category === 'Exclusive' || idx < 10 || maxP >= 2500 || ['irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace', 'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination'].includes(itemSlug);
-
-          return {
-            id: p.id || itemSlug,
-            slug: itemSlug,
-            name: p.name,
-            brand: p.brand || "Murakkaz",
-            category: (p.category || (isExcl ? 'Exclusive' : 'Regular')) as 'Exclusive' | 'Regular',
-            inspiredBy: p.inspiredBy || "",
-            description: p.description || "",
-            rating: p.rating || 5.0,
-            reviews: p.reviewCount || p.reviews || 0,
-            price: priceStr,
-            originalPrice: p.originalPrice || "400tk",
-            priceVal: minPrice,
-            originalPriceVal: Math.round(minPrice * 1.25),
-            volume: p.volume || (p.sizes && p.sizes.length > 0 ? p.sizes.map((s: any) => s.size).join(', ') : "6ml - 50ml"),
-            image: itemImage,
-            family: (p.family || "FLORAL").toUpperCase(),
-            gender: (p.gender || "UNISEX").toUpperCase(),
-            occasion: p.occasion || "Versatile",
-            meter: (p.meter || "BEAST_MODE").toUpperCase(),
-            notes: notesArr,
-            badge: isExcl ? "EXCLUSIVE" : (p.isFeatured ? "FEATURED" : undefined),
-          };
-        });
-        lastFetchTime = Date.now();
-        console.log(`[Murakkaz] Loaded ${cachedProducts.length} live products from API`);
-        return cachedProducts;
-      }
+    const isServer = typeof window === 'undefined';
+    const baseUrl = isServer 
+      ? (process.env.INTERNAL_API_URL || 'http://localhost:5000') 
+      : '';
+    
+    const res = await fetch(`${baseUrl}/api/products?limit=1000`, {
+      next: { revalidate: 60 }
+    });
+    
+    if (!res.ok) throw new Error('API fetch failed');
+    const json = await res.json();
+    
+    if (json.data && Array.isArray(json.data) && json.data.length > 0) {
+      return json.data.map((p: any) => {
+        const minSize = p.sizes && p.sizes.length > 0 
+          ? p.sizes.reduce((min: any, s: any) => s.price < min.price ? s : min, p.sizes[0])
+          : { price: 0 };
+          
+        return {
+          id: p.id,
+          slug: p.slug,
+          name: p.name,
+          brand: p.brand || 'Murakkaz',
+          inspiredBy: p.inspiredBy || '',
+          price: `৳${minSize.price || 0}`,
+          priceVal: minSize.price || 0,
+          originalPrice: minSize.originalPrice ? `৳${minSize.originalPrice}` : undefined,
+          originalPriceVal: minSize.originalPrice,
+          rating: p.rating || 5.0,
+          reviewCount: p.reviewCount || 0,
+          image: p.image || '/images/products/placeholder.jpg',
+          family: p.family || 'WOODY',
+          gender: p.gender || 'UNISEX',
+          occasion: p.occasion || 'Special Occasion',
+          meter: p.meter || 'LONG_LASTING',
+          category: p.category || (['Irish Leather', 'Baccarat Rouge 540', 'Tobacco Vanille', 'By the Fireplace', 'Resala', 'Sultani', 'Guidance', 'Rosewood', 'Sakura Dior', 'Imagination'].includes(p.name) ? 'Exclusive' : 'Regular'),
+          notes: p.notes ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name) : [],
+          description: p.description || '',
+          ourTake: p.ourTake || p.description || '',
+          sizes: p.sizes || [],
+          accords: p.accords || [],
+          noteDetails: p.notes || [],
+          bestFor: p.bestFor ? p.bestFor.map((b: any) => typeof b === 'string' ? b : b.name) : [],
+          reviews: p.reviews || []
+        };
+      });
     }
-  } catch (err) {
-    console.warn(`[Murakkaz] API fetch failed (${apiUrl}):`, err);
+  } catch (e) {
+    console.warn('Falling back to static catalog:', e);
   }
-
-  // Fallback to static catalog if API unreachable
-  if (!cachedProducts) {
-    cachedProducts = luxuryProducts;
-  }
-  return cachedProducts;
+  
+  return staticProducts;
 }
+
+export const products = staticProducts;
+export default staticProducts;
