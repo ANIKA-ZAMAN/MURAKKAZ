@@ -98,4 +98,15 @@ router.post('/:id/dispatch-courier', async (req: Request, res: Response, next: N
   }
 });
 
+// Get Steadfast Courier Balance & Settlement Info
+router.get('/courier/balance', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { getSteadfastBalance } = await import('../../services/courier.service');
+    const balance = await getSteadfastBalance();
+    res.json({ status: 'success', data: balance });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

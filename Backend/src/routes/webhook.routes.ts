@@ -1,56 +1,27 @@
-import { Router, Request, Response } from 'express';
-import prisma from '../config/database';
+import { Router, Request, Response, NextFunction } from 'express';
+import { handleSteadfastStatusUpdate } from '../services/courier.service';
 
 const router = Router();
 
-// Courier Webhook endpoint (Steadfast / Pathao delivery updates)
-router.post('/courier', async (req: Request, res: Response) => {
+/**
+ * Steadfast Courier Status Webhook
+ * Accepts webhook payload from Steadfast when rider changes delivery status
+ */
+router.post('/steadfast', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { tracking_code, invoice, status, delivery_status } = req.body;
-    const effectiveStatus = (delivery_status || status || '').toLowerCase();
-    const orderNumber = invoice;
+    const { tracking_code, status, consignment_id, invoice } = req.body;
+    const identifier = tracking_code || invoice || consignment_id;
 
-    console.log(`[Courier Webhook] Received status '${effectiveStatus}' for invoice ${orderNumber} (tracking: ${tracking_code})`);
+    console.log('[Webhook Received from Steadfast]:', req.body);
 
-    const order = await prisma.order.findFirst({
-      where: {
-        OR: [
-          ...(orderNumber ? [{ orderNumber }] : []),
-          ...(tracking_code ? [{ trackingNumber: tracking_code }] : [])
-        ]
-      },
-      include: { payment: true }
-    });
-
-    if (!order) {
-      return res.status(200).json({ status: 'ignored', message: 'Order not found' });
+    if (identifier && status) {
+      await handleSteadfastStatusUpdate(identifier, status);
     }
 
-    if (effectiveStatus === 'delivered') {
-      await prisma.$transaction(async (tx) => {
-        await tx.order.update({
-          where: { id: order.id },
-          data: { status: 'DELIVERED' }
-        });
-
-        if (order.payment && order.payment.status === 'PENDING') {
-          await tx.payment.update({
-            where: { id: order.payment.id },
-            data: { status: 'VERIFIED', verifiedAt: new Date() }
-          });
-        }
-      });
-    } else if (effectiveStatus === 'cancelled' || effectiveStatus === 'cancelled_by_customer') {
-      await prisma.order.update({
-        where: { id: order.id },
-        data: { status: 'CANCELLED' }
-      });
-    }
-
-    res.status(200).json({ status: 'success', message: 'Webhook processed successfully' });
+    res.status(200).json({ status: 'success', message: 'Webhook processed' });
   } catch (error) {
-    console.error('Courier webhook error:', error);
-    res.status(200).json({ status: 'error', message: 'Webhook failed gracefully' });
+    console.error('Steadfast Webhook Error:', error);
+    res.status(200).json({ status: 'ignored', error: 'Processing error handled' });
   }
 });
 

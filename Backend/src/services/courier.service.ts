@@ -1,6 +1,7 @@
 import { env } from '../config/env';
 import prisma from '../config/database';
 import { AppError } from '../middleware/errorHandler';
+import { sendOrderShippedEmail, sendOrderDeliveredEmail } from './mail.service';
 
 export const isSteadfastConfigured = (): boolean => {
   return Boolean(env.STEADFAST_API_KEY && env.STEADFAST_SECRET_KEY);
@@ -14,6 +15,9 @@ const getSteadfastHeaders = () => {
   };
 };
 
+/**
+ * Dispatches an order to Steadfast Courier API and marks it as SHIPPED
+ */
 export const createSteadfastConsignment = async (orderId: string) => {
   const order = await prisma.order.findUnique({
     where: { id: orderId },
@@ -23,7 +27,7 @@ export const createSteadfastConsignment = async (orderId: string) => {
   if (!order) throw new AppError('Order not found', 404);
 
   // If already dispatched, return existing tracking info
-  if (order.trackingNumber && order.trackingNumber.startsWith('STDF-')) {
+  if (order.trackingNumber && (order.trackingNumber.startsWith('STDF-') || order.trackingNumber.startsWith('SF'))) {
     return {
       consignment_id: order.trackingNumber,
       tracking_code: order.trackingNumber,
@@ -52,6 +56,21 @@ export const createSteadfastConsignment = async (orderId: string) => {
       },
       include: { payment: true, items: true }
     });
+
+    // Trigger customer shipped email
+    try {
+      if (order.email && order.email.includes('@') && !order.email.includes('@guest.murakkaz.com')) {
+        sendOrderShippedEmail({
+          orderNumber: order.orderNumber,
+          fullName: order.fullName,
+          email: order.email,
+          trackingNumber: mockTrackingCode,
+          location: order.location
+        }).catch(err => console.warn('Shipped email failed:', err));
+      }
+    } catch (e) {
+      console.warn('Shipped email error:', e);
+    }
 
     return {
       consignment_id: 'SIM-' + Date.now(),
@@ -95,6 +114,21 @@ export const createSteadfastConsignment = async (orderId: string) => {
         include: { payment: true, items: true }
       });
 
+      // Trigger customer shipped email with live tracking code
+      try {
+        if (order.email && order.email.includes('@') && !order.email.includes('@guest.murakkaz.com')) {
+          sendOrderShippedEmail({
+            orderNumber: order.orderNumber,
+            fullName: order.fullName,
+            email: order.email,
+            trackingNumber: trackingCode,
+            location: order.location
+          }).catch(err => console.warn('Shipped email failed:', err));
+        }
+      } catch (e) {
+        console.warn('Shipped email error:', e);
+      }
+
       return {
         consignment_id: consignment.consignment_id,
         tracking_code: trackingCode,
@@ -111,6 +145,9 @@ export const createSteadfastConsignment = async (orderId: string) => {
   }
 };
 
+/**
+ * Look up real-time delivery status for a tracking code
+ */
 export const getSteadfastTracking = async (trackingCode: string) => {
   if (!isSteadfastConfigured()) {
     return {
@@ -135,4 +172,90 @@ export const getSteadfastTracking = async (trackingCode: string) => {
     console.error('Steadfast Tracking Lookup Error:', error.message);
     return null;
   }
+};
+
+/**
+ * Look up current Steadfast wallet & settlement balance
+ */
+export const getSteadfastBalance = async () => {
+  if (!isSteadfastConfigured()) {
+    return {
+      status: 200,
+      current_balance: 0,
+      isSimulated: true
+    };
+  }
+
+  const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.steadfast.com.bd/api/v1';
+
+  try {
+    const res = await fetch(`${baseUrl}/get_balance`, {
+      headers: getSteadfastHeaders()
+    });
+
+    const data: any = await res.json();
+    return data;
+  } catch (error: any) {
+    console.error('Steadfast Balance Lookup Error:', error.message);
+    return null;
+  }
+};
+
+/**
+ * Handle incoming Steadfast delivery webhooks or status changes
+ */
+export const handleSteadfastStatusUpdate = async (trackingCode: string, status: string) => {
+  const order = await prisma.order.findFirst({
+    where: {
+      OR: [
+        { trackingNumber: trackingCode },
+        { orderNumber: trackingCode }
+      ]
+    },
+    include: { payment: true }
+  });
+
+  if (!order) {
+    console.warn(`[Steadfast Webhook] No order found matching ${trackingCode}`);
+    return null;
+  }
+
+  const normalizedStatus = status.toLowerCase();
+  let nextStatus = order.status;
+
+  if (normalizedStatus === 'delivered' || normalizedStatus === 'partial_delivered') {
+    nextStatus = 'DELIVERED';
+    // Mark payment verified upon cash collection
+    if (order.payment && order.payment.status !== 'VERIFIED') {
+      await prisma.payment.update({
+        where: { id: order.payment.id },
+        data: { status: 'VERIFIED' }
+      });
+    }
+
+    // Trigger delivery confirmation email
+    try {
+      if (order.email && order.email.includes('@') && !order.email.includes('@guest.murakkaz.com')) {
+        sendOrderDeliveredEmail({
+          orderNumber: order.orderNumber,
+          fullName: order.fullName,
+          email: order.email
+        }).catch(err => console.warn('Delivered email failed:', err));
+      }
+    } catch (e) {
+      console.warn('Delivered email error:', e);
+    }
+  } else if (normalizedStatus === 'cancelled' || normalizedStatus === 'returned') {
+    nextStatus = 'CANCELLED';
+  } else if (normalizedStatus === 'in_transit') {
+    nextStatus = 'SHIPPED';
+  }
+
+  const updated = await prisma.order.update({
+    where: { id: order.id },
+    data: { status: nextStatus }
+  });
+
+  console.log(`[Steadfast Webhook] Order #${order.orderNumber} status updated: ${order.status} -> ${nextStatus}`);
+  return updated;
 };

@@ -2,6 +2,7 @@ import prisma from '../config/database';
 import { AppError } from '../middleware/errorHandler';
 import { generateOrderNumber } from '../utils/orderNumber';
 import { getPaginationParams, createPaginatedResult } from '../utils/pagination';
+import { sendOrderConfirmationEmail } from './mail.service';
 
 export const createOrder = async (userId: string | null | undefined, data: any) => {
   if (!userId) {
@@ -168,6 +169,18 @@ export const createOrder = async (userId: string | null | undefined, data: any) 
 
     return created;
   });
+
+  // Asynchronously trigger customer confirmation email
+  try {
+    if (order.email && order.email.includes('@') && !order.email.includes('@guest.murakkaz.com')) {
+      sendOrderConfirmationEmail({
+        ...order,
+        paymentMethod: order.payment?.method || 'COD'
+      }).catch(err => console.warn('Order confirmation email failed:', err));
+    }
+  } catch (e) {
+    console.warn('Email trigger error:', e);
+  }
 
   return order;
 };
