@@ -1,25 +1,46 @@
+export interface ProductNoteItem {
+  name: string;
+  type?: string;
+  image?: string | null;
+}
+
+export interface ProductSizeItem {
+  size: string;
+  price: number;
+  originalPrice?: number;
+  stock?: number;
+}
+
 export interface Product {
   id: string;
   slug?: string;
   name: string;
   brand: string;
-  category?: 'Exclusive' | 'Regular';
+  category?: 'Exclusive' | 'Regular' | string;
   inspiredBy?: string;
   description: string;
   rating: number;
-  reviews: number;
+  reviews?: number;
+  reviewCount?: number;
   price: string;
   originalPrice?: string;
   priceVal: number;
   originalPriceVal?: number;
-  volume: string;
+  volume?: string;
   image: string;
   family: string;
   gender: string;
   occasion: string;
   meter: string;
-  notes: string[];
+  notes: any[];
+  sizes?: ProductSizeItem[] | any;
+  accords?: any[];
+  bestFor?: any[];
+  galleryImages?: any[];
+  ourTake?: string;
   badge?: string;
+  isActive?: boolean;
+  [key: string]: any;
 }
 
 export function slugify(text: string): string {

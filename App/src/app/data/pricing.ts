@@ -56,7 +56,7 @@ export const PERFUME_PRICING_CONFIG: Record<PerfumeCategory, PricingTierConfig> 
   },
 };
 
-export const EXCLUSIVE_FRAGRANCES = [
+export const EXCLUSIVE_FRAGRANCES = new Set([
   'irish-leather',
   'baccarat-rouge-540',
   'tobacco-vanille',
@@ -66,20 +66,61 @@ export const EXCLUSIVE_FRAGRANCES = [
   'guidance',
   'rosewood',
   'sakura-dior',
-  'imagination'
-];
+  'imagination',
+  'prod-irish-leather-01',
+  'prod-baccarat-rouge-540-02',
+  'prod-tobacco-vanille-03',
+  'prod-by-the-fireplace-04',
+  'prod-resala-05',
+  'prod-sultani-06',
+  'prod-guidance-07',
+  'prod-rosewood-08',
+  'prod-sakura-dior-09',
+  'prod-imagination-10'
+]);
+
+export function resolvePerfumeCategory(product: {
+  category?: string;
+  slug?: string;
+  name?: string;
+  id?: string;
+  badge?: string;
+}): PerfumeCategory {
+  if (product.category && product.category.toLowerCase() === 'exclusive') {
+    return 'exclusive';
+  }
+  if (product.badge && product.badge.toLowerCase().includes('exclusive')) {
+    return 'exclusive';
+  }
+  const cleanSlug = (product.slug || '').toLowerCase().trim();
+  const cleanId = (product.id || '').toLowerCase().trim();
+  if (EXCLUSIVE_FRAGRANCES.has(cleanSlug) || EXCLUSIVE_FRAGRANCES.has(cleanId)) {
+    return 'exclusive';
+  }
+  return 'regular';
+}
+
+export function getPricingForCategory(category: PerfumeCategory): PricingTierConfig {
+  return PERFUME_PRICING_CONFIG[category] || PERFUME_PRICING_CONFIG.regular;
+}
+
+export function getProductPriceForSize(
+  category: PerfumeCategory,
+  size: string,
+  customPrices?: Record<string, number>
+): number {
+  if (customPrices && customPrices[size]) {
+    return customPrices[size];
+  }
+  const tier = getPricingForCategory(category);
+  return tier.prices[size] || tier.prices[tier.defaultSize] || 500;
+}
 
 export function getPerfumePricing(product: {
   slug?: string;
   name?: string;
   category?: string;
 }): PricingTierConfig {
-  const isExclusive =
-    product.category?.toLowerCase() === 'exclusive' ||
-    (product.slug &&
-      EXCLUSIVE_FRAGRANCES.some(
-        (ex) => product.slug!.toLowerCase().includes(ex) || ex.includes(product.slug!.toLowerCase())
-      ));
-
-  return isExclusive ? PERFUME_PRICING_CONFIG.exclusive : PERFUME_PRICING_CONFIG.regular;
+  const cat = resolvePerfumeCategory(product);
+  return getPricingForCategory(cat);
 }

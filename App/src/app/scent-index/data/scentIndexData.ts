@@ -130,7 +130,10 @@ function generatePersonalizedReason(
   const styleAns = answers[7] as string | undefined;
 
   const matchedNotes = notesAns.filter((n) =>
-    prod.notes.some((pn) => pn.toLowerCase().includes(n.toLowerCase()))
+    (prod.notes || []).some((pn: any) => {
+      const noteName = typeof pn === 'string' ? pn : (pn?.name || '');
+      return noteName.toLowerCase().includes(n.toLowerCase());
+    })
   );
 
   const highlights: string[] = [];

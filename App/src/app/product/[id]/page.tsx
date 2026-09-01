@@ -228,55 +228,74 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     );
   }, [id]);
 
+  const EXCLUSIVE_SLUGS = React.useMemo(() => new Set([
+    "irish-leather", "baccarat-rouge-540", "tobacco-vanille", "by-the-fireplace",
+    "resala", "sultani", "guidance", "rosewood", "sakura-dior", "imagination",
+    "prod-irish-leather-01", "prod-baccarat-rouge-540-02", "prod-tobacco-vanille-03",
+    "prod-by-the-fireplace-04", "prod-resala-05", "prod-sultani-06", "prod-guidance-07",
+    "prod-rosewood-08", "prod-sakura-dior-09", "prod-imagination-10"
+  ]), []);
+
   const isExclusive = React.useMemo(() => {
     if (catalogItem && catalogItem.category) {
-      return catalogItem.category === "Exclusive";
+      return catalogItem.category.toLowerCase() === "exclusive";
     }
-    if (liveProduct && liveProduct.sizes && Array.isArray(liveProduct.sizes)) {
-      return liveProduct.sizes.some((s: any) => Number(s.price) >= 2500);
+    if (liveProduct && liveProduct.category) {
+      return liveProduct.category.toLowerCase() === "exclusive";
     }
     const cleanId = id ? id.toLowerCase().trim() : "";
-    return [
-      "irish-leather", "baccarat-rouge-540", "tobacco-vanille", "by-the-fireplace",
-      "resala", "sultani", "guidance", "rosewood", "sakura-dior", "imagination",
-      "prod-irish-leather-01", "prod-baccarat-rouge-540-02", "prod-tobacco-vanille-03",
-      "prod-by-the-fireplace-04", "prod-resala-05", "prod-sultani-06", "prod-guidance-07",
-      "prod-rosewood-08", "prod-sakura-dior-09", "prod-imagination-10", "hellenist"
-    ].some(slug => cleanId.includes(slug) || slug.includes(cleanId));
-  }, [catalogItem, liveProduct, id]);
+    return EXCLUSIVE_SLUGS.has(cleanId);
+  }, [catalogItem, liveProduct, id, EXCLUSIVE_SLUGS]);
 
-  // Size and pricing configuration from centralized pricing config
-  const defaultSizeOptions = React.useMemo(() => {
+  const sizeOptions = React.useMemo(() => {
+    const sizeOrder = ["6ml", "10ml", "30ml", "50ml"];
+    // 1. Check liveProduct from DB
+    if (liveProduct && liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
+      const mapped = liveProduct.sizes.map((s: any) => ({
+        label: s.size || `${s.volume}ml`,
+        price: Number(s.price),
+        originalPrice: s.originalPrice ? Number(s.originalPrice) : undefined
+      }));
+      return mapped.sort((a: any, b: any) => sizeOrder.indexOf(a.label) - sizeOrder.indexOf(b.label));
+    }
+    // 2. Check catalogItem from local catalog
+    if (catalogItem && catalogItem.sizes && Array.isArray(catalogItem.sizes) && catalogItem.sizes.length > 0) {
+      const mapped = catalogItem.sizes.map((s: any) => ({
+        label: s.size || `${s.volume}ml`,
+        price: Number(s.price),
+        originalPrice: s.originalPrice ? Number(s.originalPrice) : undefined
+      }));
+      return mapped.sort((a: any, b: any) => sizeOrder.indexOf(a.label) - sizeOrder.indexOf(b.label));
+    }
+    // 3. Fallback based on category
     if (isExclusive) {
       return [
-        { label: "6ml", price: 300 },
-        { label: "10ml", price: 500 },
-        { label: "30ml", price: 1500 },
-        { label: "50ml", price: 2500 },
+        { label: "6ml", price: 300, originalPrice: 400 },
+        { label: "10ml", price: 500, originalPrice: 650 },
+        { label: "30ml", price: 1500, originalPrice: 1900 },
+        { label: "50ml", price: 2500, originalPrice: 3200 },
       ];
     }
     return [
-      { label: "6ml", price: 300 },
-      { label: "10ml", price: 500 },
-      { label: "30ml", price: 900 },
-      { label: "50ml", price: 1500 },
+      { label: "6ml", price: 300, originalPrice: 400 },
+      { label: "10ml", price: 500, originalPrice: 650 },
+      { label: "30ml", price: 900, originalPrice: 1100 },
+      { label: "50ml", price: 1500, originalPrice: 1900 },
     ];
-  }, [isExclusive]);
+  }, [liveProduct, catalogItem, isExclusive]);
 
-  const sizeOptions = React.useMemo(() => {
-    if (liveProduct && liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
-      return liveProduct.sizes.map((s: any) => ({
-        label: s.size || `${s.volume}ml`,
-        price: Number(s.price)
-      }));
-    }
-    return defaultSizeOptions;
-  }, [liveProduct, defaultSizeOptions]);
-
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState<{ label: string; price: number }>(defaultSizeOptions[1]); // Default to 10ml
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState<{ label: string; price: number }>(() => {
+    return sizeOptions.find((s: any) => s.label === "10ml") || sizeOptions[1] || sizeOptions[0];
+  });
 
   useEffect(() => {
-    setSelectedSizeOpt(sizeOptions[1] || sizeOptions[0]);
+    setSelectedSizeOpt((prev) => {
+      if (prev && prev.label) {
+        const matching = sizeOptions.find((s: any) => s.label === prev.label);
+        if (matching) return matching;
+      }
+      return sizeOptions.find((s: any) => s.label === "10ml") || sizeOptions[1] || sizeOptions[0];
+    });
   }, [sizeOptions]);
 
   // Dynamic API fetch for custom products created via Admin

@@ -20,7 +20,7 @@ interface ProductCardProps {
   category?: 'Exclusive' | 'Regular' | 'exclusive' | 'regular' | string;
   description?: string;
   rating: number;
-  reviews: number;
+  reviews?: number;
   price?: string;
   originalPrice?: string;
   volume?: string;

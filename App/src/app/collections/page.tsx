@@ -121,7 +121,10 @@ function CollectionsContent() {
 
     if (selectedFilters.notes && selectedFilters.notes.length > 0) {
       const productNotes = product.notes || [];
-      if (!selectedFilters.notes.some((note) => productNotes.some(pn => pn.toLowerCase().includes(note.toLowerCase())))) return false;
+      if (!selectedFilters.notes.some((note) => productNotes.some((pn: any) => {
+        const noteName = typeof pn === 'string' ? pn : (pn?.name || '');
+        return noteName.toLowerCase().includes(note.toLowerCase());
+      }))) return false;
     }
     return true;
   });
@@ -198,7 +201,7 @@ function CollectionsContent() {
                     brand={product.brand}
                     description={product.description}
                     rating={product.rating}
-                    reviews={product.reviews}
+                    reviews={product.reviews || product.reviewCount || 0}
                     image={product.image}
                   />
                 ))}
