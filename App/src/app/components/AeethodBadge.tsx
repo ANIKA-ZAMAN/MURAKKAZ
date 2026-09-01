@@ -58,7 +58,7 @@ export default function AeethodBadge() {
           ) : (
             <div className={styles.hoverContainer}>
               <span className={styles.hoverLine1}>
-                ENGINEERED <span className={styles.goldHighlight}>BY AEETHOD</span>
+                CRAFTED <span className={styles.goldHighlight}>BY AEETHOD</span>
               </span>
               <span className={styles.hoverLine2}>DIGITAL EXPERIENCES</span>
             </div>
