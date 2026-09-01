@@ -212,7 +212,7 @@ export const luxuryProducts: Product[] = [
     "priceVal": 300,
     "originalPriceVal": 400,
     "volume": "6ml - 50ml",
-    "image": "/images/products/sultani_v3.jpg",
+    "image": "/images/products/sultani_v5.jpg",
     "family": "ORIENTAL",
     "gender": "MEN",
     "occasion": "Executive & Formal",
