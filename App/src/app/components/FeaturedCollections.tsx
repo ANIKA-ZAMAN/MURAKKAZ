@@ -22,7 +22,7 @@ const defaultFeaturedProducts = luxuryProducts.slice(0, 8).map((p, idx) => ({
   originalPrice: p.originalPrice || "650tk",
   volume: p.volume || "10ml",
   image: p.image,
-  badge: p.badge || (p.category === "Exclusive" ? "EXCLUSIVE" : idx % 2 === 0 ? "BESTSELLER" : undefined),
+  badge: (p.category === "Exclusive" || p.category === "exclusive") ? "EXCLUSIVE" : undefined,
 }));
 
 export default function FeaturedCollections() {
@@ -50,7 +50,7 @@ export default function FeaturedCollections() {
           originalPrice: item.originalPrice || "650tk",
           volume: item.volume || "10ml",
           image: item.image,
-          badge: item.badge || (item.category === "Exclusive" ? "EXCLUSIVE" : idx % 2 === 0 ? "BESTSELLER" : undefined),
+          badge: (item.category === "Exclusive" || item.category === "exclusive") ? "EXCLUSIVE" : undefined,
         }));
         setFeaturedProducts(liveList);
       }

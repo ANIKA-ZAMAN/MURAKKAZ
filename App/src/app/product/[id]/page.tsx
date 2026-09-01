@@ -29,7 +29,7 @@ const productsDetailMap: Record<string, {
   "jade-serenity": {
     name: "Jade Serenity",
     inspiredBy: "Inspired by Creed Original Vetiver",
-    badge: "Recommended by Founder",
+    badge: undefined,
     description: "Jade Serenity is a masterclass in clean, sophisticated freshness engineered explicitly to conquer hot and humid weather. Opening with a crisp, rejuvenating burst of green tea and sharp citrus, it effortlessly settles into a calming, earthy base of rich vetiver and smooth cedarwood. This isn't just a fragrance—it's an invisible suit of armor that keeps you feeling fresh, composed, and undeniably premium from morning meetings to late-night lounge sessions.",
     image: "/images/products/jade_serenity.png",
     family: "Citrus",
@@ -76,7 +76,7 @@ const productsDetailMap: Record<string, {
   "coral-sea": {
     name: "Coral Sea",
     inspiredBy: "Inspired by Jo Malone Wood Sage & Sea Salt",
-    badge: "Best Seller",
+    badge: undefined,
     description: "Coral Sea transports you to windswept coastal shores. A mineral, fresh scent blending sea salt spray, earthy wood sage, and a light grapefruit undertone. Perfect for daily wear, it feels airy, natural, and refreshingly clean, evoking the spirit of freedom and raw nature.",
     image: "/images/products/coral_sea.png",
     family: "Fresh",
@@ -115,7 +115,7 @@ const productsDetailMap: Record<string, {
   "murakkaz-noir": {
     name: "Murakkaz Noir",
     inspiredBy: "Inspired by Dior Sauvage Elixir",
-    badge: "Top Pick",
+    badge: undefined,
     description: "Murakkaz Noir is an intense, concentrated fragrance for the bold and sophisticated. Opening with sweet cardamoms, hot cinnamon, and fiery spices, it transitions smoothly into a calming lavender heart and a deep base of dark cedar, patchouli, and licorice. A true masterpiece of projection and longevity.",
     image: "/images/products/magnetism.png",
     family: "Woody",
@@ -310,7 +310,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           setLiveProduct({
             name: p.name || 'Unnamed Fragrance',
             inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : `Inspired by ${p.brand || 'Murakkaz'}`,
-            badge: p.isFeatured ? "Featured Atelier Creation" : undefined,
+            badge: (p.category === 'Exclusive' || p.category === 'exclusive' || isExclusive) ? "EXCLUSIVE" : undefined,
             description: p.description || `${p.name} by ${p.brand || 'Murakkaz'}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
             image: p.image || '/images/products/jade_serenity.png',
             family: p.family || 'Woody',
@@ -423,7 +423,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       return {
         name: catalogItem.name,
         inspiredBy: catalogItem.inspiredBy ? `Inspired by ${catalogItem.inspiredBy}` : (catalogItem.brand ? `Inspired by ${catalogItem.brand}` : ""),
-        badge: catalogItem.badge || "Best Seller",
+        badge: isExclusive ? "EXCLUSIVE" : undefined,
         description: catalogItem.description || `${catalogItem.name} by ${catalogItem.brand}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
         image: catalogItem.image,
         family: catalogItem.family || "Woody",

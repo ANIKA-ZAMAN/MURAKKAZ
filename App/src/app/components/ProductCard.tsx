@@ -198,11 +198,9 @@ export default function ProductCard({
           sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 280px"
           className={styles.image}
         />
-        {badge ? (
-          <span className={styles.badge}>{badge}</span>
-        ) : resolvedCategory === "exclusive" ? (
+        {resolvedCategory === "exclusive" && (
           <span className={styles.badge} style={{ backgroundColor: "#820011", color: "#FFFFFF" }}>EXCLUSIVE</span>
-        ) : null}
+        )}
       </div>
 
       {/* Card Content */}
