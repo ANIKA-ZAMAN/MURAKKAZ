@@ -29,6 +29,15 @@ export default function BlogPage() {
   // Fetch live blog posts from API if available
   useEffect(() => {
     const baseUrl = getApiBaseUrl();
+    const defaultBlogImages = [
+      "/images/events/blog1.jpg",
+      "/images/events/blog2.jpg",
+      "/images/events/blog3.jpg",
+      "/images/events/eliyas.jpg",
+      "/images/events/event_gallery_1.jpg",
+      "/images/events/event_gallery_2.jpg",
+    ];
+
     fetch(`${baseUrl}/api/blog`)
       .then((res) => {
         if (res.ok) return res.json();
@@ -36,19 +45,28 @@ export default function BlogPage() {
       })
       .then((data) => {
         if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
-          const mapped: BlogPost[] = data.data.map((item: any) => ({
-            id: item.id || item.slug,
-            slug: item.slug || item.id,
-            date: item.publishedAt ? new Date(item.publishedAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' }) : "19th May, 2026",
-            title: item.title,
-            subtitle: item.description,
-            description: item.description,
-            content: item.content || item.description,
-            image: item.image || "/images/events/blog1.jpg",
-            author: item.author ? `${item.author.firstName} ${item.author.lastName}` : "Eliyash Hossain",
-            category: item.category || "Olfactory Journal",
-            readTime: "5 min read",
-          }));
+          const mapped: BlogPost[] = data.data.map((item: any, idx: number) => {
+            let img = item.image;
+            if (!img || img === "null" || img === "undefined" || !img.trim()) {
+              img = defaultBlogImages[idx % defaultBlogImages.length];
+            } else if (!img.startsWith("http") && !img.startsWith("/")) {
+              img = `/images/events/${img}`;
+            }
+
+            return {
+              id: item.id || item.slug,
+              slug: item.slug || item.id,
+              date: item.publishedAt ? new Date(item.publishedAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' }) : "19th May, 2026",
+              title: item.title,
+              subtitle: item.description,
+              description: item.description,
+              content: item.content || item.description,
+              image: img,
+              author: item.author ? `${item.author.firstName} ${item.author.lastName}` : "Eliyash Hossain",
+              category: item.category || "Olfactory Journal",
+              readTime: "5 min read",
+            };
+          });
           setPosts(mapped);
         }
       })

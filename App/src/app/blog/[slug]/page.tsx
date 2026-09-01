@@ -43,6 +43,13 @@ export default function BlogDetailPage({ params }: PageProps) {
         .then((data) => {
           if (data && data.data) {
             const item = data.data;
+            let itemImage = item.image;
+            if (!itemImage || itemImage === "null" || itemImage === "undefined" || !itemImage.trim()) {
+              itemImage = "/images/events/blog1.jpg";
+            } else if (!itemImage.startsWith("http") && !itemImage.startsWith("/")) {
+              itemImage = `/images/events/${itemImage}`;
+            }
+
             setPost({
               id: item.id,
               slug: item.slug,
@@ -51,7 +58,7 @@ export default function BlogDetailPage({ params }: PageProps) {
               subtitle: item.description,
               description: item.description,
               content: item.content || item.description,
-              image: item.image || "/images/events/event_gallery_1.jpg",
+              image: itemImage,
               author: item.author ? `${item.author.firstName} ${item.author.lastName}` : "Murakkaz Editorial",
               category: "Olfactory Journal",
               readTime: "5 min read",
@@ -144,6 +151,7 @@ export default function BlogDetailPage({ params }: PageProps) {
             alt={post.title}
             fill
             priority
+            unoptimized
             sizes="(max-width: 1100px) 100vw, 1100px"
             className={styles.heroImage}
           />

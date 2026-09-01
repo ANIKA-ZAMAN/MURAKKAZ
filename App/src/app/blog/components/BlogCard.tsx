@@ -14,14 +14,25 @@ interface BlogCardProps {
 export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps) {
   const postSlug = post.slug || post.id;
 
+  const getValidImg = (img?: string) => {
+    if (!img || img === "null" || img === "undefined" || !img.trim()) {
+      return "/images/events/blog1.jpg";
+    }
+    if (img.startsWith("http") || img.startsWith("/")) {
+      return img;
+    }
+    return `/images/events/${img}`;
+  };
+
   return (
     <article className={styles.card} aria-labelledby={`title-${post.id}`}>
       <Link href={`/blog/${postSlug}`} className={styles.imageLink}>
         <div className={styles.imageWrapper}>
           <Image
-            src={post.image}
+            src={getValidImg(post.image)}
             alt={post.title}
             fill
+            unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 380px"
             className={styles.postImage}
           />
