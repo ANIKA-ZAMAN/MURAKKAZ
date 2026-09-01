@@ -206,29 +206,8 @@ function ShopContent() {
           onSortChange={handleSortChange}
         />
 
-        {/* Category Filter Pills & Official Price List Trigger */}
-        <div className={styles.categoryBar}>
-          <div className={styles.categoryPills}>
-            <button
-              onClick={() => handleCategoryTab(null)}
-              className={`${styles.catPill} ${!activeCategory ? styles.catPillActive : ''}`}
-            >
-              All Perfumes ({productsList.length || 62})
-            </button>
-            <button
-              onClick={() => handleCategoryTab('Exclusive')}
-              className={`${styles.catPill} ${styles.catPillExclusive} ${activeCategory === 'Exclusive' ? styles.catPillActive : ''}`}
-            >
-              💎 Exclusive / Premium (10)
-            </button>
-            <button
-              onClick={() => handleCategoryTab('Regular')}
-              className={`${styles.catPill} ${activeCategory === 'Regular' ? styles.catPillActive : ''}`}
-            >
-              🌿 Regular Collection (52)
-            </button>
-          </div>
-
+        {/* Official Price List Trigger */}
+        <div className={styles.categoryBar} style={{ justifyContent: "flex-end" }}>
           <button
             onClick={() => setShowPriceModal(true)}
             className={styles.priceListBtn}
