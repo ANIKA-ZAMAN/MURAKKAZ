@@ -58,7 +58,7 @@ export default function WishlistPage() {
               inspiredBy: match.inspiredBy
                 ? `Inspired by ${match.inspiredBy}`
                 : (match.brand ? `By ${match.brand}` : match.name),
-              price: "300 - 2500tk",
+              price: "300 - 1500tk",
               rating: (match.rating || 4.8).toString(),
               ratingCount: match.reviews || 180,
               inWishlist: true,
@@ -71,7 +71,7 @@ export default function WishlistPage() {
               name: entry.name,
               image: entry.image || "/images/products/jade_serenity.png",
               inspiredBy: entry.brand ? `By ${entry.brand}` : entry.name,
-              price: "300 - 2500tk",
+              price: "300 - 1500tk",
               rating: (entry.rating || 4.8).toString(),
               ratingCount: entry.ratingCount || 150,
               inWishlist: true,
@@ -93,7 +93,7 @@ export default function WishlistPage() {
           inspiredBy: p.inspiredBy
             ? `Inspired by ${p.inspiredBy}`
             : (p.brand ? `By ${p.brand}` : p.name),
-          price: "300 - 2500tk",
+          price: "300 - 1500tk",
           rating: (p.rating || 4.8).toString(),
           ratingCount: p.reviews || 150,
           inWishlist: false,
@@ -176,8 +176,8 @@ export default function WishlistPage() {
       const prices = isExclusive ? {
         "6ml": 300,
         "10ml": 500,
-        "30ml": 1500,
-        "50ml": 2500,
+        "30ml": 900,
+        "50ml": 1500,
       } : {
         "6ml": 300,
         "10ml": 500,

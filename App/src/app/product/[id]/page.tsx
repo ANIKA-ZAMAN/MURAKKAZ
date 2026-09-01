@@ -247,19 +247,11 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   // Size and pricing configuration from centralized pricing config
   const defaultSizeOptions = React.useMemo(() => {
-    if (isExclusive) {
-      return [
-        { label: "6ml", price: 300 },
-        { label: "10ml", price: 500 },
-        { label: "30ml", price: 1500 },
-        { label: "50ml", price: 2500 },
-      ];
-    }
     return [
       { label: "6ml", price: 300 },
       { label: "10ml", price: 500 },
-      { label: "30ml", price: 1500 },
-      { label: "50ml", price: 2500 },
+      { label: "30ml", price: 900 },
+      { label: "50ml", price: 1500 },
     ];
   }, [isExclusive]);
 
@@ -482,12 +474,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       sizeOptions.forEach((s: { label: string; price: number }) => {
         priceMap[s.label] = s.price;
       });
-      const defaultMap = isExclusive ? {
-        "6ml": 300,
-        "10ml": 500,
-        "30ml": 1500,
-        "50ml": 2500,
-      } : {
+      const defaultMap = {
         "6ml": 300,
         "10ml": 500,
         "30ml": 900,

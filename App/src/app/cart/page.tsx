@@ -30,8 +30,8 @@ const initialCartItems: CartItem[] = [
     prices: {
       "6ml": 300,
       "10ml": 500,
-      "30ml": 1500,
-      "50ml": 2500,
+      "30ml": 900,
+      "50ml": 1500,
     },
     selected: true,
   },
@@ -45,8 +45,8 @@ const initialCartItems: CartItem[] = [
     prices: {
       "6ml": 300,
       "10ml": 500,
-      "30ml": 1500,
-      "50ml": 2500,
+      "30ml": 900,
+      "50ml": 1500,
     },
     selected: true,
   },
