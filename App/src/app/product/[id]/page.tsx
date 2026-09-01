@@ -381,40 +381,59 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   }, [id]);
 
   const details = React.useMemo(() => {
-    // 1. If catalog item exists in master luxury catalog (63 fragrances with curated notes & Set B studio renders):
+    // 1. If catalog item exists in master luxury catalog:
     if (catalogItem) {
-      const allNotes = catalogItem.notes && catalogItem.notes.length > 0 ? catalogItem.notes : ["Bergamot", "Jasmine", "Amber"];
-      const oneThird = Math.max(1, Math.floor(allNotes.length / 3));
+      const topRaw = (catalogItem.notes || []).filter((n: any) => typeof n === "object" && n?.type === "TOP").map((n: any) => n.name);
+      const midRaw = (catalogItem.notes || []).filter((n: any) => typeof n === "object" && n?.type === "MIDDLE").map((n: any) => n.name);
+      const baseRaw = (catalogItem.notes || []).filter((n: any) => typeof n === "object" && n?.type === "BASE").map((n: any) => n.name);
 
-      const topNotes = allNotes.slice(0, oneThird).map((n) => ({ name: n, image: getNoteImage(n) }));
-      const middleNotes = allNotes.slice(oneThird, oneThird * 2).map((n) => ({ name: n, image: getNoteImage(n) }));
-      const baseNotes = allNotes.slice(oneThird * 2).map((n) => ({ name: n, image: getNoteImage(n) }));
+      const allNames: string[] = (catalogItem.notes || []).map((n: any) => (typeof n === "string" ? n : n?.name || "")).filter(Boolean);
+      const fallbackNames = allNames.length > 0 ? allNames : ["Bergamot", "Jasmine", "Amber"];
+      const oneThird = Math.max(1, Math.floor(fallbackNames.length / 3));
+
+      const topNotes = (topRaw.length > 0 ? topRaw : fallbackNames.slice(0, oneThird)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+      const middleNotes = (midRaw.length > 0 ? midRaw : fallbackNames.slice(oneThird, oneThird * 2)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+      const baseNotes = (baseRaw.length > 0 ? baseRaw : fallbackNames.slice(oneThird * 2)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+
+      const accords = (catalogItem.accords && catalogItem.accords.length > 0)
+        ? catalogItem.accords.map((a: any) => ({
+            name: a.name,
+            pct: a.percentage || a.pct || 80,
+            color: a.color || "#e2cc9e",
+            path: a.path || "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z"
+          }))
+        : [
+            { name: catalogItem.family || "Woody", pct: 90, color: "#e2cc9e", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+            { name: "Aromatic", pct: 75, color: "#b9cad7", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+            { name: "Spicy", pct: 60, color: "#e89f65", path: "M4 18L18 4" }
+          ];
+
+      const bestFor = (catalogItem.bestFor && catalogItem.bestFor.length > 0)
+        ? catalogItem.bestFor.map((b: any) => ({
+            name: b.name,
+            pct: b.percentage || b.pct || 80
+          }))
+        : [
+            { name: "Spring & Summer", pct: 80 },
+            { name: "Autumn & Winter", pct: 85 },
+            { name: "Daytime Wear", pct: 75 },
+            { name: "Nightly Occasions", pct: 90 }
+          ];
 
       return {
         name: catalogItem.name,
-        inspiredBy: catalogItem.inspiredBy ? `Inspired by ${catalogItem.inspiredBy}` : (catalogItem.brand ? `Inspired by ${catalogItem.brand}` : ''),
+        inspiredBy: catalogItem.inspiredBy ? `Inspired by ${catalogItem.inspiredBy}` : (catalogItem.brand ? `Inspired by ${catalogItem.brand}` : ""),
         badge: catalogItem.badge || "Best Seller",
         description: catalogItem.description || `${catalogItem.name} by ${catalogItem.brand}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
         image: catalogItem.image,
         family: catalogItem.family || "Woody",
-        galleryImages: [
-          catalogItem.image
-        ],
+        galleryImages: [catalogItem.image],
         topNotes,
         middleNotes,
         baseNotes,
-        accords: [
-          { name: catalogItem.family || "Woody", pct: 90, color: "#e2cc9e", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
-          { name: "Aromatic", pct: 75, color: "#b9cad7", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
-          { name: "Spicy", pct: 60, color: "#e89f65", path: "M4 18L18 4" }
-        ],
-        bestFor: [
-          { name: "Spring & Summer", pct: 80 },
-          { name: "Autumn & Winter", pct: 85 },
-          { name: "Daytime Wear", pct: 75 },
-          { name: "Nightly Occasions", pct: 90 }
-        ],
-        ourTake: catalogItem.description || `${catalogItem.name} is a captivating fragrance formulation.`
+        accords,
+        bestFor,
+        ourTake: catalogItem.ourTake || catalogItem.description || `${catalogItem.name} is a captivating fragrance formulation.`
       };
     }
 
@@ -434,8 +453,8 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   useEffect(() => {
     setActiveImageIndex(0);
     setQuantity(1);
-    setSelectedSizeOpt(sizeOptions[1]);
-  }, [targetKey]);
+    setSelectedSizeOpt(sizeOptions[1] || sizeOptions[0]);
+  }, [targetKey, sizeOptions]);
 
   // Dynamic countdown timer loop & screen size check for accordion default
   useEffect(() => {
