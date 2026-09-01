@@ -16,6 +16,26 @@ export interface ProductFilterParams {
   limit?: number;
 }
 
+const EXCLUSIVE_SLUGS = new Set([
+  'irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace',
+  'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
+  'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
+  'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
+  'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
+]);
+
+function attachCategory(p: any) {
+  if (!p) return p;
+  const isExclusive = (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500)) ||
+    EXCLUSIVE_SLUGS.has(p.slug) ||
+    EXCLUSIVE_SLUGS.has(p.id) ||
+    p.category?.toLowerCase() === 'exclusive';
+  return {
+    ...p,
+    category: isExclusive ? 'Exclusive' : 'Regular'
+  };
+}
+
 export const getProducts = async (filters: ProductFilterParams) => {
   const { q, family, gender, occasion, meter, notes, maxPrice, sort, page, limit } = filters;
   const { skip, take } = getPaginationParams({ page: page?.toString(), limit: limit?.toString() });
@@ -81,7 +101,7 @@ export const getProducts = async (filters: ProductFilterParams) => {
         products = products.slice(skip, skip + take);
       }
 
-      return createPaginatedResult(products, total, page || 1, limit || 12);
+      return createPaginatedResult(products.map(attachCategory), total, page || 1, limit || 12);
     },
     () => {
       let products = dbStore.products.filter(p => p.isActive !== false);
@@ -93,7 +113,7 @@ export const getProducts = async (filters: ProductFilterParams) => {
       }
       const total = products.length;
       const paginated = products.slice(skip, skip + (limit || 12));
-      return createPaginatedResult(paginated, total, page || 1, limit || 12);
+      return createPaginatedResult(paginated.map(attachCategory), total, page || 1, limit || 12);
     }
   );
 };
@@ -120,12 +140,12 @@ export const getProductBySlug = async (slug: string) => {
       });
 
       if (!product) throw new AppError('Product not found', 404);
-      return product;
+      return attachCategory(product);
     },
     () => {
       const product = dbStore.products.find((p) => p.slug === slug || p.id === slug);
       if (!product) throw new AppError('Product not found', 404);
-      return { ...product, aggregateRating: product.rating || 5, accords: [], bestFor: [], galleryImages: [], reviews: [] };
+      return attachCategory({ ...product, aggregateRating: product.rating || 5, accords: [], bestFor: [], galleryImages: [], reviews: [] });
     }
   );
 };
