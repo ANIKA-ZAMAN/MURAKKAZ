@@ -79,12 +79,24 @@ export const EXCLUSIVE_FRAGRANCES = new Set([
   'prod-imagination-10'
 ]);
 
+function slugifyName(text?: string): string {
+  if (!text) return "";
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
+}
+
 export function resolvePerfumeCategory(product: {
   category?: string;
   slug?: string;
   name?: string;
   id?: string;
   badge?: string;
+  sizes?: Array<{ price?: number | string }>;
 }): PerfumeCategory {
   if (product.category && product.category.toLowerCase() === 'exclusive') {
     return 'exclusive';
@@ -94,7 +106,15 @@ export function resolvePerfumeCategory(product: {
   }
   const cleanSlug = (product.slug || '').toLowerCase().trim();
   const cleanId = (product.id || '').toLowerCase().trim();
-  if (EXCLUSIVE_FRAGRANCES.has(cleanSlug) || EXCLUSIVE_FRAGRANCES.has(cleanId)) {
+  const nameSlug = slugifyName(product.name);
+  if (
+    EXCLUSIVE_FRAGRANCES.has(cleanSlug) ||
+    EXCLUSIVE_FRAGRANCES.has(cleanId) ||
+    EXCLUSIVE_FRAGRANCES.has(nameSlug)
+  ) {
+    return 'exclusive';
+  }
+  if (product.sizes && Array.isArray(product.sizes) && product.sizes.some((s) => Number(s.price) >= 2500)) {
     return 'exclusive';
   }
   return 'regular';

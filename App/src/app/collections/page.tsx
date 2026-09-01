@@ -9,6 +9,7 @@ import FilterDrawer from "../components/FilterDrawer";
 import Pagination from "../components/Pagination";
 import CollectionCard from "./components/CollectionCard";
 import { Product, productsCatalog, fetchLiveProducts } from "../data/products";
+import { resolvePerfumeCategory } from "../data/pricing";
 import styles from "./page.module.css";
 
 function CollectionsContent() {
@@ -167,33 +168,15 @@ function CollectionsContent() {
   });
 
   // Sort logic
-  const EXCLUSIVE_SET = new Set([
-    'irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace',
-    'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
-    'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
-    'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
-    'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
-  ]);
-
-  const checkIsExclusive = (p: Product) => {
-    if (p.category && p.category.toLowerCase() === 'exclusive') return true;
-    if (p.badge && p.badge.toLowerCase().includes('exclusive')) return true;
-    const slug = (p.slug || '').toLowerCase().trim();
-    const id = (p.id || '').toLowerCase().trim();
-    if (EXCLUSIVE_SET.has(slug) || EXCLUSIVE_SET.has(id)) return true;
-    if (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500)) return true;
-    return false;
-  };
-
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    const aIsExcl = checkIsExclusive(a);
-    const bIsExcl = checkIsExclusive(b);
+    const aIsExcl = resolvePerfumeCategory(a) === 'exclusive';
+    const bIsExcl = resolvePerfumeCategory(b) === 'exclusive';
     
     const aPrice = a.maxPriceVal || (a.sizes && Array.isArray(a.sizes) && a.sizes.length > 0 ? Math.max(...a.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n))) : (aIsExcl ? 2500 : 1500));
     const bPrice = b.maxPriceVal || (b.sizes && Array.isArray(b.sizes) && b.sizes.length > 0 ? Math.max(...b.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n))) : (bIsExcl ? 2500 : 1500));
 
     if (sortBy === "price_desc") {
-      // High to Low: Exclusive perfumes (৳2,500 - ৳5,000) on top, then Normal / Regular (৳1,500)
+      // High to Low: Exclusive perfumes (৳2,500 - ৳5,000 tier) on top, then Normal / Regular (৳1,500)
       if (aIsExcl && !bIsExcl) return -1;
       if (!aIsExcl && bIsExcl) return 1;
       if (bPrice !== aPrice) return bPrice - aPrice;
@@ -201,7 +184,7 @@ function CollectionsContent() {
     }
 
     if (sortBy === "price_asc") {
-      // Low to High: Normal / Regular perfumes on top, then Exclusive perfumes
+      // Low to High: Normal / Regular perfumes on top, then Exclusive perfumes at bottom
       if (!aIsExcl && bIsExcl) return -1;
       if (aIsExcl && !bIsExcl) return 1;
       if (aPrice !== bPrice) return aPrice - bPrice;
