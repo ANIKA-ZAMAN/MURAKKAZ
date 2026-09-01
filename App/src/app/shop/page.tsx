@@ -16,7 +16,7 @@ function ShopContent() {
 
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showPriceModal, setShowPriceModal] = useState(false);
+
   
   // Initialize state directly from URL query parameters
   const initialQ = searchParams.get("q") || "";
@@ -65,13 +65,6 @@ function ShopContent() {
     setCurrentPage(1);
   };
 
-  const handleCategoryTab = (category: string | null) => {
-    setSelectedFilters((prev) => ({
-      ...prev,
-      category: category ? [category] : [],
-    }));
-    setCurrentPage(1);
-  };
 
   const handlePriceChange = (price: number) => {
     setMaxPrice(price);
@@ -206,18 +199,6 @@ function ShopContent() {
           onSortChange={handleSortChange}
         />
 
-        {/* Official Price List Trigger */}
-        <div className={styles.categoryBar} style={{ justifyContent: "flex-end" }}>
-          <button
-            onClick={() => setShowPriceModal(true)}
-            className={styles.priceListBtn}
-            aria-label="View official price list"
-          >
-            <span>📋</span>
-            <span>Shop Price List</span>
-          </button>
-        </div>
-
         {/* Content Layout: In-Screen Left Filter Sidebar + Responsive Product Grid */}
         <div className={styles.contentLayout}>
           {isFilterOpen && (
@@ -246,141 +227,6 @@ function ShopContent() {
         {/* Explore Our Recommendation Section */}
         <RecommendationSlider />
       </main>
-
-      {/* Official Price List Modal */}
-      {showPriceModal && (
-        <div className={styles.modalOverlay} onClick={() => setShowPriceModal(false)}>
-          <div className={styles.priceModal} onClick={(e) => e.stopPropagation()}>
-            <div className={styles.modalHeader}>
-              <div className={styles.modalTitleGroup}>
-                <h2 className={styles.modalTitle}>Murakkaz Shop Price List</h2>
-                <p className={styles.modalSubtitle}>Transparent pricing across our two master fragrance categories</p>
-              </div>
-              <button 
-                className={styles.modalCloseBtn}
-                onClick={() => setShowPriceModal(false)}
-                aria-label="Close price list modal"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className={styles.modalBody}>
-              {/* Card 1: Exclusive Collection */}
-              <div className={`${styles.priceCard} ${styles.priceCardExclusive}`}>
-                <div className={styles.priceCardHeader}>
-                  <span className={styles.categoryBadgeExclusive}>💎 Exclusive / Premium</span>
-                  <h3 className={styles.priceCardTitle}>Expensive Fragrances Catalogue</h3>
-                  <p className={styles.priceCardDesc}>
-                    10 ultra-luxury, high-concentration niche fragrances with rare and precious raw extracts.
-                  </p>
-                  <div className={styles.includedPerfumes}>
-                    <strong>Includes:</strong> Irish Leather, Baccarat Rouge 540, Tobacco Vanille, By the Fireplace, Resala, Sultani, Guidance, Rosewood, Sakura Dior, Imagination.
-                  </div>
-                </div>
-
-                <div className={styles.tableWrapper}>
-                  <table className={styles.pricingTable}>
-                    <thead>
-                      <tr>
-                        <th>Bottle Size</th>
-                        <th className={styles.thRight}>Price (BDT)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><strong>6 ml</strong></td>
-                        <td className={styles.priceCell}>৳300</td>
-                      </tr>
-                      <tr>
-                        <td><strong>12 ml</strong></td>
-                        <td className={styles.priceCell}>৳500</td>
-                      </tr>
-                      <tr>
-                        <td><strong>30 ml</strong></td>
-                        <td className={styles.priceCell}>৳1,500</td>
-                      </tr>
-                      <tr>
-                        <td><strong>50 ml</strong></td>
-                        <td className={styles.priceCell}>৳2,500</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <button
-                  className={styles.filterCategoryBtn}
-                  onClick={() => {
-                    handleCategoryTab('Exclusive');
-                    setShowPriceModal(false);
-                  }}
-                >
-                  View Exclusive Fragrances (10) →
-                </button>
-              </div>
-
-              {/* Card 2: Regular Collection */}
-              <div className={styles.priceCard}>
-                <div className={styles.priceCardHeader}>
-                  <span className={styles.categoryBadgeRegular}>🌿 Regular Collection</span>
-                  <h3 className={styles.priceCardTitle}>Signature Daily Perfumes</h3>
-                  <p className={styles.priceCardDesc}>
-                    52 designer-inspired and artisanal compositions engineered for executive projection and long-lasting sillage.
-                  </p>
-                  <div className={styles.includedPerfumes}>
-                    <strong>Includes:</strong> Ultra Male, Bad Boy, Stronger With You, Valentino Donna, Sexy Secret, Bombshell, Mon Guerlain, Spicebomb Extreme, Sauvage, Eros, MYSLF & more.
-                  </div>
-                </div>
-
-                <div className={styles.tableWrapper}>
-                  <table className={styles.pricingTable}>
-                    <thead>
-                      <tr>
-                        <th>Bottle Size</th>
-                        <th className={styles.thRight}>Price (BDT)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><strong>6 ml</strong></td>
-                        <td className={styles.priceCell}>৳300</td>
-                      </tr>
-                      <tr>
-                        <td><strong>12 ml</strong></td>
-                        <td className={styles.priceCell}>৳500</td>
-                      </tr>
-                      <tr>
-                        <td><strong>30 ml</strong></td>
-                        <td className={styles.priceCell}>৳1,500</td>
-                      </tr>
-                      <tr>
-                        <td><strong>50 ml</strong></td>
-                        <td className={styles.priceCell}>৳2,500</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <button
-                  className={styles.filterCategoryBtn}
-                  onClick={() => {
-                    handleCategoryTab('Regular');
-                    setShowPriceModal(false);
-                  }}
-                >
-                  View Regular Fragrances (52) →
-                </button>
-              </div>
-            </div>
-
-            <div className={styles.modalFooter}>
-              <p className={styles.guaranteeText}>
-                ✨ All formulations use authentic French & Middle Eastern oil concentrates with no artificial diluents.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
