@@ -26,7 +26,7 @@ export default function AeethodBadge() {
 
   return (
     <div className={styles.badgeWrapper} ref={wrapperRef}>
-      {/* 1. Main Pill Badge (Default & Hover States) */}
+      {/* 1. Main Interactive Pill / Trigger */}
       <button
         type="button"
         className={styles.pill}
@@ -34,24 +34,24 @@ export default function AeethodBadge() {
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsExpanded((prev) => !prev)}
         aria-expanded={isExpanded}
-        aria-label="Engineered by Aeethod"
+        aria-label="Crafted by Aeethod"
       >
-        {/* Logo */}
+        {/* Logo (Direct PNG from user) */}
         <div className={styles.logoWrap}>
           <Image
-            src="/images/aeethod_logo.png"
+            src={isHovered ? "/images/aeethod_logo_gold.png" : "/images/aeethod_logo_white.png"}
             alt="Aeethod Logo"
-            width={24}
-            height={24}
+            width={28}
+            height={28}
             className={styles.logoImg}
             priority
           />
         </div>
 
-        {/* Divider */}
+        {/* Vertical Divider */}
         <div className={styles.divider} />
 
-        {/* Text Zone: Switches smoothly on Hover */}
+        {/* Text Area */}
         <div className={styles.contentArea}>
           {!isHovered ? (
             <span className={styles.defaultText}>CRAFTED BY AEETHOD</span>
@@ -65,7 +65,7 @@ export default function AeethodBadge() {
           )}
         </div>
 
-        {/* Dot Indicator */}
+        {/* Accent Dot */}
         <div className={styles.dot} />
       </button>
 
@@ -88,10 +88,10 @@ export default function AeethodBadge() {
           {/* Expanded Logo */}
           <div className={styles.expandedLogoWrap}>
             <Image
-              src="/images/aeethod_logo.png"
+              src="/images/aeethod_logo_gold.png"
               alt="Aeethod Agency"
-              width={40}
-              height={40}
+              width={42}
+              height={42}
               className={styles.expandedLogoImg}
             />
           </div>
