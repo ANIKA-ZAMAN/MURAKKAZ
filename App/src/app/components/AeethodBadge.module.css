@@ -1,0 +1,295 @@
+.badgeWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  z-index: 60;
+  user-select: none;
+}
+
+/* 1. Main Interactive Pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(18, 18, 20, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.pill::before {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 15%;
+  right: 15%;
+  height: 12px;
+  background: radial-gradient(ellipse at center, rgba(197, 168, 128, 0.45) 0%, rgba(197, 168, 128, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.pill:hover {
+  background: rgba(24, 24, 28, 0.95);
+  border-color: rgba(197, 168, 128, 0.45);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 0 15px rgba(197, 168, 128, 0.15);
+  transform: translateY(-1px);
+}
+
+.pill:hover::before {
+  opacity: 1;
+}
+
+/* Logo Image & Icon */
+.logoWrap {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition: all 0.3s ease;
+}
+
+.pill:hover .logoImg {
+  filter: brightness(0) saturate(100%) invert(80%) sepia(25%) saturate(550%) hue-rotate(350deg) brightness(95%) contrast(90%);
+  transform: scale(1.08);
+}
+
+/* Vertical Divider */
+.divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.pill:hover .divider {
+  background: rgba(197, 168, 128, 0.35);
+}
+
+/* Content Container */
+.contentArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 135px;
+}
+
+/* Default State Text */
+.defaultText {
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #F5F1E8;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+}
+
+/* Hover State Animated Text */
+.hoverContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.hoverLine1 {
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+.goldHighlight {
+  color: #C5A880;
+}
+
+.hoverLine2 {
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #9A9A9C;
+  white-space: nowrap;
+}
+
+/* Dot Indicator */
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  opacity: 0.8;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.pill:hover .dot {
+  background: #C5A880;
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(197, 168, 128, 0.8);
+  transform: scale(1.2);
+}
+
+/* ── 3. Expanded Popup Card ── */
+.expandedCard {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 360px;
+  max-width: 90vw;
+  background: #111114;
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(197, 168, 128, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  animation: cardFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  z-index: 70;
+}
+
+.expandedCard::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20%;
+  right: 20%;
+  height: 16px;
+  background: radial-gradient(ellipse at center, rgba(197, 168, 128, 0.4) 0%, rgba(197, 168, 128, 0) 70%);
+  pointer-events: none;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.expandedLogoWrap {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.expandedLogoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(80%) sepia(25%) saturate(550%) hue-rotate(350deg) brightness(95%) contrast(90%);
+}
+
+.expandedDivider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(197, 168, 128, 0.25);
+  flex-shrink: 0;
+}
+
+.expandedBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.expandedBrandName {
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C5A880;
+  margin: 0;
+}
+
+.expandedDesc {
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #D1D1D6;
+  margin: 0;
+}
+
+.expandedLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  font-family: var(--font-sans, -apple-system, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  color: #C5A880;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.expandedLink:hover {
+  color: #E6D0B3;
+  transform: translateX(2px);
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #9A9A9C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  background: rgba(197, 168, 128, 0.2);
+  color: #FFFFFF;
+}
+
+@media (max-width: 640px) {
+  .expandedCard {
+    width: 320px;
+    right: -10px;
+  }
+}
