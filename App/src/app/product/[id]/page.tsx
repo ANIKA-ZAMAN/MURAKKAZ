@@ -35,8 +35,8 @@ const productsDetailMap: Record<string, {
     family: "Citrus",
     galleryImages: [
       "/images/products/jade_serenity.png",
+      "/images/murakkaz_cream_lineup.jpg",
       "/images/products/amber_gold.png",
-      "/images/products/velvet_oud.png",
     ],
     topNotes: [
       { name: "Osmanthus", image: "osmanthus.png" },
@@ -82,8 +82,8 @@ const productsDetailMap: Record<string, {
     family: "Fresh",
     galleryImages: [
       "/images/products/coral_sea.png",
+      "/images/murakkaz_cream_lineup.jpg",
       "/images/products/jade_serenity.png",
-      "/images/products/magnetism.png",
     ],
     topNotes: [
       { name: "Bergamot", image: "bergamot.png" },
@@ -121,8 +121,8 @@ const productsDetailMap: Record<string, {
     family: "Woody",
     galleryImages: [
       "/images/products/magnetism.png",
+      "/images/murakkaz_cream_lineup.jpg",
       "/images/products/hellenist.png",
-      "/images/products/velvet_oud.png",
     ],
     topNotes: [
       { name: "Cinnamon", image: "cinnamon.png" },
@@ -163,7 +163,7 @@ const productsDetailMap: Record<string, {
     family: "Oriental",
     galleryImages: [
       "/images/products/hellenist.png",
-      "/images/products/magnetism.png",
+      "/images/murakkaz_cream_lineup.jpg",
       "/images/products/amber_gold.png",
     ],
     topNotes: [
@@ -314,9 +314,11 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             description: p.description || `${p.name} by ${p.brand || 'Murakkaz'}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
             image: p.image || '/images/products/jade_serenity.png',
             family: p.family || 'Woody',
-            galleryImages: p.galleryImages && p.galleryImages.length > 0 
-              ? p.galleryImages.map((g: any) => g.url) 
-              : [p.image || '/images/products/jade_serenity.png'],
+            galleryImages: [
+              p.image || '/images/products/jade_serenity.png',
+              '/images/murakkaz_cream_lineup.jpg',
+              ...(p.galleryImages || []).map((g: any) => typeof g === 'string' ? g : g.url).filter((u: string) => u !== (p.image || '/images/products/jade_serenity.png') && u !== '/images/murakkaz_cream_lineup.jpg')
+            ],
             topNotes: (() => {
               const top = p.notes?.filter((n: any) => n.type === 'TOP').map((n: any) => ({ name: typeof n === 'string' ? n : n.name, image: getNoteImage(typeof n === 'string' ? n : n.name) })) || [];
               if (top.length > 0) return top;
@@ -427,7 +429,11 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         description: catalogItem.description || `${catalogItem.name} by ${catalogItem.brand}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
         image: catalogItem.image,
         family: catalogItem.family || "Woody",
-        galleryImages: [catalogItem.image],
+        galleryImages: [
+          catalogItem.image,
+          '/images/murakkaz_cream_lineup.jpg',
+          ...(catalogItem.galleryImages || []).filter((g: string) => g !== catalogItem.image && g !== '/images/murakkaz_cream_lineup.jpg')
+        ],
         topNotes,
         middleNotes,
         baseNotes,

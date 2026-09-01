@@ -35,8 +35,8 @@ function JadeSerenityProductContent() {
   // Gallery images list using existing high-quality assets
   const galleryImages = [
     "/images/products/jade_serenity.png",
+    "/images/murakkaz_cream_lineup.jpg",
     "/images/products/amber_gold.png",
-    "/images/products/velvet_oud.png",
   ];
 
   // Reusable fragrance notes data list
