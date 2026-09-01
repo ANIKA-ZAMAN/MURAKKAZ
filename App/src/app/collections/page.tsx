@@ -167,19 +167,47 @@ function CollectionsContent() {
   });
 
   // Sort logic
+  const EXCLUSIVE_SET = new Set([
+    'irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace',
+    'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
+    'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
+    'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
+    'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
+  ]);
+
+  const checkIsExclusive = (p: Product) => {
+    if (p.category && p.category.toLowerCase() === 'exclusive') return true;
+    if (p.badge && p.badge.toLowerCase().includes('exclusive')) return true;
+    const slug = (p.slug || '').toLowerCase().trim();
+    const id = (p.id || '').toLowerCase().trim();
+    if (EXCLUSIVE_SET.has(slug) || EXCLUSIVE_SET.has(id)) return true;
+    if (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500)) return true;
+    return false;
+  };
+
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    const aIsExcl = (a.category?.toLowerCase() === 'exclusive') || (a.badge?.toLowerCase().includes('exclusive')) || (a.sizes && Array.isArray(a.sizes) && a.sizes.some((s: any) => Number(s.price) >= 2500));
-    const bIsExcl = (b.category?.toLowerCase() === 'exclusive') || (b.badge?.toLowerCase().includes('exclusive')) || (b.sizes && Array.isArray(b.sizes) && b.sizes.some((s: any) => Number(s.price) >= 2500));
+    const aIsExcl = checkIsExclusive(a);
+    const bIsExcl = checkIsExclusive(b);
     
     const aPrice = a.maxPriceVal || (a.sizes && Array.isArray(a.sizes) && a.sizes.length > 0 ? Math.max(...a.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n))) : (aIsExcl ? 2500 : 1500));
     const bPrice = b.maxPriceVal || (b.sizes && Array.isArray(b.sizes) && b.sizes.length > 0 ? Math.max(...b.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n))) : (bIsExcl ? 2500 : 1500));
 
-    if (sortBy === "price_asc") {
-      return aPrice - bPrice;
-    }
     if (sortBy === "price_desc") {
-      return bPrice - aPrice;
+      // High to Low: Exclusive perfumes (৳2,500 - ৳5,000) on top, then Normal / Regular (৳1,500)
+      if (aIsExcl && !bIsExcl) return -1;
+      if (!aIsExcl && bIsExcl) return 1;
+      if (bPrice !== aPrice) return bPrice - aPrice;
+      return (b.rating || 0) - (a.rating || 0);
     }
+
+    if (sortBy === "price_asc") {
+      // Low to High: Normal / Regular perfumes on top, then Exclusive perfumes
+      if (!aIsExcl && bIsExcl) return -1;
+      if (aIsExcl && !bIsExcl) return 1;
+      if (aPrice !== bPrice) return aPrice - bPrice;
+      return (b.rating || 0) - (a.rating || 0);
+    }
+
     if (sortBy === "rating") {
       return (b.rating || 0) - (a.rating || 0);
     }
