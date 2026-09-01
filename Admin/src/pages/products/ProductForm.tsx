@@ -41,16 +41,16 @@ const METERS = ['INTIMATE', 'MODERATE', 'LONG_LASTING', 'BEAST_MODE'];
 
 const REGULAR_SIZES: SizeRow[] = [
   { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
-  { size: '12ml', price: 500, originalPrice: 650, stock: 50 },
-  { size: '30ml', price: 1500, originalPrice: 1900, stock: 35 },
-  { size: '50ml', price: 2500, originalPrice: 3200, stock: 25 },
+  { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+  { size: '30ml', price: 900, originalPrice: 1100, stock: 35 },
+  { size: '50ml', price: 1500, originalPrice: 1900, stock: 25 },
 ];
 
 const EXCLUSIVE_SIZES: SizeRow[] = [
-  { size: '6ml', price: 300, originalPrice: 450, stock: 50 },
-  { size: '12ml', price: 500, originalPrice: 750, stock: 50 },
-  { size: '30ml', price: 1500, originalPrice: 2200, stock: 35 },
-  { size: '50ml', price: 2500, originalPrice: 3600, stock: 25 },
+  { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+  { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+  { size: '30ml', price: 1500, originalPrice: 1900, stock: 35 },
+  { size: '50ml', price: 2500, originalPrice: 3200, stock: 25 },
 ];
 
 const DEFAULT_SIZES: SizeRow[] = REGULAR_SIZES;

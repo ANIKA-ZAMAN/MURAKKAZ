@@ -53,12 +53,20 @@ function sanitizeGallery(galleryImages: any[]) {
   }));
 }
 
+const EXCLUSIVE_SLUGS = new Set([
+  'irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace',
+  'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
+  'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
+  'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
+  'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
+]);
+
 // List all products for admin
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await safeDbCall(
       async () => {
-        return await prisma.product.findMany({
+        const raw = await prisma.product.findMany({
           orderBy: { createdAt: 'desc' },
           include: {
             sizes: true,
@@ -68,8 +76,15 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
             galleryImages: true,
           },
         });
+        return raw.map(p => ({
+          ...p,
+          category: (p.sizes?.some((s: any) => Number(s.price) >= 2500) || EXCLUSIVE_SLUGS.has(p.slug)) ? 'Exclusive' : 'Regular'
+        }));
       },
-      () => dbStore.products
+      () => dbStore.products.map((p: any) => ({
+        ...p,
+        category: (p.category || (p.sizes?.some((s: any) => Number(s.price) >= 2500) || EXCLUSIVE_SLUGS.has(p.slug)) ? 'Exclusive' : 'Regular')
+      }))
     );
 
     res.json({ status: 'success', data: products });
