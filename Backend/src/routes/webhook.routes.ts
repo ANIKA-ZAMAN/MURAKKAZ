@@ -4,7 +4,19 @@ import { handleSteadfastStatusUpdate } from '../services/courier.service';
 const router = Router();
 
 /**
- * Steadfast Courier Status Webhook
+ * Health check / Verification route for browser visits & webhook URL validators
+ */
+router.get('/steadfast', (req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'active',
+    service: 'Murakkaz Steadfast Webhook Listener',
+    message: 'Endpoint is live and ready to receive POST delivery status callbacks from Steadfast',
+    timestamp: new Date().toISOString()
+  });
+});
+
+/**
+ * Steadfast Courier Status Webhook (POST)
  * Accepts webhook payload from Steadfast when rider changes delivery status
  */
 router.post('/steadfast', async (req: Request, res: Response, next: NextFunction) => {
