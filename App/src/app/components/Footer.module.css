@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .container {
@@ -12,6 +13,8 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
 .footerSvg {
@@ -20,3 +23,12 @@
   display: block;
 }
 
+.badgeRow {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1rem 2.5rem 1rem;
+  background-color: #313134;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}

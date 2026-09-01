@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import AeethodBadge from "./AeethodBadge";
 
 const navLinks = [
   { label: "Our Story", href: "/our-story" },
@@ -253,11 +252,8 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Desktop Right Actions: Aeethod Badge + Embedded Searchbar + Wishlist + Cart + Account */}
-          <div className="hidden lg:flex items-center gap-3.5 xl:gap-4 shrink-0">
-            {/* Aeethod Agency Interactive Badge */}
-            <AeethodBadge />
-
+          {/* Desktop Right Actions: Embedded Searchbar + Wishlist + Cart + Account */}
+          <div className="hidden lg:flex items-center gap-4 xl:gap-5 shrink-0">
             {/* Minimal Luxury Search Bar */}
             <form
               onSubmit={handleSearchSubmit}
@@ -544,12 +540,7 @@ export default function Navbar() {
           </nav>
 
           {/* Account Profile Section */}
-          <div className="w-full mt-10 sm:mt-16 pb-10 flex flex-col items-center justify-center gap-4">
-            {/* Aeethod Agency Badge */}
-            <div className="flex justify-center w-full">
-              <AeethodBadge />
-            </div>
-
+          <div className="w-full mt-16 sm:mt-24 pb-12 flex flex-col items-center justify-center">
             {/* Account Link / Sign In */}
             {isLoggedIn ? (
               <Link

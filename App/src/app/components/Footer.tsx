@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import ScrollReveal from "./ScrollReveal";
+import AeethodBadge from "./AeethodBadge";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
@@ -17,10 +18,13 @@ export default function Footer() {
             className={styles.footerSvg}
             priority
           />
+
+          {/* Footer Agency Attribution Row */}
+          <div className={styles.badgeRow}>
+            <AeethodBadge />
+          </div>
         </div>
       </ScrollReveal>
     </footer>
   );
 }
-
-
