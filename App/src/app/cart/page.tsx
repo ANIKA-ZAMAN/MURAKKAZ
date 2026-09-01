@@ -79,7 +79,6 @@ export default function CartPage() {
                 : {
                     "6ml": 300,
                     "10ml": 500,
-                    "10ml": 500,
                     "30ml": 900,
                     "50ml": 1500,
                   },
