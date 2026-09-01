@@ -10,6 +10,7 @@ import {
   getProductPriceForSize,
   PerfumeCategory,
 } from "../data/pricing";
+import { trackAnalyticsEvent } from "./AnalyticsProvider";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
@@ -281,6 +282,7 @@ export default function ProductCard({
 
                 localStorage.setItem("cart-items", JSON.stringify(cart));
                 window.dispatchEvent(new Event("cart-updated"));
+                trackAnalyticsEvent("ADD_TO_CART", { name: displayName, price: currentPrice, size: selectedSize, slug: targetSlug });
                 router.push("/cart");
               } catch (err) {
                 console.error(err);
@@ -325,6 +327,7 @@ export default function ProductCard({
 
                 localStorage.setItem("cart-items", JSON.stringify(cart));
                 window.dispatchEvent(new Event("cart-updated"));
+                trackAnalyticsEvent("ADD_TO_CART", { name: displayName, price: currentPrice, size: selectedSize, slug: targetSlug });
                 setToastMessage(`Added ${displayName} (${selectedSize} - ৳${currentPrice.toLocaleString()}) to your bag!`);
               } catch (err) {
                 console.error(err);

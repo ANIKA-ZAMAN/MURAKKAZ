@@ -11,6 +11,7 @@ import contentRoutes from './content.routes';
 import storeRoutes from './store.routes';
 import userRoutes from './user.routes';
 import dashboardRoutes from './dashboard.routes';
+import analyticsRoutes from './analytics.routes';
 
 const router = Router();
 
@@ -30,5 +31,6 @@ router.use('/content', contentRoutes);
 router.use('/stores', storeRoutes);
 router.use('/users', userRoutes);
 router.use('/dashboard', dashboardRoutes);
+router.use('/analytics', analyticsRoutes);
 
 export default router;

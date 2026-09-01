@@ -20,6 +20,7 @@ import contentRoutes from './routes/content.routes';
 import storeRoutes from './routes/store.routes';
 import collectionRoutes from './routes/collection.routes';
 import webhookRoutes from './routes/webhook.routes';
+import analyticsRoutes from './routes/analytics.routes';
 import adminRoutes from './routes/admin/index';
 
 const app = express();
@@ -54,6 +55,7 @@ app.use('/api/content', contentRoutes);
 app.use('/api/stores', storeRoutes);
 app.use('/api/collections', collectionRoutes);
 app.use('/api/webhooks', webhookRoutes);
+app.use('/api/analytics', analyticsRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Error handling

@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import FragranceNotes from "../../components/FragranceNotes";
 import { productsCatalog, slugify, getNoteImage, getProductsApiBaseUrl } from "../../data/products";
+import { trackAnalyticsEvent } from "../../components/AnalyticsProvider";
 import styles from "./page.module.css";
 
 // Dynamic database mapping for premium details page content
@@ -556,6 +557,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
     localStorage.setItem("cart-items", JSON.stringify(cartItems));
     window.dispatchEvent(new Event("cart-updated"));
+    trackAnalyticsEvent("ADD_TO_CART", {
+      name: details.name,
+      size: selectedSizeOpt.label,
+      price: selectedSizeOpt.price,
+      quantity,
+      slug: targetKey
+    });
     triggerToast(`Added ${quantity}x ${details.name} (${selectedSizeOpt.label}) to your bag!`);
   };
 

@@ -452,3 +452,76 @@ model NewsletterSubscriber {
   createdAt DateTime @default(now())
 }
 
+// ----------------------------------------------------
+// 📊 Advanced Analytics & Intelligence Models
+// ----------------------------------------------------
+
+model VisitorSession {
+  id              String           @id @default(cuid())
+  sessionId       String           @unique
+  visitorId       String
+  userId          String?
+  ip              String?
+  country         String           @default("Bangladesh")
+  city            String           @default("Dhaka")
+  device          String           @default("Mobile") // Mobile, Desktop, Tablet
+  browser         String           @default("Chrome")
+  os              String           @default("Android")
+  referrer        String?
+  referrerSource  String           @default("Direct") // Direct, Social, Organic Search, Referral, Campaign
+  utmSource       String?
+  utmMedium       String?
+  utmCampaign     String?
+  landingPage     String           @default("/")
+  exitPage        String?
+  pageviewCount   Int              @default(1)
+  durationSeconds Int              @default(0)
+  isBounce        Boolean          @default(true)
+  lastActiveAt    DateTime         @default(now())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  pageviews       PageView[]
+  events          AnalyticsEvent[]
+
+  @@index([visitorId])
+  @@index([createdAt])
+  @@index([lastActiveAt])
+  @@index([referrerSource])
+  @@index([city])
+  @@index([device])
+}
+
+model PageView {
+  id          String         @id @default(cuid())
+  sessionId   String
+  session     VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  url         String
+  path        String
+  title       String?
+  productSlug String?
+  timeOnPage  Int            @default(0) // seconds spent
+  createdAt   DateTime       @default(now())
+
+  @@index([sessionId])
+  @@index([path])
+  @@index([productSlug])
+  @@index([createdAt])
+}
+
+model AnalyticsEvent {
+  id          String         @id @default(cuid())
+  sessionId   String
+  session     VisitorSession @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  eventName   String         // VIEW_PRODUCT, ADD_TO_CART, REMOVE_FROM_CART, START_CHECKOUT, PURCHASE, SEARCH, WISHLIST_ADD
+  productSlug String?
+  metadata    String?        // JSON payload: { price, size, search_query, etc. }
+  createdAt   DateTime       @default(now())
+
+  @@index([sessionId])
+  @@index([eventName])
+  @@index([productSlug])
+  @@index([createdAt])
+}
+
+

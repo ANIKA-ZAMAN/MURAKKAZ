@@ -4,6 +4,7 @@ import styles from './Sidebar.module.css';
 import { useTheme } from '../../context/ThemeContext';
 import {
   LayoutDashboard,
+  BarChart3,
   Package,
   Layers,
   ShoppingCart,
@@ -22,6 +23,7 @@ import {
 
 const NAV_ITEMS = [
   { label: 'Dashboard', path: '/', icon: LayoutDashboard },
+  { label: '360° Analytics', path: '/analytics', icon: BarChart3 },
   { label: 'Products', path: '/products', icon: Package },
   { label: 'Collections', path: '/collections', icon: Layers },
   { label: 'Orders', path: '/orders', icon: ShoppingCart },

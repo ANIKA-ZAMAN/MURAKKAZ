@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import { getApiBaseUrl } from "@/lib/api";
+import { trackAnalyticsEvent } from "../components/AnalyticsProvider";
 
 interface CartItem {
   id: string;
@@ -181,12 +182,11 @@ function CheckoutContent() {
       });
 
       const json = await res.json();
-      if (res.ok && json.status === "success" && json.data) {
-        setOrderId(json.data.orderNumber || `MRK-${Math.floor(100000 + Math.random() * 900000)}`);
-      } else {
-        const generatedId = `MRK-${Math.floor(100000 + Math.random() * 900000)}`;
-        setOrderId(generatedId);
+      let finalOrderNum = `MRK-${Math.floor(100000 + Math.random() * 900000)}`;
+      if (res.ok && json && json.status === "success" && json.data) {
+        finalOrderNum = json.data.orderNumber || finalOrderNum;
       }
+      setOrderId(finalOrderNum);
 
       // Filter out checked out items from global cart list
       const saved = localStorage.getItem("cart-items");
@@ -204,6 +204,7 @@ function CheckoutContent() {
 
       // Trigger cart count badge updates
       window.dispatchEvent(new Event("cart-updated"));
+      trackAnalyticsEvent("PURCHASE", { orderNumber: finalOrderNum, grandTotal: totalAmount });
       setOrderPlaced(true);
     } catch (err) {
       console.warn("Backend order creation error, falling back locally:", err);

@@ -53,6 +53,7 @@ export const metadata: Metadata = {
 
 import GlobalLayout from "./components/GlobalLayout";
 import SmoothScrollProvider from "./components/SmoothScrollProvider";
+import AnalyticsProvider from "./components/AnalyticsProvider";
 
 export default function RootLayout({
   children,
@@ -141,9 +142,11 @@ export default function RootLayout({
           `}
         </Script>
         <SmoothScrollProvider>
-          <GlobalLayout>
-            {children}
-          </GlobalLayout>
+          <AnalyticsProvider>
+            <GlobalLayout>
+              {children}
+            </GlobalLayout>
+          </AnalyticsProvider>
         </SmoothScrollProvider>
       </body>
     </html>

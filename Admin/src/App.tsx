@@ -22,6 +22,7 @@ import Stores from './pages/Stores';
 import Users from './pages/Users';
 import Content from './pages/Content';
 import Settings from './pages/Settings';
+import Analytics from './pages/analytics/Analytics';
 
 const ProtectedLayout: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -63,6 +64,7 @@ function App() {
 
               <Route path="/" element={<ProtectedLayout />}>
                 <Route index element={<Dashboard />} />
+                <Route path="analytics" element={<Analytics />} />
                 <Route path="products" element={<ProductList />} />
                 <Route path="products/new" element={<ProductForm />} />
                 <Route path="products/:id/edit" element={<ProductForm />} />
