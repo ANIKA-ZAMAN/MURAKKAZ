@@ -57,14 +57,14 @@ export default function UpcomingEventsSection({
                   <p className={styles.exactDescText}>{event.description}</p>
                 </div>
 
-                {/* Col 4: Image Banner */}
+                {/* Col 3: Image Banner */}
                 <div className={styles.exactColImageWrap}>
                   <Image
                     src={imageSrc}
                     alt={event.title}
                     fill
                     unoptimized
-                    sizes="(max-width: 768px) 100vw, 240px"
+                    sizes="(max-width: 860px) 100vw, 280px"
                     className={styles.exactMockImage}
                     priority={idx === 0}
                   />

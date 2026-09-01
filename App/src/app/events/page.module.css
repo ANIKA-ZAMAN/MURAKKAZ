@@ -1727,11 +1727,11 @@
 .exactCardRow {
   background: rgba(245, 239, 230, 0.75);
   border: 1.2px solid rgba(175, 155, 125, 0.38);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 1.75rem 2.25rem;
   display: grid;
-  grid-template-columns: 105px 235px 1fr 170px;
-  gap: 2rem;
+  grid-template-columns: 240px 1fr 280px;
+  gap: 2.5rem;
   align-items: center;
   box-shadow: 0 2px 10px rgba(60, 45, 25, 0.02);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -1743,48 +1743,18 @@
   border-color: rgba(165, 135, 92, 0.55);
 }
 
-/* Col 1: Date & Time */
-.exactColDate {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.exactDayNumber {
-  font-family: var(--font-serif-title), var(--font-playfair), Georgia, serif;
-  font-size: 2.75rem;
-  font-weight: 400;
-  line-height: 1;
-  color: #313134;
-}
-
-.exactMonthName {
-  font-family: var(--font-serif-title), var(--font-playfair), Georgia, serif;
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: #313134;
-  margin-top: 2px;
-}
-
-.exactTimeText {
-  font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.72rem;
-  line-height: 1.35;
-  color: #8A8477;
-  margin-top: 1.75rem;
-}
-
-/* Col 2: Title, Location, Days Left, Reminder Button */
+/* Col 1: Title, Location, Reminder Button */
 .exactColTitle {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .exactCardTitle {
   font-family: var(--font-serif-title), var(--font-playfair), Georgia, serif;
   font-size: 1.35rem;
-  font-weight: 400;
+  font-weight: 500;
   color: #313134;
   line-height: 1.3;
   margin-bottom: 0.35rem;
@@ -1794,7 +1764,7 @@
   font-family: var(--font-serif-text), Georgia, serif;
   font-size: 0.85rem;
   color: #767677;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.15rem;
 }
 
 .exactRedDaysLeft {
@@ -1811,11 +1781,12 @@
   font-family: var(--font-serif-text), Georgia, serif;
   font-size: 0.78rem;
   font-weight: 500;
-  padding: 0.5rem 1.25rem;
+  padding: 0.55rem 1.25rem;
   border-radius: 8px;
   border: none;
   cursor: pointer;
   transition: background-color 0.25s ease, transform 0.2s ease;
+  white-space: nowrap;
 }
 
 .exactSetReminderBtn:hover {
@@ -1823,33 +1794,39 @@
   transform: translateY(-1px);
 }
 
-/* Col 3: Description */
+/* Col 2: Description */
 .exactColDesc {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .exactDescText {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   line-height: 1.65;
   color: #555558;
   margin: 0;
 }
 
-/* Col 4: Image */
+/* Col 3: Image */
 .exactColImageWrap {
   width: 100%;
-  height: 115px;
+  max-width: 280px;
+  aspect-ratio: 16 / 10;
+  height: 160px;
   position: relative;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   background-color: #E2DACD;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  justify-self: end;
 }
 
 .exactMockImage {
   object-fit: cover;
-  transition: transform 0.6s ease;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .exactCardRow:hover .exactMockImage {
@@ -1925,45 +1902,36 @@
 /* Responsive Breakpoints */
 @media (max-width: 1100px) {
   .exactCardRow {
-    grid-template-columns: 90px 210px 1fr 200px;
-    gap: 1.5rem;
+    grid-template-columns: 210px 1fr 240px;
+    gap: 1.75rem;
     padding: 1.5rem;
   }
-}
 
-@media (max-width: 900px) {
-  .exactCardRow {
-    grid-template-columns: 80px 1fr 150px;
-    grid-template-areas:
-      "date title image"
-      "date desc image";
+  .exactColImageWrap {
+    max-width: 240px;
+    height: 145px;
   }
-  .exactColDate { grid-area: date; }
-  .exactColTitle { grid-area: title; }
-  .exactColDesc { grid-area: desc; }
-  .exactColImageWrap { grid-area: image; height: 115px; }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 860px) {
   .exactCardRow {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    padding: 1.25rem;
-    gap: 1rem;
+    padding: 1.5rem;
+    gap: 1.25rem;
   }
+
   .exactColImageWrap {
-    height: 180px;
+    max-width: 100%;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: 220px;
     order: -1;
   }
-  .exactColDate {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0.75rem;
-  }
-  .exactTimeText {
-    margin-top: 0;
-    margin-left: auto;
+
+  .exactCardLocation {
+    margin-bottom: 0.75rem;
   }
 }
 
