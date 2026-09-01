@@ -108,7 +108,8 @@
         "percentage": 55,
         "color": "#A1887F"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-baccarat-rouge-540-02",
@@ -203,7 +204,8 @@
         "percentage": 50,
         "color": "#9E9D24"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-tobacco-vanille-03",
@@ -306,7 +308,8 @@
         "percentage": 60,
         "color": "#6D4C41"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-by-the-fireplace-04",
@@ -418,7 +421,8 @@
         "percentage": 55,
         "color": "#A1887F"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-resala-05",
@@ -522,7 +526,8 @@
         "percentage": 60,
         "color": "#4E342E"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-sultani-06",
@@ -638,7 +643,8 @@
         "percentage": 55,
         "color": "#FFB300"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-guidance-07",
@@ -758,7 +764,8 @@
         "percentage": 55,
         "color": "#E0E0E0"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-rosewood-08",
@@ -858,7 +865,8 @@
         "percentage": 55,
         "color": "#ECEFF1"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-sakura-dior-09",
@@ -962,7 +970,8 @@
         "percentage": 50,
         "color": "#CFD8DC"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-imagination-10",
@@ -1073,7 +1082,8 @@
         "percentage": 60,
         "color": "#FFB74D"
       }
-    ]
+    ],
+    "category": "Exclusive"
   },
   {
     "id": "prod-normal-1",
@@ -1192,7 +1202,8 @@
         "percentage": 65,
         "color": "#D84315"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-2",
@@ -1290,7 +1301,8 @@
         "percentage": 65,
         "color": "#80CBC4"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-3",
@@ -1392,7 +1404,8 @@
         "percentage": 65,
         "color": "#BCAAA4"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-4",
@@ -1482,7 +1495,8 @@
         "percentage": 65,
         "color": "#FFF59D"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-5",
@@ -1579,7 +1593,8 @@
         "percentage": 80,
         "color": "#FFF176"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-6",
@@ -1692,7 +1707,8 @@
         "percentage": 80,
         "color": "#80DEEA"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-7",
@@ -1793,7 +1809,8 @@
         "percentage": 75,
         "color": "#A1887F"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-8",
@@ -1882,7 +1899,8 @@
         "percentage": 80,
         "color": "#D84315"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-9",
@@ -1987,7 +2005,8 @@
         "percentage": 75,
         "color": "#8D6E63"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-10",
@@ -2080,7 +2099,8 @@
         "percentage": 70,
         "color": "#FFF176"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-11",
@@ -2197,7 +2217,8 @@
         "percentage": 75,
         "color": "#FFEB3B"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-12",
@@ -2290,7 +2311,8 @@
         "percentage": 80,
         "color": "#E0F7FA"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-13",
@@ -2379,7 +2401,8 @@
         "percentage": 80,
         "color": "#FFB74D"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-14",
@@ -2480,7 +2503,8 @@
         "percentage": 80,
         "color": "#FFB74D"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-15",
@@ -2561,7 +2585,8 @@
         "percentage": 75,
         "color": "#6D4C41"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-16",
@@ -2634,7 +2659,8 @@
         "percentage": 80,
         "color": "#FFB74D"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-17",
@@ -2727,7 +2753,8 @@
         "percentage": 80,
         "color": "#FFA000"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-18",
@@ -2816,7 +2843,8 @@
         "percentage": 80,
         "color": "#FFB300"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-19",
@@ -2909,7 +2937,8 @@
         "percentage": 80,
         "color": "#F48FB1"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-20",
@@ -3006,7 +3035,8 @@
         "percentage": 75,
         "color": "#FFB300"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-21",
@@ -3087,7 +3117,8 @@
         "percentage": 80,
         "color": "#FFE082"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-22",
@@ -3184,7 +3215,8 @@
         "percentage": 75,
         "color": "#A5D6A7"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-23",
@@ -3285,7 +3317,8 @@
         "percentage": 80,
         "color": "#6D4C41"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-24",
@@ -3394,7 +3427,8 @@
         "percentage": 75,
         "color": "#795548"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-25",
@@ -3483,7 +3517,8 @@
         "percentage": 80,
         "color": "#FFA000"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-26",
@@ -3576,7 +3611,8 @@
         "percentage": 75,
         "color": "#FFF59D"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-27",
@@ -3661,7 +3697,8 @@
         "percentage": 80,
         "color": "#80DEEA"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-28",
@@ -3758,7 +3795,8 @@
         "percentage": 75,
         "color": "#EDE7F6"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-29",
@@ -3879,7 +3917,8 @@
         "percentage": 80,
         "color": "#FFD54F"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-30",
@@ -3984,7 +4023,8 @@
         "percentage": 80,
         "color": "#CE93D8"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-31",
@@ -4069,7 +4109,8 @@
         "percentage": 80,
         "color": "#C8E6C9"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-32",
@@ -4162,7 +4203,8 @@
         "percentage": 80,
         "color": "#FFE082"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-33",
@@ -4267,7 +4309,8 @@
         "percentage": 85,
         "color": "#FFB74D"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-34",
@@ -4384,7 +4427,8 @@
         "percentage": 80,
         "color": "#AED581"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-35",
@@ -4485,7 +4529,8 @@
         "percentage": 80,
         "color": "#FFEE58"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-36",
@@ -4590,7 +4635,8 @@
         "percentage": 80,
         "color": "#FFB74D"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-37",
@@ -4691,7 +4737,8 @@
         "percentage": 80,
         "color": "#BCAAA4"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-38",
@@ -4776,7 +4823,8 @@
         "percentage": 80,
         "color": "#F5F5F5"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-39",
@@ -4917,7 +4965,8 @@
         "percentage": 80,
         "color": "#D84315"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-40",
@@ -5026,7 +5075,8 @@
         "percentage": 75,
         "color": "#8D6E63"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-41",
@@ -5131,7 +5181,8 @@
         "percentage": 80,
         "color": "#FAFAFA"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-42",
@@ -5220,7 +5271,8 @@
         "percentage": 80,
         "color": "#5D4037"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-43",
@@ -5309,7 +5361,8 @@
         "percentage": 80,
         "color": "#558B2F"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-44",
@@ -5406,7 +5459,8 @@
         "percentage": 80,
         "color": "#FFE082"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-45",
@@ -5503,7 +5557,8 @@
         "percentage": 80,
         "color": "#E0F7FA"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-46",
@@ -5588,7 +5643,8 @@
         "percentage": 75,
         "color": "#FFE082"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-47",
@@ -5685,7 +5741,8 @@
         "percentage": 75,
         "color": "#F48FB1"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-48",
@@ -5770,7 +5827,8 @@
         "percentage": 80,
         "color": "#F8BBD0"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-49",
@@ -5843,7 +5901,8 @@
         "percentage": 80,
         "color": "#B2EBF2"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-50",
@@ -5928,7 +5987,8 @@
         "percentage": 80,
         "color": "#E0F7FA"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-51",
@@ -6017,7 +6077,8 @@
         "percentage": 80,
         "color": "#F8BBD0"
       }
-    ]
+    ],
+    "category": "Regular"
   },
   {
     "id": "prod-normal-52",
@@ -6110,6 +6171,7 @@
         "percentage": 80,
         "color": "#FFB300"
       }
-    ]
+    ],
+    "category": "Regular"
   }
 ]

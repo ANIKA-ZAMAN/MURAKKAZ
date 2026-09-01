@@ -10,20 +10,10 @@ interface CartItem {
   name: string;
   image: string;
   inspiredBy: string;
-  selectedSize: "6ml" | "12ml" | "30ml" | "50ml";
+  selectedSize: string;
   quantity: number;
-  prices: {
-    "6ml": number;
-    "12ml": number;
-    "30ml": number;
-    "50ml": number;
-  };
-  originalPrices?: {
-    "6ml"?: number;
-    "12ml"?: number;
-    "30ml"?: number;
-    "50ml"?: number;
-  };
+  prices: Record<string, number>;
+  originalPrices?: Record<string, number>;
   selected: boolean;
 }
 
@@ -32,30 +22,30 @@ import { productsCatalog } from "../data/products";
 const initialCartItems: CartItem[] = [
   {
     id: "cart-1",
-    name: productsCatalog[1]?.name || "Irish Leather",
-    image: productsCatalog[1]?.image || "/images/products/irish_leather.jpg",
-    inspiredBy: productsCatalog[1]?.inspiredBy ? `Inspired by ${productsCatalog[1].inspiredBy}` : `By ${productsCatalog[1]?.brand || "Murakkaz"}`,
-    selectedSize: "12ml",
+    name: productsCatalog[0]?.name || "Irish Leather",
+    image: productsCatalog[0]?.image || "/images/products/irish_leather.jpg",
+    inspiredBy: productsCatalog[0]?.inspiredBy ? `Inspired by ${productsCatalog[0].inspiredBy}` : `By ${productsCatalog[0]?.brand || "Murakkaz"}`,
+    selectedSize: "10ml",
     quantity: 1,
     prices: {
       "6ml": 300,
-      "12ml": 500,
-      "30ml": 900,
+      "10ml": 500,
+      "30ml": 1500,
       "50ml": 2500,
     },
     selected: true,
   },
   {
     id: "cart-2",
-    name: productsCatalog[2]?.name || "Baccarat Rouge 540",
-    image: productsCatalog[2]?.image || "/images/products/baccarat_rouge_540.jpg",
-    inspiredBy: productsCatalog[2]?.inspiredBy ? `Inspired by ${productsCatalog[2].inspiredBy}` : `By ${productsCatalog[2]?.brand || "Murakkaz"}`,
-    selectedSize: "12ml",
+    name: productsCatalog[1]?.name || "Baccarat Rouge 540",
+    image: productsCatalog[1]?.image || "/images/products/baccarat_rouge_540.jpg",
+    inspiredBy: productsCatalog[1]?.inspiredBy ? `Inspired by ${productsCatalog[1].inspiredBy}` : `By ${productsCatalog[1]?.brand || "Murakkaz"}`,
+    selectedSize: "10ml",
     quantity: 1,
     prices: {
       "6ml": 300,
-      "12ml": 500,
-      "30ml": 900,
+      "10ml": 500,
+      "30ml": 1500,
       "50ml": 2500,
     },
     selected: true,
@@ -82,15 +72,16 @@ export default function CartPage() {
               name: item.name || "Murakkaz Fragrance",
               image: item.image || "/images/products/vanilla_28_v2.jpg",
               inspiredBy: item.inspiredBy || `By Murakkaz`,
-              selectedSize: (item.selectedSize as "6ml" | "12ml" | "30ml" | "50ml") || "12ml",
+              selectedSize: item.selectedSize || "10ml",
               quantity: Math.max(1, Number(item.quantity) || 1),
               prices: hasNewSizes
                 ? item.prices
                 : {
                     "6ml": 300,
+                    "10ml": 500,
                     "12ml": 500,
                     "30ml": 900,
-                    "50ml": 2500,
+                    "50ml": 1500,
                   },
               selected: item.selected !== undefined ? item.selected : true,
             };
@@ -131,7 +122,7 @@ export default function CartPage() {
   };
 
   // Change product size
-  const changeSize = (id: string, size: "6ml" | "12ml" | "30ml" | "50ml") => {
+  const changeSize = (id: string, size: string) => {
     setCartItems(prev => {
       const targetItem = prev.find(item => item.id === id);
       if (!targetItem) return prev;
@@ -290,7 +281,7 @@ export default function CartPage() {
                         <div className={styles.sizeSelectionRow}>
                           <span className={styles.metaLabel}>Size:</span>
                           <div className={styles.sizeTags}>
-                            {(["6ml", "12ml", "30ml", "50ml"] as const).map((size) => (
+                            {(["6ml", "10ml", "30ml", "50ml"] as const).map((size) => (
                               <button
                                 key={size}
                                 className={`${styles.sizeTag} ${item.selectedSize === size ? styles.activeSize : ""}`}

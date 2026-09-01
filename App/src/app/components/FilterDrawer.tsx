@@ -26,6 +26,7 @@ export default function FilterDrawer({
 }: FilterDrawerProps) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
     price: true,
+    category: true,
     family: true,
     gender: true,
     occasion: true,
@@ -85,6 +86,12 @@ export default function FilterDrawer({
       id: "price",
       name: "Price Range",
       type: "slider",
+    },
+    {
+      id: "category",
+      name: "Perfume Category",
+      options: ["Exclusive", "Regular"],
+      type: "checkbox",
     },
     {
       id: "family",

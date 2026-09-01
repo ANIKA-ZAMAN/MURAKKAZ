@@ -39,12 +39,21 @@ const GENDERS = ['UNISEX', 'MEN', 'WOMEN'];
 const OCCASIONS = ['Everyday', 'Office', 'Date Night', 'Party', 'Formal Event', 'Special Occasion', 'Casual'];
 const METERS = ['INTIMATE', 'MODERATE', 'LONG_LASTING', 'BEAST_MODE'];
 
-const DEFAULT_SIZES: SizeRow[] = [
+const REGULAR_SIZES: SizeRow[] = [
   { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
-  { size: '12ml', price: 500, originalPrice: 700, stock: 50 },
-  { size: '30ml', price: 900, originalPrice: 1200, stock: 35 },
-  { size: '50ml', price: 2500, originalPrice: 3200, stock: 25 },
+  { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+  { size: '30ml', price: 900, originalPrice: 1100, stock: 35 },
+  { size: '50ml', price: 1500, originalPrice: 1850, stock: 25 },
 ];
+
+const EXCLUSIVE_SIZES: SizeRow[] = [
+  { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+  { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+  { size: '30ml', price: 1500, originalPrice: 1850, stock: 35 },
+  { size: '50ml', price: 2500, originalPrice: 3100, stock: 25 },
+];
+
+const DEFAULT_SIZES: SizeRow[] = REGULAR_SIZES;
 
 const DEFAULT_ACCORDS: AccordItem[] = [
   { id: '1', name: 'Woody', percentage: 85, color: '#A38258' },
@@ -597,8 +606,46 @@ const ProductForm: React.FC = () => {
           {activeTab === 'pricing' && (
             <div className={styles.cardSection}>
               <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Size Variants & Pricing Matrix</h2>
-                <p className={styles.sectionDesc}>Set prices in BDT (৳) and stock per size tier</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', width: '100%' }}>
+                  <div>
+                    <h2 className={styles.sectionTitle}>Size Variants & Pricing Matrix</h2>
+                    <p className={styles.sectionDesc}>Set prices in BDT (৳) and stock per size tier</p>
+                  </div>
+                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                    <button
+                      type="button"
+                      onClick={() => setSizes(REGULAR_SIZES)}
+                      style={{
+                        padding: '0.45rem 0.85rem',
+                        fontSize: '0.82rem',
+                        fontWeight: 600,
+                        borderRadius: '6px',
+                        background: '#ECE6DA',
+                        border: '1px solid #D5CBB9',
+                        color: '#313134',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      🌿 Preset: Regular Tier (300/500/900/1500)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSizes(EXCLUSIVE_SIZES)}
+                      style={{
+                        padding: '0.45rem 0.85rem',
+                        fontSize: '0.82rem',
+                        fontWeight: 600,
+                        borderRadius: '6px',
+                        background: '#820011',
+                        border: 'none',
+                        color: '#FFFFFF',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      💎 Preset: Exclusive Tier (300/500/1500/2500)
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <table className={styles.pricingTable}>

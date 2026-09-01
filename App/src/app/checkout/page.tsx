@@ -119,7 +119,7 @@ function CheckoutContent() {
 
   // Billing math
   const subtotal = cartItems.reduce((sum, item) => {
-    const itemPrice = item.prices[item.selectedSize] || 500;
+    const itemPrice = item.prices?.[item.selectedSize] || 500;
     return sum + itemPrice * item.quantity;
   }, 0);
 
@@ -142,9 +142,9 @@ function CheckoutContent() {
     const orderItems = cartItems.map((item) => ({
       id: item.id,
       name: item.name,
-      selectedSize: item.selectedSize || "12ml",
+      selectedSize: item.selectedSize || "10ml",
       quantity: item.quantity || 1,
-      unitPrice: item.prices[item.selectedSize] || 500,
+      unitPrice: item.prices?.[item.selectedSize] || 500,
       image: item.image,
       inspiredBy: item.inspiredBy,
     }));

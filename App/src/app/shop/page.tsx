@@ -16,9 +16,11 @@ function ShopContent() {
 
   const [productsList, setProductsList] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showPriceModal, setShowPriceModal] = useState(false);
   
   // Initialize state directly from URL query parameters
   const initialQ = searchParams.get("q") || "";
+  const initialCategory = searchParams.get("category") ? searchParams.get("category")!.split(",") : [];
   const initialFamily = searchParams.get("family") ? searchParams.get("family")!.split(",") : [];
   const initialGender = searchParams.get("gender") ? searchParams.get("gender")!.split(",") : [];
   const initialOccasion = searchParams.get("occasion") ? searchParams.get("occasion")!.split(",") : [];
@@ -26,6 +28,7 @@ function ShopContent() {
   const initialNotes = searchParams.get("notes") ? searchParams.get("notes")!.split(",") : [];
 
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+    category: initialCategory,
     family: initialFamily,
     gender: initialGender,
     occasion: initialOccasion,
@@ -62,6 +65,14 @@ function ShopContent() {
     setCurrentPage(1);
   };
 
+  const handleCategoryTab = (category: string | null) => {
+    setSelectedFilters((prev) => ({
+      ...prev,
+      category: category ? [category] : [],
+    }));
+    setCurrentPage(1);
+  };
+
   const handlePriceChange = (price: number) => {
     setMaxPrice(price);
     setCurrentPage(1);
@@ -74,6 +85,7 @@ function ShopContent() {
 
   const handleClearAll = () => {
     setSelectedFilters({
+      category: [],
       family: [],
       gender: [],
       occasion: [],
@@ -107,6 +119,12 @@ function ShopContent() {
     }
 
     if (product.priceVal > maxPrice) return false;
+
+    if (selectedFilters.category && selectedFilters.category.length > 0) {
+      const selectedCaps = selectedFilters.category.map(c => c.toLowerCase());
+      const prodCat = (product.category || 'regular').toLowerCase();
+      if (!selectedCaps.includes(prodCat)) return false;
+    }
 
     if (selectedFilters.family && selectedFilters.family.length > 0) {
       const selectedCaps = selectedFilters.family.map(f => f.toUpperCase().replace(/\s+/g, '_'));
@@ -165,6 +183,8 @@ function ShopContent() {
     0
   );
 
+  const activeCategory = selectedFilters.category && selectedFilters.category.length === 1 ? selectedFilters.category[0] : null;
+
   const itemsPerPage = 12;
   const totalPages = Math.max(1, Math.ceil(sortedProducts.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -185,6 +205,39 @@ function ShopContent() {
           sortBy={sortBy}
           onSortChange={handleSortChange}
         />
+
+        {/* Category Filter Pills & Official Price List Trigger */}
+        <div className={styles.categoryBar}>
+          <div className={styles.categoryPills}>
+            <button
+              onClick={() => handleCategoryTab(null)}
+              className={`${styles.catPill} ${!activeCategory ? styles.catPillActive : ''}`}
+            >
+              All Perfumes ({productsList.length || 62})
+            </button>
+            <button
+              onClick={() => handleCategoryTab('Exclusive')}
+              className={`${styles.catPill} ${styles.catPillExclusive} ${activeCategory === 'Exclusive' ? styles.catPillActive : ''}`}
+            >
+              💎 Exclusive / Premium (10)
+            </button>
+            <button
+              onClick={() => handleCategoryTab('Regular')}
+              className={`${styles.catPill} ${activeCategory === 'Regular' ? styles.catPillActive : ''}`}
+            >
+              🌿 Regular Collection (52)
+            </button>
+          </div>
+
+          <button
+            onClick={() => setShowPriceModal(true)}
+            className={styles.priceListBtn}
+            aria-label="View official price list"
+          >
+            <span>📋</span>
+            <span>Shop Price List</span>
+          </button>
+        </div>
 
         {/* Content Layout: In-Screen Left Filter Sidebar + Responsive Product Grid */}
         <div className={styles.contentLayout}>
@@ -214,6 +267,141 @@ function ShopContent() {
         {/* Explore Our Recommendation Section */}
         <RecommendationSlider />
       </main>
+
+      {/* Official Price List Modal */}
+      {showPriceModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowPriceModal(false)}>
+          <div className={styles.priceModal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <div className={styles.modalTitleGroup}>
+                <h2 className={styles.modalTitle}>Murakkaz Shop Price List</h2>
+                <p className={styles.modalSubtitle}>Transparent pricing across our two master fragrance categories</p>
+              </div>
+              <button 
+                className={styles.modalCloseBtn}
+                onClick={() => setShowPriceModal(false)}
+                aria-label="Close price list modal"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className={styles.modalBody}>
+              {/* Card 1: Exclusive Collection */}
+              <div className={`${styles.priceCard} ${styles.priceCardExclusive}`}>
+                <div className={styles.priceCardHeader}>
+                  <span className={styles.categoryBadgeExclusive}>💎 Exclusive / Premium</span>
+                  <h3 className={styles.priceCardTitle}>Expensive Fragrances Catalogue</h3>
+                  <p className={styles.priceCardDesc}>
+                    10 ultra-luxury, high-concentration niche fragrances with rare and precious raw extracts.
+                  </p>
+                  <div className={styles.includedPerfumes}>
+                    <strong>Includes:</strong> Irish Leather, Baccarat Rouge 540, Tobacco Vanille, By the Fireplace, Resala, Sultani, Guidance, Rosewood, Sakura Dior, Imagination.
+                  </div>
+                </div>
+
+                <div className={styles.tableWrapper}>
+                  <table className={styles.pricingTable}>
+                    <thead>
+                      <tr>
+                        <th>Bottle Size</th>
+                        <th className={styles.thRight}>Price (BDT)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>6 ml</strong></td>
+                        <td className={styles.priceCell}>৳300</td>
+                      </tr>
+                      <tr>
+                        <td><strong>10 ml</strong></td>
+                        <td className={styles.priceCell}>৳500</td>
+                      </tr>
+                      <tr>
+                        <td><strong>30 ml</strong></td>
+                        <td className={styles.priceCell}>৳1,500</td>
+                      </tr>
+                      <tr>
+                        <td><strong>50 ml</strong></td>
+                        <td className={styles.priceCell}>৳2,500</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <button
+                  className={styles.filterCategoryBtn}
+                  onClick={() => {
+                    handleCategoryTab('Exclusive');
+                    setShowPriceModal(false);
+                  }}
+                >
+                  View Exclusive Fragrances (10) →
+                </button>
+              </div>
+
+              {/* Card 2: Regular Collection */}
+              <div className={styles.priceCard}>
+                <div className={styles.priceCardHeader}>
+                  <span className={styles.categoryBadgeRegular}>🌿 Regular Collection</span>
+                  <h3 className={styles.priceCardTitle}>Signature Daily Perfumes</h3>
+                  <p className={styles.priceCardDesc}>
+                    52 designer-inspired and artisanal compositions engineered for executive projection and long-lasting sillage.
+                  </p>
+                  <div className={styles.includedPerfumes}>
+                    <strong>Includes:</strong> Ultra Male, Bad Boy, Stronger With You, Valentino Donna, Sexy Secret, Bombshell, Mon Guerlain, Spicebomb Extreme, Sauvage, Eros, MYSLF & more.
+                  </div>
+                </div>
+
+                <div className={styles.tableWrapper}>
+                  <table className={styles.pricingTable}>
+                    <thead>
+                      <tr>
+                        <th>Bottle Size</th>
+                        <th className={styles.thRight}>Price (BDT)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>6 ml</strong></td>
+                        <td className={styles.priceCell}>৳300</td>
+                      </tr>
+                      <tr>
+                        <td><strong>10 ml</strong></td>
+                        <td className={styles.priceCell}>৳500</td>
+                      </tr>
+                      <tr>
+                        <td><strong>30 ml</strong></td>
+                        <td className={styles.priceCell}>৳900</td>
+                      </tr>
+                      <tr>
+                        <td><strong>50 ml</strong></td>
+                        <td className={styles.priceCell}>৳1,500</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <button
+                  className={styles.filterCategoryBtn}
+                  onClick={() => {
+                    handleCategoryTab('Regular');
+                    setShowPriceModal(false);
+                  }}
+                >
+                  View Regular Fragrances (52) →
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.modalFooter}>
+              <p className={styles.guaranteeText}>
+                ✨ All formulations use authentic French & Middle Eastern oil concentrates with no artificial diluents.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

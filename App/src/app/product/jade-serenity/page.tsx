@@ -22,15 +22,15 @@ function JadeSerenityProductContent() {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Size and pricing configuration requested by the user
+  // Size and pricing configuration
   const sizeOptions = [
     { label: "6ml", price: 300 },
-    { label: "12ml", price: 500 },
+    { label: "10ml", price: 500 },
     { label: "30ml", price: 900 },
-    { label: "50ml", price: 2500 },
+    { label: "50ml", price: 1500 },
   ];
 
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[1]); // Default to 12ml
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[1]); // Default to 10ml
 
   // Gallery images list using existing high-quality assets
   const galleryImages = [
@@ -130,9 +130,10 @@ function JadeSerenityProductContent() {
         quantity: quantity,
         prices: {
           "6ml": 300,
+          "10ml": 500,
           "12ml": 500,
           "30ml": 900,
-          "50ml": 2500,
+          "50ml": 1500,
         },
         selected: true,
       };

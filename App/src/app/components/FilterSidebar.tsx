@@ -21,6 +21,7 @@ export default function FilterSidebar({
   totalMatching,
 }: FilterSidebarProps) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
+    category: true,
     gender: true,
     family: true,
     meter: true,
@@ -37,6 +38,11 @@ export default function FilterSidebar({
   };
 
   const categories = [
+    {
+      id: "category",
+      name: "Perfume Category",
+      options: ["Exclusive", "Regular"],
+    },
     {
       id: "gender",
       name: "Gender",

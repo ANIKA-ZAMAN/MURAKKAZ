@@ -210,15 +210,58 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Size and pricing configuration
-  const defaultSizeOptions = [
-    { label: "6ml", price: 300 },
-    { label: "12ml", price: 500 },
-    { label: "30ml", price: 900 },
-    { label: "50ml", price: 2500 },
-  ];
-
   const [liveProduct, setLiveProduct] = useState<any>(null);
+
+  // Dynamic targeting logic based on URL route ID or SLUG
+  const catalogItem = React.useMemo(() => {
+    if (!id) return null;
+    const cleanId = id.toLowerCase().trim();
+    return productsCatalog.find(
+      (p) =>
+        (p.slug && p.slug.toLowerCase() === cleanId) ||
+        p.id.toLowerCase() === cleanId ||
+        p.name.toLowerCase() === cleanId ||
+        slugify(p.name) === cleanId ||
+        p.name.toLowerCase().replace(/\s+/g, "-") === cleanId ||
+        cleanId.includes(p.id.toLowerCase()) ||
+        p.id.toLowerCase().includes(cleanId)
+    );
+  }, [id]);
+
+  const isExclusive = React.useMemo(() => {
+    if (catalogItem && catalogItem.category) {
+      return catalogItem.category === "Exclusive";
+    }
+    if (liveProduct && liveProduct.sizes && Array.isArray(liveProduct.sizes)) {
+      return liveProduct.sizes.some((s: any) => Number(s.price) >= 2500);
+    }
+    const cleanId = id ? id.toLowerCase().trim() : "";
+    return [
+      "irish-leather", "baccarat-rouge-540", "tobacco-vanille", "by-the-fireplace",
+      "resala", "sultani", "guidance", "rosewood", "sakura-dior", "imagination",
+      "prod-irish-leather-01", "prod-baccarat-rouge-540-02", "prod-tobacco-vanille-03",
+      "prod-by-the-fireplace-04", "prod-resala-05", "prod-sultani-06", "prod-guidance-07",
+      "prod-rosewood-08", "prod-sakura-dior-09", "prod-imagination-10", "hellenist"
+    ].some(slug => cleanId.includes(slug) || slug.includes(cleanId));
+  }, [catalogItem, liveProduct, id]);
+
+  // Size and pricing configuration
+  const defaultSizeOptions = React.useMemo(() => {
+    if (isExclusive) {
+      return [
+        { label: "6ml", price: 300 },
+        { label: "10ml", price: 500 },
+        { label: "30ml", price: 1500 },
+        { label: "50ml", price: 2500 },
+      ];
+    }
+    return [
+      { label: "6ml", price: 300 },
+      { label: "10ml", price: 500 },
+      { label: "30ml", price: 900 },
+      { label: "50ml", price: 1500 },
+    ];
+  }, [isExclusive]);
 
   const sizeOptions = React.useMemo(() => {
     if (liveProduct && liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
@@ -228,9 +271,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       }));
     }
     return defaultSizeOptions;
-  }, [liveProduct]);
+  }, [liveProduct, defaultSizeOptions]);
 
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState(defaultSizeOptions[1]); // Default to 12ml
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState<{ label: string; price: number }>(defaultSizeOptions[1]); // Default to 10ml
+
+  useEffect(() => {
+    setSelectedSizeOpt(sizeOptions[1] || sizeOptions[0]);
+  }, [sizeOptions]);
 
   // Dynamic API fetch for custom products created via Admin
   useEffect(() => {
@@ -292,22 +339,6 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         }
       })
       .catch(() => {});
-  }, [id]);
-
-  // Dynamic targeting logic based on URL route ID or SLUG
-  const catalogItem = React.useMemo(() => {
-    if (!id) return null;
-    const cleanId = id.toLowerCase().trim();
-    return productsCatalog.find(
-      (p) =>
-        (p.slug && p.slug.toLowerCase() === cleanId) ||
-        p.id.toLowerCase() === cleanId ||
-        p.name.toLowerCase() === cleanId ||
-        slugify(p.name) === cleanId ||
-        p.name.toLowerCase().replace(/\s+/g, "-") === cleanId ||
-        cleanId.includes(p.id.toLowerCase()) ||
-        p.id.toLowerCase().includes(cleanId)
-    );
   }, [id]);
 
   const targetKey = React.useMemo(() => {
@@ -447,6 +478,22 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     if (existingIndex > -1) {
       cartItems[existingIndex].quantity += quantity;
     } else {
+      const priceMap: Record<string, number> = {};
+      sizeOptions.forEach((s: { label: string; price: number }) => {
+        priceMap[s.label] = s.price;
+      });
+      const defaultMap = isExclusive ? {
+        "6ml": 300,
+        "10ml": 500,
+        "30ml": 1500,
+        "50ml": 2500,
+      } : {
+        "6ml": 300,
+        "10ml": 500,
+        "30ml": 900,
+        "50ml": 1500,
+      };
+
       const newItem = {
         id: `cart-${targetKey}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
         name: details.name,
@@ -455,10 +502,8 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         selectedSize: selectedSizeOpt.label,
         quantity: quantity,
         prices: {
-          "6ml": 300,
-          "12ml": 500,
-          "30ml": 900,
-          "50ml": 2500,
+          ...defaultMap,
+          ...priceMap,
         },
         selected: true,
       };

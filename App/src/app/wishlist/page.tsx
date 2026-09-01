@@ -168,6 +168,23 @@ export default function WishlistPage() {
           (i.selectedSize === "12ml" || !i.selectedSize)
       );
 
+      const isExclusive = [
+        "irish-leather", "baccarat-rouge-540", "tobacco-vanille", "by-the-fireplace",
+        "resala", "sultani", "guidance", "rosewood", "sakura-dior", "imagination"
+      ].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug)));
+
+      const prices = isExclusive ? {
+        "6ml": 300,
+        "10ml": 500,
+        "30ml": 1500,
+        "50ml": 2500,
+      } : {
+        "6ml": 300,
+        "10ml": 500,
+        "30ml": 900,
+        "50ml": 1500,
+      };
+
       if (existingIndex > -1) {
         cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
         cart[existingIndex].selected = true;
@@ -177,14 +194,9 @@ export default function WishlistPage() {
           name: item.name,
           image: item.image,
           inspiredBy: item.inspiredBy,
-          selectedSize: "12ml",
+          selectedSize: "10ml",
           quantity: 1,
-          prices: {
-            "6ml": 300,
-            "12ml": 500,
-            "30ml": 900,
-            "50ml": 2500,
-          },
+          prices: prices,
           selected: true,
         });
       }

@@ -144,11 +144,31 @@ export default function ProductCard({
     router.push(`/product/${targetSlug}`);
   };
 
-  // Display price range format (e.g. "300 - 2500tk")
-  const rawPrice = price || "300 - 2500tk";
+  const isExclusive = 
+    (badge && badge.toUpperCase().includes("EXCLUSIVE")) ||
+    (price && (price.includes("2500") || price.includes("2,500"))) ||
+    [
+      "irish-leather", "baccarat-rouge-540", "tobacco-vanille", "by-the-fireplace",
+      "resala", "sultani", "guidance", "rosewood", "sakura-dior", "imagination"
+    ].includes(targetSlug);
+
+  const productPrices = isExclusive ? {
+    "6ml": 300,
+    "10ml": 500,
+    "30ml": 1500,
+    "50ml": 2500,
+  } : {
+    "6ml": 300,
+    "10ml": 500,
+    "30ml": 900,
+    "50ml": 1500,
+  };
+
+  // Display price range format (e.g. "300 - 2500tk" or "300 - 1500tk")
+  const rawPrice = price || (isExclusive ? "300 - 2500tk" : "300 - 1500tk");
   const displayPrice = (rawPrice.includes("-") || rawPrice.includes("–"))
     ? rawPrice
-    : "300 - 2500tk";
+    : (isExclusive ? "300 - 2500tk" : "300 - 1500tk");
 
   const displayOriginalPrice = originalPrice ? (originalPrice.includes("tk") ? originalPrice : `${originalPrice}tk`) : "";
 
@@ -230,7 +250,7 @@ export default function ProductCard({
                   (i: any) =>
                     i.name &&
                     i.name.toLowerCase() === displayName.toLowerCase() &&
-                    (i.selectedSize === "12ml" || !i.selectedSize)
+                    (i.selectedSize === "10ml" || i.selectedSize === "12ml" || !i.selectedSize)
                 );
 
                 if (existingIndex > -1) {
@@ -242,14 +262,9 @@ export default function ProductCard({
                     name: displayName,
                     image: image,
                     inspiredBy: subTitleText,
-                    selectedSize: "12ml",
+                    selectedSize: "10ml",
                     quantity: 1,
-                    prices: {
-                      "6ml": 300,
-                      "12ml": 500,
-                      "30ml": 900,
-                      "50ml": 2500,
-                    },
+                    prices: productPrices,
                     selected: true,
                   });
                 }
@@ -279,7 +294,7 @@ export default function ProductCard({
                   (i: any) =>
                     i.name &&
                     i.name.toLowerCase() === displayName.toLowerCase() &&
-                    (i.selectedSize === "12ml" || !i.selectedSize)
+                    (i.selectedSize === "10ml" || i.selectedSize === "12ml" || !i.selectedSize)
                 );
 
                 if (existingIndex > -1) {
@@ -291,21 +306,16 @@ export default function ProductCard({
                     name: displayName,
                     image: image,
                     inspiredBy: subTitleText,
-                    selectedSize: "12ml",
+                    selectedSize: "10ml",
                     quantity: 1,
-                    prices: {
-                      "6ml": 300,
-                      "12ml": 500,
-                      "30ml": 900,
-                      "50ml": 2500,
-                    },
+                    prices: productPrices,
                     selected: true,
                   });
                 }
 
                 localStorage.setItem("cart-items", JSON.stringify(cart));
                 window.dispatchEvent(new Event("cart-updated"));
-                setToastMessage(`Added ${displayName} (12ml) to your bag!`);
+                setToastMessage(`Added ${displayName} (10ml) to your bag!`);
               } catch (err) {
                 console.error(err);
               }
