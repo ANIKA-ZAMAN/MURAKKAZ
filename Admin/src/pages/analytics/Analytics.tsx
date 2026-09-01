@@ -13,6 +13,15 @@ import styles from './Analytics.module.css';
 
 const CHART_COLORS = ['#820011', '#C5A880', '#2563eb', '#16a34a', '#d97706', '#9333ea', '#0891b2'];
 
+const tooltipStyle = {
+  backgroundColor: '#1C1C1F',
+  borderColor: 'rgba(197, 168, 128, 0.35)',
+  color: '#F5F1E8',
+  borderRadius: '8px',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+  fontSize: '0.85rem'
+};
+
 export default function Analytics() {
   const [period, setPeriod] = useState<string>('7d');
   const [activeTab, setActiveTab] = useState<'traffic' | 'orders' | 'customers' | 'products'>('traffic');
@@ -248,7 +257,7 @@ export default function Analytics() {
                       <tr key={idx}>
                         <td><strong>{v.city}</strong>, {v.country}</td>
                         <td>{v.device} • {v.browser}</td>
-                        <td><code style={{ background: '#f4f4f5', padding: '2px 6px', borderRadius: '4px' }}>{v.exitPage || v.landingPage}</code></td>
+                        <td><code style={{ background: 'var(--bg-elevated, #2A2A2D)', color: 'var(--accent-gold, #C5A880)', padding: '3px 8px', borderRadius: '4px', border: '1px solid var(--border-subtle, rgba(197, 168, 128, 0.15))' }}>{v.exitPage || v.landingPage}</code></td>
                         <td><span className={styles.badgeTag}>{v.referrerSource}</span></td>
                         <td>{v.pageviewCount}</td>
                       </tr>
@@ -510,22 +519,22 @@ export default function Analytics() {
                 <h3 className={styles.cardTitle}><Users size={18} /> Customer Retention Metrics</h3>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginTop: '1rem' }}>
-                <div style={{ padding: '1.2rem', background: '#fafafa', borderRadius: '12px' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#71717a' }}>Repeat Purchase Rate</div>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#820011' }}>
+                <div style={{ padding: '1.2rem', background: 'var(--bg-elevated, #2A2A2D)', border: '1px solid var(--border-subtle, rgba(197, 168, 128, 0.15))', borderRadius: '12px' }}>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary, #9A9A9C)' }}>Repeat Purchase Rate</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--brand-maroon, #820011)' }}>
                     {customers?.repeatPurchaseRate || 0}%
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: '#71717a' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary, #9A9A9C)' }}>
                     {customers?.repeatCustomersCount || 0} repeat customers
                   </div>
                 </div>
 
-                <div style={{ padding: '1.2rem', background: '#fafafa', borderRadius: '12px' }}>
-                  <div style={{ fontSize: '0.8rem', color: '#71717a' }}>Customer Lifetime Value</div>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#C5A880' }}>
+                <div style={{ padding: '1.2rem', background: 'var(--bg-elevated, #2A2A2D)', border: '1px solid var(--border-subtle, rgba(197, 168, 128, 0.15))', borderRadius: '12px' }}>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary, #9A9A9C)' }}>Customer Lifetime Value</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--accent-gold, #C5A880)' }}>
                     ৳{(customers?.averageCustomerLifetimeValue || 0).toLocaleString()}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: '#71717a' }}>Average spend per customer</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary, #9A9A9C)' }}>Average spend per customer</div>
                 </div>
               </div>
             </div>
