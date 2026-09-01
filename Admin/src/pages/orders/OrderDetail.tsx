@@ -438,7 +438,7 @@ const OrderDetail = () => {
         </div>
 
         <div style={{ marginTop: '24px', paddingTop: '8px', borderTop: '1px solid #ccc', textAlign: 'center', fontSize: '10px', color: '#666' }}>
-          Thank you for choosing Murakkaz. For support: info@murakkaz.com · Hotline: +880 1700-000000
+          Thank you for choosing Murakkaz. For support: info@murakkaz.com · Hotline: +880 1997-807701
         </div>
       </div>
     </div>
