@@ -245,21 +245,21 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     ].some(slug => cleanId.includes(slug) || slug.includes(cleanId));
   }, [catalogItem, liveProduct, id]);
 
-  // Size and pricing configuration
+  // Size and pricing configuration from centralized pricing config
   const defaultSizeOptions = React.useMemo(() => {
     if (isExclusive) {
       return [
         { label: "6ml", price: 300 },
-        { label: "10ml", price: 500 },
+        { label: "12ml", price: 500 },
         { label: "30ml", price: 1500 },
         { label: "50ml", price: 2500 },
       ];
     }
     return [
       { label: "6ml", price: 300 },
-      { label: "10ml", price: 500 },
-      { label: "30ml", price: 900 },
-      { label: "50ml", price: 1500 },
+      { label: "12ml", price: 500 },
+      { label: "30ml", price: 1500 },
+      { label: "50ml", price: 2500 },
     ];
   }, [isExclusive]);
 
@@ -958,12 +958,15 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
               onTouchStart={() => setIsHovered(true)}
               onTouchEnd={() => setIsHovered(false)}
             >
-              {recommendations.map((item, idx) => (
+              {recommendations.map((item: any, idx: number) => (
                 <ProductCard
                   key={idx}
                   id={item.id}
+                  slug={item.slug}
                   brand="Murakkaz"
                   name={item.name}
+                  category={item.category}
+                  badge={item.badge}
                   inspiredBy={item.inspiredBy}
                   rating={item.rating}
                   reviews={item.reviews}

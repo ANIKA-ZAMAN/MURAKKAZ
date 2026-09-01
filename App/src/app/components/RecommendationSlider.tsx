@@ -99,8 +99,12 @@ export default function RecommendationSlider() {
             <div key={product.id} className={styles.slide}>
               <ProductCard
                 id={product.id}
+                slug={product.slug}
                 brand={product.brand}
                 name={product.name}
+                category={product.category}
+                badge={product.badge}
+                inspiredBy={product.inspiredBy}
                 description={product.description}
                 rating={product.rating}
                 reviews={product.reviews}

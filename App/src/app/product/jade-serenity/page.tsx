@@ -25,12 +25,12 @@ function JadeSerenityProductContent() {
   // Size and pricing configuration
   const sizeOptions = [
     { label: "6ml", price: 300 },
-    { label: "10ml", price: 500 },
-    { label: "30ml", price: 900 },
-    { label: "50ml", price: 1500 },
+    { label: "12ml", price: 500 },
+    { label: "30ml", price: 1500 },
+    { label: "50ml", price: 2500 },
   ];
 
-  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[1]); // Default to 10ml
+  const [selectedSizeOpt, setSelectedSizeOpt] = useState(sizeOptions[1]); // Default to 12ml
 
   // Gallery images list using existing high-quality assets
   const galleryImages = [
@@ -750,12 +750,14 @@ function JadeSerenityProductContent() {
 
             {/* Slider items */}
             <div className={styles.sliderGrid} ref={sliderRef}>
-              {recommendations.map((item, idx) => (
+              {recommendations.map((item: any, idx: number) => (
                 <ProductCard
                   key={idx}
                   id={`rec-${idx}`}
                   brand="Murakkaz"
                   name={item.name}
+                  category={item.category}
+                  badge={item.badge}
                   description={item.description}
                   rating={item.rating}
                   reviews={item.reviews}

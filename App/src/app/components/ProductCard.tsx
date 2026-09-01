@@ -4,6 +4,12 @@ import Image from "next/image";
 import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { slugify } from "../data/products";
+import {
+  resolvePerfumeCategory,
+  getPricingForCategory,
+  getProductPriceForSize,
+  PerfumeCategory,
+} from "../data/pricing";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
@@ -11,10 +17,11 @@ interface ProductCardProps {
   slug?: string;
   name: string;
   brand: string;
+  category?: 'Exclusive' | 'Regular' | 'exclusive' | 'regular' | string;
   description?: string;
   rating: number;
   reviews: number;
-  price: string;
+  price?: string;
   originalPrice?: string;
   volume?: string;
   image: string;
@@ -23,6 +30,7 @@ interface ProductCardProps {
   inspiredBy?: string;
   notes?: string[];
   variant?: "default" | "featured";
+  customPrices?: Record<string, number>;
 }
 
 export default function ProductCard({
@@ -30,6 +38,7 @@ export default function ProductCard({
   slug,
   name,
   brand,
+  category,
   description,
   rating,
   reviews,
@@ -42,6 +51,7 @@ export default function ProductCard({
   inspiredBy,
   notes,
   variant = "default",
+  customPrices,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -62,6 +72,30 @@ export default function ProductCard({
     }
     return { displayName: name, subTitleText: `Inspired by ${brand}` };
   }, [name, brand, inspiredBy, description]);
+
+  // Determine category and pricing configuration
+  const resolvedCategory: PerfumeCategory = useMemo(() => {
+    return resolvePerfumeCategory({ category, slug: targetSlug, name, id, badge });
+  }, [category, targetSlug, name, id, badge]);
+
+  const pricingTier = useMemo(() => {
+    return getPricingForCategory(resolvedCategory);
+  }, [resolvedCategory]);
+
+  // Independent per-card selected size state
+  const [selectedSize, setSelectedSize] = useState<string>(pricingTier.defaultSize || "12ml");
+
+  // Dynamic price based on selected size
+  const currentPrice = useMemo(() => {
+    return getProductPriceForSize(resolvedCategory, selectedSize, customPrices);
+  }, [resolvedCategory, selectedSize, customPrices]);
+
+  const currentOriginalPrice = useMemo(() => {
+    if (pricingTier.originalPrices && pricingTier.originalPrices[selectedSize]) {
+      return pricingTier.originalPrices[selectedSize];
+    }
+    return Math.round(currentPrice * 1.3);
+  }, [pricingTier, selectedSize, currentPrice]);
 
   // Check wishlist state on mount
   useEffect(() => {
@@ -137,40 +171,14 @@ export default function ProductCard({
     if (
       target.closest(`.${styles.compareBtn}`) ||
       target.closest(`.${styles.detailsBtn}`) ||
-      target.closest(`.${styles.wishlistBtn}`)
+      target.closest(`.${styles.wishlistBtn}`) ||
+      target.closest(`.${styles.sizePill}`) ||
+      target.closest(`.${styles.actions}`)
     ) {
       return;
     }
     router.push(`/product/${targetSlug}`);
   };
-
-  const isExclusive = 
-    (badge && badge.toUpperCase().includes("EXCLUSIVE")) ||
-    (price && (price.includes("2500") || price.includes("2,500"))) ||
-    [
-      "irish-leather", "baccarat-rouge-540", "tobacco-vanille", "by-the-fireplace",
-      "resala", "sultani", "guidance", "rosewood", "sakura-dior", "imagination"
-    ].includes(targetSlug);
-
-  const productPrices = isExclusive ? {
-    "6ml": 300,
-    "10ml": 500,
-    "30ml": 1500,
-    "50ml": 2500,
-  } : {
-    "6ml": 300,
-    "10ml": 500,
-    "30ml": 900,
-    "50ml": 1500,
-  };
-
-  // Display price range format (e.g. "300 - 2500tk" or "300 - 1500tk")
-  const rawPrice = price || (isExclusive ? "300 - 2500tk" : "300 - 1500tk");
-  const displayPrice = (rawPrice.includes("-") || rawPrice.includes("–"))
-    ? rawPrice
-    : (isExclusive ? "300 - 2500tk" : "300 - 1500tk");
-
-  const displayOriginalPrice = originalPrice ? (originalPrice.includes("tk") ? originalPrice : `${originalPrice}tk`) : "";
 
   return (
     <div
@@ -190,7 +198,11 @@ export default function ProductCard({
           sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 280px"
           className={styles.image}
         />
-        {badge && <span className={styles.badge}>{badge}</span>}
+        {badge ? (
+          <span className={styles.badge}>{badge}</span>
+        ) : resolvedCategory === "exclusive" ? (
+          <span className={styles.badge} style={{ backgroundColor: "#820011", color: "#FFFFFF" }}>EXCLUSIVE</span>
+        ) : null}
       </div>
 
       {/* Card Content */}
@@ -220,7 +232,7 @@ export default function ProductCard({
           <span className={styles.brandText}>{subTitleText}</span>
         </div>
 
-        {/* Row 4: Rating (Left) & Pricing (Right) */}
+        {/* Row 3: Rating (Left) & Dynamic Price (Right) */}
         <div className={styles.ratingPriceRow}>
           <div className={styles.ratingGroup}>
             <span className={styles.star}>★</span>
@@ -230,8 +242,29 @@ export default function ProductCard({
           </div>
 
           <div className={styles.priceGroup}>
-            <span className={styles.currentPrice}>{displayPrice}</span>
+            <span className={styles.currentPrice}>৳{currentPrice.toLocaleString()}</span>
           </div>
+        </div>
+
+        {/* Row 4: Size Selector Pills */}
+        <div className={styles.sizeSelectorRow}>
+          {pricingTier.sizesList.map((size) => {
+            const isSelected = selectedSize === size;
+            return (
+              <button
+                key={size}
+                type="button"
+                className={`${styles.sizePill} ${isSelected ? styles.sizePillActive : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedSize(size);
+                }}
+                aria-label={`Select ${size}`}
+              >
+                {size}
+              </button>
+            );
+          })}
         </div>
 
         {/* Row 5: Action Buttons */}
@@ -250,7 +283,7 @@ export default function ProductCard({
                   (i: any) =>
                     i.name &&
                     i.name.toLowerCase() === displayName.toLowerCase() &&
-                    (i.selectedSize === "10ml" || i.selectedSize === "12ml" || !i.selectedSize)
+                    i.selectedSize === selectedSize
                 );
 
                 if (existingIndex > -1) {
@@ -262,9 +295,9 @@ export default function ProductCard({
                     name: displayName,
                     image: image,
                     inspiredBy: subTitleText,
-                    selectedSize: "10ml",
+                    selectedSize: selectedSize,
                     quantity: 1,
-                    prices: productPrices,
+                    prices: pricingTier.prices,
                     selected: true,
                   });
                 }
@@ -294,7 +327,7 @@ export default function ProductCard({
                   (i: any) =>
                     i.name &&
                     i.name.toLowerCase() === displayName.toLowerCase() &&
-                    (i.selectedSize === "10ml" || i.selectedSize === "12ml" || !i.selectedSize)
+                    i.selectedSize === selectedSize
                 );
 
                 if (existingIndex > -1) {
@@ -306,16 +339,16 @@ export default function ProductCard({
                     name: displayName,
                     image: image,
                     inspiredBy: subTitleText,
-                    selectedSize: "10ml",
+                    selectedSize: selectedSize,
                     quantity: 1,
-                    prices: productPrices,
+                    prices: pricingTier.prices,
                     selected: true,
                   });
                 }
 
                 localStorage.setItem("cart-items", JSON.stringify(cart));
                 window.dispatchEvent(new Event("cart-updated"));
-                setToastMessage(`Added ${displayName} (10ml) to your bag!`);
+                setToastMessage(`Added ${displayName} (${selectedSize} - ৳${currentPrice.toLocaleString()}) to your bag!`);
               } catch (err) {
                 console.error(err);
               }

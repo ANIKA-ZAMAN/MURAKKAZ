@@ -30,8 +30,12 @@ export default function BestSellersSection() {
             <ProductCard
               key={product.id}
               id={product.id}
+              slug={product.slug}
               name={product.name}
               brand={product.brand}
+              category={product.category}
+              badge={product.badge}
+              inspiredBy={product.inspiredBy}
               description={product.description}
               rating={product.rating}
               reviews={product.reviews}

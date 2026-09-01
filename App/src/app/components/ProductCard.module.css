@@ -226,9 +226,11 @@
 
 .currentPrice {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.08rem;
+  font-weight: 700;
   color: #00B865;
+  letter-spacing: -0.01em;
+  transition: all 0.2s ease;
 }
 
 .originalPrice {
@@ -237,6 +239,45 @@
   color: #9ca3af;
   text-decoration: line-through;
   margin-top: 1px;
+}
+
+/* Size Selector Pills Row */
+.sizeSelectorRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.sizePill {
+  flex: 1;
+  padding: 4.5px 0;
+  border-radius: 6px;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: #555558;
+  background: #ECE6DA;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.sizePill:hover {
+  background: #DFD6C7;
+  color: #1F1C18;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.sizePillActive {
+  background: #820011 !important;
+  color: #FFFFFF !important;
+  border-color: #820011 !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(130, 0, 17, 0.22);
 }
 
 /* Action Buttons */

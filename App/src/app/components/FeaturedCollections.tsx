@@ -10,8 +10,10 @@ import { luxuryProducts, fetchLiveProducts } from "../data/products";
 /* ── Curated Real Featured Collection Products (From 63 Master PDF Catalog) ── */
 const defaultFeaturedProducts = luxuryProducts.slice(0, 8).map((p, idx) => ({
   id: p.id || `fc-${idx}`,
+  slug: p.slug,
   name: p.name,
   brand: p.brand,
+  category: p.category,
   inspiredBy: p.inspiredBy || `Master Fragrance`,
   description: p.description,
   rating: p.rating || 4.9,
@@ -20,7 +22,7 @@ const defaultFeaturedProducts = luxuryProducts.slice(0, 8).map((p, idx) => ({
   originalPrice: p.originalPrice || "650tk",
   volume: p.volume || "12ml",
   image: p.image,
-  badge: idx % 2 === 0 ? "BESTSELLER" : "EXCLUSIVE",
+  badge: p.badge || (p.category === "Exclusive" ? "EXCLUSIVE" : idx % 2 === 0 ? "BESTSELLER" : undefined),
 }));
 
 export default function FeaturedCollections() {
@@ -36,8 +38,10 @@ export default function FeaturedCollections() {
       if (isMounted && data && data.length > 0) {
         const liveList = data.slice(0, 12).map((item, idx) => ({
           id: item.id || `prod-${idx}`,
+          slug: item.slug,
           name: item.name,
           brand: item.brand || "MURAKKAZ",
+          category: item.category,
           inspiredBy: item.inspiredBy || "",
           description: item.description || "",
           rating: item.rating || 4.9,
@@ -46,7 +50,7 @@ export default function FeaturedCollections() {
           originalPrice: item.originalPrice || "650tk",
           volume: item.volume || "12ml",
           image: item.image,
-          badge: item.badge || (idx % 2 === 0 ? "BESTSELLER" : "EXCLUSIVE"),
+          badge: item.badge || (item.category === "Exclusive" ? "EXCLUSIVE" : idx % 2 === 0 ? "BESTSELLER" : undefined),
         }));
         setFeaturedProducts(liveList);
       }
@@ -199,8 +203,10 @@ export default function FeaturedCollections() {
                   >
                     <ProductCard
                       id={product.id}
+                      slug={product.slug}
                       name={product.name}
                       brand={product.brand}
+                      category={product.category}
                       inspiredBy={product.inspiredBy}
                       description={product.description}
                       rating={product.rating}

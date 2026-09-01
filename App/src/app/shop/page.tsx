@@ -314,7 +314,7 @@ function ShopContent() {
                         <td className={styles.priceCell}>৳300</td>
                       </tr>
                       <tr>
-                        <td><strong>10 ml</strong></td>
+                        <td><strong>12 ml</strong></td>
                         <td className={styles.priceCell}>৳500</td>
                       </tr>
                       <tr>
@@ -367,16 +367,16 @@ function ShopContent() {
                         <td className={styles.priceCell}>৳300</td>
                       </tr>
                       <tr>
-                        <td><strong>10 ml</strong></td>
+                        <td><strong>12 ml</strong></td>
                         <td className={styles.priceCell}>৳500</td>
                       </tr>
                       <tr>
                         <td><strong>30 ml</strong></td>
-                        <td className={styles.priceCell}>৳900</td>
+                        <td className={styles.priceCell}>৳1,500</td>
                       </tr>
                       <tr>
                         <td><strong>50 ml</strong></td>
-                        <td className={styles.priceCell}>৳1,500</td>
+                        <td className={styles.priceCell}>৳2,500</td>
                       </tr>
                     </tbody>
                   </table>

@@ -33,6 +33,8 @@ export default function ProductGrid({
               slug={product.slug}
               brand={product.brand}
               name={product.name}
+              category={product.category}
+              badge={product.badge}
               inspiredBy={product.inspiredBy}
               description={product.description}
               rating={product.rating}
