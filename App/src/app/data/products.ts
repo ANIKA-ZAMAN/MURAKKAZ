@@ -923,7 +923,7 @@ export const luxuryProducts: Product[] = [
     "priceVal": 300,
     "originalPriceVal": 400,
     "volume": "6ml - 50ml",
-    "image": "/images/products/strawberry_letter_v3.jpg",
+    "image": "/images/products/strawberry_letter_v5.jpg",
     "family": "GOURMAND",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
