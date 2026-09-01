@@ -1,4 +1,5 @@
 import prisma from '../config/database';
+import geoip from 'geoip-lite';
 
 export interface RecordPageviewInput {
   sessionId: string;
@@ -108,27 +109,36 @@ export function classifyReferrer(referrerUrl?: string, utmSource?: string): { so
 }
 
 export function parseLocationFromIp(ip: string = '', headers: Record<string, any> = {}) {
-  // Check Cloudflare or custom geo headers if present
-  const countryHeader = headers['cf-ipcountry'] || headers['x-country-code'];
-  const cityHeader = headers['cf-ipcity'] || headers['x-city'];
+  // 1. Check Cloudflare or reverse proxy geo headers if present
+  const countryHeader = headers['cf-ipcountry'] || headers['x-country-code'] || headers['x-vercel-ip-country'];
+  const cityHeader = headers['cf-ipcity'] || headers['x-city'] || headers['x-vercel-ip-city'];
 
   if (countryHeader && cityHeader) {
+    const country = countryHeader === 'BD' ? 'Bangladesh' : String(countryHeader);
     return {
-      country: String(countryHeader),
+      country,
       city: String(cityHeader)
     };
   }
 
-  // Default Bangladesh cities distribution
-  const knownCities = ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna', 'Cumilla', 'Gazipur', 'Narayanganj'];
-  
-  // Deterministic fallback based on IP ending for consistent test reporting
-  if (ip && ip.length > 0) {
-    const lastChar = ip.charCodeAt(ip.length - 1);
-    const city = knownCities[lastChar % knownCities.length];
-    return { country: 'Bangladesh', city };
+  // 2. Real GeoIP database lookup
+  if (ip && ip.trim() !== '') {
+    const cleanIp = ip.replace(/^::ffff:/, '').split(',')[0].trim();
+    if (cleanIp !== '127.0.0.1' && cleanIp !== '::1' && !cleanIp.startsWith('192.168.') && !cleanIp.startsWith('10.')) {
+      try {
+        const geo = geoip.lookup(cleanIp);
+        if (geo) {
+          const country = geo.country === 'BD' ? 'Bangladesh' : (geo.country || 'Bangladesh');
+          const city = geo.city && geo.city.trim() !== '' ? geo.city : (country === 'Bangladesh' ? 'Dhaka' : 'Unknown');
+          return { country, city };
+        }
+      } catch (err) {
+        console.warn('GeoIP lookup error:', err);
+      }
+    }
   }
 
+  // Default for local / Bangladesh ISP private ranges
   return { country: 'Bangladesh', city: 'Dhaka' };
 }
 
