@@ -1573,7 +1573,7 @@ export const luxuryProducts: Product[] = [
     "priceVal": 300,
     "originalPriceVal": 400,
     "volume": "6ml - 50ml",
-    "image": "/images/products/japanese_cherry_blossom_v3.jpg",
+    "image": "/images/products/japanese_cherry_blossom_v5.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
