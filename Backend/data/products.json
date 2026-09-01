@@ -29,14 +29,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -109,7 +109,8 @@
         "color": "#A1887F"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-baccarat-rouge-540-02",
@@ -141,14 +142,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -205,7 +206,8 @@
         "color": "#9E9D24"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-tobacco-vanille-03",
@@ -237,14 +239,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -309,7 +311,8 @@
         "color": "#6D4C41"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-by-the-fireplace-04",
@@ -341,14 +344,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -422,7 +425,8 @@
         "color": "#A1887F"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-resala-05",
@@ -454,14 +458,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -527,7 +531,8 @@
         "color": "#4E342E"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-sultani-06",
@@ -559,14 +564,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -644,7 +649,8 @@
         "color": "#FFB300"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-guidance-07",
@@ -676,14 +682,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -765,7 +771,8 @@
         "color": "#E0E0E0"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-rosewood-08",
@@ -797,14 +804,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -866,7 +873,8 @@
         "color": "#ECEFF1"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-sakura-dior-09",
@@ -898,14 +906,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -971,7 +979,8 @@
         "color": "#CFD8DC"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-imagination-10",
@@ -1003,14 +1012,14 @@
       },
       {
         "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
+        "price": 1500,
+        "originalPrice": 1900,
         "stock": 35
       },
       {
         "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
+        "price": 2500,
+        "originalPrice": 3200,
         "stock": 25
       }
     ],
@@ -1083,7 +1092,8 @@
         "color": "#FFB74D"
       }
     ],
-    "category": "Exclusive"
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
   },
   {
     "id": "prod-normal-1",
@@ -1203,7 +1213,8 @@
         "color": "#D84315"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-2",
@@ -1302,7 +1313,8 @@
         "color": "#80CBC4"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-3",
@@ -1405,7 +1417,8 @@
         "color": "#BCAAA4"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-4",
@@ -1496,7 +1509,8 @@
         "color": "#FFF59D"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-5",
@@ -1594,7 +1608,8 @@
         "color": "#FFF176"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-6",
@@ -1708,7 +1723,8 @@
         "color": "#80DEEA"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-7",
@@ -1810,7 +1826,8 @@
         "color": "#A1887F"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-8",
@@ -1900,7 +1917,8 @@
         "color": "#D84315"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-9",
@@ -2006,7 +2024,8 @@
         "color": "#8D6E63"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-10",
@@ -2100,7 +2119,8 @@
         "color": "#FFF176"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-11",
@@ -2218,7 +2238,8 @@
         "color": "#FFEB3B"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-12",
@@ -2312,7 +2333,8 @@
         "color": "#E0F7FA"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-13",
@@ -2402,7 +2424,8 @@
         "color": "#FFB74D"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-14",
@@ -2504,7 +2527,8 @@
         "color": "#FFB74D"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-15",
@@ -2586,7 +2610,8 @@
         "color": "#6D4C41"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-16",
@@ -2660,7 +2685,8 @@
         "color": "#FFB74D"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-17",
@@ -2754,7 +2780,8 @@
         "color": "#FFA000"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-18",
@@ -2844,7 +2871,8 @@
         "color": "#FFB300"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-19",
@@ -2938,7 +2966,8 @@
         "color": "#F48FB1"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-20",
@@ -3036,7 +3065,8 @@
         "color": "#FFB300"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-21",
@@ -3118,7 +3148,8 @@
         "color": "#FFE082"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-22",
@@ -3216,7 +3247,8 @@
         "color": "#A5D6A7"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-23",
@@ -3318,7 +3350,8 @@
         "color": "#6D4C41"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-24",
@@ -3428,7 +3461,8 @@
         "color": "#795548"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-25",
@@ -3518,7 +3552,8 @@
         "color": "#FFA000"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-26",
@@ -3612,7 +3647,8 @@
         "color": "#FFF59D"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-27",
@@ -3698,7 +3734,8 @@
         "color": "#80DEEA"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-28",
@@ -3796,7 +3833,8 @@
         "color": "#EDE7F6"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-29",
@@ -3918,7 +3956,8 @@
         "color": "#FFD54F"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-30",
@@ -4024,7 +4063,8 @@
         "color": "#CE93D8"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-31",
@@ -4110,7 +4150,8 @@
         "color": "#C8E6C9"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-32",
@@ -4204,7 +4245,8 @@
         "color": "#FFE082"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-33",
@@ -4310,7 +4352,8 @@
         "color": "#FFB74D"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-34",
@@ -4428,7 +4471,8 @@
         "color": "#AED581"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-35",
@@ -4530,7 +4574,8 @@
         "color": "#FFEE58"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-36",
@@ -4636,7 +4681,8 @@
         "color": "#FFB74D"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-37",
@@ -4738,7 +4784,8 @@
         "color": "#BCAAA4"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-38",
@@ -4824,7 +4871,8 @@
         "color": "#F5F5F5"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-39",
@@ -4966,7 +5014,8 @@
         "color": "#D84315"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-40",
@@ -5076,7 +5125,8 @@
         "color": "#8D6E63"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-41",
@@ -5182,7 +5232,8 @@
         "color": "#FAFAFA"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-42",
@@ -5272,7 +5323,8 @@
         "color": "#5D4037"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-43",
@@ -5362,7 +5414,8 @@
         "color": "#558B2F"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-44",
@@ -5460,7 +5513,8 @@
         "color": "#FFE082"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-45",
@@ -5558,7 +5612,8 @@
         "color": "#E0F7FA"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-46",
@@ -5644,7 +5699,8 @@
         "color": "#FFE082"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-47",
@@ -5742,7 +5798,8 @@
         "color": "#F48FB1"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-48",
@@ -5828,7 +5885,8 @@
         "color": "#F8BBD0"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-49",
@@ -5902,7 +5960,8 @@
         "color": "#B2EBF2"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-50",
@@ -5988,7 +6047,8 @@
         "color": "#E0F7FA"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-51",
@@ -6078,7 +6138,8 @@
         "color": "#F8BBD0"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   },
   {
     "id": "prod-normal-52",
@@ -6172,6 +6233,7 @@
         "color": "#FFB300"
       }
     ],
-    "category": "Regular"
+    "category": "Regular",
+    "price": "300 - 1500tk"
   }
 ]

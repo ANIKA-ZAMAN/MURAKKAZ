@@ -1,6 +1,6 @@
-﻿/**
+/**
  * Reusable Perfume Pricing Configuration for Murakkaz
- * Supports dynamic pricing by category (Regular vs Exclusive) and sizes (6ml, 12ml, 30ml, 50ml).
+ * Supports dynamic pricing by category (Regular vs Exclusive) and sizes (6ml, 10ml, 30ml, 50ml).
  */
 
 export type PerfumeCategory = 'regular' | 'exclusive';
@@ -30,9 +30,9 @@ export const PERFUME_PRICING_CONFIG: Record<PerfumeCategory, PricingTierConfig> 
     },
     originalPrices: {
       '6ml': 400,
-      '10ml': 700,
-      '30ml': 900,
-      '50ml': 1500,
+      '10ml': 650,
+      '30ml': 1100,
+      '50ml': 1900,
     },
   },
   exclusive: {
@@ -44,22 +44,19 @@ export const PERFUME_PRICING_CONFIG: Record<PerfumeCategory, PricingTierConfig> 
     prices: {
       '6ml': 300,
       '10ml': 500,
-      '30ml': 900,
-      '50ml': 1500,
+      '30ml': 1500,
+      '50ml': 2500,
     },
     originalPrices: {
-      '6ml': 450,
-      '10ml': 800,
-      '30ml': 900,
-      '50ml': 1500,
+      '6ml': 400,
+      '10ml': 650,
+      '30ml': 1900,
+      '50ml': 3200,
     },
   },
 };
 
-/**
- * List of known Exclusive Luxury Fragrance slugs / keywords
- */
-export const EXCLUSIVE_PERFUME_SLUGS: string[] = [
+export const EXCLUSIVE_FRAGRANCES = [
   'irish-leather',
   'baccarat-rouge-540',
   'tobacco-vanille',
@@ -69,69 +66,20 @@ export const EXCLUSIVE_PERFUME_SLUGS: string[] = [
   'guidance',
   'rosewood',
   'sakura-dior',
-  'imagination',
+  'imagination'
 ];
 
-/**
- * Automatically determine whether a product belongs to the Exclusive or Regular category.
- */
-export function resolvePerfumeCategory(product: {
-  category?: string | null;
-  slug?: string | null;
-  name?: string | null;
-  id?: string | null;
-  badge?: string | null;
-}): PerfumeCategory {
-  if (product.category) {
-    const clean = product.category.toLowerCase().trim();
-    if (clean === 'exclusive' || clean.includes('exclusive') || clean.includes('premium')) {
-      return 'exclusive';
-    }
-    if (clean === 'regular' || clean.includes('regular')) {
-      return 'regular';
-    }
-  }
+export function getPerfumePricing(product: {
+  slug?: string;
+  name?: string;
+  category?: string;
+}): PricingTierConfig {
+  const isExclusive =
+    product.category?.toLowerCase() === 'exclusive' ||
+    (product.slug &&
+      EXCLUSIVE_FRAGRANCES.some(
+        (ex) => product.slug!.toLowerCase().includes(ex) || ex.includes(product.slug!.toLowerCase())
+      ));
 
-  if (product.badge && product.badge.toUpperCase().includes('EXCLUSIVE')) {
-    return 'exclusive';
-  }
-
-  const checkStrings = [product.slug, product.name, product.id].filter(Boolean) as string[];
-  for (const s of checkStrings) {
-    const clean = s.toLowerCase().trim();
-    for (const exclusiveSlug of EXCLUSIVE_PERFUME_SLUGS) {
-      if (clean.includes(exclusiveSlug) || exclusiveSlug.includes(clean)) {
-        return 'exclusive';
-      }
-    }
-  }
-
-  return 'regular';
-}
-
-/**
- * Helper to get the pricing configuration for a category.
- */
-export function getPricingForCategory(category?: string | null): PricingTierConfig {
-  if (!category) return PERFUME_PRICING_CONFIG.regular;
-  const clean = category.toLowerCase().trim();
-  if (clean === 'exclusive' || clean.includes('exclusive') || clean.includes('premium')) {
-    return PERFUME_PRICING_CONFIG.exclusive;
-  }
-  return PERFUME_PRICING_CONFIG.regular;
-}
-
-/**
- * Helper to get price for a specific product and size.
- */
-export function getProductPriceForSize(
-  category: string | undefined,
-  size: string,
-  customPrices?: Record<string, number>
-): number {
-  if (customPrices && customPrices[size] !== undefined && !isNaN(Number(customPrices[size]))) {
-    return Number(customPrices[size]);
-  }
-  const tier = getPricingForCategory(category);
-  return tier.prices[size] ?? tier.prices[tier.defaultSize] ?? 500;
+  return isExclusive ? PERFUME_PRICING_CONFIG.exclusive : PERFUME_PRICING_CONFIG.regular;
 }
