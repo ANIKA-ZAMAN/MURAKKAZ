@@ -8,8 +8,6 @@ interface FilterDrawerProps {
   onClose: () => void;
   selectedFilters: Record<string, string[]>;
   onCheckboxChange: (categoryId: string, option: string) => void;
-  maxPrice: number;
-  onPriceChange: (price: number) => void;
   onClearAll: () => void;
   totalMatching: number;
 }
@@ -19,13 +17,10 @@ export default function FilterDrawer({
   onClose,
   selectedFilters,
   onCheckboxChange,
-  maxPrice,
-  onPriceChange,
   onClearAll,
   totalMatching,
 }: FilterDrawerProps) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
-    price: true,
     category: true,
     family: true,
     gender: true,
@@ -82,11 +77,6 @@ export default function FilterDrawer({
   ];
 
   const categories = [
-    {
-      id: "price",
-      name: "Price Range",
-      type: "slider",
-    },
     {
       id: "category",
       name: "Perfume Category",
@@ -206,28 +196,6 @@ export default function FilterDrawer({
 
                 {isExpanded && (
                   <div className={styles.categoryContent}>
-                    {cat.type === "slider" && (
-                      <div className={styles.sliderWrapper}>
-                        <div className={styles.sliderHeader}>
-                          <span className={styles.sliderLabel}>Max Price</span>
-                          <span className={styles.sliderValue}>{maxPrice.toLocaleString()}tk</span>
-                        </div>
-                        <input
-                          type="range"
-                          min="300"
-                          max="5000"
-                          step="50"
-                          value={maxPrice}
-                          onChange={(e) => onPriceChange(Number(e.target.value))}
-                          className={styles.rangeInput}
-                        />
-                        <div className={styles.sliderLimits}>
-                          <span>300tk</span>
-                          <span>5,000tk</span>
-                        </div>
-                      </div>
-                    )}
-
                     {cat.type === "checkbox" && (
                       <div className={styles.checkboxGrid}>
                         {cat.options?.map((option) => {

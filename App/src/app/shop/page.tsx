@@ -267,8 +267,6 @@ function ShopContent() {
               <FilterSidebar
                 selectedFilters={selectedFilters}
                 onCheckboxChange={handleCheckboxChange}
-                maxPrice={maxPrice}
-                onPriceChange={handlePriceChange}
                 onClearAll={handleClearAll}
                 totalMatching={sortedProducts.length}
               />

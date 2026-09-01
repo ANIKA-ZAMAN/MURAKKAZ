@@ -6,8 +6,6 @@ import styles from "./FilterSidebar.module.css";
 interface FilterSidebarProps {
   selectedFilters: Record<string, string[]>;
   onCheckboxChange: (categoryId: string, option: string) => void;
-  maxPrice: number;
-  onPriceChange: (price: number) => void;
   onClearAll: () => void;
   totalMatching: number;
 }
@@ -15,8 +13,6 @@ interface FilterSidebarProps {
 export default function FilterSidebar({
   selectedFilters,
   onCheckboxChange,
-  maxPrice,
-  onPriceChange,
   onClearAll,
   totalMatching,
 }: FilterSidebarProps) {
@@ -27,7 +23,6 @@ export default function FilterSidebar({
     meter: true,
     occasion: true,
     notes: false,
-    price: true,
   });
 
   const toggleExpand = (id: string) => {
@@ -76,7 +71,7 @@ export default function FilterSidebar({
   const activeFiltersCount = Object.values(selectedFilters).reduce(
     (acc, list) => acc + (list ? list.length : 0),
     0
-  ) + (maxPrice < 5000 ? 1 : 0);
+  );
 
   return (
     <aside className={styles.sidebarCard}>
@@ -96,31 +91,6 @@ export default function FilterSidebar({
       </div>
 
       <div className={styles.categoriesList}>
-        {/* Price Slider */}
-        <div className={styles.section}>
-          <div className={styles.sectionHeader} onClick={() => toggleExpand("price")}>
-            <span className={styles.sectionTitle}>Price Range</span>
-            <span className={styles.chevron}>{expanded["price"] ? "−" : "+"}</span>
-          </div>
-          {expanded["price"] && (
-            <div className={styles.sectionBody}>
-              <div className={styles.priceDisplay}>
-                <span>৳300</span>
-                <span className={styles.currentPrice}>৳{maxPrice.toLocaleString()}</span>
-              </div>
-              <input
-                type="range"
-                min="300"
-                max="5000"
-                step="50"
-                value={maxPrice}
-                onChange={(e) => onPriceChange(Number(e.target.value))}
-                className={styles.rangeSlider}
-              />
-            </div>
-          )}
-        </div>
-
         {/* Dynamic Category Accordions */}
         {categories.map((cat) => {
           const isExpanded = !!expanded[cat.id];
