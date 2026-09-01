@@ -81,7 +81,7 @@ export const createSteadfastConsignment = async (orderId: string) => {
     };
   }
 
-  const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.steadfast.com.bd/api/v1';
+  const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.packzy.com/api/v1';
 
   try {
     const payload = {
@@ -159,7 +159,7 @@ export const getSteadfastTracking = async (trackingCode: string) => {
     };
   }
 
-  const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.steadfast.com.bd/api/v1';
+  const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.packzy.com/api/v1';
 
   try {
     const res = await fetch(`${baseUrl}/status_by_trackingcode/${trackingCode}`, {
@@ -186,7 +186,7 @@ export const getSteadfastBalance = async () => {
     };
   }
 
-  const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.steadfast.com.bd/api/v1';
+  const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.packzy.com/api/v1';
 
   try {
     const res = await fetch(`${baseUrl}/get_balance`, {

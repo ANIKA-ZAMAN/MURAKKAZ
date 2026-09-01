@@ -26,7 +26,7 @@ const envSchema = z.object({
   SSLCOMMERZ_BASE_URL: z.string().optional(),
   STEADFAST_API_KEY: z.string().optional(),
   STEADFAST_SECRET_KEY: z.string().optional(),
-  STEADFAST_BASE_URL: z.string().default('https://portal.steadfast.com.bd/api/v1'),
+  STEADFAST_BASE_URL: z.string().default('https://portal.packzy.com/api/v1'),
   UPLOAD_DIR: z.string().default('uploads'),
   MAX_FILE_SIZE: z.coerce.number().default(5242880)
 });
