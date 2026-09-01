@@ -6396,14 +6396,25 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             itemImage = "/images/products/resala_arabian_oud.jpg";
           }
 
-          const isExcl = p.category === 'Exclusive' || idx < 10 || maxP >= 2500 || ['irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace', 'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination'].includes(itemSlug);
+          const EXCLUSIVE_SET = new Set([
+            'irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace',
+            'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
+            'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
+            'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
+            'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
+          ]);
+
+          const isExcl = (p.category && p.category.toLowerCase() === 'exclusive') ||
+            EXCLUSIVE_SET.has(itemSlug) ||
+            EXCLUSIVE_SET.has(p.id) ||
+            (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500));
 
           return {
             id: p.id || itemSlug,
             slug: itemSlug,
             name: p.name,
             brand: p.brand || "Murakkaz",
-            category: (p.category || (isExcl ? 'Exclusive' : 'Regular')) as 'Exclusive' | 'Regular',
+            category: (isExcl ? 'Exclusive' : 'Regular') as 'Exclusive' | 'Regular',
             inspiredBy: p.inspiredBy || "",
             description: p.description || "",
             rating: p.rating || 5.0,
@@ -6419,7 +6430,7 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             occasion: p.occasion || "Versatile",
             meter: (p.meter || "BEAST_MODE").toUpperCase(),
             notes: notesArr,
-            badge: isExcl ? "EXCLUSIVE" : (p.isFeatured ? "FEATURED" : undefined),
+            badge: isExcl ? "EXCLUSIVE" : undefined,
           };
         });
         lastFetchTime = Date.now();
