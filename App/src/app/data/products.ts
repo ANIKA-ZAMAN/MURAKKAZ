@@ -25,6 +25,7 @@ export interface Product {
   price: string;
   originalPrice?: string;
   priceVal: number;
+  maxPriceVal?: number;
   originalPriceVal?: number;
   volume?: string;
   image: string;
@@ -6422,6 +6423,7 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             price: priceStr,
             originalPrice: p.originalPrice || "400tk",
             priceVal: minPrice,
+            maxPriceVal: maxP,
             originalPriceVal: Math.round(minPrice * 1.25),
             volume: p.volume || (p.sizes && p.sizes.length > 0 ? p.sizes.map((s: any) => s.size).join(', ') : "6ml - 50ml"),
             image: itemImage,
@@ -6431,6 +6433,17 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             meter: (p.meter || "BEAST_MODE").toUpperCase(),
             notes: notesArr,
             badge: isExcl ? "EXCLUSIVE" : undefined,
+            sizes: p.sizes || (isExcl ? [
+              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+              { size: '30ml', price: 1500, originalPrice: 1900, stock: 35 },
+              { size: '50ml', price: 2500, originalPrice: 3200, stock: 25 },
+            ] : [
+              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+              { size: '30ml', price: 900, originalPrice: 1100, stock: 35 },
+              { size: '50ml', price: 1500, originalPrice: 1900, stock: 25 },
+            ]),
           };
         });
         lastFetchTime = Date.now();

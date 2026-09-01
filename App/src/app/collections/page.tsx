@@ -26,6 +26,7 @@ function CollectionsContent() {
   }, []);
 
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+    category: [],
     family: [],
     gender: [],
     occasion: [],
@@ -62,6 +63,7 @@ function CollectionsContent() {
 
   const handleClearAll = () => {
     setSelectedFilters({
+      category: [],
       family: [],
       gender: [],
       occasion: [],
@@ -84,7 +86,7 @@ function CollectionsContent() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Filter products by search query, price, family, gender, occasion, meter, notes
+  // Filter products by search query, price, category, family, gender, occasion, meter, notes
   const filteredProducts = productsList.filter((product) => {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -93,7 +95,25 @@ function CollectionsContent() {
       const matchBrand = product.brand ? product.brand.toLowerCase().includes(q) : false;
       if (!matchName && !matchDesc && !matchBrand) return false;
     }
-    if (product.priceVal > maxPrice) return false;
+
+    const isProductExclusive = (product.category?.toLowerCase() === 'exclusive') ||
+      (product.badge?.toLowerCase().includes('exclusive')) ||
+      (product.sizes && Array.isArray(product.sizes) && product.sizes.some((s: any) => Number(s.price) >= 2500));
+
+    const prodCategory = isProductExclusive ? 'exclusive' : 'regular';
+
+    // Price range filtering
+    const prodMaxPrice = product.maxPriceVal || (product.sizes && Array.isArray(product.sizes) && product.sizes.length > 0
+      ? Math.max(...product.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n)))
+      : (isProductExclusive ? 2500 : 1500));
+
+    if (prodMaxPrice > maxPrice) return false;
+
+    // Category filter
+    if (selectedFilters.category && selectedFilters.category.length > 0) {
+      const selectedLower = selectedFilters.category.map(c => c.toLowerCase());
+      if (!selectedLower.includes(prodCategory)) return false;
+    }
 
     if (selectedFilters.family && selectedFilters.family.length > 0) {
       const selectedCaps = selectedFilters.family.map(f => f.toUpperCase().replace(/\s+/g, '_'));
@@ -131,11 +151,17 @@ function CollectionsContent() {
 
   // Sort logic
   const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const aIsExcl = (a.category?.toLowerCase() === 'exclusive') || (a.badge?.toLowerCase().includes('exclusive')) || (a.sizes && Array.isArray(a.sizes) && a.sizes.some((s: any) => Number(s.price) >= 2500));
+    const bIsExcl = (b.category?.toLowerCase() === 'exclusive') || (b.badge?.toLowerCase().includes('exclusive')) || (b.sizes && Array.isArray(b.sizes) && b.sizes.some((s: any) => Number(s.price) >= 2500));
+    
+    const aPrice = a.maxPriceVal || (a.sizes && Array.isArray(a.sizes) && a.sizes.length > 0 ? Math.max(...a.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n))) : (aIsExcl ? 2500 : 1500));
+    const bPrice = b.maxPriceVal || (b.sizes && Array.isArray(b.sizes) && b.sizes.length > 0 ? Math.max(...b.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n))) : (bIsExcl ? 2500 : 1500));
+
     if (sortBy === "price_asc") {
-      return (a.priceVal || 0) - (b.priceVal || 0);
+      return aPrice - bPrice;
     }
     if (sortBy === "price_desc") {
-      return (b.priceVal || 0) - (a.priceVal || 0);
+      return bPrice - aPrice;
     }
     if (sortBy === "rating") {
       return (b.rating || 0) - (a.rating || 0);
