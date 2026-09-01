@@ -82,20 +82,20 @@ export default function ProductCard({
     return getPricingForCategory(resolvedCategory);
   }, [resolvedCategory]);
 
-  // Independent per-card selected size state
-  const [selectedSize, setSelectedSize] = useState<string>(pricingTier.defaultSize || "10ml");
+  // Default size is 10ml
+  const selectedSize = "10ml";
 
-  // Dynamic price based on selected size
+  // Dynamic price based on 10ml size
   const currentPrice = useMemo(() => {
-    return getProductPriceForSize(resolvedCategory, selectedSize, customPrices);
-  }, [resolvedCategory, selectedSize, customPrices]);
+    return getProductPriceForSize(resolvedCategory, "10ml", customPrices);
+  }, [resolvedCategory, customPrices]);
 
   const currentOriginalPrice = useMemo(() => {
-    if (pricingTier.originalPrices && pricingTier.originalPrices[selectedSize]) {
-      return pricingTier.originalPrices[selectedSize];
+    if (pricingTier.originalPrices && pricingTier.originalPrices["10ml"]) {
+      return pricingTier.originalPrices["10ml"];
     }
     return Math.round(currentPrice * 1.3);
-  }, [pricingTier, selectedSize, currentPrice]);
+  }, [pricingTier, currentPrice]);
 
   // Check wishlist state on mount
   useEffect(() => {
@@ -244,28 +244,7 @@ export default function ProductCard({
           </div>
         </div>
 
-        {/* Row 4: Size Selector Pills */}
-        <div className={styles.sizeSelectorRow}>
-          {pricingTier.sizesList.map((size) => {
-            const isSelected = selectedSize === size;
-            return (
-              <button
-                key={size}
-                type="button"
-                className={`${styles.sizePill} ${isSelected ? styles.sizePillActive : ""}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedSize(size);
-                }}
-                aria-label={`Select ${size}`}
-              >
-                {size}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Row 5: Action Buttons */}
+        {/* Row 4: Action Buttons */}
         <div className={styles.actions}>
           <button
             type="button"
