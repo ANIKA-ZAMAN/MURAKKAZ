@@ -25,14 +25,14 @@ export const PERFUME_PRICING_CONFIG: Record<PerfumeCategory, PricingTierConfig> 
     prices: {
       '6ml': 300,
       '10ml': 500,
-      '30ml': 1500,
+      '30ml': 900,
       '50ml': 1500,
     },
     originalPrices: {
       '6ml': 400,
       '10ml': 700,
-      '30ml': 1900,
-      '50ml': 1900,
+      '30ml': 900,
+      '50ml': 1500,
     },
   },
   exclusive: {
@@ -44,14 +44,14 @@ export const PERFUME_PRICING_CONFIG: Record<PerfumeCategory, PricingTierConfig> 
     prices: {
       '6ml': 300,
       '10ml': 500,
-      '30ml': 1500,
+      '30ml': 900,
       '50ml': 1500,
     },
     originalPrices: {
       '6ml': 450,
       '10ml': 800,
-      '30ml': 2200,
-      '50ml': 2000,
+      '30ml': 900,
+      '50ml': 1500,
     },
   },
 };
