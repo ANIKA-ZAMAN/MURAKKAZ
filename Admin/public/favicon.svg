@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1E22"/>
+      <stop offset="50%" stop-color="#121215"/>
+      <stop offset="100%" stop-color="#0A0A0C"/>
+    </linearGradient>
+    <linearGradient id="goldBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC695"/>
+      <stop offset="35%" stop-color="#B8864E"/>
+      <stop offset="70%" stop-color="#DFC08F"/>
+      <stop offset="100%" stop-color="#9C6B38"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF384E"/>
+      <stop offset="40%" stop-color="#D6182F"/>
+      <stop offset="100%" stop-color="#990B1E"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#D6182F" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Luxury Background with Gold Border -->
+  <rect x="20" y="20" width="472" height="472" rx="108" fill="url(#bgGrad)" stroke="url(#goldBorder)" stroke-width="10"/>
+
+  <!-- Iconic Murakkaz Ribbon 'm' Calligraphy -->
+  <g filter="url(#shadow)">
+    <path d="M 120 285 C 150 215, 175 195, 205 210 C 230 222, 240 270, 260 275 C 285 280, 310 200, 345 205 C 375 210, 385 255, 405 270"
+          fill="none"
+          stroke="url(#redGrad)"
+          stroke-width="38"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+
+  <!-- Brand Typography -->
+  <text x="256" y="380"
+        font-family="'Playfair Display', 'Georgia', 'Times New Roman', serif"
+        font-size="46"
+        font-weight="600"
+        letter-spacing="9"
+        fill="#ECC695"
+        text-anchor="middle">MURAKKAZ</text>
+</svg>
