@@ -29,7 +29,7 @@ export default function FloatingContact({
       <div className={`${styles.menu} ${isOpen ? styles.menuOpen : ""}`}>
         {/* Messenger Link */}
         <a
-          href="https://m.me/murakkaz"
+          href="https://www.facebook.com/profile.php?id=100063498011095"
           target="_blank"
           rel="noopener noreferrer"
           className={`${styles.menuItem} ${styles.messenger}`}
@@ -46,7 +46,7 @@ export default function FloatingContact({
 
         {/* WhatsApp Link */}
         <a
-          href="https://wa.me/8801700000000"
+          href="https://wa.me/8801997807701"
           target="_blank"
           rel="noopener noreferrer"
           className={`${styles.menuItem} ${styles.whatsapp}`}
@@ -63,7 +63,7 @@ export default function FloatingContact({
 
         {/* Phone Call Link */}
         <a
-          href="tel:+8801700000000"
+          href="tel:+8801997807701"
           className={`${styles.menuItem} ${styles.phone}`}
           aria-label="Call us"
         >
