@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import CollectionHeader from "../components/CollectionHeader";
 import FilterButton from "../components/FilterButton";
 import FilterSidebar from "../components/FilterSidebar";
@@ -10,10 +11,10 @@ import CollectionCard from "./components/CollectionCard";
 import { Product, productsCatalog, fetchLiveProducts } from "../data/products";
 import styles from "./page.module.css";
 
-
 function CollectionsContent() {
+  const searchParams = useSearchParams();
   const [productsList, setProductsList] = useState<Product[]>(productsCatalog);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [currentPage, setCurrentPage] = useState(1);
   const [isFilterOpen, setIsFilterOpen] = useState(true);
 
@@ -23,6 +24,22 @@ function CollectionsContent() {
         setProductsList(data);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const qParam = searchParams.get("q") || "";
+    setSearchQuery(qParam);
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handleNavbarSearch = (e: CustomEvent<string>) => {
+      setSearchQuery(e.detail ?? "");
+      setCurrentPage(1);
+    };
+    window.addEventListener("navbar-search" as any, handleNavbarSearch as any);
+    return () => {
+      window.removeEventListener("navbar-search" as any, handleNavbarSearch as any);
+    };
   }, []);
 
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({

@@ -50,6 +50,22 @@ function ShopContent() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    const qParam = searchParams.get("q") || "";
+    setSearchQuery(qParam);
+  }, [searchParams]);
+
+  useEffect(() => {
+    const handleNavbarSearch = (e: CustomEvent<string>) => {
+      setSearchQuery(e.detail ?? "");
+      setCurrentPage(1);
+    };
+    window.addEventListener("navbar-search" as any, handleNavbarSearch as any);
+    return () => {
+      window.removeEventListener("navbar-search" as any, handleNavbarSearch as any);
+    };
+  }, []);
+
   const handleCheckboxChange = (categoryId: string, option: string) => {
     setSelectedFilters((prev) => {
       const currentSelected = prev[categoryId] || [];
