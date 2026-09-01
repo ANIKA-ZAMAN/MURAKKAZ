@@ -36,7 +36,7 @@ function ShopContent() {
     notes: initialNotes,
   });
 
-  const [maxPrice, setMaxPrice] = useState<number>(10000);
+  const [maxPrice, setMaxPrice] = useState<number>(5000);
   const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [sortBy, setSortBy] = useState<string>("newest");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -85,7 +85,7 @@ function ShopContent() {
       meter: [],
       notes: [],
     });
-    setMaxPrice(10000);
+    setMaxPrice(5000);
     setSearchQuery("");
     setSortBy("newest");
     setCurrentPage(1);

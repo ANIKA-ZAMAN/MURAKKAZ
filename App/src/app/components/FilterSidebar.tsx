@@ -76,7 +76,7 @@ export default function FilterSidebar({
   const activeFiltersCount = Object.values(selectedFilters).reduce(
     (acc, list) => acc + (list ? list.length : 0),
     0
-  ) + (maxPrice < 10000 ? 1 : 0);
+  ) + (maxPrice < 5000 ? 1 : 0);
 
   return (
     <aside className={styles.sidebarCard}>
@@ -111,8 +111,8 @@ export default function FilterSidebar({
               <input
                 type="range"
                 min="300"
-                max="10000"
-                step="100"
+                max="5000"
+                step="50"
                 value={maxPrice}
                 onChange={(e) => onPriceChange(Number(e.target.value))}
                 className={styles.rangeSlider}

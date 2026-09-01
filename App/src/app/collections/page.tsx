@@ -32,7 +32,7 @@ function CollectionsContent() {
     meter: [],
     notes: [],
   });
-  const [maxPrice, setMaxPrice] = useState<number>(10000);
+  const [maxPrice, setMaxPrice] = useState<number>(5000);
   const [sortBy, setSortBy] = useState<string>("newest");
 
   const handleCheckboxChange = (categoryId: string, option: string) => {
@@ -68,7 +68,7 @@ function CollectionsContent() {
       meter: [],
       notes: [],
     });
-    setMaxPrice(10000);
+    setMaxPrice(5000);
     setSearchQuery("");
     setSortBy("newest");
     setCurrentPage(1);
