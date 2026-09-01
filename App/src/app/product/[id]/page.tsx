@@ -250,14 +250,14 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     if (isExclusive) {
       return [
         { label: "6ml", price: 300 },
-        { label: "12ml", price: 500 },
+        { label: "10ml", price: 500 },
         { label: "30ml", price: 1500 },
         { label: "50ml", price: 2500 },
       ];
     }
     return [
       { label: "6ml", price: 300 },
-      { label: "12ml", price: 500 },
+      { label: "10ml", price: 500 },
       { label: "30ml", price: 1500 },
       { label: "50ml", price: 2500 },
     ];
@@ -573,7 +573,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     rating: p.rating || 4.9,
     reviews: p.reviews || 50,
     price: p.price,
-    volume: p.volume || "12ml",
+    volume: p.volume || "10ml",
     image: p.image,
     id: p.id
   }));

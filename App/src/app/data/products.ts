@@ -94,7 +94,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -206,7 +206,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -302,7 +302,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -406,7 +406,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -519,7 +519,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -624,7 +624,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -741,7 +741,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -862,7 +862,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -963,7 +963,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }
@@ -1068,7 +1068,7 @@ export const staticProducts: Product[] = [
       },
       {
         "size": "50ml",
-        "price": 2500,
+        "price": 1500,
         "originalPrice": 3100,
         "stock": 25
       }

@@ -168,7 +168,7 @@ export default function ScentIndex() {
     try {
       const savedCart = localStorage.getItem("cart-items");
       let cart = savedCart ? JSON.parse(savedCart) : [];
-      const existingIndex = cart.findIndex((item: any) => item.name === product.name && item.volume === "12ml");
+      const existingIndex = cart.findIndex((item: any) => item.name === product.name && item.volume === "10ml");
 
       if (existingIndex > -1) {
         cart[existingIndex].quantity += 1;
@@ -180,7 +180,7 @@ export default function ScentIndex() {
           brand: product.brand || "Murakkaz",
           price: product.priceVal || 300,
           originalPrice: product.originalPriceVal || 400,
-          volume: "12ml",
+          volume: "10ml",
           image: product.image,
           quantity: 1,
           selected: true,
@@ -189,7 +189,7 @@ export default function ScentIndex() {
 
       localStorage.setItem("cart-items", JSON.stringify(cart));
       window.dispatchEvent(new Event("cart-updated"));
-      setToastMessage(`Added ${product.name} (12ml) to your shopping bag!`);
+      setToastMessage(`Added ${product.name} (10ml) to your shopping bag!`);
     } catch (e) {
       console.error("Error adding to cart:", e);
     }
@@ -453,7 +453,7 @@ export default function ScentIndex() {
                               handleAddToCart(rec.product);
                             }}
                           >
-                            Add 12ml Bag
+                            Add 10ml Bag
                           </button>
                           <button
                             type="button"

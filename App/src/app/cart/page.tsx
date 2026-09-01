@@ -79,7 +79,7 @@ export default function CartPage() {
                 : {
                     "6ml": 300,
                     "10ml": 500,
-                    "12ml": 500,
+                    "10ml": 500,
                     "30ml": 900,
                     "50ml": 1500,
                   },
@@ -281,7 +281,7 @@ export default function CartPage() {
                         <div className={styles.sizeSelectionRow}>
                           <span className={styles.metaLabel}>Size:</span>
                           <div className={styles.sizeTags}>
-                            {(["6ml", "12ml", "30ml", "50ml"] as const).map((size) => (
+                            {(["6ml", "10ml", "30ml", "50ml"] as const).map((size) => (
                               <button
                                 key={size}
                                 className={`${styles.sizeTag} ${item.selectedSize === size ? styles.activeSize : ""}`}

@@ -83,7 +83,7 @@ export default function ProductCard({
   }, [resolvedCategory]);
 
   // Independent per-card selected size state
-  const [selectedSize, setSelectedSize] = useState<string>(pricingTier.defaultSize || "12ml");
+  const [selectedSize, setSelectedSize] = useState<string>(pricingTier.defaultSize || "10ml");
 
   // Dynamic price based on selected size
   const currentPrice = useMemo(() => {

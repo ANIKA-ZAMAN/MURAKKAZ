@@ -165,7 +165,7 @@ export default function WishlistPage() {
         (i: any) =>
           i.name &&
           i.name.toLowerCase() === item.name.toLowerCase() &&
-          (i.selectedSize === "12ml" || !i.selectedSize)
+          (i.selectedSize === "10ml" || !i.selectedSize)
       );
 
       const isExclusive = [
