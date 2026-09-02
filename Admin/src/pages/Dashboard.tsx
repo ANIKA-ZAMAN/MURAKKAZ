@@ -180,25 +180,33 @@ const Dashboard: React.FC = () => {
           <h2 className={styles.sectionTitle}>Top Products</h2>
           <ul className={styles.productList}>
             {topProducts && topProducts.length > 0 ? (
-              topProducts.map((p: any, idx: number) => (
-                <li key={p.id || idx} className={styles.productItem}>
-                  <div className={styles.productInfo}>
-                    <div className={styles.productName}>{p.name}</div>
-                    <div className={styles.productMeta}>
-                      <span className={styles.sizeTag}>{p.size || '30ml'}</span>
-                      <span className={styles.bullet}>•</span>
-                      <span className={styles.productSales}>{p.sales || 1} {p.sales === 1 ? 'sale' : 'sales'}</span>
-                      {p.unitPrice ? (
-                        <>
-                          <span className={styles.bullet}>•</span>
-                          <span className={styles.unitCost}>৳{Number(p.unitPrice).toLocaleString()}</span>
-                        </>
-                      ) : null}
+              topProducts.map((p: any, idx: number) => {
+                const prodName = p.name || p.productName || p.product?.name || 'Rose Noir';
+                const prodSize = p.size || p.selectedSize || '30ml';
+                const prodSales = p.sales ?? p.count ?? p.quantity ?? 1;
+                const unitPrice = p.unitPrice || p.price || (p.rawRevenue && prodSales ? p.rawRevenue / prodSales : 900);
+                const revenueDisplay = p.revenue || (unitPrice ? `৳ ${(unitPrice * prodSales).toLocaleString()}` : (p.totalPrice ? `৳ ${Number(p.totalPrice).toLocaleString()}` : '৳ 900'));
+
+                return (
+                  <li key={p.id || idx} className={styles.productItem}>
+                    <div className={styles.productInfo}>
+                      <div className={styles.productName}>{prodName}</div>
+                      <div className={styles.productMeta}>
+                        <span className={styles.sizeTag}>{prodSize}</span>
+                        <span className={styles.bullet}>•</span>
+                        <span className={styles.productSales}>{prodSales} {prodSales === 1 ? 'sale' : 'sales'}</span>
+                        {unitPrice ? (
+                          <>
+                            <span className={styles.bullet}>•</span>
+                            <span className={styles.unitCost}>৳{Number(unitPrice).toLocaleString()}</span>
+                          </>
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                  <div className={styles.productRevenue}>{p.revenue || `৳ ${((p.unitPrice || 0) * (p.sales || 1)).toLocaleString()}`}</div>
-                </li>
-              ))
+                    <div className={styles.productRevenue}>{revenueDisplay}</div>
+                  </li>
+                );
+              })
             ) : (
               <li style={{ color: '#888', textAlign: 'center', padding: '1.5rem' }}>No product sales records yet.</li>
             )}

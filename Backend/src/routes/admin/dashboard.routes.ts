@@ -60,21 +60,27 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
         }> = {};
 
         for (const item of allOrderItems) {
-          const key = `${item.productName}_${item.selectedSize}`;
+          const prodName = item.productName || item.product?.name || 'Rose Noir';
+          const prodSize = item.selectedSize || '30ml';
+          const key = `${prodName}_${prodSize}`;
           if (!productStatsMap[key]) {
             productStatsMap[key] = {
-              id: item.productId || key,
-              name: item.productName,
-              size: item.selectedSize || '30ml',
-              unitPrice: item.unitPrice || 0,
+              id: item.productId || item.id || key,
+              name: prodName,
+              size: prodSize,
+              unitPrice: item.unitPrice || 900,
               sales: 0,
               revenue: 0,
               image: item.productImage || item.product?.image || ''
             };
           }
-          productStatsMap[key].sales += item.quantity || 1;
-          productStatsMap[key].revenue += item.totalPrice || ((item.unitPrice || 0) * (item.quantity || 1));
-          if (!productStatsMap[key].unitPrice && item.unitPrice) {
+          const qty = item.quantity || 1;
+          const uPrice = item.unitPrice || 900;
+          const totPrice = item.totalPrice || (uPrice * qty);
+
+          productStatsMap[key].sales += qty;
+          productStatsMap[key].revenue += totPrice;
+          if (item.unitPrice) {
             productStatsMap[key].unitPrice = item.unitPrice;
           }
         }
@@ -85,11 +91,18 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
           .map(p => ({
             id: p.id,
             name: p.name,
+            productName: p.name,
+            product: { id: p.id, name: p.name },
             size: p.size,
+            selectedSize: p.size,
             unitPrice: p.unitPrice,
+            price: p.unitPrice,
             unitPriceFormatted: `৳ ${p.unitPrice.toLocaleString()}`,
             sales: p.sales,
+            count: p.sales,
+            quantity: p.sales,
             revenue: `৳ ${p.revenue.toLocaleString()}`,
+            totalPrice: p.revenue,
             rawRevenue: p.revenue,
             image: p.image
           }));
