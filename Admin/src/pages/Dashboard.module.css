@@ -203,10 +203,33 @@
 }
 
 .productName {
-  font-weight: 500;
-  font-size: 0.9rem;
+  font-weight: 600;
+  font-size: 0.95rem;
   color: var(--text-primary, #F5F1E8);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.productMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary, #9A9A9C);
+}
+
+.sizeTag {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(197, 168, 128, 0.12);
+  color: var(--accent-gold, #C5A880);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.bullet {
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .productSales {
@@ -214,10 +237,17 @@
   font-size: 0.8rem;
 }
 
+.unitCost {
+  color: #8E8E93;
+  font-size: 0.78rem;
+}
+
 .productRevenue {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--accent-gold, #C5A880);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  text-align: right;
+  white-space: nowrap;
 }
 
 @media (max-width: 1024px) {

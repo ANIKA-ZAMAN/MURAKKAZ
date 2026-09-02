@@ -152,10 +152,12 @@ const Dashboard: React.FC = () => {
               {recentOrders.length > 0 ? (
                 recentOrders.map((order: any) => (
                   <tr key={order.id}>
-                    <td>{order.id}</td>
-                    <td>{order.customer || order.user?.firstName || 'Collector'}</td>
-                    <td>{order.date || order.createdAt?.slice(0, 10) || '2026-07-28'}</td>
-                    <td>{order.total || `৳ ${order.grandTotal}`}</td>
+                    <td style={{ fontWeight: 600, color: 'var(--accent-gold, #C5A880)' }}>
+                      {order.orderNumber || order.id}
+                    </td>
+                    <td>{order.fullName || order.customer || (order.user ? `${order.user.firstName || ''} ${order.user.lastName || ''}`.trim() : 'Collector')}</td>
+                    <td>{order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-GB') : (order.date || 'Today')}</td>
+                    <td style={{ fontWeight: 600 }}>{order.grandTotal ? `৳ ${Number(order.grandTotal).toLocaleString()}` : (order.total || '৳ 0')}</td>
                     <td>
                       <span className={`${styles.statusBadge} ${styles[(order.status || 'PENDING').toLowerCase()]}`}>
                         {order.status || 'Pending'}
@@ -177,18 +179,28 @@ const Dashboard: React.FC = () => {
         <div className={styles.topProductsCard}>
           <h2 className={styles.sectionTitle}>Top Products</h2>
           <ul className={styles.productList}>
-            {topProducts.length > 0 ? (
+            {topProducts && topProducts.length > 0 ? (
               topProducts.map((p: any, idx: number) => (
                 <li key={p.id || idx} className={styles.productItem}>
                   <div className={styles.productInfo}>
-                    <div className={styles.productName}>{p.name || p.product?.name || 'Oud Extrait'}</div>
-                    <div className={styles.productSales}>{p.sales || p.count || 12} sales</div>
+                    <div className={styles.productName}>{p.name}</div>
+                    <div className={styles.productMeta}>
+                      <span className={styles.sizeTag}>{p.size || '30ml'}</span>
+                      <span className={styles.bullet}>•</span>
+                      <span className={styles.productSales}>{p.sales || 1} {p.sales === 1 ? 'sale' : 'sales'}</span>
+                      {p.unitPrice ? (
+                        <>
+                          <span className={styles.bullet}>•</span>
+                          <span className={styles.unitCost}>৳{Number(p.unitPrice).toLocaleString()}</span>
+                        </>
+                      ) : null}
+                    </div>
                   </div>
-                  <div className={styles.productRevenue}>{p.revenue || '৳ 45,000'}</div>
+                  <div className={styles.productRevenue}>{p.revenue || `৳ ${((p.unitPrice || 0) * (p.sales || 1)).toLocaleString()}`}</div>
                 </li>
               ))
             ) : (
-              <li style={{ color: '#888', textAlign: 'center', padding: '1rem' }}>No sales records yet.</li>
+              <li style={{ color: '#888', textAlign: 'center', padding: '1.5rem' }}>No product sales records yet.</li>
             )}
           </ul>
         </div>
