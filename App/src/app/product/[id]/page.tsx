@@ -36,7 +36,7 @@ const productsDetailMap: Record<string, {
     family: "Citrus",
     galleryImages: [
       "/images/products/jade_serenity.png",
-      "/images/murakkaz_cream_lineup.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
       "/images/products/amber_gold.png",
     ],
     topNotes: [
@@ -83,7 +83,7 @@ const productsDetailMap: Record<string, {
     family: "Fresh",
     galleryImages: [
       "/images/products/coral_sea.png",
-      "/images/murakkaz_cream_lineup.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
       "/images/products/jade_serenity.png",
     ],
     topNotes: [
@@ -122,7 +122,7 @@ const productsDetailMap: Record<string, {
     family: "Woody",
     galleryImages: [
       "/images/products/magnetism.png",
-      "/images/murakkaz_cream_lineup.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
       "/images/products/hellenist.png",
     ],
     topNotes: [
@@ -164,7 +164,7 @@ const productsDetailMap: Record<string, {
     family: "Oriental",
     galleryImages: [
       "/images/products/hellenist.png",
-      "/images/murakkaz_cream_lineup.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
       "/images/products/amber_gold.png",
     ],
     topNotes: [
@@ -317,8 +317,8 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             family: p.family || 'Woody',
             galleryImages: [
               p.image || '/images/products/jade_serenity.png',
-              '/images/murakkaz_cream_lineup.jpg',
-              ...(p.galleryImages || []).map((g: any) => typeof g === 'string' ? g : g.url).filter((u: string) => u !== (p.image || '/images/products/jade_serenity.png') && u !== '/images/murakkaz_cream_lineup.jpg')
+              '/images/murakkaz_cream_lineup_v2.jpg',
+              ...(p.galleryImages || []).map((g: any) => typeof g === 'string' ? g : g.url).filter((u: string) => u !== (p.image || '/images/products/jade_serenity.png') && u !== '/images/murakkaz_cream_lineup_v2.jpg')
             ],
             topNotes: (() => {
               const top = p.notes?.filter((n: any) => n.type === 'TOP').map((n: any) => ({ name: typeof n === 'string' ? n : n.name, image: getNoteImage(typeof n === 'string' ? n : n.name) })) || [];
@@ -432,8 +432,8 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         family: catalogItem.family || "Woody",
         galleryImages: [
           catalogItem.image,
-          '/images/murakkaz_cream_lineup.jpg',
-          ...(catalogItem.galleryImages || []).filter((g: string) => g !== catalogItem.image && g !== '/images/murakkaz_cream_lineup.jpg')
+          '/images/murakkaz_cream_lineup_v2.jpg',
+          ...(catalogItem.galleryImages || []).filter((g: string) => g !== catalogItem.image && g !== '/images/murakkaz_cream_lineup_v2.jpg')
         ],
         topNotes,
         middleNotes,
