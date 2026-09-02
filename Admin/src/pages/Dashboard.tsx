@@ -6,15 +6,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell
+  ResponsiveContainer
 } from 'recharts';
 import { api } from '../api/client';
 import styles from './Dashboard.module.css';
-
-const COLORS = ['#f39c12', '#3498db', '#9b59b6', '#2ecc71'];
 
 interface DashboardData {
   totalUsers: number;
@@ -22,7 +17,6 @@ interface DashboardData {
   totalRevenue: number;
   totalProducts: number;
   recentOrders: any[];
-  ordersByStatus: { name: string; value: number }[];
   topProducts: any[];
   revenueData: { name: string; revenue: number }[];
 }
@@ -43,9 +37,17 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const revenueData = data?.revenueData || [];
-  const orderStatusData = data?.ordersByStatus || [];
   const recentOrders = data?.recentOrders || [];
   const topProducts = data?.topProducts || [];
+
+  if (loading) {
+    return (
+      <div className={styles.loadingContainer}>
+        <div className={styles.spinner}></div>
+        <p>Loading Perfumery Intelligence...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.dashboardContainer}>
@@ -54,12 +56,12 @@ const Dashboard: React.FC = () => {
         <p className={styles.subtitle}>Real-time perfumery command center synced with Express REST API.</p>
       </header>
 
-      {/* Stats Summary Cards */}
+      {/* KPI Stats Grid */}
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
           <div className={styles.statTitle}>Total Revenue</div>
           <div className={styles.statValue}>
-            ৳{(data?.totalRevenue || 0).toLocaleString()}
+            {data?.totalRevenue !== undefined ? `৳ ${data.totalRevenue.toLocaleString()}` : '৳ 0'}
           </div>
           <div className={`${styles.statChange} ${styles.positive}`}>Live Backend Sync</div>
         </div>
@@ -83,49 +85,36 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Analytics Charts */}
+      {/* Revenue Analytics Chart */}
       <div className={styles.chartsSection}>
         <div className={styles.chartCard}>
-          <h2 className={styles.sectionTitle}>Revenue Analytics</h2>
+          <div className={styles.cardHeader}>
+            <h2 className={styles.sectionTitle}>Revenue Analytics</h2>
+            <span className={styles.chartSubtitle}>Monthly Sales Progression</span>
+          </div>
           <div className={styles.chartWrapper}>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={revenueData}>
+            <ResponsiveContainer width="100%" height={320}>
+              <AreaChart data={revenueData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#C5A880" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#C5A880" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#C5A880" stopOpacity={0.85}/>
+                    <stop offset="95%" stopColor="#C5A880" stopOpacity={0.02}/>
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="name" stroke="#888" />
-                <YAxis stroke="#888" />
-                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
-                <Area type="monotone" dataKey="revenue" stroke="#C5A880" fillOpacity={1} fill="url(#colorRevenue)" />
+                <XAxis dataKey="name" stroke="#7A7A7C" tick={{ fill: '#9A9A9C', fontSize: 12 }} />
+                <YAxis stroke="#7A7A7C" tick={{ fill: '#9A9A9C', fontSize: 12 }} tickFormatter={(val) => `৳${val}`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(197, 168, 128, 0.1)" vertical={false} />
+                <Tooltip
+                  formatter={(value: any) => [`৳ ${Number(value).toLocaleString()}`, 'Revenue']}
+                  contentStyle={{
+                    backgroundColor: '#1C1C1F',
+                    border: '1px solid rgba(197, 168, 128, 0.3)',
+                    borderRadius: '8px',
+                    color: '#F5F1E8'
+                  }}
+                />
+                <Area type="monotone" dataKey="revenue" stroke="#C5A880" strokeWidth={2.5} fillOpacity={1} fill="url(#colorRevenue)" />
               </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        <div className={styles.chartCard}>
-          <h2 className={styles.sectionTitle}>Orders by Status</h2>
-          <div className={styles.chartWrapper}>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={orderStatusData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {orderStatusData.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333' }} />
-              </PieChart>
             </ResponsiveContainer>
           </div>
         </div>
