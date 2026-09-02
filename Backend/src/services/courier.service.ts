@@ -84,14 +84,24 @@ export const createSteadfastConsignment = async (orderId: string) => {
   const baseUrl = env.STEADFAST_BASE_URL || 'https://portal.packzy.com/api/v1';
 
   try {
-    const payload = {
+    const totalLot = order.items.reduce((sum, it) => sum + (it.quantity || 1), 0);
+    const itemDescription = order.items.map(i => `${i.productName} (${i.selectedSize}) x${i.quantity}`).join(', ');
+
+    const payload: Record<string, any> = {
       invoice,
       recipient_name: recipientName,
       recipient_phone: recipientPhone,
       recipient_address: recipientAddress,
       cod_amount: codAmount,
-      note
+      note,
+      item_description: itemDescription,
+      total_lot: totalLot,
+      delivery_type: 0 // 0 = Home Delivery
     };
+
+    if (order.email && order.email.includes('@') && !order.email.includes('@guest.murakkaz.com')) {
+      payload.recipient_email = order.email;
+    }
 
     const res = await fetch(`${baseUrl}/create_order`, {
       method: 'POST',
