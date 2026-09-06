@@ -163,7 +163,7 @@
   height: 34px;
   border-radius: 50%;
   background: #820011;
-  color: var(--text-primary, #F5F1E8);
+  color: #FFFFFF !important;
   display: flex;
   align-items: center;
   justify-content: center;

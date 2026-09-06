@@ -74,3 +74,17 @@ input:focus, select:focus, textarea:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--brand-maroon);
 }
+
+/* Universal High-Contrast Rules for Table Headers & Maroon Action Buttons */
+table th, th {
+  color: #FFFFFF !important;
+}
+
+[class*="createBtn"],
+[class*="addBtn"],
+[class*="saveBtn"],
+[class*="refreshBtn"],
+[class*="updateBtn"] {
+  color: #FFFFFF !important;
+}
+

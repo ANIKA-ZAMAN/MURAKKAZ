@@ -277,10 +277,10 @@
 
 .table th {
   padding: 12px 14px;
-  color: var(--accent-gold, #C5A880);
+  color: #FFFFFF !important;
   font-weight: 600;
   border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
-  background: var(--bg-elevated, #2A2A2D);
+  background: rgba(34, 34, 37, 0.85);
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;

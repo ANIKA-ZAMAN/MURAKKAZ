@@ -268,8 +268,10 @@
 .dataTable th {
   text-align: left;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
-  color: var(--accent-gold, #C5A880);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+  color: #FFFFFF !important;
+  background: rgba(34, 34, 37, 0.85);
+  font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;

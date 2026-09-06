@@ -294,7 +294,7 @@ const ProductList: React.FC = () => {
               gap: '8px',
               padding: '0.75rem 1.5rem',
               background: '#820011',
-              color: '#F5F1E8',
+              color: '#FFFFFF',
               borderRadius: '8px',
               textDecoration: 'none',
               fontWeight: 600,
@@ -302,7 +302,7 @@ const ProductList: React.FC = () => {
               boxShadow: '0 4px 15px rgba(130,0,17,0.3)',
             }}
           >
-            <Plus size={18} /> Add Product
+            <Plus size={18} style={{ color: '#FFFFFF' }} /> Add Product
           </Link>
         </div>
       </header>
@@ -567,23 +567,23 @@ const ProductList: React.FC = () => {
       <div style={{ background: '#1C1C1F', borderRadius: '12px', border: '1px solid rgba(197,168,128,0.15)', overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
         <table className={styles.table} style={{ width: '100%', minWidth: '850px', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
-            <tr style={{ background: 'rgba(34,34,37,0.85)', color: '#C5A880', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '1px solid rgba(197,168,128,0.15)', letterSpacing: '0.04em' }}>
-              <th style={{ padding: '1rem 1.25rem' }}>Fragrance</th>
+            <tr style={{ background: 'rgba(34,34,37,0.85)', color: '#FFFFFF', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '1px solid rgba(197,168,128,0.25)', letterSpacing: '0.05em' }}>
+              <th style={{ padding: '1rem 1.25rem', color: '#FFFFFF' }}>Fragrance</th>
               <th
                 onClick={handleCategorySortToggle}
-                style={{ padding: '1rem 1.25rem', cursor: 'pointer', userSelect: 'none' }}
+                style={{ padding: '1rem 1.25rem', cursor: 'pointer', userSelect: 'none', color: '#FFFFFF' }}
                 title="Click to toggle Exclusive / Regular sort"
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>Category</span>
-                  <ArrowUpDown size={14} style={{ color: sortBy.includes('exclusive') || sortBy.includes('regular') ? '#FFD700' : '#A0A0A5' }} />
+                  <span style={{ color: '#FFFFFF' }}>Category</span>
+                  <ArrowUpDown size={14} style={{ color: sortBy.includes('exclusive') || sortBy.includes('regular') ? '#FFD700' : '#FFFFFF' }} />
                 </div>
               </th>
-              <th style={{ padding: '1rem 1.25rem' }}>Brand & Family</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Sizes & Price</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Rating</th>
-              <th style={{ padding: '1rem 1.25rem' }}>Status</th>
-              <th style={{ padding: '1rem 1.25rem', textAlign: 'right' }}>Actions</th>
+              <th style={{ padding: '1rem 1.25rem', color: '#FFFFFF' }}>Brand & Family</th>
+              <th style={{ padding: '1rem 1.25rem', color: '#FFFFFF' }}>Sizes & Price</th>
+              <th style={{ padding: '1rem 1.25rem', color: '#FFFFFF' }}>Rating</th>
+              <th style={{ padding: '1rem 1.25rem', color: '#FFFFFF' }}>Status</th>
+              <th style={{ padding: '1rem 1.25rem', textAlign: 'right', color: '#FFFFFF' }}>Actions</th>
             </tr>
           </thead>
           <tbody>

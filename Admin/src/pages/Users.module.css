@@ -142,9 +142,10 @@
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--accent-gold, #C5A880);
-  background: var(--bg-surface-hover, rgba(34, 34, 37, 0.7));
-  border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
+  color: #FFFFFF !important;
+  background: rgba(34, 34, 37, 0.85);
+  border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+  font-weight: 600;
 }
 
 .table td {
@@ -170,7 +171,7 @@
   border-radius: 50%;
   background: linear-gradient(135deg, #820011 0%, #313134 100%);
   border: 1px solid var(--border-gold, rgba(197, 168, 128, 0.3));
-  color: #F5F1E8;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
