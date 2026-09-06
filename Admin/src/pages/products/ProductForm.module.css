@@ -258,11 +258,11 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #FFFFFF !important;
-  background: rgba(34, 34, 37, 0.85);
+  background: #27272A;
   font-weight: 600;
   text-align: left;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
+  border-bottom: 2px solid #18181B;
 }
 
 .pricingTable td {

@@ -273,23 +273,29 @@
   border-collapse: collapse;
   text-align: left;
   font-size: 0.88rem;
+  background: #FFFFFF;
 }
 
 .table th {
   padding: 12px 14px;
   color: #FFFFFF !important;
   font-weight: 600;
-  border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
-  background: rgba(34, 34, 37, 0.85);
+  border-bottom: 2px solid #18181B;
+  background: #27272A;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
 }
 
+.table tbody {
+  background: #FFFFFF;
+}
+
 .table td {
   padding: 14px 14px;
-  border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.1));
-  color: var(--text-primary, #F5F1E8);
+  border-bottom: 1px solid #E5E7EB;
+  color: #111114;
+  background: #FFFFFF;
 }
 
 .table tr:last-child td {
@@ -297,7 +303,7 @@
 }
 
 .table tr:hover td {
-  background: var(--bg-surface-hover, #252528);
+  background: #F9FAFB;
 }
 
 .badgeTag {

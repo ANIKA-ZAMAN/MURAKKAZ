@@ -100,10 +100,10 @@
 }
 
 .tableCard {
-  background: var(--bg-surface, #1C1C1F);
-  border: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  background: #FFFFFF;
+  border: 1px solid #E4E4E7;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
@@ -117,6 +117,7 @@
   width: 100%;
   border-collapse: collapse;
   min-width: 650px;
+  background: #FFFFFF;
 }
 
 .table th {
@@ -126,22 +127,27 @@
   color: #FFFFFF !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background-color: rgba(34, 34, 37, 0.85);
-  border-bottom: 1px solid var(--border-subtle, rgba(197, 168, 128, 0.15));
+  background-color: #27272A;
+  border-bottom: 2px solid #18181B;
   text-align: left;
   white-space: nowrap;
+}
+
+.table tbody {
+  background: #FFFFFF;
 }
 
 .table td {
   padding: 14px 16px;
   font-size: 13.5px;
-  color: var(--text-primary, #F5F1E8);
-  border-bottom: 1px solid rgba(197, 168, 128, 0.08);
+  color: #111114;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E5E7EB;
   text-align: left;
 }
 
 .table tr:hover td {
-  background: rgba(197, 168, 128, 0.03);
+  background: #F9FAFB;
 }
 
 .badge {

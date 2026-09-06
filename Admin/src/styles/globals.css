@@ -75,9 +75,29 @@ input:focus, select:focus, textarea:focus {
   background: var(--brand-maroon);
 }
 
-/* Universal High-Contrast Rules for Table Headers & Maroon Action Buttons */
-table th, th {
+/* Universal Table Styling: Ash Table Head with High-Contrast White Text */
+table thead tr, table th, th {
+  background-color: #27272A !important;
   color: #FFFFFF !important;
+}
+
+/* Universal Clean Crisp White Table Body with Dark Readable Text */
+table tbody, tbody {
+  background-color: #FFFFFF !important;
+}
+
+table tbody tr td, table td {
+  background-color: #FFFFFF;
+  color: #111114;
+}
+
+table tbody tr:hover td {
+  background-color: #F9FAFB !important;
+}
+
+.tableCard, [class*="tableCard"] {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E4E4E7 !important;
 }
 
 [class*="createBtn"],
@@ -87,4 +107,5 @@ table th, th {
 [class*="updateBtn"] {
   color: #FFFFFF !important;
 }
+
 

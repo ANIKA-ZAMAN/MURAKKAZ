@@ -328,14 +328,15 @@ const ProductList: React.FC = () => {
             fontSize: '0.85rem',
             fontWeight: 600,
             cursor: 'pointer',
-            border: activeTab === 'ALL' ? '1px solid #C5A880' : '1px solid rgba(255,255,255,0.08)',
-            background: activeTab === 'ALL' ? 'rgba(197,168,128,0.15)' : '#1C1C1F',
-            color: activeTab === 'ALL' ? '#C5A880' : '#A0A0A5',
+            border: activeTab === 'ALL' ? '1px solid #820011' : '1px solid #E5E7EB',
+            background: activeTab === 'ALL' ? 'rgba(130,0,17,0.08)' : '#FFFFFF',
+            color: activeTab === 'ALL' ? '#820011' : '#374151',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
             transition: 'all 0.2s ease',
           }}
         >
           <span>All Fragrances</span>
-          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'ALL' ? '#C5A880' : 'rgba(255,255,255,0.08)', color: activeTab === 'ALL' ? '#141416' : '#E5E5EA', fontSize: '0.75rem' }}>
+          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'ALL' ? '#820011' : '#F3F4F6', color: activeTab === 'ALL' ? '#FFFFFF' : '#374151', fontSize: '0.75rem' }}>
             {metrics.total}
           </span>
         </button>
@@ -352,16 +353,16 @@ const ProductList: React.FC = () => {
             fontSize: '0.85rem',
             fontWeight: 600,
             cursor: 'pointer',
-            border: activeTab === 'EXCLUSIVE' ? '1px solid #820011' : '1px solid rgba(255,255,255,0.12)',
-            background: activeTab === 'EXCLUSIVE' ? '#820011' : 'rgba(130,0,17,0.4)',
-            color: '#FFFFFF',
-            boxShadow: activeTab === 'EXCLUSIVE' ? '0 4px 14px rgba(130,0,17,0.3)' : 'none',
+            border: activeTab === 'EXCLUSIVE' ? '1px solid #820011' : '1px solid #E5E7EB',
+            background: activeTab === 'EXCLUSIVE' ? '#820011' : '#FFFFFF',
+            color: activeTab === 'EXCLUSIVE' ? '#FFFFFF' : '#820011',
+            boxShadow: activeTab === 'EXCLUSIVE' ? '0 4px 14px rgba(130,0,17,0.3)' : '0 1px 3px rgba(0,0,0,0.05)',
             transition: 'all 0.2s ease',
           }}
         >
-          <Crown size={14} style={{ color: '#FFD700' }} />
+          <Crown size={14} style={{ color: activeTab === 'EXCLUSIVE' ? '#FFD700' : '#820011' }} />
           <span>Exclusive Collection</span>
-          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'EXCLUSIVE' ? 'rgba(255,255,255,0.25)' : 'rgba(130,0,17,0.6)', color: '#FFFFFF', fontSize: '0.75rem' }}>
+          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'EXCLUSIVE' ? 'rgba(255,255,255,0.25)' : '#FDE8E8', color: activeTab === 'EXCLUSIVE' ? '#FFFFFF' : '#820011', fontSize: '0.75rem' }}>
             {metrics.exclusive}
           </span>
         </button>
@@ -378,15 +379,16 @@ const ProductList: React.FC = () => {
             fontSize: '0.85rem',
             fontWeight: 600,
             cursor: 'pointer',
-            border: activeTab === 'REGULAR' ? '1px solid #4B5563' : '1px solid rgba(255,255,255,0.08)',
-            background: activeTab === 'REGULAR' ? '#374151' : '#1C1C1F',
-            color: activeTab === 'REGULAR' ? '#F3F4F6' : '#9CA3AF',
+            border: activeTab === 'REGULAR' ? '1px solid #374151' : '1px solid #E5E7EB',
+            background: activeTab === 'REGULAR' ? '#374151' : '#FFFFFF',
+            color: activeTab === 'REGULAR' ? '#FFFFFF' : '#374151',
+            boxShadow: activeTab === 'REGULAR' ? '0 4px 14px rgba(55,65,81,0.25)' : '0 1px 3px rgba(0,0,0,0.05)',
             transition: 'all 0.2s ease',
           }}
         >
           <Sparkles size={14} />
           <span>Regular Collection</span>
-          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'REGULAR' ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.08)', color: '#FFFFFF', fontSize: '0.75rem' }}>
+          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'REGULAR' ? 'rgba(255,255,255,0.2)' : '#F3F4F6', color: activeTab === 'REGULAR' ? '#FFFFFF' : '#374151', fontSize: '0.75rem' }}>
             {metrics.regular}
           </span>
         </button>
@@ -403,15 +405,16 @@ const ProductList: React.FC = () => {
             fontSize: '0.85rem',
             fontWeight: 600,
             cursor: 'pointer',
-            border: activeTab === 'ACTIVE' ? '1px solid #059669' : '1px solid rgba(255,255,255,0.08)',
-            background: activeTab === 'ACTIVE' ? 'rgba(5,150,105,0.2)' : '#1C1C1F',
-            color: activeTab === 'ACTIVE' ? '#34D399' : '#A0A0A5',
+            border: activeTab === 'ACTIVE' ? '1px solid #059669' : '1px solid #E5E7EB',
+            background: activeTab === 'ACTIVE' ? '#DEF7EC' : '#FFFFFF',
+            color: activeTab === 'ACTIVE' ? '#03543F' : '#374151',
+            boxShadow: activeTab === 'ACTIVE' ? '0 4px 14px rgba(5,150,105,0.15)' : '0 1px 3px rgba(0,0,0,0.05)',
             transition: 'all 0.2s ease',
           }}
         >
-          <CheckCircle2 size={14} />
+          <CheckCircle2 size={14} style={{ color: activeTab === 'ACTIVE' ? '#03543F' : '#059669' }} />
           <span>Active Live</span>
-          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'ACTIVE' ? '#059669' : 'rgba(255,255,255,0.08)', color: '#FFFFFF', fontSize: '0.75rem' }}>
+          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'ACTIVE' ? '#059669' : '#DEF7EC', color: activeTab === 'ACTIVE' ? '#FFFFFF' : '#03543F', fontSize: '0.75rem' }}>
             {metrics.active}
           </span>
         </button>
@@ -424,17 +427,18 @@ const ProductList: React.FC = () => {
           display: 'flex',
           flexWrap: 'wrap',
           gap: '1rem',
-          background: '#18181A',
+          background: '#FFFFFF',
           padding: '1.1rem',
           borderRadius: '12px',
-          border: '1px solid rgba(197,168,128,0.15)',
+          border: '1px solid #E5E7EB',
           marginBottom: '1.5rem',
           alignItems: 'center',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
         }}
       >
         {/* Search */}
         <div style={{ flex: '1 1 240px', position: 'relative', display: 'flex', alignItems: 'center' }}>
-          <Search size={18} style={{ position: 'absolute', left: '12px', color: '#A0A0A5' }} />
+          <Search size={18} style={{ position: 'absolute', left: '12px', color: '#9CA3AF' }} />
           <input
             type="text"
             placeholder="Search fragrance name, brand, inspired-by, or slug..."
@@ -448,10 +452,10 @@ const ProductList: React.FC = () => {
             style={{
               width: '100%',
               padding: '0.65rem 1rem 0.65rem 2.4rem',
-              background: '#161618',
-              border: '1px solid rgba(197,168,128,0.2)',
+              background: '#FFFFFF',
+              border: '1px solid #D1D5DB',
               borderRadius: '8px',
-              color: '#F5F1E8',
+              color: '#111114',
               outline: 'none',
               fontSize: '0.88rem',
             }}
@@ -471,10 +475,10 @@ const ProductList: React.FC = () => {
             }}
             style={{
               padding: '0.65rem 1rem',
-              background: '#161618',
-              border: '1px solid rgba(197,168,128,0.2)',
+              background: '#FFFFFF',
+              border: '1px solid #D1D5DB',
               borderRadius: '8px',
-              color: '#F5F1E8',
+              color: '#111114',
               outline: 'none',
               fontSize: '0.88rem',
             }}
@@ -492,10 +496,10 @@ const ProductList: React.FC = () => {
           onChange={(e) => setFilter({ ...filter, family: e.target.value })}
           style={{
             padding: '0.65rem 1rem',
-            background: '#161618',
-            border: '1px solid rgba(197,168,128,0.2)',
+            background: '#FFFFFF',
+            border: '1px solid #D1D5DB',
             borderRadius: '8px',
-            color: '#F5F1E8',
+            color: '#111114',
             outline: 'none',
             fontSize: '0.88rem',
           }}
@@ -518,10 +522,10 @@ const ProductList: React.FC = () => {
           onChange={(e) => setFilter({ ...filter, gender: e.target.value })}
           style={{
             padding: '0.65rem 1rem',
-            background: '#161618',
-            border: '1px solid rgba(197,168,128,0.2)',
+            background: '#FFFFFF',
+            border: '1px solid #D1D5DB',
             borderRadius: '8px',
-            color: '#F5F1E8',
+            color: '#111114',
             outline: 'none',
             fontSize: '0.88rem',
           }}
@@ -534,17 +538,17 @@ const ProductList: React.FC = () => {
 
         {/* Sorting Dropdown */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginLeft: 'auto' }}>
-          <SlidersHorizontal size={16} style={{ color: '#C5A880' }} />
+          <SlidersHorizontal size={16} style={{ color: '#4B5563' }} />
           <select
             className={styles.select}
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={{
               padding: '0.65rem 1.1rem',
-              background: '#222225',
-              border: '1px solid rgba(197,168,128,0.35)',
+              background: '#FFFFFF',
+              border: '1px solid #D1D5DB',
               borderRadius: '8px',
-              color: '#C5A880',
+              color: '#111114',
               fontWeight: 600,
               outline: 'none',
               fontSize: '0.88rem',
@@ -564,10 +568,10 @@ const ProductList: React.FC = () => {
       </div>
 
       {/* Main Catalog Table */}
-      <div style={{ background: '#1C1C1F', borderRadius: '12px', border: '1px solid rgba(197,168,128,0.15)', overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
-        <table className={styles.table} style={{ width: '100%', minWidth: '850px', borderCollapse: 'collapse', textAlign: 'left' }}>
+      <div className={styles.tableCard} style={{ background: '#FFFFFF', borderRadius: '12px', border: '1px solid #E4E4E7', overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+        <table className={styles.table} style={{ width: '100%', minWidth: '850px', borderCollapse: 'collapse', textAlign: 'left', background: '#FFFFFF' }}>
           <thead>
-            <tr style={{ background: 'rgba(34,34,37,0.85)', color: '#FFFFFF', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '1px solid rgba(197,168,128,0.25)', letterSpacing: '0.05em' }}>
+            <tr style={{ background: '#27272A', color: '#FFFFFF', fontSize: '0.8rem', textTransform: 'uppercase', borderBottom: '2px solid #18181B', letterSpacing: '0.05em' }}>
               <th style={{ padding: '1rem 1.25rem', color: '#FFFFFF' }}>Fragrance</th>
               <th
                 onClick={handleCategorySortToggle}
@@ -586,10 +590,10 @@ const ProductList: React.FC = () => {
               <th style={{ padding: '1rem 1.25rem', textAlign: 'right', color: '#FFFFFF' }}>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style={{ background: '#FFFFFF' }}>
             {loading ? (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: '#A0A0A5' }}>
+                <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: '#6B7280', background: '#FFFFFF' }}>
                   Loading product catalog ({products.length} products)...
                 </td>
               </tr>
@@ -616,13 +620,15 @@ const ProductList: React.FC = () => {
                   <tr
                     key={p.id}
                     style={{
-                      borderBottom: '1px solid rgba(197,168,128,0.08)',
-                      background: isExclusive ? 'rgba(130,0,17,0.04)' : 'transparent',
-                      transition: 'background 0.2s ease',
+                      borderBottom: '1px solid #E5E7EB',
+                      background: '#FFFFFF',
+                      transition: 'background 0.15s ease',
                     }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLTableRowElement).style.background = '#F9FAFB')}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLTableRowElement).style.background = '#FFFFFF')}
                   >
                     {/* Fragrance Name & Image */}
-                    <td style={{ padding: '1.1rem 1.25rem' }}>
+                    <td style={{ padding: '1.1rem 1.25rem', background: 'transparent' }}>
                       <div className={styles.productCell} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <img 
                           src={p.image || '/images/products/jade_serenity.png'} 
@@ -635,21 +641,21 @@ const ProductList: React.FC = () => {
                             height: '46px',
                             borderRadius: '8px',
                             objectFit: 'cover',
-                            background: '#222225',
-                            border: isExclusive ? '1px solid rgba(130,0,17,0.4)' : '1px solid rgba(197,168,128,0.2)',
+                            background: '#F3F4F6',
+                            border: '1px solid #E5E7EB',
                           }} 
                         />
                         <div>
-                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600, color: '#F5F1E8', fontSize: '1.02rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <div style={{ fontFamily: 'Playfair Display, serif', fontWeight: 600, color: '#111114', fontSize: '1.02rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                             {p.name}
-                            {isExclusive && <Crown size={14} style={{ color: '#FFD700' }} />}
+                            {isExclusive && <Crown size={14} style={{ color: '#D97706' }} />}
                           </div>
                           {p.inspiredBy && (
-                            <div style={{ fontSize: '0.78rem', color: '#9A9A9C', fontStyle: 'italic', marginTop: '2px' }}>
+                            <div style={{ fontSize: '0.78rem', color: '#6B7280', fontStyle: 'italic', marginTop: '2px' }}>
                               {p.inspiredBy}
                             </div>
                           )}
-                          <div style={{ fontSize: '0.75rem', color: '#7E7E85' }}>
+                          <div style={{ fontSize: '0.75rem', color: '#9CA3AF' }}>
                             slug: {p.slug}
                           </div>
                         </div>
@@ -657,7 +663,7 @@ const ProductList: React.FC = () => {
                     </td>
 
                     {/* Category Column */}
-                    <td style={{ padding: '1.1rem 1.25rem' }}>
+                    <td style={{ padding: '1.1rem 1.25rem', background: 'transparent' }}>
                       {isExclusive ? (
                         <span
                           style={{
@@ -671,8 +677,7 @@ const ProductList: React.FC = () => {
                             fontSize: '0.75rem',
                             fontWeight: 700,
                             letterSpacing: '0.04em',
-                            border: '1px solid rgba(255,215,0,0.3)',
-                            boxShadow: '0 2px 8px rgba(130,0,17,0.3)',
+                            boxShadow: '0 2px 6px rgba(130,0,17,0.25)',
                           }}
                         >
                           <Crown size={12} style={{ color: '#FFD700' }} />
@@ -685,12 +690,12 @@ const ProductList: React.FC = () => {
                             alignItems: 'center',
                             padding: '4px 10px',
                             borderRadius: '50px',
-                            background: '#2A2A2E',
-                            color: '#C5C5CA',
+                            background: '#F3F4F6',
+                            color: '#374151',
                             fontSize: '0.75rem',
                             fontWeight: 600,
                             letterSpacing: '0.03em',
-                            border: '1px solid rgba(255,255,255,0.08)',
+                            border: '1px solid #E5E7EB',
                           }}
                         >
                           REGULAR
@@ -699,47 +704,47 @@ const ProductList: React.FC = () => {
                     </td>
 
                     {/* Brand & Family */}
-                    <td style={{ padding: '1.1rem 1.25rem' }}>
-                      <span style={{ padding: '3px 8px', borderRadius: '4px', background: 'rgba(197,168,128,0.1)', color: '#F5F1E8', fontSize: '0.78rem', border: '1px solid rgba(197,168,128,0.2)', marginRight: '6px' }}>
+                    <td style={{ padding: '1.1rem 1.25rem', background: 'transparent' }}>
+                      <span style={{ padding: '3px 8px', borderRadius: '4px', background: '#F3F4F6', color: '#1F2937', fontSize: '0.78rem', border: '1px solid #E5E7EB', marginRight: '6px', fontWeight: 600 }}>
                         {p.brand || 'Murakkaz'}
                       </span>
-                      <span style={{ padding: '3px 8px', borderRadius: '4px', background: 'rgba(255,255,255,0.05)', color: '#A0A0A5', fontSize: '0.78rem' }}>
+                      <span style={{ padding: '3px 8px', borderRadius: '4px', background: '#F9FAFB', color: '#4B5563', fontSize: '0.78rem', border: '1px solid #E5E7EB' }}>
                         {p.family || 'WOODY'}
                       </span>
                     </td>
 
                     {/* Sizes & Price */}
-                    <td style={{ padding: '1.1rem 1.25rem' }}>
-                      <div style={{ fontWeight: 600, color: isExclusive ? '#FCD34D' : '#F5F1E8', fontSize: '0.95rem' }}>
+                    <td style={{ padding: '1.1rem 1.25rem', background: 'transparent' }}>
+                      <div style={{ fontWeight: 600, color: '#111114', fontSize: '0.95rem' }}>
                         {priceText}
                       </div>
                       {p.sizes && p.sizes.length > 0 ? (
-                        <div style={{ fontSize: '0.74rem', color: '#A0A0A5', marginTop: '3px' }}>
+                        <div style={{ fontSize: '0.74rem', color: '#6B7280', marginTop: '3px' }}>
                           {p.sizes.map(s => `${s.size} (৳${s.price})`).join(' · ')}
                         </div>
                       ) : (
-                        <div style={{ fontSize: '0.74rem', color: '#7E7E85', marginTop: '3px' }}>
+                        <div style={{ fontSize: '0.74rem', color: '#9CA3AF', marginTop: '3px' }}>
                           {isExclusive ? '30ml: ৳1,500 · 50ml: ৳2,500' : '30ml: ৳900 · 50ml: ৳1,500'}
                         </div>
                       )}
                     </td>
 
                     {/* Rating */}
-                    <td style={{ padding: '1.1rem 1.25rem', color: '#D97706', fontSize: '0.9rem' }}>
-                      ★ {p.rating || 5.0} <span style={{ color: '#A0A0A5', fontSize: '0.78rem' }}>({p.reviewCount || 0})</span>
+                    <td style={{ padding: '1.1rem 1.25rem', color: '#D97706', fontSize: '0.9rem', background: 'transparent' }}>
+                      ★ {p.rating || 5.0} <span style={{ color: '#6B7280', fontSize: '0.78rem' }}>({p.reviewCount || 0})</span>
                     </td>
 
                     {/* Status */}
-                    <td style={{ padding: '1.1rem 1.25rem' }}>
-                      <span style={{ padding: '3px 10px', borderRadius: '50px', background: p.isActive !== false ? 'rgba(52,211,153,0.12)' : 'rgba(239,68,68,0.12)', color: p.isActive !== false ? '#34D399' : '#EF4444', fontSize: '0.76rem', fontWeight: 600, border: `1px solid ${p.isActive !== false ? 'rgba(52,211,153,0.25)' : 'rgba(239,68,68,0.25)'}` }}>
+                    <td style={{ padding: '1.1rem 1.25rem', background: 'transparent' }}>
+                      <span style={{ padding: '3px 10px', borderRadius: '50px', background: p.isActive !== false ? '#DEF7EC' : '#FDE8E8', color: p.isActive !== false ? '#03543F' : '#9B1C1C', fontSize: '0.76rem', fontWeight: 600, border: `1px solid ${p.isActive !== false ? '#BCF0DA' : '#FBD5D5'}` }}>
                         {p.isActive !== false ? 'Active' : 'Inactive'}
                       </span>
                     </td>
 
                     {/* Actions */}
-                    <td style={{ padding: '1.1rem 1.25rem', textAlign: 'right' }}>
+                    <td style={{ padding: '1.1rem 1.25rem', textAlign: 'right', background: 'transparent' }}>
                       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
-                        <Link to={`/products/${p.id}/edit`} style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(197,168,128,0.25)', color: '#FFFFFF', borderRadius: '6px', textDecoration: 'none', fontSize: '0.82rem', fontWeight: 600 }}>
+                        <Link to={`/products/${p.id}/edit`} style={{ padding: '6px 14px', background: '#F3F4F6', border: '1px solid #D1D5DB', color: '#111114', borderRadius: '6px', textDecoration: 'none', fontSize: '0.82rem', fontWeight: 600 }}>
                           Edit
                         </Link>
                         <button
@@ -754,7 +759,7 @@ const ProductList: React.FC = () => {
                             fontSize: '0.82rem',
                             fontWeight: 600,
                             cursor: 'pointer',
-                            boxShadow: '0 2px 6px rgba(220, 38, 38, 0.35)',
+                            boxShadow: '0 2px 6px rgba(220, 38, 38, 0.25)',
                             transition: 'all 0.15s ease',
                           }}
                           onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#b91c1c')}
@@ -769,7 +774,7 @@ const ProductList: React.FC = () => {
               })
             ) : (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: '#A0A0A5' }}>
+                <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: '#6B7280', background: '#FFFFFF' }}>
                   No products found matching filters.
                 </td>
               </tr>
