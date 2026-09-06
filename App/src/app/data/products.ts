@@ -5214,7 +5214,7 @@ export const luxuryProducts: Product[] = [
     "description": "A graceful floral fragrance blending sweet cherry blossom, crisp Asian pear, and warm vanilla rice.",
     "rating": 4.8999999999999995,
     "reviewCount": 50,
-    "image": "/images/products/japanese_cherry_blossom_v5.jpg",
+    "image": "/images/products/japanese_cherry_blossom_v6.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
@@ -6395,6 +6395,9 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           let itemImage = p.image || "/images/products/jade_serenity.png";
           if (itemSlug === "resala" || (p.name && p.name.toLowerCase().includes("resala"))) {
             itemImage = "/images/products/resala_arabian_oud.jpg";
+          }
+          if (itemSlug === "japanese-cherry-blossom" || (p.name && p.name.toLowerCase().includes("japanese cherry blossom"))) {
+            itemImage = "/images/products/japanese_cherry_blossom_v6.jpg";
           }
 
           const EXCLUSIVE_SET = new Set([
