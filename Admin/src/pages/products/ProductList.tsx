@@ -352,16 +352,16 @@ const ProductList: React.FC = () => {
             fontSize: '0.85rem',
             fontWeight: 600,
             cursor: 'pointer',
-            border: activeTab === 'EXCLUSIVE' ? '1px solid #820011' : '1px solid rgba(255,255,255,0.08)',
-            background: activeTab === 'EXCLUSIVE' ? '#820011' : '#1C1C1F',
-            color: activeTab === 'EXCLUSIVE' ? '#FFFFFF' : '#E5A5AC',
+            border: activeTab === 'EXCLUSIVE' ? '1px solid #820011' : '1px solid rgba(255,255,255,0.12)',
+            background: activeTab === 'EXCLUSIVE' ? '#820011' : 'rgba(130,0,17,0.4)',
+            color: '#FFFFFF',
             boxShadow: activeTab === 'EXCLUSIVE' ? '0 4px 14px rgba(130,0,17,0.3)' : 'none',
             transition: 'all 0.2s ease',
           }}
         >
-          <Crown size={14} style={{ color: activeTab === 'EXCLUSIVE' ? '#FFD700' : '#E5A5AC' }} />
+          <Crown size={14} style={{ color: '#FFD700' }} />
           <span>Exclusive Collection</span>
-          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'EXCLUSIVE' ? 'rgba(255,255,255,0.2)' : 'rgba(130,0,17,0.3)', color: '#FFFFFF', fontSize: '0.75rem' }}>
+          <span style={{ padding: '2px 7px', borderRadius: '12px', background: activeTab === 'EXCLUSIVE' ? 'rgba(255,255,255,0.25)' : 'rgba(130,0,17,0.6)', color: '#FFFFFF', fontSize: '0.75rem' }}>
             {metrics.exclusive}
           </span>
         </button>
@@ -739,10 +739,27 @@ const ProductList: React.FC = () => {
                     {/* Actions */}
                     <td style={{ padding: '1.1rem 1.25rem', textAlign: 'right' }}>
                       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
-                        <Link to={`/products/${p.id}/edit`} style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(197,168,128,0.2)', color: '#F5F1E8', borderRadius: '6px', textDecoration: 'none', fontSize: '0.82rem', fontWeight: 500 }}>
+                        <Link to={`/products/${p.id}/edit`} style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(197,168,128,0.25)', color: '#FFFFFF', borderRadius: '6px', textDecoration: 'none', fontSize: '0.82rem', fontWeight: 600 }}>
                           Edit
                         </Link>
-                        <button type="button" onClick={() => handleDelete(p.id)} style={{ padding: '6px 12px', background: 'rgba(229,72,72,0.12)', border: '1px solid rgba(229,72,72,0.3)', color: '#e54848', borderRadius: '6px', fontSize: '0.82rem', cursor: 'pointer' }}>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(p.id)}
+                          style={{
+                            padding: '6px 14px',
+                            background: '#dc2626',
+                            border: '1px solid #b91c1c',
+                            color: '#ffffff',
+                            borderRadius: '6px',
+                            fontSize: '0.82rem',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            boxShadow: '0 2px 6px rgba(220, 38, 38, 0.35)',
+                            transition: 'all 0.15s ease',
+                          }}
+                          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#b91c1c')}
+                          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#dc2626')}
+                        >
                           Delete
                         </button>
                       </div>

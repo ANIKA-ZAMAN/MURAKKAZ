@@ -178,9 +178,10 @@
 }
 
 .badgeCancelled {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #F87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background-color: #dc2626;
+  color: #ffffff;
+  border: 1px solid #b91c1c;
+  font-weight: 600;
 }
 
 .actionLink {
