@@ -76,42 +76,44 @@ export default function UpcomingEventsSection({
       </div>
 
       {/* Exact Pagination Bar matching screenshot */}
-      <div className={styles.exactPaginationContainer}>
-        <button
-          type="button"
-          onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-          className={styles.exactArrowBtn}
-          disabled={currentPage === 1}
-          aria-label="Previous Page"
-        >
-          ‹
-        </button>
+      {totalPages > 1 && (
+        <div className={styles.exactPaginationContainer}>
+          <button
+            type="button"
+            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+            className={styles.exactArrowBtn}
+            disabled={currentPage === 1}
+            aria-label="Previous Page"
+          >
+            ‹
+          </button>
 
-        <div className={styles.exactPageNumbersGroup}>
-          {[1, 2, 3].map((pageNum) => (
-            <button
-              key={pageNum}
-              type="button"
-              onClick={() => onPageChange(pageNum)}
-              className={`${styles.exactPageNumBtn} ${
-                currentPage === pageNum ? styles.exactPageNumActive : ""
-              }`}
-            >
-              {pageNum}
-            </button>
-          ))}
+          <div className={styles.exactPageNumbersGroup}>
+            {Array.from({ length: Math.min(3, totalPages) }, (_, i) => i + 1).map((pageNum) => (
+              <button
+                key={pageNum}
+                type="button"
+                onClick={() => onPageChange(pageNum)}
+                className={`${styles.exactPageNumBtn} ${
+                  currentPage === pageNum ? styles.exactPageNumActive : ""
+                }`}
+              >
+                {pageNum}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
+            className={styles.exactArrowBtn}
+            disabled={currentPage === totalPages}
+            aria-label="Next Page"
+          >
+            ›
+          </button>
         </div>
-
-        <button
-          type="button"
-          onClick={() => onPageChange(Math.min(3, currentPage + 1))}
-          className={styles.exactArrowBtn}
-          disabled={currentPage === Math.min(3, totalPages)}
-          aria-label="Next Page"
-        >
-          ›
-        </button>
-      </div>
+      )}
     </section>
   );
 }
