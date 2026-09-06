@@ -85,9 +85,8 @@ export default function FloatingContact({
         aria-label="Open contact options"
         aria-expanded={isOpen}
       >
-        {/* Active Online Indicator on Corner */}
-        <div className={styles.activeBadge} title="Active Now">
-          <span className={styles.activePing} />
+        {/* Luxury Active Online Signal */}
+        <div className={styles.activeBadge} title="Concierge Online">
           <span className={styles.activeDot} />
         </div>
 
