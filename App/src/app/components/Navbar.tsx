@@ -12,7 +12,6 @@ const navLinks = [
   { label: "Library", href: "/collections" },
   { label: "Compare", href: "/compare" },
   { label: "Finder", href: "/scent-index" },
-  { label: "Vlog", href: "/blog" },
 ];
 
 export default function Navbar() {
