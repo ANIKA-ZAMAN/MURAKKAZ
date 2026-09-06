@@ -1402,7 +1402,7 @@ export const luxuryProducts: Product[] = [
     "description": "An opulent, sensual composition centered around sweet glazed chestnut and smooth bourbon vanilla, grounded by warm aromatic spices and soft leather.",
     "rating": 5,
     "reviewCount": 26,
-    "image": "/images/products/emporio_armani_stronger_with_you_parfum_v3.jpg",
+    "image": "/images/products/emporio_armani_stronger_with_you_parfum_v4.jpg",
     "family": "ORIENTAL",
     "gender": "MEN",
     "occasion": "Daily & Executive",
@@ -5974,7 +5974,7 @@ export const luxuryProducts: Product[] = [
     "description": "A crisp, metallic-woody fragrance inspired by mountain exploration—fresh violet leaves and herbal sage over clean cedarwood.",
     "rating": 4.8,
     "reviewCount": 29,
-    "image": "/images/products/explorer_platinum_v3.jpg",
+    "image": "/images/products/explorer_platinum_v4.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
@@ -6404,6 +6404,12 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           }
           if (itemSlug.includes("terre-d-herm") || (p.name && p.name.toLowerCase().includes("terre d'herm"))) {
             itemImage = "/images/products/terre_d_hermes_parfum_v3.jpg";
+          }
+          if (itemSlug.includes("stronger-with-you") || (p.name && p.name.toLowerCase().includes("stronger with you"))) {
+            itemImage = "/images/products/emporio_armani_stronger_with_you_parfum_v4.jpg";
+          }
+          if (itemSlug.includes("explorer-platinum") || (p.name && p.name.toLowerCase().includes("explorer platinum"))) {
+            itemImage = "/images/products/explorer_platinum_v4.jpg";
           }
 
           const EXCLUSIVE_SET = new Set([
