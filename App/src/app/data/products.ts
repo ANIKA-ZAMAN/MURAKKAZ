@@ -5412,7 +5412,7 @@ export const luxuryProducts: Product[] = [
     "description": "An earthy, mineral-rich masterpiece contrasting sparkling grapefruit and citrus with warm flint, oakmoss, and noble woods.",
     "rating": 4.8,
     "reviewCount": 56,
-    "image": "/images/products/terre_d_hermes_parfum_v2.jpg",
+    "image": "/images/products/terre_d_hermes_parfum_v3.jpg",
     "family": "FRESH",
     "gender": "MEN",
     "occasion": "Daily & Executive",
@@ -6049,7 +6049,7 @@ export const luxuryProducts: Product[] = [
     "description": "A charming explosion of romantic florals grounded by sweet vanilla and powdery bitter almond.",
     "rating": 4.8999999999999995,
     "reviewCount": 32,
-    "image": "/images/products/good_girl_blush_v3.jpg",
+    "image": "/images/products/good_girl_blush_v4.jpg",
     "family": "FLORAL",
     "gender": "WOMEN",
     "occasion": "Romantic & Daytime",
@@ -6398,6 +6398,12 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           }
           if (itemSlug === "japanese-cherry-blossom" || (p.name && p.name.toLowerCase().includes("japanese cherry blossom"))) {
             itemImage = "/images/products/japanese_cherry_blossom_v6.jpg";
+          }
+          if (itemSlug === "good-girl-blush" || (p.name && p.name.toLowerCase().includes("good girl blush"))) {
+            itemImage = "/images/products/good_girl_blush_v4.jpg";
+          }
+          if (itemSlug.includes("terre-d-herm") || (p.name && p.name.toLowerCase().includes("terre d'herm"))) {
+            itemImage = "/images/products/terre_d_hermes_parfum_v3.jpg";
           }
 
           const EXCLUSIVE_SET = new Set([
