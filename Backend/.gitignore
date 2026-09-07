@@ -3,3 +3,7 @@ dist/
 .env
 uploads/
 *.log
+prisma/*.db
+prisma/*.db-journal
+*.db
+*.db-journal

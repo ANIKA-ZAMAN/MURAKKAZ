@@ -4,3 +4,12 @@ node_modules/
 **/dist/
 .env
 .env.local
+
+# Databases & Backups (Never commit or overwrite production database)
+*.db
+*.db-journal
+Backend/prisma/*.db
+Backend/prisma/*.db-journal
+
+# Temporary archives
+*.tar.gz
