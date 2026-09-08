@@ -1,34 +1,375 @@
-.footer {
+.footerWrapper {
   width: 100%;
-  background-color: #313134; /* matches SVG background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #262628;
+  color: #FAF7F2;
   position: relative;
+  overflow: hidden;
+  user-select: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.container {
+.footerContainer {
   width: 100%;
-  max-width: 1440px; /* SVG design width */
+  max-width: 1240px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+  padding: 5rem 1.5rem 4rem 1.5rem;
 }
 
-.footerSvg {
-  width: 100%;
-  height: auto;
+@media (min-width: 640px) {
+  .footerContainer {
+    padding: 6rem 2.5rem 5rem 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .footerContainer {
+    padding: 7rem 3.5rem 5rem 3.5rem;
+  }
+}
+
+/* 3-Column Grid Layout */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .mainGrid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainGrid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* 1. Left Section (Contact & Heading) */
+.leftCol {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .leftCol {
+    grid-column: span 12;
+  }
+}
+
+@media (min-width: 1024px) {
+  .leftCol {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1280px) {
+  .leftCol {
+    grid-column: span 7;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C5A880;
+  margin-bottom: 0.85rem;
+  display: block;
+  font-weight: 500;
+}
+
+.heading {
+  font-family: var(--font-playfair), "Libertinus Serif Display", Georgia, serif;
+  font-size: clamp(32px, 3.8vw, 50px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #FAF7F2;
+  letter-spacing: -0.015em;
+  margin: 0 0 2rem 0;
+}
+
+.heading br {
   display: block;
 }
 
-.badgeRow {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+/* Call Button */
+.callBtnWrapper {
+  margin-bottom: 2.5rem;
+}
+
+.callBtn {
+  display: inline-flex;
   align-items: center;
-  padding: 1.5rem 1rem 2.5rem 1rem;
-  background-color: #313134;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 0.75rem;
+  background-color: #FAF7F2 !important;
+  color: #2C2D30 !important;
+  font-family: var(--font-lora), Georgia, serif !important;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0.85rem 1.75rem;
+  border-radius: 9999px;
+  text-decoration: none !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.callBtn span {
+  color: #2C2D30 !important;
+}
+
+.callBtn:hover {
+  background-color: #FFFFFF !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(250, 247, 242, 0.22);
+}
+
+.callArrow {
+  font-size: 17px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.callBtn:hover .callArrow {
+  transform: translateX(4px);
+}
+
+/* Email Pill */
+.emailSection {
+  margin-top: 1.5rem;
+}
+
+.emailLabel {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9E988D;
+  margin-bottom: 0.65rem;
+  display: block;
+  font-weight: 500;
+}
+
+.emailPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s ease;
+}
+
+.emailPill:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.emailText {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13.5px;
+  color: #FAF7F2;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.copyBtn {
+  background: transparent;
+  border: none;
+  color: rgba(250, 247, 242, 0.6);
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.copyBtn:hover {
+  color: #FAF7F2;
+}
+
+.copiedBadge {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 11px;
+  color: #C5A880;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 500;
+}
+
+/* 2. Middle Column (Quick Link) */
+.linksCol {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 640px) {
+  .linksCol {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 768px) {
+  .linksCol {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1024px) {
+  .linksCol {
+    grid-column: span 3;
+    padding-left: 1rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .linksCol {
+    grid-column: span 2;
+    padding-left: 1.5rem;
+  }
+}
+
+.colHeader {
+  font-family: var(--font-playfair), "Libertinus Serif Display", Georgia, serif;
+  font-size: 14.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #E8DFC8;
+  font-weight: 400;
+  margin-bottom: 1.4rem;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.navItem {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 14px;
+  color: #A9A49B;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  line-height: 1.5;
+}
+
+.navItem:hover {
+  color: #FAF7F2;
+  transform: translateX(2px);
+}
+
+/* 3. Right Column (Information & Social) */
+.infoCol {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 640px) {
+  .infoCol {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 768px) {
+  .infoCol {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1024px) {
+  .infoCol {
+    grid-column: span 3;
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .infoCol {
+    grid-column: span 3;
+    padding-left: 2rem;
+  }
+}
+
+.actionItem {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 14px;
+  color: #A9A49B;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+  line-height: 1.5;
+}
+
+.actionItem:hover {
+  color: #FAF7F2;
+  transform: translateX(2px);
+}
+
+/* Social Box */
+.socialWrapper {
+  margin-top: 1.4rem;
+}
+
+.socialBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.socialIcon {
+  color: #A9A49B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.socialIcon:hover {
+  color: #FAF7F2;
+  transform: scale(1.15);
+}
+
+/* 4. Bottom Attribution Row */
+.bottomRow {
+  margin-top: 4.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .bottomRow {
+    flex-direction: row;
+    margin-top: 5.5rem;
+  }
+}
+
+.copyright {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 12px;
+  color: #7E7970;
 }
