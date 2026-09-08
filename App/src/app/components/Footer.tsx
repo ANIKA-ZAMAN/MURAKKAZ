@@ -6,7 +6,6 @@ import AeethodBadge from "./AeethodBadge";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
-  const [copied, setCopied] = useState(false);
   const [isCookieModalOpen, setIsCookieModalOpen] = useState(false);
   const [cookieSettings, setCookieSettings] = useState({
     necessary: true,
@@ -14,17 +13,6 @@ export default function Footer() {
     marketing: false,
   });
   const [cookieSavedToast, setCookieSavedToast] = useState(false);
-
-  const handleCopyEmail = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    try {
-      await navigator.clipboard.writeText("re@murakkaz.com");
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2200);
-    } catch (err) {
-      console.error("Failed to copy email:", err);
-    }
-  };
 
   const handleSaveCookies = () => {
     try {
@@ -45,7 +33,7 @@ export default function Footer() {
             
             {/* 1. Left Brand & Inquiries Column */}
             <div className={styles.leftCol}>
-              <span className={styles.eyebrow}>CONTRACT US</span>
+              <span className={styles.eyebrow}>CONTACT US</span>
 
               <h2 className={styles.heading}>
                 Have Questions?<br />
@@ -64,42 +52,6 @@ export default function Footer() {
                   <span style={{ color: "#2C2D30" }}>Schedule a call now</span>
                   <span style={{ color: "#2C2D30" }} className={styles.callArrow}>→</span>
                 </a>
-              </div>
-
-              {/* Email Us At */}
-              <div className={styles.emailSection}>
-                <span className={styles.emailLabel}>OR EMAIL US AT</span>
-
-                <div className={styles.emailPill}>
-                  <a
-                    href="mailto:re@murakkaz.com"
-                    className={styles.emailText}
-                  >
-                    re@murakkaz.com
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={handleCopyEmail}
-                    className={styles.copyBtn}
-                    aria-label="Copy email address"
-                    title="Copy email to clipboard"
-                  >
-                    {copied ? (
-                      <span className={styles.copiedBadge}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                        Copied!
-                      </span>
-                    ) : (
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
               </div>
             </div>
 
