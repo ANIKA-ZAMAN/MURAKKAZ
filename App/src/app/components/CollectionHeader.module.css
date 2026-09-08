@@ -113,40 +113,76 @@
 
 @media (max-width: 768px) {
   .headerContainer {
-    margin-bottom: 1.5rem;
-    gap: 1.2rem;
+    margin-top: 0.25rem;
+    margin-bottom: 1.25rem;
+    gap: 1.1rem;
+  }
+
+  .titleGroup {
+    text-align: left;
+    width: 100%;
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 6vw, 2.15rem);
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 0.88rem;
+    line-height: 1.35;
   }
 
   .toolbarRow {
     flex-direction: column;
     align-items: stretch;
-    gap: 1rem;
+    gap: 0.85rem;
+    padding-bottom: 0;
   }
 
   .leftControls {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+    gap: 0.85rem;
   }
 
   .searchWrapper {
     width: 100%;
-    min-width: unset;
+    min-width: 0;
   }
 
   .rightControls {
     width: 100%;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
     margin-left: 0;
-    padding-top: 0.25rem;
+    padding-top: 0.15rem;
+    box-sizing: border-box;
   }
 
-  .sortSelect {
-    width: 100%;
+  .sortLabel {
+    font-size: 0.82rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .selectWrapper {
     flex: 1;
+    display: flex;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .sortSelect {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 0.82rem;
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    height: 42px;
   }
 }
 

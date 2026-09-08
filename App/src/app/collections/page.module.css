@@ -23,6 +23,7 @@
   padding: 5.5rem 1.5rem 2.5rem 1.5rem;
   gap: 2.5rem;
   position: relative;
+  box-sizing: border-box;
 }
 
 .contentLayout {
@@ -31,6 +32,8 @@
   width: 100%;
   align-items: flex-start;
   transition: all 0.3s ease;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .sidebarWrapper {
@@ -45,26 +48,36 @@
   flex: 1;
   width: 100%;
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2.5rem 1.5rem;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .gridFullWidth {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 2.5rem 1.5rem;
   width: 100%;
+  box-sizing: border-box;
+}
+
+.grid > *,
+.gridFullWidth > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 1200px) {
   .grid,
   .gridFullWidth {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 1.5rem 1rem !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -75,6 +88,7 @@
 @media (max-width: 1024px) {
   .contentLayout {
     flex-direction: column;
+    gap: 1.5rem;
   }
 
   .sidebarWrapper {
@@ -83,10 +97,32 @@
   }
 }
 
+@media (max-width: 768px) {
+  .main {
+    padding: clamp(6.75rem, 16vw, 7.5rem) 1.25rem 2.5rem 1.25rem !important;
+    gap: 1.5rem !important;
+  }
+
+  .grid,
+  .gridFullWidth {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.25rem 0.75rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
 @media (max-width: 480px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 1.25rem 0.6rem !important;
+  .main {
+    padding: clamp(6.5rem, 18vw, 7.25rem) 1rem 2rem 1rem !important;
+    gap: 1.25rem !important;
+  }
+
+  .grid,
+  .gridFullWidth {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.1rem 0.65rem !important;
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
