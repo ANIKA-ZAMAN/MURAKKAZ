@@ -596,48 +596,58 @@ export default function Navbar() {
           </nav>
 
           {/* Account Profile Section */}
-          <div className="w-full mt-16 sm:mt-24 pb-12 flex flex-col items-center justify-center">
+          <div className="w-full mt-8 sm:mt-10 pt-6 border-t border-[#E8DFC8]/80 pb-8 flex flex-col items-center justify-center">
             {/* Account Link / Sign In */}
             {isLoggedIn ? (
               <Link
                 href="/account"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex flex-col items-center justify-center gap-1.5 group transition-opacity active:opacity-75"
+                className="w-full bg-white/70 backdrop-blur-xs border border-[#E2D5C3] rounded-2xl p-3.5 flex items-center justify-between group transition-all duration-200 hover:border-[#820011]/40 hover:bg-white active:scale-[0.99] shadow-xs"
               >
-                {userPhoto ? (
-                  <div className="w-13 h-13 rounded-full overflow-hidden border-2 border-[#D4C0A7] shadow-xs flex items-center justify-center bg-white shrink-0 group-hover:border-[#8C1D2E] transition-colors">
-                    <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
-                  </div>
-                ) : (
-                  <div className="w-13 h-13 rounded-full bg-[#820011] text-white flex items-center justify-center text-[18px] font-bold shadow-xs shrink-0">
-                    {userName ? userName.charAt(0).toUpperCase() : "M"}
-                  </div>
-                )}
+                <div className="flex items-center gap-3 min-w-0">
+                  {userPhoto ? (
+                    <div className="w-11 h-11 rounded-full overflow-hidden border border-[#D4C0A7] shadow-2xs flex items-center justify-center bg-white shrink-0">
+                      <img src={userPhoto} alt="My Account" className="w-full h-full rounded-full object-cover" />
+                    </div>
+                  ) : (
+                    <div className="w-11 h-11 rounded-full bg-[#820011] text-white flex items-center justify-center text-[16px] font-bold shadow-2xs shrink-0">
+                      {userName ? userName.charAt(0).toUpperCase() : "M"}
+                    </div>
+                  )}
 
-                <span className="font-serif-title text-[16px] font-medium text-[#313134] group-hover:text-[#8C1D2E] transition-colors mt-0.5">
-                  {userName ? userName : "My Account"}
-                </span>
+                  <div className="flex flex-col min-w-0 text-left">
+                    <span className="font-serif-title text-[15px] font-medium text-[#313134] group-hover:text-[#820011] transition-colors truncate">
+                      {userName ? userName : "My Account"}
+                    </span>
+                    <span className="text-[11.5px] text-[#8A8477] tracking-wider uppercase font-serif-text">
+                      Fragrance Circle Member
+                    </span>
+                  </div>
+                </div>
 
-                <span className="font-serif-text text-[11.5px] tracking-[0.14em] uppercase text-[#8A8477] group-hover:text-[#8C1D2E] transition-colors">
-                  View Profile →
-                </span>
+                <div className="flex items-center gap-1 text-[#820011] text-[13px] font-medium shrink-0 pr-1">
+                  <span>Profile</span>
+                  <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                </div>
               </Link>
             ) : (
-              <Link
-                href="/account"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex flex-col items-center justify-center gap-2 group transition-opacity active:opacity-75"
-              >
-                <div className="px-6 py-2.5 rounded-full bg-[#820011] text-white font-medium text-[14px] shadow-sm flex items-center gap-2 hover:bg-[#66000d] transition-colors">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              <div className="w-full flex flex-col items-center gap-2.5">
+                <Link
+                  href="/account"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="group w-full h-[50px] rounded-full bg-[#820011] text-white font-medium text-[13.5px] sm:text-[14px] tracking-[0.08em] uppercase shadow-[0_4px_16px_rgba(130,0,17,0.25)] flex items-center justify-center gap-2.5 hover:bg-[#6c000e] active:scale-[0.99] transition-all duration-200 select-none px-6"
+                >
+                  <svg className="w-4.5 h-4.5 shrink-0 transition-transform duration-200 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                   </svg>
-                  <span>Sign In / Register</span>
-                </div>
-                <span className="font-serif-text text-[12px] text-[#8A8477]">
+                  <span className="whitespace-nowrap font-medium">Sign In / Register</span>
+                  <span className="text-white/80 transition-transform duration-200 group-hover:translate-x-1">→</span>
+                </Link>
+
+                <span className="font-serif-text text-[12px] text-[#8A8477] tracking-[0.02em] text-center">
                   Join Murakkaz Fragrance Circle
                 </span>
-              </Link>
+              </div>
             )}
           </div>
         </div>
