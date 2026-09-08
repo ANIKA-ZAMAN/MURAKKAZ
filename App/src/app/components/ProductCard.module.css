@@ -314,26 +314,26 @@
 
 .buyNowBtn {
   background: transparent;
-  border: 1px solid #820011;
-  color: #820011;
-}
-
-.buyNowBtn:hover {
-  background-color: #820011;
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(130, 0, 17, 0.25);
-}
-
-.addBagBtn {
-  background: transparent;
   border: 1px solid #313134;
   color: #313134;
 }
 
-.addBagBtn:hover {
+.buyNowBtn:hover {
   background-color: #313134;
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(49, 49, 52, 0.18);
+}
+
+.addBagBtn {
+  background: #313134;
+  border: 1px solid #313134;
+  color: #ffffff;
+}
+
+.addBagBtn:hover {
+  background-color: #232326;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(49, 49, 52, 0.24);
 }
 
 /* ───────────────────────────────────────────────────────────── */
@@ -430,7 +430,7 @@
     min-height: 32px !important;
     font-size: 0.7rem !important;
     border-radius: 12px !important;
-    border: 1px solid #820011 !important;
+    border: 1px solid #313134 !important;
     padding: 0 4px !important;
     display: flex !important;
     align-items: center !important;
@@ -440,7 +440,14 @@
     text-overflow: ellipsis !important;
   }
 
+  .buyNowBtn {
+    background: transparent !important;
+    color: #313134 !important;
+  }
+
   .addBagBtn {
+    background: #313134 !important;
+    color: #ffffff !important;
     border: 1px solid #313134 !important;
   }
 }
@@ -519,7 +526,7 @@
     min-height: 32px !important;
     font-size: 0.74rem !important;
     border-radius: 12px !important;
-    border: 1px solid #820011 !important;
+    border: 1px solid #313134 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -529,7 +536,14 @@
     padding: 0 4px !important;
   }
 
+  .buyNowBtn {
+    background: transparent !important;
+    color: #313134 !important;
+  }
+
   .addBagBtn {
+    background: #313134 !important;
+    color: #ffffff !important;
     border: 1px solid #313134 !important;
   }
 }
@@ -575,7 +589,7 @@
     min-height: 34px !important;
     font-size: 0.76rem !important;
     border-radius: 14px !important;
-    border: 1px solid #820011 !important;
+    border: 1px solid #313134 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -585,7 +599,14 @@
     padding: 0 6px !important;
   }
 
+  .buyNowBtn {
+    background: transparent !important;
+    color: #313134 !important;
+  }
+
   .addBagBtn {
+    background: #313134 !important;
+    color: #ffffff !important;
     border: 1px solid #313134 !important;
   }
 }
@@ -734,28 +755,28 @@
 
 .featuredCard .buyNowBtn {
   background: transparent !important;
-  border: 1px solid #820011 !important;
-  color: #820011 !important;
+  border: 1px solid #313134 !important;
+  color: #313134 !important;
   font-weight: 600 !important;
   box-shadow: none !important;
 }
 
 .featuredCard .buyNowBtn:hover {
-  background-color: #820011 !important;
+  background-color: #313134 !important;
   color: #FAF7F2 !important;
   box-shadow: none !important;
 }
 
 .featuredCard .addBagBtn {
-  background: transparent !important;
+  background: #313134 !important;
   border: 1px solid #313134 !important;
-  color: #2C2B2E !important;
+  color: #FAF7F2 !important;
   font-weight: 600 !important;
   box-shadow: none !important;
 }
 
 .featuredCard .addBagBtn:hover {
-  background-color: #313134 !important;
+  background-color: #232326 !important;
   color: #FAF7F2 !important;
   box-shadow: none !important;
 }

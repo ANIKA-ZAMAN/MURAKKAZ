@@ -201,26 +201,26 @@
 
 .compareBtn {
   background: transparent;
-  border: 1px solid #820011;
-  color: #820011;
-}
-
-.compareBtn:hover {
-  background-color: #820011;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.15);
-}
-
-.readMoreBtn {
-  background: transparent;
   border: 1px solid #313134;
   color: #313134;
 }
 
-.readMoreBtn:hover {
+.compareBtn:hover {
   background-color: #313134;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(49, 49, 52, 0.15);
+}
+
+.readMoreBtn {
+  background: #313134;
+  border: 1px solid #313134;
+  color: #ffffff;
+}
+
+.readMoreBtn:hover {
+  background-color: #232326;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(49, 49, 52, 0.22);
 }
 
 @media (max-width: 1200px) {
@@ -248,6 +248,18 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+  }
+
+  .compareBtn {
+    border: 1px solid #313134 !important;
+    color: #313134 !important;
+    background: transparent !important;
+  }
+
+  .readMoreBtn {
+    border: 1px solid #313134 !important;
+    background: #313134 !important;
+    color: #ffffff !important;
   }
 }
 
@@ -297,5 +309,17 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+  }
+
+  .compareBtn {
+    border: 1px solid #313134 !important;
+    color: #313134 !important;
+    background: transparent !important;
+  }
+
+  .readMoreBtn {
+    border: 1px solid #313134 !important;
+    background: #313134 !important;
+    color: #ffffff !important;
   }
 }
