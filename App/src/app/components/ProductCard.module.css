@@ -291,9 +291,10 @@
 .buyNowBtn,
 .addBagBtn {
   flex: 1;
+  min-width: 0;
   height: 38px;
   min-height: 38px;
-  border-radius: 20px;
+  border-radius: 14px;
   font-family: var(--font-serif-text), Georgia, serif;
   font-size: 0.78rem;
   font-weight: 500;
@@ -304,6 +305,7 @@
   justify-content: center;
   letter-spacing: 0.01em;
   box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .buyNowBtn {
@@ -407,23 +409,27 @@
   }
 
   .actions {
-    flex-direction: column !important;
-    gap: 5px !important;
+    flex-direction: row !important;
+    gap: 6px !important;
     width: 100% !important;
   }
 
   .buyNowBtn,
   .addBagBtn {
     width: 100% !important;
-    flex: none !important;
-    height: 30px !important;
-    min-height: 30px !important;
-    font-size: 0.72rem !important;
-    border-radius: 15px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    font-size: 0.7rem !important;
+    border-radius: 12px !important;
     padding: 0 4px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 }
 
@@ -484,7 +490,7 @@
   }
 
   .actions {
-    flex-direction: column !important;
+    flex-direction: row !important;
     gap: 6px !important;
     width: 100% !important;
   }
@@ -492,18 +498,23 @@
   .buyNowBtn,
   .addBagBtn {
     width: 100% !important;
-    flex: none !important;
+    flex: 1 !important;
+    min-width: 0 !important;
     height: 32px !important;
     min-height: 32px !important;
     font-size: 0.74rem !important;
-    border-radius: 16px !important;
+    border-radius: 12px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 0 4px !important;
   }
 }
 
-/* 3. Surface / Small Laptops (1024px – 1366px): 4-column layout, vertical stacked buttons */
+/* 3. Surface / Small Laptops (1024px – 1366px): 4-column layout, side by side buttons */
 @media (min-width: 1024px) and (max-width: 1366px) {
   .imageContainer {
     aspect-ratio: 1 / 1;
@@ -527,7 +538,7 @@
   }
 
   .actions {
-    flex-direction: column !important;
+    flex-direction: row !important;
     gap: 6px !important;
     width: 100% !important;
   }
@@ -535,14 +546,19 @@
   .buyNowBtn,
   .addBagBtn {
     width: 100% !important;
-    flex: none !important;
+    flex: 1 !important;
+    min-width: 0 !important;
     height: 34px !important;
     min-height: 34px !important;
     font-size: 0.76rem !important;
-    border-radius: 17px !important;
+    border-radius: 14px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 0 6px !important;
   }
 }
 
