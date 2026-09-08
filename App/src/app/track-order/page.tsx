@@ -515,18 +515,6 @@ function TrackOrderContent() {
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerInner}>
-          <span>©2026 Murakkaz Luxury Perfumes. All rights reserved.</span>
-          <div style={{ display: "flex", gap: "1.5rem" }}>
-            <Link href="/shop" style={{ color: "#820011", textDecoration: "none" }}>Shop Collection</Link>
-            <Link href="/our-story" style={{ color: "#820011", textDecoration: "none" }}>Our Story</Link>
-            <Link href="/account" style={{ color: "#820011", textDecoration: "none" }}>My Account</Link>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

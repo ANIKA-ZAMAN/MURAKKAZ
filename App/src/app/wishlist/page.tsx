@@ -475,56 +475,6 @@ export default function WishlistPage() {
           </div>
         )}
       </main>
-
-      {/* Luxury Footer Section */}
-      <footer className={styles.footer}>
-        <div className={styles.footerContainer}>
-          <div className={styles.footerBrandCol}>
-            <div className={styles.footerLogo}>
-              <span>Murakkaz</span>
-            </div>
-            <p className={styles.footerDesc}>
-              Crafted and created by Murakkaj. Redefining luxury fragrances in Bangladesh by bringing you world-class olfactory art with beast-mode longevity, without the ridiculous designer markups.
-            </p>
-          </div>
-          <div className={styles.footerLinksCol}>
-            <div className={styles.linksRow}>
-              <Link href="/">Home</Link>
-              <Link href="/">Our Story</Link>
-              <Link href="/">Shop</Link>
-              <Link href="/events">Event</Link>
-              <Link href="/">Discovery</Link>
-              <Link href="/">Community</Link>
-            </div>
-            <div className={styles.linksSubRow}>
-              <Link href="/events">Event Finder</Link>
-              <Link href="/">Perfume Finder</Link>
-            </div>
-          </div>
-          <div className={styles.footerSocialCol}>
-            <div className={styles.socialIconsRow}>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className={styles.socialBox} aria-label="Facebook">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9 8H7v3h2v9h3v-9h3l.5-3H12V6c0-.88.39-1 1-1h2V2h-3c-2.9 0-5 1.55-5 4.5V8z" />
-                </svg>
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className={styles.socialBox} aria-label="Instagram">
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className={styles.socialBox} aria-label="YouTube">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.002 3.002 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                </svg>
-              </a>
-            </div>
-            <span className={styles.copyrightText}>©2026 Murakkaj. All rights reserved.</span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
