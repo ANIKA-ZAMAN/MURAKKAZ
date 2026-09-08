@@ -635,13 +635,25 @@ export default function Navbar() {
                 <Link
                   href="/account"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="group w-full h-[50px] rounded-full bg-[#820011] text-white font-medium text-[13.5px] sm:text-[14px] tracking-[0.08em] uppercase shadow-[0_4px_16px_rgba(130,0,17,0.25)] flex items-center justify-center gap-2.5 hover:bg-[#6c000e] active:scale-[0.99] transition-all duration-200 select-none px-6"
+                  style={{ color: "#FFFFFF", backgroundColor: "#820011" }}
+                  className="group w-full h-[50px] rounded-full !text-white font-medium text-[13.5px] sm:text-[14px] tracking-[0.08em] uppercase shadow-[0_4px_16px_rgba(130,0,17,0.25)] flex items-center justify-center gap-2.5 hover:bg-[#6c000e] active:scale-[0.99] transition-all duration-200 select-none px-6"
                 >
-                  <svg className="w-4.5 h-4.5 shrink-0 transition-transform duration-200 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+                  <svg
+                    style={{ color: "#FFFFFF", stroke: "#FFFFFF" }}
+                    className="w-4.5 h-4.5 shrink-0 transition-transform duration-200 group-hover:scale-110 !text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="#FFFFFF"
+                    strokeWidth="1.8"
+                  >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                   </svg>
-                  <span className="whitespace-nowrap font-medium">Sign In / Register</span>
-                  <span className="text-white/80 transition-transform duration-200 group-hover:translate-x-1">→</span>
+                  <span style={{ color: "#FFFFFF" }} className="whitespace-nowrap font-medium !text-white">
+                    Sign In / Register
+                  </span>
+                  <span style={{ color: "#FFFFFF" }} className="!text-white transition-transform duration-200 group-hover:translate-x-1">
+                    →
+                  </span>
                 </Link>
 
                 <span className="font-serif-text text-[12px] text-[#8A8477] tracking-[0.02em] text-center">
