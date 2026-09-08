@@ -8,6 +8,7 @@ interface FilterSidebarProps {
   onCheckboxChange: (categoryId: string, option: string) => void;
   onClearAll: () => void;
   totalMatching: number;
+  onClose?: () => void;
 }
 
 export default function FilterSidebar({
@@ -15,6 +16,7 @@ export default function FilterSidebar({
   onCheckboxChange,
   onClearAll,
   totalMatching,
+  onClose,
 }: FilterSidebarProps) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
     category: true,
@@ -83,11 +85,32 @@ export default function FilterSidebar({
             <span className={styles.activeBadge}>{activeFiltersCount}</span>
           )}
         </div>
-        {activeFiltersCount > 0 && (
-          <button onClick={onClearAll} className={styles.clearBtn}>
-            Clear all
-          </button>
-        )}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          {activeFiltersCount > 0 && (
+            <button onClick={onClearAll} className={styles.clearBtn}>
+              Clear all
+            </button>
+          )}
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="lg:hidden"
+              style={{
+                background: "transparent",
+                border: "none",
+                fontSize: "17px",
+                color: "#8c8c90",
+                cursor: "pointer",
+                padding: "2px 6px",
+                lineHeight: 1,
+              }}
+              aria-label="Close filters"
+            >
+              ✕
+            </button>
+          )}
+        </div>
       </div>
 
       <div className={styles.categoriesList}>
@@ -134,11 +157,30 @@ export default function FilterSidebar({
         })}
       </div>
 
-      {/* Results Count Footer */}
-      <div className={styles.footer}>
+      {/* Results Count Footer / Mobile Apply Button */}
+      <div className={styles.footer} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <span className={styles.matchCount}>
           {totalMatching} {totalMatching === 1 ? "perfume" : "perfumes"} found
         </span>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="lg:hidden"
+            style={{
+              backgroundColor: "#820011",
+              color: "#FFFFFF",
+              border: "none",
+              borderRadius: "9999px",
+              padding: "6px 14px",
+              fontSize: "12.5px",
+              fontWeight: 500,
+              cursor: "pointer",
+            }}
+          >
+            Apply Filters
+          </button>
+        )}
       </div>
     </aside>
   );

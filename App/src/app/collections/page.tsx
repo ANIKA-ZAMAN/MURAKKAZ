@@ -17,7 +17,14 @@ function CollectionsContent() {
   const [productsList, setProductsList] = useState<Product[]>(productsCatalog);
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isFilterOpen, setIsFilterOpen] = useState(true);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  useEffect(() => {
+    // Only expand by default on desktop screens (>= 1024px); keep closed on mobile phones
+    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      setIsFilterOpen(true);
+    }
+  }, []);
 
   useEffect(() => {
     fetchLiveProducts().then((data) => {
@@ -238,6 +245,7 @@ function CollectionsContent() {
                 onCheckboxChange={handleCheckboxChange}
                 onClearAll={handleClearAll}
                 totalMatching={sortedProducts.length}
+                onClose={() => setIsFilterOpen(false)}
               />
             </div>
           )}

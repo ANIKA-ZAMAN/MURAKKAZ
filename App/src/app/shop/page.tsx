@@ -41,7 +41,14 @@ function ShopContent() {
   const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [sortBy, setSortBy] = useState<string>("newest");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(true);
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Only expand by default on desktop screens (>= 1024px); keep closed on mobile phones
+    if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      setIsFilterOpen(true);
+    }
+  }, []);
 
   useEffect(() => {
     fetchLiveProducts()
@@ -252,6 +259,7 @@ function ShopContent() {
                 onCheckboxChange={handleCheckboxChange}
                 onClearAll={handleClearAll}
                 totalMatching={sortedProducts.length}
+                onClose={() => setIsFilterOpen(false)}
               />
             </div>
           )}
