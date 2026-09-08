@@ -103,110 +103,113 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* 2. Quick Link Column */}
-            <div className={styles.linksCol}>
-              <h3 className={styles.colHeader}>QUICK LINK</h3>
-              <ul className={styles.linkList}>
-                {[
-                  { label: "Home", href: "/" },
-                  { label: "Our Story", href: "/our-story" },
-                  { label: "Shop", href: "/shop" },
-                  { label: "Event", href: "/events" },
-                  { label: "Library", href: "/collections" },
-                  { label: "Compare", href: "/compare" },
-                  { label: "Finder", href: "/scent-index" },
-                  { label: "Vlog", href: "/blog" },
-                ].map((item) => (
-                  <li key={item.label}>
-                    <Link href={item.href} className={styles.navItem}>
-                      {item.label}
+            {/* 2 & 3. Right Columns (Quick Link & Information) */}
+            <div className={styles.rightColsWrapper}>
+              {/* Quick Link Column */}
+              <div className={styles.linksCol}>
+                <h3 className={styles.colHeader}>QUICK LINK</h3>
+                <ul className={styles.linkList}>
+                  {[
+                    { label: "Home", href: "/" },
+                    { label: "Our Story", href: "/our-story" },
+                    { label: "Shop", href: "/shop" },
+                    { label: "Event", href: "/events" },
+                    { label: "Library", href: "/collections" },
+                    { label: "Compare", href: "/compare" },
+                    { label: "Finder", href: "/scent-index" },
+                    { label: "Vlog", href: "/blog" },
+                  ].map((item) => (
+                    <li key={item.label}>
+                      <Link href={item.href} className={styles.navItem}>
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Information & Socials Column */}
+              <div className={styles.infoCol}>
+                <h3 className={styles.colHeader}>INFORMATION</h3>
+                <ul className={styles.linkList}>
+                  <li>
+                    <Link href="/terms" className={styles.navItem}>
+                      Terms of Service
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </div>
+                  <li>
+                    <Link href="/privacy" className={styles.navItem}>
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      onClick={() => setIsCookieModalOpen(true)}
+                      className={styles.actionItem}
+                    >
+                      Cookies Settings
+                    </button>
+                  </li>
+                </ul>
 
-            {/* 3. Information & Socials Column */}
-            <div className={styles.infoCol}>
-              <h3 className={styles.colHeader}>INFORMATION</h3>
-              <ul className={styles.linkList}>
-                <li>
-                  <Link href="/terms" className={styles.navItem}>
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className={styles.navItem}>
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => setIsCookieModalOpen(true)}
-                    className={styles.actionItem}
-                  >
-                    Cookies Settings
-                  </button>
-                </li>
-              </ul>
+                {/* Social Media Box */}
+                <div className={styles.socialWrapper}>
+                  <div className={styles.socialBox}>
+                    {/* Facebook */}
+                    <a
+                      href="https://facebook.com/murakkaz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.socialIcon}
+                      aria-label="Facebook"
+                    >
+                      <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5c0-.988.293-1.49 1.5-1.49H17V2.14c-.658-.088-1.704-.14-2.802-.14-3.267 0-5 1.776-5 5.2v2.31H6.198v3.98H9.198v8.01z" />
+                      </svg>
+                    </a>
 
-              {/* Social Media Box */}
-              <div className={styles.socialWrapper}>
-                <div className={styles.socialBox}>
-                  {/* Facebook */}
-                  <a
-                    href="https://facebook.com/murakkaz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialIcon}
-                    aria-label="Facebook"
-                  >
-                    <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M9.198 21.5h4v-8.01h3.604l.396-3.98h-4V7.5c0-.988.293-1.49 1.5-1.49H17V2.14c-.658-.088-1.704-.14-2.802-.14-3.267 0-5 1.776-5 5.2v2.31H6.198v3.98H9.198v8.01z" />
-                    </svg>
-                  </a>
+                    {/* Instagram */}
+                    <a
+                      href="https://instagram.com/murakkaz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.socialIcon}
+                      aria-label="Instagram"
+                    >
+                      <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                      </svg>
+                    </a>
 
-                  {/* Instagram */}
-                  <a
-                    href="https://instagram.com/murakkaz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialIcon}
-                    aria-label="Instagram"
-                  >
-                    <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                    </svg>
-                  </a>
+                    {/* X (formerly Twitter) */}
+                    <a
+                      href="https://x.com/murakkaz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.socialIcon}
+                      aria-label="X (formerly Twitter)"
+                    >
+                      <svg width="13.5" height="13.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                      </svg>
+                    </a>
 
-                  {/* X (formerly Twitter) */}
-                  <a
-                    href="https://x.com/murakkaz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialIcon}
-                    aria-label="X (formerly Twitter)"
-                  >
-                    <svg width="13.5" height="13.5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                    </svg>
-                  </a>
-
-                  {/* YouTube */}
-                  <a
-                    href="https://youtube.com/@murakkaz"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.socialIcon}
-                    aria-label="YouTube"
-                  >
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-                    </svg>
-                  </a>
+                    {/* YouTube */}
+                    <a
+                      href="https://youtube.com/@murakkaz"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.socialIcon}
+                      aria-label="YouTube"
+                    >
+                      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

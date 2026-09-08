@@ -12,12 +12,18 @@
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 5rem 1.5rem 4rem 1.5rem;
+  padding: 3.5rem 1.25rem calc(7.5rem + env(safe-area-inset-bottom, 0px)) 1.25rem;
 }
 
 @media (min-width: 640px) {
   .footerContainer {
-    padding: 6rem 2.5rem 5rem 2.5rem;
+    padding: 4.5rem 2rem calc(6.5rem + env(safe-area-inset-bottom, 0px)) 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .footerContainer {
+    padding: 5.5rem 2.5rem 5rem 2.5rem;
   }
 }
 
@@ -27,37 +33,26 @@
   }
 }
 
-/* 3-Column Grid Layout */
+/* Main Layout */
 .mainGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3.5rem;
-  align-items: start;
-}
-
-@media (min-width: 768px) {
-  .mainGrid {
-    grid-template-columns: repeat(12, 1fr);
-    gap: 2.5rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
   .mainGrid {
+    display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 3rem;
+    align-items: start;
   }
 }
 
 /* 1. Left Section (Contact & Heading) */
 .leftCol {
-  grid-column: 1 / -1;
-}
-
-@media (min-width: 768px) {
-  .leftCol {
-    grid-column: span 12;
-  }
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -74,50 +69,49 @@
 
 .eyebrow {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 11.5px;
+  font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #C5A880;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
   display: block;
   font-weight: 500;
 }
 
 .heading {
   font-family: var(--font-playfair), "Libertinus Serif Display", Georgia, serif;
-  font-size: clamp(32px, 3.8vw, 50px);
+  font-size: clamp(26px, 6.5vw, 48px);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: 1.16;
   color: #FAF7F2;
   letter-spacing: -0.015em;
-  margin: 0 0 2rem 0;
-}
-
-.heading br {
-  display: block;
+  margin: 0 0 1.75rem 0;
+  word-break: break-word;
 }
 
 /* Call Button */
 .callBtnWrapper {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .callBtn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
   background-color: #FAF7F2 !important;
   color: #2C2D30 !important;
   font-family: var(--font-lora), Georgia, serif !important;
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.01em;
-  padding: 0.85rem 1.75rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 9999px;
   text-decoration: none !important;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   border: 1px solid rgba(255, 255, 255, 0.4);
+  max-width: 100%;
 }
 
 .callBtn span {
@@ -131,7 +125,7 @@
 }
 
 .callArrow {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1;
   transition: transform 0.2s ease;
 }
@@ -140,18 +134,18 @@
   transform: translateX(4px);
 }
 
-/* Email Pill */
+/* Email Section */
 .emailSection {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
 }
 
 .emailLabel {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #9E988D;
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.55rem;
   display: block;
   font-weight: 500;
 }
@@ -159,12 +153,13 @@
 .emailPill {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 1.4rem;
+  gap: 0.65rem;
+  padding: 0.55rem 1.25rem;
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 255, 255, 0.03);
   transition: all 0.2s ease;
+  max-width: 100%;
 }
 
 .emailPill:hover {
@@ -174,10 +169,13 @@
 
 .emailText {
   font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 13.5px;
+  font-size: 13px;
   color: #FAF7F2;
   text-decoration: none;
   letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .copyBtn {
@@ -185,11 +183,13 @@
   border: none;
   color: rgba(250, 247, 242, 0.6);
   cursor: pointer;
-  padding: 0.2rem;
+  padding: 0.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: color 0.2s ease;
+  min-width: 24px;
+  min-height: 24px;
 }
 
 .copyBtn:hover {
@@ -206,45 +206,48 @@
   font-weight: 500;
 }
 
-/* 2. Middle Column (Quick Link) */
-.linksCol {
-  grid-column: 1 / -1;
+/* 2. Right Columns Wrapper (Quick Link + Information) */
+.rightColsWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+  width: 100%;
 }
 
 @media (min-width: 640px) {
-  .linksCol {
-    grid-column: span 6;
-  }
-}
-
-@media (min-width: 768px) {
-  .linksCol {
-    grid-column: span 6;
+  .rightColsWrapper {
+    gap: 3rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .linksCol {
-    grid-column: span 3;
-    padding-left: 1rem;
+  .rightColsWrapper {
+    grid-column: span 6;
+    grid-template-columns: 2fr 3fr;
+    gap: 2.5rem;
   }
 }
 
 @media (min-width: 1280px) {
-  .linksCol {
-    grid-column: span 2;
-    padding-left: 1.5rem;
+  .rightColsWrapper {
+    grid-column: span 5;
+    gap: 3.5rem;
   }
+}
+
+.linksCol,
+.infoCol {
+  width: 100%;
 }
 
 .colHeader {
   font-family: var(--font-playfair), "Libertinus Serif Display", Georgia, serif;
-  font-size: 14.5px;
+  font-size: 13.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #E8DFC8;
   font-weight: 400;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.25rem;
 }
 
 .linkList {
@@ -258,12 +261,14 @@
 
 .navItem {
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 14px;
+  font-size: 13.5px;
   color: #A9A49B;
   text-decoration: none;
   transition: color 0.2s ease, transform 0.2s ease;
-  display: inline-block;
-  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  line-height: 1.4;
 }
 
 .navItem:hover {
@@ -271,48 +276,20 @@
   transform: translateX(2px);
 }
 
-/* 3. Right Column (Information & Social) */
-.infoCol {
-  grid-column: 1 / -1;
-}
-
-@media (min-width: 640px) {
-  .infoCol {
-    grid-column: span 6;
-  }
-}
-
-@media (min-width: 768px) {
-  .infoCol {
-    grid-column: span 6;
-  }
-}
-
-@media (min-width: 1024px) {
-  .infoCol {
-    grid-column: span 3;
-    padding-left: 1.5rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .infoCol {
-    grid-column: span 3;
-    padding-left: 2rem;
-  }
-}
-
 .actionItem {
   background: transparent;
   border: none;
   padding: 0;
   font-family: var(--font-lora), Georgia, serif;
-  font-size: 14px;
+  font-size: 13.5px;
   color: #A9A49B;
   text-align: left;
   cursor: pointer;
   transition: color 0.2s ease, transform 0.2s ease;
-  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  line-height: 1.4;
 }
 
 .actionItem:hover {
@@ -328,11 +305,18 @@
 .socialBox {
   display: inline-flex;
   align-items: center;
-  gap: 1.1rem;
-  padding: 0.55rem 1rem;
+  gap: 0.85rem;
+  padding: 0.5rem 0.85rem;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.22);
   background-color: rgba(255, 255, 255, 0.02);
+}
+
+@media (min-width: 640px) {
+  .socialBox {
+    gap: 1.1rem;
+    padding: 0.55rem 1rem;
+  }
 }
 
 .socialIcon {
@@ -342,6 +326,8 @@
   justify-content: center;
   transition: color 0.2s ease, transform 0.2s ease;
   text-decoration: none;
+  min-width: 24px;
+  min-height: 24px;
 }
 
 .socialIcon:hover {
@@ -351,19 +337,27 @@
 
 /* 4. Bottom Attribution Row */
 .bottomRow {
-  margin-top: 4.5rem;
+  margin-top: 3.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.07);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1.25rem;
+  text-align: center;
 }
 
 @media (min-width: 640px) {
   .bottomRow {
     flex-direction: row;
+    margin-top: 4.5rem;
+    text-align: left;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bottomRow {
     margin-top: 5.5rem;
   }
 }
