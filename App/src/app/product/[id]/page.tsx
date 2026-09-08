@@ -248,6 +248,33 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     return EXCLUSIVE_SLUGS.has(cleanId);
   }, [catalogItem, liveProduct, id, EXCLUSIVE_SLUGS]);
 
+  const isOutOfStock = React.useMemo(() => {
+    const cleanId = id ? id.toLowerCase().trim() : "";
+    if (cleanId === "imagination" || cleanId === "prod-imagination-10" || cleanId.includes("imagination")) {
+      return true;
+    }
+    if (liveProduct) {
+      if (liveProduct.isOutOfStock === true || liveProduct.inStock === false) return true;
+      if (liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
+        if (liveProduct.sizes.every((s: any) => Number(s.stock ?? s.quantity ?? 0) <= 0)) {
+          return true;
+        }
+      }
+      if (liveProduct.name && liveProduct.name.toLowerCase().includes("imagination")) return true;
+    }
+    if (catalogItem) {
+      if ((catalogItem as any).isOutOfStock === true || (catalogItem as any).inStock === false) return true;
+      if (catalogItem.sizes && Array.isArray(catalogItem.sizes) && catalogItem.sizes.length > 0) {
+        if (catalogItem.sizes.every((s: any) => Number(s.stock ?? 0) <= 0)) {
+          return true;
+        }
+      }
+      if (catalogItem.slug && catalogItem.slug.toLowerCase().includes("imagination")) return true;
+      if (catalogItem.name && catalogItem.name.toLowerCase().includes("imagination")) return true;
+    }
+    return false;
+  }, [id, liveProduct, catalogItem]);
+
   const sizeOptions = React.useMemo(() => {
     const sizeOrder = ["6ml", "10ml", "30ml", "50ml"];
     // 1. Check liveProduct from DB
@@ -502,6 +529,11 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   };
 
   const handleAddToCart = () => {
+    if (isOutOfStock) {
+      triggerToast(`${details.name} is currently out of stock.`);
+      return;
+    }
+
     const savedCart = localStorage.getItem("cart-items");
     let cartItems = [];
     if (savedCart) {
@@ -568,6 +600,10 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   };
 
   const handleTryNow = () => {
+    if (isOutOfStock) {
+      triggerToast(`${details.name} is currently out of stock.`);
+      return;
+    }
     handleAddToCart();
     router.push("/cart");
   };
@@ -725,13 +761,19 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
               <div>
                 <h1 className={styles.title}>{details.name}</h1>
                 <p className={styles.subtitle}>{details.inspiredBy}</p>
-                {details.badge && (
-                  <div className={styles.badgeRow}>
+                <div className={styles.badgeRow}>
+                  {details.badge && (
                     <span className={styles.badge}>{details.badge}</span>
-                  </div>
-                )}
+                  )}
+                  {isOutOfStock && (
+                    <span className={styles.outOfStockBadgePill}>OUT OF STOCK</span>
+                  )}
+                </div>
               </div>
-              <div className={styles.price}>{selectedSizeOpt.price.toLocaleString()}tk</div>
+              <div className={styles.priceContainer}>
+                {isOutOfStock && <span className={styles.stockOutTag}>Stock Out</span>}
+                <div className={styles.price}>{selectedSizeOpt.price.toLocaleString()}tk</div>
+              </div>
             </div>
 
 
@@ -761,10 +803,11 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             <div className={styles.optionSection}>
               <span className={styles.optionLabel}>Select Quantity</span>
               <div className={styles.quantityHeartRow}>
-                <div className={styles.quantityWrapper}>
+                <div className={styles.quantityWrapper} style={isOutOfStock ? { opacity: 0.6, pointerEvents: "none" } : undefined}>
                   <button
                     onClick={() => handleQuantityChange("dec")}
                     className={styles.quantityBtn}
+                    disabled={isOutOfStock}
                   >
                     —
                   </button>
@@ -772,6 +815,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                   <button
                     onClick={() => handleQuantityChange("inc")}
                     className={styles.quantityBtn}
+                    disabled={isOutOfStock}
                   >
                     +
                   </button>
@@ -800,18 +844,30 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
             {/* Action Buttons */}
             <div className={styles.actionRow}>
-              <button
-                onClick={handleTryNow}
-                className={styles.buyNowBtn}
-              >
-                Buy now
-              </button>
-              <button
-                onClick={handleAddToCart}
-                className={styles.addToCartBtn}
-              >
-                Add To Cart
-              </button>
+              {isOutOfStock ? (
+                <button
+                  type="button"
+                  disabled
+                  className={styles.outOfStockBtn}
+                >
+                  Out of Stock
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={handleTryNow}
+                    className={styles.buyNowBtn}
+                  >
+                    Buy now
+                  </button>
+                  <button
+                    onClick={handleAddToCart}
+                    className={styles.addToCartBtn}
+                  >
+                    Add To Cart
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Accordion description */}

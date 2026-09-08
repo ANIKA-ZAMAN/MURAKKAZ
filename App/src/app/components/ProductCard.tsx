@@ -32,6 +32,8 @@ interface ProductCardProps {
   notes?: string[];
   variant?: "default" | "featured";
   customPrices?: Record<string, number>;
+  inStock?: boolean;
+  isOutOfStock?: boolean;
 }
 
 export default function ProductCard({
@@ -53,6 +55,8 @@ export default function ProductCard({
   notes,
   variant = "default",
   customPrices,
+  inStock: propInStock,
+  isOutOfStock: propIsOutOfStock,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -63,6 +67,16 @@ export default function ProductCard({
     if (name) return slugify(name);
     return id;
   }, [slug, name, id]);
+
+  const isOutOfStock = useMemo(() => {
+    if (propIsOutOfStock === true || propInStock === false) return true;
+    const s = (slug || targetSlug || "").toLowerCase();
+    const n = (name || "").toLowerCase();
+    if (s === "imagination" || n === "imagination" || s.includes("imagination") || n.includes("imagination")) {
+      return true;
+    }
+    return false;
+  }, [propIsOutOfStock, propInStock, slug, targetSlug, name]);
 
   const { displayName, subTitleText } = useMemo(() => {
     if (inspiredBy) {
@@ -197,10 +211,13 @@ export default function ProductCard({
           decoding="async"
           loading="lazy"
           sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 280px"
-          className={styles.image}
+          className={`${styles.image} ${isOutOfStock ? styles.outOfStockImage : ""}`}
         />
         {resolvedCategory === "exclusive" && (
           <span className={styles.badge} style={{ backgroundColor: "#820011", color: "#FFFFFF" }}>EXCLUSIVE</span>
+        )}
+        {isOutOfStock && (
+          <span className={styles.outOfStockBadge}>OUT OF STOCK</span>
         )}
       </div>
 
@@ -241,101 +258,117 @@ export default function ProductCard({
           </div>
 
           <div className={styles.priceGroup}>
+            {isOutOfStock && <span className={styles.stockOutTag}>Stock Out</span>}
             <span className={styles.currentPrice}>৳{currentPrice.toLocaleString()}</span>
           </div>
         </div>
 
         {/* Row 4: Action Buttons */}
         <div className={styles.actions}>
-          <button
-            type="button"
-            className={styles.buyNowBtn}
-            onClick={(e) => {
-              e.stopPropagation();
-              try {
-                const saved = localStorage.getItem("cart-items");
-                let cart: any[] = saved ? JSON.parse(saved) : [];
-                if (!Array.isArray(cart)) cart = [];
+          {isOutOfStock ? (
+            <button
+              type="button"
+              className={styles.outOfStockBtn}
+              disabled
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              Out of Stock
+            </button>
+          ) : (
+            <>
+              <button
+                type="button"
+                className={styles.buyNowBtn}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  try {
+                    const saved = localStorage.getItem("cart-items");
+                    let cart: any[] = saved ? JSON.parse(saved) : [];
+                    if (!Array.isArray(cart)) cart = [];
 
-                const existingIndex = cart.findIndex(
-                  (i: any) =>
-                    i.name &&
-                    i.name.toLowerCase() === displayName.toLowerCase() &&
-                    i.selectedSize === selectedSize
-                );
+                    const existingIndex = cart.findIndex(
+                      (i: any) =>
+                        i.name &&
+                        i.name.toLowerCase() === displayName.toLowerCase() &&
+                        i.selectedSize === selectedSize
+                    );
 
-                if (existingIndex > -1) {
-                  cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
-                  cart[existingIndex].selected = true;
-                } else {
-                  cart.push({
-                    id: `cart-${targetSlug}-${Date.now()}`,
-                    name: displayName,
-                    image: image,
-                    inspiredBy: subTitleText,
-                    selectedSize: selectedSize,
-                    quantity: 1,
-                    prices: pricingTier.prices,
-                    selected: true,
-                  });
-                }
+                    if (existingIndex > -1) {
+                      cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+                      cart[existingIndex].selected = true;
+                    } else {
+                      cart.push({
+                        id: `cart-${targetSlug}-${Date.now()}`,
+                        name: displayName,
+                        image: image,
+                        inspiredBy: subTitleText,
+                        selectedSize: selectedSize,
+                        quantity: 1,
+                        prices: pricingTier.prices,
+                        selected: true,
+                      });
+                    }
 
-                localStorage.setItem("cart-items", JSON.stringify(cart));
-                window.dispatchEvent(new Event("cart-updated"));
-                trackAnalyticsEvent("ADD_TO_CART", { name: displayName, price: currentPrice, size: selectedSize, slug: targetSlug });
-                router.push("/cart");
-              } catch (err) {
-                console.error(err);
-                router.push("/cart");
-              }
-            }}
-          >
-            Buy Now
-          </button>
-          <button
-            type="button"
-            className={styles.addBagBtn}
-            onClick={(e) => {
-              e.stopPropagation();
-              try {
-                const saved = localStorage.getItem("cart-items");
-                let cart: any[] = saved ? JSON.parse(saved) : [];
-                if (!Array.isArray(cart)) cart = [];
+                    localStorage.setItem("cart-items", JSON.stringify(cart));
+                    window.dispatchEvent(new Event("cart-updated"));
+                    trackAnalyticsEvent("ADD_TO_CART", { name: displayName, price: currentPrice, size: selectedSize, slug: targetSlug });
+                    router.push("/cart");
+                  } catch (err) {
+                    console.error(err);
+                    router.push("/cart");
+                  }
+                }}
+              >
+                Buy Now
+              </button>
+              <button
+                type="button"
+                className={styles.addBagBtn}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  try {
+                    const saved = localStorage.getItem("cart-items");
+                    let cart: any[] = saved ? JSON.parse(saved) : [];
+                    if (!Array.isArray(cart)) cart = [];
 
-                const existingIndex = cart.findIndex(
-                  (i: any) =>
-                    i.name &&
-                    i.name.toLowerCase() === displayName.toLowerCase() &&
-                    i.selectedSize === selectedSize
-                );
+                    const existingIndex = cart.findIndex(
+                      (i: any) =>
+                        i.name &&
+                        i.name.toLowerCase() === displayName.toLowerCase() &&
+                        i.selectedSize === selectedSize
+                    );
 
-                if (existingIndex > -1) {
-                  cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
-                  cart[existingIndex].selected = true;
-                } else {
-                  cart.push({
-                    id: `cart-${targetSlug}-${Date.now()}`,
-                    name: displayName,
-                    image: image,
-                    inspiredBy: subTitleText,
-                    selectedSize: selectedSize,
-                    quantity: 1,
-                    prices: pricingTier.prices,
-                    selected: true,
-                  });
-                }
+                    if (existingIndex > -1) {
+                      cart[existingIndex].quantity = (cart[existingIndex].quantity || 1) + 1;
+                      cart[existingIndex].selected = true;
+                    } else {
+                      cart.push({
+                        id: `cart-${targetSlug}-${Date.now()}`,
+                        name: displayName,
+                        image: image,
+                        inspiredBy: subTitleText,
+                        selectedSize: selectedSize,
+                        quantity: 1,
+                        prices: pricingTier.prices,
+                        selected: true,
+                      });
+                    }
 
-                localStorage.setItem("cart-items", JSON.stringify(cart));
-                window.dispatchEvent(new Event("cart-updated"));
-                trackAnalyticsEvent("ADD_TO_CART", { name: displayName, price: currentPrice, size: selectedSize, slug: targetSlug });
-                setToastMessage(`Added ${displayName} (${selectedSize} - ৳${currentPrice.toLocaleString()}) to your bag!`);
-              } catch (err) {
-                console.error(err);
-              }
-            }}
-          >
-            Add to Bag
-          </button>
+                    localStorage.setItem("cart-items", JSON.stringify(cart));
+                    window.dispatchEvent(new Event("cart-updated"));
+                    trackAnalyticsEvent("ADD_TO_CART", { name: displayName, price: currentPrice, size: selectedSize, slug: targetSlug });
+                    setToastMessage(`Added ${displayName} (${selectedSize} - ৳${currentPrice.toLocaleString()}) to your bag!`);
+                  } catch (err) {
+                    console.error(err);
+                  }
+                }}
+              >
+                Add to Bag
+              </button>
+            </>
+          )}
         </div>
       </div>
 

@@ -36,6 +36,16 @@ export const createOrder = async (userId: string | null | undefined, data: any) 
         });
       }
 
+      // Check if product is out of stock (e.g. Imagination or marked out of stock)
+      const isImagination = (item.name && item.name.toLowerCase().includes('imagination')) ||
+        (item.id && String(item.id).toLowerCase().includes('imagination')) ||
+        (product && (product.name?.toLowerCase().includes('imagination') || product.slug?.toLowerCase().includes('imagination') || product.id?.toLowerCase().includes('imagination')));
+      const isProductOutOfStock = isImagination ||
+        (product && (product.inStock === false || (product as any).isOutOfStock === true));
+      if (isProductOutOfStock) {
+        throw new AppError(`${item.name || (product ? product.name : 'This item')} is currently out of stock and cannot be ordered.`, 400);
+      }
+
       const selectedSize = item.selectedSize || '12ml';
       const quantity = Math.max(1, Number(item.quantity) || 1);
       
@@ -77,6 +87,14 @@ export const createOrder = async (userId: string | null | undefined, data: any) 
     });
 
     for (const item of dbCartItems) {
+      const isImagination = (item.product.name && item.product.name.toLowerCase().includes('imagination')) ||
+        (item.product.slug && item.product.slug.toLowerCase().includes('imagination')) ||
+        (item.product.id && item.product.id.toLowerCase().includes('imagination'));
+      const isProductOutOfStock = isImagination || (item.product as any).inStock === false || (item.product as any).isOutOfStock === true;
+      if (isProductOutOfStock) {
+        throw new AppError(`${item.product.name} is currently out of stock and cannot be ordered.`, 400);
+      }
+
       const sizeData = item.product.sizes.find((s: any) => s.size === item.selectedSize);
       const unitPrice = sizeData ? sizeData.price : 500;
       const totalPrice = unitPrice * item.quantity;

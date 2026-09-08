@@ -52,6 +52,11 @@ const initialCartItems: CartItem[] = [
   },
 ];
 
+const isCartItemOutOfStock = (item: CartItem | any) => {
+  if (!item || !item.name) return false;
+  return item.name.toLowerCase().includes("imagination");
+};
+
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isMounted, setIsMounted] = useState(false);
@@ -67,6 +72,7 @@ export default function CartPage() {
           // Normalize cart item sizes/prices to avoid type issues
           const normalized = parsed.map((item: any) => {
             const hasNewSizes = item.prices && typeof item.prices === "object" && "6ml" in item.prices;
+            const isOutOfStock = isCartItemOutOfStock(item);
             return {
               id: item.id || `cart-${Date.now()}-${Math.random()}`,
               name: item.name || "Murakkaz Fragrance",
@@ -82,7 +88,7 @@ export default function CartPage() {
                     "30ml": 900,
                     "50ml": 1500,
                   },
-              selected: item.selected !== undefined ? item.selected : true,
+              selected: isOutOfStock ? false : (item.selected !== undefined ? item.selected : true),
             };
           });
           setCartItems(normalized);
@@ -106,17 +112,30 @@ export default function CartPage() {
   // Toggle single item selection
   const toggleSelectItem = (id: string) => {
     setCartItems(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, selected: !item.selected } : item
-      )
+      prev.map(item => {
+        if (item.id === id) {
+          if (!item.selected && isCartItemOutOfStock(item)) {
+            alert(`${item.name} is currently out of stock and cannot be ordered.`);
+            return item;
+          }
+          return { ...item, selected: !item.selected };
+        }
+        return item;
+      })
     );
   };
 
   // Toggle select all items
-  const isAllSelected = cartItems.length > 0 && cartItems.every(item => item.selected);
+  const availableItems = cartItems.filter(item => !isCartItemOutOfStock(item));
+  const isAllSelected = availableItems.length > 0 && availableItems.every(item => item.selected);
   const toggleSelectAll = () => {
     setCartItems(prev =>
-      prev.map(item => ({ ...item, selected: !isAllSelected }))
+      prev.map(item => {
+        if (isCartItemOutOfStock(item)) {
+          return { ...item, selected: false };
+        }
+        return { ...item, selected: !isAllSelected };
+      })
     );
   };
 
@@ -175,6 +194,11 @@ export default function CartPage() {
   const handleProceedToPay = (e: React.MouseEvent) => {
     e.preventDefault();
     if (selectedItemsCount === 0) return;
+    const hasOutOfStockSelected = cartItems.some(item => item.selected && isCartItemOutOfStock(item));
+    if (hasOutOfStockSelected) {
+      alert("Please unselect or remove out-of-stock items before proceeding to checkout.");
+      return;
+    }
     const token = typeof window !== "undefined" ? localStorage.getItem("murakkaz-token") : null;
     if (!token) {
       if (typeof window !== "undefined") {
@@ -235,14 +259,19 @@ export default function CartPage() {
               {/* Items List */}
               <div className={styles.itemsList}>
                 {cartItems.map((item) => {
+                  const isOutOfStock = isCartItemOutOfStock(item);
                   const currentPrice = item.prices[item.selectedSize];
                   const currentOriginalPrice = item.originalPrices?.[item.selectedSize];
                   const subtotal = currentPrice * item.quantity;
 
                   return (
-                    <div key={item.id} className={styles.itemCard}>
+                    <div key={item.id} className={styles.itemCard} style={isOutOfStock ? { opacity: 0.78 } : undefined}>
                       {/* Selection Checkbox on Image hover or border area */}
-                      <div className={styles.cardSelectWrapper} onClick={() => toggleSelectItem(item.id)}>
+                      <div
+                        className={styles.cardSelectWrapper}
+                        onClick={() => toggleSelectItem(item.id)}
+                        style={isOutOfStock ? { opacity: 0.35, cursor: "not-allowed" } : undefined}
+                      >
                         <span className={styles.itemCheckIcon}>
                           {item.selected ? (
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="#389e0d">
@@ -264,7 +293,24 @@ export default function CartPage() {
                       <div className={styles.itemDetails}>
                         <div className={styles.cardHeaderRow}>
                           <div>
-                            <h3 className={styles.productName}>{item.name}</h3>
+                            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                              <h3 className={styles.productName}>{item.name}</h3>
+                              {isOutOfStock && (
+                                <span style={{
+                                  display: "inline-block",
+                                  backgroundColor: "#820011",
+                                  color: "#ffffff",
+                                  fontSize: "0.62rem",
+                                  fontWeight: 700,
+                                  letterSpacing: "0.08em",
+                                  textTransform: "uppercase",
+                                  padding: "2px 8px",
+                                  borderRadius: "4px"
+                                }}>
+                                  Out of Stock
+                                </span>
+                              )}
+                            </div>
                             <div className={styles.inspiredBy}>{item.inspiredBy}</div>
                           </div>
                           <button 

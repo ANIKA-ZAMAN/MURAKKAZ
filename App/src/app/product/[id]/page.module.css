@@ -218,6 +218,8 @@
 
 .badgeRow {
   display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .badge {
@@ -230,6 +232,38 @@
   border-radius: 50px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.outOfStockBadgePill {
+  background-color: #820011;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: 0 2px 8px rgba(130, 0, 17, 0.25);
+}
+
+.priceContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.stockOutTag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #820011;
+  background-color: rgba(130, 0, 17, 0.08);
+  border: 1px solid rgba(130, 0, 17, 0.25);
+  padding: 2px 8px;
+  border-radius: 4px;
 }
 
 .price {
@@ -411,6 +445,23 @@
 .addToCartBtn:hover {
   background-color: #313134;
   color: #ffffff;
+}
+
+.outOfStockBtn {
+  width: 100%;
+  background-color: #ECE6DA;
+  color: #8A8275;
+  border: 1.5px solid #D5CEBF;
+  padding: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 6px;
+  cursor: not-allowed;
+  opacity: 0.92;
+  text-align: center;
+  user-select: none;
 }
 
 /* Accordion Description */

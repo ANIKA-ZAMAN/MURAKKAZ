@@ -81,6 +81,28 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.outOfStockBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #820011;
+  color: #FFFFFF;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(130, 0, 17, 0.35);
+}
+
+.outOfStockImage {
+  opacity: 0.8;
+  filter: grayscale(18%);
+}
+
 /* ── Content Layout ── */
 .content {
   display: flex;
@@ -224,6 +246,21 @@
   line-height: 1.15;
 }
 
+.stockOutTag {
+  display: inline-block;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #820011;
+  background-color: rgba(130, 0, 17, 0.08);
+  border: 1px solid rgba(130, 0, 17, 0.22);
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+}
+
 .currentPrice {
   font-family: var(--font-serif-text), Georgia, serif;
   font-size: 1.08rem;
@@ -336,11 +373,28 @@
   box-shadow: 0 4px 14px rgba(49, 49, 52, 0.24);
 }
 
-/* ───────────────────────────────────────────────────────────── */
-/* RESPONSIVE SPECIFICATIONS FOR MOBILE, TABLET, AND SURFACES   */
-/* ───────────────────────────────────────────────────────────── */
-
-/* 1. Mobile (< 768px): 2-column grid, compact 1:1 card layout, vertical stacked buttons */
+.outOfStockBtn {
+  width: 100%;
+  flex: 1;
+  height: 38px;
+  min-height: 38px;
+  border-radius: 20px;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: #ECE6DA;
+  border: 1.5px solid #D5CEBF;
+  color: #8A8275;
+  opacity: 0.92;
+  user-select: none;
+}
 @media (max-width: 767px) {
   .imageContainer {
     aspect-ratio: 1 / 1 !important; /* Compact 1:1 image aspect ratio on mobile */
@@ -422,7 +476,8 @@
   }
 
   .buyNowBtn,
-  .addBagBtn {
+  .addBagBtn,
+  .outOfStockBtn {
     width: 100% !important;
     flex: 1 !important;
     min-width: 0 !important;
@@ -518,7 +573,8 @@
   }
 
   .buyNowBtn,
-  .addBagBtn {
+  .addBagBtn,
+  .outOfStockBtn {
     width: 100% !important;
     flex: 1 !important;
     min-width: 0 !important;
@@ -581,7 +637,8 @@
   }
 
   .buyNowBtn,
-  .addBagBtn {
+  .addBagBtn,
+  .outOfStockBtn {
     width: 100% !important;
     flex: 1 !important;
     min-width: 0 !important;

@@ -30,9 +30,15 @@ function attachCategory(p: any) {
     EXCLUSIVE_SLUGS.has(p.slug) ||
     EXCLUSIVE_SLUGS.has(p.id) ||
     p.category?.toLowerCase() === 'exclusive';
+  const isImagination = (p.slug && p.slug.toLowerCase().includes('imagination')) ||
+    (p.id && p.id.toLowerCase().includes('imagination')) ||
+    (p.name && p.name.toLowerCase().includes('imagination'));
+  const isOutOfStock = isImagination || p.isOutOfStock === true || p.inStock === false;
   return {
     ...p,
-    category: isExclusive ? 'Exclusive' : 'Regular'
+    category: isExclusive ? 'Exclusive' : 'Regular',
+    inStock: isOutOfStock ? false : (p.inStock !== false),
+    isOutOfStock: isOutOfStock ? true : false,
   };
 }
 

@@ -70,8 +70,8 @@ function CheckoutContent() {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          // Only pull selected items for checkout
-          const selected = parsed.filter((item: any) => item.selected);
+          // Only pull selected items for checkout, excluding out-of-stock items
+          const selected = parsed.filter((item: any) => item.selected && !item.name?.toLowerCase().includes("imagination"));
           setCartItems(selected);
         }
       } catch (e) {
@@ -133,6 +133,13 @@ function CheckoutContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (cartItems.length === 0 || isSubmitting) return;
+
+    // Reject if any out of stock items are present
+    const outOfStockItem = cartItems.find((item) => item.name?.toLowerCase().includes("imagination"));
+    if (outOfStockItem) {
+      setErrorMessage(`${outOfStockItem.name} is currently out of stock and cannot be ordered.`);
+      return;
+    }
 
     setIsSubmitting(true);
     setErrorMessage(null);
