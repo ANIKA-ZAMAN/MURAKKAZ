@@ -657,13 +657,18 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   // Dynamic recommendations list (pulling from 63 master PDF fragrances)
   const recommendations = productsCatalog.slice(0, 8).map(p => ({
     name: p.name,
+    slug: p.slug,
+    category: p.category,
+    badge: p.badge,
     inspiredBy: p.inspiredBy || `Inspired by ${p.brand}`,
     rating: p.rating || 4.9,
     reviews: p.reviews || 50,
     price: p.price,
     volume: p.volume || "10ml",
     image: p.image,
-    id: p.id
+    id: p.id,
+    inStock: (p as any).inStock,
+    isOutOfStock: (p as any).isOutOfStock,
   }));
 
   return (
@@ -1081,6 +1086,8 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                   price={item.price}
                   volume={item.volume}
                   image={item.image}
+                  inStock={item.inStock}
+                  isOutOfStock={item.isOutOfStock}
                 />
               ))}
             </div>

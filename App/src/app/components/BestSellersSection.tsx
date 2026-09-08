@@ -42,6 +42,8 @@ export default function BestSellersSection() {
               price={product.price}
               volume={product.volume}
               image={product.image}
+              inStock={product.inStock}
+              isOutOfStock={product.isOutOfStock}
               delay={idx * 90}
             />
           ))}

@@ -23,6 +23,8 @@ const defaultFeaturedProducts = luxuryProducts.slice(0, 8).map((p, idx) => ({
   volume: p.volume || "10ml",
   image: p.image,
   badge: (p.category === "Exclusive" || p.category === "exclusive") ? "EXCLUSIVE" : undefined,
+  inStock: p.inStock,
+  isOutOfStock: p.isOutOfStock,
 }));
 
 export default function FeaturedCollections() {
@@ -51,6 +53,8 @@ export default function FeaturedCollections() {
           volume: item.volume || "10ml",
           image: item.image,
           badge: (item.category === "Exclusive" || item.category === "exclusive") ? "EXCLUSIVE" : undefined,
+          inStock: item.inStock,
+          isOutOfStock: item.isOutOfStock,
         }));
         setFeaturedProducts(liveList);
       }
@@ -216,6 +220,8 @@ export default function FeaturedCollections() {
                       volume={product.volume}
                       image={product.image}
                       badge={product.badge}
+                      inStock={product.inStock}
+                      isOutOfStock={product.isOutOfStock}
                       delay={0}
                       variant="featured"
                     />

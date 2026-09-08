@@ -72,11 +72,19 @@ export default function ProductCard({
     if (propIsOutOfStock === true || propInStock === false) return true;
     const s = (slug || targetSlug || "").toLowerCase();
     const n = (name || "").toLowerCase();
-    if (s === "imagination" || n === "imagination" || s.includes("imagination") || n.includes("imagination")) {
+    const i = (id || "").toLowerCase();
+    if (
+      s === "imagination" ||
+      n === "imagination" ||
+      s.includes("imagination") ||
+      n.includes("imagination") ||
+      i.includes("imagination") ||
+      i === "prod-imagination-10"
+    ) {
       return true;
     }
     return false;
-  }, [propIsOutOfStock, propInStock, slug, targetSlug, name]);
+  }, [propIsOutOfStock, propInStock, slug, targetSlug, name, id]);
 
   const { displayName, subTitleText } = useMemo(() => {
     if (inspiredBy) {

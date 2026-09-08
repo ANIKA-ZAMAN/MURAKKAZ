@@ -44,6 +44,8 @@ export default function ProductGrid({
               volume={product.volume}
               image={product.image}
               notes={product.notes}
+              inStock={product.inStock}
+              isOutOfStock={product.isOutOfStock}
             />
           ))}
         </div>
