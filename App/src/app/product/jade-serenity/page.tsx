@@ -401,15 +401,6 @@ function JadeSerenityProductContent() {
               <div className={styles.notesGrid}>
                 {topNotes.map((note) => (
                   <div key={note.name} className={styles.noteItem}>
-                    <div className={styles.noteImageWrapper}>
-                      <Image
-                        src={`/images/notes/${note.image}`}
-                        alt={note.name}
-                        width={80}
-                        height={80}
-                        className={styles.noteImage}
-                      />
-                    </div>
                     <span className={styles.noteName}>{note.name}</span>
                   </div>
                 ))}
@@ -422,15 +413,6 @@ function JadeSerenityProductContent() {
               <div className={styles.notesGrid}>
                 {middleNotes.map((note) => (
                   <div key={note.name} className={styles.noteItem}>
-                    <div className={styles.noteImageWrapper}>
-                      <Image
-                        src={`/images/notes/${note.image}`}
-                        alt={note.name}
-                        width={80}
-                        height={80}
-                        className={styles.noteImage}
-                      />
-                    </div>
                     <span className={styles.noteName}>{note.name}</span>
                   </div>
                 ))}
@@ -443,15 +425,6 @@ function JadeSerenityProductContent() {
               <div className={styles.notesGrid}>
                 {baseNotes.map((note) => (
                   <div key={note.name} className={styles.noteItem}>
-                    <div className={styles.noteImageWrapper}>
-                      <Image
-                        src={`/images/notes/${note.image}`}
-                        alt={note.name}
-                        width={80}
-                        height={80}
-                        className={styles.noteImage}
-                      />
-                    </div>
                     <span className={styles.noteName}>{note.name}</span>
                   </div>
                 ))}

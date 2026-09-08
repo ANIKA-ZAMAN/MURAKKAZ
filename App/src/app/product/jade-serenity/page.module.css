@@ -737,47 +737,43 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2.5rem;
-  row-gap: 2rem;
-  max-width: 1000px;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+  max-width: 800px;
   width: 100%;
 }
 
 .noteItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 110px;
-  gap: 0.75rem;
-}
-
-.noteImageWrapper {
-  width: 80px;
-  height: 80px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  transition: transform 0.2s ease;
-  overflow: hidden;
+  padding: 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid #d8cfc0;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
 }
 
-.noteImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply; /* Renders solid white background 100% transparent */
-}
-
-.noteItem:hover .noteImageWrapper {
-  transform: scale(1.1);
+.noteItem:hover {
+  border-color: #820011;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(130, 0, 17, 0.08);
+  transform: translateY(-2px);
 }
 
 .noteName {
-  font-size: 0.875rem;
+  font-family: var(--font-playfair), serif;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: #555558;
+  color: #313134;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
+}
+
+.noteItem:hover .noteName {
+  color: #820011;
 }
 
 

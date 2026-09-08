@@ -120,7 +120,7 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Juniper Berries",
+        "name": "Juniper Berry Essence",
         "type": "TOP"
       },
       {
@@ -128,35 +128,35 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Clary Sage",
+        "name": "Mandarin Essence",
         "type": "TOP"
-      },
-      {
-        "name": "Green Maté Absolute",
-        "type": "MIDDLE"
       },
       {
         "name": "Iris Concrete",
         "type": "MIDDLE"
       },
       {
-        "name": "Flouve",
+        "name": "Clary Sage Essence",
         "type": "MIDDLE"
       },
       {
-        "name": "Leather Accord",
+        "name": "Green Maté Absolute",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Green Leather Accord",
+        "type": "BASE"
+      },
+      {
+        "name": "Cedarwood Essence",
+        "type": "BASE"
+      },
+      {
+        "name": "Vetiver",
         "type": "BASE"
       },
       {
         "name": "Birch",
-        "type": "BASE"
-      },
-      {
-        "name": "Amber",
-        "type": "BASE"
-      },
-      {
-        "name": "Tonka Bean",
         "type": "BASE"
       }
     ],
@@ -237,7 +237,11 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Jasmine",
+        "name": "Jasmine Grandiflorum",
+        "type": "TOP"
+      },
+      {
+        "name": "Luminous Hedione",
         "type": "TOP"
       },
       {
@@ -245,7 +249,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Ambergris",
+        "name": "Mineral Ambergris Accord",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Warm Cedar Facets",
         "type": "MIDDLE"
       },
       {
@@ -253,7 +261,11 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Cedarwood",
+        "name": "Ambroxan™",
+        "type": "BASE"
+      },
+      {
+        "name": "Spun Sugar / Ethyl Maltol",
         "type": "BASE"
       }
     ],
@@ -334,11 +346,15 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Spicy Notes",
+        "name": "Ginger",
         "type": "TOP"
       },
       {
-        "name": "Vanilla",
+        "name": "Aromatic Spices",
+        "type": "TOP"
+      },
+      {
+        "name": "Madagascar Vanilla",
         "type": "MIDDLE"
       },
       {
@@ -354,11 +370,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Dried Fruits",
+        "name": "Dried Fruit Accords",
         "type": "BASE"
       },
       {
-        "name": "Woody Notes",
+        "name": "Rich Sweet Wood Sap",
         "type": "BASE"
       }
     ],
@@ -435,35 +451,35 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Cloves",
+        "name": "Cloves Oil",
         "type": "TOP"
       },
       {
-        "name": "Pink Pepper",
+        "name": "Pink Pepper Essence",
         "type": "TOP"
       },
       {
-        "name": "Orange Blossom",
+        "name": "Orange Blossom Absolute",
         "type": "TOP"
       },
       {
-        "name": "Chestnut",
+        "name": "Chestnut Accord",
         "type": "MIDDLE"
       },
       {
-        "name": "Guaiac Wood",
+        "name": "Gaïac Wood Oil",
         "type": "MIDDLE"
       },
       {
-        "name": "Juniper",
+        "name": "Cade Oil",
         "type": "MIDDLE"
       },
       {
-        "name": "Vanilla",
+        "name": "Vanilla Accord",
         "type": "BASE"
       },
       {
-        "name": "Peru Balsam",
+        "name": "Peru Balsam Resinoïd",
         "type": "BASE"
       },
       {
@@ -549,31 +565,31 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Saffron",
+        "name": "Spicy Saffron",
         "type": "TOP"
       },
       {
-        "name": "Dark Chocolate",
+        "name": "Decadent Dark Chocolate",
         "type": "TOP"
       },
       {
-        "name": "Damask Rose",
+        "name": "Damask Rose Petals",
         "type": "MIDDLE"
       },
       {
-        "name": "Precious Oud",
+        "name": "Creamy Vanilla",
         "type": "MIDDLE"
       },
       {
-        "name": "Vanilla",
+        "name": "Precious Agarwood (Oud)",
         "type": "BASE"
       },
       {
-        "name": "Leather",
+        "name": "Cedar",
         "type": "BASE"
       },
       {
-        "name": "Woody Accords",
+        "name": "Leather Accords",
         "type": "BASE"
       }
     ],
@@ -663,11 +679,15 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Pink Pepper",
+        "name": "Crisp Mint & Pink Pepper Accents",
         "type": "TOP"
       },
       {
-        "name": "Freesia",
+        "name": "Iris (Orris)",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Delicate Freesia",
         "type": "MIDDLE"
       },
       {
@@ -675,23 +695,19 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Lily-of-the-Valley",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "White Musk",
+        "name": "Velvety Musk",
         "type": "BASE"
       },
       {
-        "name": "Sandalwood",
+        "name": "Australian Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
         "type": "BASE"
       },
       {
         "name": "Amber",
-        "type": "BASE"
-      },
-      {
-        "name": "Patchouli",
         "type": "BASE"
       }
     ],
@@ -773,11 +789,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Pear",
+        "name": "Crisp Pear",
         "type": "TOP"
       },
       {
-        "name": "Frankincense",
+        "name": "Royal Frankincense",
         "type": "TOP"
       },
       {
@@ -785,15 +801,11 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Osmanthus",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Rose",
-        "type": "MIDDLE"
-      },
-      {
         "name": "Saffron",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose Centifolia",
         "type": "MIDDLE"
       },
       {
@@ -801,11 +813,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Sandalwood",
+        "name": "Osmanthus",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cistus (Labdanum)",
         "type": "BASE"
       },
       {
-        "name": "Vanilla",
+        "name": "Sandalwood",
         "type": "BASE"
       },
       {
@@ -814,6 +830,10 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Ambergris",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
         "type": "BASE"
       }
     ],
@@ -895,27 +915,39 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Gentle Rose",
+        "name": "Red Fruits",
         "type": "TOP"
+      },
+      {
+        "name": "Sparkling Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Soft Rose Water",
+        "type": "TOP"
+      },
+      {
+        "name": "Bulgarian Rose Petals",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Amber Infusion",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cedar",
+        "type": "MIDDLE"
       },
       {
         "name": "Madagascar Vanilla",
-        "type": "TOP"
-      },
-      {
-        "name": "Cedarwood",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Rich Woods",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "White Musk",
         "type": "BASE"
       },
       {
-        "name": "Golden Amber",
+        "name": "Sensual White Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Accords",
         "type": "BASE"
       }
     ],
@@ -997,7 +1029,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Crisp Green Notes",
+        "name": "Crisp Dewy Green Notes",
+        "type": "TOP"
+      },
+      {
+        "name": "Sweet Almond Nuance",
         "type": "TOP"
       },
       {
@@ -1005,11 +1041,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Rose",
+        "name": "Grasse Rose",
         "type": "MIDDLE"
       },
       {
-        "name": "Jasmine",
+        "name": "Hedione",
         "type": "MIDDLE"
       },
       {
@@ -1017,11 +1053,11 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Mimosa",
+        "name": "Powdery Violet",
         "type": "BASE"
       },
       {
-        "name": "Soft Violet",
+        "name": "Mimosa",
         "type": "BASE"
       }
     ],
@@ -1105,20 +1141,16 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Citron",
+        "name": "Calabrian Bergamot",
         "type": "TOP"
       },
       {
-        "name": "Calabrian Bergamot",
+        "name": "Citron",
         "type": "TOP"
       },
       {
         "name": "Sicilian Orange",
         "type": "TOP"
-      },
-      {
-        "name": "Tunisian Neroli",
-        "type": "MIDDLE"
       },
       {
         "name": "Nigerian Ginger",
@@ -1129,11 +1161,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Chinese Black Tea",
+        "name": "Tunisian Neroli",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Chinese Black Tea (Extraction)",
         "type": "BASE"
       },
       {
-        "name": "Ambroxan",
+        "name": "Ambrox",
         "type": "BASE"
       },
       {
@@ -1258,11 +1294,11 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Patchouli",
+        "name": "Cedarwood",
         "type": "BASE"
       },
       {
-        "name": "Cedar",
+        "name": "Patchouli",
         "type": "BASE"
       }
     ],
@@ -1339,15 +1375,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Black Pepper",
+        "name": "White & Black Pepper",
         "type": "TOP"
       },
       {
-        "name": "White Pepper",
-        "type": "TOP"
-      },
-      {
-        "name": "Italian Green Bergamot",
+        "name": "Italian Bergamot",
         "type": "TOP"
       },
       {
@@ -1355,7 +1387,7 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Sage",
+        "name": "Clary Sage",
         "type": "MIDDLE"
       },
       {
@@ -1363,7 +1395,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Cacao",
+        "name": "Roasted Cacao",
         "type": "BASE"
       },
       {
@@ -1459,7 +1491,7 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Chestnut",
+        "name": "Glazed Chestnut",
         "type": "BASE"
       },
       {
@@ -1471,7 +1503,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Leather",
+        "name": "Leather Accord",
         "type": "BASE"
       }
     ],
@@ -1547,7 +1579,7 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Iris",
+        "name": "Iris Concrete",
         "type": "MIDDLE"
       },
       {
@@ -1555,11 +1587,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Leather",
+        "name": "Leather Accord",
         "type": "BASE"
       },
       {
-        "name": "Vanilla",
+        "name": "Bourbon Vanilla",
         "type": "BASE"
       },
       {
@@ -1659,7 +1691,7 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Creamy Vanilla",
+        "name": "French Vanilla",
         "type": "BASE"
       },
       {
@@ -1667,7 +1699,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Amber",
+        "name": "Raw Amber",
         "type": "BASE"
       }
     ],
@@ -1734,7 +1766,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Passionfruit",
+        "name": "Purple Passionfruit",
+        "type": "TOP"
+      },
+      {
+        "name": "Shangri-La Peony",
         "type": "TOP"
       },
       {
@@ -1743,14 +1779,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Pineapple",
-        "type": "TOP"
-      },
-      {
-        "name": "Strawberry",
-        "type": "TOP"
-      },
-      {
-        "name": "Big Strawberry",
         "type": "TOP"
       },
       {
@@ -1766,19 +1794,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Jasmine",
-        "type": "MIDDLE"
-      },
-      {
         "name": "Lily-of-the-Valley",
         "type": "MIDDLE"
       },
       {
-        "name": "Musk",
+        "name": "Velvet Musk",
         "type": "BASE"
       },
       {
-        "name": "Woody Notes",
+        "name": "Blonde Woods",
         "type": "BASE"
       },
       {
@@ -1873,19 +1897,11 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
         "name": "Coumarin",
-        "type": "BASE"
-      },
-      {
-        "name": "Australian Sandalwood",
-        "type": "BASE"
-      },
-      {
-        "name": "Benzoin",
-        "type": "BASE"
-      },
-      {
-        "name": "Patchouli",
         "type": "BASE"
       }
     ],
@@ -1956,6 +1972,10 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
+        "name": "Grapefruit",
+        "type": "TOP"
+      },
+      {
         "name": "Caraway",
         "type": "TOP"
       },
@@ -1968,7 +1988,7 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Tobacco",
+        "name": "Tobacco Leaf",
         "type": "MIDDLE"
       },
       {
@@ -1976,7 +1996,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Amber",
+        "name": "Cistus Amber",
         "type": "BASE"
       }
     ],
@@ -2043,7 +2063,7 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Apple",
+        "name": "Crisp Apple",
         "type": "TOP"
       },
       {
@@ -2075,7 +2095,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Cedar",
+        "name": "Cedarwood",
         "type": "BASE"
       },
       {
@@ -2150,35 +2170,39 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
+        "name": "Mandarin",
+        "type": "TOP"
+      },
+      {
         "name": "Bergamot",
         "type": "TOP"
       },
       {
-        "name": "Citrus Accord",
+        "name": "Lavender",
         "type": "TOP"
       },
       {
-        "name": "Rose",
+        "name": "Rosemary",
         "type": "MIDDLE"
       },
       {
-        "name": "Floral Notes",
+        "name": "Sandalwood",
         "type": "MIDDLE"
       },
       {
-        "name": "Oud",
+        "name": "Rose Petals",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Ambergris",
         "type": "BASE"
       },
       {
-        "name": "Amber",
+        "name": "Musk",
         "type": "BASE"
       },
       {
-        "name": "Powdery Notes",
-        "type": "BASE"
-      },
-      {
-        "name": "Cedarwood",
+        "name": "Noble Woods",
         "type": "BASE"
       }
     ],
@@ -2245,11 +2269,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Neroli",
+        "name": "Bergamot",
         "type": "TOP"
       },
       {
-        "name": "Bergamot",
+        "name": "Neroli Absolute",
         "type": "TOP"
       },
       {
@@ -2261,11 +2285,7 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Black Pepper",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Lavender",
+        "name": "Provence Lavender",
         "type": "MIDDLE"
       },
       {
@@ -2273,31 +2293,27 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
+        "name": "Sage",
+        "type": "MIDDLE"
+      },
+      {
         "name": "Juniper Berries",
         "type": "MIDDLE"
       },
       {
-        "name": "Sage",
-        "type": "MIDDLE"
+        "name": "Smoked Oud",
+        "type": "BASE"
+      },
+      {
+        "name": "Orris Leather",
+        "type": "BASE"
       },
       {
         "name": "Vetiver",
         "type": "BASE"
       },
       {
-        "name": "Oud",
-        "type": "BASE"
-      },
-      {
-        "name": "Leather",
-        "type": "BASE"
-      },
-      {
         "name": "Oakmoss",
-        "type": "BASE"
-      },
-      {
-        "name": "Iris",
         "type": "BASE"
       }
     ],
@@ -2364,35 +2380,39 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
+        "name": "Green Mandarin",
+        "type": "TOP"
+      },
+      {
         "name": "Bergamot",
         "type": "TOP"
       },
       {
-        "name": "Marine Notes",
+        "name": "Nutmeg",
         "type": "TOP"
       },
       {
-        "name": "Rosemary",
+        "name": "Violet Leaf",
         "type": "MIDDLE"
       },
       {
-        "name": "Clary Sage",
+        "name": "Aquatic Marine Accord",
         "type": "MIDDLE"
       },
       {
-        "name": "Geranium",
-        "type": "MIDDLE"
+        "name": "Leather Accord",
+        "type": "BASE"
       },
       {
         "name": "Patchouli",
         "type": "BASE"
       },
       {
-        "name": "Woody Notes",
+        "name": "Vetiver",
         "type": "BASE"
       },
       {
-        "name": "Leather Accord",
+        "name": "Labdanum",
         "type": "BASE"
       }
     ],
@@ -2467,10 +2487,6 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Lavender",
-        "type": "MIDDLE"
-      },
-      {
         "name": "Star Anise",
         "type": "MIDDLE"
       },
@@ -2479,11 +2495,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Ambroxan",
+        "name": "Lavender",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla Absolute",
         "type": "BASE"
       },
       {
-        "name": "Vanilla",
+        "name": "Ambroxan",
         "type": "BASE"
       }
     ],
@@ -2550,7 +2570,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Mint",
+        "name": "Mint Oil",
+        "type": "TOP"
+      },
+      {
+        "name": "Candied Lemon",
         "type": "TOP"
       },
       {
@@ -2558,7 +2582,7 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Lemon",
+        "name": "Mandarin",
         "type": "TOP"
       },
       {
@@ -2570,15 +2594,23 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Geranium",
+        "name": "Geranium Flower",
         "type": "MIDDLE"
       },
       {
-        "name": "Madagascar Vanilla",
+        "name": "Clary Sage",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla",
         "type": "BASE"
       },
       {
-        "name": "Cedarwood",
+        "name": "Virginian Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Atlas Cedar",
         "type": "BASE"
       },
       {
@@ -2657,19 +2689,19 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Bergamot",
+        "name": "Vert de Bergamot",
         "type": "TOP"
       },
       {
-        "name": "Tunisian Orange Blossom",
+        "name": "Tunisian Orange Blossom Absolute",
         "type": "MIDDLE"
       },
       {
-        "name": "Ambrofix",
+        "name": "Indonesian Patchouli Heart",
         "type": "BASE"
       },
       {
-        "name": "Patchouli",
+        "name": "Ambrofix",
         "type": "BASE"
       }
     ],
@@ -2744,7 +2776,7 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Tonka Bean",
+        "name": "Roasted Tonka Bean",
         "type": "BASE"
       }
     ],
@@ -2811,7 +2843,7 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Cardamom",
+        "name": "Green Artemisia",
         "type": "TOP"
       },
       {
@@ -2819,19 +2851,19 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Green Artemisia",
+        "name": "Cardamom",
         "type": "TOP"
       },
       {
-        "name": "Fresh Lavender",
+        "name": "Provençal Lavender",
         "type": "MIDDLE"
       },
       {
-        "name": "Incense",
+        "name": "Indonesian Patchouli",
         "type": "MIDDLE"
       },
       {
-        "name": "Rich Vanilla",
+        "name": "Vanilla Bean",
         "type": "BASE"
       },
       {
@@ -2839,7 +2871,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Patchouli",
+        "name": "Smoky Frankincense",
         "type": "BASE"
       }
     ],
@@ -2918,7 +2950,7 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Leather",
+        "name": "Leather Accord",
         "type": "MIDDLE"
       },
       {
@@ -2927,6 +2959,10 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Cashmeran",
+        "type": "BASE"
+      },
+      {
+        "name": "Pine Resin",
         "type": "BASE"
       },
       {
@@ -3001,7 +3037,11 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Mandarin Orange",
+        "name": "Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Neroli",
         "type": "TOP"
       },
       {
@@ -3009,8 +3049,12 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Blackcurrant",
+        "name": "Blackcurrant Bud",
         "type": "MIDDLE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
       },
       {
         "name": "Musk",
@@ -3018,10 +3062,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Petitgrain",
-        "type": "BASE"
-      },
-      {
-        "name": "Sandalwood",
         "type": "BASE"
       },
       {
@@ -3092,16 +3132,20 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Cassis",
+        "name": "Strawberry Gariguette",
         "type": "TOP"
       },
       {
-        "name": "Strawberry",
+        "name": "Cassis Leaves",
         "type": "TOP"
       },
       {
         "name": "Plum Nectar",
         "type": "TOP"
+      },
+      {
+        "name": "Wild Lily",
+        "type": "MIDDLE"
       },
       {
         "name": "Red Poppy",
@@ -3112,8 +3156,8 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Wild Lily",
-        "type": "MIDDLE"
+        "name": "Earthy Woods",
+        "type": "BASE"
       },
       {
         "name": "Tonka Bean",
@@ -3121,10 +3165,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Sugared Amber",
-        "type": "BASE"
-      },
-      {
-        "name": "Earthy Woods",
         "type": "BASE"
       }
     ],
@@ -3199,11 +3239,11 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Caramel",
+        "name": "Brown Caramel",
         "type": "MIDDLE"
       },
       {
-        "name": "Tonka Bean",
+        "name": "Roasted Tonka Bean",
         "type": "MIDDLE"
       },
       {
@@ -3286,27 +3326,31 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
+        "name": "Cedar Leaf",
+        "type": "TOP"
+      },
+      {
+        "name": "Mexican Tuberose",
+        "type": "MIDDLE"
+      },
+      {
         "name": "Ylang-Ylang",
         "type": "MIDDLE"
       },
       {
-        "name": "Tuberose",
+        "name": "Olibanum",
         "type": "MIDDLE"
       },
       {
-        "name": "Suede",
-        "type": "BASE"
-      },
-      {
-        "name": "Leather",
-        "type": "BASE"
-      },
-      {
-        "name": "Cedar",
+        "name": "Virginian Cedarwood",
         "type": "BASE"
       },
       {
         "name": "Vetiver",
+        "type": "BASE"
+      },
+      {
+        "name": "Suede Accord",
         "type": "BASE"
       }
     ],
@@ -3373,15 +3417,19 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Grapefruit",
-        "type": "TOP"
-      },
-      {
         "name": "Bergamot",
         "type": "TOP"
       },
       {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
         "name": "Blackcurrant",
+        "type": "TOP"
+      },
+      {
+        "name": "Grapefruit",
         "type": "TOP"
       },
       {
@@ -3393,16 +3441,12 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Citron",
-        "type": "MIDDLE"
-      },
-      {
         "name": "Cardamom",
         "type": "MIDDLE"
       },
       {
         "name": "Pink Pepper",
-        "type": "BASE"
+        "type": "MIDDLE"
       },
       {
         "name": "Patchouli",
@@ -3410,6 +3454,18 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Vetiver",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      },
+      {
+        "name": "Labdanum",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambroxan",
         "type": "BASE"
       }
     ],
@@ -3476,7 +3532,15 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Pineapple",
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Apple",
         "type": "TOP"
       },
       {
@@ -3488,31 +3552,19 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Apple",
-        "type": "TOP"
-      },
-      {
-        "name": "Birch",
+        "name": "Pineapple",
         "type": "MIDDLE"
       },
       {
-        "name": "Patchouli",
+        "name": "Jasmine",
         "type": "MIDDLE"
       },
       {
-        "name": "Moroccan Jasmine",
+        "name": "Indonesian Patchouli",
         "type": "MIDDLE"
       },
       {
-        "name": "Rose",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Musk",
-        "type": "BASE"
-      },
-      {
-        "name": "Oakmoss",
+        "name": "Birch Wood",
         "type": "BASE"
       },
       {
@@ -3520,7 +3572,15 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Vanille",
+        "name": "Cedarwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
         "type": "BASE"
       }
     ],
@@ -3587,11 +3647,15 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Cognac",
+        "name": "Cognac Essence",
         "type": "TOP"
       },
       {
-        "name": "Cinnamon",
+        "name": "Cinnamon Bark",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Oak Absolute",
         "type": "MIDDLE"
       },
       {
@@ -3599,19 +3663,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Oak",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Vanilla",
-        "type": "BASE"
-      },
-      {
         "name": "Praline",
         "type": "BASE"
       },
       {
         "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
         "type": "BASE"
       }
     ],
@@ -3682,19 +3742,23 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Grapefruit",
+        "name": "Grapefruit Accord",
         "type": "TOP"
+      },
+      {
+        "name": "Rose Essence",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine Absolute",
+        "type": "MIDDLE"
       },
       {
         "name": "Hyacinth",
         "type": "MIDDLE"
       },
       {
-        "name": "Jasmine",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Musk",
+        "name": "White Musk",
         "type": "BASE"
       },
       {
@@ -3702,11 +3766,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Virginia Cedar",
-        "type": "BASE"
-      },
-      {
-        "name": "Amber",
+        "name": "Amber Notes",
         "type": "BASE"
       }
     ],
@@ -3773,27 +3833,23 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Sicilian Mandarin",
+        "name": "Calabrian Bergamot",
         "type": "TOP"
       },
       {
-        "name": "Pink Peony",
+        "name": "Sweet Pea",
+        "type": "TOP"
+      },
+      {
+        "name": "Damascus Rose",
         "type": "MIDDLE"
       },
       {
-        "name": "Damask Rose",
+        "name": "Peony",
         "type": "MIDDLE"
       },
       {
-        "name": "Apricot",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Peach",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "White Musk",
+        "name": "White Musks",
         "type": "BASE"
       }
     ],
@@ -3860,15 +3916,15 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
         "name": "Orange",
         "type": "TOP"
       },
       {
-        "name": "Mandarin Orange",
-        "type": "TOP"
-      },
-      {
-        "name": "Pear",
+        "name": "Mandarin",
         "type": "TOP"
       },
       {
@@ -3880,12 +3936,8 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "African Orange Flower",
+        "name": "Orange Blossom",
         "type": "MIDDLE"
-      },
-      {
-        "name": "Musk",
-        "type": "BASE"
       },
       {
         "name": "Sandalwood",
@@ -3893,6 +3945,10 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Virginia Cedar",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
         "type": "BASE"
       }
     ],
@@ -3971,6 +4027,10 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
+        "name": "Heliotrope",
+        "type": "TOP"
+      },
+      {
         "name": "Rum",
         "type": "MIDDLE"
       },
@@ -3983,11 +4043,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Jasmine",
+        "name": "Jasmine Sambac",
         "type": "MIDDLE"
       },
       {
-        "name": "Indonesian Patchouli Leaf",
+        "name": "Patchouli",
         "type": "BASE"
       },
       {
@@ -4008,14 +4068,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Cashmeran",
-        "type": "BASE"
-      },
-      {
-        "name": "Vetiver",
-        "type": "BASE"
-      },
-      {
-        "name": "Labdanum",
         "type": "BASE"
       }
     ],
@@ -4082,11 +4134,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Lavender",
+        "name": "Mandarin",
         "type": "TOP"
       },
       {
-        "name": "Mandarin Orange",
+        "name": "Diva Lavender",
         "type": "TOP"
       },
       {
@@ -4098,15 +4150,11 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Lavender",
+        "name": "Moroccan Orange Blossom",
         "type": "MIDDLE"
       },
       {
-        "name": "Orange Blossom",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Jasmine",
+        "name": "Jasmine Sambac",
         "type": "MIDDLE"
       },
       {
@@ -4114,15 +4162,15 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Musk",
-        "type": "BASE"
-      },
-      {
-        "name": "Cedar",
+        "name": "Cedarwood",
         "type": "BASE"
       },
       {
         "name": "Ambergris",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
         "type": "BASE"
       }
     ],
@@ -4205,11 +4253,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Neroli",
+        "name": "Honeysuckle",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rose Centifolia",
         "type": "BASE"
       },
       {
-        "name": "Rose",
+        "name": "White Musks",
         "type": "BASE"
       }
     ],
@@ -4276,11 +4328,7 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Pear Blossom",
-        "type": "TOP"
-      },
-      {
-        "name": "Red Berries",
+        "name": "Blossom Accord",
         "type": "TOP"
       },
       {
@@ -4288,11 +4336,15 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Gardenia",
+        "name": "Red Berries",
+        "type": "TOP"
+      },
+      {
+        "name": "White Gardenia",
         "type": "MIDDLE"
       },
       {
-        "name": "Jasmine",
+        "name": "Jasmine Absolute",
         "type": "MIDDLE"
       },
       {
@@ -4300,11 +4352,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Brown Sugar",
+        "name": "Patchouli",
         "type": "BASE"
       },
       {
-        "name": "Patchouli",
+        "name": "Brown Sugar Accord",
         "type": "BASE"
       }
     ],
@@ -4371,6 +4423,10 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
+        "name": "Black Coffee Accord",
+        "type": "TOP"
+      },
+      {
         "name": "Pear",
         "type": "TOP"
       },
@@ -4380,10 +4436,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Orange Blossom",
-        "type": "TOP"
-      },
-      {
-        "name": "Coffee",
         "type": "MIDDLE"
       },
       {
@@ -4407,7 +4459,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Cedar",
+        "name": "Cedarwood",
         "type": "BASE"
       },
       {
@@ -4478,11 +4530,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Grapefruit",
+        "name": "Lemon",
         "type": "TOP"
       },
       {
-        "name": "Lemon",
+        "name": "Grapefruit",
         "type": "TOP"
       },
       {
@@ -4510,15 +4562,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Incense",
+        "name": "Frankincense",
         "type": "BASE"
       },
       {
-        "name": "Vetiver",
-        "type": "BASE"
-      },
-      {
-        "name": "Cedar",
+        "name": "Cedarwood",
         "type": "BASE"
       },
       {
@@ -4530,7 +4578,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Labdanum",
+        "name": "Vetiver",
         "type": "BASE"
       }
     ],
@@ -4597,11 +4645,11 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Rose",
+        "name": "Pear",
         "type": "TOP"
       },
       {
-        "name": "White Flowers",
+        "name": "Rose",
         "type": "TOP"
       },
       {
@@ -4613,15 +4661,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Jasmine",
+        "name": "Solar Jasmine Absolute",
         "type": "MIDDLE"
       },
       {
-        "name": "Solar Notes",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Vanilla",
+        "name": "Bourbon Vanilla",
         "type": "BASE"
       },
       {
@@ -4700,7 +4744,7 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Pear",
+        "name": "Bergamot Heart",
         "type": "TOP"
       },
       {
@@ -4708,19 +4752,15 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Bergamot",
+        "name": "Pear Accord",
         "type": "TOP"
       },
       {
-        "name": "Orange Blossom",
+        "name": "Neroli Bud Essence",
         "type": "MIDDLE"
       },
       {
-        "name": "Neroli Essence",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Neroli",
+        "name": "Orange Flower",
         "type": "MIDDLE"
       },
       {
@@ -4728,19 +4768,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
+        "name": "Ambrofix",
+        "type": "BASE"
+      },
+      {
+        "name": "Serenolide White Musk",
+        "type": "BASE"
+      },
+      {
         "name": "Bourbon Vanilla",
-        "type": "BASE"
-      },
-      {
-        "name": "Amber",
-        "type": "BASE"
-      },
-      {
-        "name": "White Musk",
-        "type": "BASE"
-      },
-      {
-        "name": "Benzoin",
         "type": "BASE"
       }
     ],
@@ -4815,11 +4851,11 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Mandarin Orange",
+        "name": "Mandarin",
         "type": "TOP"
       },
       {
-        "name": "Almond",
+        "name": "Bitter Almond",
         "type": "MIDDLE"
       },
       {
@@ -4910,19 +4946,19 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Rose",
+        "name": "Rose Petals",
         "type": "TOP"
       },
       {
-        "name": "Peach",
+        "name": "Peach Pulp",
         "type": "TOP"
       },
       {
-        "name": "Musk",
+        "name": "Musk Heart",
         "type": "MIDDLE"
       },
       {
-        "name": "Amber",
+        "name": "Amber Accord",
         "type": "MIDDLE"
       },
       {
@@ -5029,10 +5065,6 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Bulgarian Rose",
-        "type": "MIDDLE"
-      },
-      {
         "name": "Tonka Bean",
         "type": "BASE"
       },
@@ -5050,26 +5082,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Sandalwood",
-        "type": "BASE"
-      },
-      {
-        "name": "Amber",
-        "type": "BASE"
-      },
-      {
-        "name": "Musk",
-        "type": "BASE"
-      },
-      {
-        "name": "Cashmere Wood",
-        "type": "BASE"
-      },
-      {
-        "name": "Cinnamon",
-        "type": "BASE"
-      },
-      {
-        "name": "Patchouli",
         "type": "BASE"
       },
       {
@@ -5140,23 +5152,7 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Strawberry",
-        "type": "TOP"
-      },
-      {
-        "name": "Raspberry",
-        "type": "TOP"
-      },
-      {
-        "name": "Blackberry",
-        "type": "TOP"
-      },
-      {
-        "name": "Sour Cherry",
-        "type": "TOP"
-      },
-      {
-        "name": "Blackcurrant",
+        "name": "Red & Dark Berries (Strawberry, Raspberry, Cherry)",
         "type": "TOP"
       },
       {
@@ -5172,19 +5168,15 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Vanilla",
+        "name": "Dry Amber",
         "type": "BASE"
       },
       {
-        "name": "Cashmeran",
+        "name": "Oakmoss",
         "type": "BASE"
       },
       {
         "name": "Woody Notes",
-        "type": "BASE"
-      },
-      {
-        "name": "Amber",
         "type": "BASE"
       }
     ],
@@ -5263,7 +5255,7 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Japanese Cherry Blossom",
+        "name": "Cherry Blossom",
         "type": "MIDDLE"
       },
       {
@@ -5272,10 +5264,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Mimosa",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Tuberose",
         "type": "MIDDLE"
       },
       {
@@ -5366,12 +5354,16 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Leather",
+        "name": "Leather Accord",
         "type": "MIDDLE"
       },
       {
-        "name": "Violet",
+        "name": "Rose Damascena",
         "type": "MIDDLE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
       },
       {
         "name": "Agarwood (Oud)",
@@ -5382,7 +5374,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Sandalwood",
+        "name": "Ambrette Seed",
         "type": "BASE"
       }
     ],
@@ -5461,11 +5453,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Mineral Notes",
+        "name": "Shiso",
         "type": "MIDDLE"
       },
       {
-        "name": "Woody Notes",
+        "name": "Pelargonium",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cedarwood",
         "type": "BASE"
       },
       {
@@ -5474,6 +5470,10 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Benzoin",
+        "type": "BASE"
+      },
+      {
+        "name": "Woody Notes",
         "type": "BASE"
       }
     ],
@@ -5540,7 +5540,7 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Damask Rose",
+        "name": "Damascena Rose",
         "type": "TOP"
       },
       {
@@ -5548,11 +5548,7 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Pear",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Black Sorbet",
+        "name": "Pear Sorbet",
         "type": "MIDDLE"
       },
       {
@@ -5560,11 +5556,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Vanilla",
-        "type": "BASE"
+        "name": "Frozen Apple",
+        "type": "MIDDLE"
       },
       {
-        "name": "Salt",
+        "name": "Salty Vanilla",
         "type": "BASE"
       },
       {
@@ -5639,31 +5635,35 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Green Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Lemon",
+        "type": "TOP"
+      },
+      {
         "name": "Fruity Notes",
         "type": "TOP"
       },
       {
-        "name": "Sea Salt",
-        "type": "TOP"
-      },
-      {
-        "name": "Sicilian Lemon",
+        "name": "Florentine Iris",
         "type": "MIDDLE"
       },
       {
-        "name": "Bergamot",
+        "name": "Marine Accord",
         "type": "MIDDLE"
       },
       {
-        "name": "Iris",
-        "type": "MIDDLE"
+        "name": "Sandalwood",
+        "type": "BASE"
       },
       {
-        "name": "Mandarin Orange",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Sea Notes",
+        "name": "Ambergris",
         "type": "BASE"
       },
       {
@@ -5671,7 +5671,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Woody Notes",
+        "name": "Cedarwood",
         "type": "BASE"
       }
     ],
@@ -5742,11 +5742,11 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Saffron",
+        "name": "Saffron Accord",
         "type": "TOP"
       },
       {
-        "name": "Damask Rose",
+        "name": "Rose Damascena",
         "type": "MIDDLE"
       },
       {
@@ -5825,6 +5825,10 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
+        "name": "Cardamom",
+        "type": "TOP"
+      },
+      {
         "name": "Grapefruit",
         "type": "TOP"
       },
@@ -5833,11 +5837,7 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Cardamom",
-        "type": "TOP"
-      },
-      {
-        "name": "Damask Rose",
+        "name": "Damascena Rose",
         "type": "MIDDLE"
       },
       {
@@ -5845,19 +5845,19 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Jasmine",
+        "name": "Lily-of-the-Valley",
         "type": "MIDDLE"
       },
       {
-        "name": "Oakmoss",
+        "name": "Moss",
+        "type": "BASE"
+      },
+      {
+        "name": "Cistus Labdanum",
         "type": "BASE"
       },
       {
         "name": "Musk",
-        "type": "BASE"
-      },
-      {
-        "name": "Labdanum",
         "type": "BASE"
       }
     ],
@@ -5924,27 +5924,15 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Jasmine",
-        "type": "TOP"
-      },
-      {
-        "name": "Green Accords",
-        "type": "TOP"
-      },
-      {
-        "name": "Tuberose",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Natural Jasmine Sambac",
-        "type": "MIDDLE"
-      },
-      {
         "name": "Rangoon Creeper",
-        "type": "BASE"
+        "type": "TOP"
       },
       {
-        "name": "Sandalwood",
+        "name": "Jasmine Bud Extract",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Natural Tuberose Absolute",
         "type": "BASE"
       }
     ],
@@ -6098,15 +6086,15 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Peony",
+        "name": "Rosewater / Peony",
         "type": "MIDDLE"
       },
       {
-        "name": "Vanilla",
+        "name": "Bourbon Vanilla",
         "type": "BASE"
       },
       {
-        "name": "Coumarin",
+        "name": "Tonka Bean",
         "type": "BASE"
       }
     ],
@@ -6173,15 +6161,15 @@ export const luxuryProducts: Product[] = [
     ],
     "notes": [
       {
-        "name": "Jasmine",
-        "type": "TOP"
-      },
-      {
-        "name": "May Rose",
-        "type": "TOP"
-      },
-      {
         "name": "Osmanthus",
+        "type": "TOP"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "TOP"
+      },
+      {
+        "name": "Rose of May",
         "type": "TOP"
       },
       {
@@ -6189,7 +6177,11 @@ export const luxuryProducts: Product[] = [
         "type": "MIDDLE"
       },
       {
-        "name": "Narcissus",
+        "name": "Egyptian Narcissus",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
         "type": "MIDDLE"
       },
       {
@@ -6197,7 +6189,7 @@ export const luxuryProducts: Product[] = [
         "type": "BASE"
       },
       {
-        "name": "Cedar",
+        "name": "Virginian Cedarwood",
         "type": "BASE"
       }
     ],
@@ -6268,19 +6260,19 @@ export const luxuryProducts: Product[] = [
         "type": "TOP"
       },
       {
-        "name": "Jasmine",
+        "name": "Creamy Jasmine",
         "type": "TOP"
       },
       {
-        "name": "Tonka Bean",
+        "name": "Tonka Bean Absolute",
         "type": "MIDDLE"
       },
       {
-        "name": "Brown Sugar",
+        "name": "Brown Sugar Accord",
         "type": "MIDDLE"
       },
       {
-        "name": "Amber",
+        "name": "Royal Amber",
         "type": "BASE"
       },
       {
@@ -6289,10 +6281,6 @@ export const luxuryProducts: Product[] = [
       },
       {
         "name": "Patchouli",
-        "type": "BASE"
-      },
-      {
-        "name": "Royal Amber",
         "type": "BASE"
       }
     ],
@@ -6317,7 +6305,6 @@ export const luxuryProducts: Product[] = [
     "price": "300 - 1500tk"
   }
 ];
-
 export const productsCatalog = luxuryProducts;
 
 /**

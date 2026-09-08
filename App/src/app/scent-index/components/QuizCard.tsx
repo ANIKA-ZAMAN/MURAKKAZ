@@ -140,18 +140,6 @@ export default function QuizCard({
                   </div>
                 )}
 
-                {isNotesQuestion && noteImageFilename && (
-                  <div className={styles.noteThumbWrapper}>
-                    <Image
-                      src={`/images/notes/${noteImageFilename}`}
-                      alt={option}
-                      width={22}
-                      height={22}
-                      className={styles.noteThumbImg}
-                    />
-                  </div>
-                )}
-
                 <span className={styles.optionLabel}>{option}</span>
               </button>
             );

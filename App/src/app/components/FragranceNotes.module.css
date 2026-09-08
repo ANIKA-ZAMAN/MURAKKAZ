@@ -146,88 +146,60 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
-  gap: 1.25rem 2rem;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
   width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
   background: transparent;
 }
 
-/* ── Individual Note Items ── */
+/* ── Individual Note Items (Text Pill) ── */
 .noteItem {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  min-width: 70px;
-  background: transparent;
-  box-shadow: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
+  justify-content: center;
+  padding: 0.45rem 1.15rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #d8cfc0;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  cursor: default;
+  box-sizing: border-box;
+  user-select: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Collapsed */
   opacity: 0;
-  transform: translateY(12px) scale(0.96);
+  transform: translateY(8px) scale(0.97);
   will-change: opacity, transform;
-  transition:
-    opacity 220ms ease-in-out,
-    transform 220ms ease-in-out;
 }
 
 .noteItemReveal {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition:
-    opacity 300ms ease-in-out calc(250ms + var(--item-delay, 0ms)),
-    transform 300ms ease-in-out calc(250ms + var(--item-delay, 0ms));
+    opacity 280ms ease-in-out calc(180ms + var(--item-delay, 0ms)),
+    transform 280ms ease-in-out calc(180ms + var(--item-delay, 0ms));
 }
 
-/* ── Note Image Wrapper (hover target) ── */
-.noteImageWrapper {
-  width: 52px;
-  height: 52px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  box-shadow: none;
-  border: none;
-  border-radius: 0;
-  will-change: transform;
-  transition: transform 220ms ease-in-out;
-}
-
-.noteItem:hover .noteImageWrapper {
-  transform: translateY(-3px) scale(1.03);
-}
-
-/* ── Note Image ── */
-.noteImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  will-change: filter;
-  transition: filter 220ms ease-in-out;
-}
-
-.noteItem:hover .noteImage {
-  filter: brightness(1.06);
+.noteItem:hover {
+  border-color: #820011;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(130, 0, 17, 0.08);
+  transform: translateY(-2px);
 }
 
 /* ── Note Name ── */
 .noteName {
   font-family: var(--font-serif-text), Georgia, serif;
-  font-size: 0.78rem;
-  font-weight: 400;
-  color: #4A4A4D;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: #313134;
   text-align: center;
   white-space: nowrap;
-  will-change: color;
-  transition: color 220ms ease-in-out;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease;
 }
 
 .noteItem:hover .noteName {
@@ -248,19 +220,14 @@
   }
 
   .notesGrid {
-    gap: 1rem 1.25rem;
+    gap: 0.45rem 0.55rem;
   }
 
   .noteItem {
-    min-width: 60px;
-  }
-
-  .noteImageWrapper {
-    width: 44px;
-    height: 44px;
+    padding: 0.35rem 0.85rem;
   }
 
   .noteName {
-    font-size: 0.74rem;
+    font-size: 0.78rem;
   }
 }

@@ -5,7 +5,7 @@ import styles from "./FragranceNotes.module.css";
 
 export interface NoteItem {
   name: string;
-  image: string;
+  image?: string;
 }
 
 interface FragranceNotesProps {
@@ -16,27 +16,22 @@ interface FragranceNotesProps {
 }
 
 export const defaultTopNotes: NoteItem[] = [
-  { name: "Osmanthus", image: "osmanthus.png" },
-  { name: "Peach", image: "peach.png" },
-  { name: "Neroli", image: "neroli.png" },
-  { name: "Bergamot", image: "bergamot.png" },
-  { name: "Mandarin", image: "mandarin.png" },
-  { name: "Cinnamon", image: "cinnamon.png" },
+  { name: "Juniper Berry Essence" },
+  { name: "Pink Pepper" },
+  { name: "Mandarin Essence" },
 ];
 
 export const defaultMiddleNotes: NoteItem[] = [
-  { name: "Indian Tuberose", image: "indian_tuberose.png" },
-  { name: "Jasmine", image: "jasmine.png" },
-  { name: "Narcissus", image: "narcissus.png" },
-  { name: "May Rose", image: "may_rose.png" },
+  { name: "Iris Concrete" },
+  { name: "Clary Sage Essence" },
+  { name: "Green Maté Absolute" },
 ];
 
 export const defaultBaseNotes: NoteItem[] = [
-  { name: "Amber", image: "amber.png" },
-  { name: "Cedar", image: "cedar.png" },
-  { name: "Sandalwood", image: "sandalwood.png" },
-  { name: "Patchouli", image: "patchouli.png" },
-  { name: "Vetiver", image: "vetiver.png" },
+  { name: "Green Leather Accord" },
+  { name: "Cedarwood Essence" },
+  { name: "Vetiver" },
+  { name: "Birch" },
 ];
 
 export default function FragranceNotes({
@@ -52,7 +47,7 @@ export default function FragranceNotes({
     { key: "top", label: "TOP NOTES", notes: topNotes },
     { key: "middle", label: "MIDDLE NOTES", notes: middleNotes },
     { key: "base", label: "BASE NOTES", notes: baseNotes },
-  ].filter((g) => g.notes.length > 0);
+  ].filter((g) => g.notes && g.notes.length > 0);
 
   let globalNoteIndex = 0;
 
@@ -60,6 +55,7 @@ export default function FragranceNotes({
     <section className={styles.notesSection}>
       {/* ── Header Button ── */}
       <button
+        type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         className={`${styles.notesHeaderBox} ${isOpen ? styles.notesHeaderBoxOpen : ""}`}
         aria-expanded={isOpen}
@@ -76,9 +72,9 @@ export default function FragranceNotes({
       <div className={`${styles.notesContainer} ${isOpen ? styles.notesContainerOpen : ""}`}>
         <div className={styles.notesContainerInner}>
           {groups.map((group, groupIdx) => {
-            const groupDelay = groupIdx * 80;
+            const groupDelay = groupIdx * 70;
             const itemsInGroup = group.notes.map((note) => {
-              const itemDelay = globalNoteIndex * 35;
+              const itemDelay = globalNoteIndex * 25;
               globalNoteIndex++;
               return (
                 <div
@@ -86,13 +82,6 @@ export default function FragranceNotes({
                   className={`${styles.noteItem} ${isOpen ? styles.noteItemReveal : ""}`}
                   style={{ "--item-delay": `${itemDelay}ms` } as React.CSSProperties}
                 >
-                  <div className={styles.noteImageWrapper}>
-                    <img
-                      src={`/images/notes/${note.image}`}
-                      alt={note.name}
-                      className={styles.noteImage}
-                    />
-                  </div>
                   <span className={styles.noteName}>{note.name}</span>
                 </div>
               );
