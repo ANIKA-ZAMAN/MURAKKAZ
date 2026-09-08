@@ -284,8 +284,12 @@
 .actions {
   margin-top: auto;
   display: flex;
+  flex-direction: row;
   gap: 8px;
-  width: 100%;
+  width: calc(100% + 1.9rem);
+  margin-left: -0.95rem;
+  margin-right: -0.95rem;
+  box-sizing: border-box;
 }
 
 .buyNowBtn,
@@ -310,7 +314,7 @@
 
 .buyNowBtn {
   background: transparent;
-  border: 1.5px solid #820011;
+  border: 1px solid #820011;
   color: #820011;
 }
 
@@ -322,7 +326,7 @@
 
 .addBagBtn {
   background: transparent;
-  border: 1.5px solid #313134;
+  border: 1px solid #313134;
   color: #313134;
 }
 
@@ -411,7 +415,10 @@
   .actions {
     flex-direction: row !important;
     gap: 6px !important;
-    width: 100% !important;
+    width: calc(100% + 1.2rem) !important;
+    margin-left: -0.6rem !important;
+    margin-right: -0.6rem !important;
+    box-sizing: border-box !important;
   }
 
   .buyNowBtn,
@@ -423,6 +430,7 @@
     min-height: 32px !important;
     font-size: 0.7rem !important;
     border-radius: 12px !important;
+    border: 1px solid #820011 !important;
     padding: 0 4px !important;
     display: flex !important;
     align-items: center !important;
@@ -430,6 +438,10 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+  }
+
+  .addBagBtn {
+    border: 1px solid #313134 !important;
   }
 }
 
@@ -492,7 +504,10 @@
   .actions {
     flex-direction: row !important;
     gap: 6px !important;
-    width: 100% !important;
+    width: calc(100% + 1.7rem) !important;
+    margin-left: -0.85rem !important;
+    margin-right: -0.85rem !important;
+    box-sizing: border-box !important;
   }
 
   .buyNowBtn,
@@ -504,6 +519,7 @@
     min-height: 32px !important;
     font-size: 0.74rem !important;
     border-radius: 12px !important;
+    border: 1px solid #820011 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -511,6 +527,10 @@
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     padding: 0 4px !important;
+  }
+
+  .addBagBtn {
+    border: 1px solid #313134 !important;
   }
 }
 
@@ -540,7 +560,10 @@
   .actions {
     flex-direction: row !important;
     gap: 6px !important;
-    width: 100% !important;
+    width: calc(100% + 1.8rem) !important;
+    margin-left: -0.9rem !important;
+    margin-right: -0.9rem !important;
+    box-sizing: border-box !important;
   }
 
   .buyNowBtn,
@@ -552,6 +575,7 @@
     min-height: 34px !important;
     font-size: 0.76rem !important;
     border-radius: 14px !important;
+    border: 1px solid #820011 !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -559,6 +583,10 @@
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     padding: 0 6px !important;
+  }
+
+  .addBagBtn {
+    border: 1px solid #313134 !important;
   }
 }
 
@@ -706,7 +734,7 @@
 
 .featuredCard .buyNowBtn {
   background: transparent !important;
-  border: 1.5px solid #820011 !important;
+  border: 1px solid #820011 !important;
   color: #820011 !important;
   font-weight: 600 !important;
   box-shadow: none !important;
@@ -720,7 +748,7 @@
 
 .featuredCard .addBagBtn {
   background: transparent !important;
-  border: 1.5px solid #313134 !important;
+  border: 1px solid #313134 !important;
   color: #2C2B2E !important;
   font-weight: 600 !important;
   box-shadow: none !important;
