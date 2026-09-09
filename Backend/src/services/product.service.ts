@@ -21,7 +21,10 @@ const EXCLUSIVE_SLUGS = new Set([
   'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
   'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
   'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
-  'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
+  'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10',
+  'arabian-tonka', 'prod-arabian-tonka-11',
+  'madwi-al-arabi', 'madawi-al-arabi', 'prod-madwi-al-arabi-12',
+  'blue-talisman', 'prod-blue-talisman-01'
 ]);
 
 function attachCategory(p: any) {

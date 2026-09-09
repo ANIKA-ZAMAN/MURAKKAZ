@@ -30,7 +30,7 @@ const productsDetailMap: Record<string, {
   "blue-talisman": {
     name: "Blue Talisman",
     inspiredBy: "Inspired by Ex Nihilo",
-    badge: undefined,
+    badge: "Exclusive",
     description: "Designed as a hypnotic olfactory jewel, Blue Talisman embodies the avant-garde spirit of Ex Nihilo. An intoxicating fusion of fresh bergamot and crisp pear meeting vibrant ginger and majestic modern woods.",
     image: "/images/products/blue_talisman.jpg",
     family: "Fresh",
@@ -66,6 +66,82 @@ const productsDetailMap: Record<string, {
       { name: "Nightly Occasions", pct: 70 },
     ],
     ourTake: "A dazzling olfactory jewel. Highly versatile and projecting fresh woody profile with unmatched crispness."
+  },
+  "arabian-tonka": {
+    name: "Arabian Tonka",
+    inspiredBy: "Inspired by Montale Arabians Tonka",
+    badge: "Exclusive",
+    description: "A tribute to the majestic Arabian horse and eastern opulence. A fiery, captivating blend of rare oud, spiced saffron, and sparkling bergamot dancing over a sumptuous heart of Bulgarian rose and cane sugar, anchored by rich tonka bean, amber, and white musk.",
+    image: "/images/products/arabian_tonka.jpg",
+    family: "Oriental",
+    galleryImages: [
+      "/images/products/arabian_tonka.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
+    ],
+    topNotes: [
+      { name: "Saffron", image: "saffron.png" },
+      { name: "Bergamot", image: "bergamot.png" },
+    ],
+    middleNotes: [
+      { name: "Agarwood (Oud)", image: "oud.png" },
+      { name: "Bulgarian Rose", image: "rose.png" },
+    ],
+    baseNotes: [
+      { name: "Tonka Bean", image: "tonka.png" },
+      { name: "Cane Sugar", image: "sugar.png" },
+      { name: "Amber", image: "amber.png" },
+      { name: "White Musk", image: "musk.png" },
+    ],
+    accords: [
+      { name: "Warm Spicy", pct: 90, color: "#D84315", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+      { name: "Sweet", pct: 88, color: "#F59E0B", path: "M12 12c2.5-4 5.5-5 7-3s0 5-3 7L12 12z" },
+      { name: "Oud", pct: 85, color: "#4E342E", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+      { name: "Amber", pct: 80, color: "#FFB300", path: "M3 10c0-3.3 4-6 9-6s9 2.7 9 6-4 6-9 6-9-2.7-9-6z" },
+    ],
+    bestFor: [
+      { name: "Winter & Autumn", pct: 95 },
+      { name: "Nightly Occasions", pct: 95 },
+      { name: "Evening Gala", pct: 90 },
+      { name: "Clubbing & Date", pct: 85 },
+    ],
+    ourTake: "A beast-mode intoxicating sweet oud fragrance with incredible sillage and compliments."
+  },
+  "madwi-al-arabi": {
+    name: "Madwi Al Arabi",
+    inspiredBy: "Arabian Oud Madawi",
+    badge: "Exclusive",
+    description: "An iconic signature fragrance celebrating Middle Eastern grace and romance. Opening with an alluring swirl of velvety peach and fragrant apple blossom, blossoming into a heart of sensual pineapple blossom, resting upon an enduring, opulent foundation of wild rose, golden musk, and deep patchouli.",
+    image: "/images/products/madwi_al_arabi.jpg",
+    family: "Oriental",
+    galleryImages: [
+      "/images/products/madwi_al_arabi.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
+    ],
+    topNotes: [
+      { name: "Peach", image: "peach.png" },
+      { name: "Apple Blossom", image: "apple.png" },
+    ],
+    middleNotes: [
+      { name: "Pineapple Blossom", image: "fruity.png" },
+    ],
+    baseNotes: [
+      { name: "Wild Rose", image: "rose.png" },
+      { name: "Musk", image: "musk.png" },
+      { name: "Patchouli", image: "patchouli.png" },
+    ],
+    accords: [
+      { name: "Fruity", pct: 90, color: "#EC4899", path: "M3 10c0-3.3 4-6 9-6s9 2.7 9 6-4 6-9 6-9-2.7-9-6z" },
+      { name: "Floral", pct: 85, color: "#F48FB1", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+      { name: "Musky", pct: 80, color: "#B0BEC5", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+      { name: "Sweet", pct: 75, color: "#FFB74D", path: "M12 12c2.5-4 5.5-5 7-3s0 5-3 7L12 12z" },
+    ],
+    bestFor: [
+      { name: "Spring & Autumn", pct: 90 },
+      { name: "Special Occasion", pct: 95 },
+      { name: "Daytime Wear", pct: 85 },
+      { name: "Nightly Occasions", pct: 90 },
+    ],
+    ourTake: "A royal oriental-floral masterpiece combining lavish peach blossom with golden musk and wild rose."
   },
   "jade-serenity": {
     name: "Jade Serenity",
@@ -274,7 +350,10 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     "resala", "sultani", "guidance", "rosewood", "sakura-dior", "imagination",
     "prod-irish-leather-01", "prod-baccarat-rouge-540-02", "prod-tobacco-vanille-03",
     "prod-by-the-fireplace-04", "prod-resala-05", "prod-sultani-06", "prod-guidance-07",
-    "prod-rosewood-08", "prod-sakura-dior-09", "prod-imagination-10"
+    "prod-rosewood-08", "prod-sakura-dior-09", "prod-imagination-10",
+    "arabian-tonka", "prod-arabian-tonka-11",
+    "madwi-al-arabi", "madawi-al-arabi", "prod-madwi-al-arabi-12",
+    "blue-talisman", "prod-blue-talisman-01"
   ]), []);
 
   const isExclusive = React.useMemo(() => {

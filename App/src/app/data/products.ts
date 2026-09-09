@@ -82,10 +82,9 @@ export const luxuryProducts: Product[] = [
     "slug": "blue-talisman",
     "name": "Blue Talisman",
     "brand": "Ex Nihilo",
-    "category": "Regular",
     "inspiredBy": "Ex Nihilo",
     "description": "Designed as a hypnotic olfactory jewel, Blue Talisman embodies the avant-garde spirit of Ex Nihilo. An intoxicating fusion of fresh bergamot and crisp pear meeting vibrant ginger and majestic modern woods.",
-    "rating": 5.0,
+    "rating": 5,
     "reviewCount": 0,
     "image": "/images/products/blue_talisman.jpg",
     "family": "FRESH, WOODY, CITRUS",
@@ -93,40 +92,119 @@ export const luxuryProducts: Product[] = [
     "occasion": "Everyday, Office, Special Occasion",
     "meter": "LONG_LASTING",
     "isActive": true,
-    "price": "300 - 1500tk",
-    "priceVal": 500,
+    "priceVal": 300,
     "sizes": [
-      { "size": "6ml", "price": 300, "originalPrice": 400, "stock": 50 },
-      { "size": "10ml", "price": 500, "originalPrice": 650, "stock": 50 },
-      { "size": "30ml", "price": 900, "originalPrice": 1100, "stock": 35 },
-      { "size": "50ml", "price": 1500, "originalPrice": 1900, "stock": 25 }
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1000,
+        "originalPrice": 1300,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1600,
+        "originalPrice": 2000,
+        "stock": 25
+      }
     ],
     "notes": [
-      { "name": "Bergamot", "type": "TOP" },
-      { "name": "Ginger", "type": "TOP" },
-      { "name": "Mandarin", "type": "TOP" },
-      { "name": "Pear", "type": "TOP" },
-      { "name": "Orange Blossom", "type": "MIDDLE" },
-      { "name": "Georgywood", "type": "MIDDLE" },
-      { "name": "Akigalawood", "type": "BASE" },
-      { "name": "Ambrofix", "type": "BASE" },
-      { "name": "Musk", "type": "BASE" }
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Ginger",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Georgywood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Akigalawood",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambrofix",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      }
     ],
     "accords": [
-      { "name": "Citrus", "percentage": 85, "color": "#F59E0B" },
-      { "name": "Fresh Spicy", "percentage": 75, "color": "#10B981" },
-      { "name": "Woody", "percentage": 70, "color": "#C5A880" },
-      { "name": "Fruity", "percentage": 65, "color": "#EC4899" }
+      {
+        "name": "Citrus",
+        "percentage": 85,
+        "color": "#F59E0B"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 75,
+        "color": "#10B981"
+      },
+      {
+        "name": "Woody",
+        "percentage": 70,
+        "color": "#C5A880"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 65,
+        "color": "#EC4899"
+      }
     ],
     "bestFor": [
-      { "name": "Spring", "percentage": 90 },
-      { "name": "Summer", "percentage": 95 },
-      { "name": "Autumn", "percentage": 80 },
-      { "name": "Winter", "percentage": 65 }
+      {
+        "name": "Spring",
+        "percentage": 90
+      },
+      {
+        "name": "Summer",
+        "percentage": 95
+      },
+      {
+        "name": "Autumn",
+        "percentage": 80
+      },
+      {
+        "name": "Winter",
+        "percentage": 65
+      }
     ],
     "galleryImages": [
-      { "url": "/images/products/blue_talisman.jpg", "sortOrder": 0 }
-    ]
+      {
+        "url": "/images/products/blue_talisman.jpg",
+        "sortOrder": 0
+      }
+    ],
+    "category": "Exclusive",
+    "price": "300 - 1600tk"
   },
   {
     "id": "prod-irish-leather-01",
@@ -1261,6 +1339,258 @@ export const luxuryProducts: Product[] = [
     ],
     "category": "Exclusive",
     "price": "300 - 2500tk"
+  },
+  {
+    "id": "prod-arabian-tonka-11",
+    "slug": "arabian-tonka",
+    "name": "Arabian Tonka",
+    "brand": "Montale",
+    "inspiredBy": "Inspired by Montale Arabians Tonka",
+    "description": "A tribute to the majestic Arabian horse and eastern opulence. A fiery, captivating blend of rare oud, spiced saffron, and sparkling bergamot dancing over a sumptuous heart of Bulgarian rose and cane sugar, anchored by rich tonka bean, amber, and white musk.",
+    "rating": 5,
+    "reviewCount": 48,
+    "image": "/images/products/arabian_tonka.jpg",
+    "family": "ORIENTAL",
+    "gender": "UNISEX",
+    "occasion": "Evening, Gala, Special Occasion",
+    "meter": "BEAST_MODE",
+    "isActive": true,
+    "priceVal": 300,
+    "category": "Exclusive",
+    "price": "300 - 2300tk",
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1400,
+        "originalPrice": 1800,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2300,
+        "originalPrice": 2900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Saffron",
+        "type": "TOP"
+      },
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Agarwood (Oud)",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bulgarian Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Cane Sugar",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "White Musk",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Warm Spicy",
+        "percentage": 90,
+        "color": "#D84315"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 88,
+        "color": "#F59E0B"
+      },
+      {
+        "name": "Oud",
+        "percentage": 85,
+        "color": "#4E342E"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#FFB300"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 75,
+        "color": "#FFF59D"
+      }
+    ],
+    "bestFor": [
+      {
+        "name": "Winter",
+        "percentage": 95
+      },
+      {
+        "name": "Autumn",
+        "percentage": 90
+      },
+      {
+        "name": "Evening",
+        "percentage": 95
+      },
+      {
+        "name": "Night Out",
+        "percentage": 90
+      }
+    ],
+    "galleryImages": [
+      {
+        "url": "/images/products/arabian_tonka.jpg",
+        "sortOrder": 0
+      }
+    ]
+  },
+  {
+    "id": "prod-madwi-al-arabi-12",
+    "slug": "madwi-al-arabi",
+    "name": "Madwi Al Arabi",
+    "brand": "Arabian Oud",
+    "inspiredBy": "Arabian Oud Madawi",
+    "description": "An iconic signature fragrance celebrating Middle Eastern grace and romance. Opening with an alluring swirl of velvety peach and fragrant apple blossom, blossoming into a heart of sensual pineapple blossom, resting upon an enduring, opulent foundation of wild rose, golden musk, and deep patchouli.",
+    "rating": 5,
+    "reviewCount": 56,
+    "image": "/images/products/madwi_al_arabi.jpg",
+    "family": "ORIENTAL",
+    "gender": "UNISEX",
+    "occasion": "Luxury Gala & Evening",
+    "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 300,
+    "category": "Exclusive",
+    "price": "300 - 2500tk",
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3200,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Peach",
+        "type": "TOP"
+      },
+      {
+        "name": "Apple Blossom",
+        "type": "TOP"
+      },
+      {
+        "name": "Pineapple Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Wild Rose",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 90,
+        "color": "#EC4899"
+      },
+      {
+        "name": "Floral",
+        "percentage": 85,
+        "color": "#F48FB1"
+      },
+      {
+        "name": "Musky",
+        "percentage": 80,
+        "color": "#B0BEC5"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 75,
+        "color": "#FFB74D"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 70,
+        "color": "#E1BEE7"
+      }
+    ],
+    "bestFor": [
+      {
+        "name": "Spring",
+        "percentage": 85
+      },
+      {
+        "name": "Autumn",
+        "percentage": 90
+      },
+      {
+        "name": "Winter",
+        "percentage": 85
+      },
+      {
+        "name": "Special Occasion",
+        "percentage": 95
+      }
+    ],
+    "galleryImages": [
+      {
+        "url": "/images/products/madwi_al_arabi.jpg",
+        "sortOrder": 0
+      }
+    ]
   },
   {
     "id": "prod-normal-1",
@@ -6460,7 +6790,10 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
             'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
             'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
-            'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
+            'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10',
+            'arabian-tonka', 'prod-arabian-tonka-11',
+            'madwi-al-arabi', 'madawi-al-arabi', 'prod-madwi-al-arabi-12',
+            'blue-talisman', 'prod-blue-talisman-01'
           ]);
 
           const isExcl = (p.category && p.category.toLowerCase() === 'exclusive') ||

@@ -76,7 +76,14 @@ export const EXCLUSIVE_FRAGRANCES = new Set([
   'prod-guidance-07',
   'prod-rosewood-08',
   'prod-sakura-dior-09',
-  'prod-imagination-10'
+  'prod-imagination-10',
+  'arabian-tonka',
+  'prod-arabian-tonka-11',
+  'madwi-al-arabi',
+  'madawi-al-arabi',
+  'prod-madwi-al-arabi-12',
+  'blue-talisman',
+  'prod-blue-talisman-01'
 ]);
 
 function slugifyName(text?: string): string {
