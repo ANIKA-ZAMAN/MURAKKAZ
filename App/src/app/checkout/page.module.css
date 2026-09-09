@@ -181,6 +181,23 @@
   background-color: rgba(49, 49, 52, 0.01);
 }
 
+.disabledPayment {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: #faf9f6;
+  border-color: #e5e2db;
+  user-select: none;
+}
+
+.disabledPayment:hover {
+  border-color: #e5e2db;
+}
+
+.disabledPayment input[type="radio"] {
+  cursor: not-allowed;
+  accent-color: #a09d97;
+}
+
 .paymentMethodDetails {
   margin-top: 1.25rem;
   padding-top: 1.25rem;
@@ -229,12 +246,34 @@
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  flex: 1;
+}
+
+.paymentNameRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .paymentName {
   font-size: 0.88rem;
   font-weight: 600;
   color: var(--foreground);
+}
+
+.comingSoonBadge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background-color: #f1ede6;
+  color: #7d756d;
+  border: 1px solid #ddd7cb;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  line-height: 1.3;
 }
 
 .paymentDesc {
