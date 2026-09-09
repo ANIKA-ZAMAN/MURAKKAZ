@@ -209,12 +209,10 @@ const ProductForm: React.FC = () => {
       reader.onload = (uploadEvent) => {
         const result = uploadEvent.target?.result as string;
         if (result) {
-          if (!mainImageUrl) {
-            setMainImageUrl(result);
-            setImageError(false);
-          }
-          setGalleryUrls(prev => [...prev, result]);
-          showToast('success', 'Image uploaded successfully!');
+          setMainImageUrl(result);
+          setImageError(false);
+          setGalleryUrls(prev => [result, ...prev.filter(u => u !== result)]);
+          showToast('success', 'Image uploaded and set as cover photo!');
         }
       };
       reader.readAsDataURL(files[0]);
@@ -225,13 +223,11 @@ const ProductForm: React.FC = () => {
   const handleAddImageUrl = () => {
     const url = imageUrlInput.trim();
     if (!url) return;
-    if (!mainImageUrl) {
-      setMainImageUrl(url);
-      setImageError(false);
-    }
-    setGalleryUrls(prev => [...prev, url]);
+    setMainImageUrl(url);
+    setImageError(false);
+    setGalleryUrls(prev => [url, ...prev.filter(u => u !== url)]);
     setImageUrlInput('');
-    showToast('success', 'Image URL added to gallery');
+    showToast('success', 'Image URL set as cover photo!');
   };
 
   // Load Existing Product if Editing
@@ -261,9 +257,13 @@ const ProductForm: React.FC = () => {
             setMainImageUrl(p.image);
             setImageError(false);
           }
-          if (p.sizes && p.sizes.length > 0) setSizes(p.sizes);
-          if (p.galleryImages && p.galleryImages.length > 0) {
-            setGalleryUrls(p.galleryImages.map((g: any) => g.url));
+          const loadedGallery = (p.galleryImages && p.galleryImages.length > 0)
+            ? p.galleryImages.map((g: any) => typeof g === 'string' ? g : g.url)
+            : [];
+          if (p.image && !loadedGallery.includes(p.image)) {
+            setGalleryUrls([p.image, ...loadedGallery]);
+          } else {
+            setGalleryUrls(loadedGallery);
           }
           if (p.notes && Array.isArray(p.notes) && p.notes.length > 0) {
             const top = p.notes.filter((n: any) => n.type === 'TOP').map((n: any) => n.name);
@@ -1189,8 +1189,65 @@ const ProductForm: React.FC = () => {
             <div className={styles.cardSection}>
               <div className={styles.sectionHeader}>
                 <h2 className={styles.sectionTitle}>Product Media & Image Gallery</h2>
-                <p className={styles.sectionDesc}>Upload photos via File Dropzone or paste Direct Image URLs</p>
+                <p className={styles.sectionDesc}>Upload photos via File Dropzone, paste Direct Image URLs, or manage cover photo</p>
               </div>
+
+              {/* Active Cover Photo Banner */}
+              {mainImageUrl && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '16px',
+                  padding: '16px',
+                  background: 'rgba(28, 28, 31, 0.9)',
+                  border: '1px solid rgba(197, 168, 128, 0.35)',
+                  borderRadius: '10px',
+                  marginBottom: '24px',
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+                }}>
+                  <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #C5A880', flexShrink: 0 }}>
+                    <img src={mainImageUrl} alt="Current Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ fontSize: '11px', color: '#111112', background: '#C5A880', padding: '2px 8px', borderRadius: '4px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Active Cover Photo
+                      </span>
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#9A9A9C', marginTop: '4px' }}>
+                      This image is displayed in the live storefront preview and catalog cards.
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const oldUrl = mainImageUrl;
+                      setMainImageUrl('');
+                      setGalleryUrls(prev => prev.filter(u => u !== oldUrl));
+                      showToast('info', 'Cover photo removed. Upload a new photo below.');
+                    }}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      padding: '8px 14px',
+                      background: '#820011',
+                      color: '#FFFFFF',
+                      border: 'none',
+                      borderRadius: '6px',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      flexShrink: 0,
+                      transition: 'background 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = '#A00015')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = '#820011')}
+                  >
+                    <Trash2 size={14} /> Remove Cover Photo
+                  </button>
+                </div>
+              )}
 
               {/* Option A: Direct URL Input */}
               <div className={styles.formGroup}>
@@ -1210,7 +1267,7 @@ const ProductForm: React.FC = () => {
                     }}
                   />
                   <button type="button" onClick={handleAddImageUrl} className={styles.urlAddBtn}>
-                    <LinkIcon size={14} /> Add URL
+                    <LinkIcon size={14} /> Set as Cover
                   </button>
                 </div>
               </div>
@@ -1221,8 +1278,8 @@ const ProductForm: React.FC = () => {
                 <label className={styles.dropzone}>
                   <input type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
                   <Upload size={36} className={styles.dropzoneIcon} />
-                  <div className={styles.dropzoneText}>Click or Drag & Drop product images</div>
-                  <div className={styles.dropzoneSubtext}>Supports PNG, JPG, WEBP formats</div>
+                  <div className={styles.dropzoneText}>Click or Drag & Drop new product image</div>
+                  <div className={styles.dropzoneSubtext}>Uploaded image will automatically become the Cover Photo</div>
                 </label>
               </div>
 
@@ -1242,8 +1299,7 @@ const ProductForm: React.FC = () => {
                             src={url}
                             alt={`Gallery item ${idx + 1}`}
                             onError={(e) => {
-                              // Handle image load error cleanly
-                              (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23C5A880" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
+                              (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23C5A880" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>';
                             }}
                           />
                           {isCover ? (
@@ -1269,11 +1325,13 @@ const ProductForm: React.FC = () => {
                               if (mainImageUrl === url) {
                                 setMainImageUrl(updated[0] || '');
                               }
+                              showToast('info', 'Image removed from gallery');
                             }}
                             className={styles.imageDeleteBtn}
-                            title="Remove image"
+                            title="Delete this image"
+                            style={{ background: '#820011', border: '1px solid #FFFFFF' }}
                           >
-                            <X size={14} />
+                            <Trash2 size={13} />
                           </button>
                         </div>
                       );
