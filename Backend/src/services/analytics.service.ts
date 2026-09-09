@@ -1,5 +1,12 @@
 import prisma from '../config/database';
-import geoip from 'geoip-lite';
+
+let geoip: any = null;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  geoip = require('geoip-lite');
+} catch {
+  // Fallback if geoip-lite binary data is not installed
+}
 
 export interface RecordPageviewInput {
   sessionId: string;
@@ -126,11 +133,13 @@ export function parseLocationFromIp(ip: string = '', headers: Record<string, any
     const cleanIp = ip.replace(/^::ffff:/, '').split(',')[0].trim();
     if (cleanIp !== '127.0.0.1' && cleanIp !== '::1' && !cleanIp.startsWith('192.168.') && !cleanIp.startsWith('10.')) {
       try {
-        const geo = geoip.lookup(cleanIp);
-        if (geo) {
-          const country = geo.country === 'BD' ? 'Bangladesh' : (geo.country || 'Bangladesh');
-          const city = geo.city && geo.city.trim() !== '' ? geo.city : (country === 'Bangladesh' ? 'Dhaka' : 'Unknown');
-          return { country, city };
+        if (geoip) {
+          const geo = geoip.lookup(cleanIp);
+          if (geo) {
+            const country = geo.country === 'BD' ? 'Bangladesh' : (geo.country || 'Bangladesh');
+            const city = geo.city && geo.city.trim() !== '' ? geo.city : (country === 'Bangladesh' ? 'Dhaka' : 'Unknown');
+            return { country, city };
+          }
         }
       } catch (err) {
         console.warn('GeoIP lookup error:', err);

@@ -143,7 +143,8 @@ function CollectionsContent() {
     if (selectedFilters.family && selectedFilters.family.length > 0) {
       const selectedCaps = selectedFilters.family.map(f => f.toUpperCase().replace(/\s+/g, '_'));
       const prodFamCaps = (product.family || '').toUpperCase().replace(/\s+/g, '_');
-      if (!selectedCaps.includes(prodFamCaps)) return false;
+      const prodFams = prodFamCaps.split(',').map((f: string) => f.trim());
+      if (!selectedCaps.some(f => prodFams.includes(f))) return false;
     }
 
     if (selectedFilters.gender && selectedFilters.gender.length > 0) {

@@ -57,9 +57,19 @@ export const getProducts = async (filters: ProductFilterParams) => {
         ];
       }
 
-      if (family) where.family = { in: family.split(',') };
+      if (family) {
+        const famList = family.split(',').map(f => f.trim());
+        if (famList.length === 1) {
+          where.family = { contains: famList[0] };
+        } else {
+          where.OR = [
+            ...(where.OR || []),
+            ...famList.map(f => ({ family: { contains: f } }))
+          ];
+        }
+      }
       if (gender) where.gender = { in: gender.split(',') };
-      if (occasion) where.occasion = { contains: occasion, mode: 'insensitive' };
+      if (occasion) where.occasion = { contains: occasion };
       if (meter) where.meter = { in: meter.split(',') };
 
       if (maxPrice) {
@@ -116,6 +126,14 @@ export const getProducts = async (filters: ProductFilterParams) => {
         products = products.filter(
           (p) => p.name.toLowerCase().includes(query) || (p.description && p.description.toLowerCase().includes(query))
         );
+      }
+      if (family) {
+        const famList = family.split(',').map((f: string) => f.trim().toUpperCase());
+        products = products.filter(p => famList.some((f: string) => (p.family || '').toUpperCase().includes(f)));
+      }
+      if (occasion) {
+        const occList = occasion.split(',').map((o: string) => o.trim().toLowerCase());
+        products = products.filter(p => occList.some((o: string) => (p.occasion || '').toLowerCase().includes(o)));
       }
       const total = products.length;
       const paginated = products.slice(skip, skip + (limit || 12));

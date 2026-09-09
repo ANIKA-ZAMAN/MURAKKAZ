@@ -104,6 +104,13 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     const cleanBestFor = sanitizeBestFor(bestFor);
     const cleanGallery = sanitizeGallery(galleryImages);
 
+    const familyVal = Array.isArray(productData.family)
+      ? productData.family.join(', ')
+      : (productData.family || 'WOODY');
+    const occasionVal = Array.isArray(productData.occasion)
+      ? productData.occasion.join(', ')
+      : (productData.occasion || 'General');
+
     const product = await safeDbCall(
       async () => {
         return await prisma.product.create({
@@ -111,9 +118,9 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
             ...productData,
             slug: productData.slug || productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
             image: productData.image || '/images/products/jade_serenity.png',
-            family: productData.family || 'WOODY',
+            family: familyVal,
             gender: productData.gender || 'UNISEX',
-            occasion: productData.occasion || 'General',
+            occasion: occasionVal,
             meter: productData.meter || 'LONG_LASTING',
             sizes: cleanSizes ? { create: cleanSizes } : undefined,
             notes: cleanNotes ? { create: cleanNotes } : undefined,
@@ -134,9 +141,9 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
           rating: 5.0,
           reviewCount: 0,
           image: productData.image || '/images/products/jade_serenity.png',
-          family: productData.family || 'WOODY',
+          family: familyVal,
           gender: productData.gender || 'UNISEX',
-          occasion: productData.occasion || 'General',
+          occasion: occasionVal,
           meter: productData.meter || 'LONG_LASTING',
           isActive: true,
           priceVal: priceVal || (cleanSizes?.[0]?.price) || 2800,
@@ -170,6 +177,17 @@ router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
     const cleanAccords = sanitizeAccords(accords);
     const cleanBestFor = sanitizeBestFor(bestFor);
     const cleanGallery = sanitizeGallery(galleryImages);
+
+    if (productData.family !== undefined) {
+      productData.family = Array.isArray(productData.family)
+        ? productData.family.join(', ')
+        : String(productData.family || 'WOODY');
+    }
+    if (productData.occasion !== undefined) {
+      productData.occasion = Array.isArray(productData.occasion)
+        ? productData.occasion.join(', ')
+        : String(productData.occasion || 'General');
+    }
 
     const product = await safeDbCall(
       async () => {

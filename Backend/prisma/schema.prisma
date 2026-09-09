@@ -193,7 +193,7 @@ model Product {
   inspiredBy    String?
   description   String
   image         String
-  family        FragranceFamily
+  family        String
   gender        Gender
   occasion      String
   meter         Meter

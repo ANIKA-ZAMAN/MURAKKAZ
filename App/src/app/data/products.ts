@@ -78,6 +78,57 @@ export function getNoteImage(name: string): string {
 // Exactly 62 Master PDF Catalog Fragrances
 export const luxuryProducts: Product[] = [
   {
+    "id": "prod-blue-talisman-01",
+    "slug": "blue-talisman",
+    "name": "Blue Talisman",
+    "brand": "Ex Nihilo",
+    "category": "Regular",
+    "inspiredBy": "Ex Nihilo",
+    "description": "Designed as a hypnotic olfactory jewel, Blue Talisman embodies the avant-garde spirit of Ex Nihilo. An intoxicating fusion of fresh bergamot and crisp pear meeting vibrant ginger and majestic modern woods.",
+    "rating": 5.0,
+    "reviewCount": 0,
+    "image": "/images/products/blue_talisman.jpg",
+    "family": "FRESH, WOODY, CITRUS",
+    "gender": "UNISEX",
+    "occasion": "Everyday, Office, Special Occasion",
+    "meter": "LONG_LASTING",
+    "isActive": true,
+    "price": "300 - 1500tk",
+    "priceVal": 500,
+    "sizes": [
+      { "size": "6ml", "price": 300, "originalPrice": 400, "stock": 50 },
+      { "size": "10ml", "price": 500, "originalPrice": 650, "stock": 50 },
+      { "size": "30ml", "price": 900, "originalPrice": 1100, "stock": 35 },
+      { "size": "50ml", "price": 1500, "originalPrice": 1900, "stock": 25 }
+    ],
+    "notes": [
+      { "name": "Bergamot", "type": "TOP" },
+      { "name": "Ginger", "type": "TOP" },
+      { "name": "Mandarin", "type": "TOP" },
+      { "name": "Pear", "type": "TOP" },
+      { "name": "Orange Blossom", "type": "MIDDLE" },
+      { "name": "Georgywood", "type": "MIDDLE" },
+      { "name": "Akigalawood", "type": "BASE" },
+      { "name": "Ambrofix", "type": "BASE" },
+      { "name": "Musk", "type": "BASE" }
+    ],
+    "accords": [
+      { "name": "Citrus", "percentage": 85, "color": "#F59E0B" },
+      { "name": "Fresh Spicy", "percentage": 75, "color": "#10B981" },
+      { "name": "Woody", "percentage": 70, "color": "#C5A880" },
+      { "name": "Fruity", "percentage": 65, "color": "#EC4899" }
+    ],
+    "bestFor": [
+      { "name": "Spring", "percentage": 90 },
+      { "name": "Summer", "percentage": 95 },
+      { "name": "Autumn", "percentage": 80 },
+      { "name": "Winter", "percentage": 65 }
+    ],
+    "galleryImages": [
+      { "url": "/images/products/blue_talisman.jpg", "sortOrder": 0 }
+    ]
+  },
+  {
     "id": "prod-irish-leather-01",
     "slug": "irish-leather",
     "name": "Irish Leather",
@@ -6399,6 +6450,9 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           }
           if (itemSlug.includes("explorer-platinum") || (p.name && p.name.toLowerCase().includes("explorer platinum"))) {
             itemImage = "/images/products/explorer_platinum_v4.jpg";
+          }
+          if (itemSlug.includes("blue-talisman") || (p.name && p.name.toLowerCase().includes("blue talisman"))) {
+            itemImage = "/images/products/blue_talisman.jpg";
           }
 
           const EXCLUSIVE_SET = new Set([

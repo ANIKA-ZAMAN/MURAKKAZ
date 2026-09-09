@@ -81,10 +81,14 @@ const ProductForm: React.FC = () => {
   const [ourTake, setOurTake] = useState('');
 
   // Classifications
-  const [family, setFamily] = useState('WOODY');
+  const [families, setFamilies] = useState<string[]>(['WOODY']);
   const [gender, setGender] = useState('UNISEX');
-  const [occasion, setOccasion] = useState('Date Night');
+  const [occasions, setOccasions] = useState<string[]>(['Date Night']);
   const [meter, setMeter] = useState('BEAST_MODE');
+
+  // Quick Note Selector for Classifications Tab
+  const [quickNoteTier, setQuickNoteTier] = useState<'TOP' | 'MIDDLE' | 'BASE'>('TOP');
+  const [quickNoteInput, setQuickNoteInput] = useState('');
 
   // Pricing & Sizes
   const [sizes, setSizes] = useState<SizeRow[]>(DEFAULT_SIZES);
@@ -145,6 +149,30 @@ const ProductForm: React.FC = () => {
 
   const handleRemoveTag = (tagToRemove: string, tags: string[], setTags: (t: string[]) => void) => {
     setTags(tags.filter(t => t !== tagToRemove));
+  };
+
+  // Toggle Family helper (Multi-select)
+  const handleToggleFamily = (fam: string) => {
+    setFamilies(prev => {
+      if (prev.includes(fam)) {
+        if (prev.length === 1) return prev; // Preserve at least one selected
+        return prev.filter(f => f !== fam);
+      } else {
+        return [...prev, fam];
+      }
+    });
+  };
+
+  // Toggle Occasion helper (Multi-select)
+  const handleToggleOccasion = (occ: string) => {
+    setOccasions(prev => {
+      if (prev.includes(occ)) {
+        if (prev.length === 1) return prev; // Preserve at least one selected
+        return prev.filter(o => o !== occ);
+      } else {
+        return [...prev, occ];
+      }
+    });
   };
 
   // Update Size Row
@@ -219,9 +247,15 @@ const ProductForm: React.FC = () => {
           setInspiredBy(p.inspiredBy || '');
           setDescription(p.description || '');
           setOurTake(p.ourTake || '');
-          setFamily(p.family || 'WOODY');
+          if (p.family) {
+            const famList = p.family.split(',').map((f: string) => f.trim().toUpperCase()).filter(Boolean);
+            if (famList.length > 0) setFamilies(famList);
+          }
           setGender(p.gender || 'UNISEX');
-          setOccasion(p.occasion || 'Date Night');
+          if (p.occasion) {
+            const occList = p.occasion.split(',').map((o: string) => o.trim()).filter(Boolean);
+            if (occList.length > 0) setOccasions(occList);
+          }
           setMeter(p.meter || 'BEAST_MODE');
           if (p.image) {
             setMainImageUrl(p.image);
@@ -230,6 +264,22 @@ const ProductForm: React.FC = () => {
           if (p.sizes && p.sizes.length > 0) setSizes(p.sizes);
           if (p.galleryImages && p.galleryImages.length > 0) {
             setGalleryUrls(p.galleryImages.map((g: any) => g.url));
+          }
+          if (p.notes && Array.isArray(p.notes) && p.notes.length > 0) {
+            const top = p.notes.filter((n: any) => n.type === 'TOP').map((n: any) => n.name);
+            const mid = p.notes.filter((n: any) => n.type === 'MIDDLE').map((n: any) => n.name);
+            const base = p.notes.filter((n: any) => n.type === 'BASE').map((n: any) => n.name);
+            if (top.length > 0) setTopNotes(top);
+            if (mid.length > 0) setMiddleNotes(mid);
+            if (base.length > 0) setBaseNotes(base);
+          }
+          if (p.accords && Array.isArray(p.accords) && p.accords.length > 0) {
+            setAccords(p.accords.map((a: any, idx: number) => ({
+              id: a.id || String(idx + 1),
+              name: a.name,
+              percentage: a.percentage || a.pct || 50,
+              color: a.color || '#C5A880',
+            })));
           }
         })
         .catch(err => {
@@ -257,9 +307,9 @@ const ProductForm: React.FC = () => {
       inspiredBy,
       description,
       ourTake,
-      family,
+      family: families.join(', '),
       gender,
-      occasion,
+      occasion: occasions.join(', '),
       meter,
       // NOTE: priceVal intentionally omitted — not in Prisma Product model.
       // Price is stored on ProductSize records, not on the Product itself.
@@ -532,20 +582,32 @@ const ProductForm: React.FC = () => {
                 <p className={styles.sectionDesc}>Filter categories, target gender, performance meter & occasion</p>
               </div>
 
-              {/* Fragrance Family */}
+              {/* Fragrance Family (Multi-Select) */}
               <div className={styles.formGroup}>
-                <label className={styles.formGroupLabel}>Fragrance Family</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <label className={styles.formGroupLabel} style={{ marginBottom: 0 }}>
+                    Fragrance Family / Scent Profile <span style={{ fontSize: '0.8rem', color: '#C5A880', fontWeight: 'normal', marginLeft: '6px' }}>(Select one or multiple)</span>
+                  </label>
+                  <span style={{ fontSize: '0.78rem', color: '#A0A0A5' }}>
+                    {families.length} {families.length === 1 ? 'family' : 'families'} selected
+                  </span>
+                </div>
                 <div className={styles.pillGroup}>
-                  {FAMILIES.map(fam => (
-                    <button
-                      key={fam}
-                      type="button"
-                      className={`${styles.pillBtn} ${family === fam ? styles.selectedPill : ''}`}
-                      onClick={() => setFamily(fam)}
-                    >
-                      {fam}
-                    </button>
-                  ))}
+                  {FAMILIES.map(fam => {
+                    const isSelected = families.includes(fam);
+                    return (
+                      <button
+                        key={fam}
+                        type="button"
+                        className={`${styles.pillBtn} ${isSelected ? styles.selectedPill : ''}`}
+                        onClick={() => handleToggleFamily(fam)}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        {isSelected && <span style={{ fontSize: '11px', lineHeight: 1 }}>✓</span>}
+                        {fam}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -566,20 +628,32 @@ const ProductForm: React.FC = () => {
                 </div>
               </div>
 
-              {/* Occasion */}
+              {/* Occasion (Multi-Select) */}
               <div className={styles.formGroup}>
-                <label className={styles.formGroupLabel}>Best Occasion</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                  <label className={styles.formGroupLabel} style={{ marginBottom: 0 }}>
+                    Best Occasion <span style={{ fontSize: '0.8rem', color: '#C5A880', fontWeight: 'normal', marginLeft: '6px' }}>(Select one or multiple)</span>
+                  </label>
+                  <span style={{ fontSize: '0.78rem', color: '#A0A0A5' }}>
+                    {occasions.length} {occasions.length === 1 ? 'occasion' : 'occasions'} selected
+                  </span>
+                </div>
                 <div className={styles.pillGroup}>
-                  {OCCASIONS.map(occ => (
-                    <button
-                      key={occ}
-                      type="button"
-                      className={`${styles.pillBtn} ${occasion === occ ? styles.selectedPill : ''}`}
-                      onClick={() => setOccasion(occ)}
-                    >
-                      {occ}
-                    </button>
-                  ))}
+                  {OCCASIONS.map(occ => {
+                    const isSelected = occasions.includes(occ);
+                    return (
+                      <button
+                        key={occ}
+                        type="button"
+                        className={`${styles.pillBtn} ${isSelected ? styles.selectedPill : ''}`}
+                        onClick={() => handleToggleOccasion(occ)}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        {isSelected && <span style={{ fontSize: '11px', lineHeight: 1 }}>✓</span>}
+                        {occ}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -597,6 +671,188 @@ const ProductForm: React.FC = () => {
                       {m.replace('_', ' ')}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              {/* Key Scent Notes (Quick Selector right in this section) */}
+              <div className={styles.formGroup} style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px dashed rgba(197,168,128,0.25)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', flexWrap: 'wrap', gap: '8px' }}>
+                  <div>
+                    <label className={styles.formGroupLabel} style={{ marginBottom: 2, display: 'flex', alignItems: 'center', gap: '8px', color: '#C5A880' }}>
+                      <Sparkles size={15} /> Scent Notes ({topNotes.length + middleNotes.length + baseNotes.length} notes selected)
+                    </label>
+                    <span style={{ fontSize: '0.75rem', color: '#A0A0A5' }}>
+                      Choose or type multiple notes directly in this section
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('notes')}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      color: '#C5A880',
+                      fontSize: '0.8rem',
+                      cursor: 'pointer',
+                      textDecoration: 'underline',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    View Full Scent Pyramid & Accords (Tab 4) →
+                  </button>
+                </div>
+
+                {/* Selected Notes Tags Container */}
+                <div className={styles.tagContainer} style={{ minHeight: '44px', marginBottom: '12px' }}>
+                  {topNotes.map(n => (
+                    <span key={`top-${n}`} className={styles.tagChip} style={{ borderLeft: '3px solid #60A5FA' }} title="Top Note">
+                      <span style={{ fontSize: '10px', opacity: 0.7, marginRight: '4px' }}>[Top]</span>
+                      {n}
+                      <button type="button" onClick={() => handleRemoveTag(n, topNotes, setTopNotes)} className={styles.tagRemoveBtn}>
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
+                  {middleNotes.map(n => (
+                    <span key={`mid-${n}`} className={styles.tagChip} style={{ borderLeft: '3px solid #F472B6' }} title="Heart Note">
+                      <span style={{ fontSize: '10px', opacity: 0.7, marginRight: '4px' }}>[Heart]</span>
+                      {n}
+                      <button type="button" onClick={() => handleRemoveTag(n, middleNotes, setMiddleNotes)} className={styles.tagRemoveBtn}>
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
+                  {baseNotes.map(n => (
+                    <span key={`base-${n}`} className={styles.tagChip} style={{ borderLeft: '3px solid #F59E0B' }} title="Base Note">
+                      <span style={{ fontSize: '10px', opacity: 0.7, marginRight: '4px' }}>[Base]</span>
+                      {n}
+                      <button type="button" onClick={() => handleRemoveTag(n, baseNotes, setBaseNotes)} className={styles.tagRemoveBtn}>
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
+                  {topNotes.length === 0 && middleNotes.length === 0 && baseNotes.length === 0 && (
+                    <span style={{ color: '#777', fontSize: '0.82rem', padding: '4px 8px' }}>No notes selected yet</span>
+                  )}
+                </div>
+
+                {/* Quick Add Custom Note Input with Tier Selector */}
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                  <select
+                    value={quickNoteTier}
+                    onChange={(e) => setQuickNoteTier(e.target.value as any)}
+                    style={{
+                      padding: '8px 12px',
+                      background: '#1A1A1D',
+                      border: '1px solid rgba(197,168,128,0.3)',
+                      borderRadius: '6px',
+                      color: '#F5F1E8',
+                      fontSize: '0.82rem',
+                      outline: 'none'
+                    }}
+                  >
+                    <option value="TOP">Top Note (Opening)</option>
+                    <option value="MIDDLE">Heart Note (Heart)</option>
+                    <option value="BASE">Base Note (Dry-down)</option>
+                  </select>
+                  <div style={{ display: 'flex', flex: '1 1 220px', gap: '6px' }}>
+                    <input
+                      type="text"
+                      placeholder="Type note name & press Enter (e.g. Cardamom, Saffron)..."
+                      value={quickNoteInput}
+                      onChange={e => setQuickNoteInput(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' || e.key === ',') {
+                          e.preventDefault();
+                          if (quickNoteTier === 'TOP') handleAddTag(quickNoteInput, setQuickNoteInput, topNotes, setTopNotes);
+                          else if (quickNoteTier === 'MIDDLE') handleAddTag(quickNoteInput, setQuickNoteInput, middleNotes, setMiddleNotes);
+                          else handleAddTag(quickNoteInput, setQuickNoteInput, baseNotes, setBaseNotes);
+                        }
+                      }}
+                      className={styles.inputField}
+                      style={{ flex: 1, padding: '8px 12px', fontSize: '0.85rem' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (quickNoteTier === 'TOP') handleAddTag(quickNoteInput, setQuickNoteInput, topNotes, setTopNotes);
+                        else if (quickNoteTier === 'MIDDLE') handleAddTag(quickNoteInput, setQuickNoteInput, middleNotes, setMiddleNotes);
+                        else handleAddTag(quickNoteInput, setQuickNoteInput, baseNotes, setBaseNotes);
+                      }}
+                      style={{
+                        padding: '8px 14px',
+                        background: 'rgba(197,168,128,0.2)',
+                        border: '1px solid #C5A880',
+                        color: '#F5F1E8',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.82rem',
+                        fontWeight: 600
+                      }}
+                    >
+                      Add Note
+                    </button>
+                  </div>
+                </div>
+
+                {/* Popular Note Suggestions */}
+                <div>
+                  <div style={{ fontSize: '0.75rem', color: '#A0A0A5', marginBottom: '6px' }}>Popular Perfume Notes (Click to toggle/add):</div>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                    {[
+                      { name: 'Bergamot', tier: 'TOP' },
+                      { name: 'Peach', tier: 'TOP' },
+                      { name: 'Pink Pepper', tier: 'TOP' },
+                      { name: 'Lemon', tier: 'TOP' },
+                      { name: 'Rose', tier: 'MIDDLE' },
+                      { name: 'Jasmine', tier: 'MIDDLE' },
+                      { name: 'Lavender', tier: 'MIDDLE' },
+                      { name: 'Saffron', tier: 'MIDDLE' },
+                      { name: 'Tuberose', tier: 'MIDDLE' },
+                      { name: 'Oud', tier: 'BASE' },
+                      { name: 'Amber', tier: 'BASE' },
+                      { name: 'Vanilla', tier: 'BASE' },
+                      { name: 'Sandalwood', tier: 'BASE' },
+                      { name: 'Vetiver', tier: 'BASE' },
+                      { name: 'Musk', tier: 'BASE' },
+                      { name: 'Patchouli', tier: 'BASE' },
+                    ].map(item => {
+                      const allCurrent = [...topNotes, ...middleNotes, ...baseNotes];
+                      const isAdded = allCurrent.includes(item.name);
+                      return (
+                        <button
+                          key={item.name}
+                          type="button"
+                          onClick={() => {
+                            if (isAdded) {
+                              if (topNotes.includes(item.name)) handleRemoveTag(item.name, topNotes, setTopNotes);
+                              if (middleNotes.includes(item.name)) handleRemoveTag(item.name, middleNotes, setMiddleNotes);
+                              if (baseNotes.includes(item.name)) handleRemoveTag(item.name, baseNotes, setBaseNotes);
+                            } else {
+                              if (item.tier === 'TOP') handleAddTag(item.name, () => {}, topNotes, setTopNotes);
+                              else if (item.tier === 'MIDDLE') handleAddTag(item.name, () => {}, middleNotes, setMiddleNotes);
+                              else handleAddTag(item.name, () => {}, baseNotes, setBaseNotes);
+                            }
+                          }}
+                          style={{
+                            background: isAdded ? 'rgba(197,168,128,0.2)' : '#1C1C24',
+                            border: isAdded ? '1px solid #C5A880' : '1px solid #2D2D3D',
+                            color: isAdded ? '#C5A880' : '#A0A0B0',
+                            borderRadius: '12px',
+                            padding: '3px 10px',
+                            fontSize: '11px',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease',
+                            fontWeight: isAdded ? 600 : 400
+                          }}
+                        >
+                          {isAdded ? `✓ ${item.name}` : `+ ${item.name}`}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -1091,7 +1347,9 @@ const ProductForm: React.FC = () => {
             {inspiredBy && <div className={styles.previewInspired}>{inspiredBy}</div>}
 
             <div className={styles.pillGroup} style={{ marginBottom: '14px' }}>
-              <span className={styles.tagChip} style={{ fontSize: '11px' }}>{family}</span>
+              {families.map(f => (
+                <span key={f} className={styles.tagChip} style={{ fontSize: '11px' }}>{f}</span>
+              ))}
               <span className={styles.tagChip} style={{ fontSize: '11px' }}>{gender}</span>
               <span className={styles.tagChip} style={{ fontSize: '11px' }}>{meter.replace('_', ' ')}</span>
             </div>

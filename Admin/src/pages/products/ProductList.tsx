@@ -171,7 +171,7 @@ const ProductList: React.FC = () => {
       }
 
       // Family & Gender
-      if (filter.family && (p.family || '').toUpperCase() !== filter.family.toUpperCase()) return false;
+      if (filter.family && !(p.family || '').toUpperCase().includes(filter.family.toUpperCase())) return false;
       if (filter.gender && (p.gender || '').toUpperCase() !== filter.gender.toUpperCase()) return false;
 
       // Status
