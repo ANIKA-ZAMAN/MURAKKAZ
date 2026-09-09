@@ -985,6 +985,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 height={600}
                 className={styles.mainImage}
                 priority
+                unoptimized
               />
             </div>
 
@@ -999,7 +1000,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                   <button
                     key={idx}
                     onClick={() => {
-                      if (img) setActiveImageIndex(idx);
+                       if (img) setActiveImageIndex(idx);
                     }}
                     className={`${styles.thumbnail} ${
                       activeImageIndex === idx ? styles.thumbnailActive : ""
@@ -1013,6 +1014,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                         width={180}
                         height={180}
                         className={styles.thumbnailImg}
+                        unoptimized
                       />
                     ) : (
                       <div className={styles.emptyThumbnailBox} />

@@ -218,6 +218,7 @@ export default function ProductCard({
           height={280}
           decoding="async"
           loading="lazy"
+          unoptimized
           sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 280px"
           className={`${styles.image} ${isOutOfStock ? styles.outOfStockImage : ""}`}
         />
