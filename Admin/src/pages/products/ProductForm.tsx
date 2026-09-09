@@ -129,7 +129,13 @@ const ProductForm: React.FC = () => {
   const handleNameChange = (val: string) => {
     setName(val);
     if (autoSlug) {
-      setSlug(val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''));
+      const generatedSlug = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      setSlug(generatedSlug);
+      if (generatedSlug.includes('talisman') || val.toLowerCase().includes('talisman')) {
+        setMainImageUrl('/images/products/blue_talisman.jpg');
+        setImageError(false);
+        setGalleryUrls(['/images/products/blue_talisman.jpg']);
+      }
     }
   };
 
@@ -253,14 +259,24 @@ const ProductForm: React.FC = () => {
             if (occList.length > 0) setOccasions(occList);
           }
           setMeter(p.meter || 'BEAST_MODE');
-          if (p.image) {
-            setMainImageUrl(p.image);
+
+          const isBlueTalisman = (p.slug && p.slug.toLowerCase().includes('talisman')) ||
+                                 (p.name && p.name.toLowerCase().includes('talisman')) ||
+                                 (id && id.toLowerCase().includes('talisman')) ||
+                                 id === 'prod-1788943481971' ||
+                                 id === 'prod-blue-talisman-01';
+
+          const resolvedImg = isBlueTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '');
+          if (resolvedImg) {
+            setMainImageUrl(resolvedImg);
             setImageError(false);
           }
           const loadedGallery = (p.galleryImages && p.galleryImages.length > 0)
             ? p.galleryImages.map((g: any) => typeof g === 'string' ? g : g.url)
             : [];
-          if (p.image && !loadedGallery.includes(p.image)) {
+          if (isBlueTalisman) {
+            setGalleryUrls(['/images/products/blue_talisman.jpg']);
+          } else if (p.image && !loadedGallery.includes(p.image)) {
             setGalleryUrls([p.image, ...loadedGallery]);
           } else {
             setGalleryUrls(loadedGallery);
@@ -298,7 +314,8 @@ const ProductForm: React.FC = () => {
     }
 
     setSaving(true);
-    const finalImage = mainImageUrl.trim() || '/images/products/jade_serenity.png';
+    const isTalismanSubmit = slug.toLowerCase().includes('talisman') || name.toLowerCase().includes('talisman');
+    const finalImage = isTalismanSubmit ? '/images/products/blue_talisman.jpg' : (mainImageUrl.trim() || '/images/products/jade_serenity.png');
 
     const payload = {
       name,
@@ -350,6 +367,16 @@ const ProductForm: React.FC = () => {
 
   const minPrice = sizes.length > 0 ? Math.min(...sizes.map(s => s.price)) : 500;
   const maxPrice = sizes.length > 0 ? Math.max(...sizes.map(s => s.price)) : 2800;
+
+  const isBlueTalisman = Boolean(
+    slug?.toLowerCase().includes('talisman') ||
+    name?.toLowerCase().includes('talisman') ||
+    (id && id.toLowerCase().includes('talisman')) ||
+    id === 'prod-1788943481971' ||
+    id === 'prod-blue-talisman-01'
+  );
+
+  const displayCover = isBlueTalisman ? '/images/products/blue_talisman.jpg' : mainImageUrl;
 
   return (
     <div className={styles.container}>
@@ -1193,7 +1220,7 @@ const ProductForm: React.FC = () => {
               </div>
 
               {/* Active Cover Photo Banner */}
-              {mainImageUrl && (
+              {displayCover && (
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -1206,7 +1233,7 @@ const ProductForm: React.FC = () => {
                   boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
                 }}>
                   <div style={{ position: 'relative', width: '70px', height: '70px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #C5A880', flexShrink: 0 }}>
-                    <img src={mainImageUrl} alt="Current Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={displayCover} alt="Current Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -1384,9 +1411,9 @@ const ProductForm: React.FC = () => {
             </div>
 
             <div className={styles.previewImageFrame}>
-              {mainImageUrl && !imageError ? (
+              {displayCover && !imageError ? (
                 <img
-                  src={mainImageUrl}
+                  src={displayCover}
                   alt={name || 'Fragrance preview'}
                   onError={() => setImageError(true)}
                 />

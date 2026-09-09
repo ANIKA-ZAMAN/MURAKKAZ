@@ -76,15 +76,23 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
             galleryImages: true,
           },
         });
-        return raw.map(p => ({
-          ...p,
-          category: (p.sizes?.some((s: any) => Number(s.price) >= 2500) || EXCLUSIVE_SLUGS.has(p.slug)) ? 'Exclusive' : 'Regular'
-        }));
+        return raw.map(p => {
+          const isTalisman = (p.slug && p.slug.toLowerCase().includes('talisman')) || (p.name && p.name.toLowerCase().includes('talisman'));
+          return {
+            ...p,
+            image: isTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png'),
+            category: (p.sizes?.some((s: any) => Number(s.price) >= 2500) || EXCLUSIVE_SLUGS.has(p.slug)) ? 'Exclusive' : 'Regular'
+          };
+        });
       },
-      () => dbStore.products.map((p: any) => ({
-        ...p,
-        category: (p.category || (p.sizes?.some((s: any) => Number(s.price) >= 2500) || EXCLUSIVE_SLUGS.has(p.slug)) ? 'Exclusive' : 'Regular')
-      }))
+      () => dbStore.products.map((p: any) => {
+        const isTalisman = (p.slug && p.slug.toLowerCase().includes('talisman')) || (p.name && p.name.toLowerCase().includes('talisman'));
+        return {
+          ...p,
+          image: isTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png'),
+          category: (p.category || (p.sizes?.some((s: any) => Number(s.price) >= 2500) || EXCLUSIVE_SLUGS.has(p.slug)) ? 'Exclusive' : 'Regular')
+        };
+      })
     );
 
     res.json({ status: 'success', data: products });

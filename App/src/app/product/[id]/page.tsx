@@ -27,6 +27,46 @@ const productsDetailMap: Record<string, {
   bestFor: Array<{ name: string; pct: number }>;
   ourTake: string;
 }> = {
+  "blue-talisman": {
+    name: "Blue Talisman",
+    inspiredBy: "Inspired by Ex Nihilo",
+    badge: undefined,
+    description: "Designed as a hypnotic olfactory jewel, Blue Talisman embodies the avant-garde spirit of Ex Nihilo. An intoxicating fusion of fresh bergamot and crisp pear meeting vibrant ginger and majestic modern woods.",
+    image: "/images/products/blue_talisman.jpg",
+    family: "Fresh",
+    galleryImages: [
+      "/images/products/blue_talisman.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
+    ],
+    topNotes: [
+      { name: "Bergamot", image: "bergamot.png" },
+      { name: "Ginger", image: "ginger.png" },
+      { name: "Mandarin", image: "mandarin.png" },
+      { name: "Pear", image: "pear.png" },
+    ],
+    middleNotes: [
+      { name: "Orange Blossom", image: "orange_blossom.png" },
+      { name: "Georgywood", image: "georgywood.png" },
+    ],
+    baseNotes: [
+      { name: "Akigalawood", image: "akigalawood.png" },
+      { name: "Ambrofix", image: "ambrofix.png" },
+      { name: "Musk", image: "musk.png" },
+    ],
+    accords: [
+      { name: "Citrus", pct: 85, color: "#F59E0B", path: "M12 12c2.5-4 5.5-5 7-3s0 5-3 7L12 12z" },
+      { name: "Fresh Spicy", pct: 75, color: "#10B981", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+      { name: "Woody", pct: 70, color: "#C5A880", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+      { name: "Fruity", pct: 65, color: "#EC4899", path: "M3 10c0-3.3 4-6 9-6s9 2.7 9 6-4 6-9 6-9-2.7-9-6z" },
+    ],
+    bestFor: [
+      { name: "Summer & Spring", pct: 95 },
+      { name: "Winter & Autumn", pct: 75 },
+      { name: "Daytime Wear", pct: 90 },
+      { name: "Nightly Occasions", pct: 70 },
+    ],
+    ourTake: "A dazzling olfactory jewel. Highly versatile and projecting fresh woody profile with unmatched crispness."
+  },
   "jade-serenity": {
     name: "Jade Serenity",
     inspiredBy: "Inspired by Creed Original Vetiver",
@@ -335,17 +375,20 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       .then((json) => {
         if (json && json.data) {
           const p = json.data;
+          const isBlueTalisman = p.slug?.includes('blue-talisman') || p.name?.toLowerCase().includes('blue talisman') || (id && id.toLowerCase().includes('talisman'));
+          const resolvedImage = isBlueTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png');
+
           setLiveProduct({
             name: p.name || 'Unnamed Fragrance',
             inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : `Inspired by ${p.brand || 'Murakkaz'}`,
             badge: (p.category === 'Exclusive' || p.category === 'exclusive' || isExclusive) ? "EXCLUSIVE" : undefined,
             description: p.description || `${p.name} by ${p.brand || 'Murakkaz'}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
-            image: p.image || '/images/products/jade_serenity.png',
+            image: resolvedImage,
             family: p.family || 'Woody',
             galleryImages: [
-              p.image || '/images/products/jade_serenity.png',
+              resolvedImage,
               '/images/murakkaz_cream_lineup_v2.jpg',
-              ...(p.galleryImages || []).map((g: any) => typeof g === 'string' ? g : g.url).filter((u: string) => u !== (p.image || '/images/products/jade_serenity.png') && u !== '/images/murakkaz_cream_lineup_v2.jpg')
+              ...(p.galleryImages || []).map((g: any) => typeof g === 'string' ? g : g.url).filter((u: string) => u !== resolvedImage && u !== '/images/murakkaz_cream_lineup_v2.jpg')
             ],
             topNotes: (() => {
               const top = p.notes?.filter((n: any) => n.type === 'TOP').map((n: any) => ({ name: typeof n === 'string' ? n : n.name, image: getNoteImage(typeof n === 'string' ? n : n.name) })) || [];
@@ -395,6 +438,9 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     const idClean = id.toLowerCase();
     
     // Exact match or contains search
+    if (idClean === "blue-talisman" || idClean.includes("talisman")) {
+      return "blue-talisman";
+    }
     if (idClean === "1" || idClean === "jade-serenity" || idClean.includes("jade")) {
       return "jade-serenity";
     }

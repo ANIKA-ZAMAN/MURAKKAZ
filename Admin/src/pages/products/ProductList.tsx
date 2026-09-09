@@ -631,10 +631,10 @@ const ProductList: React.FC = () => {
                     <td style={{ padding: '1.1rem 1.25rem', background: 'transparent' }}>
                       <div className={styles.productCell} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                         <img 
-                          src={p.image || '/images/products/jade_serenity.png'} 
+                          src={(p.slug?.toLowerCase().includes('talisman') || p.name?.toLowerCase().includes('talisman')) ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png')} 
                           alt={p.name} 
                           onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/images/products/jade_serenity.png';
+                            (e.target as HTMLImageElement).src = (p.slug?.toLowerCase().includes('talisman') || p.name?.toLowerCase().includes('talisman')) ? '/images/products/blue_talisman.jpg' : '/images/products/jade_serenity.png';
                           }}
                           style={{
                             width: '46px',
