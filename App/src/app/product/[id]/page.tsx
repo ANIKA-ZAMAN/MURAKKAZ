@@ -143,6 +143,82 @@ const productsDetailMap: Record<string, {
     ],
     ourTake: "A royal oriental-floral masterpiece combining lavish peach blossom with golden musk and wild rose."
   },
+  "arabians-tonka": {
+    name: "Arabians Tonka",
+    inspiredBy: "Inspired by Montale",
+    badge: "Exclusive",
+    description: "A tribute to the majestic Arabian horse and eastern opulence. A fiery, captivating blend of rare oud, spiced saffron, and sparkling bergamot dancing over a sumptuous heart of Bulgarian rose and cane sugar, anchored by rich tonka bean, amber, and white musk.",
+    image: "/images/products/arabian_tonka.jpg",
+    family: "Oriental",
+    galleryImages: [
+      "/images/products/arabian_tonka.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
+    ],
+    topNotes: [
+      { name: "Saffron", image: "saffron.png" },
+      { name: "Bergamot", image: "bergamot.png" },
+    ],
+    middleNotes: [
+      { name: "Agarwood (Oud)", image: "oud.png" },
+      { name: "Bulgarian Rose", image: "rose.png" },
+    ],
+    baseNotes: [
+      { name: "Tonka Bean", image: "tonka.png" },
+      { name: "Cane Sugar", image: "sugar.png" },
+      { name: "Amber", image: "amber.png" },
+      { name: "White Musk", image: "musk.png" },
+    ],
+    accords: [
+      { name: "Warm Spicy", pct: 90, color: "#D84315", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+      { name: "Sweet", pct: 88, color: "#F59E0B", path: "M12 12c2.5-4 5.5-5 7-3s0 5-3 7L12 12z" },
+      { name: "Oud", pct: 85, color: "#4E342E", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+      { name: "Amber", pct: 80, color: "#FFB300", path: "M3 10c0-3.3 4-6 9-6s9 2.7 9 6-4 6-9 6-9-2.7-9-6z" },
+    ],
+    bestFor: [
+      { name: "Winter & Autumn", pct: 95 },
+      { name: "Nightly Occasions", pct: 95 },
+      { name: "Evening Gala", pct: 90 },
+      { name: "Clubbing & Date", pct: 85 },
+    ],
+    ourTake: "A beast-mode intoxicating sweet oud fragrance with incredible sillage and compliments."
+  },
+  "madawi-gold-edition": {
+    name: "Madawi Gold Edition",
+    inspiredBy: "Arabian Oud Madawi",
+    badge: "Exclusive",
+    description: "An iconic signature fragrance celebrating Middle Eastern grace and romance. Opening with an alluring swirl of velvety peach and fragrant apple blossom, blossoming into a heart of sensual pineapple blossom, resting upon an enduring, opulent foundation of wild rose, golden musk, and deep patchouli.",
+    image: "/images/products/madwi_al_arabi.jpg",
+    family: "Oriental",
+    galleryImages: [
+      "/images/products/madwi_al_arabi.jpg",
+      "/images/murakkaz_cream_lineup_v2.jpg",
+    ],
+    topNotes: [
+      { name: "Peach", image: "peach.png" },
+      { name: "Apple Blossom", image: "apple.png" },
+    ],
+    middleNotes: [
+      { name: "Pineapple Blossom", image: "fruity.png" },
+    ],
+    baseNotes: [
+      { name: "Wild Rose", image: "rose.png" },
+      { name: "Musk", image: "musk.png" },
+      { name: "Patchouli", image: "patchouli.png" },
+    ],
+    accords: [
+      { name: "Fruity", pct: 90, color: "#EC4899", path: "M3 10c0-3.3 4-6 9-6s9 2.7 9 6-4 6-9 6-9-2.7-9-6z" },
+      { name: "Floral", pct: 85, color: "#F48FB1", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+      { name: "Musky", pct: 80, color: "#B0BEC5", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+      { name: "Sweet", pct: 75, color: "#FFB74D", path: "M12 12c2.5-4 5.5-5 7-3s0 5-3 7L12 12z" },
+    ],
+    bestFor: [
+      { name: "Spring & Autumn", pct: 90 },
+      { name: "Special Occasion", pct: 95 },
+      { name: "Daytime Wear", pct: 85 },
+      { name: "Nightly Occasions", pct: 90 },
+    ],
+    ourTake: "A royal oriental-floral masterpiece combining lavish peach blossom with golden musk and wild rose."
+  },
   "jade-serenity": {
     name: "Jade Serenity",
     inspiredBy: "Inspired by Creed Original Vetiver",
@@ -341,7 +417,10 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         slugify(p.name) === cleanId ||
         p.name.toLowerCase().replace(/\s+/g, "-") === cleanId ||
         cleanId.includes(p.id.toLowerCase()) ||
-        p.id.toLowerCase().includes(cleanId)
+        p.id.toLowerCase().includes(cleanId) ||
+        (cleanId.includes("tonka") && p.slug?.includes("tonka")) ||
+        (cleanId.includes("talisman") && p.slug?.includes("talisman")) ||
+        ((cleanId.includes("madwi") || cleanId.includes("madawi")) && (p.slug?.includes("madwi") || p.slug?.includes("madawi")))
     );
   }, [id]);
 
@@ -351,19 +430,27 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     "prod-irish-leather-01", "prod-baccarat-rouge-540-02", "prod-tobacco-vanille-03",
     "prod-by-the-fireplace-04", "prod-resala-05", "prod-sultani-06", "prod-guidance-07",
     "prod-rosewood-08", "prod-sakura-dior-09", "prod-imagination-10",
-    "arabian-tonka", "prod-arabian-tonka-11",
-    "madwi-al-arabi", "madawi-al-arabi", "prod-madwi-al-arabi-12",
+    "arabian-tonka", "arabians-tonka", "prod-arabian-tonka-11", "cmttukhh102zxjju646krncbh",
+    "madwi-al-arabi", "madawi-al-arabi", "madawi-gold-edition", "prod-madwi-al-arabi-12", "cmttujk3l02zbjju6cq4r4c62",
     "blue-talisman", "prod-blue-talisman-01"
   ]), []);
 
   const isExclusive = React.useMemo(() => {
+    const cleanId = id ? id.toLowerCase().trim() : "";
+    if (
+      cleanId.includes("tonka") ||
+      cleanId.includes("talisman") ||
+      cleanId.includes("madwi") ||
+      cleanId.includes("madawi")
+    ) {
+      return true;
+    }
     if (catalogItem && catalogItem.category) {
       return catalogItem.category.toLowerCase() === "exclusive";
     }
     if (liveProduct && liveProduct.category) {
       return liveProduct.category.toLowerCase() === "exclusive";
     }
-    const cleanId = id ? id.toLowerCase().trim() : "";
     return EXCLUSIVE_SLUGS.has(cleanId);
   }, [catalogItem, liveProduct, id, EXCLUSIVE_SLUGS]);
 
@@ -396,7 +483,53 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   const sizeOptions = React.useMemo(() => {
     const sizeOrder = ["6ml", "10ml", "30ml", "50ml"];
-    // 1. Check liveProduct from DB
+    const cleanId = (id || "").toLowerCase().trim();
+
+    const isTonka = cleanId.includes("tonka") || 
+      (liveProduct?.name && liveProduct.name.toLowerCase().includes("tonka")) ||
+      (liveProduct?.slug && liveProduct.slug.toLowerCase().includes("tonka")) ||
+      (catalogItem?.name && catalogItem.name.toLowerCase().includes("tonka")) ||
+      (catalogItem?.slug && catalogItem.slug.toLowerCase().includes("tonka"));
+
+    const isTalisman = cleanId.includes("talisman") ||
+      (liveProduct?.name && liveProduct.name.toLowerCase().includes("talisman")) ||
+      (liveProduct?.slug && liveProduct.slug.toLowerCase().includes("talisman")) ||
+      (catalogItem?.name && catalogItem.name.toLowerCase().includes("talisman")) ||
+      (catalogItem?.slug && catalogItem.slug.toLowerCase().includes("talisman"));
+
+    const isMadwi = cleanId.includes("madwi") || cleanId.includes("madawi") ||
+      (liveProduct?.name && (liveProduct.name.toLowerCase().includes("madwi") || liveProduct.name.toLowerCase().includes("madawi"))) ||
+      (liveProduct?.slug && (liveProduct.slug.toLowerCase().includes("madwi") || liveProduct.slug.toLowerCase().includes("madawi"))) ||
+      (catalogItem?.name && (catalogItem.name.toLowerCase().includes("madwi") || catalogItem.name.toLowerCase().includes("madawi"))) ||
+      (catalogItem?.slug && (catalogItem.slug.toLowerCase().includes("madwi") || catalogItem.slug.toLowerCase().includes("madawi")));
+
+    // 1. Direct custom pricing for the 3 user-specified perfumes
+    if (isTonka) {
+      return [
+        { label: "6ml", price: 300, originalPrice: 400 },
+        { label: "10ml", price: 500, originalPrice: 650 },
+        { label: "30ml", price: 1400, originalPrice: 1800 },
+        { label: "50ml", price: 2300, originalPrice: 2900 },
+      ];
+    }
+    if (isTalisman) {
+      return [
+        { label: "6ml", price: 300, originalPrice: 400 },
+        { label: "10ml", price: 500, originalPrice: 650 },
+        { label: "30ml", price: 1000, originalPrice: 1300 },
+        { label: "50ml", price: 1600, originalPrice: 2000 },
+      ];
+    }
+    if (isMadwi) {
+      return [
+        { label: "6ml", price: 300, originalPrice: 400 },
+        { label: "10ml", price: 500, originalPrice: 650 },
+        { label: "30ml", price: 1500, originalPrice: 1900 },
+        { label: "50ml", price: 2500, originalPrice: 3200 },
+      ];
+    }
+
+    // 2. Check liveProduct from DB
     if (liveProduct && liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
       const mapped = liveProduct.sizes.map((s: any) => ({
         label: s.size || `${s.volume}ml`,
@@ -405,7 +538,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       }));
       return mapped.sort((a: any, b: any) => sizeOrder.indexOf(a.label) - sizeOrder.indexOf(b.label));
     }
-    // 2. Check catalogItem from local catalog
+    // 3. Check catalogItem from local catalog
     if (catalogItem && catalogItem.sizes && Array.isArray(catalogItem.sizes) && catalogItem.sizes.length > 0) {
       const mapped = catalogItem.sizes.map((s: any) => ({
         label: s.size || `${s.volume}ml`,
@@ -414,7 +547,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       }));
       return mapped.sort((a: any, b: any) => sizeOrder.indexOf(a.label) - sizeOrder.indexOf(b.label));
     }
-    // 3. Fallback based on category
+    // 4. Fallback based on category
     if (isExclusive) {
       return [
         { label: "6ml", price: 300, originalPrice: 400 },
@@ -429,7 +562,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       { label: "30ml", price: 900, originalPrice: 1100 },
       { label: "50ml", price: 1500, originalPrice: 1900 },
     ];
-  }, [liveProduct, catalogItem, isExclusive]);
+  }, [id, liveProduct, catalogItem, isExclusive]);
 
   const [selectedSizeOpt, setSelectedSizeOpt] = useState<{ label: string; price: number }>(() => {
     return sizeOptions.find((s: any) => s.label === "10ml") || sizeOptions[1] || sizeOptions[0];
@@ -457,10 +590,15 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           const isBlueTalisman = p.slug?.includes('blue-talisman') || p.name?.toLowerCase().includes('blue talisman') || (id && id.toLowerCase().includes('talisman'));
           const resolvedImage = isBlueTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png');
 
+          const isExclusiveProd = isExclusive || p.category === 'Exclusive' || p.category === 'exclusive';
           setLiveProduct({
+            id: p.id,
+            slug: p.slug,
+            category: isExclusiveProd ? 'Exclusive' : 'Regular',
+            sizes: p.sizes,
             name: p.name || 'Unnamed Fragrance',
             inspiredBy: p.inspiredBy ? `Inspired by ${p.inspiredBy}` : `Inspired by ${p.brand || 'Murakkaz'}`,
-            badge: (p.category === 'Exclusive' || p.category === 'exclusive' || isExclusive) ? "EXCLUSIVE" : undefined,
+            badge: isExclusiveProd ? "EXCLUSIVE" : undefined,
             description: p.description || `${p.name} by ${p.brand || 'Murakkaz'}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
             image: resolvedImage,
             family: p.family || 'Woody',

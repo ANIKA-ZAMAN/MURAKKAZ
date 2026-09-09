@@ -78,10 +78,14 @@ export const EXCLUSIVE_FRAGRANCES = new Set([
   'prod-sakura-dior-09',
   'prod-imagination-10',
   'arabian-tonka',
+  'arabians-tonka',
   'prod-arabian-tonka-11',
+  'cmttukhh102zxjju646krncbh',
   'madwi-al-arabi',
   'madawi-al-arabi',
+  'madawi-gold-edition',
   'prod-madwi-al-arabi-12',
+  'cmttujk3l02zbjju6cq4r4c62',
   'blue-talisman',
   'prod-blue-talisman-01'
 ]);

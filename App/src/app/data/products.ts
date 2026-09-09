@@ -6748,7 +6748,43 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           let priceStr = p.price || "300 - 1500tk";
           let minPrice = 300;
           let maxP = 1500;
-          if (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0) {
+          let prodSizes = p.sizes;
+
+          const itemSlug = p.slug || slugify(p.name);
+          const slugClean = (itemSlug || "").toLowerCase();
+          const nameClean = (p.name || "").toLowerCase();
+
+          if (slugClean.includes('tonka') || nameClean.includes('tonka')) {
+            prodSizes = [
+              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+              { size: '30ml', price: 1400, originalPrice: 1800, stock: 35 },
+              { size: '50ml', price: 2300, originalPrice: 2900, stock: 25 },
+            ];
+            priceStr = "300 - 2300tk";
+            minPrice = 300;
+            maxP = 2300;
+          } else if (slugClean.includes('talisman') || nameClean.includes('talisman')) {
+            prodSizes = [
+              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+              { size: '30ml', price: 1000, originalPrice: 1300, stock: 35 },
+              { size: '50ml', price: 1600, originalPrice: 2000, stock: 25 },
+            ];
+            priceStr = "300 - 1600tk";
+            minPrice = 300;
+            maxP = 1600;
+          } else if (slugClean.includes('madwi') || slugClean.includes('madawi') || nameClean.includes('madwi') || nameClean.includes('madawi')) {
+            prodSizes = [
+              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
+              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
+              { size: '30ml', price: 1500, originalPrice: 1900, stock: 35 },
+              { size: '50ml', price: 2500, originalPrice: 3200, stock: 25 },
+            ];
+            priceStr = "300 - 2500tk";
+            minPrice = 300;
+            maxP = 2500;
+          } else if (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0) {
             const prices = p.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n));
             if (prices.length > 0) {
               minPrice = Math.min(...prices);
@@ -6761,7 +6797,6 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name)
             : [];
 
-          const itemSlug = p.slug || slugify(p.name);
           let itemImage = p.image || "/images/products/jade_serenity.png";
           if (itemSlug === "resala" || (p.name && p.name.toLowerCase().includes("resala"))) {
             itemImage = "/images/products/resala_arabian_oud.jpg";
@@ -6784,6 +6819,12 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           if (itemSlug.includes("blue-talisman") || (p.name && p.name.toLowerCase().includes("blue talisman"))) {
             itemImage = "/images/products/blue_talisman.jpg";
           }
+          if (slugClean.includes("tonka") || nameClean.includes("tonka")) {
+            itemImage = "/images/products/arabian_tonka.jpg";
+          }
+          if (slugClean.includes("madwi") || slugClean.includes("madawi") || nameClean.includes("madwi") || nameClean.includes("madawi")) {
+            itemImage = "/images/products/madwi_al_arabi.jpg";
+          }
 
           const EXCLUSIVE_SET = new Set([
             'irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace',
@@ -6791,15 +6832,19 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
             'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
             'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10',
-            'arabian-tonka', 'prod-arabian-tonka-11',
-            'madwi-al-arabi', 'madawi-al-arabi', 'prod-madwi-al-arabi-12',
+            'arabian-tonka', 'arabians-tonka', 'prod-arabian-tonka-11', 'cmttukhh102zxjju646krncbh',
+            'madwi-al-arabi', 'madawi-al-arabi', 'madawi-gold-edition', 'prod-madwi-al-arabi-12', 'cmttujk3l02zbjju6cq4r4c62',
             'blue-talisman', 'prod-blue-talisman-01'
           ]);
 
           const isExcl = (p.category && p.category.toLowerCase() === 'exclusive') ||
             EXCLUSIVE_SET.has(itemSlug) ||
             EXCLUSIVE_SET.has(p.id) ||
-            (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500));
+            slugClean.includes('tonka') ||
+            slugClean.includes('talisman') ||
+            slugClean.includes('madwi') ||
+            slugClean.includes('madawi') ||
+            (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2300));
 
           const isOutOfStock = p.inStock === false || p.isOutOfStock === true ||
             itemSlug === "imagination" || (p.name && p.name.toLowerCase() === "imagination") ||
