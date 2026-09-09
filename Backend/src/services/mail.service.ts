@@ -391,3 +391,123 @@ export const sendOrderDeliveredEmail = async (order: {
 
   return sendEmail({ to: order.email, subject, htmlContent });
 };
+
+/**
+ * Send Luxury Order Cancellation Email
+ */
+export const sendOrderCancelledEmail = async (order: {
+  orderNumber: string;
+  fullName: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  location?: string;
+  subtotal: number;
+  deliveryCharge: number;
+  grandTotal: number;
+  paymentMethod?: string;
+  notes?: string;
+  items: Array<{
+    productName: string;
+    selectedSize: string;
+    quantity: number;
+    totalPrice: number;
+    unitPrice?: number;
+  }>;
+}) => {
+  if (!order.email || !order.email.includes('@')) return;
+
+  const subject = `Notice of Cancellation: Murakkaz Order [#${order.orderNumber}]`;
+
+  const itemsHtml = order.items.map(item => `
+    <tr style="border-bottom: 1px solid rgba(197, 168, 128, 0.15);">
+      <td style="padding: 12px 8px; text-align: left;">
+        <strong style="color: #F5F1E8; font-size: 14px;">${item.productName}</strong><br>
+        <span style="color: #A0A0A5; font-size: 12px;">Size: ${item.selectedSize} · Qty: ${item.quantity}</span>
+      </td>
+      <td style="padding: 12px 8px; text-align: right; color: #C5A880; font-weight: bold; font-size: 14px;">
+        ৳${item.totalPrice.toLocaleString()}
+      </td>
+    </tr>
+  `).join('');
+
+  const paymentExplanation = order.paymentMethod?.toUpperCase() === 'COD'
+    ? 'As this order was placed with <strong>Cash on Delivery (COD)</strong>, no payment was collected from you.'
+    : 'If your payment was charged or pre-authorized, our finance team will process a full refund to your original payment method promptly.';
+
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: 'Georgia', serif; background-color: #0A0A0A; color: #F5F1E8; margin: 0; padding: 20px; }
+        .container { max-width: 580px; margin: 0 auto; background: #141414; border: 1px solid rgba(197, 168, 128, 0.3); border-radius: 10px; padding: 36px 28px; text-align: center; }
+        .logo { font-size: 28px; letter-spacing: 5px; color: #C5A880; font-weight: bold; text-transform: uppercase; margin-bottom: 6px; }
+        .subtitle { font-size: 11px; letter-spacing: 2px; color: #888888; text-transform: uppercase; margin-bottom: 24px; }
+        .badge { display: inline-block; background: #820011; color: #FFFFFF; font-size: 12px; font-weight: bold; padding: 6px 18px; border-radius: 20px; margin-bottom: 20px; letter-spacing: 1px; }
+        .greeting { font-size: 16px; color: #F5F1E8; margin-bottom: 14px; text-align: left; }
+        .desc { font-size: 13.5px; line-height: 1.7; color: #CCCCCC; margin-bottom: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: left; }
+        .notice-card { background: #1C1C1F; border: 1px solid rgba(197, 168, 128, 0.25); border-radius: 8px; padding: 18px; text-align: left; margin: 20px 0; font-size: 13px; color: #DDD; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+        .table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #AAAAAA; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .total-row { display: flex; justify-content: space-between; padding: 12px 0; font-size: 15px; font-weight: bold; color: #C5A880; border-top: 1px solid rgba(197, 168, 128, 0.3); margin-top: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .btn { display: inline-block; background: #820011; color: #FFFFFF !important; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: 600; font-size: 13px; margin: 20px 0; letter-spacing: 0.5px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .footer { margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-size: 11px; color: #666666; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; letter-spacing: 1px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="logo">MURAKKAZ</div>
+        <div class="subtitle">House of Rare Scents • Dhaka</div>
+        
+        <div class="badge">ORDER CANCELLED</div>
+        <div class="greeting">Dear ${order.fullName},</div>
+        <p class="desc">
+          We are writing to notify you that your Murakkaz order <strong>#${order.orderNumber}</strong> has been cancelled.
+        </p>
+
+        <div class="notice-card">
+          <strong style="color: #C5A880;">Payment & Order Notice:</strong><br>
+          ${paymentExplanation}
+          ${order.notes ? `<br><br><strong style="color: #F5F1E8;">Note:</strong> ${order.notes}` : ''}
+        </div>
+        
+        <table class="table">
+          ${itemsHtml}
+        </table>
+        
+        <div style="max-width: 320px; margin-left: auto;">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>৳${order.subtotal.toLocaleString()}</span>
+          </div>
+          <div class="summary-row">
+            <span>Delivery</span>
+            <span>৳${order.deliveryCharge}</span>
+          </div>
+          <div class="total-row">
+            <span>Order Value</span>
+            <span>৳${order.grandTotal.toLocaleString()}</span>
+          </div>
+        </div>
+        
+        <p class="desc" style="margin-top: 24px;">
+          If you would like to re-order or if you have questions regarding this cancellation, please don't hesitate to contact our concierge team at <strong>01319022151</strong> (Phone & WhatsApp) or simply reply to this email.
+        </p>
+
+        <div style="text-align: center;">
+          <a href="https://murakkaz.com/shop" class="btn">EXPLORE THE COLLECTION</a>
+        </div>
+
+        <div class="footer">
+          MURAKKAZ FRAGRANCES &copy; 2026. ALL RIGHTS RESERVED.<br>
+          BANANI, DHAKA, BANGLADESH · CONCIERGE: 01319022151
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  return sendEmail({ to: order.email, subject, htmlContent });
+};

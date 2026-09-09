@@ -2,7 +2,7 @@ import prisma from '../config/database';
 import { AppError } from '../middleware/errorHandler';
 import { generateOrderNumber } from '../utils/orderNumber';
 import { getPaginationParams, createPaginatedResult } from '../utils/pagination';
-import { sendOrderConfirmationEmail } from './mail.service';
+import { sendOrderConfirmationEmail, sendOrderCancelledEmail } from './mail.service';
 
 export const createOrder = async (userId: string | null | undefined, data: any) => {
   if (!userId) {
@@ -282,9 +282,34 @@ export const cancelOrder = async (userId: string, orderId: string) => {
 
     return tx.order.findUnique({
       where: { id: orderId },
-      include: { payment: true, items: true }
+      include: { payment: true, items: true, user: true }
     });
   });
+
+  if (result) {
+    const recipientEmail = result.email || result.user?.email;
+    if (recipientEmail) {
+      sendOrderCancelledEmail({
+        orderNumber: result.orderNumber,
+        fullName: result.fullName || `${result.user?.firstName || ''} ${result.user?.lastName || ''}`.trim() || 'Valued Customer',
+        email: recipientEmail,
+        phone: result.phone || result.user?.phone || undefined,
+        address: result.address,
+        location: result.location,
+        subtotal: result.subtotal,
+        deliveryCharge: result.deliveryCharge,
+        grandTotal: result.grandTotal,
+        paymentMethod: result.payment?.method || 'COD',
+        notes: result.notes || 'Order cancelled by customer.',
+        items: result.items.map(i => ({
+          productName: i.productName,
+          selectedSize: i.selectedSize,
+          quantity: i.quantity,
+          totalPrice: i.totalPrice,
+        })),
+      }).catch(err => console.error('Failed to send customer order cancellation email:', err));
+    }
+  }
 
   return result;
 };
