@@ -61,7 +61,8 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
           <video
             ref={videoRef}
             className={styles.realVideo}
-            preload="metadata"
+            preload="auto"
+            autoPlay
             muted
             playsInline
             loop
@@ -93,16 +94,18 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
         >
           <svg
             className={styles.playIcon}
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
-            fill="currentColor"
+            fill="#1C1B1A"
           >
             {isPlaying ? (
-              <>
-                <rect x="6" y="4" width="4" height="16" />
-                <rect x="14" y="4" width="4" height="16" />
-              </>
+              <g fill="#1C1B1A">
+                <rect x="6" y="4" width="4" height="16" fill="#1C1B1A" />
+                <rect x="14" y="4" width="4" height="16" fill="#1C1B1A" />
+              </g>
             ) : (
-              <polygon points="6 3 20 12 6 3" />
+              <polygon points="7 4 19 12 7 20" fill="#1C1B1A" />
             )}
           </svg>
         </button>

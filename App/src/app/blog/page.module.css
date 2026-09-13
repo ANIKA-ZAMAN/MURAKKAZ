@@ -247,10 +247,12 @@
 }
 
 .playIcon {
-  width: 16px;
-  height: 16px;
-  fill: #1C1B1A;
-  margin-left: 3px;
+  width: 18px;
+  height: 18px;
+  fill: #1C1B1A !important;
+  color: #1C1B1A !important;
+  margin-left: 2px;
+  display: block;
   transition: transform 0.2s ease;
 }
 

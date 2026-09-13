@@ -67,15 +67,10 @@ export default function BlogPage() {
             };
           });
 
-          // Merge live posts with fallback so reference layout items are always present
-          const existingIds = new Set(mapped.map((m) => m.slug || m.id));
-          const combined = [...mapped];
-          fallbackPosts.forEach((fp) => {
-            if (!existingIds.has(fp.slug || fp.id)) {
-              combined.push(fp);
-            }
-          });
-          setPosts(combined);
+          // Always keep fallbackPosts in their curated editorial order so Card 1 has the real video
+          const fallbackIds = new Set(fallbackPosts.map((fp) => fp.slug || fp.id));
+          const extraApiPosts = mapped.filter((m) => !fallbackIds.has(m.slug || m.id));
+          setPosts([...fallbackPosts, ...extraApiPosts]);
         }
       })
       .catch(() => {
