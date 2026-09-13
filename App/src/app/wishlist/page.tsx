@@ -299,7 +299,7 @@ export default function WishlistPage() {
             </Link>
           </div>
         ) : (
-          <div className={styles.grid}>
+          <div className={styles.gridContainer}>
             {displayedFavorites.map((item) => (
               <div key={item.id} className={styles.card}>
                 <div className={styles.imageWrapper}>

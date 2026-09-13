@@ -138,13 +138,19 @@
 }
 
 /* Grid Layout */
-.gridContainer {
+.gridContainer,
+.grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.75rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.75rem 1.25rem;
   width: 100%;
   max-width: 1249px;
   margin: 0 auto;
+}
+
+.gridContainer > *,
+.grid > * {
+  min-width: 0;
 }
 
 /* Card */
@@ -527,14 +533,18 @@
 }
 
 @media (max-width: 1279px) {
-  .gridContainer {
-    grid-template-columns: repeat(3, 1fr);
+  .gridContainer,
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem 1rem;
   }
 }
 
 @media (max-width: 1024px) {
-  .gridContainer {
-    grid-template-columns: repeat(2, 1fr);
+  .gridContainer,
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem 0.9rem;
   }
 
   .carouselCard {
@@ -566,8 +576,29 @@
     font-size: 2rem;
   }
 
-  .gridContainer {
-    grid-template-columns: 1fr;
+  .gridContainer,
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 10px;
+  }
+
+  .cardDetails {
+    padding: 0.75rem;
+  }
+
+  .productName {
+    font-size: 0.95rem;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .addBagBtn,
+  .buyNowBtn {
+    height: 34px;
+    font-size: 0.75rem;
   }
 
   .carouselCard {
