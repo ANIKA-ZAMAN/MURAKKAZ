@@ -38,6 +38,9 @@ export default function BlogPage() {
       .then((data) => {
         if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
           const mapped: BlogPost[] = data.data.map((item: any) => {
+            const fallback = fallbackPosts.find(
+              (f) => (f.slug && f.slug === item.slug) || f.id === item.id || f.title === item.title
+            );
             return {
               id: item.id || item.slug,
               slug: item.slug || item.id,
@@ -47,19 +50,20 @@ export default function BlogPage() {
                     month: "short",
                     year: "numeric",
                   }).toUpperCase()
-                : "12 JUL 2025",
-              title: item.title,
-              subtitle: item.description,
-              description: item.description,
-              content: item.content || item.description,
-              image: item.image || "/images/events/blog1.jpg",
-              duration: item.duration || "00:45",
-              videoDuration: item.duration || "00:45",
+                : fallback?.date || "12 JUL 2025",
+              title: item.title || fallback?.title || "",
+              subtitle: item.description || fallback?.subtitle || "",
+              description: item.description || fallback?.description || "",
+              content: item.content || item.description || fallback?.content || "",
+              image: item.image || fallback?.image || "/images/events/blog1.jpg",
+              videoUrl: item.videoUrl || fallback?.videoUrl,
+              duration: item.duration || fallback?.duration || "00:45",
+              videoDuration: item.duration || fallback?.videoDuration || "00:45",
               author: item.author
-                ? `${item.author.firstName} ${item.author.lastName}`
-                : "Eliyash Hossain",
-              category: item.category || "Stories",
-              readTime: "4 min read",
+                ? (typeof item.author === "string" ? item.author : `${item.author.firstName} ${item.author.lastName}`)
+                : fallback?.author || "Eliyash Hossain",
+              category: item.category || fallback?.category || "Stories",
+              readTime: fallback?.readTime || "4 min read",
             };
           });
 
