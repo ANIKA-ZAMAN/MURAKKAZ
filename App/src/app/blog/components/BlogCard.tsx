@@ -327,17 +327,6 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
 
         {/* 1-2 Line Description */}
         <p className={styles.postDesc}>{post.description}</p>
-
-        {/* Compact "See More →" Button */}
-        <div className={styles.actionRow}>
-          <Link
-            href={`/blog/${postSlug}`}
-            className={styles.seeMoreBtn}
-            aria-label={`See more about ${post.title}`}
-          >
-            See More &rarr;
-          </Link>
-        </div>
       </div>
     </article>
   );
