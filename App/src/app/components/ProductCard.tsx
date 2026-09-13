@@ -73,13 +73,18 @@ export default function ProductCard({
     const s = (slug || targetSlug || "").toLowerCase();
     const n = (name || "").toLowerCase();
     const i = (id || "").toLowerCase();
+    const oosKeywords = [
+      "imagination",
+      "spicebomb",
+      "gucci-bloom",
+      "explorer-platinum",
+      "blue-talisman",
+      "talisman"
+    ];
     if (
-      s === "imagination" ||
-      n === "imagination" ||
-      s.includes("imagination") ||
-      n.includes("imagination") ||
-      i.includes("imagination") ||
-      i === "prod-imagination-10"
+      oosKeywords.some((kw) => s.includes(kw) || n.includes(kw) || i.includes(kw)) ||
+      (n.includes("gucci") && n.includes("bloom")) ||
+      (n.includes("explorer") && n.includes("platinum"))
     ) {
       return true;
     }

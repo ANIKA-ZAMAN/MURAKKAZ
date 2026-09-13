@@ -98,25 +98,25 @@ export const luxuryProducts: Product[] = [
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 1000,
         "originalPrice": 1300,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1600,
         "originalPrice": 2000,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -204,7 +204,9 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 1600tk"
+    "price": "300 - 1600tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-irish-leather-01",
@@ -2326,25 +2328,25 @@ export const luxuryProducts: Product[] = [
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -2399,7 +2401,9 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-normal-9",
@@ -6282,25 +6286,25 @@ export const luxuryProducts: Product[] = [
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -6335,7 +6339,9 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-normal-49",
@@ -6357,25 +6363,25 @@ export const luxuryProducts: Product[] = [
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -6410,7 +6416,9 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-normal-50",
@@ -6846,8 +6854,11 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             slugClean.includes('madawi') ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2300));
 
-          const isOutOfStock = p.inStock === false || p.isOutOfStock === true ||
-            itemSlug === "imagination" || (p.name && p.name.toLowerCase() === "imagination") ||
+          const isTargetOOS = [
+            "imagination", "spicebomb", "gucci-bloom", "explorer-platinum", "talisman"
+          ].some(kw => itemSlug.includes(kw) || (p.name && p.name.toLowerCase().includes(kw)) || (p.id && String(p.id).toLowerCase().includes(kw)));
+
+          const isOutOfStock = p.inStock === false || p.isOutOfStock === true || isTargetOOS ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0));
           const inStock = !isOutOfStock;
 

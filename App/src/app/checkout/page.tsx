@@ -19,6 +19,26 @@ interface CartItem {
   selected: boolean;
 }
 
+const isItemOutOfStock = (item: any) => {
+  if (!item) return false;
+  const n = (item.name || "").toLowerCase();
+  const s = (item.slug || "").toLowerCase();
+  const id = (item.id || "").toLowerCase();
+  const oosKeywords = [
+    "imagination",
+    "spicebomb",
+    "gucci-bloom",
+    "explorer-platinum",
+    "blue-talisman",
+    "talisman"
+  ];
+  return (
+    oosKeywords.some((kw) => n.includes(kw) || s.includes(kw) || id.includes(kw)) ||
+    (n.includes("gucci") && n.includes("bloom")) ||
+    (n.includes("explorer") && n.includes("platinum"))
+  );
+};
+
 function CheckoutContent() {
   const router = useRouter();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -48,10 +68,10 @@ function CheckoutContent() {
     const userStr = typeof window !== "undefined" ? (localStorage.getItem("murakkaz-user") || localStorage.getItem("murakkaz_user")) : null;
 
     if (token && userStr) {
-      setIsLoggedIn(true);
       try {
         const parsed = JSON.parse(userStr);
         if (parsed) {
+          setIsLoggedIn(true);
           setFormData((prev) => ({
             ...prev,
             fullName: parsed.name || prev.fullName,
@@ -71,7 +91,7 @@ function CheckoutContent() {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
           // Only pull selected items for checkout, excluding out-of-stock items
-          const selected = parsed.filter((item: any) => item.selected && !item.name?.toLowerCase().includes("imagination"));
+          const selected = parsed.filter((item: any) => item.selected && !isItemOutOfStock(item));
           setCartItems(selected);
         }
       } catch (e) {
@@ -135,7 +155,7 @@ function CheckoutContent() {
     if (cartItems.length === 0 || isSubmitting) return;
 
     // Reject if any out of stock items are present
-    const outOfStockItem = cartItems.find((item) => item.name?.toLowerCase().includes("imagination"));
+    const outOfStockItem = cartItems.find((item) => isItemOutOfStock(item));
     if (outOfStockItem) {
       setErrorMessage(`${outOfStockItem.name} is currently out of stock and cannot be ordered.`);
       return;

@@ -246,6 +246,24 @@
   box-shadow: 0 2px 8px rgba(130, 0, 17, 0.25);
 }
 
+.outOfStockBadgeOverlay {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background-color: #820011;
+  color: #ffffff;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  z-index: 3;
+  box-shadow: 0 4px 12px rgba(130, 0, 17, 0.35);
+  pointer-events: none;
+}
+
 .priceContainer {
   display: flex;
   flex-direction: column;

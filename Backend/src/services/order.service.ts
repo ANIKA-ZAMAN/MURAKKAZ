@@ -4,6 +4,28 @@ import { generateOrderNumber } from '../utils/orderNumber';
 import { getPaginationParams, createPaginatedResult } from '../utils/pagination';
 import { sendOrderConfirmationEmail, sendOrderCancelledEmail } from './mail.service';
 
+const OOS_KEYWORDS = ['imagination', 'spicebomb', 'gucci-bloom', 'explorer-platinum', 'blue-talisman', 'talisman'];
+
+export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inStock?: boolean, isOutOfStock?: boolean) {
+  if (inStock === false || isOutOfStock === true) return true;
+  const n = (name || '').toLowerCase();
+  const s = (slug || '').toLowerCase();
+  const i = (id ? String(id) : '').toLowerCase();
+  if (
+    OOS_KEYWORDS.some(kw => n.includes(kw) || s.includes(kw) || i.includes(kw)) ||
+    (n.includes('gucci') && n.includes('bloom')) ||
+    (n.includes('explorer') && n.includes('platinum')) ||
+    i === 'prod-normal-8' ||
+    i === 'prod-normal-48' ||
+    i === 'prod-normal-49' ||
+    i === 'prod-blue-talisman-01' ||
+    i === 'prod-imagination-10'
+  ) {
+    return true;
+  }
+  return false;
+}
+
 export const createOrder = async (userId: string | null | undefined, data: any) => {
   if (!userId) {
     throw new AppError('Please sign in to place an order.', 401);
@@ -36,12 +58,14 @@ export const createOrder = async (userId: string | null | undefined, data: any) 
         });
       }
 
-      // Check if product is out of stock (e.g. Imagination or marked out of stock)
-      const isImagination = (item.name && item.name.toLowerCase().includes('imagination')) ||
-        (item.id && String(item.id).toLowerCase().includes('imagination')) ||
-        (product && (product.name?.toLowerCase().includes('imagination') || product.slug?.toLowerCase().includes('imagination') || product.id?.toLowerCase().includes('imagination')));
-      const isProductOutOfStock = isImagination ||
-        (product && (product.inStock === false || (product as any).isOutOfStock === true));
+      // Check if product is out of stock (e.g. Imagination, Spicebomb Extreme, Gucci Bloom, Explorer Platinum, Blue Talisman or marked out of stock)
+      const isProductOutOfStock = checkIsOutOfStock(
+        item.name || product?.name,
+        product?.slug,
+        item.productId || item.id || product?.id,
+        product?.inStock,
+        (product as any)?.isOutOfStock
+      );
       if (isProductOutOfStock) {
         throw new AppError(`${item.name || (product ? product.name : 'This item')} is currently out of stock and cannot be ordered.`, 400);
       }
@@ -87,10 +111,13 @@ export const createOrder = async (userId: string | null | undefined, data: any) 
     });
 
     for (const item of dbCartItems) {
-      const isImagination = (item.product.name && item.product.name.toLowerCase().includes('imagination')) ||
-        (item.product.slug && item.product.slug.toLowerCase().includes('imagination')) ||
-        (item.product.id && item.product.id.toLowerCase().includes('imagination'));
-      const isProductOutOfStock = isImagination || (item.product as any).inStock === false || (item.product as any).isOutOfStock === true;
+      const isProductOutOfStock = checkIsOutOfStock(
+        item.product.name,
+        item.product.slug,
+        item.product.id,
+        (item.product as any).inStock,
+        (item.product as any).isOutOfStock
+      );
       if (isProductOutOfStock) {
         throw new AppError(`${item.product.name} is currently out of stock and cannot be ordered.`, 400);
       }

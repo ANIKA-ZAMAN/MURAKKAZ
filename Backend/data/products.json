@@ -20,25 +20,25 @@
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 1000,
         "originalPrice": 1300,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1600,
         "originalPrice": 2000,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -126,7 +126,9 @@
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 1600tk"
+    "price": "300 - 1600tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-irish-leather-01",
@@ -2248,25 +2250,25 @@
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -2321,7 +2323,9 @@
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-normal-9",
@@ -6204,25 +6208,25 @@
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -6257,7 +6261,9 @@
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-normal-49",
@@ -6279,25 +6285,25 @@
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -6332,7 +6338,9 @@
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "inStock": false,
+    "isOutOfStock": true
   },
   {
     "id": "prod-normal-50",

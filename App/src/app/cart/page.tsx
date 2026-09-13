@@ -53,8 +53,23 @@ const initialCartItems: CartItem[] = [
 ];
 
 const isCartItemOutOfStock = (item: CartItem | any) => {
-  if (!item || !item.name) return false;
-  return item.name.toLowerCase().includes("imagination");
+  if (!item) return false;
+  const n = (item.name || "").toLowerCase();
+  const s = (item.slug || "").toLowerCase();
+  const id = (item.id || "").toLowerCase();
+  const oosKeywords = [
+    "imagination",
+    "spicebomb",
+    "gucci-bloom",
+    "explorer-platinum",
+    "blue-talisman",
+    "talisman"
+  ];
+  return (
+    oosKeywords.some((kw) => n.includes(kw) || s.includes(kw) || id.includes(kw)) ||
+    (n.includes("gucci") && n.includes("bloom")) ||
+    (n.includes("explorer") && n.includes("platinum"))
+  );
 };
 
 export default function CartPage() {

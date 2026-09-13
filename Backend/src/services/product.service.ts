@@ -33,14 +33,30 @@ function attachCategory(p: any) {
     EXCLUSIVE_SLUGS.has(p.slug) ||
     EXCLUSIVE_SLUGS.has(p.id) ||
     p.category?.toLowerCase() === 'exclusive';
-  const isImagination = (p.slug && p.slug.toLowerCase().includes('imagination')) ||
-    (p.id && p.id.toLowerCase().includes('imagination')) ||
-    (p.name && p.name.toLowerCase().includes('imagination'));
-  const isOutOfStock = isImagination || p.isOutOfStock === true || p.inStock === false;
+  const oosKeywords = [
+    'imagination',
+    'spicebomb',
+    'gucci-bloom',
+    'explorer-platinum',
+    'blue-talisman',
+    'talisman'
+  ];
+  const pName = (p.name || '').toLowerCase();
+  const pSlug = (p.slug || '').toLowerCase();
+  const pId = (p.id ? String(p.id) : '').toLowerCase();
 
-  const isBlueTalisman = (p.slug && p.slug.toLowerCase().includes('talisman')) ||
-    (p.id && p.id.toLowerCase().includes('talisman')) ||
-    (p.name && p.name.toLowerCase().includes('talisman'));
+  const isTargetOOS = oosKeywords.some(kw => pSlug.includes(kw) || pName.includes(kw) || pId.includes(kw)) ||
+    (pName.includes('gucci') && pName.includes('bloom')) ||
+    (pName.includes('explorer') && pName.includes('platinum')) ||
+    pId === 'prod-normal-8' ||
+    pId === 'prod-normal-48' ||
+    pId === 'prod-normal-49' ||
+    pId === 'prod-blue-talisman-01' ||
+    pId === 'prod-imagination-10';
+
+  const isOutOfStock = isTargetOOS || p.isOutOfStock === true || p.inStock === false;
+
+  const isBlueTalisman = pSlug.includes('talisman') || pId.includes('talisman') || pName.includes('talisman');
 
   return {
     ...p,

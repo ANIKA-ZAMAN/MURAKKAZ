@@ -456,9 +456,26 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   const isOutOfStock = React.useMemo(() => {
     const cleanId = id ? id.toLowerCase().trim() : "";
-    if (cleanId === "imagination" || cleanId === "prod-imagination-10" || cleanId.includes("imagination")) {
+    const oosKeywords = [
+      "imagination",
+      "spicebomb",
+      "gucci-bloom",
+      "explorer-platinum",
+      "blue-talisman",
+      "talisman"
+    ];
+
+    if (
+      oosKeywords.some(kw => cleanId.includes(kw)) ||
+      cleanId === "prod-normal-8" ||
+      cleanId === "prod-normal-48" ||
+      cleanId === "prod-normal-49" ||
+      cleanId === "prod-blue-talisman-01" ||
+      cleanId === "prod-imagination-10"
+    ) {
       return true;
     }
+
     if (liveProduct) {
       if (liveProduct.isOutOfStock === true || liveProduct.inStock === false) return true;
       if (liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
@@ -466,8 +483,17 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           return true;
         }
       }
-      if (liveProduct.name && liveProduct.name.toLowerCase().includes("imagination")) return true;
+      const lpName = (liveProduct.name || "").toLowerCase();
+      const lpSlug = (liveProduct.slug || "").toLowerCase();
+      if (
+        oosKeywords.some(kw => lpName.includes(kw) || lpSlug.includes(kw)) ||
+        (lpName.includes("gucci") && lpName.includes("bloom")) ||
+        (lpName.includes("explorer") && lpName.includes("platinum"))
+      ) {
+        return true;
+      }
     }
+
     if (catalogItem) {
       if ((catalogItem as any).isOutOfStock === true || (catalogItem as any).inStock === false) return true;
       if (catalogItem.sizes && Array.isArray(catalogItem.sizes) && catalogItem.sizes.length > 0) {
@@ -475,8 +501,15 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           return true;
         }
       }
-      if (catalogItem.slug && catalogItem.slug.toLowerCase().includes("imagination")) return true;
-      if (catalogItem.name && catalogItem.name.toLowerCase().includes("imagination")) return true;
+      const catName = (catalogItem.name || "").toLowerCase();
+      const catSlug = (catalogItem.slug || "").toLowerCase();
+      if (
+        oosKeywords.some(kw => catName.includes(kw) || catSlug.includes(kw)) ||
+        (catName.includes("gucci") && catName.includes("bloom")) ||
+        (catName.includes("explorer") && catName.includes("platinum"))
+      ) {
+        return true;
+      }
     }
     return false;
   }, [id, liveProduct, catalogItem]);
@@ -987,6 +1020,9 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
                 priority
                 unoptimized
               />
+              {isOutOfStock && (
+                <span className={styles.outOfStockBadgeOverlay}>OUT OF STOCK</span>
+              )}
             </div>
 
             {/* 3 Mini Images Row */}
