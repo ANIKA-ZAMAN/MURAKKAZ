@@ -208,7 +208,32 @@
   text-decoration: none;
 }
 
+.videoWithMedia {
+  background-color: #121110;
+}
+
+.realVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 14px;
+  background-color: #121110;
+}
+
+.placeholderLink {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  text-decoration: none;
+}
+
 .playButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
   width: 52px;
   height: 52px;
   border-radius: 50%;
@@ -229,16 +254,23 @@
   transition: transform 0.2s ease;
 }
 
-.videoPlaceholder:hover .playButton {
-  transform: scale(1.08);
+.videoPlaceholder:hover .playButton:not(.playButtonHidden) {
+  transform: translate(-50%, -50%) scale(1.08);
   background-color: #FFFFFF;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+}
+
+.playButtonHidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.85);
 }
 
 .durationBadge {
   position: absolute;
   bottom: 12px;
   right: 12px;
+  z-index: 3;
   background-color: rgba(28, 27, 26, 0.88);
   color: #FFFFFF;
   font-family: var(--font-geist-mono), monospace, sans-serif;

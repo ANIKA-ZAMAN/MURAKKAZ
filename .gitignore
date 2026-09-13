@@ -13,3 +13,5 @@ Backend/prisma/*.db-journal
 
 # Temporary archives
 *.tar.gz
+
+elements/video*.mp4

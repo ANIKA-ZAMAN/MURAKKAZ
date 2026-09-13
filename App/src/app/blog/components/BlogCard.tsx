@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { BlogPost } from "../../data/blogData";
 import styles from "../page.module.css";
@@ -10,31 +11,105 @@ interface BlogCardProps {
   onToggleLike: (id: string) => void;
 }
 
+export function resolveVideoUrl(src?: string): string | undefined {
+  if (!src) return undefined;
+  const s = src.trim();
+  if (
+    s === "elements video" ||
+    s === "elements/video" ||
+    s === "elements/video 1" ||
+    s === "elements video.mp4"
+  ) {
+    return "/elements/video 1.mp4";
+  }
+  return s;
+}
+
 export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps) {
   const postSlug = post.slug || post.id;
   const duration = post.duration || post.videoDuration || "00:45";
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const videoSrc = resolveVideoUrl(post.videoUrl);
+  const hasRealVideo = Boolean(videoSrc);
+
+  const handleTogglePlay = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!videoRef.current) return;
+
+    if (videoRef.current.paused) {
+      videoRef.current.play().catch((err) => {
+        console.warn("Video play interrupted:", err);
+      });
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <article className={styles.card} aria-labelledby={`title-${post.id}`}>
-      {/* Large Video Placeholder Container */}
-      <Link
-        href={`/blog/${postSlug}`}
-        className={styles.videoPlaceholder}
-        aria-label={`Watch video: ${post.title}`}
+      {/* Video Container / Thumbnail */}
+      <div
+        className={`${styles.videoPlaceholder} ${hasRealVideo ? styles.videoWithMedia : ""}`}
+        onClick={hasRealVideo ? handleTogglePlay : undefined}
       >
-        <div className={styles.playButton} aria-hidden="true">
+        {hasRealVideo ? (
+          <video
+            ref={videoRef}
+            className={styles.realVideo}
+            preload="metadata"
+            muted
+            playsInline
+            loop
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onEnded={() => setIsPlaying(false)}
+            aria-label={post.title}
+          >
+            <source src={videoSrc} type="video/mp4" />
+            <source src="/elements/video 1.mp4" type="video/mp4" />
+            <source src="/elements/video.mp4" type="video/mp4" />
+            <source src="/videos/perfume-01.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <Link
+            href={`/blog/${postSlug}`}
+            className={styles.placeholderLink}
+            aria-label={`Read article: ${post.title}`}
+          />
+        )}
+
+        {/* Centered Play Button Overlay */}
+        <button
+          type="button"
+          onClick={handleTogglePlay}
+          className={`${styles.playButton} ${isPlaying ? styles.playButtonHidden : ""}`}
+          aria-label={isPlaying ? "Pause video" : "Play video"}
+        >
           <svg
             className={styles.playIcon}
             viewBox="0 0 24 24"
             fill="currentColor"
           >
-            <polygon points="6 3 20 12 6 21 6 3" />
+            {isPlaying ? (
+              <>
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </>
+            ) : (
+              <polygon points="6 3 20 12 6 3" />
+            )}
           </svg>
-        </div>
+        </button>
 
         {/* Small corner duration badge */}
         <span className={styles.durationBadge}>{duration}</span>
-      </Link>
+      </div>
 
       {/* Editorial Content Below Video */}
       <div className={styles.cardContent}>
