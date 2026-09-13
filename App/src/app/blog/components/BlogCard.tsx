@@ -100,6 +100,28 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
     }
   };
 
+  const handleFullscreen = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!videoRef.current) return;
+
+    const el = videoRef.current as any;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else if (el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {});
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.webkitEnterFullscreen) {
+      // iOS Safari native video fullscreen
+      el.webkitEnterFullscreen();
+    } else if (el.mozRequestFullScreen) {
+      el.mozRequestFullScreen();
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen();
+    }
+  };
+
   return (
     <article className={styles.card} aria-labelledby={`title-${post.id}`}>
       {/* Video Container / Thumbnail */}
@@ -113,10 +135,14 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
               ref={videoRef}
               className={styles.realVideo}
               preload="auto"
-              autoPlay
               muted={isMuted}
               playsInline
               loop
+              onLoadedMetadata={(e) => {
+                try {
+                  e.currentTarget.currentTime = 0.001;
+                } catch (err) {}
+              }}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onEnded={() => setIsPlaying(false)}
@@ -138,6 +164,28 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
               )}
               Your browser does not support the video tag.
             </video>
+
+            {/* Fullscreen Expand Button in Thumbnail */}
+            <button
+              type="button"
+              onClick={handleFullscreen}
+              className={styles.fullscreenBtn}
+              aria-label="View video fullscreen"
+              title="Full screen"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+              </svg>
+            </button>
 
             {/* Sound / Volume Control Pill */}
             <div

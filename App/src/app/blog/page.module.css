@@ -215,10 +215,39 @@
 .realVideo {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
   display: block;
   border-radius: 14px;
   background-color: #121110;
+}
+
+.fullscreenBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  background-color: rgba(28, 27, 26, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #FAF8F5;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.fullscreenBtn:hover {
+  background-color: rgba(28, 27, 26, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.08);
+  color: #FFFFFF;
 }
 
 .placeholderLink {
@@ -234,24 +263,25 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.88);
+  background-color: rgba(255, 255, 255, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
   transition: all 0.25s ease;
   border: none;
+  cursor: pointer;
 }
 
 .playIcon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   fill: #1C1B1A !important;
   color: #1C1B1A !important;
-  margin-left: 2px;
+  margin-left: 3px;
   display: block;
   transition: transform 0.2s ease;
 }
@@ -259,7 +289,13 @@
 .videoPlaceholder:hover .playButton:not(.playButtonHidden) {
   transform: translate(-50%, -50%) scale(1.08);
   background-color: #FFFFFF;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
+
+.videoPlaceholder:hover .playButton.playButtonHidden {
+  opacity: 0.82;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .playButtonHidden {
