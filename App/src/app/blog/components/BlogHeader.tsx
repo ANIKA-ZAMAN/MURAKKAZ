@@ -5,17 +5,11 @@ import styles from "../page.module.css";
 interface BlogHeaderProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  activeCategory: string;
-  onSelectCategory: (category: string) => void;
 }
-
-const CATEGORIES = ["All", "Guides", "Reviews", "Behind the Scenes", "Stories"];
 
 export default function BlogHeader({
   searchQuery,
   onSearchChange,
-  activeCategory,
-  onSelectCategory,
 }: BlogHeaderProps) {
   return (
     <header className={styles.header}>
@@ -63,24 +57,6 @@ export default function BlogHeader({
               ✕
             </button>
           )}
-        </div>
-
-        <div className={styles.filterPills} role="tablist" aria-label="Category filters">
-          {CATEGORIES.map((category) => {
-            const isActive = activeCategory.toLowerCase() === category.toLowerCase();
-            return (
-              <button
-                key={category}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => onSelectCategory(category)}
-                className={`${styles.filterPill} ${isActive ? styles.filterPillActive : ""}`}
-              >
-                {category}
-              </button>
-            );
-          })}
         </div>
       </div>
     </header>

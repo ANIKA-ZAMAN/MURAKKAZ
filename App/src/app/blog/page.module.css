@@ -70,11 +70,10 @@
 
 .headerRight {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.85rem;
+  align-items: center;
+  justify-content: flex-end;
   width: 100%;
-  max-width: 480px;
+  max-width: 400px;
 }
 
 .searchWrapper {
@@ -134,40 +133,6 @@
 
 .clearSearchBtn:hover {
   color: #1C1B1A;
-}
-
-.filterPills {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-.filterPill {
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
-  padding: 0.38rem 1.15rem;
-  border-radius: 9999px;
-  border: 1.2px solid #D5CEBF;
-  background-color: transparent;
-  color: #2B2824;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.filterPill:hover {
-  border-color: #1C1B1A;
-  color: #1C1B1A;
-  background-color: rgba(28, 27, 26, 0.03);
-}
-
-.filterPillActive {
-  background-color: #1C1B1A !important;
-  color: #FFFFFF !important;
-  border-color: #1C1B1A !important;
 }
 
 /* ========================================== */
@@ -596,10 +561,6 @@
     max-width: 100%;
   }
 
-  .filterPills {
-    justify-content: flex-start;
-  }
-
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 2.25rem 1.5rem;
@@ -619,13 +580,6 @@
   .grid {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-
-  .filterPills {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 6px;
-    width: 100%;
   }
 }
 

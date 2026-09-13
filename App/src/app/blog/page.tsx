@@ -11,7 +11,6 @@ import { getApiBaseUrl } from "@/lib/api";
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>(fallbackPosts);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
 
@@ -44,21 +43,15 @@ export default function BlogPage() {
             return {
               id: item.id || item.slug,
               slug: item.slug || item.id,
-              date: item.publishedAt
-                ? new Date(item.publishedAt).toLocaleDateString("en-US", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  }).toUpperCase()
-                : fallback?.date || "12 JUL 2025",
+              date: "",
               title: item.title || fallback?.title || "",
               subtitle: item.description || fallback?.subtitle || "",
               description: item.description || fallback?.description || "",
               content: item.content || item.description || fallback?.content || "",
               image: item.image || fallback?.image || "/images/events/blog1.jpg",
               videoUrl: item.videoUrl || fallback?.videoUrl,
-              duration: item.duration || fallback?.duration || "00:45",
-              videoDuration: item.duration || fallback?.videoDuration || "00:45",
+              duration: item.duration || fallback?.duration || "",
+              videoDuration: item.duration || fallback?.videoDuration || "",
               author: item.author
                 ? (typeof item.author === "string" ? item.author : `${item.author.firstName} ${item.author.lastName}`)
                 : fallback?.author || "Eliyash Hossain",
@@ -86,26 +79,19 @@ export default function BlogPage() {
     });
   };
 
-  // Filter posts based on category and search query
+  // Filter posts based on search query
   const filteredPosts = posts.filter((post) => {
-    // Empty placeholder slots only appear in the default grid view (All categories & no search query)
+    // Empty placeholder slots only appear in the default grid view (no search query)
     if (!post.title) {
-      return activeCategory === "All" && !searchQuery.trim();
+      return !searchQuery.trim();
     }
 
-    const matchesCategory =
-      activeCategory === "All" ||
-      (post.category &&
-        post.category.trim().toLowerCase() === activeCategory.trim().toLowerCase());
-
     const query = searchQuery.trim().toLowerCase();
-    const matchesSearch =
+    return (
       !query ||
       post.title.toLowerCase().includes(query) ||
-      post.description.toLowerCase().includes(query) ||
-      (post.category && post.category.toLowerCase().includes(query));
-
-    return matchesCategory && matchesSearch;
+      post.description.toLowerCase().includes(query)
+    );
   });
 
   // Exactly 6 cards per page on desktop (3 x 2 grid)
@@ -124,26 +110,18 @@ export default function BlogPage() {
     setCurrentPage(1);
   };
 
-  const handleCategoryChange = (cat: string) => {
-    setActiveCategory(cat);
-    setCurrentPage(1);
-  };
-
   const handleResetFilters = () => {
     setSearchQuery("");
-    setActiveCategory("All");
     setCurrentPage(1);
   };
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        {/* Refined Page Header with Search and Category Filter Pills */}
+        {/* Refined Page Header with Search */}
         <BlogHeader
           searchQuery={searchQuery}
           onSearchChange={handleSearchChange}
-          activeCategory={activeCategory}
-          onSelectCategory={handleCategoryChange}
         />
 
         {/* 3-Column Editorial Grid (3 x 2 cards per page) */}
