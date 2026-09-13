@@ -6,7 +6,6 @@ import BlogHeader from "./components/BlogHeader";
 import BlogCard from "./components/BlogCard";
 import BlogPagination from "./components/BlogPagination";
 import styles from "./page.module.css";
-import { getApiBaseUrl } from "@/lib/api";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>(fallbackPosts);
@@ -24,51 +23,6 @@ export default function BlogPage() {
         console.error("Failed to parse liked blog posts", e);
       }
     }
-  }, []);
-
-  // Optionally fetch live blog posts if API is available, merging with fallback
-  useEffect(() => {
-    const baseUrl = getApiBaseUrl();
-    fetch(`${baseUrl}/api/blog`)
-      .then((res) => {
-        if (res.ok) return res.json();
-        throw new Error("API response not ok");
-      })
-      .then((data) => {
-        if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
-          const mapped: BlogPost[] = data.data.map((item: any) => {
-            const fallback = fallbackPosts.find(
-              (f) => (f.slug && f.slug === item.slug) || f.id === item.id || f.title === item.title
-            );
-            return {
-              id: item.id || item.slug,
-              slug: item.slug || item.id,
-              date: "",
-              title: item.title || fallback?.title || "",
-              subtitle: item.description || fallback?.subtitle || "",
-              description: item.description || fallback?.description || "",
-              content: item.content || item.description || fallback?.content || "",
-              image: item.image || fallback?.image || "/images/events/blog1.jpg",
-              videoUrl: item.videoUrl || fallback?.videoUrl,
-              duration: item.duration || fallback?.duration || "",
-              videoDuration: item.duration || fallback?.videoDuration || "",
-              author: item.author
-                ? (typeof item.author === "string" ? item.author : `${item.author.firstName} ${item.author.lastName}`)
-                : fallback?.author || "Eliyash Hossain",
-              category: item.category || fallback?.category || "Stories",
-              readTime: fallback?.readTime || "4 min read",
-            };
-          });
-
-          // Always keep fallbackPosts in their curated editorial order so Card 1 has the real video
-          const fallbackIds = new Set(fallbackPosts.map((fp) => fp.slug || fp.id));
-          const extraApiPosts = mapped.filter((m) => !fallbackIds.has(m.slug || m.id));
-          setPosts([...fallbackPosts, ...extraApiPosts]);
-        }
-      })
-      .catch(() => {
-        setPosts(fallbackPosts);
-      });
   }, []);
 
   const toggleLike = (postId: string) => {
