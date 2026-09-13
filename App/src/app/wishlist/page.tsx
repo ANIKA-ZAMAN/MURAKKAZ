@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
@@ -24,7 +24,9 @@ export default function WishlistPage() {
   const [related, setRelated] = useState<WishlistProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [favoritesLimit, setFavoritesLimit] = useState(8);
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  const carouselViewportRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const syncWishlist = () => {
@@ -221,13 +223,40 @@ export default function WishlistPage() {
     }
   };
 
+  const checkCarouselScroll = () => {
+    if (carouselViewportRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselViewportRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
+    }
+  };
+
   const handlePrevCarousel = () => {
-    setCarouselIndex((prev) => Math.max(prev - 1, 0));
+    if (carouselViewportRef.current) {
+      const scrollAmount = carouselViewportRef.current.clientWidth * 0.75;
+      carouselViewportRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    }
   };
 
   const handleNextCarousel = () => {
-    setCarouselIndex((prev) => Math.min(prev + 1, Math.max(0, related.length - 4)));
+    if (carouselViewportRef.current) {
+      const scrollAmount = carouselViewportRef.current.clientWidth * 0.75;
+      carouselViewportRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
   };
+
+  useEffect(() => {
+    const el = carouselViewportRef.current;
+    if (el) {
+      checkCarouselScroll();
+      el.addEventListener("scroll", checkCarouselScroll, { passive: true });
+      window.addEventListener("resize", checkCarouselScroll);
+      return () => {
+        el.removeEventListener("scroll", checkCarouselScroll);
+        window.removeEventListener("resize", checkCarouselScroll);
+      };
+    }
+  }, [related]);
 
   const filteredFavorites = favorites.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -243,7 +272,7 @@ export default function WishlistPage() {
           <h1 className={styles.title}>
             Your Favorite Things
             {isLoaded && favorites.length > 0 && (
-              <span style={{ fontSize: "1.25rem", color: "#820011", marginLeft: "0.75rem", fontWeight: 600 }}>
+              <span className={styles.countBadge}>
                 ({favorites.length})
               </span>
             )}
@@ -376,101 +405,91 @@ export default function WishlistPage() {
         {/* Products Related To Your Liking */}
         {related.length > 0 && (
           <div className={styles.relatedSection}>
-            <h2 className={styles.relatedTitle}>Products Related To Your Liking</h2>
-            <div className={styles.carouselContainer}>
-              {/* Left Nav */}
-              <button
-                className={styles.carouselNavBtn}
-                onClick={handlePrevCarousel}
-                disabled={carouselIndex === 0}
-                style={{ opacity: carouselIndex === 0 ? 0.3 : 1, cursor: carouselIndex === 0 ? "default" : "pointer" }}
-                aria-label="Previous Related Products"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              </button>
-
-              {/* Carousel Viewport Container */}
-              <div className={styles.carouselViewport}>
-                <div
-                  className={styles.carouselTrack}
-                  style={{ "--carousel-index": carouselIndex } as React.CSSProperties}
+            <div className={styles.relatedHeader}>
+              <h2 className={styles.relatedTitle}>Products Related To Your Liking</h2>
+              <div className={styles.carouselNavGroup}>
+                <button
+                  className={styles.carouselNavBtn}
+                  onClick={handlePrevCarousel}
+                  disabled={!canScrollLeft}
+                  aria-label="Previous Related Products"
                 >
-                  {related.map((item) => (
-                    <div key={item.id} className={styles.carouselCard}>
-                      <div className={styles.card}>
-                        <div className={styles.imageWrapper}>
-                          <img src={item.image} alt={item.name} className={styles.productImg} />
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button
+                  className={styles.carouselNavBtn}
+                  onClick={handleNextCarousel}
+                  disabled={!canScrollRight}
+                  aria-label="Next Related Products"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.carouselViewport} ref={carouselViewportRef}>
+              <div className={styles.carouselTrack}>
+                {related.map((item) => (
+                  <div key={item.id} className={styles.carouselCard}>
+                    <div className={styles.card}>
+                      <div className={styles.imageWrapper}>
+                        <img src={item.image} alt={item.name} className={styles.productImg} />
+                      </div>
+                      <div className={styles.cardDetails}>
+                        <div className={styles.titleHeartRow}>
+                          <h3 className={styles.productName}>{item.name}</h3>
+                          <button
+                            className={styles.heartBtn}
+                            onClick={() => toggleFavorite(item.id, true)}
+                            title={item.inWishlist ? "Remove from wishlist" : "Add to wishlist"}
+                          >
+                            {item.inWishlist ? (
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="#820011" stroke="#820011" strokeWidth="1.5">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                              </svg>
+                            ) : (
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a7a7d" strokeWidth="1.5">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                              </svg>
+                            )}
+                          </button>
                         </div>
-                        <div className={styles.cardDetails}>
-                          <div className={styles.titleHeartRow}>
-                            <h3 className={styles.productName}>{item.name}</h3>
-                            <button
-                              className={styles.heartBtn}
-                              onClick={() => toggleFavorite(item.id, true)}
-                              title={item.inWishlist ? "Remove from wishlist" : "Add to wishlist"}
-                            >
-                              {item.inWishlist ? (
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="#820011" stroke="#820011" strokeWidth="1.5">
-                                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                </svg>
-                              ) : (
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a7a7d" strokeWidth="1.5">
-                                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                </svg>
-                              )}
-                            </button>
+                        <div className={styles.inspiredBy}>{item.inspiredBy}</div>
+                        <div className={styles.ratingPriceRow}>
+                          <div className={styles.ratingWrapper}>
+                            <span className={styles.starIcon}>★</span>
+                            <span className={styles.ratingValue}>{item.rating}</span>
+                            <span className={styles.ratingCount}>({item.ratingCount})</span>
                           </div>
-                          <div className={styles.inspiredBy}>{item.inspiredBy}</div>
-                          <div className={styles.ratingPriceRow}>
-                            <div className={styles.ratingWrapper}>
-                              <span className={styles.starIcon}>★</span>
-                              <span className={styles.ratingValue}>{item.rating}</span>
-                              <span className={styles.ratingCount}>({item.ratingCount})</span>
-                            </div>
-                            <div className={styles.priceContainer}>
-                              <span className={styles.price}>{item.price}</span>
-                            </div>
+                          <div className={styles.priceContainer}>
+                            <span className={styles.price}>{item.price}</span>
                           </div>
-                          <div className={styles.actionButtons}>
-                            <button
-                              type="button"
-                              className={styles.buyNowBtn}
-                              onClick={() => handleBuyNow(item)}
-                            >
-                              Buy Now
-                            </button>
-                            <button
-                              type="button"
-                              className={styles.addBagBtn}
-                              onClick={() => handleAddToBag(item)}
-                            >
-                              Add to Bag
-                            </button>
-                          </div>
+                        </div>
+                        <div className={styles.actionButtons}>
+                          <button
+                            type="button"
+                            className={styles.buyNowBtn}
+                            onClick={() => handleBuyNow(item)}
+                          >
+                            Buy Now
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.addBagBtn}
+                            onClick={() => handleAddToBag(item)}
+                          >
+                            Add to Bag
+                          </button>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-
-              {/* Right Nav */}
-              <button
-                className={styles.carouselNavBtn}
-                onClick={handleNextCarousel}
-                disabled={carouselIndex >= Math.max(0, related.length - 4)}
-                style={{
-                  opacity: carouselIndex >= Math.max(0, related.length - 4) ? 0.3 : 1,
-                  cursor: carouselIndex >= Math.max(0, related.length - 4) ? "default" : "pointer",
-                }}
-                aria-label="Next Related Products"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
             </div>
           </div>
         )}
