@@ -5,18 +5,17 @@ import { blogPosts as fallbackPosts, BlogPost } from "../data/blogData";
 import BlogHeader from "./components/BlogHeader";
 import BlogCard from "./components/BlogCard";
 import BlogPagination from "./components/BlogPagination";
-import PerfumeVideoGrid from "./components/PerfumeVideoGrid";
 import styles from "./page.module.css";
 import { getApiBaseUrl } from "@/lib/api";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<BlogPost[]>(fallbackPosts);
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
-  const [viewTab, setViewTab] = useState<"all" | "videos" | "articles">("all");
 
-  // Load liked posts from localStorage
+  // Load wishlist liked posts from localStorage
   useEffect(() => {
     const savedLikes = localStorage.getItem("blog-liked-posts");
     if (savedLikes) {
@@ -28,18 +27,9 @@ export default function BlogPage() {
     }
   }, []);
 
-  // Fetch live blog posts from API if available
+  // Optionally fetch live blog posts if API is available, merging with fallback
   useEffect(() => {
     const baseUrl = getApiBaseUrl();
-    const defaultBlogImages = [
-      "/images/events/blog1.jpg",
-      "/images/events/blog2.jpg",
-      "/images/events/blog3.jpg",
-      "/images/events/eliyas.jpg",
-      "/images/events/event_gallery_1.jpg",
-      "/images/events/event_gallery_2.jpg",
-    ];
-
     fetch(`${baseUrl}/api/blog`)
       .then((res) => {
         if (res.ok) return res.json();
@@ -47,29 +37,41 @@ export default function BlogPage() {
       })
       .then((data) => {
         if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
-          const mapped: BlogPost[] = data.data.map((item: any, idx: number) => {
-            let img = item.image;
-            if (!img || img === "null" || img === "undefined" || !img.trim()) {
-              img = defaultBlogImages[idx % defaultBlogImages.length];
-            } else if (!img.startsWith("http") && !img.startsWith("/")) {
-              img = `/images/events/${img}`;
-            }
-
+          const mapped: BlogPost[] = data.data.map((item: any) => {
             return {
               id: item.id || item.slug,
               slug: item.slug || item.id,
-              date: item.publishedAt ? new Date(item.publishedAt).toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' }) : "19th May, 2026",
+              date: item.publishedAt
+                ? new Date(item.publishedAt).toLocaleDateString("en-US", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  }).toUpperCase()
+                : "12 JUL 2025",
               title: item.title,
               subtitle: item.description,
               description: item.description,
               content: item.content || item.description,
-              image: img,
-              author: item.author ? `${item.author.firstName} ${item.author.lastName}` : "Eliyash Hossain",
-              category: item.category || "Olfactory Journal",
-              readTime: "5 min read",
+              image: item.image || "/images/events/blog1.jpg",
+              duration: item.duration || "00:45",
+              videoDuration: item.duration || "00:45",
+              author: item.author
+                ? `${item.author.firstName} ${item.author.lastName}`
+                : "Eliyash Hossain",
+              category: item.category || "Stories",
+              readTime: "4 min read",
             };
           });
-          setPosts(mapped);
+
+          // Merge live posts with fallback so reference layout items are always present
+          const existingIds = new Set(mapped.map((m) => m.slug || m.id));
+          const combined = [...mapped];
+          fallbackPosts.forEach((fp) => {
+            if (!existingIds.has(fp.slug || fp.id)) {
+              combined.push(fp);
+            }
+          });
+          setPosts(combined);
         }
       })
       .catch(() => {
@@ -85,12 +87,24 @@ export default function BlogPage() {
     });
   };
 
-  // Filter posts
-  const filteredPosts = posts.filter((post) =>
-    post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    post.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter posts based on category and search query
+  const filteredPosts = posts.filter((post) => {
+    const matchesCategory =
+      activeCategory === "All" ||
+      (post.category &&
+        post.category.trim().toLowerCase() === activeCategory.trim().toLowerCase());
 
+    const query = searchQuery.trim().toLowerCase();
+    const matchesSearch =
+      !query ||
+      post.title.toLowerCase().includes(query) ||
+      post.description.toLowerCase().includes(query) ||
+      (post.category && post.category.toLowerCase().includes(query));
+
+    return matchesCategory && matchesSearch;
+  });
+
+  // Exactly 6 cards per page on desktop (3 x 2 grid)
   const itemsPerPage = 6;
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -101,167 +115,81 @@ export default function BlogPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleSearchChange = (q: string) => {
+    setSearchQuery(q);
+    setCurrentPage(1);
+  };
+
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat);
+    setCurrentPage(1);
+  };
+
+  const handleResetFilters = () => {
+    setSearchQuery("");
+    setActiveCategory("All");
+    setCurrentPage(1);
+  };
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        {/* Header: Vlog title + Search your perfume */}
+        {/* Refined Page Header with Search and Category Filter Pills */}
         <BlogHeader
           searchQuery={searchQuery}
-          onSearchChange={(q) => {
-            setSearchQuery(q);
-            setCurrentPage(1);
-          }}
+          onSearchChange={handleSearchChange}
+          activeCategory={activeCategory}
+          onSelectCategory={handleCategoryChange}
         />
 
-        {/* View Switcher Tabs */}
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            alignItems: "center",
-            flexWrap: "wrap",
-            borderBottom: "1px solid rgba(0, 0, 0, 0.08)",
-            paddingBottom: "12px",
-            marginTop: "-0.5rem",
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => setViewTab("all")}
-            style={{
-              padding: "7px 18px",
-              borderRadius: "30px",
-              border: "none",
-              background: viewTab === "all" ? "#1f1f22" : "#f2edf9",
-              color: viewTab === "all" ? "#ffffff" : "#555558",
-              fontSize: "0.82rem",
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
+        {/* 3-Column Editorial Grid (3 x 2 cards per page) */}
+        {paginatedPosts.length > 0 ? (
+          <section
+            className={styles.grid}
+            aria-label="Fragrance videos and stories grid"
           >
-            All Highlights
-          </button>
-          <button
-            type="button"
-            onClick={() => setViewTab("videos")}
-            style={{
-              padding: "7px 18px",
-              borderRadius: "30px",
-              border: "none",
-              background: viewTab === "videos" ? "#1f1f22" : "#f2edf9",
-              color: viewTab === "videos" ? "#ffffff" : "#555558",
-              fontSize: "0.82rem",
-              fontWeight: 600,
-              cursor: "pointer",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              transition: "all 0.2s ease",
-            }}
-          >
-            <span style={{ fontSize: "11px" }}>▶</span> Perfume Cinema (Videos)
-          </button>
-          <button
-            type="button"
-            onClick={() => setViewTab("articles")}
-            style={{
-              padding: "7px 18px",
-              borderRadius: "30px",
-              border: "none",
-              background: viewTab === "articles" ? "#1f1f22" : "#f2edf9",
-              color: viewTab === "articles" ? "#ffffff" : "#555558",
-              fontSize: "0.82rem",
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-          >
-            Editorial Articles
-          </button>
-        </div>
-
-        {/* Perfume Video Grid Section */}
-        {(viewTab === "all" || viewTab === "videos") && (
-          <PerfumeVideoGrid />
+            {paginatedPosts.map((post) => (
+              <BlogCard
+                key={post.id}
+                post={post}
+                isLiked={!!likedPosts[post.id]}
+                onToggleLike={toggleLike}
+              />
+            ))}
+          </section>
+        ) : (
+          <div className={styles.noResults} role="status">
+            <div className={styles.noResultsIcon}>✧</div>
+            <h2
+              style={{
+                fontFamily: "var(--font-playfair), Georgia, serif",
+                fontSize: "1.6rem",
+                color: "#1C1B1A",
+                margin: 0,
+              }}
+            >
+              No Fragrance Videos Found
+            </h2>
+            <p style={{ maxWidth: "420px", margin: 0, fontSize: "0.88rem" }}>
+              We could not find any videos or stories matching your search or category filter.
+            </p>
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className={styles.resetFiltersBtn}
+            >
+              Reset Filters
+            </button>
+          </div>
         )}
 
-        {/* Editorial Articles Section */}
-        {(viewTab === "all" || viewTab === "articles") && (
-          <section style={{ display: "flex", flexDirection: "column", gap: "1.5rem", width: "100%" }}>
-            {viewTab === "all" && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "4px",
-                  borderTop: "1px solid rgba(197, 168, 128, 0.25)",
-                  paddingTop: "2rem",
-                  marginTop: "1rem",
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: "0.72rem",
-                    letterSpacing: "0.18em",
-                    textTransform: "uppercase",
-                    color: "#820011",
-                    fontWeight: 700,
-                  }}
-                >
-                  The Olfactory Journal
-                </span>
-                <h2
-                  style={{
-                    fontFamily: "var(--font-playfair), serif",
-                    fontSize: "1.9rem",
-                    color: "#1f1f22",
-                    margin: 0,
-                    fontWeight: 500,
-                  }}
-                >
-                  Fragrance Guides & Stories
-                </h2>
-              </div>
-            )}
-
-            {paginatedPosts.length > 0 ? (
-              <div className={styles.grid}>
-                {paginatedPosts.map((post) => (
-                  <BlogCard
-                    key={post.id}
-                    post={post}
-                    isLiked={!!likedPosts[post.id]}
-                    onToggleLike={toggleLike}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className={styles.noResults}>
-                <div className={styles.noResultsIcon}>✧</div>
-                <h3>No Perfume Articles Found</h3>
-                <p>
-                  We couldn&apos;t find any articles matching your search query. Try searching with a different perfume note or keyword.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery("")}
-                  className={styles.resetSearchBtn}
-                >
-                  Reset Search
-                </button>
-              </div>
-            )}
-
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <BlogPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />
-            )}
-          </section>
+        {/* Centered Pagination Controls */}
+        {totalPages > 1 && (
+          <BlogPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         )}
       </main>
     </div>

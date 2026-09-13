@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "../page.module.css";
 
 interface BlogPaginationProps {
@@ -6,11 +8,16 @@ interface BlogPaginationProps {
   onPageChange: (pageNum: number) => void;
 }
 
-export default function BlogPagination({ currentPage, totalPages, onPageChange }: BlogPaginationProps) {
+export default function BlogPagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: BlogPaginationProps) {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <nav className={styles.pagination} aria-label="Pagination Navigation">
+      {/* Previous Page Arrow */}
       <button
         type="button"
         onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
@@ -18,18 +25,30 @@ export default function BlogPagination({ currentPage, totalPages, onPageChange }
         className={styles.paginationArrow}
         aria-label="Previous Page"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6" />
         </svg>
       </button>
 
+      {/* Page Numbers */}
       <div className={styles.pageNumbers}>
         {pages.map((pageNum) => (
           <button
             key={pageNum}
             type="button"
             onClick={() => onPageChange(pageNum)}
-            className={`${styles.pageNumber} ${currentPage === pageNum ? styles.activePage : ""}`}
+            className={`${styles.pageNumber} ${
+              currentPage === pageNum ? styles.activePage : ""
+            }`}
             aria-label={`Go to page ${pageNum}`}
             aria-current={currentPage === pageNum ? "page" : undefined}
           >
@@ -38,6 +57,7 @@ export default function BlogPagination({ currentPage, totalPages, onPageChange }
         ))}
       </div>
 
+      {/* Next Page Arrow */}
       <button
         type="button"
         onClick={() => onPageChange(Math.min(currentPage + 1, totalPages))}
@@ -45,8 +65,17 @@ export default function BlogPagination({ currentPage, totalPages, onPageChange }
         className={styles.paginationArrow}
         aria-label="Next Page"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6" />
         </svg>
       </button>
     </nav>
