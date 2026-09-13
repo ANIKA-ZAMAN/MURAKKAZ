@@ -18,9 +18,24 @@ export function resolveVideoUrl(src?: string): string | undefined {
     s === "elements video" ||
     s === "elements/video" ||
     s === "elements/video 1" ||
-    s === "elements video.mp4"
+    s === "elements video.mp4" ||
+    s === "elements video 1.mp4"
   ) {
     return "/elements/video 1.mp4";
+  }
+  if (
+    s === "elements video 2" ||
+    s === "elements/video 2" ||
+    s === "elements video 2.mp4"
+  ) {
+    return "/elements/video 2.mp4";
+  }
+  if (
+    s === "elements video 3" ||
+    s === "elements/video 3" ||
+    s === "elements video 3.mp4"
+  ) {
+    return "/elements/video 3.mp4";
   }
   return s;
 }
@@ -30,6 +45,8 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
   const duration = post.duration || post.videoDuration || "00:45";
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [volume, setVolume] = useState(0.8);
 
   const videoSrc = resolveVideoUrl(post.videoUrl);
   const hasRealVideo = Boolean(videoSrc);
@@ -50,6 +67,39 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
     }
   };
 
+  const handleToggleSound = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!videoRef.current) return;
+
+    if (isMuted) {
+      videoRef.current.muted = false;
+      const targetVol = volume > 0.05 ? volume : 0.8;
+      videoRef.current.volume = targetVol;
+      setVolume(targetVol);
+      setIsMuted(false);
+    } else {
+      videoRef.current.muted = true;
+      setIsMuted(true);
+    }
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    const newVol = parseFloat(e.target.value);
+    setVolume(newVol);
+    if (!videoRef.current) return;
+
+    videoRef.current.volume = newVol;
+    if (newVol <= 0.01) {
+      videoRef.current.muted = true;
+      setIsMuted(true);
+    } else {
+      videoRef.current.muted = false;
+      setIsMuted(false);
+    }
+  };
+
   return (
     <article className={styles.card} aria-labelledby={`title-${post.id}`}>
       {/* Video Container / Thumbnail */}
@@ -58,25 +108,106 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
         onClick={hasRealVideo ? handleTogglePlay : undefined}
       >
         {hasRealVideo ? (
-          <video
-            ref={videoRef}
-            className={styles.realVideo}
-            preload="auto"
-            autoPlay
-            muted
-            playsInline
-            loop
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onEnded={() => setIsPlaying(false)}
-            aria-label={post.title}
-          >
-            <source src={videoSrc} type="video/mp4" />
-            <source src="/elements/video 1.mp4" type="video/mp4" />
-            <source src="/elements/video.mp4" type="video/mp4" />
-            <source src="/videos/perfume-01.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <>
+            <video
+              ref={videoRef}
+              className={styles.realVideo}
+              preload="auto"
+              autoPlay
+              muted={isMuted}
+              playsInline
+              loop
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+              onEnded={() => setIsPlaying(false)}
+              aria-label={post.title}
+            >
+              <source src={videoSrc} type="video/mp4" />
+              {videoSrc?.includes('video 1') && (
+                <>
+                  <source src="/elements/video 1.mp4" type="video/mp4" />
+                  <source src="/elements/video.mp4" type="video/mp4" />
+                  <source src="/videos/perfume-01.mp4" type="video/mp4" />
+                </>
+              )}
+              {videoSrc?.includes('video 2') && (
+                <source src="/elements/video 2.mp4" type="video/mp4" />
+              )}
+              {videoSrc?.includes('video 3') && (
+                <source src="/elements/video 3.mp4" type="video/mp4" />
+              )}
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Sound / Volume Control Pill */}
+            <div
+              className={styles.volumeControlWrapper}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={handleToggleSound}
+                className={styles.soundBtn}
+                aria-label={isMuted ? "Unmute video sound" : "Mute video sound"}
+                title={isMuted ? "Turn Sound On" : "Mute Sound"}
+              >
+                {isMuted || volume <= 0.01 ? (
+                  /* Muted Speaker Icon */
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+                    <line x1="23" y1="9" x2="17" y2="15" />
+                    <line x1="17" y1="9" x2="23" y2="15" />
+                  </svg>
+                ) : (
+                  /* Active Sound Speaker Icon */
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                  </svg>
+                )}
+              </button>
+
+              <span
+                onClick={handleToggleSound}
+                className={styles.soundLabel}
+              >
+                {isMuted ? "Sound" : `${Math.round((isMuted ? 0 : volume) * 100)}%`}
+              </span>
+
+              {/* Volume Slider for Sound Up and Down */}
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value={isMuted ? 0 : volume}
+                onChange={handleVolumeChange}
+                onClick={(e) => e.stopPropagation()}
+                className={styles.volumeSlider}
+                aria-label="Adjust volume up or down"
+                title="Adjust sound volume"
+              />
+            </div>
+          </>
         ) : (
           <Link
             href={`/blog/${postSlug}`}
