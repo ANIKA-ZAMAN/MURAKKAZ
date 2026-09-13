@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { BlogPost } from "../../data/blogData";
 import styles from "../page.module.css";
@@ -100,14 +100,50 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
     }
   };
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isFs = Boolean(
+        document.fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).mozFullScreenElement ||
+        (document as any).msFullscreenElement
+      );
+      if (videoRef.current) {
+        videoRef.current.controls = isFs;
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+    document.addEventListener("MSFullscreenChange", handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+      document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
+      document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
+    };
+  }, []);
+
   const handleFullscreen = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (!videoRef.current) return;
 
     const el = videoRef.current as any;
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
+
+    if (el.paused) {
+      el.play().catch(() => {});
+      setIsPlaying(true);
+    }
+
+    if (document.fullscreenElement || (document as any).webkitFullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      }
     } else if (el.requestFullscreen) {
       el.requestFullscreen().catch(() => {});
     } else if (el.webkitRequestFullscreen) {
@@ -128,6 +164,7 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
       <div
         className={`${styles.videoPlaceholder} ${hasRealVideo ? styles.videoWithMedia : ""}`}
         onClick={hasRealVideo ? handleTogglePlay : undefined}
+        onDoubleClick={hasRealVideo ? handleFullscreen : undefined}
       >
         {hasRealVideo ? (
           <>
