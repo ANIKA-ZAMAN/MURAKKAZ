@@ -14,7 +14,6 @@ export default function BlogHeader({
   return (
     <header className={styles.header}>
       <div className={styles.headerLeft}>
-        <span className={styles.brandEyebrow}>MURAKKAZ</span>
         <h1 className={styles.pageTitle}>Fragrance Videos</h1>
         <p className={styles.pageSubtitle}>
           <span className={styles.pageSubtitleLine}>Behind the scents, beyond the bottle.</span>

@@ -36,15 +36,6 @@
   max-width: 580px;
 }
 
-.brandEyebrow {
-  font-family: var(--font-geist-sans), sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #8C8478;
-  margin-bottom: 0.45rem;
-}
 
 .pageTitle {
   font-family: var(--font-playfair), var(--font-lora), Georgia, serif;
