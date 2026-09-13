@@ -3,7 +3,7 @@
 import { use, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { blogPosts, BlogPost } from "../../data/blogData";
+import { blogPosts, legacyBlogPosts, BlogPost } from "../../data/blogData";
 import BlogCard from "../components/BlogCard";
 import styles from "./article.module.css";
 import { getApiBaseUrl } from "@/lib/api";
@@ -33,7 +33,12 @@ export default function BlogDetailPage({ params }: PageProps) {
 
   // Find post in static data or try API fetch
   useEffect(() => {
-    const found = blogPosts.find((p) => p.slug === slug || p.id === slug);
+    const allPosts = [...blogPosts, ...legacyBlogPosts];
+    const found =
+      allPosts.find((p) => p.slug === slug || p.id === slug) ||
+      (slug === "the-story-behind-murakkaz" ? blogPosts[0] : undefined) ||
+      (slug === "how-to-choose-your-signature-scent" ? blogPosts[1] : undefined) ||
+      (slug === "layering-scents-like-a-pro" ? blogPosts[2] : undefined);
     if (found) {
       setPost(found);
     } else {
@@ -97,7 +102,7 @@ export default function BlogDetailPage({ params }: PageProps) {
     }
   };
 
-  const relatedPosts = blogPosts.filter((p) => p.id !== post.id).slice(0, 3);
+  const relatedPosts = blogPosts.filter((p) => p.id !== post.id && p.title).slice(0, 3);
 
   const contentParagraphs = Array.isArray(post.content)
     ? post.content
@@ -138,9 +143,11 @@ export default function BlogDetailPage({ params }: PageProps) {
               </div>
             </div>
 
-            <div className={styles.dateMeta}>
-              <span>Published on {post.date}</span>
-            </div>
+            {post.date ? (
+              <div className={styles.dateMeta}>
+                <span>Published on {post.date}</span>
+              </div>
+            ) : null}
           </div>
         </header>
 

@@ -212,6 +212,32 @@
   background: radial-gradient(ellipse at center, #262422 0%, #141312 100%);
 }
 
+.emptyPlaceholder {
+  background-color: #E2DDD5;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  cursor: default !important;
+}
+
+.emptySlotContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.emptySlotIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
 .realVideo {
   width: 100%;
   height: 100%;
@@ -339,9 +365,9 @@
 
 .metaRow {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.35rem;
 }
 
 .postDate {

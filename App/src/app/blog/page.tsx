@@ -88,6 +88,11 @@ export default function BlogPage() {
 
   // Filter posts based on category and search query
   const filteredPosts = posts.filter((post) => {
+    // Empty placeholder slots only appear in the default grid view (All categories & no search query)
+    if (!post.title) {
+      return activeCategory === "All" && !searchQuery.trim();
+    }
+
     const matchesCategory =
       activeCategory === "All" ||
       (post.category &&

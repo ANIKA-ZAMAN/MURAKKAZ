@@ -42,7 +42,7 @@ export function resolveVideoUrl(src?: string): string | undefined {
 
 export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps) {
   const postSlug = post.slug || post.id;
-  const duration = post.duration || post.videoDuration || "00:45";
+  const duration = post.duration || post.videoDuration || "";
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -162,7 +162,7 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
     <article className={styles.card} aria-labelledby={`title-${post.id}`}>
       {/* Video Container / Thumbnail */}
       <div
-        className={`${styles.videoPlaceholder} ${hasRealVideo ? styles.videoWithMedia : ""}`}
+        className={`${styles.videoPlaceholder} ${hasRealVideo ? styles.videoWithMedia : styles.emptyPlaceholder}`}
         onClick={hasRealVideo ? handleTogglePlay : undefined}
         onDoubleClick={hasRealVideo ? handleFullscreen : undefined}
       >
@@ -292,79 +292,101 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
                 title="Adjust sound volume"
               />
             </div>
+
+            {/* Centered Play Button Overlay */}
+            <button
+              type="button"
+              onClick={handleTogglePlay}
+              className={`${styles.playButton} ${isPlaying ? styles.playButtonHidden : ""}`}
+              aria-label={isPlaying ? "Pause video" : "Play video"}
+            >
+              <svg
+                className={styles.playIcon}
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="#1C1B1A"
+              >
+                {isPlaying ? (
+                  <g fill="#1C1B1A">
+                    <rect x="6" y="4" width="4" height="16" fill="#1C1B1A" />
+                    <rect x="14" y="4" width="4" height="16" fill="#1C1B1A" />
+                  </g>
+                ) : (
+                  <polygon points="7 4 19 12 7 20" fill="#1C1B1A" />
+                )}
+              </svg>
+            </button>
+
+            {/* Small corner duration badge */}
+            {duration ? <span className={styles.durationBadge}>{duration}</span> : null}
           </>
         ) : (
-          <Link
-            href={`/blog/${postSlug}`}
-            className={styles.placeholderLink}
-            aria-label={`Read article: ${post.title}`}
-          />
+          /* Empty placeholder box */
+          <div className={styles.emptySlotContent}>
+            {post.title ? (
+              <Link
+                href={`/blog/${postSlug}`}
+                className={styles.placeholderLink}
+                aria-label={`Read article: ${post.title}`}
+              />
+            ) : null}
+            <div className={styles.emptySlotIcon}>
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#A8A095"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polygon points="6 4 19 12 6 20 6 4" fill="#C8C0B2" opacity="0.3" />
+              </svg>
+            </div>
+          </div>
         )}
-
-        {/* Centered Play Button Overlay */}
-        <button
-          type="button"
-          onClick={handleTogglePlay}
-          className={`${styles.playButton} ${isPlaying ? styles.playButtonHidden : ""}`}
-          aria-label={isPlaying ? "Pause video" : "Play video"}
-        >
-          <svg
-            className={styles.playIcon}
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="#1C1B1A"
-          >
-            {isPlaying ? (
-              <g fill="#1C1B1A">
-                <rect x="6" y="4" width="4" height="16" fill="#1C1B1A" />
-                <rect x="14" y="4" width="4" height="16" fill="#1C1B1A" />
-              </g>
-            ) : (
-              <polygon points="7 4 19 12 7 20" fill="#1C1B1A" />
-            )}
-          </svg>
-        </button>
-
-        {/* Small corner duration badge */}
-        <span className={styles.durationBadge}>{duration}</span>
       </div>
 
       {/* Editorial Content Below Video */}
-      <div className={styles.cardContent}>
-        {/* Date + Wishlist Icon */}
-        <div className={styles.metaRow}>
-          <span className={styles.postDate}>{post.date}</span>
-          <button
-            type="button"
-            onClick={() => onToggleLike(post.id)}
-            className={`${styles.wishlistBtn} ${isLiked ? styles.wishlistBtnActive : ""}`}
-            aria-label={isLiked ? "Remove from wishlist" : "Add to wishlist"}
-          >
-            <svg
-              className={styles.heartIcon}
-              viewBox="0 0 24 24"
-              fill={isLiked ? "currentColor" : "none"}
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+      {post.title ? (
+        <div className={styles.cardContent}>
+          {/* Wishlist Icon */}
+          <div className={styles.metaRow}>
+            <button
+              type="button"
+              onClick={() => onToggleLike(post.id)}
+              className={`${styles.wishlistBtn} ${isLiked ? styles.wishlistBtnActive : ""}`}
+              aria-label={isLiked ? "Remove from wishlist" : "Add to wishlist"}
             >
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-          </button>
+              <svg
+                className={styles.heartIcon}
+                viewBox="0 0 24 24"
+                fill={isLiked ? "currentColor" : "none"}
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Elegant Serif Title */}
+          <h2 id={`title-${post.id}`} className={styles.postTitle}>
+            <Link href={`/blog/${postSlug}`} className={styles.titleLink}>
+              {post.title}
+            </Link>
+          </h2>
+
+          {/* 1-2 Line Description */}
+          {post.description ? (
+            <p className={styles.postDesc}>{post.description}</p>
+          ) : null}
         </div>
-
-        {/* Elegant Serif Title */}
-        <h2 id={`title-${post.id}`} className={styles.postTitle}>
-          <Link href={`/blog/${postSlug}`} className={styles.titleLink}>
-            {post.title}
-          </Link>
-        </h2>
-
-        {/* 1-2 Line Description */}
-        <p className={styles.postDesc}>{post.description}</p>
-      </div>
+      ) : null}
     </article>
   );
 }
