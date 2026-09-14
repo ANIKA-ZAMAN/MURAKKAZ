@@ -94,69 +94,133 @@ export interface QuizRecommendation {
   performance?: string;
 }
 
+const NOTE_SYNONYMS: Record<string, string[]> = {
+  rose: ["rose", "rosewater", "damascena", "may rose", "bulgarian rose", "taif"],
+  vanilla: ["vanilla", "bourbon vanilla", "vanilla sugar", "vanilla bean", "madagascar"],
+  oud: ["oud", "agarwood", "cambodian", "oud wood", "dukhan"],
+  sandalwood: ["sandalwood", "santal", "sandal"],
+  bergamot: ["bergamot", "citrus", "calabrian bergamot"],
+  jasmine: ["jasmine", "sambac", "jasmine bud", "white floral"],
+  musk: ["musk", "white musk", "ambrofix", "cashmeran"],
+  amber: ["amber", "ambergris", "cistus", "labdanum", "ambroxan"],
+  saffron: ["saffron", "crocus"],
+  "tonka bean": ["tonka", "tonka bean", "coumarin"],
+  leather: ["leather", "suede", "cuir"],
+  coffee: ["coffee", "qahwa", "espresso", "roasted coffee"],
+};
+
 /**
- * Score how well the user's chosen notes match the product's actual notes array.
- * Heart & base notes (latter 2/3 of array) receive 3x weight (3 pts), top notes receive 1pt.
+ * Score how well the user's chosen notes match the product's actual notes array,
+ * taking advantage of olfactory synonyms and weighting heart & base notes.
  */
-function scoreNoteMatch(userNotes: string[], productNotes: string[]): number {
-  if (!userNotes.length || !productNotes.length) return 0;
-  let score = 0;
+function scoreNoteMatch(userNotes: string[], productNotes: any[]): { score: number; matchedNotes: string[] } {
+  if (!userNotes.length || !productNotes.length) return { score: 0, matchedNotes: [] };
+
+  let rawScore = 0;
+  const matchedUserNotes = new Set<string>();
   const total = productNotes.length;
 
   userNotes.forEach((uNote) => {
     const cleanUser = uNote.toLowerCase().trim();
+    const synonyms = NOTE_SYNONYMS[cleanUser] || [cleanUser];
+
     productNotes.forEach((pNote, idx) => {
-      const cleanProd = pNote.toLowerCase().trim();
-      if (cleanProd.includes(cleanUser) || cleanUser.includes(cleanProd)) {
+      const noteName = typeof pNote === "string" ? pNote : (pNote?.name || "");
+      const cleanProd = noteName.toLowerCase().trim();
+
+      const isMatch = synonyms.some((syn) => cleanProd.includes(syn) || syn.includes(cleanProd));
+      if (isMatch) {
+        matchedUserNotes.add(uNote);
         const isHeartOrBase = idx >= Math.floor(total / 3);
-        score += isHeartOrBase ? 3 : 1;
+        rawScore += isHeartOrBase ? 3 : 1.5;
       }
     });
   });
 
-  return Math.min(30, score);
+  const matchRatio = matchedUserNotes.size / Math.max(1, userNotes.length);
+  const finalScore = Math.min(30, Math.round(matchRatio * 18 + rawScore * 2));
+
+  return { score: finalScore, matchedNotes: Array.from(matchedUserNotes) };
 }
 
 /**
- * Generate a dynamic personalized reason based on user answers and matching catalog attributes.
+ * Generates an eloquent, personalized editorial rationale reflecting the user's exact selections.
  */
 function generatePersonalizedReason(
   prod: Product,
-  answers: Record<number, string | string[]>
+  answers: Record<number, string | string[]>,
+  matchedNotes: string[] = []
 ): string {
-  const notesAns = (answers[3] as string[]) || [];
   const occasionAns = answers[2] as string | undefined;
   const intensityAns = answers[4] as string | undefined;
   const styleAns = answers[7] as string | undefined;
 
-  const matchedNotes = notesAns.filter((n) =>
-    (prod.notes || []).some((pn: any) => {
-      const noteName = typeof pn === 'string' ? pn : (pn?.name || '');
-      return noteName.toLowerCase().includes(n.toLowerCase());
-    })
-  );
-
   const highlights: string[] = [];
 
+  // 1. Notes Highlight
   if (matchedNotes.length > 0) {
-    highlights.push(`matches your love for ${matchedNotes.join(", ")}`);
-  } else {
-    highlights.push(`features rich ${prod.family.toLowerCase()} accords`);
+    if (matchedNotes.length === 1) {
+      highlights.push(`celebrates your fondness for luscious ${matchedNotes[0].toLowerCase()}`);
+    } else {
+      const allExceptLast = matchedNotes.slice(0, -1).map((n) => n.toLowerCase()).join(", ");
+      const last = matchedNotes[matchedNotes.length - 1].toLowerCase();
+      highlights.push(`celebrates your love for ${allExceptLast} and ${last}`);
+    }
+  } else if (prod.family) {
+    highlights.push(`unfolds radiant ${prod.family.toLowerCase()} accords`);
   }
 
-  if (occasionAns) {
-    highlights.push(`fits your ${occasionAns.toLowerCase()} wear`);
+  // 2. Occasion Highlight
+  const OCCASION_PHRASING: Record<string, string> = {
+    "Everyday": "serves as your effortless daily signature",
+    "Office": "effortlessly suits polished executive and office settings",
+    "Date Night": "is intoxicatingly crafted for romantic evenings and date nights",
+    "Party": "stands out vibrantly at celebrations and lively parties",
+    "Formal Event": "elevates black-tie galas and prestigious formal events",
+    "Special Occasion": "is reserved for cherished, unforgettable milestone moments",
+    "Cozy Evening": "delivers warm, comforting intimacy for relaxed evenings",
+  };
+  if (occasionAns && OCCASION_PHRASING[occasionAns]) {
+    highlights.push(OCCASION_PHRASING[occasionAns]);
   }
 
-  if (intensityAns) {
-    highlights.push(`delivers your desired ${intensityAns.toLowerCase()} presence`);
+  // 3. Intensity Highlight
+  const INTENSITY_PHRASING: Record<string, string> = {
+    "Soft & Skin-like": "embraces an intimate, whisper-soft skin presence",
+    "Moderate": "projects a balanced, versatile sillage",
+    "Strong": "radiates a commanding, persistent sillage",
+    "Very Strong": "unleashes an intense, room-filling beast-mode aura",
+  };
+  if (intensityAns && INTENSITY_PHRASING[intensityAns]) {
+    highlights.push(INTENSITY_PHRASING[intensityAns]);
   }
 
-  if (styleAns) {
-    highlights.push(`complements your ${styleAns.toLowerCase()} style`);
+  // 4. Personality / Style Highlight
+  const STYLE_PHRASING: Record<string, string> = {
+    "Minimal": "complements your clean, understated aesthetic",
+    "Elegant": "accentuates your poised, sophisticated elegance",
+    "Romantic": "speaks directly to your affectionate, poetic nature",
+    "Bold": "embodies a daring, fearless confidence",
+    "Mysterious": "radiates an enigmatic, hypnotic allure",
+    "Classic": "resonates with timeless, distinguished heritage",
+  };
+  if (styleAns && STYLE_PHRASING[styleAns]) {
+    highlights.push(STYLE_PHRASING[styleAns]);
   }
 
-  return `We handpicked ${prod.name} because it ${highlights.join(", ")}.`;
+  if (highlights.length === 0) {
+    return `We handpicked ${prod.name} as a distinguished signature creation engineered with opulent fragrance accords.`;
+  }
+  if (highlights.length === 1) {
+    return `We handpicked ${prod.name} because it ${highlights[0]}.`;
+  }
+  if (highlights.length === 2) {
+    return `We handpicked ${prod.name} because it ${highlights[0]} and ${highlights[1]}.`;
+  }
+
+  const initial = highlights.slice(0, -1).join(", ");
+  const final = highlights[highlights.length - 1];
+  return `We handpicked ${prod.name} because it ${initial}, and ${final}.`;
 }
 
 /**
@@ -238,16 +302,17 @@ export function getTop3Recommendations(
     "All Year": { families: [], noteKeywords: [] },
   };
 
-  const scoredProducts: Array<{ product: Product; score: number }> = [];
+  const scoredProducts: Array<{ product: Product; score: number; matchedNotes: string[] }> = [];
 
   catalogToUse.forEach((prod) => {
     let score = 0;
 
-    // A. Direct Note Match (up to 30 pts)
-    score += scoreNoteMatch(notesAns, prod.notes);
+    // A. Direct Note Match (up to 30 pts) with Synonym Support
+    const { score: noteScore, matchedNotes } = scoreNoteMatch(notesAns, prod.notes);
+    score += noteScore;
 
     // B. Gender Match (15 pts / 10 pts)
-    if (genderAns) {
+    if (genderAns && prod.gender) {
       const pGender = prod.gender.toUpperCase();
       const uGender = genderAns.toUpperCase();
       if (pGender === uGender) score += 15;
@@ -310,11 +375,20 @@ export function getTop3Recommendations(
       }
     }
 
-    // H. Tiebreakers (up to 3 pts)
+    // H. Scent Vibe Affinity (+6 pts)
+    if (prod.vibe && styleScentAns.length > 0) {
+      const prodVibe = prod.vibe.toLowerCase();
+      const matchingVibes = styleScentAns.filter(s => prodVibe.includes(s.toLowerCase()));
+      if (matchingVibes.length > 0) {
+        score += Math.min(6, matchingVibes.length * 3);
+      }
+    }
+
+    // I. Tiebreakers (up to 3 pts)
     if (prod.badge) score += 2;
     if (prod.rating && prod.rating >= 4.9) score += 1;
 
-    scoredProducts.push({ product: prod, score });
+    scoredProducts.push({ product: prod, score, matchedNotes });
   });
 
   // Sort descending by score
@@ -322,15 +396,15 @@ export function getTop3Recommendations(
 
   // Take top 3 distinct products
   const top3 = scoredProducts.slice(0, 3);
-  const maxPossibleScore = 90;
+  const maxPossibleScore = 96;
 
   return top3.map((item, index) => {
     const rawScore = item.score;
     const bestProduct = { ...item.product };
 
     const matchPercentage = Math.min(
-      99 - index * 2,
-      Math.max(82, Math.round((rawScore / maxPossibleScore) * 15 + 84) - index * 3)
+      99 - index * 3,
+      Math.max(83, Math.round((rawScore / maxPossibleScore) * 14 + 85) - index * 3)
     );
 
     const inspiration = bestProduct.inspiredBy 
@@ -342,7 +416,7 @@ export function getTop3Recommendations(
       bestProduct.gender,
       bestProduct.season ? bestProduct.season.split(',')[0].trim() : undefined,
       bestProduct.personality ? bestProduct.personality.split(',')[0].trim() : undefined,
-      bestProduct.meter ? bestProduct.meter.replace("_", " ") : undefined,
+      bestProduct.meter ? bestProduct.meter.replace(/_/g, " ") : undefined,
     ].filter(Boolean) as string[];
 
     const performance = (bestProduct.longevity && bestProduct.projection)
@@ -353,8 +427,8 @@ export function getTop3Recommendations(
       ? "6-8 Hours • Strong Presence"
       : "4-6 Hours • Elegant Skin Presence";
 
-    const keyNotes = bestProduct.notes ? bestProduct.notes.slice(0, 4) : [];
-    const reason = generatePersonalizedReason(bestProduct, answers);
+    const keyNotes = bestProduct.notes ? bestProduct.notes.slice(0, 4).map((n: any) => typeof n === 'string' ? n : n.name) : [];
+    const reason = generatePersonalizedReason(bestProduct, answers, item.matchedNotes);
 
     return {
       product: bestProduct,
