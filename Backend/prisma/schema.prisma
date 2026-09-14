@@ -197,6 +197,12 @@ model Product {
   gender        Gender
   occasion      String
   meter         Meter
+  intensity     String?
+  longevity     String?
+  projection    String?
+  season        String?
+  personality   String?
+  vibe          String?
   rating        Float                 @default(0.0)
   reviewCount   Int                   @default(0)
   ourTake       String?

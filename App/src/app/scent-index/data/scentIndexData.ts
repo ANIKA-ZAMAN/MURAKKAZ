@@ -257,7 +257,8 @@ export function getTop3Recommendations(
     // C. Occasion Match (12 pts)
     if (targetOccasions.length > 0 && prod.occasion) {
       const prodOccasion = prod.occasion.toLowerCase();
-      const isMatch = targetOccasions.some((t) => prodOccasion.includes(t.toLowerCase()));
+      const isMatch = targetOccasions.some((t) => prodOccasion.includes(t.toLowerCase())) ||
+        (occasionAns && prodOccasion.includes(occasionAns.toLowerCase()));
       if (isMatch) score += 12;
     }
 
@@ -267,29 +268,46 @@ export function getTop3Recommendations(
       if (targetFamilies.includes(pFamily)) score += 10;
     }
 
-    // E. Performance Meter Match (10 pts)
-    if (targetMeters.length > 0 && prod.meter) {
+    // E. Performance / Intensity Match (10 pts)
+    if (intensityAns && prod.intensity) {
+      const cleanAns = intensityAns.toLowerCase().split(' ')[0]; // e.g. "soft", "moderate", "strong", "very"
+      if (prod.intensity.toLowerCase().includes(cleanAns)) {
+        score += 10;
+      }
+    } else if (targetMeters.length > 0 && prod.meter) {
       const pMeter = prod.meter.toUpperCase().replace(/[\s_]+/g, "");
       const isMeterMatch = targetMeters.some((tm) => tm.replace(/[\s_]+/g, "") === pMeter);
       if (isMeterMatch) score += 10;
     }
 
     // F. Season/Climate Affinity Match (up to 8 pts)
-    if (seasonAns && seasonAns !== "All Year" && seasonFamilyMap[seasonAns]) {
-      const sData = seasonFamilyMap[seasonAns];
-      if (sData.families.includes(prod.family.toUpperCase())) score += 5;
+    if (seasonAns) {
+      if (prod.season) {
+        const prodSeason = prod.season.toLowerCase();
+        const cleanSeason = seasonAns.toLowerCase();
+        if (cleanSeason === "all year" || prodSeason.includes("year-round") || prodSeason.includes("all season") || prodSeason.includes(cleanSeason)) {
+          score += 8;
+        }
+      } else if (seasonAns !== "All Year" && seasonFamilyMap[seasonAns]) {
+        const sData = seasonFamilyMap[seasonAns];
+        if (sData.families.includes(prod.family.toUpperCase())) score += 5;
 
-      let keywordMatch = 0;
-      sData.noteKeywords.forEach((kw) => {
-        if (prod.notes.some((n) => n.toLowerCase().includes(kw))) keywordMatch++;
-      });
-      score += Math.min(3, keywordMatch);
+        let keywordMatch = 0;
+        sData.noteKeywords.forEach((kw) => {
+          if (prod.notes.some((n) => (typeof n === 'string' ? n : n?.name || '').toLowerCase().includes(kw))) keywordMatch++;
+        });
+        score += Math.min(3, keywordMatch);
+      }
     }
 
-    // G. Personality Profile Match (5 pts)
-    if (styleAns && personalityFamilyMap[styleAns]) {
-      const targetPFamilies = personalityFamilyMap[styleAns];
-      if (targetPFamilies.includes(prod.family.toUpperCase())) score += 5;
+    // G. Personality Profile Match (up to 7 pts)
+    if (styleAns) {
+      if (prod.personality && prod.personality.toLowerCase().includes(styleAns.toLowerCase())) {
+        score += 7;
+      } else if (personalityFamilyMap[styleAns]) {
+        const targetPFamilies = personalityFamilyMap[styleAns];
+        if (targetPFamilies.includes(prod.family.toUpperCase())) score += 5;
+      }
     }
 
     // H. Tiebreakers (up to 3 pts)
@@ -322,15 +340,18 @@ export function getTop3Recommendations(
     const profileTags = [
       bestProduct.family,
       bestProduct.gender,
-      bestProduct.meter.replace("_", " "),
-    ];
+      bestProduct.season ? bestProduct.season.split(',')[0].trim() : undefined,
+      bestProduct.personality ? bestProduct.personality.split(',')[0].trim() : undefined,
+      bestProduct.meter ? bestProduct.meter.replace("_", " ") : undefined,
+    ].filter(Boolean) as string[];
 
-    const performance =
-      bestProduct.meter === "BEAST_MODE"
-        ? "8+ Hours • Powerful Room Projection"
-        : bestProduct.meter === "LONG_LASTING"
-        ? "6-8 Hours • Strong Presence"
-        : "4-6 Hours • Elegant Skin Presence";
+    const performance = (bestProduct.longevity && bestProduct.projection)
+      ? `${bestProduct.longevity} • ${bestProduct.projection}`
+      : bestProduct.meter === "BEAST_MODE"
+      ? "8+ Hours • Powerful Room Projection"
+      : bestProduct.meter === "LONG_LASTING"
+      ? "6-8 Hours • Strong Presence"
+      : "4-6 Hours • Elegant Skin Presence";
 
     const keyNotes = bestProduct.notes ? bestProduct.notes.slice(0, 4) : [];
     const reason = generatePersonalizedReason(bestProduct, answers);

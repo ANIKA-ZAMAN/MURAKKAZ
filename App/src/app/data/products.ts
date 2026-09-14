@@ -33,6 +33,12 @@ export interface Product {
   gender: string;
   occasion: string;
   meter: string;
+  intensity?: string;
+  longevity?: string;
+  projection?: string;
+  season?: string;
+  personality?: string;
+  vibe?: string;
   notes: any[];
   sizes?: ProductSizeItem[] | any;
   accords?: any[];
@@ -75,139 +81,7 @@ export function getNoteImage(name: string): string {
   return 'bergamot.png';
 }
 
-// Exactly 62 Master PDF Catalog Fragrances
 export const luxuryProducts: Product[] = [
-  {
-    "id": "prod-blue-talisman-01",
-    "slug": "blue-talisman",
-    "name": "Blue Talisman",
-    "brand": "Ex Nihilo",
-    "inspiredBy": "Ex Nihilo",
-    "description": "Designed as a hypnotic olfactory jewel, Blue Talisman embodies the avant-garde spirit of Ex Nihilo. An intoxicating fusion of fresh bergamot and crisp pear meeting vibrant ginger and majestic modern woods.",
-    "rating": 5,
-    "reviewCount": 0,
-    "image": "/images/products/blue_talisman.jpg",
-    "family": "FRESH, WOODY, CITRUS",
-    "gender": "UNISEX",
-    "occasion": "Everyday, Office, Special Occasion",
-    "meter": "LONG_LASTING",
-    "isActive": true,
-    "priceVal": 300,
-    "sizes": [
-      {
-        "size": "6ml",
-        "price": 300,
-        "originalPrice": 400,
-        "stock": 0
-      },
-      {
-        "size": "10ml",
-        "price": 500,
-        "originalPrice": 650,
-        "stock": 0
-      },
-      {
-        "size": "30ml",
-        "price": 1000,
-        "originalPrice": 1300,
-        "stock": 0
-      },
-      {
-        "size": "50ml",
-        "price": 1600,
-        "originalPrice": 2000,
-        "stock": 0
-      }
-    ],
-    "notes": [
-      {
-        "name": "Bergamot",
-        "type": "TOP"
-      },
-      {
-        "name": "Ginger",
-        "type": "TOP"
-      },
-      {
-        "name": "Mandarin",
-        "type": "TOP"
-      },
-      {
-        "name": "Pear",
-        "type": "TOP"
-      },
-      {
-        "name": "Orange Blossom",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Georgywood",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Akigalawood",
-        "type": "BASE"
-      },
-      {
-        "name": "Ambrofix",
-        "type": "BASE"
-      },
-      {
-        "name": "Musk",
-        "type": "BASE"
-      }
-    ],
-    "accords": [
-      {
-        "name": "Citrus",
-        "percentage": 85,
-        "color": "#F59E0B"
-      },
-      {
-        "name": "Fresh Spicy",
-        "percentage": 75,
-        "color": "#10B981"
-      },
-      {
-        "name": "Woody",
-        "percentage": 70,
-        "color": "#C5A880"
-      },
-      {
-        "name": "Fruity",
-        "percentage": 65,
-        "color": "#EC4899"
-      }
-    ],
-    "bestFor": [
-      {
-        "name": "Spring",
-        "percentage": 90
-      },
-      {
-        "name": "Summer",
-        "percentage": 95
-      },
-      {
-        "name": "Autumn",
-        "percentage": 80
-      },
-      {
-        "name": "Winter",
-        "percentage": 65
-      }
-    ],
-    "galleryImages": [
-      {
-        "url": "/images/products/blue_talisman.jpg",
-        "sortOrder": 0
-      }
-    ],
-    "category": "Exclusive",
-    "price": "300 - 1600tk",
-    "inStock": false,
-    "isOutOfStock": true
-  },
   {
     "id": "prod-irish-leather-01",
     "slug": "irish-leather",
@@ -217,10 +91,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.9,
     "reviewCount": 38,
     "image": "/images/products/irish_leather_v3.jpg",
-    "family": "WOODY",
+    "family": "Leather / Woody",
     "gender": "UNISEX",
-    "occasion": "Outdoor & Evening",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Special Occasion",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -319,7 +193,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Spring",
+    "personality": "Bold",
+    "vibe": "Woody, Fresh, Green"
   },
   {
     "id": "prod-baccarat-rouge-540-02",
@@ -330,9 +210,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 94,
     "image": "/images/products/baccarat_rouge_540_v2.jpg",
-    "family": "ORIENTAL",
+    "family": "Oriental / Amber Floral",
     "gender": "UNISEX",
-    "occasion": "Luxury Gala & Formal",
+    "occasion": "Date Night, Special Occasion",
     "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
@@ -428,7 +308,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter, All Year",
+    "personality": "Mysterious, Elegant",
+    "vibe": "Sweet, Warm, Woody"
   },
   {
     "id": "prod-tobacco-vanille-03",
@@ -439,9 +325,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.9,
     "reviewCount": 67,
     "image": "/images/products/tobacco_vanille_v4.jpg",
-    "family": "GOURMAND",
+    "family": "Oriental / Gourmand",
     "gender": "UNISEX",
-    "occasion": "Winter & Evening",
+    "occasion": "Date Night, Special Occasion",
     "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
@@ -537,7 +423,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold, Elegant",
+    "vibe": "Warm, Sweet, Spicy"
   },
   {
     "id": "prod-by-the-fireplace-04",
@@ -548,9 +440,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 45,
     "image": "/images/products/by_the_fireplace_v2.jpg",
-    "family": "WOODY",
+    "family": "Woody / Gourmand",
     "gender": "UNISEX",
-    "occasion": "Cozy Winter",
+    "occasion": "Date Night, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -651,7 +543,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Romantic",
+    "vibe": "Smoky, Warm, Sweet"
   },
   {
     "id": "prod-resala-05",
@@ -662,9 +560,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 52,
     "image": "/images/products/resala_v3.jpg",
-    "family": "ORIENTAL",
+    "family": "Oriental / Gourmand",
     "gender": "UNISEX",
-    "occasion": "Royalty & Special Occasions",
+    "occasion": "Special Occasion, Date Night",
     "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
@@ -757,7 +655,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold, Mysterious",
+    "vibe": "Dark, Warm, Spicy"
   },
   {
     "id": "prod-sultani-06",
@@ -768,10 +672,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.9,
     "reviewCount": 41,
     "image": "/images/products/sultani_v8.jpg",
-    "family": "ORIENTAL",
-    "gender": "MEN",
-    "occasion": "Executive & Formal",
-    "meter": "BEAST_MODE",
+    "family": "Fresh / Floral Woody",
+    "gender": "UNISEX",
+    "occasion": "Formal Event, Office",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -875,7 +779,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Spring, Autumn, All Year",
+    "personality": "Elegant, Classic",
+    "vibe": "Clean, Fresh, Woody"
   },
   {
     "id": "prod-guidance-07",
@@ -886,9 +796,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 61,
     "image": "/images/products/guidance_v3.jpg",
-    "family": "FLORAL",
-    "gender": "UNISEX",
-    "occasion": "Signature & High Art",
+    "family": "Floral / Gourmand Woody",
+    "gender": "WOMEN",
+    "occasion": "Special Occasion, Date Night",
     "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
@@ -1001,7 +911,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Bold, Romantic",
+    "vibe": "Sweet, Warm, Floral"
   },
   {
     "id": "prod-rosewood-08",
@@ -1012,9 +928,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 34,
     "image": "/images/products/rosewood_v5.jpg",
-    "family": "WOODY",
+    "family": "Woody / Oriental Floral",
     "gender": "UNISEX",
-    "occasion": "Sensual Evening",
+    "occasion": "Formal Event, Date Night",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -1115,7 +1031,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Elegant",
+    "vibe": "Woody, Warm, Floral"
   },
   {
     "id": "prod-sakura-dior-09",
@@ -1126,9 +1048,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.9,
     "reviewCount": 48,
     "image": "/images/products/sakura_dior_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral",
     "gender": "UNISEX",
-    "occasion": "Spring & Daytime",
+    "occasion": "Everyday, Office",
     "meter": "MODERATE",
     "isActive": true,
     "priceVal": 300,
@@ -1225,7 +1147,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
+    "price": "300 - 2500tk",
+    "intensity": "Soft & Skin-like",
+    "longevity": "4–6h",
+    "projection": "Intimate",
+    "season": "Spring, Summer",
+    "personality": "Minimal, Romantic",
+    "vibe": "Fresh, Floral, Clean"
   },
   {
     "id": "prod-imagination-10",
@@ -1236,10 +1164,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 89,
     "image": "/images/products/imagination_v3.jpg",
-    "family": "FRESH",
+    "family": "Citrus / Fresh",
     "gender": "MEN",
-    "occasion": "Summer Signature & Daily",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Office, Casual",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "inStock": false,
     "isOutOfStock": true,
@@ -1340,259 +1268,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Exclusive",
-    "price": "300 - 2500tk"
-  },
-  {
-    "id": "prod-arabian-tonka-11",
-    "slug": "arabian-tonka",
-    "name": "Arabian Tonka",
-    "brand": "Montale",
-    "inspiredBy": "Inspired by Montale Arabians Tonka",
-    "description": "A tribute to the majestic Arabian horse and eastern opulence. A fiery, captivating blend of rare oud, spiced saffron, and sparkling bergamot dancing over a sumptuous heart of Bulgarian rose and cane sugar, anchored by rich tonka bean, amber, and white musk.",
-    "rating": 5,
-    "reviewCount": 48,
-    "image": "/images/products/arabian_tonka.jpg",
-    "family": "ORIENTAL",
-    "gender": "UNISEX",
-    "occasion": "Evening, Gala, Special Occasion",
-    "meter": "BEAST_MODE",
-    "isActive": true,
-    "priceVal": 300,
-    "category": "Exclusive",
-    "price": "300 - 2300tk",
-    "sizes": [
-      {
-        "size": "6ml",
-        "price": 300,
-        "originalPrice": 400,
-        "stock": 50
-      },
-      {
-        "size": "10ml",
-        "price": 500,
-        "originalPrice": 650,
-        "stock": 50
-      },
-      {
-        "size": "30ml",
-        "price": 1400,
-        "originalPrice": 1800,
-        "stock": 35
-      },
-      {
-        "size": "50ml",
-        "price": 2300,
-        "originalPrice": 2900,
-        "stock": 25
-      }
-    ],
-    "notes": [
-      {
-        "name": "Saffron",
-        "type": "TOP"
-      },
-      {
-        "name": "Bergamot",
-        "type": "TOP"
-      },
-      {
-        "name": "Agarwood (Oud)",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Bulgarian Rose",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Tonka Bean",
-        "type": "BASE"
-      },
-      {
-        "name": "Cane Sugar",
-        "type": "BASE"
-      },
-      {
-        "name": "Amber",
-        "type": "BASE"
-      },
-      {
-        "name": "White Musk",
-        "type": "BASE"
-      }
-    ],
-    "accords": [
-      {
-        "name": "Warm Spicy",
-        "percentage": 90,
-        "color": "#D84315"
-      },
-      {
-        "name": "Sweet",
-        "percentage": 88,
-        "color": "#F59E0B"
-      },
-      {
-        "name": "Oud",
-        "percentage": 85,
-        "color": "#4E342E"
-      },
-      {
-        "name": "Amber",
-        "percentage": 80,
-        "color": "#FFB300"
-      },
-      {
-        "name": "Vanilla",
-        "percentage": 75,
-        "color": "#FFF59D"
-      }
-    ],
-    "bestFor": [
-      {
-        "name": "Winter",
-        "percentage": 95
-      },
-      {
-        "name": "Autumn",
-        "percentage": 90
-      },
-      {
-        "name": "Evening",
-        "percentage": 95
-      },
-      {
-        "name": "Night Out",
-        "percentage": 90
-      }
-    ],
-    "galleryImages": [
-      {
-        "url": "/images/products/arabian_tonka.jpg",
-        "sortOrder": 0
-      }
-    ]
-  },
-  {
-    "id": "prod-madwi-al-arabi-12",
-    "slug": "madwi-al-arabi",
-    "name": "Madwi Al Arabi",
-    "brand": "Arabian Oud",
-    "inspiredBy": "Arabian Oud Madawi",
-    "description": "An iconic signature fragrance celebrating Middle Eastern grace and romance. Opening with an alluring swirl of velvety peach and fragrant apple blossom, blossoming into a heart of sensual pineapple blossom, resting upon an enduring, opulent foundation of wild rose, golden musk, and deep patchouli.",
-    "rating": 5,
-    "reviewCount": 56,
-    "image": "/images/products/madwi_al_arabi.jpg",
-    "family": "ORIENTAL",
-    "gender": "UNISEX",
-    "occasion": "Luxury Gala & Evening",
-    "meter": "LONG_LASTING",
-    "isActive": true,
-    "priceVal": 300,
-    "category": "Exclusive",
     "price": "300 - 2500tk",
-    "sizes": [
-      {
-        "size": "6ml",
-        "price": 300,
-        "originalPrice": 400,
-        "stock": 50
-      },
-      {
-        "size": "10ml",
-        "price": 500,
-        "originalPrice": 650,
-        "stock": 50
-      },
-      {
-        "size": "30ml",
-        "price": 1500,
-        "originalPrice": 1900,
-        "stock": 35
-      },
-      {
-        "size": "50ml",
-        "price": 2500,
-        "originalPrice": 3200,
-        "stock": 25
-      }
-    ],
-    "notes": [
-      {
-        "name": "Peach",
-        "type": "TOP"
-      },
-      {
-        "name": "Apple Blossom",
-        "type": "TOP"
-      },
-      {
-        "name": "Pineapple Blossom",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Wild Rose",
-        "type": "BASE"
-      },
-      {
-        "name": "Musk",
-        "type": "BASE"
-      },
-      {
-        "name": "Patchouli",
-        "type": "BASE"
-      }
-    ],
-    "accords": [
-      {
-        "name": "Fruity",
-        "percentage": 90,
-        "color": "#EC4899"
-      },
-      {
-        "name": "Floral",
-        "percentage": 85,
-        "color": "#F48FB1"
-      },
-      {
-        "name": "Musky",
-        "percentage": 80,
-        "color": "#B0BEC5"
-      },
-      {
-        "name": "Sweet",
-        "percentage": 75,
-        "color": "#FFB74D"
-      },
-      {
-        "name": "Powdery",
-        "percentage": 70,
-        "color": "#E1BEE7"
-      }
-    ],
-    "bestFor": [
-      {
-        "name": "Spring",
-        "percentage": 85
-      },
-      {
-        "name": "Autumn",
-        "percentage": 90
-      },
-      {
-        "name": "Winter",
-        "percentage": 85
-      },
-      {
-        "name": "Special Occasion",
-        "percentage": 95
-      }
-    ],
-    "galleryImages": [
-      {
-        "url": "/images/products/madwi_al_arabi.jpg",
-        "sortOrder": 0
-      }
-    ]
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Elegant, Clean",
+    "vibe": "Fresh, Clean, Spicy"
   },
   {
     "id": "prod-normal-1",
@@ -1603,10 +1285,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 20,
     "image": "/images/products/ultra_male_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Oriental Fougere",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "LONG_LASTING",
+    "occasion": "Party, Date Night",
+    "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -1713,7 +1395,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold",
+    "vibe": "Sweet, Spicy, Warm"
   },
   {
     "id": "prod-normal-2",
@@ -1724,10 +1412,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 23,
     "image": "/images/products/bad_boy_v2.jpg",
-    "family": "SPICY",
+    "family": "Oriental / Spicy",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "occasion": "Casual, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -1809,7 +1497,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Bold",
+    "vibe": "Warm, Sweet, Spicy"
   },
   {
     "id": "prod-normal-3",
@@ -1820,9 +1514,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 26,
     "image": "/images/products/emporio_armani_stronger_with_you_parfum_v4.jpg",
-    "family": "ORIENTAL",
+    "family": "Gourmand / Oriental Woody",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Date Night, Special Occasion",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -1913,7 +1607,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Romantic, Bold",
+    "vibe": "Warm, Sweet, Spicy"
   },
   {
     "id": "prod-normal-4",
@@ -1924,10 +1624,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 29,
     "image": "/images/products/valentino_donna_v3.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Oriental",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Date Night, Formal Event",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -2005,7 +1705,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Elegant, Classic",
+    "vibe": "Floral, Sweet, Warm"
   },
   {
     "id": "prod-normal-5",
@@ -2016,10 +1722,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 32,
     "image": "/images/products/sexy_secret_v3.jpg",
-    "family": "GOURMAND",
+    "family": "Floral / Gourmand",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "LONG_LASTING",
+    "occasion": "Casual, Date Night",
+    "meter": "MODERATE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -2104,7 +1810,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "4–6h",
+    "projection": "Moderate",
+    "season": "All Year",
+    "personality": "Romantic",
+    "vibe": "Sweet, Floral"
   },
   {
     "id": "prod-normal-6",
@@ -2115,10 +1827,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 35,
     "image": "/images/products/bombshell_v2.jpg",
-    "family": "FLORAL",
+    "family": "Fresh / Fruity Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Casual",
+    "meter": "MODERATE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -2211,7 +1923,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "4–6h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Minimal",
+    "vibe": "Fresh, Floral, Sweet"
   },
   {
     "id": "prod-normal-7",
@@ -2222,9 +1940,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 38,
     "image": "/images/products/mon_guerlain_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Oriental",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
+    "occasion": "Everyday, Office, Date Night",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -2306,7 +2024,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Autumn, All Year",
+    "personality": "Elegant, Romantic",
+    "vibe": "Clean, Sweet, Floral"
   },
   {
     "id": "prod-normal-8",
@@ -2317,9 +2041,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 41,
     "image": "/images/products/spicebomb_extreme_v2.jpg",
-    "family": "SPICY",
+    "family": "Spicy / Oriental",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Date Night, Party, Casual",
     "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
@@ -2328,25 +2052,25 @@ export const luxuryProducts: Product[] = [
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 0
+        "stock": 35
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 0
+        "stock": 25
       }
     ],
     "notes": [
@@ -2402,8 +2126,12 @@ export const luxuryProducts: Product[] = [
     ],
     "category": "Regular",
     "price": "300 - 1500tk",
-    "inStock": false,
-    "isOutOfStock": true
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold, Mysterious",
+    "vibe": "Warm, Spicy, Sweet"
   },
   {
     "id": "prod-normal-9",
@@ -2414,9 +2142,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 44,
     "image": "/images/products/y_eau_de_parfum_v2.jpg",
-    "family": "FRESH",
+    "family": "Fresh / Woody Aromatic",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Everyday, Office, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -2510,7 +2238,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "All Year",
+    "personality": "Classic",
+    "vibe": "Fresh, Clean, Woody"
   },
   {
     "id": "prod-normal-10",
@@ -2521,10 +2255,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 47,
     "image": "/images/products/ehsas_v5.jpg",
-    "family": "ORIENTAL",
-    "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "family": "Woody / Oriental",
+    "gender": "UNISEX",
+    "occasion": "Formal Event, Everyday",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -2609,7 +2343,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Autumn, All Year",
+    "personality": "Classic, Elegant",
+    "vibe": "Clean, Warm, Woody"
   },
   {
     "id": "prod-normal-11",
@@ -2620,9 +2360,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 50,
     "image": "/images/products/icon_v2.jpg",
-    "family": "WOODY",
+    "family": "Woody / Spicy Aromatic",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Office, Formal Event",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -2720,7 +2460,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Autumn, Summer",
+    "personality": "Elegant, Classic",
+    "vibe": "Fresh, Spicy, Woody"
   },
   {
     "id": "prod-normal-12",
@@ -2731,10 +2477,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 53,
     "image": "/images/products/acqua_di_gio_elixir_v5.jpg",
-    "family": "AQUATIC",
+    "family": "Aquatic / Woody",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "occasion": "Date Night, Special Occasion",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -2819,7 +2565,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Spring, Summer, Autumn",
+    "personality": "Bold, Elegant",
+    "vibe": "Fresh, Dark, Woody"
   },
   {
     "id": "prod-normal-13",
@@ -2830,9 +2582,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 56,
     "image": "/images/products/sauvage_eau_de_parfum_v2.jpg",
-    "family": "FRESH",
+    "family": "Fresh / Spicy Oriental",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Everyday, Date Night, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -2910,7 +2662,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "All Year",
+    "personality": "Bold",
+    "vibe": "Fresh, Spicy, Warm"
   },
   {
     "id": "prod-normal-14",
@@ -2921,10 +2679,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 59,
     "image": "/images/products/si_parfum_v2.jpg",
-    "family": "FRESH",
+    "family": "Oriental / Fresh Fougere",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "occasion": "Party, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -3025,7 +2783,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Bold",
+    "vibe": "Sweet, Fresh, Warm"
   },
   {
     "id": "prod-normal-15",
@@ -3036,9 +2800,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 62,
     "image": "/images/products/myslf_eau_de_parfum_v2.jpg",
-    "family": "FRESH",
+    "family": "Fresh / Floral Woody",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Everyday, Office, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -3108,7 +2872,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer, All Year",
+    "personality": "Modern, Minimal",
+    "vibe": "Fresh, Clean, Floral"
   },
   {
     "id": "prod-normal-16",
@@ -3119,10 +2889,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 20,
     "image": "/images/products/le_beau_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Woody",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "occasion": "Casual, Party",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -3183,7 +2953,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Romantic",
+    "vibe": "Sweet, Warm, Woody"
   },
   {
     "id": "prod-normal-17",
@@ -3194,10 +2970,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 23,
     "image": "/images/products/invictus_victory_elixir_v2.jpg",
-    "family": "SPICY",
+    "family": "Oriental / Gourmand",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "LONG_LASTING",
+    "occasion": "Party, Date Night",
+    "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -3278,7 +3054,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold",
+    "vibe": "Sweet, Warm, Smoky"
   },
   {
     "id": "prod-normal-18",
@@ -3289,9 +3071,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 26,
     "image": "/images/products/1_million_parfum_v2.jpg",
-    "family": "ORIENTAL",
+    "family": "Floral / Oriental Leather",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Party, Date Night",
     "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
@@ -3373,7 +3155,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold",
+    "vibe": "Warm, Sweet, Floral"
   },
   {
     "id": "prod-normal-19",
@@ -3384,9 +3172,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 29,
     "image": "/images/products/silver_mountain_water_v3.jpg",
-    "family": "FRESH",
+    "family": "Fresh / Aquatic",
     "gender": "UNISEX",
-    "occasion": "Versatile",
+    "occasion": "Everyday, Office",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -3472,7 +3260,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Elegant, Minimal",
+    "vibe": "Fresh, Clean"
   },
   {
     "id": "prod-normal-20",
@@ -3483,10 +3277,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 32,
     "image": "/images/products/strawberry_letter_v5.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Fruity Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Casual, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -3571,7 +3365,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Romantic",
+    "vibe": "Sweet, Floral"
   },
   {
     "id": "prod-normal-21",
@@ -3582,9 +3382,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 35,
     "image": "/images/products/scandal_pour_homme_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Woody",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Party, Date Night",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -3654,7 +3454,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Bold",
+    "vibe": "Sweet, Warm, Woody"
   },
   {
     "id": "prod-normal-22",
@@ -3665,10 +3471,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 38,
     "image": "/images/products/eau_de_lacoste_l_12_12_white_v2.jpg",
-    "family": "FRESH",
+    "family": "Fresh / Woody Floral",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Office, Casual",
+    "meter": "MODERATE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -3757,7 +3563,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "4–6h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Minimal, Clean",
+    "vibe": "Fresh, Clean, Woody"
   },
   {
     "id": "prod-normal-23",
@@ -3768,9 +3580,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 41,
     "image": "/images/products/absolu_aventus_v2.jpg",
-    "family": "WOODY",
+    "family": "Fresh / Woody Spicy",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Special Occasion, Formal Event",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -3872,7 +3684,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Bold, Elegant",
+    "vibe": "Dark, Fresh, Smoky"
   },
   {
     "id": "prod-normal-24",
@@ -3883,10 +3701,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 44,
     "image": "/images/products/aventus_v2.jpg",
-    "family": "WOODY",
+    "family": "Fresh / Woody Fruity",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "occasion": "Office, Special Occasion",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -3987,7 +3805,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "All Year",
+    "personality": "Elegant, Classic",
+    "vibe": "Fresh, Smoky, Woody"
   },
   {
     "id": "prod-normal-25",
@@ -3998,10 +3822,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 47,
     "image": "/images/products/angels_share_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Oriental",
     "gender": "UNISEX",
-    "occasion": "Versatile",
-    "meter": "LONG_LASTING",
+    "occasion": "Date Night, Special Occasion",
+    "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4078,7 +3902,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Romantic, Bold",
+    "vibe": "Warm, Sweet, Spicy"
   },
   {
     "id": "prod-normal-26",
@@ -4089,10 +3919,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 50,
     "image": "/images/products/chance_eau_tendre_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Fresh",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Office",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4173,7 +4003,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Elegant, Minimal",
+    "vibe": "Clean, Floral, Fresh"
   },
   {
     "id": "prod-normal-27",
@@ -4184,10 +4020,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 53,
     "image": "/images/products/miss_dior_blooming_bouquet_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Fresh",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "LONG_LASTING",
+    "occasion": "Everyday, Casual",
+    "meter": "MODERATE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4256,7 +4092,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Soft & Skin-like",
+    "longevity": "4–6h",
+    "projection": "Intimate",
+    "season": "Spring, Summer",
+    "personality": "Romantic, Minimal",
+    "vibe": "Fresh, Floral, Clean"
   },
   {
     "id": "prod-normal-28",
@@ -4267,10 +4109,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 56,
     "image": "/images/products/lady_korloff_v3.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Woody",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Formal Event, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4355,7 +4197,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Elegant",
+    "vibe": "Floral, Sweet, Woody"
   },
   {
     "id": "prod-normal-29",
@@ -4366,9 +4214,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 59,
     "image": "/images/products/bright_peach_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Fruity Oriental",
     "gender": "UNISEX",
-    "occasion": "Versatile",
+    "occasion": "Casual, Party",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -4474,7 +4322,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Spring",
+    "personality": "Bold",
+    "vibe": "Sweet, Warm, Dark"
   },
   {
     "id": "prod-normal-30",
@@ -4485,10 +4339,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 62,
     "image": "/images/products/libre_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Oriental Fougere",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Office, Everyday, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4577,7 +4431,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "All Year",
+    "personality": "Elegant, Bold",
+    "vibe": "Clean, Floral, Warm"
   },
   {
     "id": "prod-normal-31",
@@ -4588,10 +4448,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 20,
     "image": "/images/products/j_adore_parfum_d_eau_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Fresh",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "LONG_LASTING",
+    "occasion": "Everyday, Casual",
+    "meter": "MODERATE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4668,7 +4528,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Soft & Skin-like",
+    "longevity": "4–6h",
+    "projection": "Intimate",
+    "season": "Spring, Summer",
+    "personality": "Romantic, Minimal",
+    "vibe": "Clean, Fresh, Floral"
   },
   {
     "id": "prod-normal-32",
@@ -4679,10 +4545,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 23,
     "image": "/images/products/flora_gorgeous_gardenia_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Gourmand",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4763,7 +4629,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Romantic",
+    "vibe": "Sweet, Floral, Fresh"
   },
   {
     "id": "prod-normal-33",
@@ -4774,9 +4646,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 26,
     "image": "/images/products/black_opium_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Oriental",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
+    "occasion": "Date Night, Party",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -4870,7 +4742,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Mysterious, Bold",
+    "vibe": "Sweet, Warm, Dark"
   },
   {
     "id": "prod-normal-34",
@@ -4881,10 +4759,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 29,
     "image": "/images/products/bleu_de_chanel_v2.jpg",
-    "family": "FRESH",
+    "family": "Fresh / Woody Aromatic",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Office, Formal Event",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -4985,7 +4863,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Moderate",
+    "season": "All Year",
+    "personality": "Classic, Elegant",
+    "vibe": "Fresh, Clean, Woody"
   },
   {
     "id": "prod-normal-35",
@@ -4996,9 +4880,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 32,
     "image": "/images/products/million_gold_for_her_v5.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Oriental",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
+    "occasion": "Date Night, Party",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -5084,7 +4968,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Bold, Romantic",
+    "vibe": "Sweet, Floral, Warm"
   },
   {
     "id": "prod-normal-36",
@@ -5095,10 +4985,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 35,
     "image": "/images/products/paradoxe_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Oriental",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -5183,7 +5073,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "All Year",
+    "personality": "Elegant, Romantic",
+    "vibe": "Floral, Sweet, Clean"
   },
   {
     "id": "prod-normal-37",
@@ -5194,9 +5090,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 38,
     "image": "/images/products/girl_of_now_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
+    "occasion": "Date Night, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -5286,7 +5182,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Romantic, Bold",
+    "vibe": "Sweet, Warm, Floral"
   },
   {
     "id": "prod-normal-38",
@@ -5297,10 +5199,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 41,
     "image": "/images/products/narciso_rodriguez_for_her_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Woody Musk",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Office, Everyday, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -5373,7 +5275,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Moderate",
+    "season": "All Year",
+    "personality": "Elegant, Romantic",
+    "vibe": "Clean, Floral, Warm"
   },
   {
     "id": "prod-normal-39",
@@ -5384,9 +5292,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 44,
     "image": "/images/products/good_girl_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Oriental Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
+    "occasion": "Date Night, Party",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -5492,7 +5400,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Bold, Mysterious",
+    "vibe": "Sweet, Warm, Floral"
   },
   {
     "id": "prod-normal-40",
@@ -5503,10 +5417,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 47,
     "image": "/images/products/burberry_her_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Fruity Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Casual, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -5583,7 +5497,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Autumn, All Year",
+    "personality": "Romantic, Minimal",
+    "vibe": "Sweet, Fresh, Floral"
   },
   {
     "id": "prod-normal-41",
@@ -5594,10 +5514,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 50,
     "image": "/images/products/japanese_cherry_blossom_v6.jpg",
-    "family": "FLORAL",
+    "family": "Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "LONG_LASTING",
+    "occasion": "Casual, Everyday",
+    "meter": "MODERATE",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -5686,7 +5606,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Soft & Skin-like",
+    "longevity": "4–6h",
+    "projection": "Intimate",
+    "season": "Spring, All Year",
+    "personality": "Minimal",
+    "vibe": "Floral, Clean, Sweet"
   },
   {
     "id": "prod-normal-42",
@@ -5697,9 +5623,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 53,
     "image": "/images/products/dior_homme_parfum_v5.jpg",
-    "family": "WOODY",
+    "family": "Woody / Oriental Leather",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Formal Event, Date Night",
     "meter": "BEAST_MODE",
     "isActive": true,
     "priceVal": 300,
@@ -5781,7 +5707,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold, Elegant",
+    "vibe": "Dark, Woody, Warm"
   },
   {
     "id": "prod-normal-43",
@@ -5792,9 +5724,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 56,
     "image": "/images/products/terre_d_hermes_parfum_v3.jpg",
-    "family": "FRESH",
+    "family": "Woody / Citrus",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Office, Everyday, Formal Event",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -5880,7 +5812,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Moderate",
+    "season": "Spring, Autumn, All Year",
+    "personality": "Classic, Elegant",
+    "vibe": "Woody, Fresh, Warm"
   },
   {
     "id": "prod-normal-44",
@@ -5891,10 +5829,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 59,
     "image": "/images/products/olympea_blossom_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Fruity Gourmand",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Casual, Everyday, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -5975,7 +5913,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Romantic",
+    "vibe": "Sweet, Fresh, Floral"
   },
   {
     "id": "prod-normal-45",
@@ -5986,9 +5930,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 62,
     "image": "/images/products/millesime_imperial_v2.jpg",
-    "family": "AQUATIC",
+    "family": "Aquatic / Citrus",
     "gender": "UNISEX",
-    "occasion": "Versatile",
+    "occasion": "Everyday, Office, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -6078,7 +6022,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Elegant, Classic",
+    "vibe": "Fresh, Clean"
   },
   {
     "id": "prod-normal-46",
@@ -6089,10 +6039,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 20,
     "image": "/images/products/si_parfum_v4.jpg",
-    "family": "FLORAL",
+    "family": "Oriental / Woody Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Formal Event, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -6165,7 +6115,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Elegant, Bold",
+    "vibe": "Warm, Sweet, Dark"
   },
   {
     "id": "prod-normal-47",
@@ -6176,9 +6132,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 23,
     "image": "/images/products/rose_noir_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Woody",
     "gender": "UNISEX",
-    "occasion": "Versatile",
+    "occasion": "Everyday, Date Night",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -6264,7 +6220,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Autumn",
+    "personality": "Mysterious, Elegant",
+    "vibe": "Dark, Floral, Woody"
   },
   {
     "id": "prod-normal-48",
@@ -6275,10 +6237,10 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 26,
     "image": "/images/products/gucci_bloom_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Casual, Office",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -6286,25 +6248,25 @@ export const luxuryProducts: Product[] = [
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 0
+        "stock": 35
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 0
+        "stock": 25
       }
     ],
     "notes": [
@@ -6340,8 +6302,12 @@ export const luxuryProducts: Product[] = [
     ],
     "category": "Regular",
     "price": "300 - 1500tk",
-    "inStock": false,
-    "isOutOfStock": true
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Romantic, Classic",
+    "vibe": "Floral, Fresh, Clean"
   },
   {
     "id": "prod-normal-49",
@@ -6352,9 +6318,9 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 29,
     "image": "/images/products/explorer_platinum_v4.jpg",
-    "family": "FRESH",
+    "family": "Woody / Fresh",
     "gender": "MEN",
-    "occasion": "Daily & Executive",
+    "occasion": "Everyday, Office, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -6363,25 +6329,25 @@ export const luxuryProducts: Product[] = [
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 0
+        "stock": 35
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 0
+        "stock": 25
       }
     ],
     "notes": [
@@ -6417,8 +6383,12 @@ export const luxuryProducts: Product[] = [
     ],
     "category": "Regular",
     "price": "300 - 1500tk",
-    "inStock": false,
-    "isOutOfStock": true
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer, Autumn",
+    "personality": "Minimal, Classic",
+    "vibe": "Fresh, Clean, Woody"
   },
   {
     "id": "prod-normal-50",
@@ -6429,10 +6399,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8999999999999995,
     "reviewCount": 32,
     "image": "/images/products/good_girl_blush_v4.jpg",
-    "family": "FLORAL",
+    "family": "Floral / Gourmand",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
-    "meter": "BEAST_MODE",
+    "occasion": "Everyday, Date Night",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -6505,7 +6475,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Spring, Summer",
+    "personality": "Romantic, Elegant",
+    "vibe": "Floral, Sweet, Fresh"
   },
   {
     "id": "prod-normal-51",
@@ -6516,9 +6492,9 @@ export const luxuryProducts: Product[] = [
     "rating": 5,
     "reviewCount": 35,
     "image": "/images/products/good_girl_gone_bad_v2.jpg",
-    "family": "FLORAL",
+    "family": "Floral",
     "gender": "WOMEN",
-    "occasion": "Romantic & Daytime",
+    "occasion": "Date Night, Special Occasion",
     "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
@@ -6600,7 +6576,13 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
-    "price": "300 - 1500tk"
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Moderate",
+    "season": "Spring, Summer, Autumn",
+    "personality": "Romantic, Elegant",
+    "vibe": "Floral, Sweet"
   },
   {
     "id": "prod-normal-52",
@@ -6611,10 +6593,10 @@ export const luxuryProducts: Product[] = [
     "rating": 4.8,
     "reviewCount": 38,
     "image": "/images/products/vanilla_28_v2.jpg",
-    "family": "GOURMAND",
+    "family": "Gourmand / Oriental",
     "gender": "UNISEX",
-    "occasion": "Versatile",
-    "meter": "BEAST_MODE",
+    "occasion": "Date Night, Casual",
+    "meter": "LONG_LASTING",
     "isActive": true,
     "priceVal": 300,
     "sizes": [
@@ -6691,9 +6673,1218 @@ export const luxuryProducts: Product[] = [
       }
     ],
     "category": "Regular",
+    "price": "300 - 1500tk",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Autumn, Winter",
+    "personality": "Romantic",
+    "vibe": "Sweet, Warm"
+  },
+  {
+    "id": "prod-madawi-gold-edition-63",
+    "slug": "madawi-gold-edition",
+    "name": "Madawi Gold Edition",
+    "brand": "Arabian Oud",
+    "description": "An intoxicating oriental-floral treasure from Arabian Oud, blending sweet pineapple and aromatic cardamom with velvety vanilla, warm amber, and sensual patchouli.",
+    "rating": 4.9,
+    "reviewCount": 25,
+    "image": "/images/products/amber_gold.png",
+    "family": "Oriental / Fruity Floral",
+    "gender": "WOMEN",
+    "occasion": "Special Occasion, Date Night",
+    "meter": "LONG_LASTING",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Elegant, Romantic",
+    "vibe": "Warm, Sweet, Floral",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3200,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Aromatic Cardamom",
+        "type": "TOP"
+      },
+      {
+        "name": "Red Fruits",
+        "type": "TOP"
+      },
+      {
+        "name": "Juicy Pineapple",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Madagascar Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Warm Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#e2cc9e"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 80,
+        "color": "#f87171"
+      },
+      {
+        "name": "Amber",
+        "percentage": 75,
+        "color": "#d97706"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 70,
+        "color": "#fef08a"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 60,
+        "color": "#ea580c"
+      }
+    ],
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
+  },
+  {
+    "id": "prod-yum-boujee-marshmallow-81-64",
+    "slug": "yum-boujee-marshmallow-81",
+    "name": "Yum Boujee Marshmallow | 81",
+    "brand": "KAYALI",
+    "description": "A delightfully whimsical and flirtatious gourmand, swirling fluffy marshmallow, crisp pink lady apple, and nectarine into rich whipped cream and vanilla sugar.",
+    "rating": 4.9,
+    "reviewCount": 26,
+    "image": "/images/products/amber_gold.png",
+    "family": "Gourmand / Fruity Floral",
+    "gender": "WOMEN",
+    "occasion": "Casual, Date Night, Everyday",
+    "meter": "LONG_LASTING",
+    "intensity": "Moderate",
+    "longevity": "6–8h",
+    "projection": "Moderate",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Romantic",
+    "vibe": "Sweet, Floral",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Fluffy Marshmallow",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Lady Apple",
+        "type": "TOP"
+      },
+      {
+        "name": "Italian Lemon",
+        "type": "TOP"
+      },
+      {
+        "name": "Nectarine",
+        "type": "TOP"
+      },
+      {
+        "name": "Freesia",
+        "type": "TOP"
+      },
+      {
+        "name": "Strawberry Nectar",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Coconut Flakes",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Whipped Cream",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "White Floral Accord",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Vanilla Absolute",
+        "type": "BASE"
+      },
+      {
+        "name": "Pink Sugar",
+        "type": "BASE"
+      },
+      {
+        "name": "Sugar Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Sweet",
+        "percentage": 95,
+        "color": "#f472b6"
+      },
+      {
+        "name": "Lactonic",
+        "percentage": 85,
+        "color": "#fef3c7"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 80,
+        "color": "#fde68a"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 75,
+        "color": "#fb7185"
+      },
+      {
+        "name": "Powdery",
+        "percentage": 65,
+        "color": "#e9d5ff"
+      }
+    ],
+    "category": "Normal",
+    "price": "300 - 1500tk"
+  },
+  {
+    "id": "prod-arabians-tonka-65",
+    "slug": "arabians-tonka",
+    "name": "Arabians Tonka",
+    "brand": "Montale",
+    "description": "A majestic and fiery creation inspired by Arabian steeds—pairing dark saffron and rich Cambodian oud with velvety Bulgarian rose, roasted tonka bean, and cane sugar.",
+    "rating": 4.9,
+    "reviewCount": 27,
+    "image": "/images/products/amber_gold.png",
+    "family": "Oriental / Woody Gourmand",
+    "gender": "UNISEX",
+    "occasion": "Party, Date Night, Special Occasion",
+    "meter": "BEAST_MODE",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold, Mysterious",
+    "vibe": "Warm, Sweet, Smoky, Dark",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3200,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Saffron",
+        "type": "TOP"
+      },
+      {
+        "name": "Calabrian Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Agarwood (Oud)",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Bulgarian Rose",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Cane Sugar",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "White Musk",
+        "type": "BASE"
+      },
+      {
+        "name": "Oakmoss",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Warm Spicy",
+        "percentage": 90,
+        "color": "#b45309"
+      },
+      {
+        "name": "Oud",
+        "percentage": 85,
+        "color": "#78350f"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#d97706"
+      },
+      {
+        "name": "Amber",
+        "percentage": 75,
+        "color": "#ca8a04"
+      },
+      {
+        "name": "Rose",
+        "percentage": 70,
+        "color": "#f43f5e"
+      }
+    ],
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
+  },
+  {
+    "id": "prod-alien-hypersense-66",
+    "slug": "alien-hypersense",
+    "name": "Alien Hypersense",
+    "brand": "Mugler",
+    "description": "A fierce, magnetic floral-woody elixir featuring juicy green mandarin and luminous pear melting into opulent Sambac jasmine and warm cashmeran wood.",
+    "rating": 4.9,
+    "reviewCount": 28,
+    "image": "/images/products/amber_gold.png",
+    "family": "Floral / Woody",
+    "gender": "WOMEN",
+    "occasion": "Everyday, Date Night, Formal Event",
+    "meter": "LONG_LASTING",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Spring, Autumn, Summer",
+    "personality": "Bold, Elegant",
+    "vibe": "Floral, Fresh, Woody",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Green Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Juicy Pear Accord",
+        "type": "TOP"
+      },
+      {
+        "name": "Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Indian Jasmine",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cashmeran Wood",
+        "type": "BASE"
+      },
+      {
+        "name": "Amberwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Driftwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "White Floral",
+        "percentage": 85,
+        "color": "#f1f5f9"
+      },
+      {
+        "name": "Woody",
+        "percentage": 80,
+        "color": "#a1887f"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 70,
+        "color": "#34d399"
+      },
+      {
+        "name": "Citrus",
+        "percentage": 65,
+        "color": "#facc15"
+      },
+      {
+        "name": "Amber",
+        "percentage": 60,
+        "color": "#e2cc9e"
+      }
+    ],
+    "category": "Normal",
+    "price": "300 - 1500tk"
+  },
+  {
+    "id": "prod-khamrah-qahwa-67",
+    "slug": "khamrah-qahwa",
+    "name": "Khamrah Qahwa",
+    "brand": "Lattafa",
+    "description": "A decadent twist on Arabic hospitality—blending spicy ginger and roasted cardamom with candied fruits, praline, and dark roasted Arabic Qahwa coffee.",
+    "rating": 4.9,
+    "reviewCount": 29,
+    "image": "/images/products/amber_gold.png",
+    "family": "Gourmand / Spicy Oriental",
+    "gender": "UNISEX",
+    "occasion": "Date Night, Special Occasion, Casual",
+    "meter": "BEAST_MODE",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Bold, Romantic",
+    "vibe": "Warm, Sweet, Spicy",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Ginger",
+        "type": "TOP"
+      },
+      {
+        "name": "Cinnamon",
+        "type": "TOP"
+      },
+      {
+        "name": "Cardamom",
+        "type": "TOP"
+      },
+      {
+        "name": "Praline",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Candied Fruits",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "White Flowers",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Roasted Arabic Coffee (Qahwa)",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Benzoin",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Warm Spicy",
+        "percentage": 90,
+        "color": "#c2410c"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#d97706"
+      },
+      {
+        "name": "Coffee",
+        "percentage": 80,
+        "color": "#78350f"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 75,
+        "color": "#fef08a"
+      },
+      {
+        "name": "Cinnamon",
+        "percentage": 70,
+        "color": "#9a3412"
+      }
+    ],
+    "category": "Normal",
+    "price": "300 - 1500tk"
+  },
+  {
+    "id": "prod-blue-talisman-01",
+    "slug": "blue-talisman",
+    "name": "Blue Talisman",
+    "brand": "Ex Nihilo",
+    "inspiredBy": "Ex Nihilo",
+    "description": "Designed as a hypnotic olfactory jewel, Blue Talisman embodies the avant-garde spirit of Ex Nihilo. An intoxicating fusion of fresh bergamot and crisp pear meeting vibrant ginger and majestic modern woods.",
+    "rating": 5,
+    "reviewCount": 0,
+    "image": "/images/products/blue_talisman.jpg",
+    "family": "Fresh / Woody Fruity",
+    "gender": "UNISEX",
+    "occasion": "Everyday, Office, Special Occasion",
+    "meter": "LONG_LASTING",
+    "isActive": true,
+    "priceVal": 500,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Ginger",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Pear",
+        "type": "TOP"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Georgywood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Akigalawood",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambrofix",
+        "type": "BASE"
+      },
+      {
+        "name": "Musk",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Citrus",
+        "percentage": 85,
+        "color": "#F59E0B"
+      },
+      {
+        "name": "Fresh Spicy",
+        "percentage": 75,
+        "color": "#10B981"
+      },
+      {
+        "name": "Woody",
+        "percentage": 70,
+        "color": "#C5A880"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 65,
+        "color": "#EC4899"
+      }
+    ],
+    "bestFor": [
+      {
+        "name": "Spring",
+        "percentage": 90
+      },
+      {
+        "name": "Summer",
+        "percentage": 95
+      },
+      {
+        "name": "Autumn",
+        "percentage": 80
+      },
+      {
+        "name": "Winter",
+        "percentage": 65
+      }
+    ],
+    "galleryImages": [
+      {
+        "url": "/images/products/blue_talisman.jpg",
+        "sortOrder": 0
+      }
+    ],
+    "category": "Regular",
+    "price": "300 - 1500tk",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Spring, Summer, Autumn",
+    "personality": "Elegant, Modern",
+    "vibe": "Fresh, Clean, Woody"
+  },
+  {
+    "id": "prod-khamrah-dukhan-69",
+    "slug": "khamrah-dukhan",
+    "name": "Khamrah Dukhan",
+    "brand": "Lattafa",
+    "description": "A deeply intoxicating and smoky oriental masterpiece, combining pimento and smoked spices with sacred frankincense, dark amber, and rich cured tobacco.",
+    "rating": 4.9,
+    "reviewCount": 31,
+    "image": "/images/products/amber_gold.png",
+    "family": "Oriental / Smoky Woody",
+    "gender": "MEN",
+    "occasion": "Date Night, Formal Event, Party",
+    "meter": "BEAST_MODE",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Autumn, Winter",
+    "personality": "Mysterious, Bold",
+    "vibe": "Smoky, Warm, Spicy, Dark",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Pimento",
+        "type": "TOP"
+      },
+      {
+        "name": "Smoked Spices",
+        "type": "TOP"
+      },
+      {
+        "name": "Mandarin",
+        "type": "TOP"
+      },
+      {
+        "name": "Incense Smoke",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cistus (Labdanum)",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Orange Blossom",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Patchouli",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Rich Tobacco",
+        "type": "BASE"
+      },
+      {
+        "name": "Dark Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Praline",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Benzoin",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Smoky",
+        "percentage": 90,
+        "color": "#52525b"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 85,
+        "color": "#ea580c"
+      },
+      {
+        "name": "Amber",
+        "percentage": 80,
+        "color": "#d97706"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 70,
+        "color": "#ca8a04"
+      },
+      {
+        "name": "Tobacco",
+        "percentage": 65,
+        "color": "#78350f"
+      }
+    ],
+    "category": "Normal",
+    "price": "300 - 1500tk"
+  },
+  {
+    "id": "prod-le-beau-le-parfum-70",
+    "slug": "le-beau-le-parfum",
+    "name": "Le Beau Le Parfum",
+    "brand": "Jean Paul Gaultier",
+    "description": "A more intense, ultra-sensual variation of Le Beau—fusing fresh pineapple and ginger with smooth iris, roasted coconut wood, and creamy tonka bean.",
+    "rating": 4.9,
+    "reviewCount": 32,
+    "image": "/images/products/le_beau_v2.jpg",
+    "family": "Gourmand / Woody Oriental",
+    "gender": "MEN",
+    "occasion": "Party, Date Night, Casual",
+    "meter": "BEAST_MODE",
+    "intensity": "Very Strong",
+    "longevity": "10+ h",
+    "projection": "Room-filling",
+    "season": "Summer, Spring, Autumn",
+    "personality": "Bold, Romantic",
+    "vibe": "Sweet, Warm, Woody",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Pineapple",
+        "type": "TOP"
+      },
+      {
+        "name": "Iris",
+        "type": "TOP"
+      },
+      {
+        "name": "Ginger",
+        "type": "TOP"
+      },
+      {
+        "name": "Cypress",
+        "type": "TOP"
+      },
+      {
+        "name": "Coconut Wood",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Woody Accords",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Sandalwood",
+        "type": "BASE"
+      },
+      {
+        "name": "Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Ambergris",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Sweet",
+        "percentage": 85,
+        "color": "#f59e0b"
+      },
+      {
+        "name": "Coconut",
+        "percentage": 80,
+        "color": "#fef3c7"
+      },
+      {
+        "name": "Woody",
+        "percentage": 75,
+        "color": "#a1887f"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 70,
+        "color": "#fef08a"
+      },
+      {
+        "name": "Fruity",
+        "percentage": 65,
+        "color": "#34d399"
+      }
+    ],
+    "category": "Normal",
+    "price": "300 - 1500tk"
+  },
+  {
+    "id": "prod-the-dubai-chocolate-perfume-71",
+    "slug": "the-dubai-chocolate-perfume",
+    "name": "The Dubai Chocolate Perfume",
+    "brand": "Vivamor Parfums",
+    "description": "Inspired by the world-famous viral sensation, this ultra-luxurious gourmand fuses roasted pistachios, kunafa pastry accord, and velvety chocolate with rich vanilla bean.",
+    "rating": 4.9,
+    "reviewCount": 33,
+    "image": "/images/products/amber_gold.png",
+    "family": "Gourmand",
+    "gender": "UNISEX",
+    "occasion": "Date Night, Casual, Special Occasion",
+    "meter": "LONG_LASTING",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter",
+    "personality": "Romantic, Bold",
+    "vibe": "Sweet, Warm",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 2500,
+        "originalPrice": 3200,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Sicilian Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Roasted Pistachio",
+        "type": "TOP"
+      },
+      {
+        "name": "Rich Chocolate Accord",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Kunafa Accord",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Creamy Pistachio Milk",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Tonka Bean Absolute",
+        "type": "BASE"
+      },
+      {
+        "name": "Madagascan Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Cashmeran",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Sweet",
+        "percentage": 95,
+        "color": "#78350f"
+      },
+      {
+        "name": "Chocolate",
+        "percentage": 90,
+        "color": "#451a03"
+      },
+      {
+        "name": "Nutty",
+        "percentage": 85,
+        "color": "#d97706"
+      },
+      {
+        "name": "Warm Spicy",
+        "percentage": 75,
+        "color": "#b45309"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 70,
+        "color": "#fef08a"
+      }
+    ],
+    "category": "Exclusive",
+    "price": "300 - 2500tk"
+  },
+  {
+    "id": "prod-power-of-you-72",
+    "slug": "power-of-you",
+    "name": "Power of You",
+    "brand": "Emporio Armani",
+    "description": "A passionate, radiant celebration of modern love—bursting with juicy red berries and sparkling bergamot over a lavish heart of Damascena rose and bourbon vanilla.",
+    "rating": 4.9,
+    "reviewCount": 34,
+    "image": "/images/products/amber_gold.png",
+    "family": "Oriental / Fruity Floral",
+    "gender": "WOMEN",
+    "occasion": "Date Night, Party, Special Occasion",
+    "meter": "LONG_LASTING",
+    "intensity": "Strong",
+    "longevity": "8–10h",
+    "projection": "Heavy",
+    "season": "Autumn, Winter, Spring",
+    "personality": "Romantic, Bold",
+    "vibe": "Sweet, Warm, Floral",
+    "isActive": true,
+    "priceVal": 300,
+    "sizes": [
+      {
+        "size": "6ml",
+        "price": 300,
+        "originalPrice": 400,
+        "stock": 50
+      },
+      {
+        "size": "10ml",
+        "price": 500,
+        "originalPrice": 650,
+        "stock": 50
+      },
+      {
+        "size": "30ml",
+        "price": 900,
+        "originalPrice": 1100,
+        "stock": 35
+      },
+      {
+        "size": "50ml",
+        "price": 1500,
+        "originalPrice": 1900,
+        "stock": 25
+      }
+    ],
+    "notes": [
+      {
+        "name": "Juicy Red Berries",
+        "type": "TOP"
+      },
+      {
+        "name": "Pink Pepper",
+        "type": "TOP"
+      },
+      {
+        "name": "Sparkling Bergamot",
+        "type": "TOP"
+      },
+      {
+        "name": "Bulgarian Rose Damascena",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Jasmine Sambac",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Cherry Blossom Accord",
+        "type": "MIDDLE"
+      },
+      {
+        "name": "Madagascar Bourbon Vanilla",
+        "type": "BASE"
+      },
+      {
+        "name": "Tonka Bean",
+        "type": "BASE"
+      },
+      {
+        "name": "Warm Amber",
+        "type": "BASE"
+      },
+      {
+        "name": "Sensual White Musk",
+        "type": "BASE"
+      }
+    ],
+    "accords": [
+      {
+        "name": "Fruity",
+        "percentage": 85,
+        "color": "#f43f5e"
+      },
+      {
+        "name": "Sweet",
+        "percentage": 80,
+        "color": "#ec4899"
+      },
+      {
+        "name": "Rose",
+        "percentage": 75,
+        "color": "#fb7185"
+      },
+      {
+        "name": "Floral",
+        "percentage": 70,
+        "color": "#e2e8f0"
+      },
+      {
+        "name": "Vanilla",
+        "percentage": 65,
+        "color": "#fef08a"
+      }
+    ],
+    "category": "Normal",
     "price": "300 - 1500tk"
   }
 ];
+
 export const productsCatalog = luxuryProducts;
 
 /**
@@ -6752,47 +7943,11 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
       const items = json ? (json.data || json) : null;
 
       if (Array.isArray(items) && items.length > 0) {
-        cachedProducts = items.map((p: any, idx: number) => {
+        cachedProducts = items.map((p: any) => {
           let priceStr = p.price || "300 - 1500tk";
           let minPrice = 300;
           let maxP = 1500;
-          let prodSizes = p.sizes;
-
-          const itemSlug = p.slug || slugify(p.name);
-          const slugClean = (itemSlug || "").toLowerCase();
-          const nameClean = (p.name || "").toLowerCase();
-
-          if (slugClean.includes('tonka') || nameClean.includes('tonka')) {
-            prodSizes = [
-              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
-              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
-              { size: '30ml', price: 1400, originalPrice: 1800, stock: 35 },
-              { size: '50ml', price: 2300, originalPrice: 2900, stock: 25 },
-            ];
-            priceStr = "300 - 2300tk";
-            minPrice = 300;
-            maxP = 2300;
-          } else if (slugClean.includes('talisman') || nameClean.includes('talisman')) {
-            prodSizes = [
-              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
-              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
-              { size: '30ml', price: 1000, originalPrice: 1300, stock: 35 },
-              { size: '50ml', price: 1600, originalPrice: 2000, stock: 25 },
-            ];
-            priceStr = "300 - 1600tk";
-            minPrice = 300;
-            maxP = 1600;
-          } else if (slugClean.includes('madwi') || slugClean.includes('madawi') || nameClean.includes('madwi') || nameClean.includes('madawi')) {
-            prodSizes = [
-              { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
-              { size: '10ml', price: 500, originalPrice: 650, stock: 50 },
-              { size: '30ml', price: 1500, originalPrice: 1900, stock: 35 },
-              { size: '50ml', price: 2500, originalPrice: 3200, stock: 25 },
-            ];
-            priceStr = "300 - 2500tk";
-            minPrice = 300;
-            maxP = 2500;
-          } else if (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0) {
+          if (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0) {
             const prices = p.sizes.map((s: any) => Number(s.price)).filter((n: number) => !isNaN(n));
             if (prices.length > 0) {
               minPrice = Math.min(...prices);
@@ -6805,6 +7960,7 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             ? p.notes.map((n: any) => typeof n === 'string' ? n : n.name)
             : [];
 
+          const itemSlug = p.slug || slugify(p.name);
           let itemImage = p.image || "/images/products/jade_serenity.png";
           if (itemSlug === "resala" || (p.name && p.name.toLowerCase().includes("resala"))) {
             itemImage = "/images/products/resala_arabian_oud.jpg";
@@ -6827,38 +7983,22 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           if (itemSlug.includes("blue-talisman") || (p.name && p.name.toLowerCase().includes("blue talisman"))) {
             itemImage = "/images/products/blue_talisman.jpg";
           }
-          if (slugClean.includes("tonka") || nameClean.includes("tonka")) {
-            itemImage = "/images/products/arabian_tonka.jpg";
-          }
-          if (slugClean.includes("madwi") || slugClean.includes("madawi") || nameClean.includes("madwi") || nameClean.includes("madawi")) {
-            itemImage = "/images/products/madwi_al_arabi.jpg";
-          }
 
           const EXCLUSIVE_SET = new Set([
             'irish-leather', 'baccarat-rouge-540', 'tobacco-vanille', 'by-the-fireplace',
             'resala', 'sultani', 'guidance', 'rosewood', 'sakura-dior', 'imagination',
             'prod-irish-leather-01', 'prod-baccarat-rouge-540-02', 'prod-tobacco-vanille-03',
             'prod-by-the-fireplace-04', 'prod-resala-05', 'prod-sultani-06', 'prod-guidance-07',
-            'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10',
-            'arabian-tonka', 'arabians-tonka', 'prod-arabian-tonka-11', 'cmttukhh102zxjju646krncbh',
-            'madwi-al-arabi', 'madawi-al-arabi', 'madawi-gold-edition', 'prod-madwi-al-arabi-12', 'cmttujk3l02zbjju6cq4r4c62',
-            'blue-talisman', 'prod-blue-talisman-01'
+            'prod-rosewood-08', 'prod-sakura-dior-09', 'prod-imagination-10'
           ]);
 
           const isExcl = (p.category && p.category.toLowerCase() === 'exclusive') ||
             EXCLUSIVE_SET.has(itemSlug) ||
             EXCLUSIVE_SET.has(p.id) ||
-            slugClean.includes('tonka') ||
-            slugClean.includes('talisman') ||
-            slugClean.includes('madwi') ||
-            slugClean.includes('madawi') ||
-            (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2300));
+            (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500));
 
-          const isTargetOOS = [
-            "imagination", "spicebomb", "gucci-bloom", "explorer-platinum", "talisman"
-          ].some(kw => itemSlug.includes(kw) || (p.name && p.name.toLowerCase().includes(kw)) || (p.id && String(p.id).toLowerCase().includes(kw)));
-
-          const isOutOfStock = p.inStock === false || p.isOutOfStock === true || isTargetOOS ||
+          const isOutOfStock = p.inStock === false || p.isOutOfStock === true ||
+            itemSlug === "imagination" || (p.name && p.name.toLowerCase() === "imagination") ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0));
           const inStock = !isOutOfStock;
 
@@ -6885,8 +8025,17 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             gender: (p.gender || "UNISEX").toUpperCase(),
             occasion: p.occasion || "Versatile",
             meter: (p.meter || "BEAST_MODE").toUpperCase(),
+            intensity: p.intensity,
+            longevity: p.longevity,
+            projection: p.projection,
+            season: p.season,
+            personality: p.personality,
+            vibe: p.vibe,
             notes: notesArr,
             badge: isExcl ? "EXCLUSIVE" : undefined,
+            accords: p.accords,
+            bestFor: p.bestFor,
+            galleryImages: p.galleryImages,
             sizes: p.sizes || (isExcl ? [
               { size: '6ml', price: 300, originalPrice: 400, stock: 50 },
               { size: '10ml', price: 500, originalPrice: 650, stock: 50 },

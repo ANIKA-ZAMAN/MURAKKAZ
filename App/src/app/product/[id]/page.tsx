@@ -676,7 +676,14 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             bestFor: p.bestFor && p.bestFor.length > 0
               ? p.bestFor.map((b: any) => ({ name: b.name, pct: b.percentage }))
               : [{ name: "Spring", pct: 70 }, { name: "Summer", pct: 40 }, { name: "Autumn", pct: 85 }, { name: "Winter", pct: 95 }],
-            ourTake: p.ourTake || p.description || 'An extraordinary fragrance formulation crafted by Murakkaz.'
+            ourTake: p.ourTake || p.description || 'An extraordinary fragrance formulation crafted by Murakkaz.',
+            intensity: p.intensity,
+            longevity: p.longevity,
+            projection: p.projection,
+            season: p.season,
+            personality: p.personality,
+            vibe: p.vibe,
+            occasion: p.occasion,
           });
         }
       })
@@ -763,7 +770,14 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         baseNotes,
         accords,
         bestFor,
-        ourTake: catalogItem.ourTake || catalogItem.description || `${catalogItem.name} is a captivating fragrance formulation.`
+        ourTake: catalogItem.ourTake || catalogItem.description || `${catalogItem.name} is a captivating fragrance formulation.`,
+        intensity: catalogItem.intensity || liveProduct?.intensity,
+        longevity: catalogItem.longevity || liveProduct?.longevity,
+        projection: catalogItem.projection || liveProduct?.projection,
+        season: catalogItem.season || liveProduct?.season,
+        personality: catalogItem.personality || liveProduct?.personality,
+        vibe: catalogItem.vibe || liveProduct?.vibe,
+        occasion: catalogItem.occasion || liveProduct?.occasion,
       };
     }
 
@@ -1067,6 +1081,13 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
               <div>
                 <h1 className={styles.title}>{details.name}</h1>
                 <p className={styles.subtitle}>{details.inspiredBy}</p>
+                {(details.season || details.longevity || details.projection) && (
+                  <div className={styles.quickSpecsRow}>
+                    {details.season && <span className={styles.quickSpecPill}>{details.season}</span>}
+                    {details.longevity && <span className={styles.quickSpecPill}>{details.longevity}</span>}
+                    {details.projection && <span className={styles.quickSpecPill}>{details.projection}</span>}
+                  </div>
+                )}
                 <div className={styles.badgeRow}>
                   {details.badge && (
                     <span className={styles.badge}>{details.badge}</span>
@@ -1231,7 +1252,57 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           <div className={styles.tabContentWrapper}>
             {activeTab === "performance" && (
               <div className={styles.performanceGrid}>
-                {/* Card 1: Main Accords */}
+                {/* Card 1: Olfactory Profile & Specifications */}
+                <div className={styles.performanceCard}>
+                  <h3 className={styles.cardTitle}>Olfactory Profile</h3>
+                  <div className={styles.specList}>
+                    {details.intensity && (
+                      <div className={styles.specItem}>
+                        <span className={styles.specLabel}>Intensity</span>
+                        <span className={styles.specValue}>{details.intensity}</span>
+                      </div>
+                    )}
+                    {details.longevity && (
+                      <div className={styles.specItem}>
+                        <span className={styles.specLabel}>Longevity</span>
+                        <span className={styles.specValue}>{details.longevity}</span>
+                      </div>
+                    )}
+                    {details.projection && (
+                      <div className={styles.specItem}>
+                        <span className={styles.specLabel}>Projection</span>
+                        <span className={styles.specValue}>{details.projection}</span>
+                      </div>
+                    )}
+                    {details.season && (
+                      <div className={styles.specItem}>
+                        <span className={styles.specLabel}>Season</span>
+                        <span className={styles.specValue}>{details.season}</span>
+                      </div>
+                    )}
+                    {details.occasion && (
+                      <div className={styles.specItem}>
+                        <span className={styles.specLabel}>Occasion</span>
+                        <span className={styles.specValue}>{details.occasion}</span>
+                      </div>
+                    )}
+                    {details.personality && (
+                      <div className={styles.specItem}>
+                        <span className={styles.specLabel}>Scent Style</span>
+                        <span className={styles.specValue}>{details.personality}</span>
+                      </div>
+                    )}
+                    {details.vibe && (
+                      <div className={styles.specItem}>
+                        <span className={styles.specLabel}>Vibe / Scene</span>
+                        <span className={styles.specValue}>{details.vibe}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.sourceText}>Source: Murakkaz Master Guide</div>
+                </div>
+
+                {/* Card 2: Main Accords */}
                 <div className={styles.performanceCard}>
                   <h3 className={styles.cardTitle}>Main Accords</h3>
                   {details.accords.map((accord: any) => (
