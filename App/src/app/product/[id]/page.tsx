@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "../../components/ProductCard";
 import FragranceNotes from "../../components/FragranceNotes";
-import { productsCatalog, slugify, getNoteImage, getProductsApiBaseUrl } from "../../data/products";
+import { productsCatalog, slugify, getNoteImage, getProductsApiBaseUrl, findCachedProduct } from "../../data/products";
 import { trackAnalyticsEvent } from "../../components/AnalyticsProvider";
 import styles from "./page.module.css";
 
@@ -148,10 +148,10 @@ const productsDetailMap: Record<string, {
     inspiredBy: "Inspired by Montale",
     badge: "Exclusive",
     description: "A tribute to the majestic Arabian horse and eastern opulence. A fiery, captivating blend of rare oud, spiced saffron, and sparkling bergamot dancing over a sumptuous heart of Bulgarian rose and cane sugar, anchored by rich tonka bean, amber, and white musk.",
-    image: "/images/products/arabian_tonka.jpg",
+    image: "/images/products/arabians_tonka.jpg",
     family: "Oriental",
     galleryImages: [
-      "/images/products/arabian_tonka.jpg",
+      "/images/products/arabians_tonka.jpg",
       "/images/murakkaz_cream_lineup_v2.jpg",
     ],
     topNotes: [
@@ -187,10 +187,10 @@ const productsDetailMap: Record<string, {
     inspiredBy: "Arabian Oud Madawi",
     badge: "Exclusive",
     description: "An iconic signature fragrance celebrating Middle Eastern grace and romance. Opening with an alluring swirl of velvety peach and fragrant apple blossom, blossoming into a heart of sensual pineapple blossom, resting upon an enduring, opulent foundation of wild rose, golden musk, and deep patchouli.",
-    image: "/images/products/madwi_al_arabi.jpg",
+    image: "/images/products/madawi_gold_edition.jpg",
     family: "Oriental",
     galleryImages: [
-      "/images/products/madwi_al_arabi.jpg",
+      "/images/products/madawi_gold_edition.jpg",
       "/images/murakkaz_cream_lineup_v2.jpg",
     ],
     topNotes: [
@@ -229,7 +229,6 @@ const productsDetailMap: Record<string, {
     galleryImages: [
       "/images/products/jade_serenity.png",
       "/images/murakkaz_cream_lineup_v2.jpg",
-      "/images/products/amber_gold.png",
     ],
     topNotes: [
       { name: "Osmanthus", image: "osmanthus.png" },
@@ -357,7 +356,6 @@ const productsDetailMap: Record<string, {
     galleryImages: [
       "/images/products/hellenist.png",
       "/images/murakkaz_cream_lineup_v2.jpg",
-      "/images/products/amber_gold.png",
     ],
     topNotes: [
       { name: "Jasmine", image: "jasmine.png" },
@@ -403,7 +401,18 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const [liveProduct, setLiveProduct] = useState<any>(null);
+  const [liveProduct, setLiveProduct] = useState<any>(() => {
+    const cached = findCachedProduct(id);
+    if (cached) {
+      return {
+        ...cached,
+        galleryImages: (cached.galleryImages && cached.galleryImages.length > 0)
+          ? cached.galleryImages
+          : [cached.image]
+      };
+    }
+    return null;
+  });
 
   // Dynamic targeting logic based on URL route ID or SLUG
   const catalogItem = React.useMemo(() => {
@@ -415,12 +424,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         p.id.toLowerCase() === cleanId ||
         p.name.toLowerCase() === cleanId ||
         slugify(p.name) === cleanId ||
-        p.name.toLowerCase().replace(/\s+/g, "-") === cleanId ||
-        cleanId.includes(p.id.toLowerCase()) ||
-        p.id.toLowerCase().includes(cleanId) ||
-        (cleanId.includes("tonka") && p.slug?.includes("tonka")) ||
-        (cleanId.includes("talisman") && p.slug?.includes("talisman")) ||
-        ((cleanId.includes("madwi") || cleanId.includes("madawi")) && (p.slug?.includes("madwi") || p.slug?.includes("madawi")))
+        p.name.toLowerCase().replace(/\s+/g, "-") === cleanId
     );
   }, [id]);
 
@@ -620,8 +624,20 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
       .then((json) => {
         if (json && json.data) {
           const p = json.data;
-          const isBlueTalisman = p.slug?.includes('blue-talisman') || p.name?.toLowerCase().includes('blue talisman') || (id && id.toLowerCase().includes('talisman'));
-          const resolvedImage = isBlueTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png');
+          const hasDbImage = p.image && typeof p.image === 'string' && p.image.trim().length > 0 && !p.image.includes('jade_serenity.png');
+          const resolvedImage = hasDbImage
+            ? p.image
+            : (catalogItem?.image || p.image || '/images/products/jade_serenity.png');
+
+          const rawGallery = Array.isArray(p.galleryImages)
+            ? p.galleryImages.map((g: any) => typeof g === 'string' ? g : g?.url).filter((u: any) => typeof u === 'string' && u.trim().length > 0)
+            : [];
+          const customGallery = rawGallery.filter((u: string) => u !== resolvedImage);
+
+          const galleryImages = [
+            resolvedImage,
+            ...(customGallery.length > 0 ? customGallery : ['/images/murakkaz_cream_lineup_v2.jpg'])
+          ];
 
           const isExclusiveProd = isExclusive || p.category === 'Exclusive' || p.category === 'exclusive';
           setLiveProduct({
@@ -635,11 +651,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
             description: p.description || `${p.name} by ${p.brand || 'Murakkaz'}. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
             image: resolvedImage,
             family: p.family || 'Woody',
-            galleryImages: [
-              resolvedImage,
-              '/images/murakkaz_cream_lineup_v2.jpg',
-              ...(p.galleryImages || []).map((g: any) => typeof g === 'string' ? g : g.url).filter((u: string) => u !== resolvedImage && u !== '/images/murakkaz_cream_lineup_v2.jpg')
-            ],
+            galleryImages: galleryImages,
             topNotes: (() => {
               const top = p.notes?.filter((n: any) => n.type === 'TOP').map((n: any) => ({ name: typeof n === 'string' ? n : n.name, image: getNoteImage(typeof n === 'string' ? n : n.name) })) || [];
               if (top.length > 0) return top;
@@ -714,45 +726,77 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   }, [id]);
 
   const details = React.useMemo(() => {
-    // 1. If catalog item exists in master luxury catalog:
+    const topRaw = (catalogItem?.notes || []).filter((n: any) => typeof n === "object" && n?.type === "TOP").map((n: any) => n.name);
+    const midRaw = (catalogItem?.notes || []).filter((n: any) => typeof n === "object" && n?.type === "MIDDLE").map((n: any) => n.name);
+    const baseRaw = (catalogItem?.notes || []).filter((n: any) => typeof n === "object" && n?.type === "BASE").map((n: any) => n.name);
+
+    const allNames: string[] = (catalogItem?.notes || []).map((n: any) => (typeof n === "string" ? n : n?.name || "")).filter(Boolean);
+    const fallbackNames = allNames.length > 0 ? allNames : ["Bergamot", "Jasmine", "Amber"];
+    const oneThird = Math.max(1, Math.floor(fallbackNames.length / 3));
+
+    const catalogTop = (topRaw.length > 0 ? topRaw : fallbackNames.slice(0, oneThird)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+    const catalogMid = (midRaw.length > 0 ? midRaw : fallbackNames.slice(oneThird, oneThird * 2)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+    const catalogBase = (baseRaw.length > 0 ? baseRaw : fallbackNames.slice(oneThird * 2)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
+
+    const catalogAccords = (catalogItem?.accords && catalogItem.accords.length > 0)
+      ? catalogItem.accords.map((a: any) => ({
+          name: a.name,
+          pct: a.percentage || a.pct || 80,
+          color: a.color || "#e2cc9e",
+          path: a.path || "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z"
+        }))
+      : [
+          { name: catalogItem?.family || "Woody", pct: 90, color: "#e2cc9e", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
+          { name: "Aromatic", pct: 75, color: "#b9cad7", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
+          { name: "Spicy", pct: 60, color: "#e89f65", path: "M4 18L18 4" }
+        ];
+
+    const catalogBestFor = (catalogItem?.bestFor && catalogItem.bestFor.length > 0)
+      ? catalogItem.bestFor.map((b: any) => ({
+          name: b.name,
+          pct: b.percentage || b.pct || 80
+        }))
+      : [
+          { name: "Spring & Summer", pct: 80 },
+          { name: "Autumn & Winter", pct: 85 },
+          { name: "Daytime Wear", pct: 75 },
+          { name: "Nightly Occasions", pct: 90 }
+        ];
+
+    // 1. PRIORITY #1: Dynamic product from Database / Admin panel (liveProduct)
+    if (liveProduct) {
+      const coverImg = liveProduct.image || catalogItem?.image || '/images/products/jade_serenity.png';
+      const gallery = (liveProduct.galleryImages && liveProduct.galleryImages.length > 0)
+        ? liveProduct.galleryImages
+        : [coverImg, '/images/murakkaz_cream_lineup_v2.jpg'];
+
+      return {
+        ...liveProduct,
+        name: liveProduct.name || catalogItem?.name || 'Unnamed Fragrance',
+        inspiredBy: liveProduct.inspiredBy || catalogItem?.inspiredBy || (catalogItem?.brand ? `Inspired by ${catalogItem.brand}` : ''),
+        badge: liveProduct.badge || (isExclusive ? "EXCLUSIVE" : undefined),
+        description: liveProduct.description || catalogItem?.description || `${liveProduct.name || 'Perfume'} by Murakkaz. High concentration artisanal fragrance engineered for luxury projection and long-lasting sillage.`,
+        image: coverImg,
+        family: liveProduct.family || catalogItem?.family || "Woody",
+        galleryImages: gallery,
+        topNotes: (liveProduct.topNotes && liveProduct.topNotes.length > 0) ? liveProduct.topNotes : catalogTop,
+        middleNotes: (liveProduct.middleNotes && liveProduct.middleNotes.length > 0) ? liveProduct.middleNotes : catalogMid,
+        baseNotes: (liveProduct.baseNotes && liveProduct.baseNotes.length > 0) ? liveProduct.baseNotes : catalogBase,
+        accords: (liveProduct.accords && liveProduct.accords.length > 0) ? liveProduct.accords : catalogAccords,
+        bestFor: (liveProduct.bestFor && liveProduct.bestFor.length > 0) ? liveProduct.bestFor : catalogBestFor,
+        ourTake: liveProduct.ourTake || catalogItem?.ourTake || liveProduct.description || `${liveProduct.name} is a captivating fragrance formulation.`,
+        intensity: liveProduct.intensity || catalogItem?.intensity,
+        longevity: liveProduct.longevity || catalogItem?.longevity,
+        projection: liveProduct.projection || catalogItem?.projection,
+        season: liveProduct.season || catalogItem?.season,
+        personality: liveProduct.personality || catalogItem?.personality,
+        vibe: liveProduct.vibe || catalogItem?.vibe,
+        occasion: liveProduct.occasion || catalogItem?.occasion,
+      };
+    }
+
+    // 2. PRIORITY #2: Catalog item fallback
     if (catalogItem) {
-      const topRaw = (catalogItem.notes || []).filter((n: any) => typeof n === "object" && n?.type === "TOP").map((n: any) => n.name);
-      const midRaw = (catalogItem.notes || []).filter((n: any) => typeof n === "object" && n?.type === "MIDDLE").map((n: any) => n.name);
-      const baseRaw = (catalogItem.notes || []).filter((n: any) => typeof n === "object" && n?.type === "BASE").map((n: any) => n.name);
-
-      const allNames: string[] = (catalogItem.notes || []).map((n: any) => (typeof n === "string" ? n : n?.name || "")).filter(Boolean);
-      const fallbackNames = allNames.length > 0 ? allNames : ["Bergamot", "Jasmine", "Amber"];
-      const oneThird = Math.max(1, Math.floor(fallbackNames.length / 3));
-
-      const topNotes = (topRaw.length > 0 ? topRaw : fallbackNames.slice(0, oneThird)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
-      const middleNotes = (midRaw.length > 0 ? midRaw : fallbackNames.slice(oneThird, oneThird * 2)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
-      const baseNotes = (baseRaw.length > 0 ? baseRaw : fallbackNames.slice(oneThird * 2)).map((n: string) => ({ name: n, image: getNoteImage(n) }));
-
-      const accords = (catalogItem.accords && catalogItem.accords.length > 0)
-        ? catalogItem.accords.map((a: any) => ({
-            name: a.name,
-            pct: a.percentage || a.pct || 80,
-            color: a.color || "#e2cc9e",
-            path: a.path || "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z"
-          }))
-        : [
-            { name: catalogItem.family || "Woody", pct: 90, color: "#e2cc9e", path: "M12 7c-2 0-3.5 1-3.5 2.5S10 12 12 12s3.5-1 3.5-2.5S14 7 12 7z" },
-            { name: "Aromatic", pct: 75, color: "#b9cad7", path: "M12 2C12 2 6 9 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9 12 2 12 2Z" },
-            { name: "Spicy", pct: 60, color: "#e89f65", path: "M4 18L18 4" }
-          ];
-
-      const bestFor = (catalogItem.bestFor && catalogItem.bestFor.length > 0)
-        ? catalogItem.bestFor.map((b: any) => ({
-            name: b.name,
-            pct: b.percentage || b.pct || 80
-          }))
-        : [
-            { name: "Spring & Summer", pct: 80 },
-            { name: "Autumn & Winter", pct: 85 },
-            { name: "Daytime Wear", pct: 75 },
-            { name: "Nightly Occasions", pct: 90 }
-          ];
-
       return {
         name: catalogItem.name,
         inspiredBy: catalogItem.inspiredBy ? `Inspired by ${catalogItem.inspiredBy}` : (catalogItem.brand ? `Inspired by ${catalogItem.brand}` : ""),
@@ -765,25 +809,20 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
           '/images/murakkaz_cream_lineup_v2.jpg',
           ...(catalogItem.galleryImages || []).filter((g: string) => g !== catalogItem.image && g !== '/images/murakkaz_cream_lineup_v2.jpg')
         ],
-        topNotes,
-        middleNotes,
-        baseNotes,
-        accords,
-        bestFor,
+        topNotes: catalogTop,
+        middleNotes: catalogMid,
+        baseNotes: catalogBase,
+        accords: catalogAccords,
+        bestFor: catalogBestFor,
         ourTake: catalogItem.ourTake || catalogItem.description || `${catalogItem.name} is a captivating fragrance formulation.`,
-        intensity: catalogItem.intensity || liveProduct?.intensity,
-        longevity: catalogItem.longevity || liveProduct?.longevity,
-        projection: catalogItem.projection || liveProduct?.projection,
-        season: catalogItem.season || liveProduct?.season,
-        personality: catalogItem.personality || liveProduct?.personality,
-        vibe: catalogItem.vibe || liveProduct?.vibe,
-        occasion: catalogItem.occasion || liveProduct?.occasion,
+        intensity: catalogItem.intensity,
+        longevity: catalogItem.longevity,
+        projection: catalogItem.projection,
+        season: catalogItem.season,
+        personality: catalogItem.personality,
+        vibe: catalogItem.vibe,
+        occasion: catalogItem.occasion,
       };
-    }
-
-    // 2. If it's a dynamic product created via admin dashboard (liveProduct):
-    if (liveProduct) {
-      return liveProduct;
     }
 
     // 3. Fallback to signature products detail map
@@ -791,7 +830,7 @@ function ProductDetailsContent({ params }: { params: Promise<{ id: string }> }) 
     if (productsDetailMap[targetKey]) return productsDetailMap[targetKey];
     
     return productsDetailMap["jade-serenity"];
-  }, [liveProduct, targetKey, id, catalogItem]);
+  }, [liveProduct, targetKey, id, catalogItem, isExclusive]);
 
   // Reset indices on product change
   useEffect(() => {

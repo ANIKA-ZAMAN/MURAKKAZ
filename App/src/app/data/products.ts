@@ -6689,7 +6689,7 @@ export const luxuryProducts: Product[] = [
     "description": "An intoxicating oriental-floral treasure from Arabian Oud, blending sweet pineapple and aromatic cardamom with velvety vanilla, warm amber, and sensual patchouli.",
     "rating": 4.9,
     "reviewCount": 25,
-    "image": "/images/products/amber_gold.png",
+    "image": "/images/products/madawi_gold_edition.jpg",
     "family": "Oriental / Fruity Floral",
     "gender": "WOMEN",
     "occasion": "Special Occasion, Date Night",
@@ -6800,7 +6800,7 @@ export const luxuryProducts: Product[] = [
     "description": "A delightfully whimsical and flirtatious gourmand, swirling fluffy marshmallow, crisp pink lady apple, and nectarine into rich whipped cream and vanilla sugar.",
     "rating": 4.9,
     "reviewCount": 26,
-    "image": "/images/products/amber_gold.png",
+    "image": "/images/products/yum_boujee_marshmallow_81.jpg",
     "family": "Gourmand / Fruity Floral",
     "gender": "WOMEN",
     "occasion": "Casual, Date Night, Everyday",
@@ -6931,7 +6931,7 @@ export const luxuryProducts: Product[] = [
     "description": "A majestic and fiery creation inspired by Arabian steeds—pairing dark saffron and rich Cambodian oud with velvety Bulgarian rose, roasted tonka bean, and cane sugar.",
     "rating": 4.9,
     "reviewCount": 27,
-    "image": "/images/products/amber_gold.png",
+    "image": "/images/products/arabians_tonka.jpg",
     "family": "Oriental / Woody Gourmand",
     "gender": "UNISEX",
     "occasion": "Party, Date Night, Special Occasion",
@@ -7039,117 +7039,6 @@ export const luxuryProducts: Product[] = [
     "price": "300 - 2500tk"
   },
   {
-    "id": "prod-alien-hypersense-66",
-    "slug": "alien-hypersense",
-    "name": "Alien Hypersense",
-    "brand": "Mugler",
-    "description": "A fierce, magnetic floral-woody elixir featuring juicy green mandarin and luminous pear melting into opulent Sambac jasmine and warm cashmeran wood.",
-    "rating": 4.9,
-    "reviewCount": 28,
-    "image": "/images/products/amber_gold.png",
-    "family": "Floral / Woody",
-    "gender": "WOMEN",
-    "occasion": "Everyday, Date Night, Formal Event",
-    "meter": "LONG_LASTING",
-    "intensity": "Strong",
-    "longevity": "8–10h",
-    "projection": "Heavy",
-    "season": "Spring, Autumn, Summer",
-    "personality": "Bold, Elegant",
-    "vibe": "Floral, Fresh, Woody",
-    "isActive": true,
-    "priceVal": 300,
-    "sizes": [
-      {
-        "size": "6ml",
-        "price": 300,
-        "originalPrice": 400,
-        "stock": 50
-      },
-      {
-        "size": "10ml",
-        "price": 500,
-        "originalPrice": 650,
-        "stock": 50
-      },
-      {
-        "size": "30ml",
-        "price": 900,
-        "originalPrice": 1100,
-        "stock": 35
-      },
-      {
-        "size": "50ml",
-        "price": 1500,
-        "originalPrice": 1900,
-        "stock": 25
-      }
-    ],
-    "notes": [
-      {
-        "name": "Green Mandarin",
-        "type": "TOP"
-      },
-      {
-        "name": "Juicy Pear Accord",
-        "type": "TOP"
-      },
-      {
-        "name": "Jasmine Sambac",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Indian Jasmine",
-        "type": "MIDDLE"
-      },
-      {
-        "name": "Cashmeran Wood",
-        "type": "BASE"
-      },
-      {
-        "name": "Amberwood",
-        "type": "BASE"
-      },
-      {
-        "name": "Driftwood",
-        "type": "BASE"
-      },
-      {
-        "name": "Musk",
-        "type": "BASE"
-      }
-    ],
-    "accords": [
-      {
-        "name": "White Floral",
-        "percentage": 85,
-        "color": "#f1f5f9"
-      },
-      {
-        "name": "Woody",
-        "percentage": 80,
-        "color": "#a1887f"
-      },
-      {
-        "name": "Fruity",
-        "percentage": 70,
-        "color": "#34d399"
-      },
-      {
-        "name": "Citrus",
-        "percentage": 65,
-        "color": "#facc15"
-      },
-      {
-        "name": "Amber",
-        "percentage": 60,
-        "color": "#e2cc9e"
-      }
-    ],
-    "category": "Normal",
-    "price": "300 - 1500tk"
-  },
-  {
     "id": "prod-khamrah-qahwa-67",
     "slug": "khamrah-qahwa",
     "name": "Khamrah Qahwa",
@@ -7157,7 +7046,7 @@ export const luxuryProducts: Product[] = [
     "description": "A decadent twist on Arabic hospitality—blending spicy ginger and roasted cardamom with candied fruits, praline, and dark roasted Arabic Qahwa coffee.",
     "rating": 4.9,
     "reviewCount": 29,
-    "image": "/images/products/amber_gold.png",
+    "image": "/images/products/khamrah_qahwa.jpg",
     "family": "Gourmand / Spicy Oriental",
     "gender": "UNISEX",
     "occasion": "Date Night, Special Occasion, Casual",
@@ -7415,7 +7304,7 @@ export const luxuryProducts: Product[] = [
     "description": "A deeply intoxicating and smoky oriental masterpiece, combining pimento and smoked spices with sacred frankincense, dark amber, and rich cured tobacco.",
     "rating": 4.9,
     "reviewCount": 31,
-    "image": "/images/products/amber_gold.png",
+    "image": "/images/products/khamrah_dukhan.jpg",
     "family": "Oriental / Smoky Woody",
     "gender": "MEN",
     "occasion": "Date Night, Formal Event, Party",
@@ -7661,7 +7550,7 @@ export const luxuryProducts: Product[] = [
     "description": "Inspired by the world-famous viral sensation, this ultra-luxurious gourmand fuses roasted pistachios, kunafa pastry accord, and velvety chocolate with rich vanilla bean.",
     "rating": 4.9,
     "reviewCount": 33,
-    "image": "/images/products/amber_gold.png",
+    "image": "/images/products/the_dubai_chocolate_perfume.jpg",
     "family": "Gourmand",
     "gender": "UNISEX",
     "occasion": "Date Night, Casual, Special Occasion",
@@ -7772,7 +7661,7 @@ export const luxuryProducts: Product[] = [
     "description": "A passionate, radiant celebration of modern love—bursting with juicy red berries and sparkling bergamot over a lavish heart of Damascena rose and bourbon vanilla.",
     "rating": 4.9,
     "reviewCount": 34,
-    "image": "/images/products/amber_gold.png",
+    "image": "/images/products/power_of_you.png",
     "family": "Oriental / Fruity Floral",
     "gender": "WOMEN",
     "occasion": "Date Night, Party, Special Occasion",
@@ -7961,27 +7850,30 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             : [];
 
           const itemSlug = p.slug || slugify(p.name);
-          let itemImage = p.image || "/images/products/jade_serenity.png";
-          if (itemSlug === "resala" || (p.name && p.name.toLowerCase().includes("resala"))) {
-            itemImage = "/images/products/resala_arabian_oud.jpg";
-          }
-          if (itemSlug === "japanese-cherry-blossom" || (p.name && p.name.toLowerCase().includes("japanese cherry blossom"))) {
-            itemImage = "/images/products/japanese_cherry_blossom_v6.jpg";
-          }
-          if (itemSlug === "good-girl-blush" || (p.name && p.name.toLowerCase().includes("good girl blush"))) {
-            itemImage = "/images/products/good_girl_blush_v4.jpg";
-          }
-          if (itemSlug.includes("terre-d-herm") || (p.name && p.name.toLowerCase().includes("terre d'herm"))) {
-            itemImage = "/images/products/terre_d_hermes_parfum_v3.jpg";
-          }
-          if (itemSlug.includes("stronger-with-you") || (p.name && p.name.toLowerCase().includes("stronger with you"))) {
-            itemImage = "/images/products/emporio_armani_stronger_with_you_parfum_v4.jpg";
-          }
-          if (itemSlug.includes("explorer-platinum") || (p.name && p.name.toLowerCase().includes("explorer platinum"))) {
-            itemImage = "/images/products/explorer_platinum_v4.jpg";
-          }
-          if (itemSlug.includes("blue-talisman") || (p.name && p.name.toLowerCase().includes("blue talisman"))) {
-            itemImage = "/images/products/blue_talisman.jpg";
+          const hasDbImage = p.image && typeof p.image === 'string' && p.image.trim().length > 0 && !p.image.includes('jade_serenity.png');
+          let itemImage = hasDbImage ? p.image : (p.image || "/images/products/jade_serenity.png");
+          if (!hasDbImage) {
+            if (itemSlug === "resala" || (p.name && p.name.toLowerCase().includes("resala"))) {
+              itemImage = "/images/products/resala_arabian_oud.jpg";
+            }
+            if (itemSlug === "japanese-cherry-blossom" || (p.name && p.name.toLowerCase().includes("japanese cherry blossom"))) {
+              itemImage = "/images/products/japanese_cherry_blossom_v6.jpg";
+            }
+            if (itemSlug === "good-girl-blush" || (p.name && p.name.toLowerCase().includes("good girl blush"))) {
+              itemImage = "/images/products/good_girl_blush_v4.jpg";
+            }
+            if (itemSlug.includes("terre-d-herm") || (p.name && p.name.toLowerCase().includes("terre d'herm"))) {
+              itemImage = "/images/products/terre_d_hermes_parfum_v3.jpg";
+            }
+            if (itemSlug.includes("stronger-with-you") || (p.name && p.name.toLowerCase().includes("stronger with you"))) {
+              itemImage = "/images/products/emporio_armani_stronger_with_you_parfum_v4.jpg";
+            }
+            if (itemSlug.includes("explorer-platinum") || (p.name && p.name.toLowerCase().includes("explorer platinum"))) {
+              itemImage = "/images/products/explorer_platinum_v4.jpg";
+            }
+            if (itemSlug.includes("blue-talisman") || (p.name && p.name.toLowerCase().includes("blue talisman"))) {
+              itemImage = "/images/products/blue_talisman.jpg";
+            }
           }
 
           const EXCLUSIVE_SET = new Set([
@@ -8064,3 +7956,16 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
   }
   return cachedProducts;
 }
+
+export function findCachedProduct(idOrSlug: string): Product | null {
+  if (!idOrSlug) return null;
+  const clean = idOrSlug.toLowerCase().trim();
+  const pool = cachedProducts && cachedProducts.length > 0 ? cachedProducts : luxuryProducts;
+  return pool.find((p: any) =>
+    (p.slug && p.slug.toLowerCase() === clean) ||
+    (p.id && String(p.id).toLowerCase() === clean) ||
+    (p.name && p.name.toLowerCase() === clean) ||
+    (p.name && slugify(p.name) === clean)
+  ) || null;
+}
+

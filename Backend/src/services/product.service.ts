@@ -57,10 +57,14 @@ function attachCategory(p: any) {
   const isOutOfStock = isTargetOOS || p.isOutOfStock === true || p.inStock === false;
 
   const isBlueTalisman = pSlug.includes('talisman') || pId.includes('talisman') || pName.includes('talisman');
+  const hasValidImage = p.image && typeof p.image === 'string' && p.image.trim().length > 0 && !p.image.includes('jade_serenity.png');
+  const resolvedImage = hasValidImage
+    ? p.image
+    : (isBlueTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png'));
 
   return {
     ...p,
-    image: isBlueTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png'),
+    image: resolvedImage,
     category: isExclusive ? 'Exclusive' : 'Regular',
     inStock: isOutOfStock ? false : (p.inStock !== false),
     isOutOfStock: isOutOfStock ? true : false,
