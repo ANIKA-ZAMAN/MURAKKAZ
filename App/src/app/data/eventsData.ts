@@ -131,8 +131,8 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
         });
 
         return {
-          upcoming: fetchedUpcoming,
-          previous: fetchedPrevious,
+          upcoming: fetchedUpcoming.length > 0 ? fetchedUpcoming : upcomingEvents,
+          previous: fetchedPrevious.length > 0 ? fetchedPrevious : previousEvents,
         };
       }
     }
@@ -141,12 +141,37 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
   }
 
   return {
-    upcoming: [],
-    previous: [],
+    upcoming: upcomingEvents,
+    previous: previousEvents,
   };
 };
 
-export const upcomingEvents: UpcomingEvent[] = [];
+export const upcomingEvents: UpcomingEvent[] = [
+  {
+    id: "upcoming-slot-1",
+    slug: "upcoming-event-1",
+    day: "TBA",
+    month: "TBA",
+    title: "Upcoming Event",
+    location: "Date & Location TBA",
+    daysLeft: "Coming Soon",
+    time: "Time TBA",
+    description: "Space reserved for new upcoming event. Details, schedule, and olfactory highlights will be announced here soon.",
+    image: "",
+  },
+  {
+    id: "upcoming-slot-2",
+    slug: "upcoming-event-2",
+    day: "TBA",
+    month: "TBA",
+    title: "Upcoming Event",
+    location: "Date & Location TBA",
+    daysLeft: "Coming Soon",
+    time: "Time TBA",
+    description: "Space reserved for new upcoming event. Details, schedule, and olfactory highlights will be announced here soon.",
+    image: "",
+  },
+];
 export const previousEvents: PreviousEvent[] = [];
 
 export const galleryImages: GalleryImage[] = [

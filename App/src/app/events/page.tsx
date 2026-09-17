@@ -27,8 +27,8 @@ export default function EventsPage() {
 
   useEffect(() => {
     fetchLiveEvents().then((result) => {
-      setLiveUpcoming(result.upcoming || []);
-      setLivePrevious(result.previous || []);
+      setLiveUpcoming(result.upcoming && result.upcoming.length > 0 ? result.upcoming : upcomingEvents);
+      setLivePrevious(result.previous && result.previous.length > 0 ? result.previous : previousEvents);
     });
   }, []);
 
