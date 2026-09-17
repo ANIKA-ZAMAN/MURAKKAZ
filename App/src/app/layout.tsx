@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Playfair_Display, Lora, IBM_Plex_Serif } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -51,6 +51,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0d0d0d",
+};
+
 import GlobalLayout from "./components/GlobalLayout";
 import SmoothScrollProvider from "./components/SmoothScrollProvider";
 import AnalyticsProvider from "./components/AnalyticsProvider";
@@ -75,28 +82,26 @@ export default function RootLayout({
           {`
             (function() {
               try {
-                const isDark = localStorage.getItem('pref-darkmode') === 'true';
-                if (isDark) {
-                  document.body.classList.add('dark-theme');
-                }
-                const isAmbient = localStorage.getItem('pref-ambient') === 'false';
-                if (isAmbient) {
-                  document.body.classList.add('no-ambient');
-                }
+                var isDark = localStorage.getItem('pref-darkmode') === 'true';
+                var isAmbient = localStorage.getItem('pref-ambient') === 'false';
+                if (isDark) document.documentElement.classList.add('dark-theme');
+                if (isAmbient) document.documentElement.classList.add('no-ambient');
+                window.addEventListener('DOMContentLoaded', function() {
+                  if (isDark && document.body) document.body.classList.add('dark-theme');
+                  if (isAmbient && document.body) document.body.classList.add('no-ambient');
+                });
               } catch (e) {}
 
-              // Aggressively remove Next.js dev badge (N)
-              const nukeDevBadge = () => {
+              var nukeDevBadge = function() {
                 try {
-                  const portal = document.querySelector('nextjs-portal');
+                  var portal = document.querySelector('nextjs-portal');
                   if (portal) portal.remove();
-                  const devTools = document.querySelector('#nextjs-dev-tools');
+                  var devTools = document.querySelector('#nextjs-dev-tools');
                   if (devTools) devTools.remove();
                 } catch (e) {}
               };
               if (typeof window !== 'undefined') {
                 window.addEventListener('DOMContentLoaded', nukeDevBadge);
-                setInterval(nukeDevBadge, 150);
               }
 
               const ignoreAttrs = ['bis_skin_checked', 'cz-shortcut-listen', 'data-new-gr-c-s-check-loaded', 'data-gr-ext-installed'];
