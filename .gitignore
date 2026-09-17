@@ -15,3 +15,8 @@ Backend/prisma/*.db-journal
 *.tar.gz
 
 elements/video*.mp4
+
+# Build static chunk archives
+.static_archive/
+**/.static_archive/
+

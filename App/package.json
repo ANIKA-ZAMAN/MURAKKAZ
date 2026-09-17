@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
+    "prebuild": "node scripts/preserve-static.js pre",
     "build": "next build --webpack",
+    "postbuild": "node scripts/preserve-static.js post",
     "start": "next start",
     "lint": "eslint"
   },
