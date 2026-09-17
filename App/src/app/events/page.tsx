@@ -16,8 +16,8 @@ export default function EventsPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Live Backend Data States
-  const [liveUpcoming, setLiveUpcoming] = useState<UpcomingEvent[]>([]);
-  const [livePrevious, setLivePrevious] = useState<PreviousEvent[]>([]);
+  const [liveUpcoming, setLiveUpcoming] = useState<UpcomingEvent[]>(upcomingEvents);
+  const [livePrevious, setLivePrevious] = useState<PreviousEvent[]>(previousEvents);
 
   // States for Event Reminder Modal
   const [selectedEvent, setSelectedEvent] = useState<UpcomingEvent | null>(null);
