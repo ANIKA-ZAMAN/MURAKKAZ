@@ -6,13 +6,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 
 const navLinks = [
-  { label: "Work", href: "/collections" },
-  { label: "Services", href: "/compare" },
-  { label: "Products", href: "/shop" },
-  { label: "Research", href: "/scent-index" },
-  { label: "About the Studio", href: "/our-story" },
+  { label: "Our Story", href: "/our-story" },
+  { label: "Shop", href: "/shop" },
+  { label: "Event", href: "/events" },
+  { label: "Library", href: "/collections" },
+  { label: "Compare", href: "/compare" },
+  { label: "Finder", href: "/scent-index" },
   { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -198,17 +198,6 @@ export default function Navbar() {
   const isCartActive = pathname === "/cart";
   const isAccountActive = pathname === "/account" || pathname.startsWith("/account/");
 
-  const isLinkActive = (link: { label: string; href: string }) => {
-    if (pathname === link.href) return true;
-    if (link.href !== "/" && (pathname?.startsWith(link.href) ?? false)) return true;
-    if (link.label === "Work" && (pathname === "/work" || (pathname?.startsWith("/work") ?? false))) return true;
-    if (link.label === "Services" && (pathname === "/services" || (pathname?.startsWith("/services") ?? false))) return true;
-    if (link.label === "Products" && (pathname === "/products" || (pathname?.startsWith("/products") ?? false) || (pathname?.startsWith("/product/") ?? false))) return true;
-    if (link.label === "Research" && (pathname === "/research" || (pathname?.startsWith("/research") ?? false))) return true;
-    if (link.label === "About the Studio" && (pathname === "/about" || pathname === "/about-the-studio" || (pathname?.startsWith("/about-the-studio") ?? false))) return true;
-    return false;
-  };
-
   return (
     <>
       {/* Drawer Keyframes & Search Animation */}
@@ -290,7 +279,11 @@ export default function Navbar() {
           {/* Desktop Nav Links (>= 1024px) - Balanced Center Zone */}
           <ul className="hidden lg:flex items-center gap-6 xl:gap-8 list-none m-0 p-0 flex-1 justify-center px-4 xl:px-8">
             {navLinks.map((link) => {
-              const isActive = isLinkActive(link);
+              const isActive =
+                pathname === link.href ||
+                (link.href !== "/" && (pathname?.startsWith(link.href) ?? false)) ||
+                (link.href === "/shop" && (pathname?.startsWith("/product") ?? false)) ||
+                (link.href === "/events" && (pathname?.startsWith("/event") ?? false));
               return (
                 <li key={link.label}>
                   <Link
@@ -587,7 +580,11 @@ export default function Navbar() {
           {/* Navigation Links: Generous spacing between links */}
           <nav className="flex flex-col gap-8 sm:gap-9 mt-6 sm:mt-8 w-full items-start">
             {navLinks.map((link, idx) => {
-              const isActive = isLinkActive(link);
+              const isActive =
+                pathname === link.href ||
+                (link.href !== "/" && (pathname?.startsWith(link.href) ?? false)) ||
+                (link.href === "/shop" && (pathname?.startsWith("/product") ?? false)) ||
+                (link.href === "/events" && (pathname?.startsWith("/event") ?? false));
               return (
                 <Link
                   key={link.label}
