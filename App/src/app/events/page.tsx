@@ -7,6 +7,7 @@ import EventGallerySection from "./components/EventGallerySection";
 import MeetGreetSection from "./components/MeetGreetSection";
 import StoreLocationSection from "./components/StoreLocationSection";
 import ReminderModal from "./components/ReminderModal";
+import EventPhotoModal, { PreviewPhotoData } from "./components/EventPhotoModal";
 import styles from "./page.module.css";
 
 export default function EventsPage() {
@@ -24,6 +25,9 @@ export default function EventsPage() {
   const [reminderName, setReminderName] = useState("");
   const [reminderEmail, setReminderEmail] = useState("");
   const [reminderSubmitted, setReminderSubmitted] = useState(false);
+
+  // States for Photo Popup Lightbox
+  const [previewPhoto, setPreviewPhoto] = useState<PreviewPhotoData | null>(null);
 
   useEffect(() => {
     fetchLiveEvents().then((result) => {
@@ -110,6 +114,7 @@ export default function EventsPage() {
             setSelectedEvent(event);
             setReminderSubmitted(false);
           }}
+          onOpenPhoto={setPreviewPhoto}
         />
 
 
@@ -137,6 +142,11 @@ export default function EventsPage() {
         onNameChange={setReminderName}
         onEmailChange={setReminderEmail}
         onSubmit={handleSetReminderSubmit}
+      />
+
+      <EventPhotoModal
+        photo={previewPhoto}
+        onClose={() => setPreviewPhoto(null)}
       />
     </div>
   );

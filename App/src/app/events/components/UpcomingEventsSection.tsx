@@ -10,6 +10,7 @@ interface UpcomingEventsSectionProps {
   totalPages: number;
   onPageChange: (page: number) => void;
   onSetReminder: (event: UpcomingEvent) => void;
+  onOpenPhoto?: (photo: { url: string; title: string; location?: string; date?: string }) => void;
 }
 
 export default function UpcomingEventsSection({
@@ -18,6 +19,7 @@ export default function UpcomingEventsSection({
   totalPages,
   onPageChange,
   onSetReminder,
+  onOpenPhoto,
 }: UpcomingEventsSectionProps) {
   return (
     <section className={styles.upcomingSection}>
@@ -61,17 +63,63 @@ export default function UpcomingEventsSection({
                 </div>
 
                 {/* Col 3: Image Banner or Placeholder Space */}
-                <div className={styles.exactColImageWrap}>
+                <div
+                  className={`${styles.exactColImageWrap} ${hasImage ? styles.exactColImageClickable : ""}`}
+                  onClick={() => {
+                    if (hasImage && onOpenPhoto) {
+                      onOpenPhoto({
+                        url: imageSrc,
+                        title: event.title,
+                        location: event.location,
+                        date: event.month && event.day ? `${event.month} ${event.day}` : undefined,
+                      });
+                    }
+                  }}
+                  role={hasImage ? "button" : undefined}
+                  tabIndex={hasImage ? 0 : undefined}
+                  onKeyDown={(e) => {
+                    if (hasImage && onOpenPhoto && (e.key === "Enter" || e.key === " ")) {
+                      e.preventDefault();
+                      onOpenPhoto({
+                        url: imageSrc,
+                        title: event.title,
+                        location: event.location,
+                        date: event.month && event.day ? `${event.month} ${event.day}` : undefined,
+                      });
+                    }
+                  }}
+                  title={hasImage ? "Click to view full photo" : undefined}
+                >
                   {hasImage ? (
-                    <Image
-                      src={imageSrc}
-                      alt={event.title}
-                      fill
-                      unoptimized
-                      sizes="(max-width: 860px) 100vw, 280px"
-                      className={styles.exactMockImage}
-                      priority={idx === 0}
-                    />
+                    <>
+                      <Image
+                        src={imageSrc}
+                        alt={event.title}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 860px) 100vw, 320px"
+                        className={styles.exactMockImage}
+                        priority={idx === 0}
+                      />
+                      <div className={styles.imageExpandBadge}>
+                        <svg
+                          width="13"
+                          height="13"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="15 3 21 3 21 9"></polyline>
+                          <polyline points="9 21 3 21 3 15"></polyline>
+                          <line x1="21" y1="3" x2="14" y2="10"></line>
+                          <line x1="3" y1="21" x2="10" y2="14"></line>
+                        </svg>
+                        <span>View Full</span>
+                      </div>
+                    </>
                   ) : (
                     <div className={styles.exactPlaceholderImage}>
                       <div className={styles.placeholderIconWrap}>
