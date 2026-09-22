@@ -23,7 +23,7 @@ const MILESTONE_BEADS = [
 const XC = 0;
 const YC = 363.171;
 const R = 220;
-const ANGLE_SPACING_DEG = 58; // Spacious angle matching Picture 2
+const ANGLE_SPACING_DEG = 58;
 
 /** Convert track angle (degrees, 0° = center reading position) to SVG (X, Y) coordinates */
 const getRailPos = (angleDeg: number) => {
@@ -52,14 +52,14 @@ export default function JourneyStorySection() {
     }
   };
 
-  // GSAP ScrollTrigger pinning & magnetic snap scroll progression
+  // GSAP ScrollTrigger pinning & balanced scroll progression
   useEffect(() => {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
       const totalSteps = journeySections.length;
       const isMobile = typeof window !== "undefined" && window.innerWidth <= 900;
-      const scrollMultiplier = isMobile ? 90 : 130;
+      const scrollMultiplier = isMobile ? 85 : 120;
 
       const trigger = ScrollTrigger.create({
         trigger: sectionRef.current,
@@ -67,16 +67,18 @@ export default function JourneyStorySection() {
         end: `+=${(totalSteps - 1) * scrollMultiplier}%`,
         pin: true,
         pinSpacing: true,
+        anticipatePin: 1,
         onUpdate: (self) => {
           const p = self.progress;
+          // Equal, balanced thresholds so every story gets solid stability:
           let step = 0;
-          if (p < 0.18) {
+          if (p < 0.125) {
             step = 0;
-          } else if (p < 0.42) {
+          } else if (p < 0.375) {
             step = 1;
-          } else if (p < 0.66) {
+          } else if (p < 0.625) {
             step = 2;
-          } else if (p < 0.88) {
+          } else if (p < 0.875) {
             step = 3;
           } else {
             step = 4;
@@ -94,9 +96,9 @@ export default function JourneyStorySection() {
     };
   }, [journeySections.length]);
 
-  // Sequential Clean Text & Wheel Arc Magnetic Bead Animation
+  // Clean, zero-overlap wheel & story text transitions
   useEffect(() => {
-    // 1. Animate all 5 beads smoothly along the 180° semi-circle arc with magnetic click feel
+    // 1. Wheel Bead animation along 180° semi-circle rail
     MILESTONE_BEADS.forEach((bead, i) => {
       const el = beadRefs.current[i];
       if (!el) return;
@@ -110,60 +112,48 @@ export default function JourneyStorySection() {
       const targetY = targetPos.y - initPos.y;
 
       let targetOpacity = 0;
-      let targetBlur = 6;
-
       if (d === 0) {
         targetOpacity = 1;
-        targetBlur = 0;
       } else if (Math.abs(d) === 1) {
-        targetOpacity = 0.85;
-        targetBlur = 0;
+        targetOpacity = 0.55;
       } else {
         targetOpacity = 0;
-        targetBlur = 6;
       }
 
       gsap.to(el, {
         x: targetX,
         y: targetY,
         opacity: targetOpacity,
-        filter: `blur(${targetBlur}px)`,
-        duration: 0.4,
+        duration: 0.32,
         ease: "power2.out",
-        overwrite: true,
+        overwrite: "auto",
       });
     });
 
-    // 2. Sequential Clean Text Transition (Zero text overlap / ghosting)
+    // 2. Absolute Zero-Overlap Story Text Isolation:
+    // Instantly hide all non-active panels (autoAlpha: 0 / visibility: hidden) so they NEVER merge
     panelsRef.current.forEach((panel, i) => {
       if (!panel) return;
+      gsap.killTweensOf(panel);
 
-      const isCurrent = i === activeIdx;
-
-      if (isCurrent) {
-        // Incoming text: waits for outgoing text to clear out completely (0.18s), then glides into place
+      if (i === activeIdx) {
         gsap.fromTo(
           panel,
-          { opacity: 0, y: 14 },
+          { autoAlpha: 0, y: 10 },
           {
-            opacity: 1,
+            autoAlpha: 1,
             y: 0,
             pointerEvents: "auto",
-            duration: 0.38,
-            delay: 0.18,
+            duration: 0.24,
             ease: "power2.out",
-            overwrite: true,
+            overwrite: "auto",
           }
         );
       } else {
-        // Outgoing text: quickly fades out
-        gsap.to(panel, {
-          opacity: 0,
+        gsap.set(panel, {
+          autoAlpha: 0,
           y: -10,
           pointerEvents: "none",
-          duration: 0.16,
-          ease: "power2.in",
-          overwrite: true,
         });
       }
     });
@@ -245,7 +235,8 @@ export default function JourneyStorySection() {
                 className={styles.storyContentBox}
                 style={{
                   opacity: i === 0 ? 1 : 0,
-                  transform: i === 0 ? "translateY(0px)" : "translateY(12px)",
+                  visibility: i === 0 ? "visible" : "hidden",
+                  transform: i === 0 ? "translateY(0px)" : "translateY(10px)",
                   pointerEvents: i === 0 ? "auto" : "none",
                 }}
               >
