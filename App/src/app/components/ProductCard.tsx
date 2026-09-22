@@ -79,12 +79,22 @@ export default function ProductCard({
       "gucci-bloom",
       "explorer-platinum",
       "blue-talisman",
-      "talisman"
+      "talisman",
+      "arabians-tonka",
+      "arabians tonka",
+      "irish-leather",
+      "irish leather"
     ];
     if (
       oosKeywords.some((kw) => s.includes(kw) || n.includes(kw) || i.includes(kw)) ||
       (n.includes("gucci") && n.includes("bloom")) ||
-      (n.includes("explorer") && n.includes("platinum"))
+      (n.includes("explorer") && n.includes("platinum")) ||
+      (n.includes("arabians") && n.includes("tonka")) ||
+      (n.includes("irish") && n.includes("leather")) ||
+      i === "prod-arabians-tonka-65" ||
+      i === "prod-irish-leather-01" ||
+      i === "cmttukhh102zxjju646krncbh" ||
+      i === "cms8s3teb0013v9f0kx34wh10"
     ) {
       return true;
     }

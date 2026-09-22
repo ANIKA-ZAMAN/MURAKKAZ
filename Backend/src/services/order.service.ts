@@ -4,7 +4,18 @@ import { generateOrderNumber } from '../utils/orderNumber';
 import { getPaginationParams, createPaginatedResult } from '../utils/pagination';
 import { sendOrderConfirmationEmail, sendOrderCancelledEmail } from './mail.service';
 
-const OOS_KEYWORDS = ['imagination', 'spicebomb', 'gucci-bloom', 'explorer-platinum', 'blue-talisman', 'talisman'];
+const OOS_KEYWORDS = [
+  'imagination',
+  'spicebomb',
+  'gucci-bloom',
+  'explorer-platinum',
+  'blue-talisman',
+  'talisman',
+  'arabians-tonka',
+  'arabians tonka',
+  'irish-leather',
+  'irish leather'
+];
 
 export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inStock?: boolean, isOutOfStock?: boolean) {
   if (inStock === false || isOutOfStock === true) return true;
@@ -15,11 +26,17 @@ export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inS
     OOS_KEYWORDS.some(kw => n.includes(kw) || s.includes(kw) || i.includes(kw)) ||
     (n.includes('gucci') && n.includes('bloom')) ||
     (n.includes('explorer') && n.includes('platinum')) ||
+    (n.includes('arabians') && n.includes('tonka')) ||
+    (n.includes('irish') && n.includes('leather')) ||
     i === 'prod-normal-8' ||
     i === 'prod-normal-48' ||
     i === 'prod-normal-49' ||
     i === 'prod-blue-talisman-01' ||
-    i === 'prod-imagination-10'
+    i === 'prod-imagination-10' ||
+    i === 'prod-arabians-tonka-65' ||
+    i === 'prod-irish-leather-01' ||
+    i === 'cmttukhh102zxjju646krncbh' ||
+    i === 'cms8s3teb0013v9f0kx34wh10'
   ) {
     return true;
   }
