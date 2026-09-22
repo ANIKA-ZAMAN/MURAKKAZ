@@ -59,7 +59,6 @@ const isCartItemOutOfStock = (item: CartItem | any) => {
   const id = (item.id || "").toLowerCase();
   const oosKeywords = [
     "imagination",
-    "spicebomb",
     "gucci-bloom",
     "explorer-platinum",
     "blue-talisman",

@@ -75,7 +75,6 @@ export default function ProductCard({
     const i = (id || "").toLowerCase();
     const oosKeywords = [
       "imagination",
-      "spicebomb",
       "gucci-bloom",
       "explorer-platinum",
       "blue-talisman",

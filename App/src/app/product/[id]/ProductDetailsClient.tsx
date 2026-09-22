@@ -477,7 +477,6 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
     const cleanId = id ? id.toLowerCase().trim() : "";
     const oosKeywords = [
       "imagination",
-      "spicebomb",
       "gucci-bloom",
       "explorer-platinum",
       "blue-talisman",
@@ -490,7 +489,6 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
 
     if (
       oosKeywords.some(kw => cleanId.includes(kw)) ||
-      cleanId === "prod-normal-8" ||
       cleanId === "prod-normal-48" ||
       cleanId === "prod-normal-49" ||
       cleanId === "prod-blue-talisman-01" ||

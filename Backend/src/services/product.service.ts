@@ -35,7 +35,6 @@ function attachCategory(p: any) {
     p.category?.toLowerCase() === 'exclusive';
   const oosKeywords = [
     'imagination',
-    'spicebomb',
     'gucci-bloom',
     'explorer-platinum',
     'blue-talisman',
@@ -54,7 +53,6 @@ function attachCategory(p: any) {
     (pName.includes('explorer') && pName.includes('platinum')) ||
     (pName.includes('arabians') && pName.includes('tonka')) ||
     (pName.includes('irish') && pName.includes('leather')) ||
-    pId === 'prod-normal-8' ||
     pId === 'prod-normal-48' ||
     pId === 'prod-normal-49' ||
     pId === 'prod-blue-talisman-01' ||

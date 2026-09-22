@@ -6,7 +6,6 @@ import { sendOrderConfirmationEmail, sendOrderCancelledEmail } from './mail.serv
 
 const OOS_KEYWORDS = [
   'imagination',
-  'spicebomb',
   'gucci-bloom',
   'explorer-platinum',
   'blue-talisman',
@@ -28,7 +27,6 @@ export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inS
     (n.includes('explorer') && n.includes('platinum')) ||
     (n.includes('arabians') && n.includes('tonka')) ||
     (n.includes('irish') && n.includes('leather')) ||
-    i === 'prod-normal-8' ||
     i === 'prod-normal-48' ||
     i === 'prod-normal-49' ||
     i === 'prod-blue-talisman-01' ||
