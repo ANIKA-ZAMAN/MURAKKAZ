@@ -42,8 +42,25 @@ export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inS
 }
 
 export const createOrder = async (userId: string | null | undefined, data: any) => {
-  if (!userId) {
-    throw new AppError('Please sign in to place an order.', 401);
+  let resolvedUserId = userId;
+  // If not authenticated via token, link order to existing account by phone or email if found
+  if (!resolvedUserId && (data.phone || data.email)) {
+    try {
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          OR: [
+            ...(data.phone ? [{ phone: data.phone }] : []),
+            ...(data.email ? [{ email: data.email }] : [])
+          ]
+        },
+        select: { id: true }
+      });
+      if (existingUser) {
+        resolvedUserId = existingUser.id;
+      }
+    } catch (e) {
+      console.warn('User lookup during guest order creation failed:', e);
+    }
   }
   const { cartItemIds, items, ...orderData } = data;
 
@@ -176,7 +193,7 @@ export const createOrder = async (userId: string | null | undefined, data: any) 
     const created = await tx.order.create({
       data: {
         orderNumber,
-        userId: userId || null,
+        userId: resolvedUserId || null,
         fullName: orderData.fullName,
         email: orderData.email || `${orderData.phone}@guest.murakkaz.com`,
         phone: orderData.phone,

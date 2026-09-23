@@ -37,11 +37,24 @@ export const createSteadfastConsignment = async (orderId: string) => {
   }
 
   const invoice = order.orderNumber;
-  const recipientName = order.fullName;
-  const recipientPhone = order.phone;
-  const recipientAddress = order.address;
+  const recipientName = (order.fullName || 'Valued Customer').trim().slice(0, 100);
+
+  // Sanitize Phone to exactly 11 digits (e.g. 01XXXXXXXXX)
+  let cleanPhone = (order.phone || '').replace(/\D/g, '');
+  if (cleanPhone.startsWith('880')) {
+    cleanPhone = cleanPhone.slice(3);
+  } else if (cleanPhone.startsWith('80')) {
+    cleanPhone = cleanPhone.slice(1);
+  }
+  if (!cleanPhone.startsWith('0') && cleanPhone.length === 10) {
+    cleanPhone = '0' + cleanPhone;
+  }
+  const recipientPhone = cleanPhone;
+
+  // Clean address: replace line breaks and limit to Steadfast's 250 character limit
+  const recipientAddress = (order.address || '').replace(/[\r\n]+/g, ', ').trim().slice(0, 250);
   const codAmount = order.payment?.status === 'VERIFIED' ? 0 : order.grandTotal;
-  const note = `Fragile luxury perfume parcel (${order.items.map(i => `${i.productName} ${i.selectedSize} x${i.quantity}`).join(', ')})`;
+  const note = `Fragile luxury perfume parcel (${order.items.map(i => `${i.productName} ${i.selectedSize} x${i.quantity}`).join(', ')})`.slice(0, 250);
 
   // Simulation mode if keys are not yet entered in .env
   if (!isSteadfastConfigured()) {
@@ -147,7 +160,14 @@ export const createSteadfastConsignment = async (orderId: string) => {
         isSimulated: false
       };
     } else {
-      throw new Error(data?.message || 'Steadfast failed to create consignment order');
+      let detailedMsg = data?.message;
+      if (data?.errors && typeof data.errors === 'object') {
+        const fieldErrors = Object.entries(data.errors)
+          .map(([k, v]: [string, any]) => `${k}: ${Array.isArray(v) ? v.join(', ') : v}`)
+          .join('; ');
+        if (fieldErrors) detailedMsg = fieldErrors;
+      }
+      throw new Error(detailedMsg || 'Steadfast failed to create consignment order');
     }
   } catch (error: any) {
     console.error('Steadfast Create Order Error:', error.message);

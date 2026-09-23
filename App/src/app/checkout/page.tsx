@@ -217,11 +217,16 @@ function CheckoutContent() {
         body: JSON.stringify(payload),
       });
 
-      const json = await res.json();
-      let finalOrderNum = `MRK-${Math.floor(100000 + Math.random() * 900000)}`;
-      if (res.ok && json && json.status === "success" && json.data) {
-        finalOrderNum = json.data.orderNumber || finalOrderNum;
+      const json = await res.json().catch(() => null);
+
+      if (!res.ok || json?.status !== "success" || !json?.data) {
+        const errorMsg = json?.message || "Failed to place order. Please try again.";
+        alert(errorMsg);
+        setIsSubmitting(false);
+        return;
       }
+
+      const finalOrderNum = json.data.orderNumber;
       setOrderId(finalOrderNum);
 
       // Filter out checked out items from global cart list
@@ -242,25 +247,9 @@ function CheckoutContent() {
       window.dispatchEvent(new Event("cart-updated"));
       trackAnalyticsEvent("PURCHASE", { orderNumber: finalOrderNum, grandTotal: totalAmount });
       setOrderPlaced(true);
-    } catch (err) {
-      console.warn("Backend order creation error, falling back locally:", err);
-      const generatedId = `MRK-${Math.floor(100000 + Math.random() * 900000)}`;
-      setOrderId(generatedId);
-
-      const saved = localStorage.getItem("cart-items");
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed)) {
-            const remaining = parsed.filter((item: any) => !item.selected);
-            localStorage.setItem("cart-items", JSON.stringify(remaining));
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      }
-      window.dispatchEvent(new Event("cart-updated"));
-      setOrderPlaced(true);
+    } catch (err: any) {
+      console.error("Order submission network error:", err);
+      alert("Network error while submitting your order. Please check your internet connection and try again.");
     } finally {
       setIsSubmitting(false);
     }

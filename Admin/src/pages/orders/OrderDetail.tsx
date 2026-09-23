@@ -102,7 +102,8 @@ const OrderDetail = () => {
       }
     } catch (err: any) {
       console.error('Failed to dispatch courier:', err);
-      setMessage('Failed to dispatch order to courier.');
+      const errMsg = err?.response?.data?.message || err?.message || 'Failed to dispatch order to courier.';
+      setMessage(`❌ Courier dispatch failed: ${errMsg}`);
     } finally {
       setDispatching(false);
     }
