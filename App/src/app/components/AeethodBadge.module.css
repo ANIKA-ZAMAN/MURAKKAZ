@@ -203,12 +203,19 @@
   align-items: center;
   justify-content: center;
   margin-top: 2px;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .expandedLogoImg {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: transform 0.25s ease;
+}
+
+.expandedLogoWrap:hover .expandedLogoImg {
+  transform: scale(1.08);
 }
 
 .expandedDivider {
@@ -226,6 +233,12 @@
   text-align: left;
 }
 
+.expandedBrandLink {
+  text-decoration: none;
+  display: inline-block;
+  align-self: flex-start;
+}
+
 .expandedBrandName {
   font-family: var(--font-sans, -apple-system, sans-serif);
   font-size: 13px;
@@ -234,6 +247,11 @@
   text-transform: uppercase;
   color: #C5A880;
   margin: 0;
+  transition: color 0.2s ease;
+}
+
+.expandedBrandLink:hover .expandedBrandName {
+  color: #E6D0B3;
 }
 
 .expandedDesc {

@@ -2,7 +2,12 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { trackAnalyticsEvent } from "./AnalyticsProvider";
 import styles from "./AeethodBadge.module.css";
+
+// Standard UTM Parameters for attribution in Google Analytics / Aeethod marketing analytics
+const AEETHOD_URL =
+  "https://aeethod.com/?utm_source=murakkaz.com&utm_medium=referral&utm_campaign=footer_credit&utm_content=crafted_by_aeethod";
 
 export default function AeethodBadge() {
   const [isHovered, setIsHovered] = useState(false);
@@ -23,6 +28,19 @@ export default function AeethodBadge() {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [isExpanded]);
+
+  const handleOutboundClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      trackAnalyticsEvent("OUTBOUND_CLICK", {
+        target: "aeethod",
+        url: AEETHOD_URL,
+        placement: "footer_badge"
+      });
+    } catch {
+      // non-blocking
+    }
+  };
 
   return (
     <div className={styles.badgeWrapper} ref={wrapperRef}>
@@ -86,7 +104,14 @@ export default function AeethodBadge() {
           </button>
 
           {/* Expanded Logo */}
-          <div className={styles.expandedLogoWrap}>
+          <a
+            href={AEETHOD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.expandedLogoWrap}
+            onClick={handleOutboundClick}
+            title="Visit Aeethod (Opens in new window)"
+          >
             <Image
               src="/images/aeethod_logo_gold.png"
               alt="Aeethod Agency"
@@ -94,23 +119,33 @@ export default function AeethodBadge() {
               height={42}
               className={styles.expandedLogoImg}
             />
-          </div>
+          </a>
 
           {/* Vertical Divider */}
           <div className={styles.expandedDivider} />
 
           {/* Expanded Body Content */}
           <div className={styles.expandedBody}>
-            <h4 className={styles.expandedBrandName}>A E E T H O D</h4>
+            <a
+              href={AEETHOD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.expandedBrandLink}
+              onClick={handleOutboundClick}
+              title="Visit Aeethod (Opens in new window)"
+            >
+              <h4 className={styles.expandedBrandName}>A E E T H O D</h4>
+            </a>
             <p className={styles.expandedDesc}>
               We design and build digital experiences for ambitious brands.
             </p>
             <a
-              href="https://aeethod.com"
+              href={AEETHOD_URL}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.expandedLink}
-              onClick={(e) => e.stopPropagation()}
+              onClick={handleOutboundClick}
+              title="Visit Aeethod (Opens in new window)"
             >
               <span>aeethod.com</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
