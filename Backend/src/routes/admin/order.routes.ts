@@ -8,16 +8,32 @@ const router = Router();
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { status, page = '1', limit = '10' } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
+    const { status, page = '1', limit = '25', search } = req.query;
+    const isAll = limit === 'all' || limit === '-1';
+    const parsedLimit = isAll ? undefined : Math.min(Number(limit) || 25, 200);
+    const parsedPage = Math.max(Number(page) || 1, 1);
+    const skip = isAll || !parsedLimit ? undefined : (parsedPage - 1) * parsedLimit;
     
-    const where = status ? { status: status as OrderStatus } : {};
+    const where: any = {};
+    if (status && status !== 'All' && status !== 'all') {
+      where.status = status as OrderStatus;
+    }
+    
+    if (search && typeof search === 'string' && search.trim() !== '') {
+      const q = search.trim();
+      where.OR = [
+        { orderNumber: { contains: q, mode: 'insensitive' } },
+        { fullName: { contains: q, mode: 'insensitive' } },
+        { phone: { contains: q } },
+        { email: { contains: q, mode: 'insensitive' } }
+      ];
+    }
     
     const [orders, total] = await Promise.all([
       prisma.order.findMany({
         where,
         skip,
-        take: Number(limit),
+        take: parsedLimit,
         include: {
           user: true,
           items: true,
@@ -28,14 +44,15 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
       prisma.order.count({ where })
     ]);
 
+    const effectiveLimit = parsedLimit || total || 1;
     res.json({
       status: 'success',
       data: orders,
       meta: {
         total,
-        page: Number(page),
-        limit: Number(limit),
-        totalPages: Math.ceil(total / Number(limit))
+        page: parsedPage,
+        limit: parsedLimit || total,
+        totalPages: isAll ? 1 : Math.max(Math.ceil(total / effectiveLimit), 1)
       }
     });
   } catch (error) {
