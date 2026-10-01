@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { upcomingEvents, previousEvents, UpcomingEvent, PreviousEvent, fetchLiveEvents, getApiBaseUrl } from "../data/eventsData";
+import EventInvitationHero from "./components/EventInvitationHero";
 import UpcomingEventsSection from "./components/UpcomingEventsSection";
 import EventGallerySection from "./components/EventGallerySection";
 import MeetGreetSection from "./components/MeetGreetSection";
@@ -105,6 +106,8 @@ export default function EventsPage() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <EventInvitationHero onOpenPhoto={setPreviewPhoto} />
+
         <UpcomingEventsSection
           paginatedEvents={paginatedEvents}
           currentPage={currentPage}
