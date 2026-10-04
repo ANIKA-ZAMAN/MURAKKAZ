@@ -1,10 +1,40 @@
 import { Request, Response, NextFunction, Router } from 'express';
+import fs from 'fs';
+import path from 'path';
 import prisma from '../../config/database';
+import { env } from '../../config/env';
 import { NoteType } from '@prisma/client';
 import { AppError } from '../../middleware/errorHandler';
 import { safeDbCall, dbStore, saveProductsToDisk } from '../../services/resilientDb';
 
 const router = Router();
+
+function saveBase64Image(dataUri: string, prefix: string): string {
+  if (!dataUri || typeof dataUri !== 'string' || !dataUri.startsWith('data:')) {
+    return dataUri;
+  }
+  const match = dataUri.match(/^data:image\/([a-zA-Z0-9+]+);base64,(.+)$/s);
+  if (!match) return dataUri;
+
+  let ext = match[1].toLowerCase();
+  if (ext === 'jpeg') ext = 'jpg';
+  const base64Data = match[2];
+  try {
+    const buffer = Buffer.from(base64Data, 'base64');
+    const uploadDir = path.join(__dirname, '../../..', env.UPLOAD_DIR, 'products');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    const safePrefix = prefix.replace(/[^a-z0-9-_]/gi, '_');
+    const filename = `${safePrefix}-${Date.now()}.${ext}`;
+    const filePath = path.join(uploadDir, filename);
+    fs.writeFileSync(filePath, buffer);
+    return `/uploads/products/${filename}`;
+  } catch (err) {
+    console.error('Failed to save base64 image:', err);
+    return dataUri;
+  }
+}
 
 function sanitizeSizes(sizes: any[]) {
   if (!Array.isArray(sizes) || sizes.length === 0) return undefined;
@@ -45,12 +75,18 @@ function sanitizeBestFor(bestFor: any[]) {
   }));
 }
 
-function sanitizeGallery(galleryImages: any[]) {
+function sanitizeGallery(galleryImages: any[], slugPrefix: string = 'gallery') {
   if (!Array.isArray(galleryImages) || galleryImages.length === 0) return undefined;
-  return galleryImages.map((g: any, idx: number) => ({
-    url: String(typeof g === 'string' ? g : g.url),
-    sortOrder: typeof g === 'object' && typeof g.sortOrder === 'number' ? g.sortOrder : idx,
-  }));
+  return galleryImages.map((g: any, idx: number) => {
+    let url = String(typeof g === 'string' ? g : g.url);
+    if (url.startsWith('data:')) {
+      url = saveBase64Image(url, `${slugPrefix}-gal-${idx}`);
+    }
+    return {
+      url,
+      sortOrder: typeof g === 'object' && typeof g.sortOrder === 'number' ? g.sortOrder : idx,
+    };
+  });
 }
 
 const EXCLUSIVE_SLUGS = new Set([
@@ -106,11 +142,16 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { sizes, notes, accords, bestFor, galleryImages, priceVal, ...productData } = req.body;
 
+    const targetSlug = productData.slug || (productData.name ? productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : `prod-${Date.now()}`);
+    if (productData.image && typeof productData.image === 'string' && productData.image.startsWith('data:')) {
+      productData.image = saveBase64Image(productData.image, targetSlug);
+    }
+
     const cleanSizes = sanitizeSizes(sizes);
     const cleanNotes = sanitizeNotes(notes);
     const cleanAccords = sanitizeAccords(accords);
     const cleanBestFor = sanitizeBestFor(bestFor);
-    const cleanGallery = sanitizeGallery(galleryImages);
+    const cleanGallery = sanitizeGallery(galleryImages, targetSlug);
 
     const familyVal = Array.isArray(productData.family)
       ? productData.family.join(', ')
@@ -124,7 +165,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
         return await prisma.product.create({
           data: {
             ...productData,
-            slug: productData.slug || productData.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+            slug: targetSlug,
             image: productData.image || '/images/products/jade_serenity.png',
             family: familyVal,
             gender: productData.gender || 'UNISEX',
@@ -180,11 +221,18 @@ router.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id as string;
     const { sizes, notes, accords, bestFor, galleryImages, priceVal, ...productData } = req.body;
 
+    const existingProduct = await prisma.product.findUnique({ where: { id }, select: { slug: true } }).catch(() => null);
+    const targetSlug = productData.slug || existingProduct?.slug || id;
+
+    if (productData.image && typeof productData.image === 'string' && productData.image.startsWith('data:')) {
+      productData.image = saveBase64Image(productData.image, targetSlug);
+    }
+
     const cleanSizes = sanitizeSizes(sizes);
     const cleanNotes = sanitizeNotes(notes);
     const cleanAccords = sanitizeAccords(accords);
     const cleanBestFor = sanitizeBestFor(bestFor);
-    const cleanGallery = sanitizeGallery(galleryImages);
+    const cleanGallery = sanitizeGallery(galleryImages, targetSlug);
 
     if (productData.family !== undefined) {
       productData.family = Array.isArray(productData.family)
