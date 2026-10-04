@@ -3,7 +3,8 @@ const path = require('path');
 
 const mode = process.argv[2]; // 'pre' or 'post'
 const appDir = path.resolve(__dirname, '..');
-const staticDir = path.join(appDir, '.next', 'static');
+const distName = process.env.NEXT_DIST_DIR || '.next';
+const staticDir = path.join(appDir, distName, 'static');
 const archiveDir = path.join(appDir, '.static_archive');
 
 function copyRecursive(src, dest, skipIfExists = false) {

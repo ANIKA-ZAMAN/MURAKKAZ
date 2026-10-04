@@ -15,22 +15,32 @@ fi
 # 2. Pull latest code
 git pull origin main
 
-# 3. Build Storefront App
+# 3. Zero-downtime Build Storefront App into .next_build
 cd /var/www/murakkaz/App
-NODE_OPTIONS="--max-old-space-size=1536" npm run build
+rm -rf .next_build
+NEXT_DIST_DIR=.next_build NODE_OPTIONS="--max-old-space-size=1536" npm run build
 
 # 4. Copy back archived static chunks so old browser sessions never 404
 if [ -d .static_archive/css ]; then
-  cp -rn .static_archive/css/* .next/static/css/ 2>/dev/null || true
+  cp -rn .static_archive/css/* .next_build/static/css/ 2>/dev/null || true
 fi
 if [ -d .static_archive/chunks ]; then
-  cp -rn .static_archive/chunks/* .next/static/chunks/ 2>/dev/null || true
+  cp -rn .static_archive/chunks/* .next_build/static/chunks/ 2>/dev/null || true
 fi
 
-# 5. Ensure SELinux permissions
-restorecon -R .next
+# 5. Ensure SELinux permissions on .next_build
+restorecon -R .next_build 2>/dev/null || true
 
-# 6. Restart PM2 storefront
+# 6. Atomic swap: .next -> .next_old, .next_build -> .next
+rm -rf .next_old
+if [ -d .next ]; then
+  mv .next .next_old
+fi
+mv .next_build .next
+restorecon -R .next 2>/dev/null || true
+
+# 7. Restart PM2 storefront
 pm2 restart murakkaz-storefront
+rm -rf .next_old
 
-echo "=== Deployment completed successfully! ==="
+echo "=== Deployment completed successfully with zero downtime! ==="
