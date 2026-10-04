@@ -22,8 +22,13 @@ function ShopContent() {
   });
 
   
-  // Initialize state directly from URL query parameters
-  const initialQ = searchParams.get("q") || "";
+  // Initialize state directly from URL query parameters (resets on page refresh)
+  const isReload = typeof window !== "undefined" && (
+    (window.performance?.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming)?.type === "reload" ||
+    (window.performance as any)?.navigation?.type === 1
+  );
+
+  const initialQ = isReload ? "" : (searchParams.get("q") || "");
   const initialCategory = searchParams.get("category") ? searchParams.get("category")!.split(",") : [];
   const initialFamily = searchParams.get("family") ? searchParams.get("family")!.split(",") : [];
   const initialGender = searchParams.get("gender") ? searchParams.get("gender")!.split(",") : [];
@@ -62,8 +67,25 @@ function ShopContent() {
   }, []);
 
   useEffect(() => {
-    const qParam = searchParams.get("q") || "";
-    setSearchQuery(qParam);
+    if (typeof window !== "undefined") {
+      const isPageReload =
+        (window.performance?.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming)?.type === "reload" ||
+        (window.performance as any)?.navigation?.type === 1;
+
+      if (isPageReload) {
+        setSearchQuery("");
+        if (window.location.search.includes("q=")) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      } else {
+        const qParam = searchParams.get("q");
+        if (qParam) {
+          setSearchQuery(qParam);
+          // Clean the query from the URL right away so refreshing or navigating doesn't stick
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
+    }
   }, [searchParams]);
 
   useEffect(() => {
@@ -71,9 +93,28 @@ function ShopContent() {
       setSearchQuery(e.detail ?? "");
       setCurrentPage(1);
     };
+    const handleResetShopFilters = () => {
+      setSearchQuery("");
+      setSelectedFilters({
+        category: [],
+        family: [],
+        gender: [],
+        occasion: [],
+        meter: [],
+        notes: [],
+      });
+      setMaxPrice(5000);
+      setCurrentPage(1);
+      if (typeof window !== "undefined" && window.location.search.includes("q=")) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    };
+
     window.addEventListener("navbar-search" as any, handleNavbarSearch as any);
+    window.addEventListener("reset-shop-filters", handleResetShopFilters);
     return () => {
       window.removeEventListener("navbar-search" as any, handleNavbarSearch as any);
+      window.removeEventListener("reset-shop-filters", handleResetShopFilters);
     };
   }, []);
 

@@ -55,11 +55,9 @@ export default function Navbar() {
   const handleSearchChange = (val: string) => {
     setSearchQuery(val);
 
-    // If on /shop or /collections, live-filter cards directly on the page
-    if (pathname === "/shop" || pathname === "/collections") {
+    // If on /shop, live-filter cards directly on the page without modifying URL history
+    if (pathname === "/shop") {
       window.dispatchEvent(new CustomEvent("navbar-search", { detail: val }));
-      const newUrl = val.trim() ? `${pathname}?q=${encodeURIComponent(val.trim())}` : pathname;
-      window.history.replaceState(null, "", newUrl);
     } else if (val.trim().length > 0) {
       // If typing on any other page, navigate to shop with the filter active
       router.push(`/shop?q=${encodeURIComponent(val.trim())}`);
@@ -68,15 +66,17 @@ export default function Navbar() {
 
   const handleClearSearch = () => {
     setSearchQuery("");
-    if (pathname === "/shop" || pathname === "/collections") {
+    if (pathname === "/shop") {
       window.dispatchEvent(new CustomEvent("navbar-search", { detail: "" }));
-      window.history.replaceState(null, "", pathname);
+    }
+    if (typeof window !== "undefined" && window.location.search.includes("q=")) {
+      window.history.replaceState(null, "", window.location.pathname);
     }
   };
 
   const handleSearchSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (pathname !== "/shop" && pathname !== "/collections") {
+    if (pathname !== "/shop") {
       router.push(searchQuery.trim() ? `/shop?q=${encodeURIComponent(searchQuery.trim())}` : `/shop`);
     } else {
       window.dispatchEvent(new CustomEvent("navbar-search", { detail: searchQuery }));
@@ -167,16 +167,24 @@ export default function Navbar() {
     };
   }, []);
 
-  // Sync searchQuery with URL on route changes
+  // Sync searchQuery on route changes: clear on page reload or normal hops, preserve only on intentional search navigation
   useEffect(() => {
     setIsMobileMenuOpen(false);
     if (typeof window !== "undefined") {
+      const isPageReload =
+        (window.performance?.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming)?.type === "reload" ||
+        (window.performance as any)?.navigation?.type === 1;
+
       const urlParams = new URLSearchParams(window.location.search);
       const qParam = urlParams.get("q");
-      if (qParam && (pathname === "/shop" || pathname === "/collections")) {
+
+      if (qParam && !isPageReload && pathname === "/shop") {
         setSearchQuery(qParam);
-      } else if (pathname !== "/shop" && pathname !== "/collections") {
+      } else {
         setSearchQuery("");
+        if (window.location.search.includes("q=")) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
       }
     }
   }, [pathname]);
@@ -288,6 +296,13 @@ export default function Navbar() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
+                    onClick={() => {
+                      setSearchQuery("");
+                      if (link.href === "/shop") {
+                        window.dispatchEvent(new CustomEvent("navbar-search", { detail: "" }));
+                        window.dispatchEvent(new CustomEvent("reset-shop-filters"));
+                      }
+                    }}
                     style={isActive ? { color: "#820011" } : undefined}
                     className={`font-serif-text text-[14px] xl:text-[14.5px] transition-colors duration-200 py-1 ${
                       isActive
@@ -589,7 +604,14 @@ export default function Navbar() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setSearchQuery("");
+                    if (link.href === "/shop") {
+                      window.dispatchEvent(new CustomEvent("navbar-search", { detail: "" }));
+                      window.dispatchEvent(new CustomEvent("reset-shop-filters"));
+                    }
+                  }}
                   style={{ animationDelay: `${idx * 35}ms` }}
                   className={`stagger-item-enter relative self-start font-serif-text text-[19px] sm:text-[21px] tracking-[0.18em] uppercase transition-all duration-200 text-left py-1 group ${
                     isActive
