@@ -649,3 +649,141 @@
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
+
+/* ========================================== */
+/* Murakkaz Facebook Discovery Banner         */
+/* ========================================== */
+
+.facebookBanner {
+  width: 100%;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #F3EDE2 0%, #E9E1D3 100%);
+  border: 1.2px solid #D8D0C1;
+  border-radius: 16px;
+  padding: 3rem 2.25rem;
+  box-shadow: 0 4px 20px rgba(28, 27, 26, 0.035);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.facebookBanner:hover {
+  border-color: #C8BFB0;
+  box-shadow: 0 6px 26px rgba(28, 27, 26, 0.06);
+}
+
+.facebookBannerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 620px;
+  width: 100%;
+  z-index: 1;
+}
+
+.facebookBannerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #820011;
+  margin-bottom: 0.85rem;
+}
+
+.facebookStar {
+  font-size: 0.85rem;
+  color: #C8A45D;
+}
+
+.facebookBannerTitle {
+  font-family: var(--font-playfair), var(--font-lora), Georgia, serif;
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  font-weight: 500;
+  color: #1C1B1A;
+  margin: 0 0 0.85rem 0;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.facebookBannerDesc {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #635E57;
+  margin: 0 0 1.85rem 0;
+}
+
+.facebookBannerBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.9rem 2.25rem;
+  background-color: #1C1B1A;
+  color: #FAF7F2;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  border-radius: 9999px;
+  text-decoration: none;
+  border: 1.2px solid #1C1B1A;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(28, 27, 26, 0.12);
+}
+
+.facebookBannerBtn:hover {
+  background-color: #820011;
+  border-color: #820011;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(130, 0, 17, 0.25);
+}
+
+.facebookIcon {
+  flex-shrink: 0;
+  color: #FFFFFF;
+  transition: transform 0.2s ease;
+}
+
+.facebookBannerBtn:hover .facebookIcon {
+  transform: scale(1.1);
+}
+
+.facebookArrow {
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.facebookBannerBtn:hover .facebookArrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+  .facebookBanner {
+    padding: 2.25rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .facebookBannerDesc {
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .facebookBannerBtn {
+    width: 100%;
+    max-width: 320px;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.86rem;
+  }
+}

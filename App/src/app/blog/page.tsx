@@ -33,11 +33,10 @@ export default function BlogPage() {
     });
   };
 
-  // Filter posts based on search query
+  // Filter posts based on search query (only valid posts with titles)
   const filteredPosts = posts.filter((post) => {
-    // Empty placeholder slots only appear in the default grid view (no search query)
-    if (!post.title) {
-      return !searchQuery.trim();
+    if (!post.title || !post.title.trim()) {
+      return false;
     }
 
     const query = searchQuery.trim().toLowerCase();
@@ -78,7 +77,7 @@ export default function BlogPage() {
           onSearchChange={handleSearchChange}
         />
 
-        {/* 3-Column Editorial Grid (3 x 2 cards per page) */}
+        {/* 3-Column Editorial Grid */}
         {paginatedPosts.length > 0 ? (
           <section
             className={styles.grid}
@@ -118,6 +117,46 @@ export default function BlogPage() {
             </button>
           </div>
         )}
+
+        {/* Murakkaz Facebook Visual Stories Banner */}
+        <section className={styles.facebookBanner} aria-label="Murakkaz on Facebook">
+          <div className={styles.facebookBannerContent}>
+            <div className={styles.facebookBannerBadge}>
+              <span className={styles.facebookStar}>✧</span>
+              <span>MURAKKAZ VISUAL ARCHIVE</span>
+              <span className={styles.facebookStar}>✧</span>
+            </div>
+
+            <h3 className={styles.facebookBannerTitle}>
+              More to Watch on Facebook
+            </h3>
+
+            <p className={styles.facebookBannerDesc}>
+              Discover exclusive fragrance reels, customer reviews, behind-the-scenes masterclasses, and olfactory stories on our official Facebook channel.
+            </p>
+
+            <a
+              href="https://www.facebook.com/profile.php?id=100063498011095"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.facebookBannerBtn}
+              aria-label="More to watch on Facebook - visit Murakkaz official Facebook page"
+            >
+              <svg
+                className={styles.facebookIcon}
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              <span>More to watch on Facebook</span>
+              <span className={styles.facebookArrow}>→</span>
+            </a>
+          </div>
+        </section>
 
         {/* Centered Pagination Controls */}
         {totalPages > 1 && (
