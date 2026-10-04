@@ -7806,26 +7806,55 @@ export function getProductsApiBaseUrl(): string {
 
 let cachedProducts: Product[] | null = null;
 let lastFetchTime = 0;
-const CACHE_TTL_MS = 5000; // 5-second lightweight cache for instant snappy navigation while staying fresh
+const CACHE_TTL_MS = 180_000; // 3-minute cache for instant snappy navigation while staying fresh
+let activeFetchPromise: Promise<Product[]> | null = null;
+
+export function getCachedProducts(): Product[] | null {
+  if (cachedProducts && cachedProducts.length > 0) {
+    return cachedProducts;
+  }
+  if (typeof window !== "undefined") {
+    try {
+      const raw = sessionStorage.getItem("murakkaz_products_cache");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed.items) && parsed.items.length > 0 && (Date.now() - parsed.timestamp < CACHE_TTL_MS)) {
+          cachedProducts = parsed.items;
+          lastFetchTime = parsed.timestamp;
+          return cachedProducts;
+        }
+      }
+    } catch {
+      // sessionStorage unavailable
+    }
+  }
+  return null;
+}
 
 export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]> {
   const now = Date.now();
-  if (!forceRefresh && cachedProducts && cachedProducts.length > 0 && (now - lastFetchTime < CACHE_TTL_MS)) {
-    return cachedProducts;
+  const existing = getCachedProducts();
+  if (!forceRefresh && existing && existing.length > 0 && (now - lastFetchTime < CACHE_TTL_MS)) {
+    return existing;
+  }
+
+  // Deduplicate in-flight fetch requests across components
+  if (!forceRefresh && activeFetchPromise) {
+    return activeFetchPromise;
   }
 
   const apiUrl = `${getProductsApiBaseUrl()}/products?limit=1000`;
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+  activeFetchPromise = (async () => {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-    const res = await fetch(apiUrl, { 
-      signal: controller.signal,
-      cache: 'no-store'
-    }).catch(() => null);
+      const res = await fetch(apiUrl, { 
+        signal: controller.signal,
+      }).catch(() => null);
 
-    clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
 
     if (res && res.ok) {
       const json = await res.json().catch(() => null);
@@ -7942,12 +7971,24 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
           };
         });
         lastFetchTime = Date.now();
+        if (typeof window !== "undefined") {
+          try {
+            sessionStorage.setItem("murakkaz_products_cache", JSON.stringify({
+              items: cachedProducts,
+              timestamp: lastFetchTime
+            }));
+          } catch {
+            // ignore storage full/blocked
+          }
+        }
         console.log(`[Murakkaz] Loaded ${cachedProducts.length} live products from API`);
         return cachedProducts;
       }
     }
   } catch (err) {
     console.warn(`[Murakkaz] API fetch failed (${apiUrl}):`, err);
+  } finally {
+    activeFetchPromise = null;
   }
 
   // Fallback to static catalog if API unreachable
@@ -7955,6 +7996,9 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
     cachedProducts = luxuryProducts;
   }
   return cachedProducts;
+})();
+
+  return activeFetchPromise;
 }
 
 export function findCachedProduct(idOrSlug: string): Product | null {

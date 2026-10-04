@@ -1,6 +1,7 @@
 "use client";
 
 import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 import Pagination from "./Pagination";
 import { Product } from "../data/products";
 import styles from "./ProductGrid.module.css";
@@ -10,6 +11,7 @@ interface ProductGridProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  loading?: boolean;
 }
 
 export default function ProductGrid({
@@ -17,10 +19,17 @@ export default function ProductGrid({
   currentPage = 1,
   totalPages = 1,
   onPageChange,
+  loading = false,
 }: ProductGridProps) {
   return (
     <div className={styles.container}>
-      {products.length === 0 ? (
+      {loading ? (
+        <div className={styles.grid} aria-busy="true" aria-label="Loading products">
+          {Array.from({ length: 12 }).map((_, idx) => (
+            <ProductCardSkeleton key={`skeleton-${idx}`} />
+          ))}
+        </div>
+      ) : products.length === 0 ? (
         <div className={styles.noResults}>
           <p>No products match your selected filters.</p>
         </div>

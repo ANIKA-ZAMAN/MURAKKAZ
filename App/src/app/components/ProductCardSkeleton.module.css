@@ -1,0 +1,166 @@
+/* Card matching ProductCard exact outer dimensions */
+.cardSkeleton {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  position: relative;
+  overflow: visible;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Warm-ivory shimmer pulse keyframe */
+@keyframes shimmerPulse {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.bone {
+  background: linear-gradient(
+    90deg,
+    #ECE5D8 0%,
+    #F7F3EB 50%,
+    #ECE5D8 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerPulse 1.8s ease-in-out infinite;
+}
+
+:global(.dark-theme) .bone {
+  background: linear-gradient(
+    90deg,
+    #252528 0%,
+    #333336 50%,
+    #252528 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* 1:1 Aspect ratio Image placeholder matching ProductCard imageContainer */
+.imageSkeleton {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(80, 60, 30, 0.05);
+}
+
+/* Content block matching ProductCard content */
+.contentSkeleton {
+  display: flex;
+  flex-direction: column;
+  padding: 0.85rem 0.95rem 1rem;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+/* Name row: 2.6rem height */
+.nameRowSkeleton {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 2.6rem;
+  min-height: 2.6rem;
+  margin-bottom: 0.2rem;
+}
+
+.nameLines {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+  padding-top: 3px;
+}
+
+.nameLine1 {
+  width: 82%;
+  height: 13px;
+  border-radius: 4px;
+}
+
+.nameLine2 {
+  width: 52%;
+  height: 13px;
+  border-radius: 4px;
+}
+
+.wishlistSkeleton {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-left: 0.4rem;
+  margin-top: 2px;
+}
+
+/* Brand/Subtitle row: 1.25rem height */
+.brandRowSkeleton {
+  width: 100%;
+  height: 1.25rem;
+  min-height: 1.25rem;
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+}
+
+.brandLine {
+  width: 60%;
+  height: 11px;
+  border-radius: 4px;
+}
+
+/* Rating & Price row */
+.ratingPriceRowSkeleton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  min-height: 1.5rem;
+}
+
+.ratingSkeleton {
+  width: 56px;
+  height: 13px;
+  border-radius: 4px;
+}
+
+.priceSkeleton {
+  width: 68px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+/* Actions: exactly 38px buttons, gap 8px */
+.actionsSkeleton {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: calc(100% + 1.9rem);
+  margin-left: -0.95rem;
+  margin-right: -0.95rem;
+  box-sizing: border-box;
+}
+
+.btnSkeleton {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  min-height: 38px;
+  border-radius: 14px;
+}

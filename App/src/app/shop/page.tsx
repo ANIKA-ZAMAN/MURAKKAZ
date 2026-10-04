@@ -8,15 +8,18 @@ import FilterSidebar from "../components/FilterSidebar";
 import FilterDrawer from "../components/FilterDrawer";
 import ProductGrid from "../components/ProductGrid";
 import RecommendationSlider from "../components/RecommendationSlider";
-import { Product, fetchLiveProducts } from "../data/products";
+import { Product, fetchLiveProducts, getCachedProducts } from "../data/products";
 import { resolvePerfumeCategory } from "../data/pricing";
 import styles from "./page.module.css";
 
 function ShopContent() {
   const searchParams = useSearchParams();
 
-  const [productsList, setProductsList] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [productsList, setProductsList] = useState<Product[]>(() => getCachedProducts() || []);
+  const [loading, setLoading] = useState<boolean>(() => {
+    const cached = getCachedProducts();
+    return !cached || cached.length === 0;
+  });
 
   
   // Initialize state directly from URL query parameters
@@ -271,6 +274,7 @@ function ShopContent() {
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}
+              loading={loading}
             />
           </div>
         </div>

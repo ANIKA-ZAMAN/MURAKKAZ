@@ -2,17 +2,21 @@
 
 import { useRef, useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { Product, fetchLiveProducts } from "../data/products";
+import { Product, fetchLiveProducts, getCachedProducts } from "../data/products";
 import styles from "./RecommendationSlider.module.css";
 
 export default function RecommendationSlider() {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(() => getCachedProducts() || []);
 
   useEffect(() => {
+    let isMounted = true;
     fetchLiveProducts().then((data) => {
-      if (data) setProducts(data);
+      if (isMounted && data) setProducts(data);
     });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (products.length === 0) return null;
