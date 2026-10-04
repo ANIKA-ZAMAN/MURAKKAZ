@@ -58,9 +58,6 @@ export default function Navbar() {
     // If on /shop, live-filter cards directly on the page without modifying URL history
     if (pathname === "/shop") {
       window.dispatchEvent(new CustomEvent("navbar-search", { detail: val }));
-    } else if (val.trim().length > 0) {
-      // If typing on any other page, navigate to shop with the filter active
-      router.push(`/shop?q=${encodeURIComponent(val.trim())}`);
     }
   };
 
@@ -69,15 +66,30 @@ export default function Navbar() {
     if (pathname === "/shop") {
       window.dispatchEvent(new CustomEvent("navbar-search", { detail: "" }));
     }
-    if (typeof window !== "undefined" && window.location.search.includes("q=")) {
-      window.history.replaceState(null, "", window.location.pathname);
+    if (typeof window !== "undefined") {
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has("q")) {
+          url.searchParams.delete("q");
+          const cleanUrl = url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : "");
+          window.history.replaceState(null, "", cleanUrl);
+        }
+      } catch {
+        if (window.location.search.includes("q=")) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+      }
     }
   };
 
   const handleSearchSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (pathname !== "/shop") {
-      router.push(searchQuery.trim() ? `/shop?q=${encodeURIComponent(searchQuery.trim())}` : `/shop`);
+      const q = searchQuery.trim();
+      if (q && typeof window !== "undefined") {
+        sessionStorage.setItem("murakkaz_nav_search", q);
+      }
+      router.push("/shop");
     } else {
       window.dispatchEvent(new CustomEvent("navbar-search", { detail: searchQuery }));
     }
@@ -167,27 +179,41 @@ export default function Navbar() {
     };
   }, []);
 
-  // Sync searchQuery on route changes: clear on page reload or normal hops, preserve only on intentional search navigation
+  // On route changes or page mounts, always reset search query and clean URL
   useEffect(() => {
     setIsMobileMenuOpen(false);
     if (typeof window !== "undefined") {
-      const isPageReload =
-        (window.performance?.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming)?.type === "reload" ||
-        (window.performance as any)?.navigation?.type === 1;
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const qParam = urlParams.get("q");
-
-      if (qParam && !isPageReload && pathname === "/shop") {
-        setSearchQuery(qParam);
+      const navSearch = sessionStorage.getItem("murakkaz_nav_search");
+      if (navSearch && pathname === "/shop") {
+        setSearchQuery(navSearch);
       } else {
         setSearchQuery("");
+      }
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has("q")) {
+          url.searchParams.delete("q");
+          const cleanUrl = url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : "");
+          window.history.replaceState(null, "", cleanUrl);
+        }
+      } catch {
         if (window.location.search.includes("q=")) {
           window.history.replaceState(null, "", window.location.pathname);
         }
       }
     }
   }, [pathname]);
+
+  // Keep navbar search input synced if search changes on the shop page
+  useEffect(() => {
+    const handleSync = (e: CustomEvent<string>) => {
+      if (e.detail !== undefined && e.detail !== searchQuery) {
+        setSearchQuery(e.detail);
+      }
+    };
+    window.addEventListener("navbar-search" as any, handleSync as any);
+    return () => window.removeEventListener("navbar-search" as any, handleSync as any);
+  }, [searchQuery]);
 
   // Prevent background scroll when mobile drawer is open
   useEffect(() => {

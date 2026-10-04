@@ -7,6 +7,7 @@ import styles from "./CollectionHeader.module.css";
 interface CollectionHeaderProps {
   title?: string;
   subtitle?: string;
+  searchValue?: string;
   onSearch?: (query: string) => void;
   onOpenFilter?: () => void;
   isFilterOpen?: boolean;
@@ -18,6 +19,7 @@ interface CollectionHeaderProps {
 export default function CollectionHeader({
   title = "Perfume Collection",
   subtitle = "Universe of perfume",
+  searchValue,
   onSearch,
   onOpenFilter,
   isFilterOpen = false,
@@ -45,7 +47,7 @@ export default function CollectionHeader({
           )}
           {onSearch && (
             <div className={styles.searchWrapper}>
-              <SearchBar placeholder="Search your perfume..." onSearch={onSearch} />
+              <SearchBar placeholder="Search your perfume..." onSearch={onSearch} value={searchValue} />
             </div>
           )}
         </div>

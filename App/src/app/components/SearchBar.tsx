@@ -6,17 +6,22 @@ import styles from "./SearchBar.module.css";
 interface SearchBarProps {
   placeholder?: string;
   onSearch?: (query: string) => void;
+  value?: string;
 }
 
 export default function SearchBar({
   placeholder = "Search your perfume",
   onSearch,
+  value,
 }: SearchBarProps) {
-  const [query, setQuery] = useState("");
+  const [internalQuery, setInternalQuery] = useState("");
+  const query = value !== undefined ? value : internalQuery;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    setQuery(val);
+    if (value === undefined) {
+      setInternalQuery(val);
+    }
     onSearch?.(val);
   };
 

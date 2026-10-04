@@ -21,14 +21,7 @@ function ShopContent() {
     return !cached || cached.length === 0;
   });
 
-  
-  // Initialize state directly from URL query parameters (resets on page refresh)
-  const isReload = typeof window !== "undefined" && (
-    (window.performance?.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming)?.type === "reload" ||
-    (window.performance as any)?.navigation?.type === 1
-  );
-
-  const initialQ = isReload ? "" : (searchParams.get("q") || "");
+  // Category and catalog filters from URL parameters
   const initialCategory = searchParams.get("category") ? searchParams.get("category")!.split(",") : [];
   const initialFamily = searchParams.get("family") ? searchParams.get("family")!.split(",") : [];
   const initialGender = searchParams.get("gender") ? searchParams.get("gender")!.split(",") : [];
@@ -46,7 +39,8 @@ function ShopContent() {
   });
 
   const [maxPrice, setMaxPrice] = useState<number>(5000);
-  const [searchQuery, setSearchQuery] = useState<string>(initialQ);
+  // Search query always starts empty so page loads, refreshes and reload buttons always show all products
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("newest");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
@@ -66,27 +60,33 @@ function ShopContent() {
       .finally(() => setLoading(false));
   }, []);
 
+  // On mount: check for one-time nav search and always clean any ?q= from the URL bar immediately
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const isPageReload =
-        (window.performance?.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming)?.type === "reload" ||
-        (window.performance as any)?.navigation?.type === 1;
-
-      if (isPageReload) {
-        setSearchQuery("");
-        if (window.location.search.includes("q=")) {
-          window.history.replaceState(null, "", window.location.pathname);
-        }
+      const navSearch = sessionStorage.getItem("murakkaz_nav_search");
+      if (navSearch) {
+        setSearchQuery(navSearch);
+        sessionStorage.removeItem("murakkaz_nav_search");
+        window.dispatchEvent(new CustomEvent("navbar-search", { detail: navSearch }));
       } else {
-        const qParam = searchParams.get("q");
-        if (qParam) {
-          setSearchQuery(qParam);
-          // Clean the query from the URL right away so refreshing or navigating doesn't stick
+        setSearchQuery("");
+      }
+
+      // Immediately delete ?q= from the address bar so reloading never locks in a search query
+      try {
+        const url = new URL(window.location.href);
+        if (url.searchParams.has("q")) {
+          url.searchParams.delete("q");
+          const cleanUrl = url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : "");
+          window.history.replaceState(null, "", cleanUrl);
+        }
+      } catch {
+        if (window.location.search.includes("q=")) {
           window.history.replaceState(null, "", window.location.pathname);
         }
       }
     }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     const handleNavbarSearch = (e: CustomEvent<string>) => {
@@ -105,8 +105,19 @@ function ShopContent() {
       });
       setMaxPrice(5000);
       setCurrentPage(1);
-      if (typeof window !== "undefined" && window.location.search.includes("q=")) {
-        window.history.replaceState(null, "", window.location.pathname);
+      if (typeof window !== "undefined") {
+        try {
+          const url = new URL(window.location.href);
+          if (url.searchParams.has("q")) {
+            url.searchParams.delete("q");
+            const cleanUrl = url.pathname + (url.searchParams.toString() ? `?${url.searchParams.toString()}` : "");
+            window.history.replaceState(null, "", cleanUrl);
+          }
+        } catch {
+          if (window.location.search.includes("q=")) {
+            window.history.replaceState(null, "", window.location.pathname);
+          }
+        }
       }
     };
 
@@ -287,6 +298,7 @@ function ShopContent() {
         <CollectionHeader
           title="Shop"
           subtitle="Explore our collections"
+          searchValue={searchQuery}
           onSearch={handleSearch}
           onOpenFilter={() => setIsFilterOpen((prev) => !prev)}
           isFilterOpen={isFilterOpen}
