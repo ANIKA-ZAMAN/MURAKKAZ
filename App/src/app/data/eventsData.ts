@@ -149,15 +149,15 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
 export const upcomingEvents: UpcomingEvent[] = [
   {
     id: "cmub2r3no0flajjhkxybs1i56",
-    slug: "murakkaz-at-her-e-trade-exhibition",
-    day: "02",
+    slug: "murakkaz-at-ronginee-exhibition-midas-centre",
+    day: "09",
     month: "OCT",
-    title: "Murakkaz at Her E-Trade Exhibition",
-    location: "Midas Center, Dhanmondi 27, Dhaka",
+    title: "Murakkaz at Ronginee Exhibition — Midas Centre",
+    location: "Midas Centre, Dhanmondi 27, Dhaka",
     daysLeft: "Coming Soon",
-    time: "2 oct - 3 oct",
-    description: "Step into a world of pure, lasting elegance with Murakkaz Perfume! We are delighted to invite you to join us at the Her E-Trade 10th Exhibition this autumn. Come immerse your senses, explore our signature handcrafted fragrance collection, and find a scent that doesn’t just get smelled—it gets remembered.\n\nWhether you're searching for your own everyday signature notes or the perfect thoughtful gift for someone special, we would love to welcome you in person.\n\nEvent Details:\nDates: October 2nd & 3rd, 2026\nVenue: Midas Center, Dhanmondi 27\nInquiries: 01997-807701",
-    image: "/uploads/events/event-1789984793704-931912873.png",
+    time: "10:00 AM - 8:00 PM",
+    description: "Step into a world of pure, lasting elegance with Murakkaz Perfume! We are thrilled to welcome you to the Ronginee Exhibition this autumn at Midas Centre, Dhanmondi.\n\nImmerse your senses in our signature collection of extra pure perfumes—including crowd favourites like 212 VIP Men, The Dubai Chocolate Perfume, Kalemat, KAYALI Yum Boujee Marshmallow, Power of YOU, and Montale Arabians Tonka. Handcrafted with the finest ingredients to ensure rich projection and all-day longevity. Find a scent that doesn’t just get smelled—it gets remembered.\n\nWhether you're exploring everyday signature notes or selecting a memorable luxury gift for someone special, our team would love to welcome you in person.\n\nEvent Details:\n• Dates: October 9th & 10th, 2026\n• Timing: 10:00 AM – 8:00 PM\n• Venue: Midas Centre, Road 27, Dhanmondi, Dhaka\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
+    image: "/uploads/events/ronginee-midas-october-2026.jpg",
   },
   {
     id: "upcoming-slot-2",
