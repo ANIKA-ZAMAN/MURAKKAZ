@@ -476,13 +476,8 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
   const isOutOfStock = React.useMemo(() => {
     const cleanId = id ? id.toLowerCase().trim() : "";
     const oosKeywords = [
-      "imagination",
       "gucci-bloom",
       "explorer-platinum",
-      "blue-talisman",
-      "talisman",
-      "arabians-tonka",
-      "arabians tonka",
       "irish-leather",
       "irish leather"
     ];
@@ -491,13 +486,8 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       oosKeywords.some(kw => cleanId.includes(kw)) ||
       cleanId === "prod-normal-48" ||
       cleanId === "prod-normal-49" ||
-      cleanId === "prod-blue-talisman-01" ||
-      cleanId === "prod-imagination-10" ||
-      cleanId === "prod-arabians-tonka-65" ||
       cleanId === "prod-irish-leather-01" ||
-      cleanId === "cmttukhh102zxjju646krncbh" ||
       cleanId === "cms8s3teb0013v9f0kx34wh10" ||
-      (cleanId.includes("arabians") && cleanId.includes("tonka")) ||
       (cleanId.includes("irish") && cleanId.includes("leather"))
     ) {
       return true;
@@ -516,7 +506,6 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
         oosKeywords.some(kw => lpName.includes(kw) || lpSlug.includes(kw)) ||
         (lpName.includes("gucci") && lpName.includes("bloom")) ||
         (lpName.includes("explorer") && lpName.includes("platinum")) ||
-        (lpName.includes("arabians") && lpName.includes("tonka")) ||
         (lpName.includes("irish") && lpName.includes("leather"))
       ) {
         return true;
@@ -536,7 +525,6 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
         oosKeywords.some(kw => catName.includes(kw) || catSlug.includes(kw)) ||
         (catName.includes("gucci") && catName.includes("bloom")) ||
         (catName.includes("explorer") && catName.includes("platinum")) ||
-        (catName.includes("arabians") && catName.includes("tonka")) ||
         (catName.includes("irish") && catName.includes("leather"))
       ) {
         return true;

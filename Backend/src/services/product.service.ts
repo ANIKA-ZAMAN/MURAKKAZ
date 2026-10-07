@@ -34,13 +34,8 @@ function attachCategory(p: any) {
     EXCLUSIVE_SLUGS.has(p.id) ||
     p.category?.toLowerCase() === 'exclusive';
   const oosKeywords = [
-    'imagination',
     'gucci-bloom',
     'explorer-platinum',
-    'blue-talisman',
-    'talisman',
-    'arabians-tonka',
-    'arabians tonka',
     'irish-leather',
     'irish leather'
   ];
@@ -51,15 +46,10 @@ function attachCategory(p: any) {
   const isTargetOOS = oosKeywords.some(kw => pSlug.includes(kw) || pName.includes(kw) || pId.includes(kw)) ||
     (pName.includes('gucci') && pName.includes('bloom')) ||
     (pName.includes('explorer') && pName.includes('platinum')) ||
-    (pName.includes('arabians') && pName.includes('tonka')) ||
     (pName.includes('irish') && pName.includes('leather')) ||
     pId === 'prod-normal-48' ||
     pId === 'prod-normal-49' ||
-    pId === 'prod-blue-talisman-01' ||
-    pId === 'prod-imagination-10' ||
-    pId === 'prod-arabians-tonka-65' ||
     pId === 'prod-irish-leather-01' ||
-    pId === 'cmttukhh102zxjju646krncbh' ||
     pId === 'cms8s3teb0013v9f0kx34wh10';
 
   const isOutOfStock = isTargetOOS || p.isOutOfStock === true || p.inStock === false;

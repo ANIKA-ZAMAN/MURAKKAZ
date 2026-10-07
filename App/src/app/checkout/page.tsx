@@ -25,13 +25,8 @@ const isItemOutOfStock = (item: any) => {
   const s = (item.slug || "").toLowerCase();
   const id = (item.id || "").toLowerCase();
   const oosKeywords = [
-    "imagination",
     "gucci-bloom",
     "explorer-platinum",
-    "blue-talisman",
-    "talisman",
-    "arabians-tonka",
-    "arabians tonka",
     "irish-leather",
     "irish leather"
   ];
@@ -39,11 +34,8 @@ const isItemOutOfStock = (item: any) => {
     oosKeywords.some((kw) => n.includes(kw) || s.includes(kw) || id.includes(kw)) ||
     (n.includes("gucci") && n.includes("bloom")) ||
     (n.includes("explorer") && n.includes("platinum")) ||
-    (n.includes("arabians") && n.includes("tonka")) ||
     (n.includes("irish") && n.includes("leather")) ||
-    id === "prod-arabians-tonka-65" ||
     id === "prod-irish-leather-01" ||
-    id === "cmttukhh102zxjju646krncbh" ||
     id === "cms8s3teb0013v9f0kx34wh10"
   );
 };

@@ -1169,33 +1169,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Everyday, Office, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
-    "inStock": false,
-    "isOutOfStock": true,
+    "inStock": true,
+    "isOutOfStock": false,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "30ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 0
+        "stock": 35
       },
       {
         "size": "50ml",
         "price": 2500,
         "originalPrice": 3200,
-        "stock": 0
+        "stock": 25
       }
     ],
     "notes": [
@@ -7919,7 +7919,6 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500));
 
           const isOutOfStock = p.inStock === false || p.isOutOfStock === true ||
-            itemSlug === "imagination" || (p.name && p.name.toLowerCase() === "imagination") ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0));
           const inStock = !isOutOfStock;
 
