@@ -49,6 +49,7 @@ export const getApiBaseUrl = (): string => {
 };
 
 const validTrackedImages = [
+  "/images/events/murakkaz_nsu_yes_october_2026.png",
   "/images/events/event_gallery_5.jpg",
   "/images/events/event_gallery_3.jpg",
   "/images/events/event_gallery_6.jpg",
@@ -148,31 +149,40 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
 
 export const upcomingEvents: UpcomingEvent[] = [
   {
-    id: "cmub2r3no0flajjhkxybs1i56",
-    slug: "murakkaz-at-ronginee-exhibition-midas-centre",
-    day: "09",
+    id: "cmue-nsu-yes-oct-2026",
+    slug: "murakkaz-coming-to-nsu-yes-club",
+    day: "23",
     month: "OCT",
-    title: "Murakkaz at Ronginee Exhibition — Midas Centre",
-    location: "Midas Centre, Dhanmondi 27, Dhaka",
-    daysLeft: "Coming Soon",
-    time: "10:00 AM - 8:00 PM",
-    description: "Step into a world of pure, lasting elegance with Murakkaz Perfume! We are thrilled to welcome you to the Ronginee Exhibition this autumn at Midas Centre, Dhanmondi.\n\nImmerse your senses in our signature collection of extra pure perfumes—including crowd favourites like 212 VIP Men, The Dubai Chocolate Perfume, Kalemat, KAYALI Yum Boujee Marshmallow, Power of YOU, and Montale Arabians Tonka. Handcrafted with the finest ingredients to ensure rich projection and all-day longevity. Find a scent that doesn’t just get smelled—it gets remembered.\n\nWhether you're exploring everyday signature notes or selecting a memorable luxury gift for someone special, our team would love to welcome you in person.\n\nEvent Details:\n• Dates: October 9th & 10th, 2026\n• Timing: 10:00 AM – 8:00 PM\n• Venue: Midas Centre, Road 27, Dhanmondi, Dhaka\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
-    image: "/uploads/events/ronginee-midas-october-2026.jpg",
+    title: "Murakkaz Coming to NSU — YES! Club Exhibition",
+    location: "North South University (NSU), Bashundhara R/A, Dhaka",
+    daysLeft: "7 days left",
+    time: "9:00 AM - 6:00 PM",
+    description: "Murakkaz is coming to North South University (NSU)!\n\nOrganized in collaboration with the Young Entrepreneurs Society (YES! Club), we warmly invite all students, faculty members, and perfume enthusiasts across Dhaka to experience our signature collection of extra pure, long-lasting luxury perfumes.\n\nExplore crowd-favourite masterpieces inspired by world-renowned perfume houses—including Poison Girl, Montale (Arabians Tonka & Roses Musk), YSL Libre & MYSLF, Tom Ford Vanille Fatale, Miss Dior, 212 VIP Men, Kilian, KAYALI, and Burberry Her. Handcrafted with premium, high-concentration fragrance oils to ensure rich projection and all-day longevity.\n\nEnjoy complimentary fragrance testing, personalized scent consultations, and exclusive campus student discounts!\n\nEvent Details:\n• Dates: October 23rd – 25th, 2026\n• Timing: 9:00 AM – 6:00 PM Daily\n• Venue: North South University (NSU), Plot # 15, Block # B, Bashundhara R/A, Dhaka\n• Host / Partner: Young Entrepreneurs Society (YES! Club)\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
+    image: "/images/events/murakkaz_nsu_yes_october_2026.png",
   },
   {
     id: "upcoming-slot-2",
     slug: "upcoming-event-2",
     day: "TBA",
     month: "TBA",
-    title: "Upcoming Event #2",
+    title: "Upcoming Campus Pop-up & Winter Showcase",
     location: "Date & Location TBA",
     daysLeft: "Coming Soon",
     time: "Time TBA",
-    description: "Space reserved for new upcoming event. Details, schedule, and olfactory highlights will be announced here soon.",
-    image: "",
+    description: "Space reserved for our next campus showcase & winter exhibition. New dates, locations, and fragrance highlights will be announced here soon.",
+    image: "/images/events/event_gallery_4.jpg",
   },
 ];
-export const previousEvents: PreviousEvent[] = [];
+export const previousEvents: PreviousEvent[] = [
+  {
+    id: "cmub2r3no0flajjhkxybs1i56",
+    slug: "murakkaz-at-ronginee-exhibition-midas-centre",
+    title: "Murakkaz at Ronginee Exhibition — Midas Centre",
+    date: "Oct 09 - 10, 2026",
+    image: "/images/events/ronginee_midas_exhibition.jpg",
+    category: "Exhibition",
+  },
+];
 
 export const galleryImages: GalleryImage[] = [
   {

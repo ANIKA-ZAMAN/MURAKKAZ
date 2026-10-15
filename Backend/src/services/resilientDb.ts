@@ -65,7 +65,58 @@ export const saveBlogsToDisk = (blogs: any[]) => {
 export const dbStore = {
   products: loadProductsFromDisk(),
   blogPosts: loadBlogsFromDisk(),
-  events: [] as any[],
+  events: [
+    {
+      id: 'cmue-nsu-yes-oct-2026',
+      slug: 'murakkaz-coming-to-nsu-yes-club',
+      title: 'Murakkaz Coming to NSU — YES! Club Exhibition',
+      description: `Murakkaz is coming to North South University (NSU)!
+
+Organized in collaboration with the Young Entrepreneurs Society (YES! Club), we warmly invite all students, faculty members, and perfume enthusiasts across Dhaka to experience our signature collection of extra pure, long-lasting luxury perfumes.
+
+Explore crowd-favourite masterpieces inspired by world-renowned perfume houses—including Poison Girl, Montale (Arabians Tonka & Roses Musk), YSL Libre & MYSLF, Tom Ford Vanille Fatale, Miss Dior, 212 VIP Men, Kilian, KAYALI, and Burberry Her. Handcrafted with premium, high-concentration fragrance oils to ensure rich projection and all-day longevity.
+
+Enjoy complimentary fragrance testing, personalized scent consultations, and exclusive campus student discounts!
+
+Event Details:
+• Dates: October 23rd – 25th, 2026
+• Timing: 9:00 AM – 6:00 PM Daily
+• Venue: North South University (NSU), Plot # 15, Block # B, Bashundhara R/A, Dhaka
+• Host / Partner: Young Entrepreneurs Society (YES! Club)
+• Inquiries & Hotline: 01997-807701
+• Official Website: www.murakkaz.com`,
+      image: '/images/events/murakkaz_nsu_yes_october_2026.png',
+      day: '23',
+      month: 'OCT',
+      time: '9:00 AM - 6:00 PM',
+      location: 'North South University (NSU), Bashundhara R/A, Dhaka',
+      daysLeft: 7,
+      eventDate: new Date('2026-10-23T09:00:00.000Z'),
+      category: 'Campus Exhibition',
+      isUpcoming: true,
+      remindersCount: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 'cmub2r3no0flajjhkxybs1i56',
+      slug: 'murakkaz-at-ronginee-exhibition-midas-centre',
+      title: 'Murakkaz at Ronginee Exhibition — Midas Centre',
+      description: 'Murakkaz at Ronginee Exhibition in Midas Centre, Dhanmondi 27, Dhaka.',
+      image: '/images/events/ronginee_midas_exhibition.jpg',
+      day: '09',
+      month: 'OCT',
+      time: '10:00 AM - 8:00 PM',
+      location: 'Midas Centre, Dhanmondi 27, Dhaka',
+      daysLeft: 0,
+      eventDate: new Date('2026-10-09T10:00:00.000Z'),
+      category: 'Exhibition',
+      isUpcoming: false,
+      remindersCount: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  ] as any[],
   stores: [
     {
       id: '01',
