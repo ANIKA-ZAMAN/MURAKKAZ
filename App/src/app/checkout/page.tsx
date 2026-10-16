@@ -25,6 +25,7 @@ const isItemOutOfStock = (item: any) => {
   const s = (item.slug || "").toLowerCase();
   const id = (item.id || "").toLowerCase();
   const oosKeywords = [
+    "hacivat",
     "gucci-bloom",
     "explorer-platinum",
     "irish-leather",
@@ -35,6 +36,7 @@ const isItemOutOfStock = (item: any) => {
     (n.includes("gucci") && n.includes("bloom")) ||
     (n.includes("explorer") && n.includes("platinum")) ||
     (n.includes("irish") && n.includes("leather")) ||
+    id === "cmu4latr100f3jjfszm4sh1yf" ||
     id === "prod-irish-leather-01" ||
     id === "cms8s3teb0013v9f0kx34wh10"
   );

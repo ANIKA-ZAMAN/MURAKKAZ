@@ -7919,6 +7919,8 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500));
 
           const isOutOfStock = p.inStock === false || p.isOutOfStock === true ||
+            itemSlug === "hacivat" || (p.name && p.name.toLowerCase().includes("hacivat")) ||
+            p.id === "cmu4latr100f3jjfszm4sh1yf" ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0));
           const inStock = !isOutOfStock;
 

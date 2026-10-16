@@ -5,6 +5,7 @@ import { getPaginationParams, createPaginatedResult } from '../utils/pagination'
 import { sendOrderConfirmationEmail, sendOrderCancelledEmail } from './mail.service';
 
 const OOS_KEYWORDS = [
+  'hacivat',
   'gucci-bloom',
   'explorer-platinum',
   'irish-leather',
@@ -23,6 +24,7 @@ export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inS
     (n.includes('irish') && n.includes('leather')) ||
     i === 'prod-normal-48' ||
     i === 'prod-normal-49' ||
+    i === 'cmu4latr100f3jjfszm4sh1yf' ||
     i === 'prod-irish-leather-01' ||
     i === 'cms8s3teb0013v9f0kx34wh10'
   ) {

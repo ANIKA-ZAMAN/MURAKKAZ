@@ -476,6 +476,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
   const isOutOfStock = React.useMemo(() => {
     const cleanId = id ? id.toLowerCase().trim() : "";
     const oosKeywords = [
+      "hacivat",
       "gucci-bloom",
       "explorer-platinum",
       "irish-leather",
@@ -486,6 +487,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       oosKeywords.some(kw => cleanId.includes(kw)) ||
       cleanId === "prod-normal-48" ||
       cleanId === "prod-normal-49" ||
+      cleanId === "cmu4latr100f3jjfszm4sh1yf" ||
       cleanId === "prod-irish-leather-01" ||
       cleanId === "cms8s3teb0013v9f0kx34wh10" ||
       (cleanId.includes("irish") && cleanId.includes("leather"))

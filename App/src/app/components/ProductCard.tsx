@@ -74,6 +74,7 @@ export default function ProductCard({
     const n = (name || "").toLowerCase();
     const i = (id || "").toLowerCase();
     const oosKeywords = [
+      "hacivat",
       "gucci-bloom",
       "explorer-platinum",
       "irish-leather",
@@ -84,6 +85,7 @@ export default function ProductCard({
       (n.includes("gucci") && n.includes("bloom")) ||
       (n.includes("explorer") && n.includes("platinum")) ||
       (n.includes("irish") && n.includes("leather")) ||
+      i === "cmu4latr100f3jjfszm4sh1yf" ||
       i === "prod-irish-leather-01" ||
       i === "cms8s3teb0013v9f0kx34wh10"
     ) {

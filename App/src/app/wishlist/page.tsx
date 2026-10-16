@@ -159,6 +159,14 @@ export default function WishlistPage() {
 
   const handleAddToBag = (item: WishlistProduct) => {
     try {
+      const isOos = [
+        "hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather"
+      ].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug)));
+      if (isOos) {
+        alert(`${item.name} is currently out of stock and cannot be ordered.`);
+        return;
+      }
+
       const saved = localStorage.getItem("cart-items");
       let cart: any[] = saved ? JSON.parse(saved) : [];
       if (!Array.isArray(cart)) cart = [];
@@ -359,20 +367,43 @@ export default function WishlistPage() {
                     </div>
                   </div>
                   <div className={styles.actionButtons}>
-                    <button
-                      type="button"
-                      className={styles.buyNowBtn}
-                      onClick={() => handleBuyNow(item)}
-                    >
-                      Buy Now
-                    </button>
-                    <button
-                      type="button"
-                      className={styles.addBagBtn}
-                      onClick={() => handleAddToBag(item)}
-                    >
-                      Add to Bag
-                    </button>
+                    {["hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather"].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug))) ? (
+                      <button
+                        type="button"
+                        disabled
+                        style={{
+                          width: "100%",
+                          padding: "8px 12px",
+                          borderRadius: "20px",
+                          backgroundColor: "#ECE6DA",
+                          border: "1.5px solid #D5CEBF",
+                          color: "#8A8275",
+                          cursor: "not-allowed",
+                          fontSize: "0.78rem",
+                          fontWeight: 600,
+                          textTransform: "uppercase"
+                        }}
+                      >
+                        Out of Stock
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          type="button"
+                          className={styles.buyNowBtn}
+                          onClick={() => handleBuyNow(item)}
+                        >
+                          Buy Now
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.addBagBtn}
+                          onClick={() => handleAddToBag(item)}
+                        >
+                          Add to Bag
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -470,20 +501,43 @@ export default function WishlistPage() {
                           </div>
                         </div>
                         <div className={styles.actionButtons}>
-                          <button
-                            type="button"
-                            className={styles.buyNowBtn}
-                            onClick={() => handleBuyNow(item)}
-                          >
-                            Buy Now
-                          </button>
-                          <button
-                            type="button"
-                            className={styles.addBagBtn}
-                            onClick={() => handleAddToBag(item)}
-                          >
-                            Add to Bag
-                          </button>
+                          {["hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather"].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug))) ? (
+                            <button
+                              type="button"
+                              disabled
+                              style={{
+                                width: "100%",
+                                padding: "8px 12px",
+                                borderRadius: "20px",
+                                backgroundColor: "#ECE6DA",
+                                border: "1.5px solid #D5CEBF",
+                                color: "#8A8275",
+                                cursor: "not-allowed",
+                                fontSize: "0.78rem",
+                                fontWeight: 600,
+                                textTransform: "uppercase"
+                              }}
+                            >
+                              Out of Stock
+                            </button>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                className={styles.buyNowBtn}
+                                onClick={() => handleBuyNow(item)}
+                              >
+                                Buy Now
+                              </button>
+                              <button
+                                type="button"
+                                className={styles.addBagBtn}
+                                onClick={() => handleAddToBag(item)}
+                              >
+                                Add to Bag
+                              </button>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>

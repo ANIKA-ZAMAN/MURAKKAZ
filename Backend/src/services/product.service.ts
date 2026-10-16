@@ -34,6 +34,7 @@ function attachCategory(p: any) {
     EXCLUSIVE_SLUGS.has(p.id) ||
     p.category?.toLowerCase() === 'exclusive';
   const oosKeywords = [
+    'hacivat',
     'gucci-bloom',
     'explorer-platinum',
     'irish-leather',
@@ -49,6 +50,7 @@ function attachCategory(p: any) {
     (pName.includes('irish') && pName.includes('leather')) ||
     pId === 'prod-normal-48' ||
     pId === 'prod-normal-49' ||
+    pId === 'cmu4latr100f3jjfszm4sh1yf' ||
     pId === 'prod-irish-leather-01' ||
     pId === 'cms8s3teb0013v9f0kx34wh10';
 
