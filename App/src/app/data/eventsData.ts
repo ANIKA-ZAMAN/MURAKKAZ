@@ -50,9 +50,10 @@ export const getApiBaseUrl = (): string => {
 };
 
 const validTrackedImages = [
+  "/images/events/murakkaz_nsu_yes_october_24_26.png",
   "/images/events/murakkaz_nsu_yes_october_2026.png",
-  "/images/events/nsu_mou_agreement.png",
   "/images/events/nsu_booth_proposal.png",
+  "/images/events/nsu_mou_agreement.png",
   "/images/events/event_gallery_5.jpg",
   "/images/events/event_gallery_3.jpg",
   "/images/events/event_gallery_6.jpg",
@@ -206,9 +207,9 @@ export const upcomingEvents: UpcomingEvent[] = [
     daysLeft: "6 days left",
     time: "9:00 AM - 6:00 PM",
     description: "Murakkaz is coming to North South University (NSU)!\n\nOrganized in collaboration with the Young Entrepreneurs Society (YES! Club), we warmly invite all students, faculty members, and perfume enthusiasts across Dhaka to experience our signature collection of extra pure, long-lasting luxury perfumes.\n\nExplore crowd-favourite masterpieces inspired by world-renowned perfume houses—including Poison Girl, Montale (Arabians Tonka & Roses Musk), YSL Libre & MYSLF, Tom Ford Vanille Fatale, Miss Dior, 212 VIP Men, Kilian, KAYALI, and Burberry Her. Handcrafted with premium, high-concentration fragrance oils to ensure rich projection and all-day longevity.\n\nEnjoy complimentary fragrance testing, personalized scent consultations, and exclusive campus student discounts!\n\nEvent Details:\n• Dates: October 24th – 26th, 2026\n• Timing: 9:00 AM – 6:00 PM Daily\n• Venue: North South University (NSU), Plot # 15, Block # B, Bashundhara R/A, Dhaka\n• Host / Partner: Young Entrepreneurs Society (YES! Club)\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
-    image: "/images/events/murakkaz_nsu_yes_october_2026.png",
+    image: "/images/events/murakkaz_nsu_yes_october_24_26.png",
     images: [
-      "/images/events/murakkaz_nsu_yes_october_2026.png",
+      "/images/events/murakkaz_nsu_yes_october_24_26.png",
       "/images/events/nsu_booth_proposal.png",
       "/images/events/nsu_mou_agreement.png",
     ],

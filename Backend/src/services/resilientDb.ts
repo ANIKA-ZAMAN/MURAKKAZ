@@ -85,16 +85,16 @@ Event Details:
 • Host / Partner: Young Entrepreneurs Society (YES! Club)
 • Inquiries & Hotline: 01997-807701
 • Official Website: www.murakkaz.com`,
-      image: '/images/events/murakkaz_nsu_yes_october_2026.png',
+      image: '/images/events/murakkaz_nsu_yes_october_24_26.png',
       images: [
-        '/images/events/murakkaz_nsu_yes_october_2026.png',
+        '/images/events/murakkaz_nsu_yes_october_24_26.png',
         '/images/events/nsu_booth_proposal.png',
         '/images/events/nsu_mou_agreement.png',
       ],
       galleryImages: [
         {
           id: 'nsu-img-1',
-          src: '/images/events/murakkaz_nsu_yes_october_2026.png',
+          src: '/images/events/murakkaz_nsu_yes_october_24_26.png',
           alt: 'Murakkaz Coming to NSU — Event Poster (24-26 Oct)',
         },
         {
