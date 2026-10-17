@@ -89,7 +89,7 @@ Event Details:
       images: [
         '/images/events/murakkaz_nsu_yes_october_24_26.png',
         '/images/events/nsu_booth_proposal.png',
-        '/images/events/nsu_mou_agreement.png',
+        '/images/events/nsu_mou_agreement_full.png',
       ],
       galleryImages: [
         {
@@ -104,7 +104,7 @@ Event Details:
         },
         {
           id: 'nsu-img-3',
-          src: '/images/events/nsu_mou_agreement.png',
+          src: '/images/events/nsu_mou_agreement_full.png',
           alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
         },
       ],

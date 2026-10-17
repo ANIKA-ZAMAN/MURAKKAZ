@@ -53,6 +53,7 @@ const validTrackedImages = [
   "/images/events/murakkaz_nsu_yes_october_24_26.png",
   "/images/events/murakkaz_nsu_yes_october_2026.png",
   "/images/events/nsu_booth_proposal.png",
+  "/images/events/nsu_mou_agreement_full.png",
   "/images/events/nsu_mou_agreement.png",
   "/images/events/event_gallery_5.jpg",
   "/images/events/event_gallery_3.jpg",
@@ -211,7 +212,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     images: [
       "/images/events/murakkaz_nsu_yes_october_24_26.png",
       "/images/events/nsu_booth_proposal.png",
-      "/images/events/nsu_mou_agreement.png",
+      "/images/events/nsu_mou_agreement_full.png",
     ],
   },
   {

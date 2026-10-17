@@ -59,7 +59,7 @@ Event Details:
       },
       {
         eventId: event.id,
-        src: '/images/events/nsu_mou_agreement.png',
+        src: '/images/events/nsu_mou_agreement_full.png',
         alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
       },
     ],
