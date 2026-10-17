@@ -6,6 +6,79 @@ import Image from "next/image";
 import { upcomingEvents, fetchLiveEvents, getApiBaseUrl, UpcomingEvent } from "../data/eventsData";
 import styles from "./homepage.module.css";
 
+function HomepageEventCardImage({ event }: { event: UpcomingEvent }) {
+  const images = (event.images && event.images.length > 0
+    ? event.images
+    : (event.image ? [event.image] : [])
+  ).map((img) => (img.startsWith("/") || img.startsWith("http") ? img : `/images/events/${img}`));
+
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  if (images.length === 0) return null;
+
+  const currentImage = images[activeIdx] || images[0];
+
+  return (
+    <div className={styles.eventImageWrap}>
+      <Image
+        key={currentImage}
+        src={currentImage}
+        alt={event.title}
+        fill
+        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className={styles.eventImage}
+        loading="lazy"
+      />
+
+      {images.length > 1 && (
+        <>
+          <div className={styles.homePhotoBadge}>
+            {activeIdx + 1} / {images.length}
+          </div>
+          <button
+            type="button"
+            className={`${styles.homeArrowBtn} ${styles.homeArrowPrev}`}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setActiveIdx((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+            }}
+            aria-label="Previous photo"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            className={`${styles.homeArrowBtn} ${styles.homeArrowNext}`}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setActiveIdx((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+            }}
+            aria-label="Next photo"
+          >
+            ›
+          </button>
+
+          <div className={styles.homeDotsRow}>
+            {images.map((_, i) => (
+              <span
+                key={i}
+                className={`${styles.homeDot} ${i === activeIdx ? styles.homeDotActive : ""}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setActiveIdx(i);
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function UpcomingEventsSection() {
   const [events, setEvents] = useState<UpcomingEvent[]>(upcomingEvents.slice(0, 3));
   const [email, setEmail] = useState("");
@@ -73,16 +146,7 @@ export default function UpcomingEventsSection() {
               style={{ "--delay": `${idx * 90}ms` } as React.CSSProperties}
               suppressHydrationWarning
             >
-              <div className={styles.eventImageWrap}>
-                <Image
-                  src={event.image.startsWith("/") ? event.image : `/images/events/${event.image}`}
-                  alt={event.title}
-                  fill
-                  sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className={styles.eventImage}
-                  loading="lazy"
-                />
-              </div>
+              <HomepageEventCardImage event={event} />
               <div className={styles.eventContent}>
                 <div className={styles.eventDateRow}>
                   <svg className="w-3.5 h-3.5 text-[#B8965C]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">

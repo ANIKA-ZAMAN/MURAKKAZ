@@ -40,7 +40,32 @@ Event Details:
     },
   });
 
-  console.log('Successfully upserted NSU event:', event.id, event.title);
+  // Re-create the 3 event gallery images
+  await prisma.eventGalleryImage.deleteMany({
+    where: { eventId: event.id }
+  });
+
+  await prisma.eventGalleryImage.createMany({
+    data: [
+      {
+        eventId: event.id,
+        src: '/images/events/murakkaz_nsu_yes_october_2026.png',
+        alt: 'Murakkaz Coming to NSU — Event Poster',
+      },
+      {
+        eventId: event.id,
+        src: '/images/events/nsu_mou_agreement.png',
+        alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
+      },
+      {
+        eventId: event.id,
+        src: '/images/events/nsu_booth_proposal.png',
+        alt: 'YES! Booth Partnership Proposal',
+      },
+    ],
+  });
+
+  console.log('Successfully upserted NSU event with 3 images:', event.id, event.title);
 
   // Mark older past event as not upcoming if it exists
   await prisma.event.updateMany({

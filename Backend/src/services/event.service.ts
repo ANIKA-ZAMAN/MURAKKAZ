@@ -25,6 +25,7 @@ export const getEvents = async (params: { upcoming?: boolean; page?: number; lim
           skip,
           take: limit,
           include: {
+            galleryImages: true,
             _count: { select: { reminders: true } }
           }
         }),

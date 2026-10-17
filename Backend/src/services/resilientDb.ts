@@ -86,6 +86,28 @@ Event Details:
 • Inquiries & Hotline: 01997-807701
 • Official Website: www.murakkaz.com`,
       image: '/images/events/murakkaz_nsu_yes_october_2026.png',
+      images: [
+        '/images/events/murakkaz_nsu_yes_october_2026.png',
+        '/images/events/nsu_mou_agreement.png',
+        '/images/events/nsu_booth_proposal.png',
+      ],
+      galleryImages: [
+        {
+          id: 'nsu-img-1',
+          src: '/images/events/murakkaz_nsu_yes_october_2026.png',
+          alt: 'Murakkaz Coming to NSU — Event Poster',
+        },
+        {
+          id: 'nsu-img-2',
+          src: '/images/events/nsu_mou_agreement.png',
+          alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
+        },
+        {
+          id: 'nsu-img-3',
+          src: '/images/events/nsu_booth_proposal.png',
+          alt: 'YES! Booth Partnership Proposal',
+        },
+      ],
       day: '23',
       month: 'OCT',
       time: '9:00 AM - 6:00 PM',

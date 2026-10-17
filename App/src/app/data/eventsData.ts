@@ -9,6 +9,7 @@ export interface UpcomingEvent {
   time: string;
   description: string;
   image: string;
+  images?: string[];
 }
 
 export interface PreviousEvent {
@@ -50,6 +51,8 @@ export const getApiBaseUrl = (): string => {
 
 const validTrackedImages = [
   "/images/events/murakkaz_nsu_yes_october_2026.png",
+  "/images/events/nsu_mou_agreement.png",
+  "/images/events/nsu_booth_proposal.png",
   "/images/events/event_gallery_5.jpg",
   "/images/events/event_gallery_3.jpg",
   "/images/events/event_gallery_6.jpg",
@@ -72,6 +75,41 @@ function getValidEventImage(rawImage: string | undefined, idx: number): string {
     return `/images/events/${rawImage}`;
   }
   return validTrackedImages[idx % validTrackedImages.length];
+}
+
+export interface EventImageMeta {
+  title: string;
+  subtitle?: string;
+  shortLabel: string;
+}
+
+export function getEventImageMeta(src: string, defaultTitle?: string): EventImageMeta {
+  if (src.includes("mou_agreement") || src.includes("mou")) {
+    return {
+      title: "Memorandum of Understanding (MoU)",
+      subtitle: "Official Signed Partnership Agreement with NSU YES! Club",
+      shortLabel: "MoU Agreement",
+    };
+  }
+  if (src.includes("booth_proposal") || src.includes("proposal")) {
+    return {
+      title: "Booth Partnership Proposal",
+      subtitle: "Young Entrepreneurs Society (YES!) Official Proposal",
+      shortLabel: "Booth Proposal",
+    };
+  }
+  if (src.includes("nsu") || src.includes("poster") || src.includes("october_2026")) {
+    return {
+      title: defaultTitle || "Murakkaz Coming to NSU — Exhibition Poster",
+      subtitle: "North South University (NSU) • Oct 23 – 25, 2026",
+      shortLabel: "Event Poster",
+    };
+  }
+  return {
+    title: defaultTitle || "Event Showcase",
+    subtitle: undefined,
+    shortLabel: "Photo",
+  };
 }
 
 export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: UpcomingEvent[]; previous: PreviousEvent[] }> => {
@@ -106,6 +144,15 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
           const dayNum = evt.day || String(evtDate.getDate()).padStart(2, "0");
           const validatedImg = getValidEventImage(evt.image, idx);
 
+          const rawImagesList: string[] = Array.isArray(evt.galleryImages) && evt.galleryImages.length > 0
+            ? evt.galleryImages.map((g: any) => (typeof g === "string" ? g : g.src))
+            : (Array.isArray(evt.images) && evt.images.length > 0 ? evt.images : [validatedImg]);
+
+          const validatedImages = rawImagesList.map((img: string, i: number) => getValidEventImage(img, i));
+          if (!validatedImages.includes(validatedImg)) {
+            validatedImages.unshift(validatedImg);
+          }
+
           if (evt.isUpcoming ?? true) {
             fetchedUpcoming.push({
               id: evt.id,
@@ -117,7 +164,8 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
               time: evt.time || "4:00 PM - 7:00 PM",
               location: evt.location || "Dhaka",
               daysLeft: daysLeftStr,
-              image: validatedImg,
+              image: validatedImages[0] || validatedImg,
+              images: validatedImages,
             });
           } else {
             fetchedPrevious.push({
@@ -159,6 +207,11 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "9:00 AM - 6:00 PM",
     description: "Murakkaz is coming to North South University (NSU)!\n\nOrganized in collaboration with the Young Entrepreneurs Society (YES! Club), we warmly invite all students, faculty members, and perfume enthusiasts across Dhaka to experience our signature collection of extra pure, long-lasting luxury perfumes.\n\nExplore crowd-favourite masterpieces inspired by world-renowned perfume houses—including Poison Girl, Montale (Arabians Tonka & Roses Musk), YSL Libre & MYSLF, Tom Ford Vanille Fatale, Miss Dior, 212 VIP Men, Kilian, KAYALI, and Burberry Her. Handcrafted with premium, high-concentration fragrance oils to ensure rich projection and all-day longevity.\n\nEnjoy complimentary fragrance testing, personalized scent consultations, and exclusive campus student discounts!\n\nEvent Details:\n• Dates: October 23rd – 25th, 2026\n• Timing: 9:00 AM – 6:00 PM Daily\n• Venue: North South University (NSU), Plot # 15, Block # B, Bashundhara R/A, Dhaka\n• Host / Partner: Young Entrepreneurs Society (YES! Club)\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
     image: "/images/events/murakkaz_nsu_yes_october_2026.png",
+    images: [
+      "/images/events/murakkaz_nsu_yes_october_2026.png",
+      "/images/events/nsu_mou_agreement.png",
+      "/images/events/nsu_booth_proposal.png",
+    ],
   },
   {
     id: "upcoming-slot-2",
@@ -171,6 +224,7 @@ export const upcomingEvents: UpcomingEvent[] = [
     time: "Time TBA",
     description: "Space reserved for our next campus showcase & winter exhibition. New dates, locations, and fragrance highlights will be announced here soon.",
     image: "/images/events/event_gallery_4.jpg",
+    images: ["/images/events/event_gallery_4.jpg"],
   },
 ];
 export const previousEvents: PreviousEvent[] = [

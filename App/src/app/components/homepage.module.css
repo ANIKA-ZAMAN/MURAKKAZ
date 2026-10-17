@@ -848,6 +848,92 @@
   transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.homePhotoBadge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: rgba(18, 16, 14, 0.8);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(197, 168, 128, 0.4);
+  color: #FAF6F0;
+  font-family: var(--font-serif-text), Georgia, serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 0.15rem 0.55rem;
+  border-radius: 12px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.homeArrowBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(18, 16, 14, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #FAF6F0;
+  font-size: 1.15rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 4;
+  opacity: 0;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.eventImageWrap:hover .homeArrowBtn {
+  opacity: 1;
+}
+
+.homeArrowBtn:hover {
+  background: #820011;
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.homeArrowPrev {
+  left: 0.5rem;
+}
+
+.homeArrowNext {
+  right: 0.5rem;
+}
+
+.homeDotsRow {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  z-index: 3;
+}
+
+.homeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.homeDotActive {
+  width: 16px;
+  border-radius: 4px;
+  background: #C5A880;
+}
+
 .eventCard:hover .eventImage {
   transform: scale(1.03);
 }
