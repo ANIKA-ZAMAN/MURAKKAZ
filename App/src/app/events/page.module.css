@@ -2765,7 +2765,7 @@
   max-height: calc(94vh - 130px);
   max-width: 86vw;
   padding: 1.5rem 1rem 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .photoModalNavArrow {
@@ -2812,7 +2812,7 @@
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 3px;
   display: block;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
