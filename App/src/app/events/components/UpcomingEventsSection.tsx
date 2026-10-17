@@ -45,11 +45,13 @@ function EventCardImageVisual({
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     setActiveIdx((prev) => (prev < images.length - 1 ? prev + 1 : 0));
   };
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     setActiveIdx((prev) => (prev > 0 ? prev - 1 : images.length - 1));
   };
 
@@ -116,18 +118,19 @@ function EventCardImageVisual({
         {/* Counter Badge if multiple images */}
         {images.length > 1 && (
           <div className={styles.cardPhotoCounterBadge}>
-            {activeIdx + 1} / {images.length}
+            Photo {activeIdx + 1} of {images.length}
           </div>
         )}
 
-        {/* Previous / Next Arrows on Card */}
+        {/* Previous / Next Slide Buttons on Card */}
         {images.length > 1 && (
           <>
             <button
               type="button"
               className={`${styles.cardArrowBtn} ${styles.cardArrowPrev}`}
               onClick={handlePrev}
-              aria-label="Previous image"
+              aria-label="Previous slide"
+              title="Slide to previous photo"
             >
               ‹
             </button>
@@ -135,7 +138,8 @@ function EventCardImageVisual({
               type="button"
               className={`${styles.cardArrowBtn} ${styles.cardArrowNext}`}
               onClick={handleNext}
-              aria-label="Next image"
+              aria-label="Next slide"
+              title="Slide to next photo"
             >
               ›
             </button>
@@ -163,6 +167,50 @@ function EventCardImageVisual({
         </div>
       </div>
 
+      {/* Slide Navigation Controls */}
+      {images.length > 1 && (
+        <div className={styles.cardSlideControlBar}>
+          <button
+            type="button"
+            className={styles.cardSlideNavBtn}
+            onClick={handlePrev}
+            aria-label="Previous slide"
+            title="Previous photo"
+          >
+            ‹ Prev
+          </button>
+
+          <div className={styles.cardSlideDots}>
+            {images.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                className={`${styles.cardSlideDot} ${i === activeIdx ? styles.cardSlideDotActive : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setActiveIdx(i);
+                }}
+                aria-label={`Slide to photo ${i + 1}`}
+                title={`Slide to Photo ${i + 1}: ${getEventImageMeta(images[i]).shortLabel}`}
+              >
+                {i + 1}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            className={styles.cardSlideNavBtn}
+            onClick={handleNext}
+            aria-label="Next slide"
+            title="Next photo"
+          >
+            Next ›
+          </button>
+        </div>
+      )}
+
       {/* Mini 3-Thumbnail Preview Selector Strip */}
       {images.length > 1 && (
         <div className={styles.cardThumbnailRow}>
@@ -175,10 +223,11 @@ function EventCardImageVisual({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
+                  e.preventDefault();
                   setActiveIdx(i);
                 }}
                 className={`${styles.cardThumbItem} ${isActive ? styles.cardThumbActive : ""}`}
-                title={meta.shortLabel}
+                title={`Click to view: ${meta.shortLabel}`}
                 aria-label={`View ${meta.shortLabel}`}
               >
                 <Image

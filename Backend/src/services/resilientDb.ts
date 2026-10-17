@@ -79,7 +79,7 @@ Explore crowd-favourite masterpieces inspired by world-renowned perfume houses�
 Enjoy complimentary fragrance testing, personalized scent consultations, and exclusive campus student discounts!
 
 Event Details:
-• Dates: October 23rd – 25th, 2026
+• Dates: October 24th – 26th, 2026
 • Timing: 9:00 AM – 6:00 PM Daily
 • Venue: North South University (NSU), Plot # 15, Block # B, Bashundhara R/A, Dhaka
 • Host / Partner: Young Entrepreneurs Society (YES! Club)
@@ -88,32 +88,32 @@ Event Details:
       image: '/images/events/murakkaz_nsu_yes_october_2026.png',
       images: [
         '/images/events/murakkaz_nsu_yes_october_2026.png',
-        '/images/events/nsu_mou_agreement.png',
         '/images/events/nsu_booth_proposal.png',
+        '/images/events/nsu_mou_agreement.png',
       ],
       galleryImages: [
         {
           id: 'nsu-img-1',
           src: '/images/events/murakkaz_nsu_yes_october_2026.png',
-          alt: 'Murakkaz Coming to NSU — Event Poster',
+          alt: 'Murakkaz Coming to NSU — Event Poster (24-26 Oct)',
         },
         {
           id: 'nsu-img-2',
-          src: '/images/events/nsu_mou_agreement.png',
-          alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
-        },
-        {
-          id: 'nsu-img-3',
           src: '/images/events/nsu_booth_proposal.png',
           alt: 'YES! Booth Partnership Proposal',
         },
+        {
+          id: 'nsu-img-3',
+          src: '/images/events/nsu_mou_agreement.png',
+          alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
+        },
       ],
-      day: '23',
+      day: '24',
       month: 'OCT',
       time: '9:00 AM - 6:00 PM',
       location: 'North South University (NSU), Bashundhara R/A, Dhaka',
-      daysLeft: 7,
-      eventDate: new Date('2026-10-23T09:00:00.000Z'),
+      daysLeft: 6,
+      eventDate: new Date('2026-10-24T09:00:00.000Z'),
       category: 'Campus Exhibition',
       isUpcoming: true,
       remindersCount: 0,

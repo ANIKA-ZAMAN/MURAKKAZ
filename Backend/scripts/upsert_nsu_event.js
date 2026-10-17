@@ -14,19 +14,19 @@ Discover signature inspired masterpieces including Poison Girl, Montale (Arabian
 Enjoy complimentary fragrance testing, personal scent consultations, and exclusive campus student discounts!
 
 Event Details:
-• Dates: October 23rd – 25th, 2026
+• Dates: October 24th – 26th, 2026
 • Timing: 9:00 AM – 6:00 PM Daily
 • Venue: North South University (NSU), Plot # 15, Block # B, Bashundhara R/A, Dhaka
 • Partner: Young Entrepreneurs Society (YES! Club)
 • Inquiries & Hotline: 01997-807701
 • Official Website: www.murakkaz.com`,
     image: '/images/events/murakkaz_nsu_yes_october_2026.png',
-    day: '23',
+    day: '24',
     month: 'OCT',
     time: '9:00 AM - 6:00 PM',
     location: 'North South University (NSU), Bashundhara R/A, Dhaka',
-    daysLeft: 7,
-    eventDate: new Date('2026-10-23T09:00:00.000Z'),
+    daysLeft: 6,
+    eventDate: new Date('2026-10-24T09:00:00.000Z'),
     category: 'Campus Exhibition',
     isUpcoming: true,
   };
@@ -50,17 +50,17 @@ Event Details:
       {
         eventId: event.id,
         src: '/images/events/murakkaz_nsu_yes_october_2026.png',
-        alt: 'Murakkaz Coming to NSU — Event Poster',
-      },
-      {
-        eventId: event.id,
-        src: '/images/events/nsu_mou_agreement.png',
-        alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
+        alt: 'Murakkaz Coming to NSU — Event Poster (24-26 Oct)',
       },
       {
         eventId: event.id,
         src: '/images/events/nsu_booth_proposal.png',
         alt: 'YES! Booth Partnership Proposal',
+      },
+      {
+        eventId: event.id,
+        src: '/images/events/nsu_mou_agreement.png',
+        alt: 'Memorandum of Understanding (MoU) — Signed Partnership Agreement',
       },
     ],
   });
