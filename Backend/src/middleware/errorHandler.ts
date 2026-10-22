@@ -26,7 +26,7 @@ export const globalErrorHandler = (
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  if (err instanceof AppError) {
+  if (err instanceof AppError || err?.isOperational || (err?.statusCode && err?.message && err.statusCode < 500)) {
     return res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
