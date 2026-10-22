@@ -38,7 +38,9 @@ function attachCategory(p: any) {
     'gucci-bloom',
     'explorer-platinum',
     'irish-leather',
-    'irish leather'
+    'irish leather',
+    'sauvage',
+    'sauvage-eau-de-parfum'
   ];
   const pName = (p.name || '').toLowerCase();
   const pSlug = (p.slug || '').toLowerCase();

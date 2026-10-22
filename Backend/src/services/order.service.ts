@@ -9,7 +9,9 @@ const OOS_KEYWORDS = [
   'gucci-bloom',
   'explorer-platinum',
   'irish-leather',
-  'irish leather'
+  'irish leather',
+  'sauvage',
+  'sauvage-eau-de-parfum'
 ];
 
 export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inStock?: boolean, isOutOfStock?: boolean) {

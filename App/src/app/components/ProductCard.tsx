@@ -78,16 +78,22 @@ export default function ProductCard({
       "gucci-bloom",
       "explorer-platinum",
       "irish-leather",
-      "irish leather"
+      "irish leather",
+      "sauvage",
+      "sauvage-eau-de-parfum"
     ];
     if (
       oosKeywords.some((kw) => s.includes(kw) || n.includes(kw) || i.includes(kw)) ||
       (n.includes("gucci") && n.includes("bloom")) ||
       (n.includes("explorer") && n.includes("platinum")) ||
       (n.includes("irish") && n.includes("leather")) ||
+      n.includes("sauvage") ||
+      s.includes("sauvage") ||
       i === "cmu4latr100f3jjfszm4sh1yf" ||
       i === "prod-irish-leather-01" ||
-      i === "cms8s3teb0013v9f0kx34wh10"
+      i === "cms8s3teb0013v9f0kx34wh10" ||
+      i === "cms8s3tp600div9f05fmzy4m6" ||
+      i === "prod-normal-13"
     ) {
       return true;
     }

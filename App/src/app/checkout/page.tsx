@@ -29,16 +29,22 @@ const isItemOutOfStock = (item: any) => {
     "gucci-bloom",
     "explorer-platinum",
     "irish-leather",
-    "irish leather"
+    "irish leather",
+    "sauvage",
+    "sauvage-eau-de-parfum"
   ];
   return (
     oosKeywords.some((kw) => n.includes(kw) || s.includes(kw) || id.includes(kw)) ||
     (n.includes("gucci") && n.includes("bloom")) ||
     (n.includes("explorer") && n.includes("platinum")) ||
     (n.includes("irish") && n.includes("leather")) ||
+    n.includes("sauvage") ||
+    s.includes("sauvage") ||
     id === "cmu4latr100f3jjfszm4sh1yf" ||
     id === "prod-irish-leather-01" ||
-    id === "cms8s3teb0013v9f0kx34wh10"
+    id === "cms8s3teb0013v9f0kx34wh10" ||
+    id === "cms8s3tp600div9f05fmzy4m6" ||
+    id === "prod-normal-13"
   );
 };
 

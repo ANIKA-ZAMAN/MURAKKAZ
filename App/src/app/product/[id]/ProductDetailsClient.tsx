@@ -480,16 +480,21 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       "gucci-bloom",
       "explorer-platinum",
       "irish-leather",
-      "irish leather"
+      "irish leather",
+      "sauvage",
+      "sauvage-eau-de-parfum"
     ];
 
     if (
       oosKeywords.some(kw => cleanId.includes(kw)) ||
+      cleanId.includes("sauvage") ||
       cleanId === "prod-normal-48" ||
       cleanId === "prod-normal-49" ||
       cleanId === "cmu4latr100f3jjfszm4sh1yf" ||
       cleanId === "prod-irish-leather-01" ||
       cleanId === "cms8s3teb0013v9f0kx34wh10" ||
+      cleanId === "cms8s3tp600div9f05fmzy4m6" ||
+      cleanId === "prod-normal-13" ||
       (cleanId.includes("irish") && cleanId.includes("leather"))
     ) {
       return true;
