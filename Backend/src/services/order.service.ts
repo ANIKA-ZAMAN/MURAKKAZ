@@ -12,7 +12,9 @@ const OOS_KEYWORDS = [
   'irish leather',
   'sauvage',
   'sauvage-eau-de-parfum',
-  'explorer'
+  'explorer',
+  'terre',
+  'terre-d-herm-s-parfum'
 ];
 
 export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inStock?: boolean, isOutOfStock?: boolean) {
@@ -32,6 +34,10 @@ export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inS
     i === 'cms8s3teb0013v9f0kx34wh10' ||
     i === 'cmuaxl5lv0f2yjjhkqv4lh4pl' ||
     i === 'cms8s3u7300vfv9f0ug28i6zc' ||
+    i === 'cms8s3u3z00snv9f0ny38tprj' ||
+    i === 'prod-normal-43' ||
+    n.includes('terre') ||
+    s.includes('terre') ||
     i === 'prod-normal-49' ||
     n.includes('explorer') ||
     s.includes('explorer')

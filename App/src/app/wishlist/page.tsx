@@ -160,7 +160,7 @@ export default function WishlistPage() {
   const handleAddToBag = (item: WishlistProduct) => {
     try {
       const isOos = [
-        "hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather", "sauvage", "explorer"
+        "hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather", "sauvage", "explorer", "terre"
       ].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug)));
       if (isOos) {
         alert(`${item.name} is currently out of stock and cannot be ordered.`);
@@ -367,7 +367,7 @@ export default function WishlistPage() {
                     </div>
                   </div>
                   <div className={styles.actionButtons}>
-                    {["hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather", "sauvage", "explorer"].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug))) ? (
+                    {["hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather", "sauvage", "explorer", "terre"].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug))) ? (
                       <button
                         type="button"
                         disabled
@@ -501,7 +501,7 @@ export default function WishlistPage() {
                           </div>
                         </div>
                         <div className={styles.actionButtons}>
-                          {["hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather", "sauvage", "explorer"].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug))) ? (
+                          {["hacivat", "gucci-bloom", "explorer-platinum", "irish-leather", "irish leather", "sauvage", "explorer", "terre"].some(slug => (item.id && item.id.toLowerCase().includes(slug)) || (item.name && item.name.toLowerCase().includes(slug))) ? (
                             <button
                               type="button"
                               disabled

@@ -483,7 +483,9 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       "irish leather",
       "sauvage",
       "sauvage-eau-de-parfum",
-      "explorer"
+      "explorer",
+      "terre",
+      "terre-d-herm-s-parfum"
     ];
 
     if (
@@ -516,7 +518,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       if (
         oosKeywords.some(kw => lpName.includes(kw) || lpSlug.includes(kw)) ||
         (lpName.includes("gucci") && lpName.includes("bloom")) ||
-        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
+        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (liveProduct as any).id === "cms8s3u3z00snv9f0ny38tprj" || lpName.includes("terre") || lpSlug.includes("terre") ||
         (lpName.includes("irish") && lpName.includes("leather"))
       ) {
         return true;
@@ -535,7 +537,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       if (
         oosKeywords.some(kw => catName.includes(kw) || catSlug.includes(kw)) ||
         (catName.includes("gucci") && catName.includes("bloom")) ||
-        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
+        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (catalogItem as any).id === "cms8s3u3z00snv9f0ny38tprj" || (catalogItem as any).id === "prod-normal-43" || catName.includes("terre") || catSlug.includes("terre") ||
         (catName.includes("irish") && catName.includes("leather"))
       ) {
         return true;

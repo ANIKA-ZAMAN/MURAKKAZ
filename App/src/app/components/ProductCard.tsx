@@ -81,7 +81,9 @@ export default function ProductCard({
       "irish leather",
       "sauvage",
       "sauvage-eau-de-parfum",
-      "explorer"
+      "explorer",
+      "terre",
+      "terre-d-herm-s-parfum"
     ];
     if (
       oosKeywords.some((kw) => s.includes(kw) || n.includes(kw) || i.includes(kw)) ||
@@ -98,6 +100,10 @@ export default function ProductCard({
       i === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
       i === "cms8s3u7300vfv9f0ug28i6zc" ||
       i === "prod-normal-49" ||
+      i === "cms8s3u3z00snv9f0ny38tprj" ||
+      i === "prod-normal-43" ||
+      n.includes("terre") ||
+      s.includes("terre") ||
       n.includes("explorer") ||
       s.includes("explorer")
     ) {

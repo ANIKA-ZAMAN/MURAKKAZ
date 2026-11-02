@@ -41,7 +41,9 @@ function attachCategory(p: any) {
     'irish leather',
     'sauvage',
     'sauvage-eau-de-parfum',
-    'explorer'
+    'explorer',
+    'terre',
+    'terre-d-herm-s-parfum'
   ];
   const pName = (p.name || '').toLowerCase();
   const pSlug = (p.slug || '').toLowerCase();
@@ -58,6 +60,10 @@ function attachCategory(p: any) {
     pId === 'cms8s3teb0013v9f0kx34wh10' ||
     pId === 'cmuaxl5lv0f2yjjhkqv4lh4pl' ||
     pId === 'cms8s3u7300vfv9f0ug28i6zc' ||
+    pId === 'cms8s3u3z00snv9f0ny38tprj' ||
+    pId === 'prod-normal-43' ||
+    pSlug.includes('terre') ||
+    pName.includes('terre') ||
     pSlug.includes('explorer') ||
     pName.includes('explorer');
 

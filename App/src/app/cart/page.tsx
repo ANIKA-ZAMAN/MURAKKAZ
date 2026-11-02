@@ -65,7 +65,9 @@ const isCartItemOutOfStock = (item: CartItem | any) => {
     "irish leather",
     "sauvage",
     "sauvage-eau-de-parfum",
-    "explorer"
+    "explorer",
+    "terre",
+    "terre-d-herm-s-parfum"
   ];
   return (
     oosKeywords.some((kw) => n.includes(kw) || s.includes(kw) || id.includes(kw)) ||
@@ -82,6 +84,10 @@ const isCartItemOutOfStock = (item: CartItem | any) => {
     id === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
     id === "cms8s3u7300vfv9f0ug28i6zc" ||
     id === "prod-normal-49" ||
+    id === "cms8s3u3z00snv9f0ny38tprj" ||
+    id === "prod-normal-43" ||
+    n.includes("terre") ||
+    s.includes("terre") ||
     n.includes("explorer") ||
     s.includes("explorer")
   );
