@@ -37,9 +37,6 @@ function attachCategory(p: any) {
     'hacivat',
     'gucci-bloom',
     'explorer-platinum',
-    'irish-leather',
-    'irish leather',
-    'sauvage',
     'sauvage-eau-de-parfum',
     'explorer',
     'terre',
@@ -52,12 +49,9 @@ function attachCategory(p: any) {
   const isTargetOOS = oosKeywords.some(kw => pSlug.includes(kw) || pName.includes(kw) || pId.includes(kw)) ||
     (pName.includes('gucci') && pName.includes('bloom')) ||
     (pName.includes('explorer') && pName.includes('platinum')) ||
-    (pName.includes('irish') && pName.includes('leather')) ||
     pId === 'prod-normal-48' ||
     pId === 'prod-normal-49' ||
     pId === 'cmu4latr100f3jjfszm4sh1yf' ||
-    pId === 'prod-irish-leather-01' ||
-    pId === 'cms8s3teb0013v9f0kx34wh10' ||
     pId === 'cmuaxl5lv0f2yjjhkqv4lh4pl' ||
     pId === 'cms8s3u7300vfv9f0ug28i6zc' ||
     pId === 'cms8s3u3z00snv9f0ny38tprj' ||

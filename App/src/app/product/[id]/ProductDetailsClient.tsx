@@ -479,9 +479,6 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       "hacivat",
       "gucci-bloom",
       "explorer-platinum",
-      "irish-leather",
-      "irish leather",
-      "sauvage",
       "sauvage-eau-de-parfum",
       "explorer",
       "terre",
@@ -490,19 +487,15 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
 
     if (
       oosKeywords.some(kw => cleanId.includes(kw)) ||
-      cleanId.includes("sauvage") ||
       cleanId === "prod-normal-48" ||
       cleanId === "prod-normal-49" ||
       cleanId === "cmu4latr100f3jjfszm4sh1yf" ||
-      cleanId === "prod-irish-leather-01" ||
-      cleanId === "cms8s3teb0013v9f0kx34wh10" ||
       cleanId === "cms8s3tp600div9f05fmzy4m6" ||
       cleanId === "prod-normal-13" ||
       cleanId === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
       cleanId === "cms8s3u7300vfv9f0ug28i6zc" ||
       cleanId.includes("explorer") ||
-      (cleanId.includes("irish") && cleanId.includes("leather"))
-    ) {
+      false) {
       return true;
     }
 
@@ -515,11 +508,13 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       }
       const lpName = (liveProduct.name || "").toLowerCase();
       const lpSlug = (liveProduct.slug || "").toLowerCase();
+      const lpId = (liveProduct.id || "").toLowerCase();
+      if (lpSlug.includes("sauvage-elixir") || lpName.includes("sauvage elixir") || lpId === "cmu4kz6v5009vjjfsmf5izsut") return false;
+      if (lpSlug.includes("irish-leather")  || lpId === "cms8s3teb0013v9f0kx34wh10") return false;
       if (
         oosKeywords.some(kw => lpName.includes(kw) || lpSlug.includes(kw)) ||
         (lpName.includes("gucci") && lpName.includes("bloom")) ||
-        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (liveProduct as any).id === "cms8s3u3z00snv9f0ny38tprj" || lpName.includes("terre") || lpSlug.includes("terre") ||
-        (lpName.includes("irish") && lpName.includes("leather"))
+        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (liveProduct as any).id === "cms8s3u3z00snv9f0ny38tprj" || lpName.includes("terre") || lpSlug.includes("terre") 
       ) {
         return true;
       }
@@ -534,11 +529,13 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       }
       const catName = (catalogItem.name || "").toLowerCase();
       const catSlug = (catalogItem.slug || "").toLowerCase();
+      const catId = (catalogItem.id || "").toLowerCase();
+      if (catSlug.includes("sauvage-elixir") || catName.includes("sauvage elixir") || catId === "cmu4kz6v5009vjjfsmf5izsut") return false;
+      if (catSlug.includes("irish-leather")  || catId === "cms8s3teb0013v9f0kx34wh10") return false;
       if (
         oosKeywords.some(kw => catName.includes(kw) || catSlug.includes(kw)) ||
         (catName.includes("gucci") && catName.includes("bloom")) ||
-        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (catalogItem as any).id === "cms8s3u3z00snv9f0ny38tprj" || (catalogItem as any).id === "prod-normal-43" || catName.includes("terre") || catSlug.includes("terre") ||
-        (catName.includes("irish") && catName.includes("leather"))
+        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (catalogItem as any).id === "cms8s3u3z00snv9f0ny38tprj" || (catalogItem as any).id === "prod-normal-43" || catName.includes("terre") || catSlug.includes("terre") 
       ) {
         return true;
       }

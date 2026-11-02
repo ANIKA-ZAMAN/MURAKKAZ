@@ -8,9 +8,6 @@ const OOS_KEYWORDS = [
   'hacivat',
   'gucci-bloom',
   'explorer-platinum',
-  'irish-leather',
-  'irish leather',
-  'sauvage',
   'sauvage-eau-de-parfum',
   'explorer',
   'terre',
@@ -26,12 +23,9 @@ export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inS
     OOS_KEYWORDS.some(kw => n.includes(kw) || s.includes(kw) || i.includes(kw)) ||
     (n.includes('gucci') && n.includes('bloom')) ||
     (n.includes('explorer') && n.includes('platinum')) ||
-    (n.includes('irish') && n.includes('leather')) ||
     i === 'prod-normal-48' ||
     i === 'prod-normal-49' ||
     i === 'cmu4latr100f3jjfszm4sh1yf' ||
-    i === 'prod-irish-leather-01' ||
-    i === 'cms8s3teb0013v9f0kx34wh10' ||
     i === 'cmuaxl5lv0f2yjjhkqv4lh4pl' ||
     i === 'cms8s3u7300vfv9f0ug28i6zc' ||
     i === 'cms8s3u3z00snv9f0ny38tprj' ||
