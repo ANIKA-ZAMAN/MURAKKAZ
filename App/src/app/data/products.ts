@@ -7812,7 +7812,8 @@ export function getProductsApiBaseUrl(): string {
 
 let cachedProducts: Product[] | null = null;
 let lastFetchTime = 0;
-const CACHE_TTL_MS = 180_000; // 3-minute cache for instant snappy navigation while staying fresh
+const CACHE_KEY = "murakkaz_products_cache_v7";
+const CACHE_TTL_MS = 30_000; // 30-second cache for instant snappy navigation while staying fresh
 let activeFetchPromise: Promise<Product[]> | null = null;
 
 export function getCachedProducts(): Product[] | null {
@@ -7821,11 +7822,25 @@ export function getCachedProducts(): Product[] | null {
   }
   if (typeof window !== "undefined") {
     try {
-      const raw = sessionStorage.getItem("murakkaz_products_cache");
+      ["murakkaz_products_cache", "murakkaz_products_cache_v2", "murakkaz_products_cache_v5"].forEach(k => {
+        try { sessionStorage.removeItem(k); } catch {}
+      });
+      const raw = sessionStorage.getItem(CACHE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed.items) && parsed.items.length > 0 && (Date.now() - parsed.timestamp < CACHE_TTL_MS)) {
-          cachedProducts = parsed.items;
+          cachedProducts = parsed.items.map((p: any) => {
+            const pSlug = (p.slug || '').toLowerCase();
+            const pName = (p.name || '').toLowerCase();
+            const pId = (p.id || '').toLowerCase();
+            if (
+              pSlug.includes('sauvage-elixir') || pName.includes('sauvage elixir') || pId === 'cmu4kz6v5009vjjfsmf5izsut' ||
+              pSlug.includes('irish-leather') || pName.includes('irish leather') || pId === 'prod-irish-leather-01' || pId === 'cms8s3teb0013v9f0kx34wh10'
+            ) {
+              return { ...p, inStock: true, isOutOfStock: false };
+            }
+            return p;
+          });
           lastFetchTime = parsed.timestamp;
           return cachedProducts;
         }
@@ -7986,7 +8001,7 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
         lastFetchTime = Date.now();
         if (typeof window !== "undefined") {
           try {
-            sessionStorage.setItem("murakkaz_products_cache", JSON.stringify({
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify({
               items: cachedProducts,
               timestamp: lastFetchTime
             }));
