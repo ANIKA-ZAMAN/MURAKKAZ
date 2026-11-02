@@ -475,6 +475,16 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
 
   const isOutOfStock = React.useMemo(() => {
     const cleanId = id ? id.toLowerCase().trim() : "";
+
+    if (
+      cleanId.includes("sauvage-elixir") ||
+      cleanId === "cmu4kz6v5009vjjfsmf5izsut" ||
+      cleanId.includes("irish-leather") ||
+      cleanId === "prod-irish-leather-01" ||
+      cleanId === "cms8s3teb0013v9f0kx34wh10"
+    ) {
+      return false;
+    }
     const oosKeywords = [
       "hacivat",
       "gucci-bloom",
@@ -500,17 +510,18 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
     }
 
     if (liveProduct) {
+      const lpName = (liveProduct.name || "").toLowerCase();
+      const lpSlug = (liveProduct.slug || "").toLowerCase();
+      const lpId = (liveProduct.id || "").toLowerCase();
+      if (lpSlug.includes("sauvage-elixir") || lpName.includes("sauvage elixir") || lpId === "cmu4kz6v5009vjjfsmf5izsut") return false;
+      if (lpSlug.includes("irish-leather")  || lpId === "cms8s3teb0013v9f0kx34wh10") return false;
+
       if (liveProduct.isOutOfStock === true || liveProduct.inStock === false) return true;
       if (liveProduct.sizes && Array.isArray(liveProduct.sizes) && liveProduct.sizes.length > 0) {
         if (liveProduct.sizes.every((s: any) => Number(s.stock ?? s.quantity ?? 0) <= 0)) {
           return true;
         }
       }
-      const lpName = (liveProduct.name || "").toLowerCase();
-      const lpSlug = (liveProduct.slug || "").toLowerCase();
-      const lpId = (liveProduct.id || "").toLowerCase();
-      if (lpSlug.includes("sauvage-elixir") || lpName.includes("sauvage elixir") || lpId === "cmu4kz6v5009vjjfsmf5izsut") return false;
-      if (lpSlug.includes("irish-leather")  || lpId === "cms8s3teb0013v9f0kx34wh10") return false;
       if (
         oosKeywords.some(kw => lpName.includes(kw) || lpSlug.includes(kw)) ||
         (lpName.includes("gucci") && lpName.includes("bloom")) ||
@@ -521,17 +532,18 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
     }
 
     if (catalogItem) {
+      const catName = (catalogItem.name || "").toLowerCase();
+      const catSlug = (catalogItem.slug || "").toLowerCase();
+      const catId = (catalogItem.id || "").toLowerCase();
+      if (catSlug.includes("sauvage-elixir") || catName.includes("sauvage elixir") || catId === "cmu4kz6v5009vjjfsmf5izsut") return false;
+      if (catSlug.includes("irish-leather")  || catId === "cms8s3teb0013v9f0kx34wh10") return false;
+
       if ((catalogItem as any).isOutOfStock === true || (catalogItem as any).inStock === false) return true;
       if (catalogItem.sizes && Array.isArray(catalogItem.sizes) && catalogItem.sizes.length > 0) {
         if (catalogItem.sizes.every((s: any) => Number(s.stock ?? 0) <= 0)) {
           return true;
         }
       }
-      const catName = (catalogItem.name || "").toLowerCase();
-      const catSlug = (catalogItem.slug || "").toLowerCase();
-      const catId = (catalogItem.id || "").toLowerCase();
-      if (catSlug.includes("sauvage-elixir") || catName.includes("sauvage elixir") || catId === "cmu4kz6v5009vjjfsmf5izsut") return false;
-      if (catSlug.includes("irish-leather")  || catId === "cms8s3teb0013v9f0kx34wh10") return false;
       if (
         oosKeywords.some(kw => catName.includes(kw) || catSlug.includes(kw)) ||
         (catName.includes("gucci") && catName.includes("bloom")) ||

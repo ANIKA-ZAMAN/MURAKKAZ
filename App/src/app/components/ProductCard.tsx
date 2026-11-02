@@ -69,10 +69,24 @@ export default function ProductCard({
   }, [slug, name, id]);
 
   const isOutOfStock = useMemo(() => {
-    if (propIsOutOfStock === true || propInStock === false) return true;
     const s = (slug || targetSlug || "").toLowerCase();
     const n = (name || "").toLowerCase();
     const i = (id || "").toLowerCase();
+
+    // Sauvage Elixir and Irish Leather are explicitly in stock
+    if (
+      s.includes("sauvage-elixir") ||
+      n.includes("sauvage elixir") ||
+      i === "cmu4kz6v5009vjjfsmf5izsut" ||
+      s.includes("irish-leather") ||
+      n.includes("irish leather") ||
+      i === "prod-irish-leather-01" ||
+      i === "cms8s3teb0013v9f0kx34wh10"
+    ) {
+      return false;
+    }
+
+    if (propIsOutOfStock === true || propInStock === false) return true;
     const oosKeywords = [
       "hacivat",
       "gucci-bloom",

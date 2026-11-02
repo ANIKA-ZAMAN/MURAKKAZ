@@ -46,6 +46,25 @@ function attachCategory(p: any) {
   const pSlug = (p.slug || '').toLowerCase();
   const pId = (p.id ? String(p.id) : '').toLowerCase();
 
+  const isSauvageElixir = pSlug.includes('sauvage-elixir') || pName.includes('sauvage elixir') || pId === 'cmu4kz6v5009vjjfsmf5izsut';
+  const isIrishLeather = pSlug.includes('irish-leather') || pName.includes('irish leather') || pId === 'prod-irish-leather-01' || pId === 'cms8s3teb0013v9f0kx34wh10';
+
+  if (isSauvageElixir || isIrishLeather) {
+    const isBlueTalisman = pSlug.includes('talisman') || pId.includes('talisman') || pName.includes('talisman');
+    const hasValidImage = p.image && typeof p.image === 'string' && p.image.trim().length > 0 && !p.image.includes('jade_serenity.png');
+    const resolvedImage = hasValidImage
+      ? p.image
+      : (isBlueTalisman ? '/images/products/blue_talisman.jpg' : (p.image || '/images/products/jade_serenity.png'));
+
+    return {
+      ...p,
+      image: resolvedImage,
+      category: isExclusive ? 'Exclusive' : 'Regular',
+      inStock: true,
+      isOutOfStock: false,
+    };
+  }
+
   const isTargetOOS = oosKeywords.some(kw => pSlug.includes(kw) || pName.includes(kw) || pId.includes(kw)) ||
     (pName.includes('gucci') && pName.includes('bloom')) ||
     (pName.includes('explorer') && pName.includes('platinum')) ||

@@ -57,6 +57,19 @@ const isCartItemOutOfStock = (item: CartItem | any) => {
   const n = (item.name || "").toLowerCase();
   const s = (item.slug || "").toLowerCase();
   const id = (item.id || "").toLowerCase();
+
+  if (
+    s.includes("sauvage-elixir") ||
+    n.includes("sauvage elixir") ||
+    id === "cmu4kz6v5009vjjfsmf5izsut" ||
+    s.includes("irish-leather") ||
+    n.includes("irish leather") ||
+    id === "prod-irish-leather-01" ||
+    id === "cms8s3teb0013v9f0kx34wh10"
+  ) {
+    return false;
+  }
+
   const oosKeywords = [
     "hacivat",
     "gucci-bloom",

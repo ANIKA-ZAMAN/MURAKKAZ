@@ -15,10 +15,23 @@ const OOS_KEYWORDS = [
 ];
 
 export function checkIsOutOfStock(name?: string, slug?: string, id?: string, inStock?: boolean, isOutOfStock?: boolean) {
-  if (inStock === false || isOutOfStock === true) return true;
   const n = (name || '').toLowerCase();
   const s = (slug || '').toLowerCase();
   const i = (id ? String(id) : '').toLowerCase();
+
+  if (
+    s.includes('sauvage-elixir') ||
+    n.includes('sauvage elixir') ||
+    i === 'cmu4kz6v5009vjjfsmf5izsut' ||
+    s.includes('irish-leather') ||
+    n.includes('irish leather') ||
+    i === 'prod-irish-leather-01' ||
+    i === 'cms8s3teb0013v9f0kx34wh10'
+  ) {
+    return false;
+  }
+
+  if (inStock === false || isOutOfStock === true) return true;
   if (
     OOS_KEYWORDS.some(kw => n.includes(kw) || s.includes(kw) || i.includes(kw)) ||
     (n.includes('gucci') && n.includes('bloom')) ||

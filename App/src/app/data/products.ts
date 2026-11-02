@@ -7924,10 +7924,16 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             EXCLUSIVE_SET.has(p.id) ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.some((s: any) => Number(s.price) >= 2500));
 
-          const isOutOfStock = p.inStock === false || p.isOutOfStock === true ||
-            itemSlug === "hacivat" || itemSlug.includes("sauvage") || itemSlug.includes("explorer") || itemSlug.includes("terre") || (p.name && p.name.toLowerCase().includes("terre")) || p.id === "cms8s3u3z00snv9f0ny38tprj" || p.id === "prod-normal-43" || (p.name && p.name.toLowerCase().includes("explorer")) || p.id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || p.id === "cms8s3u7300vfv9f0ug28i6zc" || (p.name && p.name.toLowerCase().includes("sauvage")) || (p.name && p.name.toLowerCase().includes("hacivat")) ||
+          const isSauvageElixir = itemSlug.includes("sauvage-elixir") || (p.name && p.name.toLowerCase().includes("sauvage elixir")) || p.id === "cmu4kz6v5009vjjfsmf5izsut";
+          const isIrishLeather = itemSlug.includes("irish-leather") || (p.name && p.name.toLowerCase().includes("irish leather")) || p.id === "prod-irish-leather-01" || p.id === "cms8s3teb0013v9f0kx34wh10";
+
+          const isOutOfStock = !isSauvageElixir && !isIrishLeather && (
+            p.inStock === false || p.isOutOfStock === true ||
+            itemSlug === "hacivat" || itemSlug === "sauvage-eau-de-parfum" || itemSlug.includes("explorer") || itemSlug.includes("terre") || (p.name && p.name.toLowerCase().includes("terre")) || p.id === "cms8s3u3z00snv9f0ny38tprj" || p.id === "prod-normal-43" || (p.name && p.name.toLowerCase().includes("explorer")) || p.id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || p.id === "cms8s3u7300vfv9f0ug28i6zc" || (p.name && p.name.toLowerCase().includes("sauvage eau de parfum")) || (p.name && p.name.toLowerCase().includes("hacivat")) ||
+            p.id === "cms8s3tp600div9f05fmzy4m6" || p.id === "prod-normal-13" ||
             p.id === "cmu4latr100f3jjfszm4sh1yf" ||
-            (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0));
+            (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0))
+          );
           const inStock = !isOutOfStock;
 
           return {
