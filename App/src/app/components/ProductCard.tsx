@@ -80,7 +80,8 @@ export default function ProductCard({
       "irish-leather",
       "irish leather",
       "sauvage",
-      "sauvage-eau-de-parfum"
+      "sauvage-eau-de-parfum",
+      "explorer"
     ];
     if (
       oosKeywords.some((kw) => s.includes(kw) || n.includes(kw) || i.includes(kw)) ||
@@ -93,7 +94,12 @@ export default function ProductCard({
       i === "prod-irish-leather-01" ||
       i === "cms8s3teb0013v9f0kx34wh10" ||
       i === "cms8s3tp600div9f05fmzy4m6" ||
-      i === "prod-normal-13"
+      i === "prod-normal-13" ||
+      i === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
+      i === "cms8s3u7300vfv9f0ug28i6zc" ||
+      i === "prod-normal-49" ||
+      n.includes("explorer") ||
+      s.includes("explorer")
     ) {
       return true;
     }

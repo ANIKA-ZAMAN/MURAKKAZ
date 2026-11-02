@@ -40,7 +40,8 @@ function attachCategory(p: any) {
     'irish-leather',
     'irish leather',
     'sauvage',
-    'sauvage-eau-de-parfum'
+    'sauvage-eau-de-parfum',
+    'explorer'
   ];
   const pName = (p.name || '').toLowerCase();
   const pSlug = (p.slug || '').toLowerCase();
@@ -54,7 +55,11 @@ function attachCategory(p: any) {
     pId === 'prod-normal-49' ||
     pId === 'cmu4latr100f3jjfszm4sh1yf' ||
     pId === 'prod-irish-leather-01' ||
-    pId === 'cms8s3teb0013v9f0kx34wh10';
+    pId === 'cms8s3teb0013v9f0kx34wh10' ||
+    pId === 'cmuaxl5lv0f2yjjhkqv4lh4pl' ||
+    pId === 'cms8s3u7300vfv9f0ug28i6zc' ||
+    pSlug.includes('explorer') ||
+    pName.includes('explorer');
 
   const isOutOfStock = isTargetOOS || p.isOutOfStock === true || p.inStock === false;
 
