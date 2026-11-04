@@ -8037,7 +8037,11 @@ export function findCachedProduct(idOrSlug: string): Product | null {
     (p.slug && p.slug.toLowerCase() === clean) ||
     (p.id && String(p.id).toLowerCase() === clean) ||
     (p.name && p.name.toLowerCase() === clean) ||
-    (p.name && slugify(p.name) === clean)
+    (p.name && slugify(p.name) === clean) ||
+    (clean.includes('terre') && p.slug && p.slug.includes('terre')) ||
+    (clean.includes('explorer') && p.slug && p.slug.includes('explorer')) ||
+    (clean.includes('elixir') && p.slug && p.slug.includes('elixir')) ||
+    (clean.includes('irish') && p.slug && p.slug.includes('irish'))
   ) || null;
 }
 

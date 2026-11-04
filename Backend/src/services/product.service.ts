@@ -204,7 +204,11 @@ export const getProductBySlug = async (slug: string) => {
         where: {
           OR: [
             { slug: slug },
-            { id: slug }
+            { id: slug },
+            ...(slug.toLowerCase().includes('terre') ? [{ slug: 'terre-d-herm-s-parfum' }, { name: { contains: 'Terre' } }] : []),
+            ...(slug.toLowerCase().includes('explorer') ? [{ slug: 'explorer' }, { name: { contains: 'Explorer' } }] : []),
+            ...(slug.toLowerCase().includes('elixir') ? [{ slug: 'sauvage-elixir' }, { name: { contains: 'Sauvage Elixir' } }] : []),
+            ...(slug.toLowerCase().includes('irish') ? [{ slug: 'irish-leather' }, { name: { contains: 'Irish Leather' } }] : []),
           ]
         },
         include: {
