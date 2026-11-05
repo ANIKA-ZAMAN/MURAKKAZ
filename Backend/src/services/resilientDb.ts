@@ -69,52 +69,53 @@ export const dbStore = {
     {
       id: 'cmue-brac-mela-nov-2026',
       slug: 'murakkaz-brac-university-mela',
-      title: 'Murakkaz at BRAC University Mela — A World of Aromatic Delights',
-      description: `Inviting all to the Mela! Murakkaz is delighted to partner with BRAC University and the Women Empowerment Cell (WEC) to bring you a world of aromatic delights.
+      title: 'Warm Invitation from Murakkaz to Uddami Mela — Sponsored Mela',
+      description: `Step into an aromatic world of handcrafted luxury! Murakkaz warmly invites all students, faculty members, and visitors to our fragrance pavilion at the Uddami Ami Mela — Celebrating Women Entrepreneurship at BRAC University.
 
-Step into our fragrance pavilion and experience the finest collection of extra pure, artisanal perfumes and long-lasting luxury concentrates. Explore the spotlight sensation—Murakkaz Blue Talisman—alongside crowd-favourite masterpieces inspired by iconic scent houses: Byredo Rose Noir, Dior Sauvage, Guerlain L'Instant Paris, Carolina Herrera Good Girl, Montale (Arabians Tonka & Roses Musk), Stronger With You, Poison Girl, and more.
-
-Handcrafted with extra pure fragrance oils for rich projection and all-day longevity. Enjoy complimentary live fragrance testing, personalized scent consultations, exclusive campus student discounts, and scan our QR code at the booth for special offers!
+Experience our signature collection of extra pure, long-lasting luxury perfumes. Enjoy complimentary live fragrance testing, personal scent consultations, and exclusive campus student discounts & special offers!
 
 Event Details:
-• Event: BRAC University Mela — Experience Our Fragrances
-• Event Partners: BRAC University & Women Empowerment Cell (WEC)
-• Dates: November 8th – 10th, 2026
-• Timing: 9:00 AM – 6:00 PM Daily
-• Venue: BRAC University, Kha 224 Pragati Sarani, Merul Badda, Dhaka 1212
-• Spotlight: Murakkaz Blue Talisman, Rose Noir, Sauvage & Montale
-• Exclusive Perks: Complimentary Fragrance Testing, Personal Consultations & Student Offers
-• Inquiries & Hotline: 01997-807701
-• Official Website: www.murakkaz.com`,
-      image: '/images/events/brac_university_mela_2026.png',
+• Event: Uddami Ami Mela — Celebrating Women Entrepreneurship
+• Venue: BRAC University Campus, Multi-Purpose Hall Lobby
+• Timing: 9:00 AM – 6:00 PM
+• Partners: Women Empowerment Cell (WEC), BRAC Bank, BRAC University, BRAC Business School & Biz Bee
+• Highlights: Complimentary Fragrance Testing, Personal Consultations & Campus Offers
+• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com`,
+      image: '/images/events/uddami_ami_mela_bracu.jpg',
       images: [
+        '/images/events/uddami_ami_mela_bracu.jpg',
         '/images/events/brac_university_mela_2026.png',
         '/images/events/event_gallery_6.jpg',
         '/images/events/event_gallery_10.jpg',
       ],
       galleryImages: [
         {
-          id: 'brac-img-1',
-          src: '/images/events/brac_university_mela_2026.png',
-          alt: 'Murakkaz at BRAC University Mela — Event Poster',
+          id: 'uddami-img-1',
+          src: '/images/events/uddami_ami_mela_bracu.jpg',
+          alt: 'Uddami Ami Mela — Celebrating Women Entrepreneurship Poster',
         },
         {
-          id: 'brac-img-2',
+          id: 'uddami-img-2',
+          src: '/images/events/brac_university_mela_2026.png',
+          alt: 'Warm Invitation from Murakkaz — Uddami Mela Poster',
+        },
+        {
+          id: 'uddami-img-3',
           src: '/images/events/event_gallery_6.jpg',
           alt: 'BRACU Customer Experience & Gifting',
         },
         {
-          id: 'brac-img-3',
+          id: 'uddami-img-4',
           src: '/images/events/event_gallery_10.jpg',
           alt: 'Murakkaz Brand Pavilion Showcase',
         },
       ],
-      day: '08',
-      month: 'NOV',
+      day: '02',
+      month: 'AUG',
       time: '9:00 AM - 6:00 PM',
-      location: 'BRAC University, Kha 224 Pragati Sarani, Merul Badda, Dhaka',
-      daysLeft: 3,
-      eventDate: new Date('2026-11-08T09:00:00.000Z'),
+      location: 'BRAC University Campus, Multi-Purpose Hall Lobby',
+      daysLeft: 1,
+      eventDate: new Date('2026-08-02T09:00:00.000Z'),
       category: 'Campus Mela',
       isUpcoming: true,
       remindersCount: 0,

@@ -50,6 +50,7 @@ export const getApiBaseUrl = (): string => {
 };
 
 const validTrackedImages = [
+  "/images/events/uddami_ami_mela_bracu.jpg",
   "/images/events/brac_university_mela_2026.png",
   "/images/events/murakkaz_brac_university_mela.png",
   "/images/events/murakkaz_nsu_yes_october_24_26.png",
@@ -224,15 +225,16 @@ export const upcomingEvents: UpcomingEvent[] = [
   {
     id: "cmue-brac-mela-nov-2026",
     slug: "murakkaz-brac-university-mela",
-    day: "08",
-    month: "NOV",
-    title: "Murakkaz at BRAC University Mela — A World of Aromatic Delights",
-    location: "BRAC University, Kha 224 Pragati Sarani, Merul Badda, Dhaka",
-    daysLeft: "3 days left",
-    time: "9:00 AM - 6:00 PM Daily",
-    description: "Inviting all to the Mela! Murakkaz is delighted to partner with BRAC University and the Women Empowerment Cell (WEC) to bring you a world of aromatic delights.\n\nStep into our fragrance pavilion and experience the finest collection of extra pure, artisanal perfumes and long-lasting luxury concentrates. Explore the spotlight sensation—Murakkaz Blue Talisman—alongside crowd-favourite masterpieces inspired by iconic scent houses: Byredo Rose Noir, Dior Sauvage, Guerlain L'Instant Paris, Carolina Herrera Good Girl, Montale (Arabians Tonka & Roses Musk), Stronger With You, Poison Girl, and more.\n\nHandcrafted with extra pure fragrance oils for rich projection and all-day longevity. Enjoy complimentary live fragrance testing, personalized scent consultations, exclusive campus student discounts, and scan our QR code at the booth for special offers!\n\nEvent Details:\n• Event: BRAC University Mela — Experience Our Fragrances\n• Event Partners: BRAC University & Women Empowerment Cell (WEC)\n• Dates: November 8th – 10th, 2026\n• Timing: 9:00 AM – 6:00 PM Daily\n• Venue: BRAC University, Kha 224 Pragati Sarani, Merul Badda, Dhaka 1212\n• Spotlight: Murakkaz Blue Talisman, Rose Noir, Sauvage & Montale\n• Exclusive Perks: Complimentary Fragrance Testing, Personal Consultations & Student Offers\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
-    image: "/images/events/brac_university_mela_2026.png",
+    day: "02",
+    month: "AUG",
+    title: "Warm Invitation from Murakkaz to Uddami Mela — Sponsored Mela",
+    location: "BRAC University Campus, Multi-Purpose Hall Lobby",
+    daysLeft: "Upcoming",
+    time: "9:00 AM - 6:00 PM",
+    description: "Step into an aromatic world of handcrafted luxury! Murakkaz warmly invites all students, faculty members, and visitors to our fragrance pavilion at the Uddami Ami Mela — Celebrating Women Entrepreneurship at BRAC University.\n\nExperience our signature collection of extra pure, long-lasting luxury perfumes. Enjoy complimentary live fragrance testing, personal scent consultations, and exclusive campus student discounts & special offers!\n\nEvent Details:\n• Event: Uddami Ami Mela — Celebrating Women Entrepreneurship\n• Venue: BRAC University Campus, Multi-Purpose Hall Lobby\n• Timing: 9:00 AM – 6:00 PM\n• Partners: Women Empowerment Cell (WEC), BRAC Bank, BRAC University, BRAC Business School & Biz Bee\n• Highlights: Complimentary Fragrance Testing, Personal Consultations & Campus Offers\n• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com",
+    image: "/images/events/uddami_ami_mela_bracu.jpg",
     images: [
+      "/images/events/uddami_ami_mela_bracu.jpg",
       "/images/events/brac_university_mela_2026.png",
       "/images/events/event_gallery_6.jpg",
       "/images/events/event_gallery_10.jpg",
