@@ -50,6 +50,8 @@ export const getApiBaseUrl = (): string => {
 };
 
 const validTrackedImages = [
+  "/images/events/brac_university_mela_2026.png",
+  "/images/events/murakkaz_brac_university_mela.png",
   "/images/events/murakkaz_nsu_yes_october_24_26.png",
   "/images/events/murakkaz_nsu_yes_october_2026.png",
   "/images/events/nsu_booth_proposal.png",
@@ -86,6 +88,27 @@ export interface EventImageMeta {
 }
 
 export function getEventImageMeta(src: string, defaultTitle?: string): EventImageMeta {
+  if (src.includes("brac_university_mela") || (src.includes("brac") && src.includes("mela"))) {
+    return {
+      title: defaultTitle || "Murakkaz at BRAC University Mela — Event Poster",
+      subtitle: "Event Partners: BRAC University & Women Empowerment Cell (WEC)",
+      shortLabel: "Event Poster",
+    };
+  }
+  if (src.includes("event_gallery_6")) {
+    return {
+      title: "BRACU Customer Experience & Gifting",
+      subtitle: "BRAC University Campus, Dhaka",
+      shortLabel: "Campus Photo",
+    };
+  }
+  if (src.includes("event_gallery_10")) {
+    return {
+      title: "Murakkaz Brand Pavilion Showcase",
+      subtitle: "BRAC University Campus Plaza, Dhaka",
+      shortLabel: "Brand Pavilion",
+    };
+  }
   if (src.includes("mou_agreement") || src.includes("mou")) {
     return {
       title: "Memorandum of Understanding (MoU)",
@@ -199,20 +222,20 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
 
 export const upcomingEvents: UpcomingEvent[] = [
   {
-    id: "cmue-nsu-yes-oct-2026",
-    slug: "murakkaz-coming-to-nsu-yes-club",
-    day: "24",
-    month: "OCT",
-    title: "Murakkaz Coming to NSU — YES! Club Exhibition",
-    location: "North South University (NSU), Bashundhara R/A, Dhaka",
-    daysLeft: "6 days left",
-    time: "9:00 AM - 6:00 PM",
-    description: "Murakkaz is coming to North South University (NSU)!\n\nOrganized in collaboration with the Young Entrepreneurs Society (YES! Club), we warmly invite all students, faculty members, and perfume enthusiasts across Dhaka to experience our signature collection of extra pure, long-lasting luxury perfumes.\n\nExplore crowd-favourite masterpieces inspired by world-renowned perfume houses—including Poison Girl, Montale (Arabians Tonka & Roses Musk), YSL Libre & MYSLF, Tom Ford Vanille Fatale, Miss Dior, 212 VIP Men, Kilian, KAYALI, and Burberry Her. Handcrafted with premium, high-concentration fragrance oils to ensure rich projection and all-day longevity.\n\nEnjoy complimentary fragrance testing, personalized scent consultations, and exclusive campus student discounts!\n\nEvent Details:\n• Dates: October 24th – 26th, 2026\n• Timing: 9:00 AM – 6:00 PM Daily\n• Venue: North South University (NSU), Plot # 15, Block # B, Bashundhara R/A, Dhaka\n• Host / Partner: Young Entrepreneurs Society (YES! Club)\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
-    image: "/images/events/murakkaz_nsu_yes_october_24_26.png",
+    id: "cmue-brac-mela-nov-2026",
+    slug: "murakkaz-brac-university-mela",
+    day: "08",
+    month: "NOV",
+    title: "Murakkaz at BRAC University Mela — A World of Aromatic Delights",
+    location: "BRAC University, Kha 224 Pragati Sarani, Merul Badda, Dhaka",
+    daysLeft: "3 days left",
+    time: "9:00 AM - 6:00 PM Daily",
+    description: "Inviting all to the Mela! Murakkaz is delighted to partner with BRAC University and the Women Empowerment Cell (WEC) to bring you a world of aromatic delights.\n\nStep into our fragrance pavilion and experience the finest collection of extra pure, artisanal perfumes and long-lasting luxury concentrates. Explore the spotlight sensation—Murakkaz Blue Talisman—alongside crowd-favourite masterpieces inspired by iconic scent houses: Byredo Rose Noir, Dior Sauvage, Guerlain L'Instant Paris, Carolina Herrera Good Girl, Montale (Arabians Tonka & Roses Musk), Stronger With You, Poison Girl, and more.\n\nHandcrafted with extra pure fragrance oils for rich projection and all-day longevity. Enjoy complimentary live fragrance testing, personalized scent consultations, exclusive campus student discounts, and scan our QR code at the booth for special offers!\n\nEvent Details:\n• Event: BRAC University Mela — Experience Our Fragrances\n• Event Partners: BRAC University & Women Empowerment Cell (WEC)\n• Dates: November 8th – 10th, 2026\n• Timing: 9:00 AM – 6:00 PM Daily\n• Venue: BRAC University, Kha 224 Pragati Sarani, Merul Badda, Dhaka 1212\n• Spotlight: Murakkaz Blue Talisman, Rose Noir, Sauvage & Montale\n• Exclusive Perks: Complimentary Fragrance Testing, Personal Consultations & Student Offers\n• Inquiries & Hotline: 01997-807701\n• Official Website: www.murakkaz.com",
+    image: "/images/events/brac_university_mela_2026.png",
     images: [
-      "/images/events/murakkaz_nsu_yes_october_24_26.png",
-      "/images/events/nsu_booth_proposal.png",
-      "/images/events/nsu_mou_agreement_full.png",
+      "/images/events/brac_university_mela_2026.png",
+      "/images/events/event_gallery_6.jpg",
+      "/images/events/event_gallery_10.jpg",
     ],
   },
   {
@@ -230,6 +253,14 @@ export const upcomingEvents: UpcomingEvent[] = [
   },
 ];
 export const previousEvents: PreviousEvent[] = [
+  {
+    id: "cmue-nsu-yes-oct-2026",
+    slug: "murakkaz-coming-to-nsu-yes-club",
+    title: "Murakkaz Coming to NSU — YES! Club Exhibition",
+    date: "Oct 24 - 26, 2026",
+    image: "/images/events/murakkaz_nsu_yes_october_24_26.png",
+    category: "Campus Exhibition",
+  },
   {
     id: "cmub2r3no0flajjhkxybs1i56",
     slug: "murakkaz-at-ronginee-exhibition-midas-centre",
