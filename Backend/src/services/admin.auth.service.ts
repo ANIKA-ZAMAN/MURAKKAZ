@@ -31,7 +31,10 @@ export const loginAdmin = async (data: any, ipAddress?: string) => {
     throw new AppError(`Admin account temporarily locked. Try again in ${minutesLeft} minute(s).`, 429);
   }
 
-  const isMatch = await bcrypt.compare(password, user.passwordHash);
+  let isMatch = await bcrypt.compare(password, user.passwordHash);
+  if (!isMatch && typeof password === 'string' && password.trim() !== password) {
+    isMatch = await bcrypt.compare(password.trim(), user.passwordHash);
+  }
   if (!isMatch) {
     const newFailedAttempts = (user.failedLoginAttempts || 0) + 1;
     let lockedUntil: Date | null = null;

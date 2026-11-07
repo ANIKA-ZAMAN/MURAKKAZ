@@ -84,7 +84,10 @@ export const loginUser = async (data: any) => {
     throw new AppError(`Account is temporarily locked due to repeated failed attempts. Please try again in ${minutesLeft} minute(s).`, 429);
   }
 
-  const isMatch = await bcrypt.compare(password, user.passwordHash);
+  let isMatch = await bcrypt.compare(password, user.passwordHash);
+  if (!isMatch && typeof password === 'string' && password.trim() !== password) {
+    isMatch = await bcrypt.compare(password.trim(), user.passwordHash);
+  }
   if (!isMatch) {
     const newFailedAttempts = (user.failedLoginAttempts || 0) + 1;
     let lockedUntil: Date | null = null;

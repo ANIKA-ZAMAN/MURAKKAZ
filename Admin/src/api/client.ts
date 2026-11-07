@@ -63,6 +63,11 @@ async function customFetch(endpoint: string, options: RequestInit = {}): Promise
     let response = await fetch(url, config);
 
     if (response.status === 401) {
+        // Do not intercept authentication endpoints (like /login) where 401 is an expected credential error
+        if (endpoint.includes('/login') || endpoint.includes('/auth/login')) {
+            return response;
+        }
+
         const refreshToken = getRefreshToken();
         
         if (!refreshToken) {

@@ -15,7 +15,8 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanId = (identifier || '').trim();
-    if (!cleanId || !password) return;
+    const cleanPw = (password || '').trim();
+    if (!cleanId || !cleanPw) return;
     setError('');
     setLoading(true);
 
@@ -24,7 +25,7 @@ const Login: React.FC = () => {
       await login({
         email: isEmail ? cleanId.toLowerCase() : undefined,
         phone: !isEmail ? cleanId : undefined,
-        password
+        password: cleanPw
       });
       navigate('/');
     } catch (err: any) {
