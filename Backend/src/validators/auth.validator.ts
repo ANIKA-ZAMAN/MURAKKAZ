@@ -1,11 +1,27 @@
 import { z } from 'zod';
 
+const sanitizeEmail = (val: unknown) => {
+  if (typeof val === 'string') {
+    const trimmed = val.trim().toLowerCase();
+    return trimmed === '' ? undefined : trimmed;
+  }
+  return val;
+};
+
+const sanitizePhone = (val: unknown) => {
+  if (typeof val === 'string') {
+    const trimmed = val.trim();
+    return trimmed === '' ? undefined : trimmed;
+  }
+  return val;
+};
+
 export const registerSchema = z.object({
   body: z.object({
-    firstName: z.string().min(1, 'First name is required').max(50),
-    lastName: z.string().min(1, 'Last name is required').max(50),
-    email: z.string().email('Invalid email').optional(),
-    phone: z.string().min(10).max(15).optional(),
+    firstName: z.string().trim().min(1, 'First name is required').max(50),
+    lastName: z.string().trim().min(1, 'Last name is required').max(50),
+    email: z.preprocess(sanitizeEmail, z.string().email('Invalid email').optional()),
+    phone: z.preprocess(sanitizePhone, z.string().min(10).max(15).optional()),
     password: z.string().min(6, 'Password must be at least 6 characters').max(100),
   }).refine(data => data.email || data.phone, {
     message: 'Either email or phone is required',
@@ -14,8 +30,8 @@ export const registerSchema = z.object({
 
 export const loginSchema = z.object({
   body: z.object({
-    email: z.string().email('Invalid email').optional(),
-    phone: z.string().optional(),
+    email: z.preprocess(sanitizeEmail, z.string().email('Invalid email').optional()),
+    phone: z.preprocess(sanitizePhone, z.string().optional()),
     password: z.string().min(1, 'Password is required'),
   }).refine(data => data.email || data.phone, {
     message: 'Either email or phone is required',

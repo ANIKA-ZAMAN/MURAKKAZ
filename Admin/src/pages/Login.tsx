@@ -14,21 +14,36 @@ const Login: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identifier || !password) return;
+    const cleanId = (identifier || '').trim();
+    if (!cleanId || !password) return;
     setError('');
     setLoading(true);
 
     try {
-      const isEmail = identifier.includes('@');
+      const isEmail = cleanId.includes('@');
       await login({
-        email: isEmail ? identifier : undefined,
-        phone: !isEmail ? identifier : undefined,
+        email: isEmail ? cleanId.toLowerCase() : undefined,
+        phone: !isEmail ? cleanId : undefined,
         password
       });
       navigate('/');
     } catch (err: any) {
       console.error('Admin login error:', err);
-      setError(err.message || 'Invalid administrative credentials. Please try again.');
+      let userFriendlyMessage = 'Invalid administrative credentials. Please try again.';
+      if (err.message) {
+        try {
+          const parsed = JSON.parse(err.message);
+          if (parsed.message) {
+            userFriendlyMessage = parsed.message;
+          }
+          if (parsed.errors && Array.isArray(parsed.errors) && parsed.errors.length > 0) {
+            userFriendlyMessage = parsed.errors[0].message || userFriendlyMessage;
+          }
+        } catch {
+          userFriendlyMessage = err.message;
+        }
+      }
+      setError(userFriendlyMessage);
     } finally {
       setLoading(false);
     }
