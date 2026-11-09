@@ -492,7 +492,11 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       "sauvage-eau-de-parfum",
       "explorer",
       "terre",
-      "terre-d-herm-s-parfum"
+      "terre-d-herm-s-parfum",
+      "blue-talisman",
+      "talisman",
+      "by-the-fireplace",
+      "fireplace"
     ];
 
     if (
@@ -504,6 +508,12 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       cleanId === "prod-normal-13" ||
       cleanId === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
       cleanId === "cms8s3u7300vfv9f0ug28i6zc" ||
+      cleanId === "cmttuo733031rjju6uw8avshr" ||
+      cleanId === "prod-blue-talisman-01" ||
+      cleanId === "cms8s3tfx002ov9f0wvmp0mzc" ||
+      cleanId === "prod-by-the-fireplace-04" ||
+      cleanId.includes("talisman") ||
+      cleanId.includes("fireplace") ||
       cleanId.includes("explorer") ||
       false) {
       return true;
@@ -525,7 +535,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       if (
         oosKeywords.some(kw => lpName.includes(kw) || lpSlug.includes(kw)) ||
         (lpName.includes("gucci") && lpName.includes("bloom")) ||
-        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (liveProduct as any).id === "cms8s3u3z00snv9f0ny38tprj" || lpName.includes("terre") || lpSlug.includes("terre") 
+        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (liveProduct as any).id === "cms8s3u3z00snv9f0ny38tprj" || lpName.includes("terre") || lpSlug.includes("terre") || (liveProduct as any).id === "cmttuo733031rjju6uw8avshr" || (liveProduct as any).id === "prod-blue-talisman-01" || lpName.includes("talisman") || lpSlug.includes("talisman") || (liveProduct as any).id === "cms8s3tfx002ov9f0wvmp0mzc" || (liveProduct as any).id === "prod-by-the-fireplace-04" || lpName.includes("fireplace") || lpSlug.includes("fireplace") 
       ) {
         return true;
       }
@@ -547,7 +557,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       if (
         oosKeywords.some(kw => catName.includes(kw) || catSlug.includes(kw)) ||
         (catName.includes("gucci") && catName.includes("bloom")) ||
-        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (catalogItem as any).id === "cms8s3u3z00snv9f0ny38tprj" || (catalogItem as any).id === "prod-normal-43" || catName.includes("terre") || catSlug.includes("terre") 
+        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (catalogItem as any).id === "cms8s3u3z00snv9f0ny38tprj" || (catalogItem as any).id === "prod-normal-43" || catName.includes("terre") || catSlug.includes("terre") || (catalogItem as any).id === "cmttuo733031rjju6uw8avshr" || (catalogItem as any).id === "prod-blue-talisman-01" || catName.includes("talisman") || catSlug.includes("talisman") || (catalogItem as any).id === "cms8s3tfx002ov9f0wvmp0mzc" || (catalogItem as any).id === "prod-by-the-fireplace-04" || catName.includes("fireplace") || catSlug.includes("fireplace") 
       ) {
         return true;
       }

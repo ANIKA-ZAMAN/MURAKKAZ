@@ -40,7 +40,11 @@ function attachCategory(p: any) {
     'sauvage-eau-de-parfum',
     'explorer',
     'terre',
-    'terre-d-herm-s-parfum'
+    'terre-d-herm-s-parfum',
+    'blue-talisman',
+    'talisman',
+    'by-the-fireplace',
+    'fireplace'
   ];
   const pName = (p.name || '').toLowerCase();
   const pSlug = (p.slug || '').toLowerCase();
@@ -75,10 +79,18 @@ function attachCategory(p: any) {
     pId === 'cms8s3u7300vfv9f0ug28i6zc' ||
     pId === 'cms8s3u3z00snv9f0ny38tprj' ||
     pId === 'prod-normal-43' ||
+    pId === 'cmttuo733031rjju6uw8avshr' ||
+    pId === 'prod-blue-talisman-01' ||
+    pId === 'cms8s3tfx002ov9f0wvmp0mzc' ||
+    pId === 'prod-by-the-fireplace-04' ||
     pSlug.includes('terre') ||
     pName.includes('terre') ||
     pSlug.includes('explorer') ||
-    pName.includes('explorer');
+    pName.includes('explorer') ||
+    pSlug.includes('talisman') ||
+    pName.includes('talisman') ||
+    pSlug.includes('fireplace') ||
+    pName.includes('fireplace');
 
   const isOutOfStock = isTargetOOS || p.isOutOfStock === true || p.inStock === false;
 
@@ -209,6 +221,8 @@ export const getProductBySlug = async (slug: string) => {
             ...(slug.toLowerCase().includes('explorer') ? [{ slug: 'explorer' }, { name: { contains: 'Explorer' } }] : []),
             ...(slug.toLowerCase().includes('elixir') ? [{ slug: 'sauvage-elixir' }, { name: { contains: 'Sauvage Elixir' } }] : []),
             ...(slug.toLowerCase().includes('irish') ? [{ slug: 'irish-leather' }, { name: { contains: 'Irish Leather' } }] : []),
+            ...(slug.toLowerCase().includes('talisman') ? [{ slug: 'blue-talisman' }, { name: { contains: 'Blue Talisman' } }] : []),
+            ...(slug.toLowerCase().includes('fireplace') ? [{ slug: 'by-the-fireplace' }, { name: { contains: 'By the Fireplace' } }] : []),
           ]
         },
         include: {

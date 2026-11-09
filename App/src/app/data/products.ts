@@ -445,31 +445,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Date Night, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 2500,
         "originalPrice": 3200,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -7182,31 +7184,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Everyday, Office, Special Occasion",
     "meter": "LONG_LASTING",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 500,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -7812,7 +7816,7 @@ export function getProductsApiBaseUrl(): string {
 
 let cachedProducts: Product[] | null = null;
 let lastFetchTime = 0;
-const CACHE_KEY = "murakkaz_products_cache_v7";
+const CACHE_KEY = "murakkaz_products_cache_v8";
 const CACHE_TTL_MS = 30_000; // 30-second cache for instant snappy navigation while staying fresh
 let activeFetchPromise: Promise<Product[]> | null = null;
 
@@ -7947,6 +7951,8 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             itemSlug === "hacivat" || itemSlug === "sauvage-eau-de-parfum" || itemSlug.includes("explorer") || itemSlug.includes("terre") || (p.name && p.name.toLowerCase().includes("terre")) || p.id === "cms8s3u3z00snv9f0ny38tprj" || p.id === "prod-normal-43" || (p.name && p.name.toLowerCase().includes("explorer")) || p.id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || p.id === "cms8s3u7300vfv9f0ug28i6zc" || (p.name && p.name.toLowerCase().includes("sauvage eau de parfum")) || (p.name && p.name.toLowerCase().includes("hacivat")) ||
             p.id === "cms8s3tp600div9f05fmzy4m6" || p.id === "prod-normal-13" ||
             p.id === "cmu4latr100f3jjfszm4sh1yf" ||
+            itemSlug.includes("blue-talisman") || itemSlug.includes("talisman") || (p.name && p.name.toLowerCase().includes("blue talisman")) || p.id === "cmttuo733031rjju6uw8avshr" || p.id === "prod-blue-talisman-01" ||
+            itemSlug.includes("fireplace") || (p.name && p.name.toLowerCase().includes("fireplace")) || p.id === "cms8s3tfx002ov9f0wvmp0mzc" || p.id === "prod-by-the-fireplace-04" ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0))
           );
           const inStock = !isOutOfStock;
@@ -8041,7 +8047,9 @@ export function findCachedProduct(idOrSlug: string): Product | null {
     (clean.includes('terre') && p.slug && p.slug.includes('terre')) ||
     (clean.includes('explorer') && p.slug && p.slug.includes('explorer')) ||
     (clean.includes('elixir') && p.slug && p.slug.includes('elixir')) ||
-    (clean.includes('irish') && p.slug && p.slug.includes('irish'))
+    (clean.includes('irish') && p.slug && p.slug.includes('irish')) ||
+    (clean.includes('talisman') && p.slug && p.slug.includes('talisman')) ||
+    (clean.includes('fireplace') && p.slug && p.slug.includes('fireplace'))
   ) || null;
 }
 

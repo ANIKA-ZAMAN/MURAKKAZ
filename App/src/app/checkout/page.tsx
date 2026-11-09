@@ -44,7 +44,11 @@ const isItemOutOfStock = (item: any) => {
     "sauvage-eau-de-parfum",
     "explorer",
     "terre",
-    "terre-d-herm-s-parfum"
+    "terre-d-herm-s-parfum",
+    "blue-talisman",
+    "talisman",
+    "by-the-fireplace",
+    "fireplace"
   ];
   return (
     oosKeywords.some((kw) => n.includes(kw) || s.includes(kw) || id.includes(kw)) ||
@@ -58,10 +62,18 @@ const isItemOutOfStock = (item: any) => {
     id === "prod-normal-49" ||
     id === "cms8s3u3z00snv9f0ny38tprj" ||
     id === "prod-normal-43" ||
+    id === "cmttuo733031rjju6uw8avshr" ||
+    id === "prod-blue-talisman-01" ||
+    id === "cms8s3tfx002ov9f0wvmp0mzc" ||
+    id === "prod-by-the-fireplace-04" ||
     n.includes("terre") ||
     s.includes("terre") ||
     n.includes("explorer") ||
-    s.includes("explorer")
+    s.includes("explorer") ||
+    n.includes("talisman") ||
+    s.includes("talisman") ||
+    n.includes("fireplace") ||
+    s.includes("fireplace")
   );
 };
 

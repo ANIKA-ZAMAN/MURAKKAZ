@@ -362,31 +362,33 @@
     "occasion": "Date Night, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 2500,
         "originalPrice": 3200,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -7099,31 +7101,33 @@
     "occasion": "Everyday, Office, Special Occasion",
     "meter": "LONG_LASTING",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 500,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
