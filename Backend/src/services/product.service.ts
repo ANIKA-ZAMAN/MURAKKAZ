@@ -44,7 +44,15 @@ function attachCategory(p: any) {
     'blue-talisman',
     'talisman',
     'by-the-fireplace',
-    'fireplace'
+    'fireplace',
+    'ehsas',
+    'bad-boy',
+    'bad boy',
+    'imagination',
+    'acqua-di-gi-elixir',
+    'acqua-di-gio-elixir',
+    '1-million-parfum',
+    'lara'
   ];
   const pName = (p.name || '').toLowerCase();
   const pSlug = (p.slug || '').toLowerCase();
@@ -83,6 +91,17 @@ function attachCategory(p: any) {
     pId === 'prod-blue-talisman-01' ||
     pId === 'cms8s3tfx002ov9f0wvmp0mzc' ||
     pId === 'prod-by-the-fireplace-04' ||
+    pId === 'cms8s3to300bxv9f032jtwv4j' ||
+    pId === 'prod-normal-10' ||
+    pId === 'cms8s3tkp007tv9f01v5kxt7m' ||
+    pId === 'prod-normal-2' ||
+    pId === 'cms8s3tj00062v9f014cmx645' ||
+    pId === 'prod-imagination-10' ||
+    pId === 'cms8s3tot00d1v9f0hfz8s7b8' ||
+    pId === 'prod-normal-12' ||
+    pId === 'cms8s3tr900fov9f0u4ye9oam' ||
+    pId === 'prod-normal-18' ||
+    pId === 'cmu4kwfyr008rjjfsvuhl70tu' ||
     pSlug.includes('terre') ||
     pName.includes('terre') ||
     pSlug.includes('explorer') ||
@@ -90,7 +109,13 @@ function attachCategory(p: any) {
     pSlug.includes('talisman') ||
     pName.includes('talisman') ||
     pSlug.includes('fireplace') ||
-    pName.includes('fireplace');
+    pName.includes('fireplace') ||
+    pSlug.includes('ehsas') || pName.includes('ehsas') ||
+    pSlug.includes('bad-boy') || pName.includes('bad boy') ||
+    pSlug.includes('imagination') || pName.includes('imagination') ||
+    (pSlug.includes('acqua') && pSlug.includes('elixir')) || (pName.includes('acqua') && pName.includes('elixir')) ||
+    ((pSlug.includes('million') || pName.includes('million')) && (pSlug.includes('parfum') || pName.includes('parfum'))) ||
+    pSlug === 'lara' || pName.trim().toLowerCase() === 'lara';
 
   const isOutOfStock = isTargetOOS || p.isOutOfStock === true || p.inStock === false;
 
@@ -223,6 +248,12 @@ export const getProductBySlug = async (slug: string) => {
             ...(slug.toLowerCase().includes('irish') ? [{ slug: 'irish-leather' }, { name: { contains: 'Irish Leather' } }] : []),
             ...(slug.toLowerCase().includes('talisman') ? [{ slug: 'blue-talisman' }, { name: { contains: 'Blue Talisman' } }] : []),
             ...(slug.toLowerCase().includes('fireplace') ? [{ slug: 'by-the-fireplace' }, { name: { contains: 'By the Fireplace' } }] : []),
+            ...(slug.toLowerCase().includes('ehsas') ? [{ slug: 'ehsas' }, { name: { contains: 'Ehsas' } }] : []),
+            ...(slug.toLowerCase().includes('bad-boy') || slug.toLowerCase().includes('bad boy') ? [{ slug: 'bad-boy' }, { name: { contains: 'Bad Boy' } }] : []),
+            ...(slug.toLowerCase().includes('imagination') ? [{ slug: 'imagination' }, { name: { contains: 'Imagination' } }] : []),
+            ...(slug.toLowerCase().includes('acqua') ? [{ slug: 'acqua-di-gi-elixir' }, { slug: 'acqua-di-gio-elixir' }, { name: { contains: 'Acqua' } }] : []),
+            ...(slug.toLowerCase().includes('1-million') || slug.toLowerCase().includes('million-parfum') ? [{ slug: '1-million-parfum' }, { name: { contains: '1 Million' } }] : []),
+            ...(slug.toLowerCase().includes('lara') ? [{ slug: 'lara' }, { name: { contains: 'Lara' } }] : []),
           ]
         },
         include: {

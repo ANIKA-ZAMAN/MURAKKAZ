@@ -496,7 +496,15 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       "blue-talisman",
       "talisman",
       "by-the-fireplace",
-      "fireplace"
+      "fireplace",
+      "ehsas",
+      "bad-boy",
+      "bad boy",
+      "imagination",
+      "acqua-di-gi-elixir",
+      "acqua-di-gio-elixir",
+      "1-million-parfum",
+      "lara"
     ];
 
     if (
@@ -512,6 +520,23 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       cleanId === "prod-blue-talisman-01" ||
       cleanId === "cms8s3tfx002ov9f0wvmp0mzc" ||
       cleanId === "prod-by-the-fireplace-04" ||
+      cleanId === "cms8s3to300bxv9f032jtwv4j" ||
+      cleanId === "prod-normal-10" ||
+      cleanId === "cms8s3tkp007tv9f01v5kxt7m" ||
+      cleanId === "prod-normal-2" ||
+      cleanId === "cms8s3tj00062v9f014cmx645" ||
+      cleanId === "prod-imagination-10" ||
+      cleanId === "cms8s3tot00d1v9f0hfz8s7b8" ||
+      cleanId === "prod-normal-12" ||
+      cleanId === "cms8s3tr900fov9f0u4ye9oam" ||
+      cleanId === "prod-normal-18" ||
+      cleanId === "cmu4kwfyr008rjjfsvuhl70tu" ||
+      cleanId.includes("ehsas") ||
+      cleanId.includes("bad-boy") ||
+      cleanId.includes("imagination") ||
+      (cleanId.includes("acqua") && cleanId.includes("elixir")) ||
+      cleanId.includes("1-million") ||
+      cleanId === "lara" || cleanId.includes("lara") ||
       cleanId.includes("talisman") ||
       cleanId.includes("fireplace") ||
       cleanId.includes("explorer") ||
@@ -535,7 +560,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       if (
         oosKeywords.some(kw => lpName.includes(kw) || lpSlug.includes(kw)) ||
         (lpName.includes("gucci") && lpName.includes("bloom")) ||
-        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (liveProduct as any).id === "cms8s3u3z00snv9f0ny38tprj" || lpName.includes("terre") || lpSlug.includes("terre") || (liveProduct as any).id === "cmttuo733031rjju6uw8avshr" || (liveProduct as any).id === "prod-blue-talisman-01" || lpName.includes("talisman") || lpSlug.includes("talisman") || (liveProduct as any).id === "cms8s3tfx002ov9f0wvmp0mzc" || (liveProduct as any).id === "prod-by-the-fireplace-04" || lpName.includes("fireplace") || lpSlug.includes("fireplace") 
+        lpName.includes("explorer") || lpSlug.includes("explorer") || (liveProduct as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (liveProduct as any).id === "cms8s3u3z00snv9f0ny38tprj" || lpName.includes("terre") || lpSlug.includes("terre") || (liveProduct as any).id === "cmttuo733031rjju6uw8avshr" || (liveProduct as any).id === "prod-blue-talisman-01" || lpName.includes("talisman") || lpSlug.includes("talisman") || (liveProduct as any).id === "cms8s3tfx002ov9f0wvmp0mzc" || (liveProduct as any).id === "prod-by-the-fireplace-04" || lpName.includes("fireplace") || lpSlug.includes("fireplace") || (liveProduct as any).id === "cms8s3to300bxv9f032jtwv4j" || (liveProduct as any).id === "prod-normal-10" || lpName.includes("ehsas") || lpSlug.includes("ehsas") || (liveProduct as any).id === "cms8s3tkp007tv9f01v5kxt7m" || (liveProduct as any).id === "prod-normal-2" || lpName.includes("bad boy") || lpSlug.includes("bad-boy") || (liveProduct as any).id === "cms8s3tj00062v9f014cmx645" || (liveProduct as any).id === "prod-imagination-10" || lpName.includes("imagination") || lpSlug.includes("imagination") || (liveProduct as any).id === "cms8s3tot00d1v9f0hfz8s7b8" || (liveProduct as any).id === "prod-normal-12" || (lpName.includes("acqua") && lpName.includes("elixir")) || (liveProduct as any).id === "cms8s3tr900fov9f0u4ye9oam" || (liveProduct as any).id === "prod-normal-18" || ((lpName.includes("1 million") || lpName.includes("million")) && lpName.includes("parfum")) || (liveProduct as any).id === "cmu4kwfyr008rjjfsvuhl70tu" || lpName.trim() === "lara" || lpSlug === "lara" 
       ) {
         return true;
       }
@@ -557,7 +582,7 @@ export default function ProductDetailsClient({ id, initialProduct }: { id: strin
       if (
         oosKeywords.some(kw => catName.includes(kw) || catSlug.includes(kw)) ||
         (catName.includes("gucci") && catName.includes("bloom")) ||
-        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (catalogItem as any).id === "cms8s3u3z00snv9f0ny38tprj" || (catalogItem as any).id === "prod-normal-43" || catName.includes("terre") || catSlug.includes("terre") || (catalogItem as any).id === "cmttuo733031rjju6uw8avshr" || (catalogItem as any).id === "prod-blue-talisman-01" || catName.includes("talisman") || catSlug.includes("talisman") || (catalogItem as any).id === "cms8s3tfx002ov9f0wvmp0mzc" || (catalogItem as any).id === "prod-by-the-fireplace-04" || catName.includes("fireplace") || catSlug.includes("fireplace") 
+        catName.includes("explorer") || catSlug.includes("explorer") || (catalogItem as any).id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || (catalogItem as any).id === "cms8s3u3z00snv9f0ny38tprj" || (catalogItem as any).id === "prod-normal-43" || catName.includes("terre") || catSlug.includes("terre") || (catalogItem as any).id === "cmttuo733031rjju6uw8avshr" || (catalogItem as any).id === "prod-blue-talisman-01" || catName.includes("talisman") || catSlug.includes("talisman") || (catalogItem as any).id === "cms8s3tfx002ov9f0wvmp0mzc" || (catalogItem as any).id === "prod-by-the-fireplace-04" || catName.includes("fireplace") || catSlug.includes("fireplace") || (catalogItem as any).id === "cms8s3to300bxv9f032jtwv4j" || (catalogItem as any).id === "prod-normal-10" || catName.includes("ehsas") || catSlug.includes("ehsas") || (catalogItem as any).id === "cms8s3tkp007tv9f01v5kxt7m" || (catalogItem as any).id === "prod-normal-2" || catName.includes("bad boy") || catSlug.includes("bad-boy") || (catalogItem as any).id === "cms8s3tj00062v9f014cmx645" || (catalogItem as any).id === "prod-imagination-10" || catName.includes("imagination") || catSlug.includes("imagination") || (catalogItem as any).id === "cms8s3tot00d1v9f0hfz8s7b8" || (catalogItem as any).id === "prod-normal-12" || (catName.includes("acqua") && catName.includes("elixir")) || (catalogItem as any).id === "cms8s3tr900fov9f0u4ye9oam" || (catalogItem as any).id === "prod-normal-18" || ((catName.includes("1 million") || catName.includes("million")) && catName.includes("parfum")) || (catalogItem as any).id === "cmu4kwfyr008rjjfsvuhl70tu" || catName.trim() === "lara" || catSlug === "lara" 
       ) {
         return true;
       }

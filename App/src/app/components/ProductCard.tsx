@@ -98,7 +98,15 @@ export default function ProductCard({
       "blue-talisman",
       "talisman",
       "by-the-fireplace",
-      "fireplace"
+      "fireplace",
+      "ehsas",
+      "bad-boy",
+      "bad boy",
+      "imagination",
+      "acqua-di-gi-elixir",
+      "acqua-di-gio-elixir",
+      "1-million-parfum",
+      "lara"
     ];
     if (
       oosKeywords.some((kw) => s.includes(kw) || n.includes(kw) || i.includes(kw)) ||
@@ -116,6 +124,17 @@ export default function ProductCard({
       i === "prod-blue-talisman-01" ||
       i === "cms8s3tfx002ov9f0wvmp0mzc" ||
       i === "prod-by-the-fireplace-04" ||
+      i === "cms8s3to300bxv9f032jtwv4j" ||
+      i === "prod-normal-10" ||
+      i === "cms8s3tkp007tv9f01v5kxt7m" ||
+      i === "prod-normal-2" ||
+      i === "cms8s3tj00062v9f014cmx645" ||
+      i === "prod-imagination-10" ||
+      i === "cms8s3tot00d1v9f0hfz8s7b8" ||
+      i === "prod-normal-12" ||
+      i === "cms8s3tr900fov9f0u4ye9oam" ||
+      i === "prod-normal-18" ||
+      i === "cmu4kwfyr008rjjfsvuhl70tu" ||
       n.includes("terre") ||
       s.includes("terre") ||
       n.includes("explorer") ||
@@ -123,7 +142,13 @@ export default function ProductCard({
       n.includes("talisman") ||
       s.includes("talisman") ||
       n.includes("fireplace") ||
-      s.includes("fireplace")
+      s.includes("fireplace") ||
+      n.includes("ehsas") || s.includes("ehsas") ||
+      n.includes("bad boy") || s.includes("bad-boy") ||
+      n.includes("imagination") || s.includes("imagination") ||
+      (n.includes("acqua") && n.includes("elixir")) || (s.includes("acqua") && s.includes("elixir")) ||
+      ((n.includes("1 million") || n.includes("million")) && n.includes("parfum")) || s.includes("1-million") ||
+      n.trim() === "lara" || s === "lara"
     ) {
       return true;
     }

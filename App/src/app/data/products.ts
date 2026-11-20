@@ -1171,33 +1171,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Everyday, Office, Casual",
     "meter": "LONG_LASTING",
     "isActive": true,
-    "inStock": true,
-    "isOutOfStock": false,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 2500,
         "originalPrice": 3200,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -1419,31 +1419,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Casual, Date Night",
     "meter": "LONG_LASTING",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -2262,31 +2264,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Formal Event, Everyday",
     "meter": "LONG_LASTING",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -2484,31 +2488,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Date Night, Special Occasion",
     "meter": "LONG_LASTING",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -3080,31 +3086,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Party, Date Night",
     "meter": "BEAST_MODE",
     "isActive": true,
+    "inStock": false,
+    "isOutOfStock": true,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 50
+        "stock": 0
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 35
+        "stock": 0
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 25
+        "stock": 0
       }
     ],
     "notes": [
@@ -7816,7 +7824,7 @@ export function getProductsApiBaseUrl(): string {
 
 let cachedProducts: Product[] | null = null;
 let lastFetchTime = 0;
-const CACHE_KEY = "murakkaz_products_cache_v8";
+const CACHE_KEY = "murakkaz_products_cache_v9";
 const CACHE_TTL_MS = 30_000; // 30-second cache for instant snappy navigation while staying fresh
 let activeFetchPromise: Promise<Product[]> | null = null;
 
@@ -7953,6 +7961,12 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
             p.id === "cmu4latr100f3jjfszm4sh1yf" ||
             itemSlug.includes("blue-talisman") || itemSlug.includes("talisman") || (p.name && p.name.toLowerCase().includes("blue talisman")) || p.id === "cmttuo733031rjju6uw8avshr" || p.id === "prod-blue-talisman-01" ||
             itemSlug.includes("fireplace") || (p.name && p.name.toLowerCase().includes("fireplace")) || p.id === "cms8s3tfx002ov9f0wvmp0mzc" || p.id === "prod-by-the-fireplace-04" ||
+            itemSlug.includes("ehsas") || (p.name && p.name.toLowerCase().includes("ehsas")) || p.id === "cms8s3to300bxv9f032jtwv4j" || p.id === "prod-normal-10" ||
+            itemSlug.includes("bad-boy") || (p.name && p.name.toLowerCase().includes("bad boy")) || p.id === "cms8s3tkp007tv9f01v5kxt7m" || p.id === "prod-normal-2" ||
+            itemSlug.includes("imagination") || (p.name && p.name.toLowerCase().includes("imagination")) || p.id === "cms8s3tj00062v9f014cmx645" || p.id === "prod-imagination-10" ||
+            (itemSlug.includes("acqua") && itemSlug.includes("elixir")) || (p.name && p.name.toLowerCase().includes("acqua") && p.name.toLowerCase().includes("elixir")) || p.id === "cms8s3tot00d1v9f0hfz8s7b8" || p.id === "prod-normal-12" ||
+            ((itemSlug.includes("million") || (p.name && p.name.toLowerCase().includes("million"))) && (itemSlug.includes("parfum") || (p.name && p.name.toLowerCase().includes("parfum")))) || p.id === "cms8s3tr900fov9f0u4ye9oam" || p.id === "prod-normal-18" ||
+            itemSlug === "lara" || (p.name && p.name.toLowerCase().trim() === "lara") || p.id === "cmu4kwfyr008rjjfsvuhl70tu" ||
             (p.sizes && Array.isArray(p.sizes) && p.sizes.length > 0 && p.sizes.every((s: any) => Number(s.stock) === 0))
           );
           const inStock = !isOutOfStock;
