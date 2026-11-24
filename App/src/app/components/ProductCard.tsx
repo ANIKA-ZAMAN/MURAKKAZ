@@ -73,7 +73,7 @@ export default function ProductCard({
     const n = (name || "").toLowerCase();
     const i = (id || "").toLowerCase();
 
-    // Sauvage Elixir and Irish Leather are explicitly in stock
+    // Sauvage Elixir, Irish Leather, and Terre d'Hermes are explicitly in stock
     if (
       s.includes("sauvage-elixir") ||
       n.includes("sauvage elixir") ||
@@ -81,7 +81,11 @@ export default function ProductCard({
       s.includes("irish-leather") ||
       n.includes("irish leather") ||
       i === "prod-irish-leather-01" ||
-      i === "cms8s3teb0013v9f0kx34wh10"
+      i === "cms8s3teb0013v9f0kx34wh10" ||
+      s.includes("terre") ||
+      n.includes("terre") ||
+      i === "cms8s3u3z00snv9f0ny38tprj" ||
+      i === "prod-normal-43"
     ) {
       return false;
     }
@@ -93,8 +97,6 @@ export default function ProductCard({
       "explorer-platinum",
       "sauvage-eau-de-parfum",
       "explorer",
-      "terre",
-      "terre-d-herm-s-parfum",
       "blue-talisman",
       "talisman",
       "by-the-fireplace",
@@ -118,8 +120,7 @@ export default function ProductCard({
       i === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
       i === "cms8s3u7300vfv9f0ug28i6zc" ||
       i === "prod-normal-49" ||
-      i === "cms8s3u3z00snv9f0ny38tprj" ||
-      i === "prod-normal-43" ||
+
       i === "cmttuo733031rjju6uw8avshr" ||
       i === "prod-blue-talisman-01" ||
       i === "cms8s3tfx002ov9f0wvmp0mzc" ||
@@ -135,8 +136,6 @@ export default function ProductCard({
       i === "cms8s3tr900fov9f0u4ye9oam" ||
       i === "prod-normal-18" ||
       i === "cmu4kwfyr008rjjfsvuhl70tu" ||
-      n.includes("terre") ||
-      s.includes("terre") ||
       n.includes("explorer") ||
       s.includes("explorer") ||
       n.includes("talisman") ||

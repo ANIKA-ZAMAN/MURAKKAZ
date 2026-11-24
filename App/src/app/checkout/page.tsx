@@ -32,7 +32,11 @@ const isItemOutOfStock = (item: any) => {
     s.includes("irish-leather") ||
     n.includes("irish leather") ||
     id === "prod-irish-leather-01" ||
-    id === "cms8s3teb0013v9f0kx34wh10"
+    id === "cms8s3teb0013v9f0kx34wh10" ||
+    s.includes("terre") ||
+    n.includes("terre") ||
+    id === "cms8s3u3z00snv9f0ny38tprj" ||
+    id === "prod-normal-43"
   ) {
     return false;
   }
@@ -43,8 +47,6 @@ const isItemOutOfStock = (item: any) => {
     "explorer-platinum",
     "sauvage-eau-de-parfum",
     "explorer",
-    "terre",
-    "terre-d-herm-s-parfum",
     "blue-talisman",
     "talisman",
     "by-the-fireplace",
@@ -68,8 +70,7 @@ const isItemOutOfStock = (item: any) => {
     id === "cmuaxl5lv0f2yjjhkqv4lh4pl" ||
     id === "cms8s3u7300vfv9f0ug28i6zc" ||
     id === "prod-normal-49" ||
-    id === "cms8s3u3z00snv9f0ny38tprj" ||
-    id === "prod-normal-43" ||
+
     id === "cmttuo733031rjju6uw8avshr" ||
     id === "prod-blue-talisman-01" ||
     id === "cms8s3tfx002ov9f0wvmp0mzc" ||
@@ -85,8 +86,6 @@ const isItemOutOfStock = (item: any) => {
     id === "cms8s3tr900fov9f0u4ye9oam" ||
     id === "prod-normal-18" ||
     id === "cmu4kwfyr008rjjfsvuhl70tu" ||
-    n.includes("terre") ||
-    s.includes("terre") ||
     n.includes("explorer") ||
     s.includes("explorer") ||
     n.includes("talisman") ||

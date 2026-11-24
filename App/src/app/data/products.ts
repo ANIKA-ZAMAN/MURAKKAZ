@@ -5741,33 +5741,33 @@ export const luxuryProducts: Product[] = [
     "occasion": "Office, Everyday, Formal Event",
     "meter": "LONG_LASTING",
     "isActive": true,
-    "inStock": false,
-    "isOutOfStock": true,
+    "inStock": true,
+    "isOutOfStock": false,
     "priceVal": 300,
     "sizes": [
       {
         "size": "6ml",
         "price": 300,
         "originalPrice": 400,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "10ml",
         "price": 500,
         "originalPrice": 650,
-        "stock": 0
+        "stock": 50
       },
       {
         "size": "30ml",
         "price": 900,
         "originalPrice": 1100,
-        "stock": 0
+        "stock": 35
       },
       {
         "size": "50ml",
         "price": 1500,
         "originalPrice": 1900,
-        "stock": 0
+        "stock": 25
       }
     ],
     "notes": [
@@ -7824,7 +7824,7 @@ export function getProductsApiBaseUrl(): string {
 
 let cachedProducts: Product[] | null = null;
 let lastFetchTime = 0;
-const CACHE_KEY = "murakkaz_products_cache_v9";
+const CACHE_KEY = "murakkaz_products_cache_v10";
 const CACHE_TTL_MS = 30_000; // 30-second cache for instant snappy navigation while staying fresh
 let activeFetchPromise: Promise<Product[]> | null = null;
 
@@ -7953,10 +7953,11 @@ export async function fetchLiveProducts(forceRefresh = false): Promise<Product[]
 
           const isSauvageElixir = itemSlug.includes("sauvage-elixir") || (p.name && p.name.toLowerCase().includes("sauvage elixir")) || p.id === "cmu4kz6v5009vjjfsmf5izsut";
           const isIrishLeather = itemSlug.includes("irish-leather") || (p.name && p.name.toLowerCase().includes("irish leather")) || p.id === "prod-irish-leather-01" || p.id === "cms8s3teb0013v9f0kx34wh10";
+          const isTerre = itemSlug.includes("terre") || (p.name && p.name.toLowerCase().includes("terre")) || p.id === "cms8s3u3z00snv9f0ny38tprj" || p.id === "prod-normal-43";
 
-          const isOutOfStock = !isSauvageElixir && !isIrishLeather && (
+          const isOutOfStock = !isSauvageElixir && !isIrishLeather && !isTerre && (
             p.inStock === false || p.isOutOfStock === true ||
-            itemSlug === "hacivat" || itemSlug === "sauvage-eau-de-parfum" || itemSlug.includes("explorer") || itemSlug.includes("terre") || (p.name && p.name.toLowerCase().includes("terre")) || p.id === "cms8s3u3z00snv9f0ny38tprj" || p.id === "prod-normal-43" || (p.name && p.name.toLowerCase().includes("explorer")) || p.id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || p.id === "cms8s3u7300vfv9f0ug28i6zc" || (p.name && p.name.toLowerCase().includes("sauvage eau de parfum")) || (p.name && p.name.toLowerCase().includes("hacivat")) ||
+            itemSlug === "hacivat" || itemSlug === "sauvage-eau-de-parfum" || itemSlug.includes("explorer") || (p.name && p.name.toLowerCase().includes("explorer")) || p.id === "cmuaxl5lv0f2yjjhkqv4lh4pl" || p.id === "cms8s3u7300vfv9f0ug28i6zc" || (p.name && p.name.toLowerCase().includes("sauvage eau de parfum")) || (p.name && p.name.toLowerCase().includes("hacivat")) ||
             p.id === "cms8s3tp600div9f05fmzy4m6" || p.id === "prod-normal-13" ||
             p.id === "cmu4latr100f3jjfszm4sh1yf" ||
             itemSlug.includes("blue-talisman") || itemSlug.includes("talisman") || (p.name && p.name.toLowerCase().includes("blue talisman")) || p.id === "cmttuo733031rjju6uw8avshr" || p.id === "prod-blue-talisman-01" ||

@@ -50,6 +50,7 @@ export const getApiBaseUrl = (): string => {
 };
 
 const validTrackedImages = [
+  "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
   "/images/events/uddami_ami_mela_bracu.jpg",
   "/images/events/brac_university_mela_2026.png",
   "/images/events/murakkaz_brac_university_mela.png",
@@ -89,6 +90,13 @@ export interface EventImageMeta {
 }
 
 export function getEventImageMeta(src: string, defaultTitle?: string): EventImageMeta {
+  if (src.includes("rupoboti") || src.includes("midas_december")) {
+    return {
+      title: defaultTitle || "Murakkaz at Rupoboti Exhibition — Official Invitation",
+      subtitle: "MIDAS Center, Dhanmondi • Dec 4 – 5, 2026",
+      shortLabel: "Invitation Poster",
+    };
+  }
   if (src.includes("brac_university_mela") || (src.includes("brac") && src.includes("mela"))) {
     return {
       title: defaultTitle || "Murakkaz at BRAC University Mela — Event Poster",
@@ -223,38 +231,32 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
 
 export const upcomingEvents: UpcomingEvent[] = [
   {
-    id: "cmue-brac-mela-nov-2026",
-    slug: "murakkaz-brac-university-mela",
-    day: "02",
-    month: "AUG",
-    title: "Warm Invitation from Murakkaz to Uddami Mela — Sponsored Mela",
-    location: "BRAC University Campus, Multi-Purpose Hall Lobby",
+    id: "cmue-rupoboti-midas-dec-2026",
+    slug: "murakkaz-at-rupoboti-exhibition-midas-center",
+    day: "04",
+    month: "DEC",
+    title: "You're Cordially Invited — Murakkaz at Rupoboti Exhibition",
+    location: "MIDAS Center, Dhanmondi, Dhaka",
     daysLeft: "Upcoming",
-    time: "9:00 AM - 6:00 PM",
-    description: "Step into an aromatic world of handcrafted luxury! Murakkaz warmly invites all students, faculty members, and visitors to our fragrance pavilion at the Uddami Ami Mela — Celebrating Women Entrepreneurship at BRAC University.\n\nExperience our signature collection of extra pure, long-lasting luxury perfumes. Enjoy complimentary live fragrance testing, personal scent consultations, and exclusive campus student discounts & special offers!\n\nEvent Details:\n• Event: Uddami Ami Mela — Celebrating Women Entrepreneurship\n• Venue: BRAC University Campus, Multi-Purpose Hall Lobby\n• Timing: 9:00 AM – 6:00 PM\n• Partners: Women Empowerment Cell (WEC), BRAC Bank, BRAC University, BRAC Business School & Biz Bee\n• Highlights: Complimentary Fragrance Testing, Personal Consultations & Campus Offers\n• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com",
-    image: "/images/events/uddami_ami_mela_bracu.jpg",
+    time: "10:00 AM - 8:00 PM",
+    description: "You're cordially invited! Visit our exclusive stall at Rupoboti (রূপবতী) Exhibition at MIDAS Center, Dhanmondi.\n\nExplore our exquisite collection and experience the art of fine, extra pure luxury fragrances. Enjoy complimentary fragrance testing, personal scent consultations, and exclusive event offers! All are welcome.\n\nEvent Details:\n• Event: Rupoboti Exhibition\n• Dates: December 4th – 5th, 2026\n• Timing: 10:00 AM – 8:00 PM\n• Venue: MIDAS Center, Dhanmondi, Dhaka\n• Highlights: Complimentary Fragrance Testing, Personal Consultations & Special Offers\n• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com",
+    image: "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
     images: [
-      "/images/events/uddami_ami_mela_bracu.jpg",
-      "/images/events/brac_university_mela_2026.png",
-      "/images/events/event_gallery_6.jpg",
-      "/images/events/event_gallery_10.jpg",
+      "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
+      "/images/events/event_gallery_1.jpg",
+      "/images/events/event_gallery_2.jpg",
     ],
-  },
-  {
-    id: "upcoming-slot-2",
-    slug: "upcoming-event-2",
-    day: "TBA",
-    month: "TBA",
-    title: "Upcoming Campus Pop-up & Winter Showcase",
-    location: "Date & Location TBA",
-    daysLeft: "Coming Soon",
-    time: "Time TBA",
-    description: "Space reserved for our next campus showcase & winter exhibition. New dates, locations, and fragrance highlights will be announced here soon.",
-    image: "/images/events/event_gallery_4.jpg",
-    images: ["/images/events/event_gallery_4.jpg"],
   },
 ];
 export const previousEvents: PreviousEvent[] = [
+  {
+    id: "cmue-brac-mela-nov-2026",
+    slug: "murakkaz-brac-university-mela",
+    title: "Murakkaz at BRAC University Uddami Mela",
+    date: "Aug 02 - 03, 2026",
+    image: "/images/events/uddami_ami_mela_bracu.jpg",
+    category: "Campus Mela",
+  },
   {
     id: "cmue-nsu-yes-oct-2026",
     slug: "murakkaz-coming-to-nsu-yes-club",
@@ -272,7 +274,6 @@ export const previousEvents: PreviousEvent[] = [
     category: "Exhibition",
   },
 ];
-
 export const galleryImages: GalleryImage[] = [
   {
     src: "/images/events/event_gallery_1.jpg",

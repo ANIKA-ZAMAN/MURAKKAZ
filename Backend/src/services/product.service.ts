@@ -39,8 +39,6 @@ function attachCategory(p: any) {
     'explorer-platinum',
     'sauvage-eau-de-parfum',
     'explorer',
-    'terre',
-    'terre-d-herm-s-parfum',
     'blue-talisman',
     'talisman',
     'by-the-fireplace',
@@ -60,8 +58,9 @@ function attachCategory(p: any) {
 
   const isSauvageElixir = pSlug.includes('sauvage-elixir') || pName.includes('sauvage elixir') || pId === 'cmu4kz6v5009vjjfsmf5izsut';
   const isIrishLeather = pSlug.includes('irish-leather') || pName.includes('irish leather') || pId === 'prod-irish-leather-01' || pId === 'cms8s3teb0013v9f0kx34wh10';
+  const isTerre = pSlug.includes('terre') || pName.includes('terre') || pId === 'cms8s3u3z00snv9f0ny38tprj' || pId === 'prod-normal-43';
 
-  if (isSauvageElixir || isIrishLeather) {
+  if (isSauvageElixir || isIrishLeather || isTerre) {
     const isBlueTalisman = pSlug.includes('talisman') || pId.includes('talisman') || pName.includes('talisman');
     const hasValidImage = p.image && typeof p.image === 'string' && p.image.trim().length > 0 && !p.image.includes('jade_serenity.png');
     const resolvedImage = hasValidImage
@@ -85,8 +84,7 @@ function attachCategory(p: any) {
     pId === 'cmu4latr100f3jjfszm4sh1yf' ||
     pId === 'cmuaxl5lv0f2yjjhkqv4lh4pl' ||
     pId === 'cms8s3u7300vfv9f0ug28i6zc' ||
-    pId === 'cms8s3u3z00snv9f0ny38tprj' ||
-    pId === 'prod-normal-43' ||
+
     pId === 'cmttuo733031rjju6uw8avshr' ||
     pId === 'prod-blue-talisman-01' ||
     pId === 'cms8s3tfx002ov9f0wvmp0mzc' ||
@@ -102,8 +100,6 @@ function attachCategory(p: any) {
     pId === 'cms8s3tr900fov9f0u4ye9oam' ||
     pId === 'prod-normal-18' ||
     pId === 'cmu4kwfyr008rjjfsvuhl70tu' ||
-    pSlug.includes('terre') ||
-    pName.includes('terre') ||
     pSlug.includes('explorer') ||
     pName.includes('explorer') ||
     pSlug.includes('talisman') ||
