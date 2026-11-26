@@ -10,6 +10,7 @@ export interface BlogPost {
   duration?: string;
   videoDuration?: string;
   videoUrl?: string;
+  externalUrl?: string;
   author: string;
   authorRole?: string;
   authorAvatar?: string;
@@ -26,6 +27,7 @@ export interface PerfumeVideo {
   category: 'Bottle Showcase' | 'Scent Review' | 'Olfactory Notes' | 'Campaign Film';
   description: string;
   videoUrl: string;
+  externalUrl?: string;
   thumbnail: string;
   duration: string;
   views?: string;
@@ -72,6 +74,48 @@ export const perfumeVideos: PerfumeVideo[] = [
     duration: "02:50",
     views: "2.4k views",
     featured: true,
+  },
+  {
+    id: "vid-fb-salman",
+    title: "এই মানুষ টা বেশ সুন্দর পারফিউম বানায়! | Salman Fragrance",
+    perfumeName: "Salman Fragrance Review",
+    perfumeSlug: "salman-fragrance-review",
+    category: "Scent Review",
+    description: "Special fragrance review and behind-the-scenes showcase by Salman Fragrance on Murakkaz extra pure perfumes.",
+    videoUrl: "https://www.facebook.com/reel/1614675433145626",
+    externalUrl: "https://www.facebook.com/reel/1614675433145626",
+    thumbnail: "/images/events/video_thumbnail_fb_salman.jpg",
+    duration: "Watch Reel",
+    views: "87k views",
+    featured: true,
+  },
+  {
+    id: "vid-fb-channel-i",
+    title: "চ্যানেল আই স্পেশাল প্রতিবেদন — Murakkaz Artisanal Perfume",
+    perfumeName: "Channel i Television Documentary",
+    perfumeSlug: "channel-i-special-report",
+    category: "Campaign Film",
+    description: "Exclusive television documentary feature broadcast by Channel i exploring Murakkaz's journey and artistry in pure fragrance crafting.",
+    videoUrl: "https://www.facebook.com/share/1Dumbnhvhu/?mibextid=wwXIfr",
+    externalUrl: "https://www.facebook.com/share/1Dumbnhvhu/?mibextid=wwXIfr",
+    thumbnail: "/images/events/video_thumbnail_fb_channel_i.jpg",
+    duration: "Watch Video",
+    views: "12k views",
+    featured: true,
+  },
+  {
+    id: "vid-fb-coming-soon",
+    title: "New Story Coming Soon",
+    perfumeName: "Murakkaz Olfactory Stories",
+    perfumeSlug: "new-story-coming-soon",
+    category: "Bottle Showcase",
+    description: "Stay tuned! Our next fragrance masterclass and exclusive video will be released here soon.",
+    videoUrl: "https://www.facebook.com/profile.php?id=100063498011095",
+    externalUrl: "https://www.facebook.com/profile.php?id=100063498011095",
+    thumbnail: "/images/events/video_thumbnail_1.png",
+    duration: "Coming Soon",
+    views: "Coming Soon",
+    featured: false,
   }
 ];
 
@@ -126,6 +170,60 @@ export const blogPosts: BlogPost[] = [
     author: "Eliyash Hossain",
     authorRole: "Master Blender",
     readTime: "4 min read"
+  },
+  {
+    id: "4",
+    slug: "salman-fragrance-review",
+    date: "Nov 2026",
+    title: "এই মানুষ টা বেশ সুন্দর পারফিউম বানায়! | Salman Fragrance",
+    subtitle: "In-depth review and feature by Salman Fragrance.",
+    description: "Special fragrance review and behind-the-scenes showcase by Salman Fragrance on Murakkaz extra pure perfumes.",
+    duration: "Watch Reel",
+    videoDuration: "Watch Reel",
+    videoUrl: "https://www.facebook.com/reel/1614675433145626",
+    externalUrl: "https://www.facebook.com/reel/1614675433145626",
+    category: "Reviews",
+    content: "An exclusive, authentic review and scent reaction by Salman Fragrance experiencing the craftsmanship, sillage, and longevity of Murakkaz handcrafted perfumes.",
+    image: "/images/events/video_thumbnail_fb_salman.jpg",
+    author: "Salman Fragrance",
+    authorRole: "Fragrance Reviewer",
+    readTime: "Watch on Facebook"
+  },
+  {
+    id: "5",
+    slug: "channel-i-special-report",
+    date: "Nov 2026",
+    title: "চ্যানেল আই স্পেশাল প্রতিবেদন — Murakkaz Artisanal Perfume",
+    subtitle: "Channel i Television Documentary & Special Report.",
+    description: "Exclusive television documentary feature broadcast by Channel i exploring Murakkaz's journey and artistry in pure fragrance crafting.",
+    duration: "Watch Video",
+    videoDuration: "Watch Video",
+    videoUrl: "https://www.facebook.com/share/1Dumbnhvhu/?mibextid=wwXIfr",
+    externalUrl: "https://www.facebook.com/share/1Dumbnhvhu/?mibextid=wwXIfr",
+    category: "Behind the Scenes",
+    content: "Special television documentary by Channel i covering the inspiring story, artisanal distillation, and passion behind Murakkaz Perfume.",
+    image: "/images/events/video_thumbnail_fb_channel_i.jpg",
+    author: "Channel i News",
+    authorRole: "Television Feature",
+    readTime: "Watch on Facebook"
+  },
+  {
+    id: "6",
+    slug: "new-story-coming-soon",
+    date: "Coming Soon",
+    title: "New Story Coming Soon",
+    subtitle: "Behind the scents, beyond the bottle.",
+    description: "Stay tuned! Our next fragrance masterclass and exclusive video will be released here soon.",
+    duration: "Coming Soon",
+    videoDuration: "Coming Soon",
+    videoUrl: "https://www.facebook.com/profile.php?id=100063498011095",
+    externalUrl: "https://www.facebook.com/profile.php?id=100063498011095",
+    category: "Stories",
+    content: "New video coming soon. Follow our official Facebook channel for upcoming releases, scent guides, and olfactory stories.",
+    image: "/images/events/video_thumbnail_1.png",
+    author: "Murakkaz",
+    authorRole: "Artisanal Perfumery",
+    readTime: "Follow on Facebook"
   }
 ];
 

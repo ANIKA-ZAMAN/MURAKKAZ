@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { BlogPost } from "../../data/blogData";
 import styles from "../page.module.css";
 
@@ -48,7 +49,9 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
   const [isMuted, setIsMuted] = useState(true);
   const [volume, setVolume] = useState(0.8);
 
-  const videoSrc = resolveVideoUrl(post.videoUrl);
+  const isExternal = Boolean(post.externalUrl || (post.videoUrl && post.videoUrl.startsWith("http")));
+  const externalLink = post.externalUrl || (post.videoUrl && post.videoUrl.startsWith("http") ? post.videoUrl : undefined);
+  const videoSrc = isExternal ? undefined : resolveVideoUrl(post.videoUrl);
   const hasRealVideo = Boolean(videoSrc);
 
   const handleTogglePlay = (e: React.MouseEvent) => {
@@ -162,11 +165,67 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
     <article className={styles.card} aria-labelledby={`title-${post.id}`}>
       {/* Video Container / Thumbnail */}
       <div
-        className={`${styles.videoPlaceholder} ${hasRealVideo ? styles.videoWithMedia : styles.emptyPlaceholder}`}
-        onClick={hasRealVideo ? handleTogglePlay : undefined}
-        onDoubleClick={hasRealVideo ? handleFullscreen : undefined}
+        className={`${styles.videoPlaceholder} ${
+          isExternal
+            ? styles.videoWithExternal
+            : hasRealVideo
+            ? styles.videoWithMedia
+            : styles.emptyPlaceholder
+        }`}
+        onClick={isExternal ? undefined : hasRealVideo ? handleTogglePlay : undefined}
+        onDoubleClick={isExternal ? undefined : hasRealVideo ? handleFullscreen : undefined}
       >
-        {hasRealVideo ? (
+        {isExternal && externalLink ? (
+          <a
+            href={externalLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.externalVideoWrap}
+            aria-label={`Watch ${post.title} on Facebook`}
+          >
+            <Image
+              src={post.image || "/images/events/video_thumbnail_1.png"}
+              alt={post.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className={styles.externalThumbnail}
+              priority={false}
+            />
+            <div className={styles.externalVideoOverlay} />
+
+            {/* Facebook Badge in Top Right */}
+            <div className={styles.facebookCardBadge} title="Watch on Facebook">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+              <span>Watch on Facebook</span>
+            </div>
+
+            {/* Centered Play Button */}
+            <div className={styles.externalPlayBtn}>
+              <svg
+                className={styles.playIcon}
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="#1C1B1A"
+              >
+                <polygon points="7 4 19 12 7 20" fill="#1C1B1A" />
+              </svg>
+            </div>
+
+            {/* Duration / Action Pill Bottom Left */}
+            <span className={styles.durationBadge}>
+              {duration || "Watch Video ↗"}
+            </span>
+          </a>
+        ) : hasRealVideo ? (
           <>
             <video
               ref={videoRef}
@@ -376,9 +435,34 @@ export default function BlogCard({ post, isLiked, onToggleLike }: BlogCardProps)
 
           {/* Elegant Serif Title */}
           <h2 id={`title-${post.id}`} className={styles.postTitle}>
-            <Link href={`/blog/${postSlug}`} className={styles.titleLink}>
-              {post.title}
-            </Link>
+            {isExternal && externalLink ? (
+              <a
+                href={externalLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.titleLink}
+              >
+                {post.title}
+                <svg
+                  className={styles.externalArrowIcon}
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17l9.2-9.2M17 17V7H7" />
+                </svg>
+              </a>
+            ) : (
+              <Link href={`/blog/${postSlug}`} className={styles.titleLink}>
+                {post.title}
+              </Link>
+            )}
           </h2>
 
           {/* 1-2 Line Description */}
