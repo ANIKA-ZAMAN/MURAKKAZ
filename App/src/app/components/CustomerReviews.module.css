@@ -358,6 +358,83 @@
   justify-content: space-between;
   padding-top: 1.25rem;
   border-top: 1px solid rgba(197, 168, 128, 0.22);
+  gap: 10px;
+}
+
+.fbReviewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: rgba(24, 119, 242, 0.08);
+  border: 1px solid rgba(24, 119, 242, 0.28);
+  color: #1877F2;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.fbReviewBtn:hover {
+  background: #1877F2;
+  color: #ffffff;
+  border-color: #1877F2;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
+}
+
+.fbBtnIcon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+.fbExternalArrow {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  opacity: 0.75;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.fbReviewBtn:hover .fbExternalArrow {
+  transform: translate(1px, -1px);
+  opacity: 1;
+}
+
+.lightboxFooterRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.85rem;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.lightboxFbBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: #1877F2;
+  color: #ffffff;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.lightboxFbBtn:hover {
+  background: #166fe5;
+  transform: translateY(-1px);
 }
 
 .authorMeta {
@@ -538,5 +615,15 @@
   .perfPill {
     font-size: 0.68rem;
     padding: 3px 8px;
+  }
+  
+  .authorFooter {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .fbReviewBtn {
+    font-size: 0.70rem;
+    padding: 4px 10px;
   }
 }

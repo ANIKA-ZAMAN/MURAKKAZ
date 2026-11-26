@@ -18,7 +18,12 @@ export default function CustomerReviews({
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
-  const [lightboxPhoto, setLightboxPhoto] = useState<{ src: string; title: string } | null>(null);
+  const [lightboxPhoto, setLightboxPhoto] = useState<{
+    src: string;
+    title: string;
+    facebookUrl?: string;
+    isVideo?: boolean;
+  } | null>(null);
   const [isInView, setIsInView] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const touchStartX = useRef<number | null>(null);
@@ -246,6 +251,8 @@ export default function CustomerReviews({
                         setLightboxPhoto({
                           src: rev.photo!,
                           title: `${rev.name}'s Perfume Review Photo`,
+                          facebookUrl: rev.facebookUrl,
+                          isVideo: rev.isVideo,
                         });
                       }}
                       role="button"
@@ -277,6 +284,31 @@ export default function CustomerReviews({
                         <h4 className={styles.authorName}>{rev.name}</h4>
                       </div>
                     </div>
+
+                    {rev.facebookUrl && (
+                      <a
+                        href={rev.facebookUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.fbReviewBtn}
+                        onClick={(e) => e.stopPropagation()}
+                        title={rev.isVideo ? "Watch on Facebook" : "View on Facebook"}
+                      >
+                        {rev.isVideo ? (
+                          <svg className={styles.fbBtnIcon} viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        ) : (
+                          <svg className={styles.fbBtnIcon} viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                          </svg>
+                        )}
+                        <span>{rev.isVideo ? "Watch on Facebook" : "View on Facebook"}</span>
+                        <svg className={styles.fbExternalArrow} viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z" clipRule="evenodd" />
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -326,7 +358,19 @@ export default function CustomerReviews({
               ✕
             </button>
             <img src={lightboxPhoto.src} alt={lightboxPhoto.title} className={styles.fullPhotoImg} />
-            <p className={styles.lightboxCaption}>{lightboxPhoto.title}</p>
+            <div className={styles.lightboxFooterRow}>
+              <p className={styles.lightboxCaption}>{lightboxPhoto.title}</p>
+              {lightboxPhoto.facebookUrl && (
+                <a
+                  href={lightboxPhoto.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.lightboxFbBtn}
+                >
+                  {lightboxPhoto.isVideo ? "Watch on Facebook ↗" : "View on Facebook ↗"}
+                </a>
+              )}
+            </div>
           </div>
         </div>
       )}
