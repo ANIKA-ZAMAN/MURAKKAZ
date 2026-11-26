@@ -67,10 +67,10 @@ export const dbStore = {
   blogPosts: loadBlogsFromDisk(),
   events: [
     {
-      id: "cmue-rupoboti-midas-dec-2026",
-      slug: "murakkaz-at-rupoboti-exhibition-midas-center",
-      title: "You're Cordially Invited — Murakkaz at Rupoboti Exhibition",
-      description: `You're cordially invited! Visit our exclusive stall at Rupoboti (রূপবতী) Exhibition at MIDAS Center, Dhanmondi.\n\nExplore our exquisite collection and experience the art of fine, extra pure luxury fragrances. Enjoy complimentary fragrance testing, personalized scent consultations, and exclusive event offers! All are welcome.\n\nEvent Details:\n• Event: Rupoboti Exhibition\n• Dates: December 4th – 5th, 2026\n• Timing: 10:00 AM – 8:00 PM\n• Venue: MIDAS Center, Dhanmondi, Dhaka\n• Highlights: Complimentary Fragrance Testing, Personal Consultations & Special Offers\n• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com`,
+      id: "cmue-baruni-midas-dec-2026",
+      slug: "murakkaz-at-baruni-exhibition-midas-center",
+      title: "You're Cordially Invited — Murakkaz at Baruni (বারুনী) Exhibition",
+      description: `You're cordially invited! Visit our exclusive stall at Baruni (বারুনী) Exhibition at MIDAS Center, Dhanmondi.\n\nExplore our exquisite collection and experience the art of fine, extra pure luxury fragrances. Enjoy complimentary fragrance testing, personalized scent consultations, and exclusive event offers! All are welcome.\n\nEvent Details:\n• Event: Baruni (বারুনী) Exhibition\n• Dates: December 4th – 5th, 2026\n• Timing: 10:00 AM – 8:00 PM\n• Venue: MIDAS Center, Dhanmondi, Dhaka\n• Highlights: Complimentary Fragrance Testing, Personal Consultations & Special Offers\n• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com`,
       image: "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
       images: [
         "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
@@ -79,17 +79,17 @@ export const dbStore = {
       ],
       galleryImages: [
         {
-          id: "rupoboti-img-1",
+          id: "baruni-img-1",
           src: "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
-          alt: "You're Cordially Invited — Murakkaz at Rupoboti Exhibition Poster",
+          alt: "You're Cordially Invited — Murakkaz at Baruni (বারুনী) Exhibition Poster",
         },
         {
-          id: "rupoboti-img-2",
+          id: "baruni-img-2",
           src: "/images/events/event_gallery_1.jpg",
           alt: "Murakkaz Exhibition Showcase",
         },
         {
-          id: "rupoboti-img-3",
+          id: "baruni-img-3",
           src: "/images/events/event_gallery_2.jpg",
           alt: "Luxury Fragrance Display",
         },

@@ -90,9 +90,9 @@ export interface EventImageMeta {
 }
 
 export function getEventImageMeta(src: string, defaultTitle?: string): EventImageMeta {
-  if (src.includes("rupoboti") || src.includes("midas_december")) {
+  if (src.includes("rupoboti") || src.includes("baruni") || src.includes("midas_december")) {
     return {
-      title: defaultTitle || "Murakkaz at Rupoboti Exhibition — Official Invitation",
+      title: defaultTitle || "Murakkaz at Baruni (বারুনী) Exhibition — Official Invitation",
       subtitle: "MIDAS Center, Dhanmondi • Dec 4 – 5, 2026",
       shortLabel: "Invitation Poster",
     };
@@ -231,15 +231,15 @@ export const fetchLiveEvents = async (upcoming?: boolean): Promise<{ upcoming: U
 
 export const upcomingEvents: UpcomingEvent[] = [
   {
-    id: "cmue-rupoboti-midas-dec-2026",
-    slug: "murakkaz-at-rupoboti-exhibition-midas-center",
+    id: "cmue-baruni-midas-dec-2026",
+    slug: "murakkaz-at-baruni-exhibition-midas-center",
     day: "04",
     month: "DEC",
-    title: "You're Cordially Invited — Murakkaz at Rupoboti Exhibition",
+    title: "You're Cordially Invited — Murakkaz at Baruni (বারুনী) Exhibition",
     location: "MIDAS Center, Dhanmondi, Dhaka",
     daysLeft: "Upcoming",
     time: "10:00 AM - 8:00 PM",
-    description: "You're cordially invited! Visit our exclusive stall at Rupoboti (রূপবতী) Exhibition at MIDAS Center, Dhanmondi.\n\nExplore our exquisite collection and experience the art of fine, extra pure luxury fragrances. Enjoy complimentary fragrance testing, personal scent consultations, and exclusive event offers! All are welcome.\n\nEvent Details:\n• Event: Rupoboti Exhibition\n• Dates: December 4th – 5th, 2026\n• Timing: 10:00 AM – 8:00 PM\n• Venue: MIDAS Center, Dhanmondi, Dhaka\n• Highlights: Complimentary Fragrance Testing, Personal Consultations & Special Offers\n• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com",
+    description: "You're cordially invited! Visit our exclusive stall at Baruni (বারুনী) Exhibition at MIDAS Center, Dhanmondi.\n\nExplore our exquisite collection and experience the art of fine, extra pure luxury fragrances. Enjoy complimentary fragrance testing, personal scent consultations, and exclusive event offers! All are welcome.\n\nEvent Details:\n• Event: Baruni (বারুনী) Exhibition\n• Dates: December 4th – 5th, 2026\n• Timing: 10:00 AM – 8:00 PM\n• Venue: MIDAS Center, Dhanmondi, Dhaka\n• Highlights: Complimentary Fragrance Testing, Personal Consultations & Special Offers\n• Inquiries & Hotline: 01997-807701 • Official Website: www.murakkaz.com",
     image: "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
     images: [
       "/images/events/murakkaz_rupoboti_midas_december_2026.jpg",
